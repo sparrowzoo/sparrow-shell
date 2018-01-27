@@ -1,0 +1,42 @@
+[submodule "sparrow"]
+	path = sparrow
+	url = git@github.com:sparrowzoo/sparrow.git
+[submodule "sparrow-cg"]
+	path = sparrow-cg
+	url = git@github.com:sparrowzoo/sparrow-cg.git
+[submodule "sparrow-container"]
+	path = sparrow-container
+	url = git@github.com:sparrowzoo/sparrow-container.git
+[submodule "sparrow-context"]
+	path = sparrow-context
+	url = git@github.com:sparrowzoo/sparrow-context.git
+[submodule "sparrow-data-source"]
+	path = sparrow-data-source
+	url = git@github.com:sparrowzoo/sparrow-data-source.git
+[submodule "sparrow-json"]
+	path = sparrow-json
+	url = git@github.com:sparrowzoo/sparrow-json.git
+[submodule "sparrow-log"]
+	path = sparrow-log
+	url = git@github.com:sparrowzoo/sparrow-log.git
+[submodule "sparrow-mvc"]
+	path = sparrow-mvc
+	url = git@github.com:sparrowzoo/sparrow-mvc.git
+[submodule "sparrow-orm"]
+	path = sparrow-orm
+	url = git@github.com:sparrowzoo/sparrow-orm.git
+[submodule "sparrow-rocketmq-client"]
+	path = sparrow-rocketmq-client
+	url = git@github.com:sparrowzoo/sparrow-rocketmq-client.git
+[submodule "sparrow-sharded-jedis"]
+	path = sparrow-sharded-jedis
+	url = git@github.com:sparrowzoo/sparrow-sharded-jedis.git
+[submodule "sparrow-super"]
+	path = sparrow-super
+	url = git@github.com:sparrowzoo/sparrow-super.git
+[submodule "style"]
+	path = style
+	url = git@github.com:sparrowzoo/style.git
+[submodule "sparrow-test"]
+	path = sparrow-test
+	url = git@github.com:sparrowzoo/sparrow-test.git

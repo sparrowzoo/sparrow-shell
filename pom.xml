@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements.  See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.sparrow</groupId>
+    <artifactId>sparrow-shell</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>sparrow</name>
+    <url>http://maven.apache.org</url>
+    <description>
+        mvn repository
+        http://mvnrepository.com/
+    </description>
+    <modules>
+        <module>sparrow-context</module>
+        <module>sparrow-mvc</module>
+        <module>sparrow-container</module>
+        <module>sparrow-cg</module>
+        <module>sparrow-data-source</module>
+        <module>sparrow-orm</module>
+        <module>sparrow-json</module>
+        <module>sparrow</module>
+        <module>sparrow-super</module>
+        <module>sparrow-test</module>
+        <module>sparrow-log</module>
+        <module>sparrow-rocketmq-client</module>
+        <module>sparrow-sharded-jedis</module>
+    </modules>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>verify</id>
+                        <phase>verify</phase>
+                        <configuration>
+                            <configLocation>style/sparrow_checkstyle.xml</configLocation>
+                            <suppressionsLocation>style/check_style_suppressions.xml</suppressionsLocation>
+                            <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
