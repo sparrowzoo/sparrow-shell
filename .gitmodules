@@ -40,3 +40,4 @@
 [submodule "sparrow-test"]
 	path = sparrow-test
 	url = git@github.com:sparrowzoo/sparrow-test.git
+
