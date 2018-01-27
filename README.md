@@ -1,5 +1,6 @@
 init 创建新项目或添加子模块
 ---
+
 	git submodule add git@github.com:sparrowzoo/sparrow.git                     sparrow
 	git submodule add git@github.com:sparrowzoo/sparrow-cg.git                  sparrow-cg
 	git submodule add git@github.com:sparrowzoo/sparrow-container.git           sparrow-container
@@ -15,15 +16,18 @@ init 创建新项目或添加子模块
 	git submodule add git@github.com:sparrowzoo/style.git                       style
 	git submodule add git@github.com:sparrowzoo/sparrow-test.git                sparrow-test
     	
-    	
+客户端批量代码clone
+---
 
 初始化 
 ---
+
 	git clone git@github.com:sparrowzoo/sparrow-shell.git
 	git submodule update --init
 	
 批量命令
----
+----
+
 	git submodule foreach git ...[fetch|pull|checkout...]
 
 

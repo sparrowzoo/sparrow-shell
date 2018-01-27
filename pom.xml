@@ -30,6 +30,7 @@
         http://mvnrepository.com/
     </description>
     <modules>
+        <module>sparrow</module>
         <module>sparrow-context</module>
         <module>sparrow-mvc</module>
         <module>sparrow-container</module>
@@ -37,7 +38,6 @@
         <module>sparrow-data-source</module>
         <module>sparrow-orm</module>
         <module>sparrow-json</module>
-        <module>sparrow</module>
         <module>sparrow-super</module>
         <module>sparrow-test</module>
         <module>sparrow-log</module>
