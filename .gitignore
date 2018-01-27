@@ -4,16 +4,3 @@ target
 classes
 logs
 .DS_Store
-sparrow
-sparrow-cg
-sparrow-container
-sparrow-context
-sparrow-json
-sparrow-rocketmq-client
-sparrow-sharded-jedis
-sparrow-data-source
-sparrow-log
-sparrow-mvc
-sparrow-orm
-sparrow-super
-sparrow-test
