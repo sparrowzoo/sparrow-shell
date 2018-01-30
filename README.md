@@ -24,6 +24,7 @@ init 创建新项目或添加子模块
 
 	git clone git@github.com:sparrowzoo/sparrow-shell.git
 	git submodule update --init
+	git submodule foreach git checkout master
 	
 批量命令
 ----
