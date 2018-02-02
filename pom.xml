@@ -35,7 +35,6 @@
 
     <modules>
         <module>sparrow</module>
-        <module>sparrow-context</module>
         <module>sparrow-mvc</module>
         <module>sparrow-container</module>
         <module>sparrow-cg</module>
