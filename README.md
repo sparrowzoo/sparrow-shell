@@ -4,7 +4,6 @@ init 创建新项目或添加子模块
 	git submodule add git@github.com:sparrowzoo/sparrow.git                     sparrow
 	git submodule add git@github.com:sparrowzoo/sparrow-cg.git                  sparrow-cg
 	git submodule add git@github.com:sparrowzoo/sparrow-container.git           sparrow-container
-	git submodule add git@github.com:sparrowzoo/sparrow-context.git             sparrow-context
 	git submodule add git@github.com:sparrowzoo/sparrow-data-source.git         sparrow-data-source
 	git submodule add git@github.com:sparrowzoo/sparrow-json.git                sparrow-json
 	git submodule add git@github.com:sparrowzoo/sparrow-log.git                 sparrow-log

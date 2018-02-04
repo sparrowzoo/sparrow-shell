@@ -7,9 +7,6 @@
 [submodule "sparrow-container"]
 	path = sparrow-container
 	url = git@github.com:sparrowzoo/sparrow-container.git
-[submodule "sparrow-context"]
-	path = sparrow-context
-	url = git@github.com:sparrowzoo/sparrow-context.git
 [submodule "sparrow-data-source"]
 	path = sparrow-data-source
 	url = git@github.com:sparrowzoo/sparrow-data-source.git
