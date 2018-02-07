@@ -37,4 +37,7 @@
 [submodule "sparrow-test"]
 	path = sparrow-test
 	url = git@github.com:sparrowzoo/sparrow-test.git
+[submodule "sparrow-markdown"]
+	path = sparrow-markdown
+	url = git@github.com:sparrowzoo/sparrow-markdown.git
 
