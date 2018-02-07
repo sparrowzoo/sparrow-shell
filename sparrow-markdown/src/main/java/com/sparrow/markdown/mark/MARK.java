@@ -51,25 +51,4 @@ public enum MARK {
         this.end = end;
         this.line = line;
     }
-
-    public static final List<MARK> CONTAINER = new ArrayList<MARK>();
-
-    static {
-        CONTAINER.add(H1);
-        CONTAINER.add(H2);
-        CONTAINER.add(H3);
-        CONTAINER.add(H4);
-        CONTAINER.add(H5);
-        CONTAINER.add(H6);
-        CONTAINER.add(HORIZONTAL_LINE);
-        CONTAINER.add(QUOTE);
-        CONTAINER.add(CHECK_BOX);
-        CONTAINER.add(DISABLE_CHECK_BOX);
-        CONTAINER.add(CODE);
-        CONTAINER.add(HIGHLIGHT);
-        CONTAINER.add(UNDERLINE);
-        CONTAINER.add(ERASURE);
-        CONTAINER.add(ITALIC);
-        CONTAINER.add(BOLD);
-    }
 }
