@@ -1,5 +1,7 @@
 package com.sparrow.markdown.parser.impl;
 
+import com.sparrow.markdown.mark.MARK;
+import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.parser.MarkParser;
 
 /**
@@ -9,12 +11,12 @@ import com.sparrow.markdown.parser.MarkParser;
 public class CodeParser implements MarkParser {
     private String content;
 
-    public CodeParser(String content) {
-        this.content = content;
+    @Override
+    public String parse(MarkContext parser) {
+        return String.format("<p class=\"code\">%1$s</p>", content);
     }
 
-    @Override
-    public String parse() {
-        return String.format("<p class=\"code\">%1$s</p>", content);
+    @Override public MARK mark() {
+        return MARK.CODE;
     }
 }

@@ -1,5 +1,7 @@
 package com.sparrow.markdown.parser.impl;
 
+import com.sparrow.markdown.mark.MARK;
+import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.parser.MarkParser;
 
 /**
@@ -9,11 +11,11 @@ import com.sparrow.markdown.parser.MarkParser;
 public class ItalicParser implements MarkParser {
     private String content;
 
-    public ItalicParser(String content) {
-        this.content = content;
-    }
     @Override
-    public String parse() {
+    public String parse(MarkContext parser) {
         return String.format("<span class=\"italic\">%1$s</span>", content);
+    }
+    @Override public MARK mark() {
+        return MARK.ITALIC;
     }
 }

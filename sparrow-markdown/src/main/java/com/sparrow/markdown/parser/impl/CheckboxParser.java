@@ -1,6 +1,7 @@
 package com.sparrow.markdown.parser.impl;
 
 import com.sparrow.markdown.mark.MARK;
+import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.parser.MarkParser;
 
 /**
@@ -10,12 +11,12 @@ import com.sparrow.markdown.parser.MarkParser;
 public class CheckboxParser implements MarkParser {
     private String content;
 
-    public CheckboxParser(String content) {
-        this.content = content;
+    @Override
+    public String parse(MarkContext parser) {
+        return String.format("<input type=\"checkbox\" disabled=\"\">%1$s", content);
     }
 
-    @Override
-    public String parse() {
-        return String.format("<input type=\"checkbox\" disabled=\"\">%1$s", content);
+    @Override public MARK mark() {
+        return MARK.CHECK_BOX;
     }
 }

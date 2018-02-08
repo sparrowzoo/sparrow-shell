@@ -1,5 +1,7 @@
 package com.sparrow.markdown.parser.impl;
 
+import com.sparrow.markdown.mark.MARK;
+import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.parser.MarkParser;
 
 /**
@@ -8,12 +10,12 @@ import com.sparrow.markdown.parser.MarkParser;
  */
 public class H6Parser implements MarkParser {
     private String content;
-
-    public H6Parser(String content) {
-        this.content = content;
-    }
-    @Override
-    public String parse() {
+ @Override
+    public String parse(MarkContext parser) {
         return String.format("<h6>%1$s</h6>", content);
+    }
+
+    @Override public MARK mark() {
+        return MARK.H6;
     }
 }
