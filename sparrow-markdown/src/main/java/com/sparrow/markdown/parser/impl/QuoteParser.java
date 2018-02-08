@@ -13,7 +13,7 @@ public class QuoteParser implements MarkParser {
 
     @Override
     public String parse(MarkContext parser) {
-        return String.format("<p class=\"quote\">%1$s</p>", content);
+        return String.format(, content);
     }
 
     @Override public MARK mark() {

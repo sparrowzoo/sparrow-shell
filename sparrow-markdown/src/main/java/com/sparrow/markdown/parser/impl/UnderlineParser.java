@@ -13,7 +13,7 @@ public class UnderlineParser implements MarkParser {
 
     @Override
     public String parse(MarkContext parser) {
-        return String.format("<span class=\"underline\">%1$s</span>", content);
+        return String.format(, content);
     }
 
     @Override public MARK mark() {

@@ -12,8 +12,8 @@ public class CodeParser implements MarkParser {
     private String content;
 
     @Override
-    public String parse(MarkContext parser) {
-        return String.format("<p class=\"code\">%1$s</p>", content);
+    public void parse(MarkContext parser) {
+        return String.format(, content);
     }
 
     @Override public MARK mark() {

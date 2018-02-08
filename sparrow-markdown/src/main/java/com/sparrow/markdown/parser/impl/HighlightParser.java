@@ -13,7 +13,7 @@ public class HighlightParser implements MarkParser {
     @Override
     public String parse(MarkContext parser) {
 
-        return String.format("<span class=\"highlight\">%1$s</span>", "");
+        return String.format(, "");
     }
     @Override public MARK mark() {
         return MARK.HIGHLIGHT;

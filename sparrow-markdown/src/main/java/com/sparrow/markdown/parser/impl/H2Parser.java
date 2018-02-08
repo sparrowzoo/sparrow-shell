@@ -13,7 +13,7 @@ public class H2Parser implements MarkParser {
 
     @Override
     public String parse(MarkContext parser) {
-        return String.format("<h2>%1$s</h2>", content);
+        return String.format(, content);
     }
 
     @Override public MARK mark() {

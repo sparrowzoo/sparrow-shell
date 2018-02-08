@@ -13,7 +13,7 @@ public class ItalicParser implements MarkParser {
 
     @Override
     public String parse(MarkContext parser) {
-        return String.format("<span class=\"italic\">%1$s</span>", content);
+        return String.format(, content);
     }
     @Override public MARK mark() {
         return MARK.ITALIC;

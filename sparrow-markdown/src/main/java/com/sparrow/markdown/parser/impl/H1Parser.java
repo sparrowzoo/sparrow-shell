@@ -9,12 +9,9 @@ import com.sparrow.markdown.parser.MarkParser;
  * @date 2018/2/6
  */
 public class H1Parser implements MarkParser {
-    private String content;
-
-
     @Override
-    public String parse(MarkContext parser) {
-        return String.format("<h1>%1$s</h1>", content);
+    public void parse(MarkContext context) {
+       context.append(String.format("<h1>%1$s</h1>", context.getHtml()));
     }
 
     @Override public MARK mark() {

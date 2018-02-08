@@ -16,25 +16,12 @@
  */
 package com.sparrow.markdown.mark;
 
+import com.sparrow.constant.CONSTANT;
+import com.sparrow.constant.magic.SYMBOL;
 import com.sparrow.markdown.parser.MarkParser;
-import com.sparrow.markdown.parser.impl.CheckboxParser;
-import com.sparrow.markdown.parser.impl.CodeParser;
-import com.sparrow.markdown.parser.impl.DisableCheckboxParser;
-import com.sparrow.markdown.parser.impl.ErasureParser;
-import com.sparrow.markdown.parser.impl.H1Parser;
-import com.sparrow.markdown.parser.impl.H2Parser;
-import com.sparrow.markdown.parser.impl.H3Parser;
-import com.sparrow.markdown.parser.impl.H4Parser;
-import com.sparrow.markdown.parser.impl.H5Parser;
-import com.sparrow.markdown.parser.impl.H6Parser;
-import com.sparrow.markdown.parser.impl.HighlightParser;
-import com.sparrow.markdown.parser.impl.HorizontalLineParser;
-import com.sparrow.markdown.parser.impl.ItalicParser;
-import com.sparrow.markdown.parser.impl.LiteraryParser;
-import com.sparrow.markdown.parser.impl.QuoteParser;
-import com.sparrow.markdown.parser.impl.UnderlineParser;
+import com.sparrow.markdown.parser.impl.*;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +30,11 @@ import java.util.Map;
  * @author by harry
  */
 public class MarkContext {
-    public MarkContext(String content) {
+    public MarkContext(String content, Boolean isLine) {
         this.content = content;
         this.currentPointer = 0;
-        this.markStatus = MARK_STATUS.START_DETECTING;
         this.contentLength = this.content.length();
+        this.setDetectLine(isLine);
     }
 
     public static final int MAX_MARK_LENGTH = 7;
@@ -55,23 +42,29 @@ public class MarkContext {
     public static final List<MARK> CONTAINER = new ArrayList<MARK>(MARK_COUNT);
     public static final Map<MARK, MarkParser> MARK_PARSER_MAP = new HashMap<MARK, MarkParser>(MARK_COUNT);
 
+    /**
+     * sort by key length
+     */
     static {
-        CONTAINER.add(MARK.H1);
-        CONTAINER.add(MARK.H2);
-        CONTAINER.add(MARK.H3);
-        CONTAINER.add(MARK.H4);
-        CONTAINER.add(MARK.H5);
         CONTAINER.add(MARK.H6);
+        CONTAINER.add(MARK.H5);
+        CONTAINER.add(MARK.H4);
+        CONTAINER.add(MARK.H3);
+        CONTAINER.add(MARK.H2);
+        CONTAINER.add(MARK.H1);
+        CONTAINER.add(MARK.BOLD);
+        CONTAINER.add(MARK.ITALIC);
+
+        CONTAINER.add(MARK.CODE);
         CONTAINER.add(MARK.HORIZONTAL_LINE);
         CONTAINER.add(MARK.QUOTE);
         CONTAINER.add(MARK.CHECK_BOX);
         CONTAINER.add(MARK.DISABLE_CHECK_BOX);
-        CONTAINER.add(MARK.CODE);
+
         CONTAINER.add(MARK.HIGHLIGHT);
         CONTAINER.add(MARK.UNDERLINE);
         CONTAINER.add(MARK.ERASURE);
-        CONTAINER.add(MARK.ITALIC);
-        CONTAINER.add(MARK.BOLD);
+
 
         MARK_PARSER_MAP.put(MARK.H1, new H1Parser());
         MARK_PARSER_MAP.put(MARK.H2, new H2Parser());
@@ -89,17 +82,17 @@ public class MarkContext {
         MARK_PARSER_MAP.put(MARK.ERASURE, new ErasureParser());
         MARK_PARSER_MAP.put(MARK.LITERARY, new LiteraryParser());
         MARK_PARSER_MAP.put(MARK.ITALIC, new ItalicParser());
-
+        MARK_PARSER_MAP.put(MARK.BOLD, new BoldParser());
     }
 
+    private boolean detectLine;
     private int contentLength;
-    private MARK_STATUS markStatus;
     /**
      * 当前字符指针
      */
     private int currentPointer;
     private String content = null;
-    private List<MarkParser> markParserList = new ArrayList<MarkParser>();
+    private StringBuilder html = new StringBuilder(8000);
     /**
      * 当前mark
      */
@@ -109,8 +102,12 @@ public class MarkContext {
         return currentPointer;
     }
 
-    public void forwardPointer(int currentPointer) {
+    public void skipPointer(int currentPointer) {
         this.currentPointer += currentPointer;
+    }
+
+    public void setPointer(int currentPointer) {
+        this.currentPointer = currentPointer;
     }
 
     public String getContent() {
@@ -129,28 +126,21 @@ public class MarkContext {
         this.currentMark = currentMark;
     }
 
-    public List<MarkParser> getMarkParserList() {
-        return markParserList;
-    }
-
-    public void setMarkParserList(List<MarkParser> markParserList) {
-        this.markParserList = markParserList;
-    }
-
-    public MARK_STATUS getMarkStatus() {
-        return markStatus;
-    }
-
-    public void setMarkStatus(MARK_STATUS markStatus) {
-        this.markStatus = markStatus;
+    public void clearCurrentMark() {
+        this.currentMark = null;
     }
 
     public int getContentLength() {
         return contentLength;
     }
 
-    public String readMaxMark() {
-        return this.content.substring(this.currentPointer, this.currentPointer + MAX_MARK_LENGTH);
+
+    public String getHtml() {
+        return html.toString();
+    }
+
+    public void append(String html) {
+        this.html.append(html);
     }
 
     public String readLine() {
@@ -163,18 +153,36 @@ public class MarkContext {
         return line.toString();
     }
 
-    public void detectStartMark(Boolean isLine) {
-        if (this.getCurrentMark() != null) {
-            return;
-        }
+    public boolean isDetectLine() {
+        return detectLine;
+    }
 
-        String markContent = this.readMaxMark();
-        for (MARK mark : MarkContext.CONTAINER) {
-            if (markContent.startsWith(mark.getStart()) && isLine == null || isLine == mark.isLine()) {
-                this.setCurrentMark(mark);
-                this.forwardPointer(mark.getStart().length());
-                return;
-            }
+    public void setDetectLine(boolean detectLine) {
+        this.detectLine = detectLine;
+    }
+
+    public MarkContext parseComplex(int endMarkIndex,MARK mark) {
+        String content = this.content.substring(this.currentPointer, endMarkIndex);
+        MarkContext innerContext = new MarkContext(content, mark.isLine());
+        MarkdownParserComposite.getInstance().parse(innerContext);
+        this.setPointer(endMarkIndex + mark.getEnd().length());
+        return innerContext;
+    }
+
+    public MarkWithIndex detectStartMark(Boolean isLine) {
+        if (this.getCurrentMark() != null) {
+            return null;
         }
+        for (MARK mark : MarkContext.CONTAINER) {
+            int index = content.indexOf(mark.getStart(), currentPointer);
+            if (index < 0) {
+                continue;
+            }
+            if (isLine != null && isLine != mark.isLine()) {
+                continue;
+            }
+            return new MarkWithIndex(mark, index);
+        }
+        return null;
     }
 }

@@ -8,6 +8,6 @@ import com.sparrow.markdown.mark.MarkContext;
  * @date 2018/2/6
  */
 public interface MarkParser {
-    String parse(MarkContext markContext);
+    void parse(MarkContext markContext);
     MARK mark();
 }

@@ -13,7 +13,7 @@ public class ErasureParser implements MarkParser {
     private String content;
     @Override
     public String parse(MarkContext parser) {
-        return String.format("<span class=\"erasure\">%1$s</span>", content);
+        return String.format(, content);
     }
 
     @Override public MARK mark() {

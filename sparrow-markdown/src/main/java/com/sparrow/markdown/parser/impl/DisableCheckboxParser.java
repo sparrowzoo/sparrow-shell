@@ -12,8 +12,8 @@ public class DisableCheckboxParser implements MarkParser {
     private String content;
 
     @Override
-    public String parse(MarkContext parser) {
-        return String.format("<input type=\"checkbox\" disabled=\"\" checked=\"checked\">%1$s", this.content);
+    public void parse(MarkContext parser) {
+        return String.format(, this.content);
     }
 
     @Override public MARK mark() {
