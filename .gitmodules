@@ -29,8 +29,8 @@
 	path = sparrow-sharded-jedis
 	url = git@github.com:sparrowzoo/sparrow-sharded-jedis.git
 [submodule "sparrow-markdown"]
-    	path = sparrow-markdown
-    	url = git@github.com:sparrowzoo/sparrow-markdown.git
+	path = sparrow-markdown
+	url = git@github.com:sparrowzoo/sparrow-markdown.git
 [submodule "sparrow-super"]
 	path = sparrow-super
 	url = git@github.com:sparrowzoo/sparrow-super.git
