@@ -1,4 +1,4 @@
-init 创建新项目或添加子模块
+init 创建新项目或添加子模块(下列代码，不需要执行)
 ---
 
 	git submodule add git@github.com:sparrowzoo/sparrow.git                     sparrow
@@ -22,6 +22,7 @@ init 创建新项目或添加子模块
 ---
 
 	git clone git@github.com:sparrowzoo/sparrow-shell.git
+	cd sparrow-shell
 	git submodule update --init
 	git submodule foreach git checkout master
 	
