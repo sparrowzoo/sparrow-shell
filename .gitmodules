@@ -1,9 +1,9 @@
 [submodule "sparrow"]
 	path = sparrow
 	url = git@github.com:sparrowzoo/sparrow.git
-[submodule "sparrow-cg"]
-	path = sparrow-cg
-	url = git@github.com:sparrowzoo/sparrow-cg.git
+[submodule "sparrow-loader"]
+	path = sparrow-loader
+	url = git@github.com:sparrowzoo/sparrow-loader.git
 [submodule "sparrow-container"]
 	path = sparrow-container
 	url = git@github.com:sparrowzoo/sparrow-container.git
