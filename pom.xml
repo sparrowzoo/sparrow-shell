@@ -35,6 +35,7 @@
 
     <modules>
         <module>sparrow</module>
+        <module>sparrow-loader</module>
         <module>sparrow-mvc</module>
         <module>sparrow-container</module>
         <module>sparrow-loader</module>
