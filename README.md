@@ -13,6 +13,8 @@ init 创建新项目或添加子模块(下列代码，不需要执行)
 	git submodule add git@github.com:sparrowzoo/sparrow-sharded-jedis.git       sparrow-sharded-jedis
 	git submodule add git@github.com:sparrowzoo/sparrow-super.git               sparrow-super
 	git submodule add git@github.com:sparrowzoo/style.git                       style
+	git submodule add git@github.com:sparrowzoo/sparrow-aop.git                 sparrow-aop
+	git submodule add git@github.com:sparrowzoo/sparrow-registry.git            sparrow-registry
 	git submodule add git@github.com:sparrowzoo/sparrow-test.git                sparrow-test
     	
 客户端批量代码clone

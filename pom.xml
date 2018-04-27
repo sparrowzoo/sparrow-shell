@@ -47,7 +47,8 @@
         <module>sparrow-rocketmq-client</module>
         <module>sparrow-sharded-jedis</module>
         <module>sparrow-markdown</module>
-        <module>sparrow-zookeeper</module>
+        <module>sparrow-registry</module>
+        <module>sparrow-aop</module>
     </modules>
     <build>
         <finalName>${project.artifactId}</finalName>
