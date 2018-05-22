@@ -52,6 +52,7 @@
     </modules>
     <build>
         <finalName>${project.artifactId}</finalName>
+
         <plugins>
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
