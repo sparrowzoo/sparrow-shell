@@ -49,6 +49,8 @@
         <module>sparrow-markdown</module>
         <module>sparrow-registry</module>
         <module>sparrow-aop</module>
+        <module>sparrow-distribution-job</module>
+        <module>sparrow-distribution-job</module>
     </modules>
     <build>
         <finalName>${project.artifactId}</finalName>

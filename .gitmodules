@@ -46,4 +46,7 @@
 [submodule "sparrow-test"]
 	path = sparrow-test
 	url = git@github.com:sparrowzoo/sparrow-test.git
+[submodule "sparrow-distribution-job"]
+    path = sparrow-distribution-job
+    url = git@github.com:sparrowzoo/sparrow-distribution-job.git
 
