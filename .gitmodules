@@ -49,4 +49,7 @@
 [submodule "sparrow-distribution-job"]
 	path = sparrow-distribution-job
 	url = git@github.com:sparrowzoo/sparrow-distribution-job.git
+[submodule "sparrow-distribution-config"]
+	path = sparrow-distribution-config
+	url = git@github.com:sparrowzoo/sparrow-distribution-config.git
 

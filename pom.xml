@@ -50,7 +50,7 @@
         <module>sparrow-registry</module>
         <module>sparrow-aop</module>
         <module>sparrow-distribution-job</module>
-        <module>sparrow-distribution-job</module>
+        <module>sparrow-distribution-config</module>
     </modules>
     <build>
         <finalName>${project.artifactId}</finalName>

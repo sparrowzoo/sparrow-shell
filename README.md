@@ -16,7 +16,8 @@ init 创建新项目或添加子模块(下列代码，不需要执行) 创建仓
 	git submodule add git@github.com:sparrowzoo/sparrow-registry.git            sparrow-registry
 	git submodule add git@github.com:sparrowzoo/sparrow-test.git                sparrow-test
     git submodule add git@github.com:sparrowzoo/sparrow-distribution-job.git    sparrow-distribution-job
-        	
+    git submodule add git@github.com:sparrowzoo/sparrow-distribution-config.git    sparrow-distribution-config
+            	
 客户端批量代码clone
 ---
 
