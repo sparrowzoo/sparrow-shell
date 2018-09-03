@@ -37,7 +37,19 @@
 [submodule "style"]
 	path = style
 	url = git@github.com:sparrowzoo/style.git
+[submodule "sparrow-aop"]
+	path = sparrow-aop
+	url = git@github.com:sparrowzoo/sparrow-aop.git
+[submodule "sparrow-registry"]
+	path = sparrow-registry
+	url = git@github.com:sparrowzoo/sparrow-registry.git
 [submodule "sparrow-test"]
 	path = sparrow-test
 	url = git@github.com:sparrowzoo/sparrow-test.git
+[submodule "sparrow-distribution-job"]
+	path = sparrow-distribution-job
+	url = git@github.com:sparrowzoo/sparrow-distribution-job.git
+[submodule "sparrow-distribution-config"]
+	path = sparrow-distribution-config
+	url = git@github.com:sparrowzoo/sparrow-distribution-config.git
 
