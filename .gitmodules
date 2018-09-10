@@ -31,9 +31,6 @@
 [submodule "sparrow-markdown"]
 	path = sparrow-markdown
 	url = git@github.com:sparrowzoo/sparrow-markdown.git
-[submodule "sparrow-super"]
-	path = sparrow-super
-	url = git@github.com:sparrowzoo/sparrow-super.git
 [submodule "style"]
 	path = style
 	url = git@github.com:sparrowzoo/style.git
@@ -52,4 +49,6 @@
 [submodule "sparrow-distribution-config"]
 	path = sparrow-distribution-config
 	url = git@github.com:sparrowzoo/sparrow-distribution-config.git
-
+[submodule "sparrow-bom"]
+	path = sparrow-bom
+	url = git@github.com:sparrowzoo/sparrow-bom.git

@@ -1,5 +1,6 @@
 init 创建新项目或添加子模块(下列代码，不需要执行) 创建仓库后直接加入到submodule
 ---
+    git submodule add git@github.com:sparrowzoo/sparrow-bom.git                 sparrow-bom
 	git submodule add git@github.com:sparrowzoo/sparrow.git                     sparrow
 	git submodule add git@github.com:sparrowzoo/sparrow-loader.git              sparrow-loader
 	git submodule add git@github.com:sparrowzoo/sparrow-container.git           sparrow-container
@@ -10,7 +11,6 @@ init 创建新项目或添加子模块(下列代码，不需要执行) 创建仓
 	git submodule add git@github.com:sparrowzoo/sparrow-orm.git                 sparrow-orm
 	git submodule add git@github.com:sparrowzoo/sparrow-rocketmq-client.git     sparrow-rocketmq-client
 	git submodule add git@github.com:sparrowzoo/sparrow-sharded-jedis.git       sparrow-sharded-jedis
-	git submodule add git@github.com:sparrowzoo/sparrow-super.git               sparrow-super
 	git submodule add git@github.com:sparrowzoo/style.git                       style
 	git submodule add git@github.com:sparrowzoo/sparrow-aop.git                 sparrow-aop
 	git submodule add git@github.com:sparrowzoo/sparrow-registry.git            sparrow-registry
