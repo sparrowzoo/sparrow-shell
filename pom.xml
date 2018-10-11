@@ -41,7 +41,7 @@
         <module>sparrow-data-source</module>
         <module>sparrow-orm</module>
         <module>sparrow-json</module>
-        <module>sparrow-super</module>
+        <module>sparrow-bom</module>
         <module>sparrow-test</module>
         <module>sparrow-log</module>
         <module>sparrow-rocketmq-client</module>
