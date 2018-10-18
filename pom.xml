@@ -24,14 +24,11 @@
     <artifactId>sparrow-shell</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
-    <name>sparrow</name>
     <url>http://maven.apache.org</url>
     <description>
         mvn repository
         http://mvnrepository.com/
     </description>
-
-
 
     <modules>
         <module>sparrow</module>
