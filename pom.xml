@@ -64,7 +64,7 @@
                             <configLocation>style/sparrow_checkstyle.xml</configLocation>
                             <suppressionsLocation>style/check_style_suppressions.xml</suppressionsLocation>
                             <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-                            <encoding>UTF-8</encoding>
+                 T           <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
                             <failsOnError>true</failsOnError>
                             <includeTestSourceDirectory>false</includeTestSourceDirectory>
