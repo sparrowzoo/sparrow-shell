@@ -27,8 +27,9 @@ init 创建新项目或添加子模块(下列代码，不需要执行) 创建仓
 
 	git clone git@github.com:sparrowzoo/sparrow-shell.git
 	cd sparrow-shell
+	git checkout develop
 	git submodule update --init
-	git submodule foreach git checkout master
+	git submodule foreach git checkout develop
 	
 批量命令
 ----
