@@ -27,8 +27,9 @@
 	url = git@github.com:sparrowzoo/sparrow-rocketmq-client.git
 
 [submodule "sparrow-kafka-client"]
-    path = sparrow-kafka-client
-    url = git@github.com:sparrowzoo/sparrow-kafka-client.git
+	path = sparrow-kafka-client
+	url = git@github.com:sparrowzoo/sparrow-kafka-client.git
+
 [submodule "sparrow-sharded-jedis"]
 	path = sparrow-sharded-jedis
 	url = git@github.com:sparrowzoo/sparrow-sharded-jedis.git
