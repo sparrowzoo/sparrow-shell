@@ -49,6 +49,7 @@
         <module>sparrow-aop</module>
         <module>sparrow-distribution-job</module>
         <module>sparrow-distribution-config</module>
+        <module>sparrow-protocol</module>
     </modules>
     <build>
         <finalName>${project.artifactId}</finalName>
