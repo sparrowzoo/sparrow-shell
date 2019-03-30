@@ -52,3 +52,6 @@
 [submodule "sparrow-bom"]
 	path = sparrow-bom
 	url = git@github.com:sparrowzoo/sparrow-bom.git
+[submodule "sparrow-kafka-client"]
+	path = sparrow-kafka-client
+	url = git@github.com:sparrowzoo/sparrow-kafka-client.git
