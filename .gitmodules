@@ -55,7 +55,4 @@
 [submodule "sparrow-kafka-client"]
 	path = sparrow-kafka-client
 	url = git@github.com:sparrowzoo/sparrow-kafka-client.git
-[submodule "sparrow-protocol"]
-	path = sparrow-protocol
-	url = git@github.com:sparrowzoo/sparrow-protocol.git
 
