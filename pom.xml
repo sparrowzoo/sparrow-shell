@@ -29,6 +29,11 @@
         mvn repository
         http://mvnrepository.com/
     </description>
+    <parent>
+        <artifactId>sparrow-bom</artifactId>
+        <groupId>com.sparrow</groupId>
+        <version>1.0</version>
+    </parent>
 
     <modules>
         <module>sparrow</module>
@@ -51,6 +56,7 @@
         <module>sparrow-distribution-config</module>
         <module>sparrow-protocol</module>
     </modules>
+
     <build>
         <finalName>${project.artifactId}</finalName>
 
@@ -66,7 +72,7 @@
                             <configLocation>style/sparrow_checkstyle.xml</configLocation>
                             <suppressionsLocation>style/check_style_suppressions.xml</suppressionsLocation>
                             <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-                 T           <encoding>UTF-8</encoding>
+                            <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
                             <failsOnError>true</failsOnError>
                             <includeTestSourceDirectory>false</includeTestSourceDirectory>
