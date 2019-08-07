@@ -21,6 +21,7 @@ git submodule add git@github.com:sparrowzoo/sparrow-test.git                spar
 git submodule add git@github.com:sparrowzoo/sparrow-distribution-job.git    sparrow-distribution-job
 git submodule add git@github.com:sparrowzoo/sparrow-distribution-config.git    sparrow-distribution-config
 git submodule add git@github.com:sparrowzoo/sparrow-protocol.git	    sparrow-protocol
+git submodule add git@github.com:sparrowzoo/sparrow-lettuce-cluster.git	    sparrow-lettuce-cluster
 
 ```       
     	
