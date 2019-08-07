@@ -19,7 +19,6 @@ package com.sparrow.cache.impl.redis.lettuce;
 
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.json.Json;
-import io.lettuce.core.RedisClient;
 
 /**
  * Created by harry on 2018/1/26.

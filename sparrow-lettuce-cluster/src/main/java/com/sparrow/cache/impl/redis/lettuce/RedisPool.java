@@ -23,35 +23,52 @@ import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.constant.magic.SYMBOL;
-import io.lettuce.core.RedisClient;
-import io.lettuce.core.api.StatefulConnection;
-import io.lettuce.core.api.sync.RedisCommands;
-import io.lettuce.core.api.sync.RedisStringCommands;
+import io.lettuce.core.RedisURI;
 import io.lettuce.core.cluster.RedisClusterClient;
 import io.lettuce.core.cluster.api.StatefulRedisClusterConnection;
 import io.lettuce.core.cluster.api.sync.RedisAdvancedClusterCommands;
+import io.lettuce.core.codec.ByteArrayCodec;
+import io.lettuce.core.codec.RedisCodec;
 import io.lettuce.core.support.ConnectionPoolSupport;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author harry
  */
 public class RedisPool implements ContainerAware {
     private Logger logger = LoggerFactory.getLogger(RedisPool.class);
-    private GenericObjectPoolConfig genericObjectPoolConfig;
-    private GenericObjectPool<StatefulRedisClusterConnection<String, String>> pool;
+    static final RedisCodec<byte[], byte[]> CODEC = ByteArrayCodec.INSTANCE;
+    private GenericObjectPoolConfig config;
+    private GenericObjectPool<StatefulRedisClusterConnection<byte[], byte[]>> pool;
     private CacheMonitor cacheMonitor;
+    private String urls;
+
+    public void setUrls(String urls) {
+        this.urls = urls;
+    }
+
     private RedisClusterClient clusterClient = null;
 
-    public void setClusterClient(RedisClusterClient clusterClient) {
-        this.clusterClient = clusterClient;
+    public void setConfig(GenericObjectPoolConfig genericObjectPoolConfig) {
+        this.config = genericObjectPoolConfig;
+    }
+
+    public void setPool(GenericObjectPool<StatefulRedisClusterConnection<byte[], byte[]>> pool) {
+        this.pool = pool;
+    }
+
+    public void setCacheMonitor(CacheMonitor cacheMonitor) {
+        this.cacheMonitor = cacheMonitor;
     }
 
     public String getInfo() {
-        return this.genericObjectPoolConfig.toString();
+        return this.config.toString();
     }
 
     public RedisPool() {
@@ -59,14 +76,15 @@ public class RedisPool implements ContainerAware {
 
     <T> T execute(Executor<T> executor, KEY key) throws CacheConnectionException {
 
-        try (StatefulRedisClusterConnection<String, String> connection = pool.borrowObject()) {
+        try {
+            StatefulRedisClusterConnection<byte[], byte[]> connection = pool.borrowObject();
             Long startTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
                 if (!this.cacheMonitor.before(startTime, key)) {
                     return null;
                 }
             }
-            RedisAdvancedClusterCommands<String, String> sync = connection.sync();
+            RedisAdvancedClusterCommands<byte[], byte[]> sync = connection.sync();
             T result = executor.execute(sync);
             Long endTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
@@ -82,8 +100,12 @@ public class RedisPool implements ContainerAware {
 
     @Override
     public void aware(Container container, String beanName) {
-        if (clusterClient != null) {
-            pool = ConnectionPoolSupport.createGenericObjectPool(() -> clusterClient.connect(), this.genericObjectPoolConfig);
+        String[] urlArray = this.urls.split(SYMBOL.COMMA);
+        List<RedisURI> redisUrls = new ArrayList<>(urlArray.length);
+        for (String url : urlArray) {
+            redisUrls.add(RedisURI.create(url));
         }
+        this.clusterClient = RedisClusterClient.create(redisUrls);
+        pool = ConnectionPoolSupport.createGenericObjectPool(() -> clusterClient.connect(CODEC), this.config);
     }
 }
