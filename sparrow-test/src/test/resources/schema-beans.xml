@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xsi equal xml schema instance-->
+<beans xmlns="http://www.sparrowzoo.com/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.sparrowzoo.com/schema/beans
+       http://www.sparrowzoo.com/schema/beans/beans.xsd">
+
+    <description>sparrow schema beans xml demo</description>
+    <import resource="sparrow_rocketmq_consumer.xml"/>
+
+    <bean name="initializer" class="com.sparrow.facade.initializer.SparrowContextInitializer"/>
+    <bean name="source" class="com.sparrow.facade.beans.Source" scope="prototype"/>
+    <bean name="target" class="com.sparrow.facade.beans.Target" scope="prototype"/>
+    <bean name="user" class="com.sparrow.json.User" scope="prototype"/>
+    <bean name="cacheMonitor" class="com.sparrow.redis.SparrowCacheMonitor"/>
+    <bean name="redisPool" class="com.sparrow.cache.impl.redis.RedisPool">
+        <property name="urls" value="127.0.0.1:6379"/>
+        <property name="cacheMonitor" ref="cacheMonitor"/>
+    </bean>
+
+    <bean name="cacheClient" class="com.sparrow.cache.impl.redis.RedisCacheClient">
+        <property name="redisPool" ref="redisPool"/>
+    </bean>
+
+    <bean name="elapsedTimeMonitor" class="com.sparrow.core.monitor.impl.LogElapsedTimeMonitorImpl"/>
+
+    <bean id="sss" name="sss">
+        <property name="a" value="a"/>
+    </bean>
+</beans>

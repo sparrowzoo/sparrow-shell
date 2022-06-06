@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mvc PUBLIC "-//sparrow Framework//DTD mvc Configuration//EN"
+        "http://www.sparrowzoo.com/dtds/mvc.dtd">
+<mvc>
+    <!--在bean context中定义-->
+    <controller id="helloController">
+        <action name="/template/welcome.jsp" method="welcome"/>
+        <!---一定以 /开头-->
+        <action name="/hello" method="hello"/>
+        <action name="/fly" method="fly"/>
+        <action name="/transit-test" method="transit"/>
+        <action name="/thread-{threadId}-{pageIndex}" method="thread"/>
+        <action name="/json-test.json" method="json"/>
+    </controller>
+
+    <controller id="elasticSearchController">
+        <action name="/elastic/search/mapping.json" method="mapping"/>
+        <action name="/elastic/search/analyze.json" method="analyze"/>
+        <action name="/elastic/search/tokenize.json" method="tokenize"/>
+        <action name="/elastic/search/info.json" method="info"/>
+        <action name="/elastic/search/mapping-create.json" method="mappingCreate"/>
+    </controller>
+
+    <controller id="classLoaderController">
+        <action name="/class-loader/get-parent" method="getParent"/>
+    </controller>
+</mvc>

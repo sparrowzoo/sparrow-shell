@@ -1,0 +1,56 @@
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements.  See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!--
+     MyEclipse config method:
+     Preference->MyEclipse->Files and Editors->XML->
+     XML Catalog->Add
+     1)Location: .dtd file address
+     2)Key Type: URI
+     3)Key     : http://www.sparrowzoo.com/dtds/mvc-config.dtd
+     DTD for the mvc Configuration File
+
+     To support validation of your configuration file, include the following
+     DOCTYPE element at the beginning (after the "xml" declaration):
+     <!DOCTYPE mvc-config PUBLIC "-//sparrow Framework//DTD mvc Configuration//EN" 
+     "http://www.sparrowzoo.com/dtds/mvc-config.dtd">
+     $Id: mvc-config.dtd $
+     
+     login:
+     0:不需要登录
+	 1:正常登录
+     2:框架内登录 default.jsp内登录
+     3:管理员登录
+     4:对话框登录
+     5:json 提示
+-->
+    <!ELEMENT mvc (controller*)>
+    <!ELEMENT controller (action+)>
+    <!ELEMENT action (result*)>
+    <!ELEMENT result (#PCDATA)>
+
+    <!ATTLIST result
+        name (success|error)  #IMPLIED>
+    <!ATTLIST action
+        name   CDATA #REQUIRED
+        method CDATA #IMPLIED
+        login  (0|1|2|3|4|5) #IMPLIED
+        validatePrivilege (true|false) #IMPLIED
+        validateRequest (true|false) #IMPLIED>
+
+    <!ATTLIST controller
+        id CDATA #REQUIRED>

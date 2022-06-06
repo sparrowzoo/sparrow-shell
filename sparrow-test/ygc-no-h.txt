@@ -1,0 +1,1391 @@
+/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/bin/java -Xmx100m -Xms100m -XX:+UseG1GC -XX:+PrintGCDetails -XX:G1HeapRegionSize=1m -XX:InitiatingHeapOccupancyPercent=10 -XX:+PrintGCTimeStamps -XX:+PrintReferenceGC -XX:G1HeapWastePercent=10 -XX:+PrintAdaptiveSizePolicy -XX:+PrintHeapAtGC -XX:+UnlockExperimentalVMOptions -XX:+G1TraceEagerReclaimHumongousObjects -XX:-G1EagerReclaimHumongousObjects "-javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=64475:/Applications/IntelliJ IDEA.app/Contents/bin" -Dfile.encoding=UTF-8 -classpath /Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jfxswt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/management-agent.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/plugin.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/ant-javafx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/dt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/javafx-mx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/jconsole.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/packager.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/sa-jdi.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/tools.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-test/target/test-classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-test/target/classes:/Users/mac/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/mac/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/mac/.m2/repository/junitperf/junitperf/1.8/junitperf-1.8.jar:/Users/mac/.m2/repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar:/Users/mac/.m2/repository/javax/servlet/jsp/jsp-api/2.2/jsp-api-2.2.jar:/Users/mac/.m2/repository/jstl/jstl/1.2/jstl-1.2.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-loader/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow/target/classes:/Users/mac/.m2/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-core/7.1.0/lucene-core-7.1.0.jar:/Users/mac/.m2/repository/org/apache/poi/poi/3.12/poi-3.12.jar:/Users/mac/.m2/repository/org/apache/poi/poi-ooxml/3.12/poi-ooxml-3.12.jar:/Users/mac/.m2/repository/org/apache/poi/poi-ooxml-schemas/3.12/poi-ooxml-schemas-3.12.jar:/Users/mac/.m2/repository/org/apache/xmlbeans/xmlbeans/2.6.0/xmlbeans-2.6.0.jar:/Users/mac/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar:/Users/mac/.m2/repository/org/apache/poi/poi-scratchpad/3.12/poi-scratchpad-3.12.jar:/Users/mac/.m2/repository/javax/mail/mail/1.4.7/mail-1.4.7.jar:/Users/mac/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/Users/mac/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-protocol/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-container/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-data-source/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-json/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-orm/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-mvc/target/classes:/Users/mac/.m2/repository/com/google/zxing/core/2.2/core-2.2.jar:/Users/mac/.m2/repository/eu/bitwalker/UserAgentUtils/1.21/UserAgentUtils-1.21.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-rocketmq-client/target/classes:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-client/4.2.0/rocketmq-client-4.2.0.jar:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-common/4.2.0/rocketmq-common-4.2.0.jar:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-remoting/4.2.0/rocketmq-remoting-4.2.0.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-sharded-jedis/target/classes:/Users/mac/.m2/repository/redis/clients/jedis/2.1.0/jedis-2.1.0.jar:/Users/mac/.m2/repository/org/glassfish/javax.json/1.0.4/javax.json-1.0.4.jar:/Users/mac/.m2/repository/com/alibaba/fastjson/1.1.41/fastjson-1.1.41.jar:/Users/mac/.m2/repository/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.8.0/jackson-annotations-2.8.0.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.8/jackson-core-2.8.8.jar:/Users/mac/.m2/repository/commons-fileupload/commons-fileupload/1.3/commons-fileupload-1.3.jar:/Users/mac/.m2/repository/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar:/Users/mac/.m2/repository/org/springframework/spring-test/4.2.6.RELEASE/spring-test-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-core/4.2.6.RELEASE/spring-core-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/Users/mac/.m2/repository/org/springframework/spring-beans/4.2.6.RELEASE/spring-beans-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/com/google/guava/guava/29.0-jre/guava-29.0-jre.jar:/Users/mac/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/Users/mac/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/mac/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/mac/.m2/repository/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.jar:/Users/mac/.m2/repository/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar:/Users/mac/.m2/repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar:/Users/mac/.m2/repository/org/springframework/spring-context/4.2.6.RELEASE/spring-context-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-aop/4.2.6.RELEASE/spring-aop-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/mac/.m2/repository/org/springframework/spring-expression/4.2.6.RELEASE/spring-expression-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-webmvc/4.2.6.RELEASE/spring-webmvc-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-web/4.2.6.RELEASE/spring-web-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-ibatis/2.0.8/spring-ibatis-2.0.8.jar:/Users/mac/.m2/repository/org/apache/ibatis/ibatis-sqlmap/2.3.0/ibatis-sqlmap-2.3.0.jar:/Users/mac/.m2/repository/org/springframework/spring-dao/2.0.8/spring-dao-2.0.8.jar:/Users/mac/.m2/repository/org/springframework/spring-jdbc/2.0.8/spring-jdbc-2.0.8.jar:/Users/mac/.m2/repository/org/mybatis/mybatis/3.2.1/mybatis-3.2.1.jar:/Users/mac/.m2/repository/org/mybatis/mybatis-spring/1.2.0/mybatis-spring-1.2.0.jar:/Users/mac/.m2/repository/org/springframework/spring-tx/4.2.6.RELEASE/spring-tx-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/mobile/spring-mobile-device/1.0.0.RELEASE/spring-mobile-device-1.0.0.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/data/spring-data-jpa/2.0.1.RELEASE/spring-data-jpa-2.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/data/spring-data-commons/2.0.1.RELEASE/spring-data-commons-2.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-orm/5.0.1.RELEASE/spring-orm-5.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/aspectj/aspectjrt/1.8.12/aspectjrt-1.8.12.jar:/Users/mac/.m2/repository/org/slf4j/slf4j-api/1.7.12/slf4j-api-1.7.12.jar:/Users/mac/.m2/repository/com/h2database/h2/1.4.193/h2-1.4.193.jar:/Users/mac/.m2/repository/org/ow2/asm/asm/6.2.1/asm-6.2.1.jar:/Users/mac/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar:/Users/mac/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch-analysis-ik/6.1.1/elasticsearch-analysis-ik-6.1.1.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch/6.1.1/elasticsearch-6.1.1.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-analyzers-common/7.1.0/lucene-analyzers-common-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-backward-codecs/7.1.0/lucene-backward-codecs-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-grouping/7.1.0/lucene-grouping-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-highlighter/7.1.0/lucene-highlighter-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-join/7.1.0/lucene-join-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-memory/7.1.0/lucene-memory-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-misc/7.1.0/lucene-misc-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-queries/7.1.0/lucene-queries-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-queryparser/7.1.0/lucene-queryparser-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-sandbox/7.1.0/lucene-sandbox-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial/7.1.0/lucene-spatial-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial-extras/7.1.0/lucene-spatial-extras-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial3d/7.1.0/lucene-spatial3d-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-suggest/7.1.0/lucene-suggest-7.1.0.jar:/Users/mac/.m2/repository/org/elasticsearch/securesm/1.2/securesm-1.2.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch-cli/6.1.1/elasticsearch-cli-6.1.1.jar:/Users/mac/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2.jar:/Users/mac/.m2/repository/com/carrotsearch/hppc/0.7.1/hppc-0.7.1.jar:/Users/mac/.m2/repository/joda-time/joda-time/2.9.5/joda-time-2.9.5.jar:/Users/mac/.m2/repository/org/yaml/snakeyaml/1.19/snakeyaml-1.19.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.8.10/jackson-dataformat-smile-2.8.10.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.8.10/jackson-dataformat-yaml-2.8.10.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.8.10/jackson-dataformat-cbor-2.8.10.jar:/Users/mac/.m2/repository/com/tdunning/t-digest/3.0/t-digest-3.0.jar:/Users/mac/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.9/HdrHistogram-2.1.9.jar:/Users/mac/.m2/repository/org/elasticsearch/jna/4.4.0-1/jna-4.4.0-1.jar:/Users/mac/.m2/repository/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar:/Users/mac/.m2/repository/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4.jar:/Users/mac/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar:/Users/mac/.m2/repository/org/apache/logging/log4j/log4j-api/2.3/log4j-api-2.3.jar:/Users/mac/.m2/repository/net/java/dev/jna/jna/5.3.1/jna-5.3.1.jar:/Users/mac/.m2/repository/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar:/Users/mac/.m2/repository/commons-pool/commons-pool/1.5.5/commons-pool-1.5.5.jar:/Users/mac/.m2/repository/com/esotericsoftware/kryo/kryo/2.24.0/kryo-2.24.0.jar:/Users/mac/.m2/repository/com/esotericsoftware/minlog/minlog/1.2/minlog-1.2.jar:/Users/mac/.m2/repository/org/objenesis/objenesis/2.1/objenesis-2.1.jar:/Users/mac/.m2/repository/io/lettuce/lettuce-core/5.2.2.RELEASE/lettuce-core-5.2.2.RELEASE.jar:/Users/mac/.m2/repository/io/netty/netty-common/4.1.45.Final/netty-common-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-handler/4.1.45.Final/netty-handler-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-buffer/4.1.45.Final/netty-buffer-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-codec/4.1.45.Final/netty-codec-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-transport/4.1.45.Final/netty-transport-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-resolver/4.1.45.Final/netty-resolver-4.1.45.Final.jar:/Users/mac/.m2/repository/io/projectreactor/reactor-core/3.3.2.RELEASE/reactor-core-3.3.2.RELEASE.jar:/Users/mac/.m2/repository/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar:/Users/mac/.m2/repository/io/milvus/milvus-sdk-java/0.9.1/milvus-sdk-java-0.9.1.jar:/Users/mac/.m2/repository/io/grpc/grpc-protobuf/1.30.2/grpc-protobuf-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-api/1.30.2/grpc-api-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-context/1.30.2/grpc-context-1.30.2.jar:/Users/mac/.m2/repository/com/google/protobuf/protobuf-java/3.12.0/protobuf-java-3.12.0.jar:/Users/mac/.m2/repository/com/google/api/grpc/proto-google-common-protos/1.17.0/proto-google-common-protos-1.17.0.jar:/Users/mac/.m2/repository/io/grpc/grpc-protobuf-lite/1.30.2/grpc-protobuf-lite-1.30.2.jar:/Users/mac/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.18/animal-sniffer-annotations-1.18.jar:/Users/mac/.m2/repository/io/grpc/grpc-stub/1.30.2/grpc-stub-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-netty-shaded/1.30.2/grpc-netty-shaded-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-core/1.30.2/grpc-core-1.30.2.jar:/Users/mac/.m2/repository/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar:/Users/mac/.m2/repository/io/perfmark/perfmark-api/0.19.0/perfmark-api-0.19.0.jar:/Users/mac/.m2/repository/org/json/json/20190722/json-20190722.jar:/Users/mac/.m2/repository/org/apache/commons/commons-lang3/3.10/commons-lang3-3.10.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-serialization-native-hession/2.7.9/dubbo-serialization-native-hession-2.7.9.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-serialization-api/2.7.9/dubbo-serialization-api-2.7.9.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-common/2.7.9/dubbo-common-2.7.9.jar:/Users/mac/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar:/Users/mac/.m2/repository/org/javassist/javassist/3.20.0-GA/javassist-3.20.0-GA.jar:/Users/mac/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar:/Users/mac/.m2/repository/com/caucho/hessian/4.0.38/hessian-4.0.38.jar com.sparrow.jdk.gc.G1Test
+ 0.014: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 104857600 bytes, attempted expansion amount: 104857600 bytes]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+ 10.194: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 10485760 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+ 10.194: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: requested by GC cause, GC cause: G1 Humongous Allocation]
+{Heap before GC invocations=0 (full 0):
+ garbage-first heap   total 102400K, used 9216K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 5 young (5120K), 0 survivors (0K)
+ Metaspace       used 3281K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 10.194: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+10.194: [GC pause (G1 Humongous Allocation) (young) (initial-mark) 10.195: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 10.00 ms, remaining time: 190.00 ms, target pause time: 200.00 ms]
+ 10.195: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 5 regions, survivors: 0 regions, predicted young region time: 68.68 ms]
+ 10.195: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 5 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 78.68 ms, target pause time: 200.00 ms]
+10.197: [SoftReference, 0 refs, 0.0000285 secs]10.197: [WeakReference, 17 refs, 0.0000114 secs]10.197: [FinalReference, 305 refs, 0.0003286 secs]10.197: [PhantomReference, 0 refs, 0 refs, 0.0000102 secs]10.197: [JNI Weak Reference, 0.0000099 secs], 0.0035115 secs]
+   [Parallel Time: 2.0 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 10194.6, Avg: 10194.8, Max: 10195.0, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.4, Avg: 0.6, Max: 0.9, Diff: 0.6, Sum: 6.1]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.9, Avg: 1.0, Max: 1.2, Diff: 0.3, Sum: 9.8]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+         [Termination Attempts: Min: 1, Avg: 12.2, Max: 18, Diff: 17, Sum: 122]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.3]
+      [GC Worker Total (ms): Min: 1.5, Avg: 1.6, Max: 1.9, Diff: 0.4, Sum: 16.4]
+      [GC Worker End (ms): Min: 10196.5, Avg: 10196.5, Max: 10196.5, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 1.3 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.9 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.2 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 5120.0K(24.0M)->0.0B(20.0M) Survivors: 0.0B->2048.0K Heap: 9709.9K(100.0M)->6365.4K(100.0M)]
+Heap after GC invocations=1 (full 0):
+ garbage-first heap   total 102400K, used 6365K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 2 young (2048K), 2 survivors (2048K)
+ Metaspace       used 3281K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.01 secs]
+10.198: [GC concurrent-root-region-scan-start]
+11
+10.199: [GC concurrent-root-region-scan-end, 0.0008131 secs]
+10.199: [GC concurrent-mark-start]
+10.199: [GC concurrent-mark-end, 0.0000952 secs]
+10.199: [GC remark 10.199: [Finalize Marking, 0.0002481 secs] 10.199: [GC ref-proc10.199: [SoftReference, 0 refs, 0.0000201 secs]10.200: [WeakReference, 0 refs, 0.0000144 secs]10.200: [FinalReference, 0 refs, 0.0000141 secs]10.200: [PhantomReference, 0 refs, 0 refs, 0.0000237 secs]10.200: [JNI Weak Reference, 0.0000051 secs], 0.0000934 secs] 10.200: [Unloading, 0.0006095 secs], 0.0011290 secs]
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+10.200: [GC cleanup 7287K->2166K(100M), 0.0005873 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+10.201: [GC concurrent-cleanup-start]
+10.201: [GC concurrent-cleanup-end, 0.0000133 secs]
+12
+13
+14
+15
+16
+17
+18
+19
+20
+ 20.238: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 10485760 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+21
+ 21.239: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 11534336 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+22
+ 22.240: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 12582912 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+23
+ 23.240: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 13631488 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+24
+ 24.242: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 14680064 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+25
+ 25.244: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 15728640 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+26
+ 26.249: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 16777216 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+27
+ 27.250: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 17825792 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+28
+ 28.254: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 18874368 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+29
+ 29.257: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 19922944 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+30
+ 30.261: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 20971520 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+31
+ 31.263: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 22020096 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+32
+ 32.264: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 23068672 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+33
+ 33.268: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 24117248 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+34
+ 34.272: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 25165824 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+35
+ 35.275: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 26214400 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+36
+ 36.281: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 27262976 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+37
+ 37.286: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 28311552 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+38
+ 38.292: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 29360128 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+39
+ 39.295: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 30408704 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+40
+ 40.299: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 31457280 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+41
+ 41.304: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 32505856 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+42
+ 42.307: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 33554432 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+43
+ 43.309: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 34603008 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+44
+ 44.315: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 35651584 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+45
+ 45.316: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 36700160 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+46
+ 46.321: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 37748736 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+47
+ 47.325: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 38797312 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+48
+ 48.328: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 39845888 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+49
+ 49.329: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 40894464 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+50
+ 50.334: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 41943040 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+51
+ 51.338: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 42991616 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+52
+ 52.344: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 44040192 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+53
+ 53.349: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 45088768 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+54
+ 54.354: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 46137344 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+55
+ 55.357: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 47185920 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+56
+ 56.362: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 48234496 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+57
+ 57.363: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 49283072 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+58
+ 58.365: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 50331648 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+59
+ 59.369: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 51380224 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+60
+ 60.373: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 52428800 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+61
+ 61.378: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 53477376 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+62
+ 62.382: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 54525952 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+63
+ 63.385: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 55574528 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+64
+ 64.388: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 56623104 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+65
+ 65.390: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 57671680 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+66
+ 66.394: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 58720256 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+67
+ 67.399: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 59768832 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+68
+ 68.402: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 60817408 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+69
+ 69.407: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 61865984 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+70
+ 70.410: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 62914560 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+71
+ 71.415: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 63963136 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+72
+ 72.421: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 65011712 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+73
+ 73.423: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 66060288 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+74
+ 74.425: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 67108864 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+75
+ 75.428: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 68157440 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+76
+ 76.433: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 69206016 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+77
+ 77.438: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 70254592 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+78
+ 78.440: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 71303168 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+79
+ 79.445: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 72351744 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+80
+ 80.449: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 73400320 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+81
+ 81.453: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 74448896 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+82
+ 82.458: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 75497472 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+83
+ 83.463: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 76546048 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+84
+ 84.468: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 77594624 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+85
+ 85.470: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 78643200 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+86
+ 86.472: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 79691776 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+87
+ 87.476: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 80740352 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+88
+ 88.481: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 81788928 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+89
+ 89.483: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 82837504 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+90
+ 90.486: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 83886080 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+91
+ 91.487: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 84934656 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+92
+ 92.493: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 85983232 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+93
+ 93.498: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 87031808 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+94
+ 94.499: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 88080384 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+95
+ 95.504: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 89128960 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+96
+ 96.508: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 90177536 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+97
+ 97.511: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 91226112 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+98
+ 98.515: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 92274688 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+99
+ 99.519: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 93323264 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+100
+ 100.524: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 94371840 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+101
+ 101.528: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 95420416 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+102
+ 102.532: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 96468992 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+103
+ 103.536: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 97517568 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+104
+ 104.540: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 98566144 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+105
+ 105.541: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 99614720 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+106
+ 106.542: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 100663296 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+107
+ 107.543: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 101711872 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+{Heap before GC invocations=2 (full 0):
+ garbage-first heap   total 102400K, used 50910K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 3 young (3072K), 2 survivors (2048K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+107.543: [GC pause (G1 Humongous Allocation) (young) 107.543: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 7.41 ms, remaining time: 192.59 ms, target pause time: 200.00 ms]
+ 107.543: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 1 regions, survivors: 2 regions, predicted young region time: 16.74 ms]
+ 107.543: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 1 regions, survivors: 2 regions, old: 0 regions, predicted pause time: 24.15 ms, target pause time: 200.00 ms]
+ 107.543: [G1Ergonomics (Heap Sizing) attempt heap expansion, reason: region allocation request failed, allocation request: 101616 bytes]
+ 107.543: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 101616 bytes, attempted expansion amount: 1048576 bytes]
+ 107.543: [G1Ergonomics (Heap Sizing) did not expand the heap, reason: heap already fully expanded]
+107.552: [SoftReference, 0 refs, 0.0000136 secs]107.552: [WeakReference, 0 refs, 0.0000054 secs]107.552: [FinalReference, 0 refs, 0.0000049 secs]107.552: [PhantomReference, 0 refs, 0 refs, 0.0000062 secs]107.552: [JNI Weak Reference, 0.0000040 secs] 107.554: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 103809024 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ 107.554: [G1Ergonomics (Mixed GCs) do not start mixed GCs, reason: candidate old regions not available]
+ (to-space exhausted), 0.0105743 secs]
+   [Parallel Time: 8.7 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 107543.3, Avg: 107543.6, Max: 107543.7, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 1.0, Max: 8.5, Diff: 8.5, Sum: 10.3]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.2, Diff: 0.2, Sum: 0.2]
+      [Object Copy (ms): Min: 0.0, Avg: 5.0, Max: 6.3, Diff: 6.3, Sum: 49.6]
+      [Termination (ms): Min: 0.0, Avg: 2.3, Max: 3.4, Diff: 3.4, Sum: 23.3]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 8.1, Avg: 8.4, Max: 8.6, Diff: 0.4, Sum: 83.5]
+      [GC Worker End (ms): Min: 107551.9, Avg: 107551.9, Max: 107552.0, Diff: 0.1]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 1.7 ms]
+      [Evacuation Failure: 1.2 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.3 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 1024.0K(20.0M)->0.0B(5120.0K) Survivors: 2048.0K->0.0B Heap: 50.5M(100.0M)->50.3M(100.0M)]
+Heap after GC invocations=3 (full 0):
+ garbage-first heap   total 102400K, used 51508K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.04 sys=0.00, real=0.01 secs]
+ 107.554: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 104857600 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: STW humongous allocation]
+{Heap before GC invocations=3 (full 0):
+ garbage-first heap   total 102400K, used 52020K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 107.554: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+107.554: [GC pause (G1 Evacuation Pause) (young) (initial-mark) 107.554: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 1280, predicted base time: 11.25 ms, remaining time: 188.75 ms, target pause time: 200.00 ms]
+ 107.554: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 0 regions, survivors: 0 regions, predicted young region time: 0.00 ms]
+ 107.554: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 0 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 11.25 ms, target pause time: 200.00 ms]
+107.555: [SoftReference, 0 refs, 0.0000245 secs]107.555: [WeakReference, 0 refs, 0.0000066 secs]107.555: [FinalReference, 0 refs, 0.0000052 secs]107.555: [PhantomReference, 0 refs, 0 refs, 0.0000061 secs]107.555: [JNI Weak Reference, 0.0000039 secs], 0.0010628 secs]
+   [Parallel Time: 0.6 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 107554.2, Avg: 107554.3, Max: 107554.4, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.1, Max: 0.2, Diff: 0.1, Sum: 1.0]
+      [Update RS (ms): Min: 0.0, Avg: 0.1, Max: 0.2, Diff: 0.2, Sum: 1.0]
+         [Processed Buffers: Min: 0, Avg: 0.6, Max: 1, Diff: 1, Sum: 6]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Termination (ms): Min: 0.0, Avg: 0.1, Max: 0.2, Diff: 0.2, Sum: 1.3]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.3]
+      [GC Worker Total (ms): Min: 0.3, Avg: 0.4, Max: 0.5, Diff: 0.2, Sum: 3.5]
+      [GC Worker End (ms): Min: 107554.6, Avg: 107554.7, Max: 107554.7, Diff: 0.1]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 0.4 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.2 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 0.0B(5120.0K)->0.0B(5120.0K) Survivors: 0.0B->0.0B Heap: 50.8M(100.0M)->50.8M(100.0M)]
+Heap after GC invocations=4 (full 0):
+ garbage-first heap   total 102400K, used 52020K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+107.555: [GC concurrent-root-region-scan-start]
+107.555: [GC concurrent-root-region-scan-end, 0.0000052 secs]
+107.555: [GC concurrent-mark-start]
+{Heap before GC invocations=4 (full 0):
+ garbage-first heap   total 102400K, used 52020K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+107.555: [GC pause (G1 Evacuation Pause) (young) 107.555: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 4.81 ms, remaining time: 195.19 ms, target pause time: 200.00 ms]
+ 107.555: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 0 regions, survivors: 0 regions, predicted young region time: 0.00 ms]
+ 107.555: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 0 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 4.81 ms, target pause time: 200.00 ms]
+107.556: [SoftReference, 0 refs, 0.0000116 secs]107.556: [WeakReference, 0 refs, 0.0000054 secs]107.556: [FinalReference, 0 refs, 0.0000049 secs]107.556: [PhantomReference, 0 refs, 0 refs, 0.0000061 secs]107.556: [JNI Weak Reference, 0.0000039 secs], 0.0007328 secs]
+   [Parallel Time: 0.3 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 107555.5, Avg: 107555.6, Max: 107555.6, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.1, Max: 0.2, Diff: 0.1, Sum: 0.9]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.1, Max: 1, Diff: 1, Sum: 1]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.0, Avg: 0.1, Max: 0.2, Diff: 0.1, Sum: 1.1]
+      [GC Worker End (ms): Min: 107555.7, Avg: 107555.7, Max: 107555.7, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 0.4 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.2 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 0.0B(5120.0K)->0.0B(5120.0K) Survivors: 0.0B->0.0B Heap: 50.8M(100.0M)->50.8M(100.0M)]
+Heap after GC invocations=5 (full 0):
+ garbage-first heap   total 102400K, used 52020K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+ 107.556: [G1Ergonomics (Heap Sizing) attempt heap expansion, reason: allocation request failed, allocation request: 24 bytes]
+ 107.556: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 1048576 bytes, attempted expansion amount: 1048576 bytes]
+ 107.556: [G1Ergonomics (Heap Sizing) did not expand the heap, reason: heap already fully expanded]
+{Heap before GC invocations=5 (full 0):
+ garbage-first heap   total 102400K, used 52020K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+107.556: [Full GC (Allocation Failure) 107.557: [SoftReference, 28 refs, 0.0000097 secs]107.557: [WeakReference, 0 refs, 0.0000049 secs]107.557: [FinalReference, 10 refs, 0.0000063 secs]107.557: [PhantomReference, 0 refs, 0 refs, 0.0000058 secs]107.557: [JNI Weak Reference, 0.0000036 secs] 50M->1335K(100M), 0.0033526 secs]
+   [Eden: 0.0B(5120.0K)->0.0B(34.0M) Survivors: 0.0B->0.0B Heap: 50.8M(100.0M)->1335.0K(100.0M)], [Metaspace: 3291K->3291K(1056768K)]
+Heap after GC invocations=6 (full 1):
+ garbage-first heap   total 102400K, used 1335K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+108
+107.560: [GC concurrent-mark-abort]
+109
+110
+111
+112
+113
+114
+115
+116
+ 116.581: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 10485760 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+ 116.581: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: requested by GC cause, GC cause: G1 Humongous Allocation]
+{Heap before GC invocations=6 (full 1):
+ garbage-first heap   total 102400K, used 5431K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 1 young (1024K), 0 survivors (0K)
+ Metaspace       used 3292K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 116.581: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+116.581: [GC pause (G1 Humongous Allocation) (young) (initial-mark) 116.581: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 3.26 ms, remaining time: 196.74 ms, target pause time: 200.00 ms]
+ 116.581: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 1 regions, survivors: 0 regions, predicted young region time: 3.66 ms]
+ 116.581: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 1 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 6.92 ms, target pause time: 200.00 ms]
+116.582: [SoftReference, 0 refs, 0.0000255 secs]116.582: [WeakReference, 0 refs, 0.0000083 secs]116.582: [FinalReference, 0 refs, 0.0000077 secs]116.582: [PhantomReference, 0 refs, 0 refs, 0.0000094 secs]116.582: [JNI Weak Reference, 0.0000063 secs], 0.0014006 secs]
+   [Parallel Time: 0.4 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 116581.0, Avg: 116581.2, Max: 116581.3, Diff: 0.2]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.2, Max: 0.3, Diff: 0.2, Sum: 1.6]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.2, Max: 0.4, Diff: 0.3, Sum: 2.0]
+      [GC Worker End (ms): Min: 116581.4, Avg: 116581.4, Max: 116581.4, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.7 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.5 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.2 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 1024.0K(34.0M)->0.0B(56.0M) Survivors: 0.0B->0.0B Heap: 6455.1K(100.0M)->5431.1K(100.0M)]
+Heap after GC invocations=7 (full 1):
+ garbage-first heap   total 102400K, used 5431K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3292K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.01 secs]
+116.583: [GC concurrent-root-region-scan-start]
+116.583: [GC concurrent-root-region-scan-end, 0.0000082 secs]
+116.583: [GC concurrent-mark-start]
+117
+116.584: [GC concurrent-mark-end, 0.0014748 secs]
+116.584: [GC remark 116.584: [Finalize Marking, 0.0003413 secs] 116.584: [GC ref-proc116.584: [SoftReference, 5 refs, 0.0000216 secs]116.584: [WeakReference, 1 refs, 0.0000146 secs]116.585: [FinalReference, 0 refs, 0.0000169 secs]116.585: [PhantomReference, 0 refs, 0 refs, 0.0000242 secs]116.585: [JNI Weak Reference, 0.0000066 secs], 0.0001015 secs] 116.585: [Unloading, 0.0006350 secs], 0.0013033 secs]
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+116.585: [GC cleanup 6455K->1846K(100M), 0.0007175 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+116.586: [GC concurrent-cleanup-start]
+116.586: [GC concurrent-cleanup-end, 0.0000123 secs]
+118
+119
+120
+121
+122
+123
+124
+125
+ 125.603: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 10485760 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+126
+ 126.607: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 11534336 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+127
+ 127.611: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 12582912 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+128
+ 128.616: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 13631488 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+129
+ 129.619: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 14680064 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+130
+ 130.623: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 15728640 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+131
+ 131.629: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 16777216 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+132
+ 132.632: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 17825792 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+133
+ 133.636: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 18874368 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+134
+ 134.636: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 19922944 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+135
+ 135.639: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 20971520 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+136
+ 136.643: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 22020096 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+137
+ 137.645: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 23068672 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+138
+ 138.649: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 24117248 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+139
+ 139.653: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 25165824 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+140
+ 140.657: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 26214400 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+141
+ 141.661: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 27262976 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+142
+ 142.663: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 28311552 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+143
+ 143.667: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 29360128 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+144
+ 144.670: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 30408704 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+145
+ 145.674: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 31457280 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+146
+ 146.677: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 32505856 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+147
+ 147.680: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 33554432 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+148
+ 148.684: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 34603008 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+149
+ 149.689: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 35651584 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+150
+ 150.692: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 36700160 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+151
+ 151.694: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 37748736 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+152
+ 152.699: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 38797312 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+153
+ 153.703: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 39845888 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+154
+ 154.707: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 40894464 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+155
+ 155.712: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 41943040 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+156
+ 156.714: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 42991616 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+157
+ 157.719: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 44040192 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+158
+ 158.720: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 45088768 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+159
+ 159.724: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 46137344 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+160
+ 160.728: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 47185920 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+161
+ 161.732: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 48234496 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+162
+ 162.736: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 49283072 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+163
+ 163.738: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 50331648 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+164
+ 164.743: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 51380224 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+165
+ 165.747: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 52428800 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+166
+ 166.752: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 53477376 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+167
+ 167.756: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 54525952 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+168
+ 168.762: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 55574528 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+169
+ 169.764: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 56623104 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+170
+ 170.769: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 57671680 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+171
+ 171.772: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 58720256 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+172
+ 172.777: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 59768832 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+173
+ 173.781: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 60817408 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+174
+ 174.785: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 61865984 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+175
+ 175.786: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 62914560 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+176
+ 176.791: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 63963136 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+177
+ 177.792: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 65011712 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+178
+ 178.793: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 66060288 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+179
+ 179.798: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 67108864 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+180
+ 180.802: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 68157440 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+181
+ 181.806: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 69206016 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+182
+ 182.810: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 70254592 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+183
+ 183.814: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 71303168 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+184
+ 184.815: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 72351744 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+185
+ 185.818: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 73400320 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+186
+ 186.819: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 74448896 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+187
+ 187.824: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 75497472 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+188
+ 188.825: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 76546048 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+189
+ 189.826: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 77594624 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+190
+ 190.830: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 78643200 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+191
+ 191.834: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 79691776 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+192
+ 192.837: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 80740352 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+193
+ 193.842: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 81788928 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+194
+ 194.843: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 82837504 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+195
+ 195.843: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 83886080 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+196
+ 196.847: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 84934656 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+197
+ 197.852: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 85983232 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+198
+ 198.855: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 87031808 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+199
+ 199.858: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 88080384 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+200
+ 200.861: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 89128960 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+201
+ 201.866: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 90177536 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+202
+ 202.869: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 91226112 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+203
+ 203.873: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 92274688 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+204
+ 204.878: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 93323264 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+205
+ 205.882: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 94371840 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+206
+ 206.885: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 95420416 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+207
+ 207.887: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 96468992 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+208
+ 208.892: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 97517568 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+209
+ 209.894: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 98566144 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+210
+ 210.899: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 99614720 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+211
+ 211.904: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 100663296 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+212
+ 212.907: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 101711872 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+213
+ 213.910: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 102760448 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+214
+ 214.913: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 103809024 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+{Heap before GC invocations=8 (full 1):
+ garbage-first heap   total 102400K, used 51000K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 1 young (1024K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+214.913: [GC pause (G1 Humongous Allocation) (young) 214.913: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 1, predicted base time: 2.83 ms, remaining time: 197.17 ms, target pause time: 200.00 ms]
+ 214.913: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 1 regions, survivors: 0 regions, predicted young region time: 1.38 ms]
+ 214.913: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 1 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 4.21 ms, target pause time: 200.00 ms]
+214.914: [SoftReference, 0 refs, 0.0000252 secs]214.914: [WeakReference, 0 refs, 0.0000082 secs]214.914: [FinalReference, 0 refs, 0.0000076 secs]214.914: [PhantomReference, 0 refs, 0 refs, 0.0000096 secs]214.914: [JNI Weak Reference, 0.0000065 secs] 214.915: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 103809024 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ 214.915: [G1Ergonomics (Mixed GCs) do not start mixed GCs, reason: reclaimable percentage not over threshold, candidate old regions: 1 regions, reclaimable: 221152 bytes (0.21 %), threshold: 10.00 %]
+, 0.0016436 secs]
+   [Parallel Time: 0.6 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 214913.1, Avg: 214913.2, Max: 214913.3, Diff: 0.2]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.2, Max: 0.3, Diff: 0.2, Sum: 1.8]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.2, Max: 1, Diff: 1, Sum: 2]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.2, Max: 0.3, Diff: 0.2, Sum: 2.3]
+      [GC Worker End (ms): Min: 214913.4, Avg: 214913.5, Max: 214913.5, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.8 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.4 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 1024.0K(56.0M)->0.0B(5120.0K) Survivors: 0.0B->0.0B Heap: 50.3M(100.0M)->49.8M(100.0M)]
+Heap after GC invocations=9 (full 1):
+ garbage-first heap   total 102400K, used 51000K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+ 214.915: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 104857600 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: STW humongous allocation]
+{Heap before GC invocations=9 (full 1):
+ garbage-first heap   total 102400K, used 51512K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 214.915: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+214.915: [GC pause (G1 Evacuation Pause) (young) (initial-mark) 214.915: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 2.55 ms, remaining time: 197.45 ms, target pause time: 200.00 ms]
+ 214.915: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 0 regions, survivors: 0 regions, predicted young region time: 0.00 ms]
+ 214.915: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 0 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 2.55 ms, target pause time: 200.00 ms]
+214.916: [SoftReference, 0 refs, 0.0000144 secs]214.916: [WeakReference, 0 refs, 0.0000065 secs]214.916: [FinalReference, 0 refs, 0.0000060 secs]214.916: [PhantomReference, 0 refs, 0 refs, 0.0000073 secs]214.916: [JNI Weak Reference, 0.0000047 secs], 0.0010647 secs]
+   [Parallel Time: 0.4 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 214915.0, Avg: 214915.2, Max: 214915.3, Diff: 0.3]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.1, Max: 0.3, Diff: 0.3, Sum: 1.3]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.1, Max: 1, Diff: 1, Sum: 1]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.2, Max: 0.3, Diff: 0.3, Sum: 1.6]
+      [GC Worker End (ms): Min: 214915.3, Avg: 214915.3, Max: 214915.4, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 0.6 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.3 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.2 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 0.0B(5120.0K)->0.0B(5120.0K) Survivors: 0.0B->0.0B Heap: 50.3M(100.0M)->50.3M(100.0M)]
+Heap after GC invocations=10 (full 1):
+ garbage-first heap   total 102400K, used 51512K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+214.916: [GC concurrent-root-region-scan-start]
+214.916: [GC concurrent-root-region-scan-end, 0.0000116 secs]
+214.916: [GC concurrent-mark-start]
+{Heap before GC invocations=10 (full 1):
+ garbage-first heap   total 102400K, used 51512K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+214.916: [GC pause (G1 Evacuation Pause) (young) 214.916: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 2.20 ms, remaining time: 197.80 ms, target pause time: 200.00 ms]
+ 214.916: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 0 regions, survivors: 0 regions, predicted young region time: 0.00 ms]
+ 214.916: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 0 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 2.20 ms, target pause time: 200.00 ms]
+214.917: [SoftReference, 0 refs, 0.0000111 secs]214.917: [WeakReference, 0 refs, 0.0000063 secs]214.917: [FinalReference, 0 refs, 0.0000061 secs]214.917: [PhantomReference, 0 refs, 0 refs, 0.0000074 secs]214.917: [JNI Weak Reference, 0.0000127 secs], 0.0009870 secs]
+   [Parallel Time: 0.3 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 214916.2, Avg: 214916.3, Max: 214916.4, Diff: 0.2]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.1, Max: 0.2, Diff: 0.2, Sum: 1.1]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.1, Max: 1, Diff: 1, Sum: 1]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.1, Max: 0.2, Diff: 0.2, Sum: 1.3]
+      [GC Worker End (ms): Min: 214916.5, Avg: 214916.5, Max: 214916.5, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 0.5 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.4 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 0.0B(5120.0K)->0.0B(5120.0K) Survivors: 0.0B->0.0B Heap: 50.3M(100.0M)->50.3M(100.0M)]
+Heap after GC invocations=11 (full 1):
+ garbage-first heap   total 102400K, used 51512K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+ 214.917: [G1Ergonomics (Heap Sizing) attempt heap expansion, reason: allocation request failed, allocation request: 24 bytes]
+ 214.917: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 1048576 bytes, attempted expansion amount: 1048576 bytes]
+ 214.917: [G1Ergonomics (Heap Sizing) did not expand the heap, reason: heap already fully expanded]
+{Heap before GC invocations=11 (full 1):
+ garbage-first heap   total 102400K, used 51512K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+214.917: [Full GC (Allocation Failure) 214.918: [SoftReference, 0 refs, 0.0000109 secs]214.918: [WeakReference, 0 refs, 0.0000063 secs]214.918: [FinalReference, 1 refs, 0.0000062 secs]214.918: [PhantomReference, 0 refs, 0 refs, 0.0000073 secs]214.918: [JNI Weak Reference, 0.0000047 secs] 50M->1320K(100M), 0.0034909 secs]
+   [Eden: 0.0B(5120.0K)->0.0B(60.0M) Survivors: 0.0B->0.0B Heap: 50.3M(100.0M)->1320.0K(100.0M)], [Metaspace: 3305K->3305K(1056768K)]
+Heap after GC invocations=12 (full 2):
+ garbage-first heap   total 102400K, used 1320K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.01 secs]
+215214.921: [GC concurrent-mark-abort]
+
+216
+217
+218
+219
+220
+221
+222
+223
+ 223.943: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 10485760 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+ 223.943: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: requested by GC cause, GC cause: G1 Humongous Allocation]
+{Heap before GC invocations=12 (full 2):
+ garbage-first heap   total 102400K, used 5416K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 1 young (1024K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 223.944: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+223.944: [GC pause (G1 Humongous Allocation) (young) (initial-mark) 223.944: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 1.92 ms, remaining time: 198.08 ms, target pause time: 200.00 ms]
+ 223.944: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 1 regions, survivors: 0 regions, predicted young region time: 1.06 ms]
+ 223.944: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 1 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 2.99 ms, target pause time: 200.00 ms]
+223.945: [SoftReference, 0 refs, 0.0000307 secs]223.945: [WeakReference, 0 refs, 0.0000116 secs]223.945: [FinalReference, 0 refs, 0.0000105 secs]223.945: [PhantomReference, 0 refs, 0 refs, 0.0000132 secs]223.945: [JNI Weak Reference, 0.0000088 secs], 0.0020624 secs]
+   [Parallel Time: 0.8 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 223943.6, Avg: 223943.9, Max: 223944.0, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.2, Max: 0.5, Diff: 0.4, Sum: 2.3]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.3, Max: 0.5, Diff: 0.4, Sum: 2.8]
+      [GC Worker End (ms): Min: 223944.2, Avg: 223944.2, Max: 223944.2, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 1.0 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.5 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 1024.0K(60.0M)->0.0B(60.0M) Survivors: 0.0B->0.0B Heap: 5928.2K(100.0M)->5416.2K(100.0M)]
+Heap after GC invocations=13 (full 2):
+ garbage-first heap   total 102400K, used 5416K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3305K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+223.946: [GC concurrent-root-region-scan-start]
+223.946: [GC concurrent-root-region-scan-end, 0.0000551 secs]
+223.946: [GC concurrent-mark-start]
+224
+223.948: [GC concurrent-mark-end, 0.0021096 secs]
+223.948: [GC remark 223.948: [Finalize Marking, 0.0004238 secs] 223.949: [GC ref-proc223.949: [SoftReference, 5 refs, 0.0000308 secs]223.949: [WeakReference, 1 refs, 0.0000185 secs]223.949: [FinalReference, 0 refs, 0.0000181 secs]223.949: [PhantomReference, 0 refs, 0 refs, 0.0000303 secs]223.949: [JNI Weak Reference, 0.0000066 secs], 0.0001235 secs] 223.949: [Unloading, 0.0006561 secs], 0.0014220 secs]
+ [Times: user=0.01 sys=0.00, real=0.01 secs]
+223.950: [GC cleanup 6440K->1832K(100M), 0.0006395 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+223.950: [GC concurrent-cleanup-start]
+223.950: [GC concurrent-cleanup-end, 0.0000121 secs]
+225
+226
+227
+228
+229
+230
+231
+232
+ 232.974: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 10485760 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+233
+ 233.976: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 11534336 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+234
+ 234.980: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 12582912 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+235
+ 235.985: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 13631488 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+236
+ 236.988: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 14680064 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+237
+ 237.992: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 15728640 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+238
+ 238.997: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 16777216 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+239
+ 240.001: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 17825792 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+240
+ 241.002: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 18874368 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+241
+ 242.007: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 19922944 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+242
+ 243.009: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 20971520 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+243
+ 244.013: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 22020096 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+244
+ 245.018: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 23068672 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+245
+ 246.021: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 24117248 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+246
+ 247.023: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 25165824 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+247
+ 248.027: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 26214400 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+248
+ 249.030: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 27262976 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+249
+ 250.034: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 28311552 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+250
+ 251.040: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 29360128 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+251
+ 252.044: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 30408704 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+252
+ 253.047: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 31457280 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+253
+ 254.051: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 32505856 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+254
+ 255.055: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 33554432 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+255
+ 256.061: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 34603008 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+256
+ 257.062: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 35651584 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+257
+ 258.066: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 36700160 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+258
+ 259.070: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 37748736 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+259
+ 260.073: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 38797312 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+260
+ 261.073: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 39845888 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+261
+ 262.076: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 40894464 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+262
+ 263.078: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 41943040 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+263
+ 264.080: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 42991616 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+264
+ 265.084: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 44040192 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+265
+ 266.086: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 45088768 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+266
+ 267.090: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 46137344 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+267
+ 268.090: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 47185920 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+268
+ 269.093: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 48234496 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+269
+ 270.096: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 49283072 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+270
+ 271.100: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 50331648 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+271
+ 272.105: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 51380224 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+272
+ 273.107: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 52428800 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+273
+ 274.112: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 53477376 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+274
+ 275.115: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 54525952 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+275
+ 276.117: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 55574528 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+276
+ 277.121: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 56623104 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+277
+ 278.125: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 57671680 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+278
+ 279.130: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 58720256 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+279
+ 280.133: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 59768832 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+280
+ 281.135: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 60817408 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+281
+ 282.138: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 61865984 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+282
+ 283.141: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 62914560 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+283
+ 284.145: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 63963136 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+284
+ 285.149: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 65011712 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+285
+ 286.150: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 66060288 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+286
+ 287.155: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 67108864 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+287
+ 288.159: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 68157440 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+288
+ 289.163: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 69206016 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+289
+ 290.167: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 70254592 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+290
+ 291.167: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 71303168 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+291
+ 292.171: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 72351744 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+292
+ 293.172: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 73400320 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+293
+ 294.174: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 74448896 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+294
+ 295.175: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 75497472 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+295
+ 296.175: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 76546048 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+296
+ 297.180: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 77594624 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+297
+ 298.183: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 78643200 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+298
+ 299.187: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 79691776 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+299
+ 300.189: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 80740352 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+300
+ 301.190: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 81788928 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+301
+ 302.192: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 82837504 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+302
+ 303.192: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 83886080 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+303
+ 304.196: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 84934656 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+304
+ 305.200: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 85983232 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+305
+ 306.202: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 87031808 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+306
+ 307.207: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 88080384 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+307
+ 308.210: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 89128960 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+308
+ 309.215: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 90177536 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+309
+ 310.217: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 91226112 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+310
+ 311.221: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 92274688 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+311
+ 312.224: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 93323264 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+312
+ 313.227: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 94371840 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+313
+ 314.230: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 95420416 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+314
+ 315.233: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 96468992 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+315
+ 316.233: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 97517568 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+316
+ 317.237: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 98566144 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+317
+ 318.240: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 99614720 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+318
+ 319.242: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 100663296 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+319
+ 320.245: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 101711872 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+320
+ 321.249: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 102760448 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+321
+ 322.250: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 103809024 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+{Heap before GC invocations=14 (full 2):
+ garbage-first heap   total 102400K, used 50985K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 1 young (1024K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+322.250: [GC pause (G1 Humongous Allocation) (young) 322.250: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 2.02 ms, remaining time: 197.98 ms, target pause time: 200.00 ms]
+ 322.250: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 1 regions, survivors: 0 regions, predicted young region time: 0.83 ms]
+ 322.250: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 1 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 2.84 ms, target pause time: 200.00 ms]
+322.251: [SoftReference, 0 refs, 0.0000285 secs]322.251: [WeakReference, 0 refs, 0.0000112 secs]322.251: [FinalReference, 0 refs, 0.0000107 secs]322.251: [PhantomReference, 0 refs, 0 refs, 0.0000133 secs]322.251: [JNI Weak Reference, 0.0000086 secs] 322.252: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 103809024 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ 322.252: [G1Ergonomics (Mixed GCs) do not start mixed GCs, reason: reclaimable percentage not over threshold, candidate old regions: 1 regions, reclaimable: 221152 bytes (0.21 %), threshold: 10.00 %]
+, 0.0019226 secs]
+   [Parallel Time: 0.7 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 322249.9, Avg: 322250.0, Max: 322250.2, Diff: 0.3]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.3, Max: 0.4, Diff: 0.3, Sum: 2.5]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.1, Max: 1, Diff: 1, Sum: 1]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.3]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.2, Avg: 0.3, Max: 0.5, Diff: 0.3, Sum: 3.2]
+      [GC Worker End (ms): Min: 322250.4, Avg: 322250.4, Max: 322250.4, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 0.9 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.5 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 1024.0K(60.0M)->0.0B(5120.0K) Survivors: 0.0B->0.0B Heap: 50.3M(100.0M)->49.8M(100.0M)]
+Heap after GC invocations=15 (full 2):
+ garbage-first heap   total 102400K, used 50985K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+ 322.252: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 104857600 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: STW humongous allocation]
+{Heap before GC invocations=15 (full 2):
+ garbage-first heap   total 102400K, used 51497K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 322.252: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+322.252: [GC pause (G1 Evacuation Pause) (young) (initial-mark) 322.252: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 2.00 ms, remaining time: 198.00 ms, target pause time: 200.00 ms]
+ 322.252: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 0 regions, survivors: 0 regions, predicted young region time: 0.00 ms]
+ 322.252: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 0 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 2.00 ms, target pause time: 200.00 ms]
+322.253: [SoftReference, 0 refs, 0.0000192 secs]322.253: [WeakReference, 0 refs, 0.0000081 secs]322.253: [FinalReference, 0 refs, 0.0000078 secs]322.253: [PhantomReference, 0 refs, 0 refs, 0.0000096 secs]322.253: [JNI Weak Reference, 0.0000061 secs], 0.0016167 secs]
+   [Parallel Time: 0.6 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 322252.3, Avg: 322252.4, Max: 322252.6, Diff: 0.2]
+      [Ext Root Scanning (ms): Min: 0.2, Avg: 0.3, Max: 0.4, Diff: 0.2, Sum: 2.6]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.1, Max: 1, Diff: 1, Sum: 1]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.2, Avg: 0.3, Max: 0.4, Diff: 0.3, Sum: 2.9]
+      [GC Worker End (ms): Min: 322252.7, Avg: 322252.7, Max: 322252.7, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.8 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.6 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.2 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 0.0B(5120.0K)->0.0B(5120.0K) Survivors: 0.0B->0.0B Heap: 50.3M(100.0M)->50.3M(100.0M)]
+Heap after GC invocations=16 (full 2):
+ garbage-first heap   total 102400K, used 51497K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+322.254: [GC concurrent-root-region-scan-start]
+322.254: [GC concurrent-root-region-scan-end, 0.0000080 secs]
+322.254: [GC concurrent-mark-start]
+{Heap before GC invocations=16 (full 2):
+ garbage-first heap   total 102400K, used 51497K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+322.254: [GC pause (G1 Evacuation Pause) (young) 322.254: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 1.92 ms, remaining time: 198.08 ms, target pause time: 200.00 ms]
+ 322.254: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 0 regions, survivors: 0 regions, predicted young region time: 0.00 ms]
+ 322.254: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 0 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 1.92 ms, target pause time: 200.00 ms]
+322.255: [SoftReference, 0 refs, 0.0000149 secs]322.255: [WeakReference, 0 refs, 0.0000080 secs]322.255: [FinalReference, 0 refs, 0.0000077 secs]322.255: [PhantomReference, 0 refs, 0 refs, 0.0000095 secs]322.255: [JNI Weak Reference, 0.0000060 secs], 0.0011533 secs]
+   [Parallel Time: 0.4 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 322254.2, Avg: 322254.3, Max: 322254.4, Diff: 0.2]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.1, Max: 0.3, Diff: 0.2, Sum: 1.2]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.1, Max: 1, Diff: 1, Sum: 1]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.4]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.2, Max: 0.3, Diff: 0.2, Sum: 1.9]
+      [GC Worker End (ms): Min: 322254.5, Avg: 322254.5, Max: 322254.5, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.6 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.3 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.2 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 0.0B(5120.0K)->0.0B(5120.0K) Survivors: 0.0B->0.0B Heap: 50.3M(100.0M)->50.3M(100.0M)]
+Heap after GC invocations=17 (full 2):
+ garbage-first heap   total 102400K, used 51497K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+ 322.256: [G1Ergonomics (Heap Sizing) attempt heap expansion, reason: allocation request failed, allocation request: 24 bytes]
+ 322.256: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 1048576 bytes, attempted expansion amount: 1048576 bytes]
+ 322.256: [G1Ergonomics (Heap Sizing) did not expand the heap, reason: heap already fully expanded]
+{Heap before GC invocations=17 (full 2):
+ garbage-first heap   total 102400K, used 51497K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+322.256: [Full GC (Allocation Failure) 322.257: [SoftReference, 0 refs, 0.0000110 secs]322.257: [WeakReference, 0 refs, 0.0000062 secs]322.257: [FinalReference, 1 refs, 0.0000061 secs]322.257: [PhantomReference, 0 refs, 0 refs, 0.0000073 secs]322.257: [JNI Weak Reference, 0.0000046 secs] 50M->1320K(100M), 0.0036237 secs]
+   [Eden: 0.0B(5120.0K)->0.0B(60.0M) Survivors: 0.0B->0.0B Heap: 50.3M(100.0M)->1320.0K(100.0M)], [Metaspace: 3320K->3320K(1056768K)]
+Heap after GC invocations=18 (full 3):
+ garbage-first heap   total 102400K, used 1320K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.01 secs]
+322
+322.259: [GC concurrent-mark-abort]
+323
+324
+325
+326
+327
+328
+329
+330
+ 331.284: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 10485760 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+ 331.284: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: requested by GC cause, GC cause: G1 Humongous Allocation]
+{Heap before GC invocations=18 (full 3):
+ garbage-first heap   total 102400K, used 5416K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 1 young (1024K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 331.284: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+331.284: [GC pause (G1 Humongous Allocation) (young) (initial-mark) 331.284: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 1.73 ms, remaining time: 198.27 ms, target pause time: 200.00 ms]
+ 331.284: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 1 regions, survivors: 0 regions, predicted young region time: 0.65 ms]
+ 331.284: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 1 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 2.38 ms, target pause time: 200.00 ms]
+331.285: [SoftReference, 0 refs, 0.0000266 secs]331.285: [WeakReference, 0 refs, 0.0000115 secs]331.285: [FinalReference, 0 refs, 0.0000109 secs]331.285: [PhantomReference, 0 refs, 0 refs, 0.0000133 secs]331.285: [JNI Weak Reference, 0.0000085 secs], 0.0022309 secs]
+   [Parallel Time: 0.7 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 331283.8, Avg: 331284.1, Max: 331284.2, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.2, Max: 0.5, Diff: 0.4, Sum: 2.3]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.3, Max: 0.5, Diff: 0.4, Sum: 2.7]
+      [GC Worker End (ms): Min: 331284.3, Avg: 331284.3, Max: 331284.3, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 1.2 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.7 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 1024.0K(60.0M)->0.0B(60.0M) Survivors: 0.0B->0.0B Heap: 5928.2K(100.0M)->5416.2K(100.0M)]
+Heap after GC invocations=19 (full 3):
+ garbage-first heap   total 102400K, used 5416K [0x00000007b9c00000, 0x00000007b9d00320, 0x00000007c0000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3320K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.01 secs]
+331.286: [GC concurrent-root-region-scan-start]
+331.286: [GC concurrent-root-region-scan-end, 0.0000112 secs]
+331.286: [GC concurrent-mark-start]
+331
+331.288: [GC concurrent-mark-end, 0.0019813 secs]
+331.288: [GC remark 331.288: [Finalize Marking, 0.0004611 secs] 331.289: [GC ref-proc331.289: [SoftReference, 5 refs, 0.0000277 secs]331.289: [WeakReference, 1 refs, 0.0000184 secs]331.289: [FinalReference, 0 refs, 0.0000180 secs]331.289: [PhantomReference, 0 refs, 0 refs, 0.0000303 secs]331.289: [JNI Weak Reference, 0.0000065 secs], 0.0001218 secs] 331.289: [Unloading, 0.0007284 secs], 0.0015996 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+331.290: [GC cleanup 6440K->1832K(100M), 0.0006865 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+331.291: [GC concurrent-cleanup-start]
+331.291: [GC concurrent-cleanup-end, 0.0000181 secs]
+332
+333
+334
+335
+336
+337
+338
+339
+ 340.317: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 10485760 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+340
+ 341.321: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 11534336 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+341
+ 342.323: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 12582912 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+342
+ 343.327: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 13631488 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+343
+ 344.330: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 14680064 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+344
+ 345.333: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 15728640 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+345
+ 346.334: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 16777216 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+346
+ 347.338: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 17825792 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+347
+ 348.340: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 18874368 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+348
+ 349.341: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 19922944 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+349
+ 350.344: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 20971520 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+350
+ 351.346: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 22020096 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+351
+ 352.349: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 23068672 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+352
+ 353.352: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 24117248 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+353
+ 354.357: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 25165824 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+354
+ 355.361: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 26214400 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+355
+ 356.365: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 27262976 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+356
+ 357.367: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 28311552 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+357
+ 358.368: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 29360128 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+358
+ 359.372: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 30408704 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+359
+ 360.377: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 31457280 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+360
+ 361.378: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 32505856 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+361
+ 362.382: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 33554432 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+362
+ 363.382: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 34603008 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+363
+ 364.387: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 35651584 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+364
+ 365.390: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 36700160 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+365
+ 366.394: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 37748736 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+366
+ 367.398: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 38797312 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+367
+ 368.400: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 39845888 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+368
+ 369.405: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 40894464 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+369
+ 370.409: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 41943040 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+370
+ 371.413: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 42991616 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+371
+ 372.416: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 44040192 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+372
+ 373.419: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 45088768 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+373
+ 374.423: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 46137344 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+374
+ 375.428: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 47185920 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+375
+ 376.432: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 48234496 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+376
+ 377.433: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 49283072 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+377
+ 378.435: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 50331648 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+378
+ 379.440: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 51380224 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+379
+ 380.445: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 52428800 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+380
+ 381.449: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 53477376 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+381
+ 382.451: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 54525952 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+382
+ 383.453: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 55574528 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+383
+ 384.457: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 56623104 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+384
+ 385.460: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 57671680 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+385
+ 386.464: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 58720256 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+386
+ 387.467: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 59768832 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+387
+ 388.469: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 60817408 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+388
+ 389.473: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 61865984 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+389
+ 390.475: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 62914560 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+390
+ 391.479: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 63963136 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+391
+ 392.482: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 65011712 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+392
+ 393.486: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 66060288 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+393
+ 394.490: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 67108864 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+394
+ 395.492: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 68157440 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+395
+ 396.493: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 69206016 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+396
+ 397.497: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 70254592 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+397
+ 398.502: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 71303168 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+398
+ 399.506: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 72351744 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+399
+ 400.509: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 73400320 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+400
+ 401.514: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 74448896 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+401
+ 402.517: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 75497472 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+402
+ 403.518: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 76546048 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+403
+ 404.522: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 77594624 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+404
+ 405.525: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 78643200 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+405
+ 406.527: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 79691776 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+406
+ 407.531: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 80740352 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+407
+ 408.534: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 81788928 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+408
+ 409.538: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 82837504 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+409
+ 410.539: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 83886080 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+410
+ 411.542: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 84934656 bytes, allocation request: 524304 bytes, threshold: 10485760 bytes (10.00 %), source: concurrent humongous allocation]
+411

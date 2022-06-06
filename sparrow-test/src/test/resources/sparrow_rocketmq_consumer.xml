@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements.  See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
+    "beans.dtd">
+<beans>
+    <bean name="cacheMonitor" class="com.sparrow.redis.SparrowCacheMonitor"/>
+    <bean name="redisPool" class="com.sparrow.cache.impl.redis.RedisPool">
+        <property name="urls" value="127.0.0.1:6379"/>
+        <property name="cacheMonitor" ref="cacheMonitor"/>
+    </bean>
+
+    <bean name="cacheClient" class="com.sparrow.cache.impl.redis.RedisCacheClient">
+        <property name="redisPool" ref="redisPool"/>
+    </bean>
+    <bean name="mqIdempotent" class="com.sparrow.mq.DefaultIdempotent">
+        <property name="cacheClient" ref="cacheClient"/>
+    </bean>
+    <bean name="messageConverter" class="com.sparrow.rocketmq.impl.SparrowJsonMessageConverter">
+        <property name="charset" value="UTF-8"/>
+    </bean>
+
+    <bean name="distributedCountDownLatch" class="com.sparrow.support.redis.impl.RedisDistributedCountDownLatch">
+        <property name="cacheClient" ref="cacheClient"/>
+    </bean>
+
+    <bean name="queueHandlerMappingContainer" class="com.sparrow.mq.DefaultQueueHandlerMappingContainer"/>
+
+    <bean name="rocketMQMessageListener" class="com.sparrow.rocketmq.impl.SparrowRocketMQMessageListener">
+        <property name="messageConverter" ref="messageConverter"/>
+        <property name="queueHandlerMappingContainer" ref="queueHandlerMappingContainer"/>
+        <property name="mqIdempotent" ref="mqIdempotent"/>
+        <property name="distributedCountDownLatch" ref="distributedCountDownLatch"/>
+    </bean>
+
+
+
+    <bean name="mqConsumer" class="com.sparrow.rocketmq.impl.RocketMQConsumer">
+        <property name="groupName" value="sparrow-consumer-group"/>
+        <property name="topicConfig" value="sparrow-test-topic:sparrow"/>
+        <property name="messageListener" ref="rocketMQMessageListener"/>
+        <property name="nameServerAddress" value="127.0.0.1:9876"/>
+        <property name="cacheClient" ref="cacheClient"/>
+        <property name="batchSize" value="100"/>
+        <property name="pullSize" value="1000"/>
+        <property name="pullInterval" value="10000"/>
+        <property name="threadCount" value="2"/>
+    </bean>
+
+    <bean name="helloHandler" class="com.sparrow.rocketmq.protocol.handler.HelloWorldHandler">
+        <property name="queueHandlerMappingContainer" ref="queueHandlerMappingContainer"/>
+    </bean>
+</beans>

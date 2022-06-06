@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements.  See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
+        "beans.dtd">
+<beans>
+    <bean name="initializer" class="com.sparrow.facade.initializer.SparrowContextInitializer"/>
+    <bean name="cacheMonitor" class="com.sparrow.redis.SparrowCacheMonitor"/>
+
+    <bean name="poolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+        <property name="maxActive" value="5"/>
+        <property name="maxIdle" value="1"/>
+        <property name="maxWait" value="2"/>
+        <property name="minIdle" value="3"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="timeBetweenEvictionRunsMillis" value="10000"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+    </bean>
+
+    <bean name="redisPool" class="com.sparrow.cache.impl.redis.lettuce.RedisPool">
+        <property name="urls" value="redis://10.2.2.13:8030/2"/>
+        <property name="cacheMonitor" ref="cacheMonitor"/>
+        <property name="config" ref="poolConfig"/>
+    </bean>
+
+    <bean name="cacheClient" class="com.sparrow.cache.impl.redis.lettuce.RedisCacheClient">
+        <property name="redisPool" ref="redisPool"/>
+    </bean>
+</beans>

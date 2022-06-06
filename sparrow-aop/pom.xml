@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sparrow-bom</artifactId>
+        <groupId>com.sparrow</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>sparrow-aop</artifactId>
+    <properties>
+        <curator.version>2.10.0</curator.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.sparrow</groupId>
+            <artifactId>sparrow</artifactId>
+        </dependency>
+            <!--必须 spring aop 使用-->
+                <dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjweaver</artifactId>
+                    <version>1.9.4</version>
+                </dependency>
+        <!--非必要aspectjweaver 中已包含-->
+<!--        <dependency>-->
+<!--            <groupId>org.aspectj</groupId>-->
+<!--            <artifactId>aspectjrt</artifactId>-->
+<!--            <version>1.9.4</version>-->
+<!--        </dependency>-->
+
+                <!--        非必须 在spring aop 中已集成-->
+                <!--        <dependency>-->
+                <!--            <groupId>aopalliance</groupId>-->
+                <!--            <artifactId>aopalliance</artifactId>-->
+                <!--            <version>1.0</version>-->
+                <!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>4.3.20.RELEASE</version>
+        </dependency>
+    </dependencies>
+
+    <!--spring-aop：AOP核心功能，例如代理工厂等
+
+aspectjweaver：支持切入点表达式等
+
+aspectjrt：支持aop相关注解等-->
+</project>

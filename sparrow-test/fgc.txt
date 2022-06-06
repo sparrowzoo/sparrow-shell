@@ -1,0 +1,207 @@
+/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/bin/java -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:53666,suspend=y,server=n -Xmx20m -Xms20m -XX:+UseG1GC -XX:+PrintGCDetails -XX:G1HeapRegionSize=2m -XX:G1HeapWastePercent=10 -XX:+PrintGCTimeStamps -XX:+PrintReferenceGC -XX:+PrintAdaptiveSizePolicy -XX:+PrintHeapAtGC -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=5 -XX:+G1TraceEagerReclaimHumongousObjects -XX:-G1EagerReclaimHumongousObjects -XX:+UnlockDiagnosticVMOptions -XX:InitiatingHeapOccupancyPercent=10 -XX:+G1PrintRegionLivenessInfo -XX:+G1PrintHeapRegions -XX:+G1TraceEagerReclaimHumongousObjects -XX:+G1PrintHeapRegions -javaagent:/Users/mac/Library/Caches/IntelliJIdea2018.2/captureAgent/debugger-agent.jar=file:/private/var/folders/cv/gwq4s3k55nbd10_x68cyn3q00000gn/T/capture.props -Dfile.encoding=UTF-8 -classpath "/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jfxswt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/management-agent.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/plugin.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/ant-javafx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/dt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/javafx-mx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/jconsole.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/packager.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/sa-jdi.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/tools.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-test/target/test-classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-test/target/classes:/Users/mac/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/mac/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/mac/.m2/repository/junitperf/junitperf/1.8/junitperf-1.8.jar:/Users/mac/.m2/repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar:/Users/mac/.m2/repository/javax/servlet/jsp/jsp-api/2.2/jsp-api-2.2.jar:/Users/mac/.m2/repository/jstl/jstl/1.2/jstl-1.2.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-loader/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow/target/classes:/Users/mac/.m2/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-core/7.1.0/lucene-core-7.1.0.jar:/Users/mac/.m2/repository/org/apache/poi/poi/3.12/poi-3.12.jar:/Users/mac/.m2/repository/org/apache/poi/poi-ooxml/3.12/poi-ooxml-3.12.jar:/Users/mac/.m2/repository/org/apache/poi/poi-ooxml-schemas/3.12/poi-ooxml-schemas-3.12.jar:/Users/mac/.m2/repository/org/apache/xmlbeans/xmlbeans/2.6.0/xmlbeans-2.6.0.jar:/Users/mac/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar:/Users/mac/.m2/repository/org/apache/poi/poi-scratchpad/3.12/poi-scratchpad-3.12.jar:/Users/mac/.m2/repository/javax/mail/mail/1.4.7/mail-1.4.7.jar:/Users/mac/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/Users/mac/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-protocol/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-container/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-data-source/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-json/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-orm/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-mvc/target/classes:/Users/mac/.m2/repository/com/google/zxing/core/2.2/core-2.2.jar:/Users/mac/.m2/repository/eu/bitwalker/UserAgentUtils/1.21/UserAgentUtils-1.21.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-rocketmq-client/target/classes:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-client/4.2.0/rocketmq-client-4.2.0.jar:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-common/4.2.0/rocketmq-common-4.2.0.jar:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-remoting/4.2.0/rocketmq-remoting-4.2.0.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-sharded-jedis/target/classes:/Users/mac/.m2/repository/redis/clients/jedis/2.1.0/jedis-2.1.0.jar:/Users/mac/.m2/repository/org/glassfish/javax.json/1.0.4/javax.json-1.0.4.jar:/Users/mac/.m2/repository/com/alibaba/fastjson/1.1.41/fastjson-1.1.41.jar:/Users/mac/.m2/repository/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.8.0/jackson-annotations-2.8.0.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.8/jackson-core-2.8.8.jar:/Users/mac/.m2/repository/commons-fileupload/commons-fileupload/1.3/commons-fileupload-1.3.jar:/Users/mac/.m2/repository/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar:/Users/mac/.m2/repository/org/springframework/spring-test/4.2.6.RELEASE/spring-test-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-core/4.2.6.RELEASE/spring-core-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/Users/mac/.m2/repository/org/springframework/spring-beans/4.2.6.RELEASE/spring-beans-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/com/google/guava/guava/29.0-jre/guava-29.0-jre.jar:/Users/mac/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/Users/mac/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/mac/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/mac/.m2/repository/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.jar:/Users/mac/.m2/repository/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar:/Users/mac/.m2/repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar:/Users/mac/.m2/repository/org/springframework/spring-context/4.2.6.RELEASE/spring-context-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-aop/4.2.6.RELEASE/spring-aop-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/mac/.m2/repository/org/springframework/spring-expression/4.2.6.RELEASE/spring-expression-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-webmvc/4.2.6.RELEASE/spring-webmvc-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-web/4.2.6.RELEASE/spring-web-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-ibatis/2.0.8/spring-ibatis-2.0.8.jar:/Users/mac/.m2/repository/org/apache/ibatis/ibatis-sqlmap/2.3.0/ibatis-sqlmap-2.3.0.jar:/Users/mac/.m2/repository/org/springframework/spring-dao/2.0.8/spring-dao-2.0.8.jar:/Users/mac/.m2/repository/org/springframework/spring-jdbc/2.0.8/spring-jdbc-2.0.8.jar:/Users/mac/.m2/repository/org/mybatis/mybatis/3.2.1/mybatis-3.2.1.jar:/Users/mac/.m2/repository/org/mybatis/mybatis-spring/1.2.0/mybatis-spring-1.2.0.jar:/Users/mac/.m2/repository/org/springframework/spring-tx/4.2.6.RELEASE/spring-tx-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/mobile/spring-mobile-device/1.0.0.RELEASE/spring-mobile-device-1.0.0.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/data/spring-data-jpa/2.0.1.RELEASE/spring-data-jpa-2.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/data/spring-data-commons/2.0.1.RELEASE/spring-data-commons-2.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-orm/5.0.1.RELEASE/spring-orm-5.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/aspectj/aspectjrt/1.8.12/aspectjrt-1.8.12.jar:/Users/mac/.m2/repository/org/slf4j/slf4j-api/1.7.12/slf4j-api-1.7.12.jar:/Users/mac/.m2/repository/com/h2database/h2/1.4.193/h2-1.4.193.jar:/Users/mac/.m2/repository/org/ow2/asm/asm/6.2.1/asm-6.2.1.jar:/Users/mac/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar:/Users/mac/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch-analysis-ik/6.1.1/elasticsearch-analysis-ik-6.1.1.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch/6.1.1/elasticsearch-6.1.1.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-analyzers-common/7.1.0/lucene-analyzers-common-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-backward-codecs/7.1.0/lucene-backward-codecs-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-grouping/7.1.0/lucene-grouping-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-highlighter/7.1.0/lucene-highlighter-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-join/7.1.0/lucene-join-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-memory/7.1.0/lucene-memory-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-misc/7.1.0/lucene-misc-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-queries/7.1.0/lucene-queries-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-queryparser/7.1.0/lucene-queryparser-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-sandbox/7.1.0/lucene-sandbox-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial/7.1.0/lucene-spatial-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial-extras/7.1.0/lucene-spatial-extras-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial3d/7.1.0/lucene-spatial3d-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-suggest/7.1.0/lucene-suggest-7.1.0.jar:/Users/mac/.m2/repository/org/elasticsearch/securesm/1.2/securesm-1.2.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch-cli/6.1.1/elasticsearch-cli-6.1.1.jar:/Users/mac/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2.jar:/Users/mac/.m2/repository/com/carrotsearch/hppc/0.7.1/hppc-0.7.1.jar:/Users/mac/.m2/repository/joda-time/joda-time/2.9.5/joda-time-2.9.5.jar:/Users/mac/.m2/repository/org/yaml/snakeyaml/1.19/snakeyaml-1.19.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.8.10/jackson-dataformat-smile-2.8.10.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.8.10/jackson-dataformat-yaml-2.8.10.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.8.10/jackson-dataformat-cbor-2.8.10.jar:/Users/mac/.m2/repository/com/tdunning/t-digest/3.0/t-digest-3.0.jar:/Users/mac/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.9/HdrHistogram-2.1.9.jar:/Users/mac/.m2/repository/org/elasticsearch/jna/4.4.0-1/jna-4.4.0-1.jar:/Users/mac/.m2/repository/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar:/Users/mac/.m2/repository/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4.jar:/Users/mac/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar:/Users/mac/.m2/repository/org/apache/logging/log4j/log4j-api/2.3/log4j-api-2.3.jar:/Users/mac/.m2/repository/net/java/dev/jna/jna/5.3.1/jna-5.3.1.jar:/Users/mac/.m2/repository/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar:/Users/mac/.m2/repository/commons-pool/commons-pool/1.5.5/commons-pool-1.5.5.jar:/Users/mac/.m2/repository/com/esotericsoftware/kryo/kryo/2.24.0/kryo-2.24.0.jar:/Users/mac/.m2/repository/com/esotericsoftware/minlog/minlog/1.2/minlog-1.2.jar:/Users/mac/.m2/repository/org/objenesis/objenesis/2.1/objenesis-2.1.jar:/Users/mac/.m2/repository/io/lettuce/lettuce-core/5.2.2.RELEASE/lettuce-core-5.2.2.RELEASE.jar:/Users/mac/.m2/repository/io/netty/netty-common/4.1.45.Final/netty-common-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-handler/4.1.45.Final/netty-handler-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-buffer/4.1.45.Final/netty-buffer-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-codec/4.1.45.Final/netty-codec-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-transport/4.1.45.Final/netty-transport-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-resolver/4.1.45.Final/netty-resolver-4.1.45.Final.jar:/Users/mac/.m2/repository/io/projectreactor/reactor-core/3.3.2.RELEASE/reactor-core-3.3.2.RELEASE.jar:/Users/mac/.m2/repository/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar:/Users/mac/.m2/repository/io/milvus/milvus-sdk-java/0.9.1/milvus-sdk-java-0.9.1.jar:/Users/mac/.m2/repository/io/grpc/grpc-protobuf/1.30.2/grpc-protobuf-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-api/1.30.2/grpc-api-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-context/1.30.2/grpc-context-1.30.2.jar:/Users/mac/.m2/repository/com/google/protobuf/protobuf-java/3.12.0/protobuf-java-3.12.0.jar:/Users/mac/.m2/repository/com/google/api/grpc/proto-google-common-protos/1.17.0/proto-google-common-protos-1.17.0.jar:/Users/mac/.m2/repository/io/grpc/grpc-protobuf-lite/1.30.2/grpc-protobuf-lite-1.30.2.jar:/Users/mac/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.18/animal-sniffer-annotations-1.18.jar:/Users/mac/.m2/repository/io/grpc/grpc-stub/1.30.2/grpc-stub-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-netty-shaded/1.30.2/grpc-netty-shaded-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-core/1.30.2/grpc-core-1.30.2.jar:/Users/mac/.m2/repository/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar:/Users/mac/.m2/repository/io/perfmark/perfmark-api/0.19.0/perfmark-api-0.19.0.jar:/Users/mac/.m2/repository/org/json/json/20190722/json-20190722.jar:/Users/mac/.m2/repository/org/apache/commons/commons-lang3/3.10/commons-lang3-3.10.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-serialization-native-hession/2.7.9/dubbo-serialization-native-hession-2.7.9.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-serialization-api/2.7.9/dubbo-serialization-api-2.7.9.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-common/2.7.9/dubbo-common-2.7.9.jar:/Users/mac/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar:/Users/mac/.m2/repository/org/javassist/javassist/3.20.0-GA/javassist-3.20.0-GA.jar:/Users/mac/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar:/Users/mac/.m2/repository/com/caucho/hessian/4.0.38/hessian-4.0.38.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar" com.sparrow.jdk.gc.G1Test
+ 0.013: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 20971520 bytes, attempted expansion amount: 20971520 bytes]
+ G1HR COMMIT [0x00000007bec00000,0x00000007bee00000]
+ G1HR COMMIT [0x00000007bee00000,0x00000007bf000000]
+ G1HR COMMIT [0x00000007bf000000,0x00000007bf200000]
+ G1HR COMMIT [0x00000007bf200000,0x00000007bf400000]
+ G1HR COMMIT [0x00000007bf400000,0x00000007bf600000]
+ G1HR COMMIT [0x00000007bf600000,0x00000007bf800000]
+ G1HR COMMIT [0x00000007bf800000,0x00000007bfa00000]
+ G1HR COMMIT [0x00000007bfa00000,0x00000007bfc00000]
+ G1HR COMMIT [0x00000007bfc00000,0x00000007bfe00000]
+ G1HR COMMIT [0x00000007bfe00000,0x00000007c0000000]
+ G1HR ALLOC(Eden) 0x00000007bfe00000
+Connected to the target VM, address: '127.0.0.1:53666', transport: 'socket'
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+ G1HR ALLOC(Eden) 0x00000007bfa00000
+2
+ G1HR ALLOC(SingleH) 0x00000007bec00000 0x00000007bed00010
+2
+ 4.164: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 2097152 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ 4.165: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: requested by GC cause, GC cause: G1 Humongous Allocation]
+{Heap before GC invocations=0 (full 0):
+ garbage-first heap   total 20480K, used 5120K [0x00000007bec00000, 0x00000007bee00050, 0x00000007c0000000)
+  region size 2048K, 3 young (6144K), 0 survivors (0K)
+ Metaspace       used 3285K, capacity 4568K, committed 4864K, reserved 1056768K
+  class space    used 349K, capacity 392K, committed 512K, reserved 1048576K
+ 4.165: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+4.165: [GC pause (G1 Humongous Allocation) (young) (initial-mark) G1HR RETIRE 0x00000007bfa00000 0x00000007bfb7ba18
+ G1HR #StartGC 1
+ 4.165: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 10.00 ms, remaining time: 190.00 ms, target pause time: 200.00 ms]
+ 4.165: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 3 regions, survivors: 0 regions, predicted young region time: 83.39 ms]
+ 4.165: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 3 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 93.39 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007bfa00000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007bfe00000
+ G1HR ALLOC(Survivor) 0x00000007bf800000
+4.166: [SoftReference, 0 refs, 0.0000192 secs]4.166: [WeakReference, 17 refs, 0.0000076 secs]4.166: [FinalReference, 409 refs, 0.0002920 secs]4.166: [PhantomReference, 0 refs, 0 refs, 0.0000069 secs]4.166: [JNI Weak Reference, 0.0000931 secs] G1HR RETIRE 0x00000007bf800000 0x00000007bf92beb8
+ G1HR #EndGC 1
+, 0.0020749 secs]
+   [Parallel Time: 1.0 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 4164.6, Avg: 4164.8, Max: 4164.8, Diff: 0.2]
+      [Ext Root Scanning (ms): Min: 0.2, Avg: 0.3, Max: 0.4, Diff: 0.2, Sum: 2.8]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.4, Avg: 0.5, Max: 0.5, Diff: 0.1, Sum: 4.9]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Termination Attempts: Min: 1, Avg: 4.5, Max: 7, Diff: 6, Sum: 45]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.7, Avg: 0.8, Max: 0.9, Diff: 0.2, Sum: 7.9]
+      [GC Worker End (ms): Min: 4165.6, Avg: 4165.6, Max: 4165.6, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 1.0 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.7 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 6144.0K(12.0M)->0.0B(8192.0K) Survivors: 0.0B->2048.0K Heap: 6638.5K(20.0M)->2223.7K(20.0M)]
+Heap after GC invocations=1 (full 0):
+ garbage-first heap   total 20480K, used 2223K [0x00000007bec00000, 0x00000007bee00050, 0x00000007c0000000)
+  region size 2048K, 1 young (2048K), 1 survivors (2048K)
+ Metaspace       used 3285K, capacity 4568K, committed 4864K, reserved 1056768K
+  class space    used 349K, capacity 392K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+4.167: [GC concurrent-root-region-scan-start]
+ G1HR ALLOC(SingleH) 0x00000007bee00000 0x00000007bef00010
+4.168: [GC concurrent-root-region-scan-end, 0.0007959 secs]
+4.168: [GC concurrent-mark-start]
+4.168: [GC concurrent-mark-end, 0.0000623 secs]
+4.168: [GC remark 4.168: [Finalize Marking, 0.0002405 secs] 4.168: [GC ref-proc4.168: [SoftReference, 0 refs, 0.0000170 secs]4.168: [WeakReference, 0 refs, 0.0000121 secs]4.168: [FinalReference, 0 refs, 0.0000119 secs]4.168: [PhantomReference, 0 refs, 0 refs, 0.0000201 secs]4.168: [JNI Weak Reference, 0.0000872 secs], 0.0001632 secs] 4.168: [Unloading, 0.0005003 secs], 0.0011191 secs]
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+4.169: [GC cleanup
+### PHASE Post-Marking @ 4.169
+### HEAP  reserved: 0x00000007bec00000-0x00000007c0000000  region-size: 2097152
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###   HUMS 0x00000007bec00000-0x00000007bee00000    1048592    1048592          0             0.0       5200         16
+###   HUMS 0x00000007bee00000-0x00000007bf000000    1048592    1048592    1048592             0.0       5200         16
+###   FREE 0x00000007bf000000-0x00000007bf200000          0          0          0             0.0       5200         16
+###   FREE 0x00000007bf200000-0x00000007bf400000          0          0          0             0.0       5200         16
+###   FREE 0x00000007bf400000-0x00000007bf600000          0          0          0             0.0       5200         16
+###   FREE 0x00000007bf600000-0x00000007bf800000          0          0          0             0.0       5200         16
+###   SURV 0x00000007bf800000-0x00000007bfa00000    1228472    1228472    1228472             0.0       5608        424
+###   FREE 0x00000007bfa00000-0x00000007bfc00000          0          0          0             0.0       5200         16
+###   FREE 0x00000007bfc00000-0x00000007bfe00000          0          0          0             0.0       5200         16
+###   FREE 0x00000007bfe00000-0x00000007c0000000          0          0          0             0.0       5200         16
+###
+### SUMMARY  capacity: 20.00 MB  used: 3.17 MB / 15.86 %  prev-live: 3.17 MB / 15.86 %  next-live: 2.17 MB / 10.86 %  remset: 0.05 MB  code-roots: 0.00 MB
+
+ G1HR CLEANUP 0x00000007bec00000
+
+### PHASE Post-Sorting @ 4.170
+### HEAP  reserved: 0x00000007bec00000-0x00000007c0000000  region-size: 2097152
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###
+### SUMMARY  capacity: 0.00 MB  used: 0.00 MB / 0.00 %  prev-live: 0.00 MB / 0.00 %  next-live: 0.00 MB / 0.00 %  remset: 0.00 MB  code-roots: 0.00 MB
+
+ 3247K->2223K(20M), 0.0006157 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+4.170: [GC concurrent-cleanup-start]
+4.170: [GC concurrent-cleanup-end, 0.0000080 secs]
+2
+ 14.127: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 2097152 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ G1HR ALLOC(SingleH) 0x00000007bf000000 0x00000007bf100010
+2
+ 15.362: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 4194304 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ G1HR ALLOC(SingleH) 0x00000007bf200000 0x00000007bf300010
+2
+ 16.166: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 6291456 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ G1HR ALLOC(SingleH) 0x00000007bf400000 0x00000007bf500010
+2
+ 17.077: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 8388608 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ G1HR ALLOC(SingleH) 0x00000007bf600000 0x00000007bf700010
+2
+ 18.105: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 10485760 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ G1HR ALLOC(SingleH) 0x00000007bfa00000 0x00000007bfb00010
+2
+ 19.164: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 12582912 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ G1HR ALLOC(SingleH) 0x00000007bfc00000 0x00000007bfd00010
+2
+ 20.019: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 14680064 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ G1HR ALLOC(SingleH) 0x00000007bfe00000 0x00000007bff00010
+2
+ 20.766: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 16777216 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+ G1HR ALLOC(SingleH) 0x00000007bec00000 0x00000007bed00010
+2
+ 21.622: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 18874368 bytes, allocation request: 1048592 bytes, threshold: 2097150 bytes (10.00 %), source: concurrent humongous allocation]
+{Heap before GC invocations=2 (full 0):
+ garbage-first heap   total 20480K, used 10415K [0x00000007bec00000, 0x00000007bee00050, 0x00000007c0000000)
+  region size 2048K, 1 young (2048K), 1 survivors (2048K)
+ Metaspace       used 3290K, capacity 4568K, committed 4864K, reserved 1056768K
+  class space    used 349K, capacity 392K, committed 512K, reserved 1048576K
+21.622: [GC pause (G1 Humongous Allocation) (young) G1HR #StartGC 3
+ 21.622: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 6.93 ms, remaining time: 193.07 ms, target pause time: 200.00 ms]
+ 21.622: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 0 regions, survivors: 1 regions, predicted young region time: 11.16 ms]
+ 21.622: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 0 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 18.10 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007bf800000
+ 21.622: [G1Ergonomics (Heap Sizing) attempt heap expansion, reason: region allocation request failed, allocation request: 94272 bytes]
+ 21.622: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 94272 bytes, attempted expansion amount: 2097152 bytes]
+ 21.622: [G1Ergonomics (Heap Sizing) did not expand the heap, reason: heap already fully expanded]
+ G1HR EVAC-FAILURE 0x00000007bf800000
+21.630: [SoftReference, 0 refs, 0.0000157 secs]21.630: [WeakReference, 0 refs, 0.0000054 secs]21.630: [FinalReference, 0 refs, 0.0000051 secs]21.630: [PhantomReference, 0 refs, 0 refs, 0.0000062 secs]21.630: [JNI Weak Reference, 0.0000524 secs] 21.632: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 20971520 bytes, allocation request: 0 bytes, threshold: 2097150 bytes (10.00 %), source: end of GC]
+ 21.632: [G1Ergonomics (Mixed GCs) do not start mixed GCs, reason: candidate old regions not available]
+ G1HR #EndGC 3
+ (to-space exhausted), 0.0093866 secs]
+   [Parallel Time: 7.3 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 21622.4, Avg: 21622.5, Max: 21622.6, Diff: 0.2]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.9, Max: 7.0, Diff: 6.9, Sum: 8.9]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.1]
+      [Object Copy (ms): Min: 0.0, Avg: 4.6, Max: 5.5, Diff: 5.5, Sum: 46.4]
+      [Termination (ms): Min: 0.0, Avg: 1.5, Max: 2.2, Diff: 2.2, Sum: 14.8]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 6.9, Avg: 7.0, Max: 7.2, Diff: 0.4, Sum: 70.4]
+      [GC Worker End (ms): Min: 21629.4, Avg: 21629.5, Max: 21629.7, Diff: 0.2]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 1.9 ms]
+      [Evacuation Failure: 1.2 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.3 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 0.0B(8192.0K)->0.0B(2048.0K) Survivors: 2048.0K->0.0B Heap: 10.2M(20.0M)->10.2M(20.0M)]
+Heap after GC invocations=3 (full 0):
+ garbage-first heap   total 20480K, used 10415K [0x00000007bec00000, 0x00000007bee00050, 0x00000007c0000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3290K, capacity 4568K, committed 4864K, reserved 1056768K
+  class space    used 349K, capacity 392K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.02 sys=0.00, real=0.01 secs]
+ 21.632: [G1Ergonomics (Heap Sizing) attempt heap expansion, reason: allocation request failed, allocation request: 1048592 bytes]
+ 21.632: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 2097152 bytes, attempted expansion amount: 2097152 bytes]
+ 21.632: [G1Ergonomics (Heap Sizing) did not expand the heap, reason: heap already fully expanded]
+{Heap before GC invocations=3 (full 0):
+ garbage-first heap   total 20480K, used 10415K [0x00000007bec00000, 0x00000007bee00050, 0x00000007c0000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3290K, capacity 4568K, committed 4864K, reserved 1056768K
+  class space    used 349K, capacity 392K, committed 512K, reserved 1048576K
+21.632: [Full GC (Allocation Failure)  G1HR #StartFullGC 4
+21.632: [SoftReference, 21 refs, 0.0000092 secs]21.632: [WeakReference, 0 refs, 0.0000051 secs]21.632: [FinalReference, 10 refs, 0.0000064 secs]21.632: [PhantomReference, 0 refs, 0 refs, 0.0000061 secs]21.632: [JNI Weak Reference, 0.0000312 secs] G1HR POST-COMPACTION(Old) 0x00000007bec00000 0x00000007becb8bb0
+ G1HR #EndFullGC 4
+ 10M->738K(20M), 0.0028403 secs]
+   [Eden: 0.0B(2048.0K)->0.0B(10.0M) Survivors: 0.0B->0.0B Heap: 10.2M(20.0M)->738.9K(20.0M)], [Metaspace: 3290K->3290K(1056768K)]
+Heap after GC invocations=4 (full 1):
+ garbage-first heap   total 20480K, used 738K [0x00000007bec00000, 0x00000007bee00050, 0x00000007c0000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3290K, capacity 4568K, committed 4864K, reserved 1056768K
+  class space    used 349K, capacity 392K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.01 secs]
+ G1HR ALLOC(SingleH) 0x00000007bee00000 0x00000007bef00010
+ 21.635: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 4194304 bytes, allocation request: 0 bytes, threshold: 2097150 bytes (10.00 %), source: STW humongous allocation]
+ G1HR ALLOC(Eden) 0x00000007bfe00000

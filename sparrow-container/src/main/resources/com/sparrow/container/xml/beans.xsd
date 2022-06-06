@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns="http://www.sparrowzoo.com/schema/beans"
+			targetNamespace="http://www.sparrowzoo.com/schema/beans"
+			elementFormDefault="qualified">
+
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[
+	Sparrow XML Beans Schema, version 1.0
+		]]></xsd:documentation>
+	</xsd:annotation>
+
+	<!-- base types -->
+	<xsd:complexType name="identifiedType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+	The unique identifier for a bean.
+			]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="id" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+	The unique identifier for a bean. A bean id may not be used more than once
+	within the same <beans> element.
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<!-- Top-level <beans> tag -->
+	<xsd:element name="beans">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+	Container for <bean> and other elements, typically the root element in the document.
+	Allows the definition of default values for all nested bean definitions. May itself
+	be nested for the purpose of defining a subset of beans with certain default values or
+	to be registered only when certain profile(s) are active. Any such nested <beans> element
+	must be declared as the last element in the document.
+			]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="description" minOccurs="0"/>
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+					<xsd:element ref="import"/>
+					<xsd:element ref="bean"/>
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attribute name="default-init-method" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation><![CDATA[
+	The default 'init-method' value; see the documentation for the
+	'init-method' attribute of the 'bean' element.
+					]]></xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="default-destroy-method" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation><![CDATA[
+	The default 'destroy-method' value; see the documentation for the
+	'destroy-method' attribute of the 'bean' element.
+					]]></xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="description">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+	Contains informative text describing the purpose of the enclosing element.
+	Used primarily for user documentation of XML bean definition documents.
+			]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType mixed="true">
+			<xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="import">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+	Specifies an XML bean definition resource to import.
+			]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="xsd:anyType">
+					<xsd:attribute name="resource" type="xsd:string" use="required">
+						<xsd:annotation>
+							<xsd:documentation><![CDATA[
+	The relative resource location of the XML (bean definition) file to import,
+	for example "myImport.xml" or "includes/myImport.xml" or "../myImport.xml".
+							]]></xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:group name="beanElements">
+		<xsd:sequence>
+			<xsd:element ref="description" minOccurs="0"/>
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element ref="property"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:group>
+
+	<xsd:attributeGroup name="beanAttributes">
+		<xsd:attribute name="name" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+	Can be used to create one or more aliases illegal in an (XML) id.
+	Multiple aliases can be separated by any number of spaces, commas,
+	or semi-colons (or indeed any mixture of the three).
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="class" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation source="java:java.lang.Class"><![CDATA[
+	The fully qualified name of the bean's class, except if it serves only
+	as a parent definition for child bean definitions.
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="scope" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+	The scope of this bean: typically "singleton" (one shared instance,
+	which will be returned by all calls to getBean with the given id), or
+	"prototype" (independent instance resulting from each call to getBean).
+
+	By default, a bean will be a singleton, unless the bean has a parent
+	bean definition in which case it will inherit the parent's scope.
+
+	Singletons are most commonly used, and are ideal for multi-threaded
+	service objects. Further scopes, such as "request" or "session", might
+	be supported by extended bean factories (e.g. in a web environment).
+
+	Inner bean definitions inherit the scope of their containing bean
+	definition, unless explicitly specified: The inner bean will be a
+	singleton if the containing bean is a singleton, and a prototype if
+	the containing bean is a prototype, etc.
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="init-method" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+	The name of the custom initialization method to invoke after setting
+	bean properties. The method must have no arguments, but may throw any
+	exception.
+
+	This is an alternative to implementing Spring's InitializingBean
+	interface or marking a method with the PostConstruct annotation.
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="destroy-method" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+	The name of the custom destroy method to invoke on bean factory shutdown.
+	The method must have no arguments, but may throw any exception.
+
+	This is an alternative to implementing Spring's DisposableBean
+	interface or the standard Java Closeable/AutoCloseable interface,
+	or marking a method with the PreDestroy annotation.
+
+	Note: Only invoked on beans whose lifecycle is under the full
+	control of the factory - which is always the case for singletons,
+	but not guaranteed for any other scope.
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
+
+	<xsd:element name="bean">
+		<xsd:annotation>
+			<xsd:documentation source="java:org.springframework.beans.factory.config.BeanDefinition"><![CDATA[
+	Defines a single (usually named) bean.
+
+	A bean definition may contain nested tags for constructor arguments,
+	property values, lookup methods, and replaced methods. Mixing constructor
+	injection and setter injection on the same bean is explicitly supported.
+			]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="identifiedType">
+					<xsd:group ref="beanElements"/>
+					<xsd:attributeGroup ref="beanAttributes"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="propertyType">
+		<xsd:sequence>
+			<xsd:element ref="description" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+	The name of the property, following JavaBean naming conventions.
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="ref" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+	A short-cut alternative to a nested "<ref bean='...'/>".
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="value" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+	A short-cut alternative to a nested "<value>...</value>" element.
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+
+
+	<xsd:element name="property" type="propertyType">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+	Bean definitions can have zero or more properties.
+	Property elements correspond to JavaBean setter methods exposed
+	by the bean classes. Spring supports primitives, references to other
+	beans in the same or related factories, lists, maps and properties.
+			]]></xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- simple internal types -->
+	<xsd:simpleType name="defaultable-boolean">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="default"/>
+			<xsd:enumeration value="true"/>
+			<xsd:enumeration value="false"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

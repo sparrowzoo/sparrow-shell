@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements.  See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
+        "beans.dtd">
+<beans>
+    <bean name="initializer" class="com.sparrow.facade.initializer.SparrowContextInitializer"/>
+    <bean name="cacheMonitor" class="com.sparrow.redis.SparrowCacheMonitor"/>
+
+    <bean name="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxActive" value="200"/>
+        <property name="maxIdle" value="1"/>
+        <property name="maxWait" value="2"/>
+        <property name="minIdle" value="3"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="timeBetweenEvictionRunsMillis" value="10000"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+    </bean>
+
+    <bean name="redisPool" class="com.sparrow.cache.impl.redis.RedisPool">
+        <property name="urls" value="127.0.0.1:6379"/>
+        <property name="config" ref="poolConfig"/>
+        <property name="cacheMonitor" ref="cacheMonitor"/>
+    </bean>
+
+    <bean name="cacheClient" class="com.sparrow.cache.impl.redis.RedisCacheClient">
+        <property name="redisPool" ref="redisPool"/>
+    </bean>
+
+
+    <bean name="distributionLock" class="com.sparrow.concurrent.DistributionLock">
+        <constructor-arg index="1" name="cacheClient" ref="cacheClient"/>
+        <constructor-arg index="2"  name="lockKey" value="LOCK:BUSINESS"/>
+        <constructor-arg index="3" type="java.lang.Integer" name="expireSecs" value="10"/>
+    </bean>
+</beans>

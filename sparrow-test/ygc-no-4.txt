@@ -1,0 +1,1309 @@
+/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/bin/java -Xmx100m -Xms100m -XX:+UseG1GC -XX:+PrintGCDetails -XX:G1HeapRegionSize=4m -XX:InitiatingHeapOccupancyPercent=10 -XX:+PrintGCTimeStamps -XX:+PrintReferenceGC -XX:G1HeapWastePercent=10 -XX:+PrintAdaptiveSizePolicy -XX:+PrintHeapAtGC -XX:+UnlockExperimentalVMOptions -XX:+G1TraceEagerReclaimHumongousObjects -XX:-G1EagerReclaimHumongousObjects -XX:+UnlockDiagnosticVMOptions -XX:+G1PrintRegionLivenessInfo -XX:+G1PrintHeapRegions "-javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=65506:/Applications/IntelliJ IDEA.app/Contents/bin" -Dfile.encoding=UTF-8 -classpath /Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jfxswt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/management-agent.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/plugin.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/ant-javafx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/dt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/javafx-mx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/jconsole.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/packager.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/sa-jdi.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/lib/tools.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-test/target/test-classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-test/target/classes:/Users/mac/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/mac/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/mac/.m2/repository/junitperf/junitperf/1.8/junitperf-1.8.jar:/Users/mac/.m2/repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar:/Users/mac/.m2/repository/javax/servlet/jsp/jsp-api/2.2/jsp-api-2.2.jar:/Users/mac/.m2/repository/jstl/jstl/1.2/jstl-1.2.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-loader/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow/target/classes:/Users/mac/.m2/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-core/7.1.0/lucene-core-7.1.0.jar:/Users/mac/.m2/repository/org/apache/poi/poi/3.12/poi-3.12.jar:/Users/mac/.m2/repository/org/apache/poi/poi-ooxml/3.12/poi-ooxml-3.12.jar:/Users/mac/.m2/repository/org/apache/poi/poi-ooxml-schemas/3.12/poi-ooxml-schemas-3.12.jar:/Users/mac/.m2/repository/org/apache/xmlbeans/xmlbeans/2.6.0/xmlbeans-2.6.0.jar:/Users/mac/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar:/Users/mac/.m2/repository/org/apache/poi/poi-scratchpad/3.12/poi-scratchpad-3.12.jar:/Users/mac/.m2/repository/javax/mail/mail/1.4.7/mail-1.4.7.jar:/Users/mac/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/Users/mac/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-protocol/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-container/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-data-source/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-json/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-orm/target/classes:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-mvc/target/classes:/Users/mac/.m2/repository/com/google/zxing/core/2.2/core-2.2.jar:/Users/mac/.m2/repository/eu/bitwalker/UserAgentUtils/1.21/UserAgentUtils-1.21.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-rocketmq-client/target/classes:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-client/4.2.0/rocketmq-client-4.2.0.jar:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-common/4.2.0/rocketmq-common-4.2.0.jar:/Users/mac/.m2/repository/org/apache/rocketmq/rocketmq-remoting/4.2.0/rocketmq-remoting-4.2.0.jar:/Users/mac/workspace/sparrow/sparrow-shell/sparrow-sharded-jedis/target/classes:/Users/mac/.m2/repository/redis/clients/jedis/2.1.0/jedis-2.1.0.jar:/Users/mac/.m2/repository/org/glassfish/javax.json/1.0.4/javax.json-1.0.4.jar:/Users/mac/.m2/repository/com/alibaba/fastjson/1.1.41/fastjson-1.1.41.jar:/Users/mac/.m2/repository/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.8.0/jackson-annotations-2.8.0.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.8/jackson-core-2.8.8.jar:/Users/mac/.m2/repository/commons-fileupload/commons-fileupload/1.3/commons-fileupload-1.3.jar:/Users/mac/.m2/repository/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar:/Users/mac/.m2/repository/org/springframework/spring-test/4.2.6.RELEASE/spring-test-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-core/4.2.6.RELEASE/spring-core-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/Users/mac/.m2/repository/org/springframework/spring-beans/4.2.6.RELEASE/spring-beans-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/com/google/guava/guava/29.0-jre/guava-29.0-jre.jar:/Users/mac/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/Users/mac/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/mac/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/mac/.m2/repository/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.jar:/Users/mac/.m2/repository/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar:/Users/mac/.m2/repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar:/Users/mac/.m2/repository/org/springframework/spring-context/4.2.6.RELEASE/spring-context-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-aop/4.2.6.RELEASE/spring-aop-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/mac/.m2/repository/org/springframework/spring-expression/4.2.6.RELEASE/spring-expression-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-webmvc/4.2.6.RELEASE/spring-webmvc-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-web/4.2.6.RELEASE/spring-web-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-ibatis/2.0.8/spring-ibatis-2.0.8.jar:/Users/mac/.m2/repository/org/apache/ibatis/ibatis-sqlmap/2.3.0/ibatis-sqlmap-2.3.0.jar:/Users/mac/.m2/repository/org/springframework/spring-dao/2.0.8/spring-dao-2.0.8.jar:/Users/mac/.m2/repository/org/springframework/spring-jdbc/2.0.8/spring-jdbc-2.0.8.jar:/Users/mac/.m2/repository/org/mybatis/mybatis/3.2.1/mybatis-3.2.1.jar:/Users/mac/.m2/repository/org/mybatis/mybatis-spring/1.2.0/mybatis-spring-1.2.0.jar:/Users/mac/.m2/repository/org/springframework/spring-tx/4.2.6.RELEASE/spring-tx-4.2.6.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/mobile/spring-mobile-device/1.0.0.RELEASE/spring-mobile-device-1.0.0.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/data/spring-data-jpa/2.0.1.RELEASE/spring-data-jpa-2.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/data/spring-data-commons/2.0.1.RELEASE/spring-data-commons-2.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/springframework/spring-orm/5.0.1.RELEASE/spring-orm-5.0.1.RELEASE.jar:/Users/mac/.m2/repository/org/aspectj/aspectjrt/1.8.12/aspectjrt-1.8.12.jar:/Users/mac/.m2/repository/org/slf4j/slf4j-api/1.7.12/slf4j-api-1.7.12.jar:/Users/mac/.m2/repository/com/h2database/h2/1.4.193/h2-1.4.193.jar:/Users/mac/.m2/repository/org/ow2/asm/asm/6.2.1/asm-6.2.1.jar:/Users/mac/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar:/Users/mac/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch-analysis-ik/6.1.1/elasticsearch-analysis-ik-6.1.1.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch/6.1.1/elasticsearch-6.1.1.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-analyzers-common/7.1.0/lucene-analyzers-common-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-backward-codecs/7.1.0/lucene-backward-codecs-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-grouping/7.1.0/lucene-grouping-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-highlighter/7.1.0/lucene-highlighter-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-join/7.1.0/lucene-join-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-memory/7.1.0/lucene-memory-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-misc/7.1.0/lucene-misc-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-queries/7.1.0/lucene-queries-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-queryparser/7.1.0/lucene-queryparser-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-sandbox/7.1.0/lucene-sandbox-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial/7.1.0/lucene-spatial-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial-extras/7.1.0/lucene-spatial-extras-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-spatial3d/7.1.0/lucene-spatial3d-7.1.0.jar:/Users/mac/.m2/repository/org/apache/lucene/lucene-suggest/7.1.0/lucene-suggest-7.1.0.jar:/Users/mac/.m2/repository/org/elasticsearch/securesm/1.2/securesm-1.2.jar:/Users/mac/.m2/repository/org/elasticsearch/elasticsearch-cli/6.1.1/elasticsearch-cli-6.1.1.jar:/Users/mac/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2.jar:/Users/mac/.m2/repository/com/carrotsearch/hppc/0.7.1/hppc-0.7.1.jar:/Users/mac/.m2/repository/joda-time/joda-time/2.9.5/joda-time-2.9.5.jar:/Users/mac/.m2/repository/org/yaml/snakeyaml/1.19/snakeyaml-1.19.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.8.10/jackson-dataformat-smile-2.8.10.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.8.10/jackson-dataformat-yaml-2.8.10.jar:/Users/mac/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.8.10/jackson-dataformat-cbor-2.8.10.jar:/Users/mac/.m2/repository/com/tdunning/t-digest/3.0/t-digest-3.0.jar:/Users/mac/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.9/HdrHistogram-2.1.9.jar:/Users/mac/.m2/repository/org/elasticsearch/jna/4.4.0-1/jna-4.4.0-1.jar:/Users/mac/.m2/repository/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar:/Users/mac/.m2/repository/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4.jar:/Users/mac/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar:/Users/mac/.m2/repository/org/apache/logging/log4j/log4j-api/2.3/log4j-api-2.3.jar:/Users/mac/.m2/repository/net/java/dev/jna/jna/5.3.1/jna-5.3.1.jar:/Users/mac/.m2/repository/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar:/Users/mac/.m2/repository/commons-pool/commons-pool/1.5.5/commons-pool-1.5.5.jar:/Users/mac/.m2/repository/com/esotericsoftware/kryo/kryo/2.24.0/kryo-2.24.0.jar:/Users/mac/.m2/repository/com/esotericsoftware/minlog/minlog/1.2/minlog-1.2.jar:/Users/mac/.m2/repository/org/objenesis/objenesis/2.1/objenesis-2.1.jar:/Users/mac/.m2/repository/io/lettuce/lettuce-core/5.2.2.RELEASE/lettuce-core-5.2.2.RELEASE.jar:/Users/mac/.m2/repository/io/netty/netty-common/4.1.45.Final/netty-common-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-handler/4.1.45.Final/netty-handler-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-buffer/4.1.45.Final/netty-buffer-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-codec/4.1.45.Final/netty-codec-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-transport/4.1.45.Final/netty-transport-4.1.45.Final.jar:/Users/mac/.m2/repository/io/netty/netty-resolver/4.1.45.Final/netty-resolver-4.1.45.Final.jar:/Users/mac/.m2/repository/io/projectreactor/reactor-core/3.3.2.RELEASE/reactor-core-3.3.2.RELEASE.jar:/Users/mac/.m2/repository/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar:/Users/mac/.m2/repository/io/milvus/milvus-sdk-java/0.9.1/milvus-sdk-java-0.9.1.jar:/Users/mac/.m2/repository/io/grpc/grpc-protobuf/1.30.2/grpc-protobuf-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-api/1.30.2/grpc-api-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-context/1.30.2/grpc-context-1.30.2.jar:/Users/mac/.m2/repository/com/google/protobuf/protobuf-java/3.12.0/protobuf-java-3.12.0.jar:/Users/mac/.m2/repository/com/google/api/grpc/proto-google-common-protos/1.17.0/proto-google-common-protos-1.17.0.jar:/Users/mac/.m2/repository/io/grpc/grpc-protobuf-lite/1.30.2/grpc-protobuf-lite-1.30.2.jar:/Users/mac/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.18/animal-sniffer-annotations-1.18.jar:/Users/mac/.m2/repository/io/grpc/grpc-stub/1.30.2/grpc-stub-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-netty-shaded/1.30.2/grpc-netty-shaded-1.30.2.jar:/Users/mac/.m2/repository/io/grpc/grpc-core/1.30.2/grpc-core-1.30.2.jar:/Users/mac/.m2/repository/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar:/Users/mac/.m2/repository/io/perfmark/perfmark-api/0.19.0/perfmark-api-0.19.0.jar:/Users/mac/.m2/repository/org/json/json/20190722/json-20190722.jar:/Users/mac/.m2/repository/org/apache/commons/commons-lang3/3.10/commons-lang3-3.10.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-serialization-native-hession/2.7.9/dubbo-serialization-native-hession-2.7.9.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-serialization-api/2.7.9/dubbo-serialization-api-2.7.9.jar:/Users/mac/.m2/repository/org/apache/dubbo/dubbo-common/2.7.9/dubbo-common-2.7.9.jar:/Users/mac/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar:/Users/mac/.m2/repository/org/javassist/javassist/3.20.0-GA/javassist-3.20.0-GA.jar:/Users/mac/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar:/Users/mac/.m2/repository/com/caucho/hessian/4.0.38/hessian-4.0.38.jar com.sparrow.jdk.gc.G1Test
+ 0.013: [G1Ergonomics (Heap Sizing) expand the heap, requested expansion amount: 104857600 bytes, attempted expansion amount: 104857600 bytes]
+ G1HR COMMIT [0x00000007b9c00000,0x00000007ba000000]
+ G1HR COMMIT [0x00000007ba000000,0x00000007ba400000]
+ G1HR COMMIT [0x00000007ba400000,0x00000007ba800000]
+ G1HR COMMIT [0x00000007ba800000,0x00000007bac00000]
+ G1HR COMMIT [0x00000007bac00000,0x00000007bb000000]
+ G1HR COMMIT [0x00000007bb000000,0x00000007bb400000]
+ G1HR COMMIT [0x00000007bb400000,0x00000007bb800000]
+ G1HR COMMIT [0x00000007bb800000,0x00000007bbc00000]
+ G1HR COMMIT [0x00000007bbc00000,0x00000007bc000000]
+ G1HR COMMIT [0x00000007bc000000,0x00000007bc400000]
+ G1HR COMMIT [0x00000007bc400000,0x00000007bc800000]
+ G1HR COMMIT [0x00000007bc800000,0x00000007bcc00000]
+ G1HR COMMIT [0x00000007bcc00000,0x00000007bd000000]
+ G1HR COMMIT [0x00000007bd000000,0x00000007bd400000]
+ G1HR COMMIT [0x00000007bd400000,0x00000007bd800000]
+ G1HR COMMIT [0x00000007bd800000,0x00000007bdc00000]
+ G1HR COMMIT [0x00000007bdc00000,0x00000007be000000]
+ G1HR COMMIT [0x00000007be000000,0x00000007be400000]
+ G1HR COMMIT [0x00000007be400000,0x00000007be800000]
+ G1HR COMMIT [0x00000007be800000,0x00000007bec00000]
+ G1HR COMMIT [0x00000007bec00000,0x00000007bf000000]
+ G1HR COMMIT [0x00000007bf000000,0x00000007bf400000]
+ G1HR COMMIT [0x00000007bf400000,0x00000007bf800000]
+ G1HR COMMIT [0x00000007bf800000,0x00000007bfc00000]
+ G1HR COMMIT [0x00000007bfc00000,0x00000007c0000000]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+ G1HR ALLOC(Eden) 0x00000007bf800000
+ G1HR ALLOC(Eden) 0x00000007bf400000
+ G1HR ALLOC(Eden) 0x00000007bf000000
+ G1HR ALLOC(Eden) 0x00000007bec00000
+ G1HR ALLOC(Eden) 0x00000007be800000
+{Heap before GC invocations=0 (full 0):
+ garbage-first heap   total 102400K, used 24576K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 6 young (24576K), 0 survivors (0K)
+ Metaspace       used 3265K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 358K, capacity 388K, committed 512K, reserved 1048576K
+0.159: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 1
+ 0.159: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 0, predicted base time: 10.00 ms, remaining time: 190.00 ms, target pause time: 200.00 ms]
+ 0.159: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 6 regions, survivors: 0 regions, predicted young region time: 363.59 ms]
+ 0.159: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 6 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 373.59 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR ALLOC(Survivor) 0x00000007be400000
+ G1HR ALLOC(Old) 0x00000007b9c00000
+ G1HR ALLOC(Old) 0x00000007ba000000
+ G1HR ALLOC(Old) 0x00000007ba400000
+ G1HR ALLOC(Old) 0x00000007ba800000
+ G1HR ALLOC(Old) 0x00000007bac00000
+0.170: [SoftReference, 0 refs, 0.0000198 secs]0.170: [WeakReference, 17 refs, 0.0000096 secs]0.170: [FinalReference, 496 refs, 0.0002613 secs]0.170: [PhantomReference, 0 refs, 0 refs, 0.0000068 secs]0.170: [JNI Weak Reference, 0.0000067 secs] G1HR RETIRE 0x00000007bac00000 0x00000007badb1400
+ 0.171: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 20971520 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ G1HR #EndGC 1
+, 0.0113928 secs]
+   [Parallel Time: 10.5 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 159.4, Avg: 159.5, Max: 159.5, Diff: 0.2]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.2, Max: 0.5, Diff: 0.4, Sum: 1.8]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 8.8, Avg: 9.6, Max: 10.0, Diff: 1.2, Sum: 95.6]
+      [Termination (ms): Min: 0.0, Avg: 0.5, Max: 1.0, Diff: 1.0, Sum: 4.9]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 10.2, Avg: 10.2, Max: 10.4, Diff: 0.2, Sum: 102.4]
+      [GC Worker End (ms): Min: 169.6, Avg: 169.7, Max: 169.9, Diff: 0.2]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 0.8 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.5 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 24.0M(24.0M)->0.0B(12.0M) Survivors: 0.0B->4096.0K Heap: 24.0M(100.0M)->21.7M(100.0M)]
+Heap after GC invocations=1 (full 0):
+ garbage-first heap   total 102400K, used 22213K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3265K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 358K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.02 sys=0.05, real=0.01 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+ G1HR ALLOC(Eden) 0x00000007bf800000
+ G1HR ALLOC(Eden) 0x00000007bf400000
+{Heap before GC invocations=1 (full 0):
+ garbage-first heap   total 102400K, used 34501K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 4 young (16384K), 1 survivors (4096K)
+ Metaspace       used 3268K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 358K, capacity 388K, committed 512K, reserved 1048576K
+ 0.172: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+0.172: [GC pause (G1 Evacuation Pause) (young) (initial-mark) G1HR #StartGC 2
+ 0.172: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 768, predicted base time: 9.11 ms, remaining time: 190.89 ms, target pause time: 200.00 ms]
+ 0.172: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 3 regions, survivors: 1 regions, predicted young region time: 202.47 ms]
+ 0.172: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 3 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 211.58 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007be400000
+ G1HR REUSE 0x00000007bac00000
+ G1HR ALLOC(Survivor) 0x00000007bf000000
+ G1HR ALLOC(Old) 0x00000007bb000000
+ G1HR ALLOC(Old) 0x00000007bb400000
+ G1HR ALLOC(Old) 0x00000007bb800000
+0.179: [SoftReference, 0 refs, 0.0000155 secs]0.179: [WeakReference, 3 refs, 0.0000073 secs]0.179: [FinalReference, 13 refs, 0.0000075 secs]0.179: [PhantomReference, 0 refs, 0 refs, 0.0000059 secs]0.179: [JNI Weak Reference, 0.0000045 secs] G1HR RETIRE 0x00000007bb800000 0x00000007bb977200
+ G1HR #EndGC 2
+, 0.0072399 secs]
+   [Parallel Time: 6.4 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 171.8, Avg: 171.9, Max: 171.9, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 0.2, Avg: 0.3, Max: 0.4, Diff: 0.1, Sum: 2.9]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.2, Diff: 0.2, Sum: 0.3]
+         [Processed Buffers: Min: 0, Avg: 0.3, Max: 2, Diff: 2, Sum: 3]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 4.9, Avg: 5.3, Max: 5.7, Diff: 0.8, Sum: 53.2]
+      [Termination (ms): Min: 0.0, Avg: 0.5, Max: 0.8, Diff: 0.8, Sum: 4.6]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 6.0, Avg: 6.1, Max: 6.3, Diff: 0.3, Sum: 61.1]
+      [GC Worker End (ms): Min: 177.9, Avg: 178.0, Max: 178.1, Diff: 0.2]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.7 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.4 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.2 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 12.0M(12.0M)->0.0B(24.0M) Survivors: 4096.0K->4096.0K Heap: 33.7M(100.0M)->33.5M(100.0M)]
+Heap after GC invocations=2 (full 0):
+ garbage-first heap   total 102400K, used 34268K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3268K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 358K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.02 sys=0.03, real=0.01 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+0.179: [GC concurrent-root-region-scan-start]
+0.179: [GC concurrent-root-region-scan-end, 0.0003177 secs]
+0.179: [GC concurrent-mark-start]
+ G1HR ALLOC(Eden) 0x00000007bf800000
+ G1HR ALLOC(Eden) 0x00000007bf400000
+ G1HR ALLOC(Eden) 0x00000007bec00000
+0.181: [GC concurrent-mark-end, 0.0010771 secs]
+10.181: [GC remark 0.181: [Finalize Marking, 0.0001869 secs] 0.181: [GC ref-proc0.181: [SoftReference, 0 refs, 0.0000159 secs]0.181: [WeakReference, 3 refs, 0.0000124 secs]0.181: [FinalReference, 83 refs, 0.0000212 secs]0.181: [PhantomReference, 0 refs, 0 refs, 0.0000184 secs]0.181: [JNI Weak Reference, 0.0000044 secs], 0.0000860 secs] 0.181: [Unloading, 0.0005305 secs], 0.0009971 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+
+0.182: [GC cleanup
+### PHASE Post-Marking @ 0.182
+### HEAP  reserved: 0x00000007b9c00000-0x00000007c0000000  region-size: 4194304
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###   OLD  0x00000007b9c00000-0x00000007ba000000    4194304    4194304    3730536             0.0       5456         16
+###   OLD  0x00000007ba000000-0x00000007ba400000    4194304    4194304    4096128             0.0       5456         16
+###   OLD  0x00000007ba400000-0x00000007ba800000    4194304    4194304    4096128             0.0       5456         16
+###   OLD  0x00000007ba800000-0x00000007bac00000    4194304    4194304    4096128             0.0       5456         16
+###   OLD  0x00000007bac00000-0x00000007bb000000    4194304    4194304    3702768             0.0       6056        616
+###   OLD  0x00000007bb000000-0x00000007bb400000    4194304    4194304    3676048             0.0       5456         16
+###   OLD  0x00000007bb400000-0x00000007bb800000    4194304    4194304    4096128             0.0       5456         16
+###   OLD  0x00000007bb800000-0x00000007bbc00000    1536512    1536512    1536048             0.0       5456         16
+###   FREE 0x00000007bbc00000-0x00000007bc000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bc000000-0x00000007bc400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bc400000-0x00000007bc800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bc800000-0x00000007bcc00000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bcc00000-0x00000007bd000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd000000-0x00000007bd400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd400000-0x00000007bd800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd800000-0x00000007bdc00000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bdc00000-0x00000007be000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be000000-0x00000007be400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be400000-0x00000007be800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be800000-0x00000007bec00000          0          0          0             0.0       5456         16
+###   EDEN 0x00000007bec00000-0x00000007bf000000    3072080    3072080    3072080             0.0       5456         16
+###   SURV 0x00000007bf000000-0x00000007bf400000    4194304    4194304    4194304             0.0       5456         16
+###   EDEN 0x00000007bf400000-0x00000007bf800000    4194304    4194304    4194304             0.0       5456         16
+###   EDEN 0x00000007bf800000-0x00000007bfc00000    4194304    4194304    4194304             0.0       5456         16
+###   EDEN 0x00000007bfc00000-0x00000007c0000000    4194304    4194304    4194304             0.0       5456         16
+###
+### SUMMARY  capacity: 100.00 MB  used: 48.40 MB / 48.40 %  prev-live: 48.40 MB / 48.40 %  next-live: 46.61 MB / 46.61 %  remset: 0.13 MB  code-roots: 0.00 MB
+
+
+### PHASE Post-Sorting @ 0.182
+### HEAP  reserved: 0x00000007b9c00000-0x00000007c0000000  region-size: 4194304
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###
+### SUMMARY  capacity: 0.00 MB  used: 0.00 MB / 0.00 %  prev-live: 0.00 MB / 0.00 %  next-live: 0.00 MB / 0.00 %  remset: 0.00 MB  code-roots: 0.00 MB
+
+ 48M->48M(100M), 0.0007057 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007be800000
+2
+3
+4
+5
+ G1HR ALLOC(Eden) 0x00000007be400000
+6
+7
+8
+9
+{Heap before GC invocations=3 (full 0):
+ garbage-first heap   total 102400K, used 58844K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 7 young (28672K), 1 survivors (4096K)
+ Metaspace       used 3287K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+9.218: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 4
+ 9.218: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 1800, predicted base time: 8.05 ms, remaining time: 191.95 ms, target pause time: 200.00 ms]
+ 9.218: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 6 regions, survivors: 1 regions, predicted young region time: 193.04 ms]
+ 9.218: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 6 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 201.10 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be400000
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007bf000000
+ G1HR REUSE 0x00000007bb800000
+ G1HR ALLOC(Survivor) 0x00000007be000000
+ G1HR ALLOC(Old) 0x00000007bbc00000
+ G1HR ALLOC(Old) 0x00000007bc000000
+ G1HR ALLOC(Old) 0x00000007bc400000
+9.229: [SoftReference, 0 refs, 0.0000149 secs]9.229: [WeakReference, 0 refs, 0.0000054 secs]9.229: [FinalReference, 0 refs, 0.0000057 secs]9.229: [PhantomReference, 0 refs, 0 refs, 0.0000085 secs]9.229: [JNI Weak Reference, 0.0000046 secs] G1HR RETIRE 0x00000007bc400000 0x00000007bc76b200
+ 9.229: [G1Ergonomics (Heap Sizing) attempt heap expansion, reason: recent GC overhead higher than threshold after GC, recent GC overhead: 11.06 %, threshold: 10.00 %, uncommitted: 0 bytes, calculated expansion amount: 0 bytes (20.00 %)]
+ 9.229: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 46137344 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ 9.229: [G1Ergonomics (Mixed GCs) do not start mixed GCs, reason: candidate old regions not available]
+ G1HR #EndGC 4
+, 0.0118307 secs]
+   [Parallel Time: 11.1 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 9217.7, Avg: 9217.9, Max: 9218.1, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.3, Max: 0.6, Diff: 0.6, Sum: 2.7]
+      [Update RS (ms): Min: 0.0, Avg: 0.1, Max: 0.9, Diff: 0.9, Sum: 1.4]
+         [Processed Buffers: Min: 0, Avg: 1.2, Max: 2, Diff: 2, Sum: 12]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 8.7, Avg: 9.7, Max: 10.3, Diff: 1.6, Sum: 97.2]
+      [Termination (ms): Min: 0.0, Avg: 0.5, Max: 1.3, Diff: 1.3, Sum: 5.2]
+         [Termination Attempts: Min: 1, Avg: 1.2, Max: 2, Diff: 1, Sum: 12]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 10.5, Avg: 10.7, Max: 10.9, Diff: 0.4, Sum: 106.6]
+      [GC Worker End (ms): Min: 9228.5, Avg: 9228.6, Max: 9228.7, Diff: 0.2]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 0.6 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.3 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 24.0M(24.0M)->0.0B(20.0M) Survivors: 4096.0K->4096.0K Heap: 57.5M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=4 (full 0):
+ garbage-first heap   total 102400K, used 48556K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3287K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.02 sys=0.06, real=0.01 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+10
+11
+12
+ G1HR ALLOC(Eden) 0x00000007bf800000
+13
+14
+15
+16
+ G1HR ALLOC(Eden) 0x00000007bf400000
+17
+18
+19
+20
+ G1HR ALLOC(Eden) 0x00000007bf000000
+21
+22
+23
+24
+ G1HR ALLOC(Eden) 0x00000007bec00000
+25
+26
+27
+28
+{Heap before GC invocations=4 (full 0):
+ garbage-first heap   total 102400K, used 69036K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 6 young (24576K), 1 survivors (4096K)
+ Metaspace       used 3288K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+28.300: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 5
+ 28.300: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 1280, predicted base time: 4.81 ms, remaining time: 195.19 ms, target pause time: 200.00 ms]
+ 28.300: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 5 regions, survivors: 1 regions, predicted young region time: 120.61 ms]
+ 28.300: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 5 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 125.41 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007be000000
+ G1HR REUSE 0x00000007bc400000
+ G1HR ALLOC(Old) 0x00000007bc800000
+28.302: [SoftReference, 0 refs, 0.0000160 secs]28.303: [WeakReference, 0 refs, 0.0000065 secs]28.303: [FinalReference, 0 refs, 0.0000049 secs]28.303: [PhantomReference, 0 refs, 0 refs, 0.0000059 secs]28.303: [JNI Weak Reference, 0.0000044 secs] G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ 28.303: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 50331648 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ G1HR #EndGC 5
+, 0.0027664 secs]
+   [Parallel Time: 2.1 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 28300.2, Avg: 28300.3, Max: 28300.3, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.1, Max: 0.2, Diff: 0.1, Sum: 1.2]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.6, Max: 1, Diff: 1, Sum: 6]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 1.1, Max: 1.6, Diff: 1.6, Sum: 11.0]
+      [Termination (ms): Min: 0.0, Avg: 0.6, Max: 1.9, Diff: 1.9, Sum: 6.1]
+         [Termination Attempts: Min: 1, Avg: 2.3, Max: 5, Diff: 4, Sum: 23]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 1.8, Avg: 1.9, Max: 2.0, Diff: 0.2, Sum: 18.5]
+      [GC Worker End (ms): Min: 28302.1, Avg: 28302.1, Max: 28302.3, Diff: 0.2]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.5 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.2 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 20.0M(20.0M)->0.0B(20.0M) Survivors: 4096.0K->0.0B Heap: 67.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=5 (full 0):
+ garbage-first heap   total 102400K, used 48556K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3288K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.01, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+29
+30
+31
+ G1HR ALLOC(Eden) 0x00000007bf800000
+32
+33
+34
+35
+ G1HR ALLOC(Eden) 0x00000007bf400000
+36
+37
+38
+39
+ G1HR ALLOC(Eden) 0x00000007bf000000
+40
+41
+42
+43
+ G1HR ALLOC(Eden) 0x00000007bec00000
+44
+45
+46
+47
+{Heap before GC invocations=5 (full 0):
+ garbage-first heap   total 102400K, used 69036K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 5 young (20480K), 0 survivors (0K)
+ Metaspace       used 3289K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 47.368: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+47.368: [GC pause (G1 Evacuation Pause) (young) (initial-mark) G1HR #StartGC 6
+ 47.368: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 2048, predicted base time: 4.50 ms, remaining time: 195.50 ms, target pause time: 200.00 ms]
+ 47.368: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 5 regions, survivors: 0 regions, predicted young region time: 60.72 ms]
+ 47.368: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 5 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 65.22 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR REUSE 0x00000007bc800000
+47.368: [SoftReference, 0 refs, 0.0000129 secs]47.368: [WeakReference, 0 refs, 0.0000052 secs]47.368: [FinalReference, 0 refs, 0.0000050 secs]47.368: [PhantomReference, 0 refs, 0 refs, 0.0000068 secs]47.368: [JNI Weak Reference, 0.0000040 secs] G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ G1HR #EndGC 6
+, 0.0008232 secs]
+   [Parallel Time: 0.3 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 47367.6, Avg: 47367.7, Max: 47367.7, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.1, Max: 0.2, Diff: 0.1, Sum: 1.2]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.9, Max: 2, Diff: 2, Sum: 9]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.2, Max: 0.2, Diff: 0.1, Sum: 1.5]
+      [GC Worker End (ms): Min: 47367.8, Avg: 47367.8, Max: 47367.8, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 0.5 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.3 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 20.0M(20.0M)->0.0B(24.0M) Survivors: 0.0B->0.0B Heap: 67.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=6 (full 0):
+ garbage-first heap   total 102400K, used 48556K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 3289K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+47.368: [GC concurrent-root-region-scan-start]
+47.368: [GC concurrent-root-region-scan-end, 0.0000091 secs]
+47.369: [GC concurrent-mark-start]
+48
+47.369: [GC concurrent-mark-end, 0.0009402 secs]
+47.369: [GC remark 47.369: [Finalize Marking, 0.0002926 secs] 47.370: [GC ref-proc47.370: [SoftReference, 0 refs, 0.0000156 secs]47.370: [WeakReference, 3 refs, 0.0000122 secs]47.370: [FinalReference, 99 refs, 0.0000218 secs]47.370: [PhantomReference, 0 refs, 0 refs, 0.0000190 secs]47.370: [JNI Weak Reference, 0.0000041 secs], 0.0000853 secs] 47.370: [Unloading, 0.0004614 secs], 0.0010086 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+47.371: [GC cleanup
+### PHASE Post-Marking @ 47.371
+### HEAP  reserved: 0x00000007b9c00000-0x00000007c0000000  region-size: 4194304
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###   OLD  0x00000007b9c00000-0x00000007ba000000    4194304    3730536    3730536             0.0       6568         16
+###   OLD  0x00000007ba000000-0x00000007ba400000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007ba400000-0x00000007ba800000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007ba800000-0x00000007bac00000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bac00000-0x00000007bb000000    4194304    3702768    3657552             0.0       8352        688
+###   OLD  0x00000007bb000000-0x00000007bb400000    4194304    3676048    3675944             0.0       6568         16
+###   OLD  0x00000007bb400000-0x00000007bb800000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bb800000-0x00000007bbc00000    4194304    4193840    4096128             0.0       5456         16
+###   OLD  0x00000007bbc00000-0x00000007bc000000    4194304    4194304    4096128             0.0       5456         16
+###   OLD  0x00000007bc000000-0x00000007bc400000    4194304    4194304    4096128             0.0       5456         16
+###   OLD  0x00000007bc400000-0x00000007bc800000    4194304    4194304    3610648             0.0       5456         16
+###   OLD  0x00000007bc800000-0x00000007bcc00000    3584512    3584512    3584112             0.0       5456         16
+###   FREE 0x00000007bcc00000-0x00000007bd000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd000000-0x00000007bd400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd400000-0x00000007bd800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd800000-0x00000007bdc00000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bdc00000-0x00000007be000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be000000-0x00000007be400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be400000-0x00000007be800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be800000-0x00000007bec00000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bec00000-0x00000007bf000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf000000-0x00000007bf400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf400000-0x00000007bf800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf800000-0x00000007bfc00000          0          0          0             0.0       5456         16
+###   EDEN 0x00000007bfc00000-0x00000007c0000000    1496160    1496160    1496160             0.0       5456         16
+###
+### SUMMARY  capacity: 100.00 MB  used: 48.85 MB / 48.85 %  prev-live: 47.07 MB / 47.07 %  next-live: 46.18 MB / 46.18 %  remset: 0.14 MB  code-roots: 0.00 MB
+
+
+### PHASE Post-Sorting @ 47.371
+### HEAP  reserved: 0x00000007b9c00000-0x00000007c0000000  region-size: 4194304
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###
+### SUMMARY  capacity: 0.00 MB  used: 0.00 MB / 0.00 %  prev-live: 0.00 MB / 0.00 %  next-live: 0.00 MB / 0.00 %  remset: 0.00 MB  code-roots: 0.00 MB
+
+ 48M->48M(100M), 0.0004708 secs]
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+49
+50
+ G1HR ALLOC(Eden) 0x00000007bf800000
+51
+52
+53
+54
+ G1HR ALLOC(Eden) 0x00000007bf400000
+55
+56
+57
+58
+ G1HR ALLOC(Eden) 0x00000007bf000000
+59
+60
+61
+62
+ G1HR ALLOC(Eden) 0x00000007bec00000
+63
+64
+65
+ G1HR ALLOC(Eden) 0x00000007be800000
+66
+67
+68
+69
+{Heap before GC invocations=7 (full 0):
+ garbage-first heap   total 102400K, used 73132K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 6 young (24576K), 0 survivors (0K)
+ Metaspace       used 3289K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+69.446: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 8
+ 69.446: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 3, predicted base time: 2.34 ms, remaining time: 197.66 ms, target pause time: 200.00 ms]
+ 69.446: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 6 regions, survivors: 0 regions, predicted young region time: 54.27 ms]
+ 69.446: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 6 regions, survivors: 0 regions, old: 0 regions, predicted pause time: 56.61 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR REUSE 0x00000007bc800000
+ G1HR ALLOC(Survivor) 0x00000007be400000
+69.448: [SoftReference, 0 refs, 0.0000283 secs]69.448: [WeakReference, 0 refs, 0.0000114 secs]69.448: [FinalReference, 0 refs, 0.0000108 secs]69.448: [PhantomReference, 0 refs, 0 refs, 0.0000142 secs]69.448: [JNI Weak Reference, 0.0000089 secs] G1HR RETIRE 0x00000007be400000 0x00000007be402040
+ G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ 69.449: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 50331648 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ 69.449: [G1Ergonomics (Mixed GCs) do not start mixed GCs, reason: candidate old regions not available]
+ G1HR #EndGC 8
+, 0.0024593 secs]
+   [Parallel Time: 0.9 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 69446.5, Avg: 69446.7, Max: 69446.8, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.2, Max: 0.4, Diff: 0.4, Sum: 2.4]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.2]
+         [Processed Buffers: Min: 0, Avg: 0.4, Max: 1, Diff: 1, Sum: 4]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.1]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [Termination (ms): Min: 0.0, Avg: 0.1, Max: 0.1, Diff: 0.1, Sum: 1.2]
+         [Termination Attempts: Min: 1, Avg: 1.1, Max: 2, Diff: 1, Sum: 11]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.2, Avg: 0.4, Max: 0.6, Diff: 0.4, Sum: 4.2]
+      [GC Worker End (ms): Min: 69447.1, Avg: 69447.1, Max: 69447.1, Diff: 0.1]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 1.3 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.8 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.4 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 24.0M(24.0M)->0.0B(24.0M) Survivors: 0.0B->4096.0K Heap: 71.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=8 (full 0):
+ garbage-first heap   total 102400K, used 48564K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3289K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+70
+71
+72
+ G1HR ALLOC(Eden) 0x00000007bf800000
+73
+74
+75
+76
+ G1HR ALLOC(Eden) 0x00000007bf400000
+77
+78
+79
+80
+ G1HR ALLOC(Eden) 0x00000007bf000000
+81
+82
+83
+84
+ G1HR ALLOC(Eden) 0x00000007bec00000
+85
+86
+87
+88
+ G1HR ALLOC(Eden) 0x00000007be800000
+89
+90
+91
+92
+{Heap before GC invocations=8 (full 0):
+ garbage-first heap   total 102400K, used 73140K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 7 young (28672K), 1 survivors (4096K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+92.528: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 9
+ 92.528: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 256, predicted base time: 3.32 ms, remaining time: 196.68 ms, target pause time: 200.00 ms]
+ 92.528: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 6 regions, survivors: 1 regions, predicted young region time: 37.53 ms]
+ 92.528: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 6 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 40.85 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007be400000
+ G1HR REUSE 0x00000007bc800000
+ G1HR ALLOC(Survivor) 0x00000007be000000
+92.529: [SoftReference, 0 refs, 0.0000274 secs]92.529: [WeakReference, 0 refs, 0.0000116 secs]92.530: [FinalReference, 0 refs, 0.0000116 secs]92.530: [PhantomReference, 0 refs, 0 refs, 0.0000139 secs]92.530: [JNI Weak Reference, 0.0000092 secs] G1HR RETIRE 0x00000007be000000 0x00000007be002040
+ G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ 92.530: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 50331648 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ G1HR #EndGC 9
+, 0.0021417 secs]
+   [Parallel Time: 0.6 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 92528.3, Avg: 92528.5, Max: 92528.6, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.2, Max: 0.4, Diff: 0.4, Sum: 2.1]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.2, Max: 1, Diff: 1, Sum: 2]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.1]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.0, Sum: 0.2]
+      [Termination (ms): Min: 0.0, Avg: 0.1, Max: 0.1, Diff: 0.1, Sum: 0.6]
+         [Termination Attempts: Min: 1, Avg: 1.4, Max: 2, Diff: 1, Sum: 14]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.2, Avg: 0.3, Max: 0.5, Diff: 0.4, Sum: 3.2]
+      [GC Worker End (ms): Min: 92528.8, Avg: 92528.8, Max: 92528.8, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 1.2 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.7 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.4 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 24.0M(24.0M)->0.0B(24.0M) Survivors: 4096.0K->4096.0K Heap: 71.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=9 (full 0):
+ garbage-first heap   total 102400K, used 48564K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3291K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.01, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+93
+94
+95
+ G1HR ALLOC(Eden) 0x00000007bf800000
+96
+97
+98
+99
+ G1HR ALLOC(Eden) 0x00000007bf400000
+100
+101
+102
+103
+ G1HR ALLOC(Eden) 0x00000007bf000000
+104
+105
+106
+107
+ G1HR ALLOC(Eden) 0x00000007bec00000
+108
+109
+110
+111
+ G1HR ALLOC(Eden) 0x00000007be800000
+112
+113
+114
+115
+{Heap before GC invocations=9 (full 0):
+ garbage-first heap   total 102400K, used 73140K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 7 young (28672K), 1 survivors (4096K)
+ Metaspace       used 3295K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 115.608: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+115.608: [GC pause (G1 Evacuation Pause) (young) (initial-mark) G1HR #StartGC 10
+ 115.608: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 257, predicted base time: 3.06 ms, remaining time: 196.94 ms, target pause time: 200.00 ms]
+ 115.608: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 6 regions, survivors: 1 regions, predicted young region time: 26.74 ms]
+ 115.609: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 6 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 29.80 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007be000000
+ G1HR REUSE 0x00000007bc800000
+ G1HR ALLOC(Survivor) 0x00000007be400000
+115.610: [SoftReference, 0 refs, 0.0000260 secs]115.610: [WeakReference, 0 refs, 0.0000118 secs]115.610: [FinalReference, 0 refs, 0.0000109 secs]115.610: [PhantomReference, 0 refs, 0 refs, 0.0000136 secs]115.610: [JNI Weak Reference, 0.0000087 secs] G1HR RETIRE 0x00000007be400000 0x00000007be403870
+ G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ G1HR #EndGC 10
+, 0.0020578 secs]
+   [Parallel Time: 0.7 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 115608.6, Avg: 115608.7, Max: 115608.8, Diff: 0.3]
+      [Ext Root Scanning (ms): Min: 0.2, Avg: 0.3, Max: 0.4, Diff: 0.3, Sum: 2.7]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.3, Max: 1, Diff: 1, Sum: 3]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.2]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.4]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.2, Avg: 0.4, Max: 0.5, Diff: 0.3, Sum: 3.7]
+      [GC Worker End (ms): Min: 115609.1, Avg: 115609.1, Max: 115609.1, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 1.1 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.6 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 24.0M(24.0M)->0.0B(28.0M) Survivors: 4096.0K->4096.0K Heap: 71.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=10 (full 0):
+ garbage-first heap   total 102400K, used 48570K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3295K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.01, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+115.611: [GC concurrent-root-region-scan-start]
+115.611: [GC concurrent-root-region-scan-end, 0.0000994 secs]
+115.611: [GC concurrent-mark-start]
+116
+115.612: [GC concurrent-mark-end, 0.0016350 secs]
+115.613: [GC remark 115.613: [Finalize Marking, 0.0004766 secs] 115.613: [GC ref-proc115.613: [SoftReference, 40 refs, 0.0000342 secs]115.613: [WeakReference, 3 refs, 0.0000191 secs]115.613: [FinalReference, 96 refs, 0.0000320 secs]115.613: [PhantomReference, 0 refs, 0 refs, 0.0000311 secs]115.613: [JNI Weak Reference, 0.0000068 secs], 0.0001482 secs] 115.613: [Unloading, 0.0008985 secs], 0.0018331 secs]
+ [Times: user=0.00 sys=0.00, real=0.01 secs]
+115.614: [GC cleanup
+### PHASE Post-Marking @ 115.615
+### HEAP  reserved: 0x00000007b9c00000-0x00000007c0000000  region-size: 4194304
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###   OLD  0x00000007b9c00000-0x00000007ba000000    4194304    3730536    3720008             0.0       6568         16
+###   OLD  0x00000007ba000000-0x00000007ba400000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007ba400000-0x00000007ba800000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007ba800000-0x00000007bac00000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bac00000-0x00000007bb000000    4194304    3657552    3646024             0.0       8376        712
+###   OLD  0x00000007bb000000-0x00000007bb400000    4194304    3675944    3674160             0.0       6568         16
+###   OLD  0x00000007bb400000-0x00000007bb800000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bb800000-0x00000007bbc00000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bbc00000-0x00000007bc000000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bc000000-0x00000007bc400000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bc400000-0x00000007bc800000    4194304    3610648    3610648             0.0       5456         16
+###   OLD  0x00000007bc800000-0x00000007bcc00000    3584512    3584112    3584112             0.0       5456         16
+###   FREE 0x00000007bcc00000-0x00000007bd000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd000000-0x00000007bd400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd400000-0x00000007bd800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd800000-0x00000007bdc00000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bdc00000-0x00000007be000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be000000-0x00000007be400000          0          0          0             0.0       5456         16
+###   SURV 0x00000007be400000-0x00000007be800000      14448      14448      14448             0.0       5840        400
+###   FREE 0x00000007be800000-0x00000007bec00000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bec00000-0x00000007bf000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf000000-0x00000007bf400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf400000-0x00000007bf800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf800000-0x00000007bfc00000          0          0          0             0.0       5456         16
+###   EDEN 0x00000007bfc00000-0x00000007c0000000    1570456    1570456    1570456             0.0       5456         16
+###
+### SUMMARY  capacity: 100.00 MB  used: 48.93 MB / 48.93 %  prev-live: 46.27 MB / 46.27 %  next-live: 46.25 MB / 46.25 %  remset: 0.14 MB  code-roots: 0.00 MB
+
+
+### PHASE Post-Sorting @ 115.615
+### HEAP  reserved: 0x00000007b9c00000-0x00000007c0000000  region-size: 4194304
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###
+### SUMMARY  capacity: 0.00 MB  used: 0.00 MB / 0.00 %  prev-live: 0.00 MB / 0.00 %  next-live: 0.00 MB / 0.00 %  remset: 0.00 MB  code-roots: 0.00 MB
+
+ 48M->48M(100M), 0.0008008 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+117
+118
+ G1HR ALLOC(Eden) 0x00000007bf800000
+119
+120
+121
+122
+ G1HR ALLOC(Eden) 0x00000007bf400000
+123
+124
+125
+126
+ G1HR ALLOC(Eden) 0x00000007bf000000
+127
+128
+129
+130
+ G1HR ALLOC(Eden) 0x00000007bec00000
+131
+132
+133
+134
+ G1HR ALLOC(Eden) 0x00000007be800000
+135
+136
+137
+138
+ G1HR ALLOC(Eden) 0x00000007be000000
+139
+140
+141
+142
+{Heap before GC invocations=11 (full 0):
+ garbage-first heap   total 102400K, used 77242K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 8 young (32768K), 1 survivors (4096K)
+ Metaspace       used 3297K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+142.698: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 12
+ 142.698: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 257, predicted base time: 2.83 ms, remaining time: 197.17 ms, target pause time: 200.00 ms]
+ 142.698: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 7 regions, survivors: 1 regions, predicted young region time: 20.43 ms]
+ 142.698: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 7 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 23.26 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be000000
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007be400000
+ G1HR REUSE 0x00000007bc800000
+ G1HR ALLOC(Survivor) 0x00000007bdc00000
+142.699: [SoftReference, 0 refs, 0.0000224 secs]142.699: [WeakReference, 0 refs, 0.0000082 secs]142.699: [FinalReference, 0 refs, 0.0000079 secs]142.699: [PhantomReference, 0 refs, 0 refs, 0.0000096 secs]142.699: [JNI Weak Reference, 0.0000064 secs] G1HR RETIRE 0x00000007bdc00000 0x00000007bdc04080
+ G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ 142.700: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 50331648 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ 142.700: [G1Ergonomics (Mixed GCs) do not start mixed GCs, reason: candidate old regions not available]
+ G1HR #EndGC 12
+, 0.0015717 secs]
+   [Parallel Time: 0.5 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 142698.2, Avg: 142698.3, Max: 142698.5, Diff: 0.3]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.1, Max: 0.3, Diff: 0.3, Sum: 1.5]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.3, Max: 1, Diff: 1, Sum: 3]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.1]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [Termination (ms): Min: 0.0, Avg: 0.1, Max: 0.1, Diff: 0.1, Sum: 0.6]
+         [Termination Attempts: Min: 1, Avg: 1.1, Max: 2, Diff: 1, Sum: 11]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.3, Max: 0.4, Diff: 0.3, Sum: 2.6]
+      [GC Worker End (ms): Min: 142698.6, Avg: 142698.6, Max: 142698.6, Diff: 0.1]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.8 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.4 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 28.0M(28.0M)->0.0B(28.0M) Survivors: 4096.0K->4096.0K Heap: 75.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=12 (full 0):
+ garbage-first heap   total 102400K, used 48572K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3297K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.01 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+143
+144
+145
+ G1HR ALLOC(Eden) 0x00000007bf800000
+146
+147
+148
+149
+ G1HR ALLOC(Eden) 0x00000007bf400000
+150
+151
+152
+153
+ G1HR ALLOC(Eden) 0x00000007bf000000
+154
+155
+156
+157
+ G1HR ALLOC(Eden) 0x00000007bec00000
+158
+159
+160
+161
+ G1HR ALLOC(Eden) 0x00000007be800000
+162
+163
+164
+165
+ G1HR ALLOC(Eden) 0x00000007be400000
+166
+167
+168
+169
+{Heap before GC invocations=12 (full 0):
+ garbage-first heap   total 102400K, used 77244K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 8 young (32768K), 1 survivors (4096K)
+ Metaspace       used 3299K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+169.802: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 13
+ 169.802: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 256, predicted base time: 2.51 ms, remaining time: 197.49 ms, target pause time: 200.00 ms]
+ 169.802: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 7 regions, survivors: 1 regions, predicted young region time: 12.51 ms]
+ 169.802: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 7 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 15.02 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be400000
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007bdc00000
+ G1HR REUSE 0x00000007bc800000
+ G1HR ALLOC(Survivor) 0x00000007be000000
+169.804: [SoftReference, 0 refs, 0.0000201 secs]169.804: [WeakReference, 0 refs, 0.0000188 secs]169.804: [FinalReference, 0 refs, 0.0000081 secs]169.804: [PhantomReference, 0 refs, 0 refs, 0.0000095 secs]169.804: [JNI Weak Reference, 0.0000063 secs] G1HR RETIRE 0x00000007be000000 0x00000007be004890
+ G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ 169.804: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 50331648 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ G1HR #EndGC 13
+, 0.0017627 secs]
+   [Parallel Time: 0.8 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 169802.5, Avg: 169802.7, Max: 169802.8, Diff: 0.3]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.3, Max: 0.4, Diff: 0.3, Sum: 2.6]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.2, Max: 1, Diff: 1, Sum: 2]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.1]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.4]
+      [Termination (ms): Min: 0.0, Avg: 0.1, Max: 0.1, Diff: 0.1, Sum: 0.7]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.2, Avg: 0.4, Max: 0.6, Diff: 0.3, Sum: 4.0]
+      [GC Worker End (ms): Min: 169803.1, Avg: 169803.1, Max: 169803.2, Diff: 0.1]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.7 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.4 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.2 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 28.0M(28.0M)->0.0B(32.0M) Survivors: 4096.0K->4096.0K Heap: 75.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=13 (full 0):
+ garbage-first heap   total 102400K, used 48574K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3299K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+170
+171
+172
+ G1HR ALLOC(Eden) 0x00000007bf800000
+173
+174
+175
+176
+ G1HR ALLOC(Eden) 0x00000007bf400000
+177
+178
+179
+180
+ G1HR ALLOC(Eden) 0x00000007bf000000
+181
+182
+183
+184
+ G1HR ALLOC(Eden) 0x00000007bec00000
+185
+186
+187
+188
+ G1HR ALLOC(Eden) 0x00000007be800000
+189
+190
+191
+192
+ G1HR ALLOC(Eden) 0x00000007be400000
+193
+194
+195
+196
+ G1HR ALLOC(Eden) 0x00000007bdc00000
+197
+198
+199
+200
+{Heap before GC invocations=13 (full 0):
+ garbage-first heap   total 102400K, used 81342K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 9 young (36864K), 1 survivors (4096K)
+ Metaspace       used 3308K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+ 200.896: [G1Ergonomics (Concurrent Cycles) initiate concurrent cycle, reason: concurrent cycle initiation requested]
+200.896: [GC pause (G1 Evacuation Pause) (young) (initial-mark) G1HR #StartGC 14
+ 200.896: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 512, predicted base time: 2.65 ms, remaining time: 197.35 ms, target pause time: 200.00 ms]
+ 200.896: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 8 regions, survivors: 1 regions, predicted young region time: 9.66 ms]
+ 200.896: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 8 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 12.31 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007bdc00000
+ G1HR CSET 0x00000007be400000
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007be000000
+ G1HR REUSE 0x00000007bc800000
+ G1HR ALLOC(Survivor) 0x00000007bd800000
+200.898: [SoftReference, 0 refs, 0.0000200 secs]200.898: [WeakReference, 0 refs, 0.0000084 secs]200.898: [FinalReference, 0 refs, 0.0000077 secs]200.898: [PhantomReference, 0 refs, 0 refs, 0.0000096 secs]200.898: [JNI Weak Reference, 0.0000063 secs] G1HR RETIRE 0x00000007bd800000 0x00000007bd804080
+ G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ G1HR #EndGC 14
+, 0.0018795 secs]
+   [Parallel Time: 0.8 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 200896.5, Avg: 200896.7, Max: 200896.8, Diff: 0.3]
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.3, Max: 0.5, Diff: 0.3, Sum: 2.6]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.3, Max: 1, Diff: 1, Sum: 3]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.1]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.4]
+      [Termination (ms): Min: 0.0, Avg: 0.1, Max: 0.1, Diff: 0.1, Sum: 0.7]
+         [Termination Attempts: Min: 1, Avg: 1.4, Max: 3, Diff: 2, Sum: 14]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 0.3, Avg: 0.4, Max: 0.6, Diff: 0.4, Sum: 4.2]
+      [GC Worker End (ms): Min: 200897.1, Avg: 200897.1, Max: 200897.1, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.9 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.5 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.2 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 32.0M(32.0M)->0.0B(32.0M) Survivors: 4096.0K->4096.0K Heap: 79.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=14 (full 0):
+ garbage-first heap   total 102400K, used 48572K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3308K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.01, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+200.898: [GC concurrent-root-region-scan-start]
+200.899: [GC concurrent-root-region-scan-end, 0.0000898 secs]
+200.899: [GC concurrent-mark-start]
+201
+200.900: [GC concurrent-mark-end, 0.0014544 secs]
+200.900: [GC remark 200.900: [Finalize Marking, 0.0003001 secs] 200.900: [GC ref-proc200.900: [SoftReference, 19 refs, 0.0000234 secs]200.900: [WeakReference, 3 refs, 0.0000149 secs]200.900: [FinalReference, 106 refs, 0.0000245 secs]200.900: [PhantomReference, 0 refs, 0 refs, 0.0000240 secs]200.901: [JNI Weak Reference, 0.0000053 secs], 0.0001085 secs] 200.901: [Unloading, 0.0006733 secs], 0.0013119 secs]
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+200.901: [GC cleanup
+### PHASE Post-Marking @ 200.902
+### HEAP  reserved: 0x00000007b9c00000-0x00000007c0000000  region-size: 4194304
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###   OLD  0x00000007b9c00000-0x00000007ba000000    4194304    3720008    3720008             0.0       6568         16
+###   OLD  0x00000007ba000000-0x00000007ba400000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007ba400000-0x00000007ba800000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007ba800000-0x00000007bac00000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bac00000-0x00000007bb000000    4194304    3646024    3646024             0.0       8400        736
+###   OLD  0x00000007bb000000-0x00000007bb400000    4194304    3674160    3674160             0.0       6568         16
+###   OLD  0x00000007bb400000-0x00000007bb800000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bb800000-0x00000007bbc00000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bbc00000-0x00000007bc000000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bc000000-0x00000007bc400000    4194304    4096128    4096128             0.0       5456         16
+###   OLD  0x00000007bc400000-0x00000007bc800000    4194304    3610648    3610648             0.0       5456         16
+###   OLD  0x00000007bc800000-0x00000007bcc00000    3584512    3584112    3584112             0.0       5456         16
+###   FREE 0x00000007bcc00000-0x00000007bd000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd000000-0x00000007bd400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bd400000-0x00000007bd800000          0          0          0             0.0       5456         16
+###   SURV 0x00000007bd800000-0x00000007bdc00000      16512      16512      16512             0.0       5936        496
+###   FREE 0x00000007bdc00000-0x00000007be000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be000000-0x00000007be400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be400000-0x00000007be800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007be800000-0x00000007bec00000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bec00000-0x00000007bf000000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf000000-0x00000007bf400000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf400000-0x00000007bf800000          0          0          0             0.0       5456         16
+###   FREE 0x00000007bf800000-0x00000007bfc00000          0          0          0             0.0       5456         16
+###   EDEN 0x00000007bfc00000-0x00000007c0000000    1655024    1655024    1655024             0.0       5456         16
+###
+### SUMMARY  capacity: 100.00 MB  used: 49.01 MB / 49.01 %  prev-live: 46.33 MB / 46.33 %  next-live: 46.33 MB / 46.33 %  remset: 0.14 MB  code-roots: 0.00 MB
+
+
+### PHASE Post-Sorting @ 200.902
+### HEAP  reserved: 0x00000007b9c00000-0x00000007c0000000  region-size: 4194304
+###
+###   type                         address-range       used  prev-live  next-live          gc-eff     remset  code-roots
+###                                                 (bytes)    (bytes)    (bytes)      (bytes/ms)    (bytes)    (bytes)
+###
+### SUMMARY  capacity: 0.00 MB  used: 0.00 MB / 0.00 %  prev-live: 0.00 MB / 0.00 %  next-live: 0.00 MB / 0.00 %  remset: 0.00 MB  code-roots: 0.00 MB
+
+ 49M->49M(100M), 0.0007162 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+202
+203
+ G1HR ALLOC(Eden) 0x00000007bf800000
+204
+205
+206
+207
+ G1HR ALLOC(Eden) 0x00000007bf400000
+208
+209
+210
+211
+ G1HR ALLOC(Eden) 0x00000007bf000000
+212
+213
+214
+215
+ G1HR ALLOC(Eden) 0x00000007bec00000
+216
+217
+218
+219
+ G1HR ALLOC(Eden) 0x00000007be800000
+220
+221
+222
+223
+ G1HR ALLOC(Eden) 0x00000007be400000
+224
+225
+226
+227
+ G1HR ALLOC(Eden) 0x00000007be000000
+228
+229
+230
+231
+{Heap before GC invocations=15 (full 0):
+ garbage-first heap   total 102400K, used 81340K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 9 young (36864K), 1 survivors (4096K)
+ Metaspace       used 3308K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+232.010: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 16
+ 232.010: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 512, predicted base time: 2.46 ms, remaining time: 197.54 ms, target pause time: 200.00 ms]
+ 232.010: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 8 regions, survivors: 1 regions, predicted young region time: 8.05 ms]
+ 232.010: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 8 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 10.51 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be000000
+ G1HR CSET 0x00000007be400000
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007bd800000
+ G1HR REUSE 0x00000007bc800000
+ G1HR ALLOC(Survivor) 0x00000007bdc00000
+232.011: [SoftReference, 0 refs, 0.0000196 secs]232.011: [WeakReference, 0 refs, 0.0000083 secs]232.011: [FinalReference, 0 refs, 0.0000079 secs]232.011: [PhantomReference, 0 refs, 0 refs, 0.0000094 secs]232.011: [JNI Weak Reference, 0.0000063 secs] G1HR RETIRE 0x00000007bdc00000 0x00000007bdc04890
+ G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ 232.012: [G1Ergonomics (Concurrent Cycles) do not request concurrent cycle initiation, reason: still doing mixed collections, occupancy: 50331648 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ 232.012: [G1Ergonomics (Mixed GCs) do not start mixed GCs, reason: candidate old regions not available]
+ G1HR #EndGC 16
+, 0.0020124 secs]
+   [Parallel Time: 0.6 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 232010.2, Avg: 232010.4, Max: 232010.6, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.2, Max: 0.4, Diff: 0.4, Sum: 2.0]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.3, Max: 1, Diff: 1, Sum: 3]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.3]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.5]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.3, Max: 0.5, Diff: 0.4, Sum: 3.0]
+      [GC Worker End (ms): Min: 232010.7, Avg: 232010.7, Max: 232010.7, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 1.1 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.7 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 32.0M(32.0M)->0.0B(32.0M) Survivors: 4096.0K->4096.0K Heap: 79.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=16 (full 0):
+ garbage-first heap   total 102400K, used 48574K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3308K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+232
+233
+234
+ G1HR ALLOC(Eden) 0x00000007bf800000
+235
+236
+237
+238
+ G1HR ALLOC(Eden) 0x00000007bf400000
+239
+240
+241
+242
+ G1HR ALLOC(Eden) 0x00000007bf000000
+243
+244
+245
+246
+ G1HR ALLOC(Eden) 0x00000007bec00000
+247
+248
+249
+250
+ G1HR ALLOC(Eden) 0x00000007be800000
+251
+252
+253
+254
+ G1HR ALLOC(Eden) 0x00000007be400000
+255
+256
+257
+258
+ G1HR ALLOC(Eden) 0x00000007be000000
+259
+260
+261
+262
+{Heap before GC invocations=16 (full 0):
+ garbage-first heap   total 102400K, used 81342K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 9 young (36864K), 1 survivors (4096K)
+ Metaspace       used 3323K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+263.106: [GC pause (G1 Evacuation Pause) (young) G1HR #StartGC 17
+ 263.106: [G1Ergonomics (CSet Construction) start choosing CSet, _pending_cards: 512, predicted base time: 2.35 ms, remaining time: 197.65 ms, target pause time: 200.00 ms]
+ 263.106: [G1Ergonomics (CSet Construction) add young regions to CSet, eden: 8 regions, survivors: 1 regions, predicted young region time: 5.79 ms]
+ 263.106: [G1Ergonomics (CSet Construction) finish choosing CSet, eden: 8 regions, survivors: 1 regions, old: 0 regions, predicted pause time: 8.14 ms, target pause time: 200.00 ms]
+ G1HR CSET 0x00000007be000000
+ G1HR CSET 0x00000007be400000
+ G1HR CSET 0x00000007be800000
+ G1HR CSET 0x00000007bec00000
+ G1HR CSET 0x00000007bf000000
+ G1HR CSET 0x00000007bf400000
+ G1HR CSET 0x00000007bf800000
+ G1HR CSET 0x00000007bfc00000
+ G1HR CSET 0x00000007bdc00000
+ G1HR REUSE 0x00000007bc800000
+ G1HR ALLOC(Survivor) 0x00000007bd800000
+263.107: [SoftReference, 0 refs, 0.0000291 secs]263.107: [WeakReference, 0 refs, 0.0000235 secs]263.107: [FinalReference, 0 refs, 0.0000133 secs]263.107: [PhantomReference, 0 refs, 0 refs, 0.0000131 secs]263.108: [JNI Weak Reference, 0.0000089 secs] G1HR RETIRE 0x00000007bd800000 0x00000007bd804890
+ G1HR RETIRE 0x00000007bc800000 0x00000007bcb6b200
+ 263.108: [G1Ergonomics (Concurrent Cycles) request concurrent cycle initiation, reason: occupancy higher than threshold, occupancy: 50331648 bytes, allocation request: 0 bytes, threshold: 10485760 bytes (10.00 %), source: end of GC]
+ G1HR #EndGC 17
+, 0.0021533 secs]
+   [Parallel Time: 0.7 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 263106.2, Avg: 263106.4, Max: 263106.6, Diff: 0.4]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.2, Max: 0.4, Diff: 0.4, Sum: 2.1]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+         [Processed Buffers: Min: 0, Avg: 0.3, Max: 1, Diff: 1, Sum: 3]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.2]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.5]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      [GC Worker Total (ms): Min: 0.1, Avg: 0.3, Max: 0.5, Diff: 0.4, Sum: 3.1]
+      [GC Worker End (ms): Min: 263106.7, Avg: 263106.7, Max: 263106.8, Diff: 0.0]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 1.1 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.6 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.3 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 32.0M(32.0M)->0.0B(32.0M) Survivors: 4096.0K->4096.0K Heap: 79.4M(100.0M)->47.4M(100.0M)]
+Heap after GC invocations=17 (full 0):
+ garbage-first heap   total 102400K, used 48574K [0x00000007b9c00000, 0x00000007ba0000c8, 0x00000007c0000000)
+  region size 4096K, 1 young (4096K), 1 survivors (4096K)
+ Metaspace       used 3323K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K
+}
+ [Times: user=0.01 sys=0.00, real=0.00 secs]
+ G1HR ALLOC(Eden) 0x00000007bfc00000
+263
+264
+265
+ G1HR ALLOC(Eden) 0x00000007bf800000
+266
+267
+268
+269
+ G1HR ALLOC(Eden) 0x00000007bf400000
+270
+271
+272
+273
+ G1HR ALLOC(Eden) 0x00000007bf000000
+274
+275
+276
+277
+ G1HR ALLOC(Eden) 0x00000007bec00000
+278
+279
+280
+281
+ G1HR ALLOC(Eden) 0x00000007be800000
+282
+283
+284
+285
+ G1HR ALLOC(Eden) 0x00000007be400000
+286
+287
+288
+289
+ G1HR ALLOC(Eden) 0x00000007be000000
+290
+291

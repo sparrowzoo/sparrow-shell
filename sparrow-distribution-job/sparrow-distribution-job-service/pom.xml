@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sparrow-bom</artifactId>
+        <groupId>com.sparrow</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <version>${sparrow_distribution_job_version}</version>
+    <artifactId>sparrow-distribution-job-service</artifactId>
+    <build>
+        <finalName>${artifactId}</finalName>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sparrow</groupId>
+            <artifactId>sparrow-distribution-job-api</artifactId>
+            <version>${sparrow_distribution_job_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sparrow</groupId>
+            <artifactId>sparrow-distribution-job-core</artifactId>
+            <version>${sparrow_distribution_job_version}</version>
+        </dependency>
+    </dependencies>
+</project>

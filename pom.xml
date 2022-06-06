@@ -52,7 +52,6 @@
         <module>sparrow-bom</module>
         <module>sparrow-log</module>
         <module>sparrow-rocketmq-client</module>
-        <module>sparrow-kafka-client</module>
         <module>sparrow-sharded-jedis</module>
         <module>sparrow-markdown</module>
         <module>sparrow-registry</module>
@@ -60,37 +59,11 @@
         <module>sparrow-distribution-job</module>
         <module>sparrow-distribution-config</module>
         <module>sparrow-protocol</module>
-        <module>sparrow-ml</module>
         <module>sparrow-test</module>
         <!--<module>sparrow-lettuce-cluster</module>-->
     </modules>
 
     <build>
         <finalName>${project.artifactId}</finalName>
-
-        <plugins>
-            <plugin>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
-                <executions>
-                    <execution>
-                        <id>verify</id>
-                        <phase>verify</phase>
-                        <configuration>
-                            <configLocation>style/sparrow_checkstyle.xml</configLocation>
-                            <suppressionsLocation>style/check_style_suppressions.xml</suppressionsLocation>
-                            <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-                            <encoding>UTF-8</encoding>
-                            <consoleOutput>true</consoleOutput>
-                            <failsOnError>true</failsOnError>
-                            <includeTestSourceDirectory>false</includeTestSourceDirectory>
-                        </configuration>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>

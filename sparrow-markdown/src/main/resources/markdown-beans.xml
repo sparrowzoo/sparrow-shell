@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
+        "beans.dtd">
+<beans>
+    <bean name="markdownImageExtractor" class="com.sparrow.markdown.image.MarkdownImageExtractor">
+        <property name="imageExtractorRegistry" ref="imageExtractorRegistry"/>
+    </bean>
+
+    <bean name="markdownPreviewController" class="com.sparrow.markdown.controller.MarkdownPreviewController">
+        <property name="imageExtractorRegistry" ref="imageExtractorRegistry"/>
+        <property name="downloader" ref="attachService"/>
+    </bean>
+</beans>
