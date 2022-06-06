@@ -29,7 +29,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <spring.framework.version>4.2.6.RELEASE</spring.framework.version>
+        <spring.framework.version>5.2.22.RELEASE</spring.framework.version>
         <maven.compile.source>1.8</maven.compile.source>
         <maven.compile.target>1.8</maven.compile.target>
 
