@@ -16,7 +16,7 @@ import com.sparrow.protocol.constant.magic.SYMBOL;
 import com.sparrow.protocol.dto.AuthorDTO;
 import com.sparrow.protocol.dto.ImageDTO;
 import com.sparrow.protocol.dto.SimpleItemDTO;
-import com.sparrow.protocol.mvc.HandlerInterceptor;
+import com.sparrow.mvc.HandlerInterceptor;
 import com.sparrow.protocol.pager.PagerQuery;
 import com.sparrow.support.Initializer;
 import com.sparrow.support.LoginDialog;

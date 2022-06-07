@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.mvc;
+package com.sparrow.mvc;
 
 import com.sparrow.protocol.VO;
 import com.sparrow.protocol.constant.CONSTANT;

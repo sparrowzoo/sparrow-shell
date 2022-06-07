@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.mvc;
+package com.sparrow.mvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

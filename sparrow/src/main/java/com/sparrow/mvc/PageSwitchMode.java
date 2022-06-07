@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.mvc;
+package com.sparrow.mvc;
 
 /**
  * @author harry

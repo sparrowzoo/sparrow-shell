@@ -37,7 +37,7 @@ import com.sparrow.protocol.constant.CONSTANT;
 import com.sparrow.protocol.constant.EXTENSION;
 import com.sparrow.protocol.constant.magic.DIGIT;
 import com.sparrow.protocol.constant.magic.SYMBOL;
-import com.sparrow.protocol.mvc.HandlerInterceptor;
+import com.sparrow.mvc.HandlerInterceptor;
 import com.sparrow.support.LoginDialog;
 import com.sparrow.support.web.CookieUtility;
 import com.sparrow.support.web.HttpContext;

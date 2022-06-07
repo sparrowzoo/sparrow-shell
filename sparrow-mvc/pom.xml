@@ -28,11 +28,7 @@
     <dependencies>
         <dependency>
             <groupId>com.sparrow</groupId>
-            <artifactId>sparrow-data-source</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sparrow</groupId>
-            <artifactId>sparrow-orm</artifactId>
+            <artifactId>sparrow</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.zxing</groupId>

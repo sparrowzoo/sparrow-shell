@@ -1,7 +1,7 @@
 package com.sparrow.interceptor;
 
 
-import com.sparrow.protocol.mvc.HandlerInterceptor;
+import com.sparrow.mvc.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
