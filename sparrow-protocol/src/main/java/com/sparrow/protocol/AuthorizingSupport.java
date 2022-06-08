@@ -19,6 +19,7 @@ package com.sparrow.protocol;
 
 /**
  * 谁证授权接口
+ *
  * @author harry
  */
 public interface AuthorizingSupport {
@@ -26,10 +27,9 @@ public interface AuthorizingSupport {
      * 签名
      *
      * @param login login token
-     * @param secret user's password
      * @return
      */
-    String sign(LoginToken login, String secret);
+    String sign(LoginToken login);
 
     /**
      * 认证

@@ -1,7 +1,7 @@
 package com.sparrow.orm.dao;
 
 import com.sparrow.orm.po.User;
-import com.sparrow.protocol.db.DaoSupport;
+import com.sparrow.protocol.dao.DaoSupport;
 
 import java.util.List;
 

@@ -28,7 +28,6 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
 
     @Override
     public LoginToken authenticate(String permission, String deviceId) {
-        // 第一次请求时没有session id
         LoginToken login = new LoginToken();
         login.setUserId(User.VISITOR_ID);
         login.setUserName(ConfigUtility.getLanguageValue(
@@ -40,10 +39,10 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
         }
 
         try {
-            if(!permission.contains("\\.")){
+            if (!permission.contains(".")) {
                 return login;
             }
-            String[]tokens=permission.split("\\.");
+            String[] tokens = permission.split("\\.");
             //id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&cent=%5$s&avatar=%6$s&deviceId=%7$s&activate=%8$s
             String userInfo = tokens[0];
             String signature = tokens[1];
@@ -59,14 +58,14 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
             String expireAtStr = userInfoArray[3].substring("expireAt=".length());
             long expireAt = 0L;
             //过期
-            if (StringUtility.isNullOrEmpty(expireAtStr) && !"null".equalsIgnoreCase(expireAtStr)) {
+            if (!StringUtility.isNullOrEmpty(expireAtStr) && !"null".equalsIgnoreCase(expireAtStr)) {
                 expireAt = Long.parseLong(expireAtStr);
                 if (System.currentTimeMillis() > expireAt) {
                     return login;
                 }
             }
 
-            Long userId=Long.parseLong(userInfoArray[0].substring("id=".length()));
+            Long userId = Long.parseLong(userInfoArray[0].substring("id=".length()));
             String newSignature = Hmac.getInstance().getSHA1Base64(userInfo,
                     this.getSecret(userId));
 
@@ -78,13 +77,22 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
             login.setNickName(userInfoArray[1].substring("name="
                     .length()));
             login.setUserName(userInfoArray[2].substring("login=".length()));
+
             login.setCent(Long.valueOf(userInfoArray[4].substring("cent=".length())));
             login.setAvatar(userInfoArray[5].substring("avatar="
                     .length()));
             login.setDeviceId(dev);
             login.setExpireAt(expireAt);
-            login.setAvatar(userInfoArray[7].substring("activate="
-                    .length()));
+            String activate = userInfoArray[7].substring("activate="
+                    .length());
+            if (!StringUtility.isNullOrEmpty(activate)) {
+                login.setActivate(Boolean.valueOf(activate));
+            }
+            String days = userInfoArray[8].substring("days="
+                    .length());
+            if (!StringUtility.isNullOrEmpty(days)) {
+                login.setDays(Integer.valueOf(days));
+            }
             return login;
         } catch (Exception ignore) {
             logger.error("parser error ", ignore);
@@ -92,9 +100,9 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
         }
     }
 
-    public String sign(LoginToken login, String secret) {
+    public String sign(LoginToken login) {
         String userInfo = String.format(
-                "id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&cent=%5$s&avatar=%6$s&deviceId=%7$s&activate=%8$s",
+                "id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&cent=%5$s&avatar=%6$s&deviceId=%7$s&activate=%8$s&days=%9$s",
                 login.getUserId(),
                 login.getUserName(),
                 login.getNickName(),
@@ -102,9 +110,10 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
                 login.getCent(),
                 login.getAvatar(),
                 login.getDeviceId(),
-                login.getActivate());
+                login.getActivate(),
+                login.getDays());
         String signature = Hmac.getInstance().getSHA1Base64(userInfo,
-                secret);
+                this.getSecret(login.getUserId()));
         try {
             return Base64.encodeBytes(userInfo.getBytes(PREFERRED_ENCODING)) + "." + signature;
         } catch (UnsupportedEncodingException ignore) {

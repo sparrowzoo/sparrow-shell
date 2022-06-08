@@ -53,7 +53,10 @@ public class ConfigUtility {
     }
 
     public static String getLanguageValue(String key, String language) {
-        return getLanguageValue(key, language,null);
+        if (StringUtility.isNullOrEmpty(language)) {
+            language = "zh_cn";
+        }
+        return getLanguageValue(key, language, null);
     }
 
     public static String getLanguageValue(String key, String language, String defaultValue) {
