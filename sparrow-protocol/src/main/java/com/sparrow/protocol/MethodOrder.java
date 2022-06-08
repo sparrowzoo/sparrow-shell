@@ -1,4 +1,4 @@
-package com.sparrow.protocol.db;
+package com.sparrow.protocol;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

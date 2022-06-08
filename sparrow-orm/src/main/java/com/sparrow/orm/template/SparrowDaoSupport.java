@@ -19,7 +19,7 @@ package com.sparrow.orm.template;
 
 import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.query.UpdateCriteria;
-import com.sparrow.protocol.db.DaoSupport;
+import com.sparrow.protocol.dao.DaoSupport;
 
 import java.util.List;
 import java.util.Map;

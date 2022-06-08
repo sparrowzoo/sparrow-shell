@@ -15,31 +15,26 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.enums;
+package com.sparrow.protocol.dao.enums;
 
 /**
  * @author harry
  */
-
-public enum DATABASE_SPLIT_STRATEGY {
+public enum HashType {
     /**
-     * 默认无
+     * 不 HASH
      */
-    DEFAULT,
+    NULL,
     /**
-     * 语言
+     * 表打散使用
      */
-    LANGUAGE,
+    HASH,
     /**
-     * 用户id
+     * only hash只用于hash不入库
      */
-    USER_ID,
+    ONLY_HASH,
     /**
-     * 用户自定义
+     * 分库
      */
-    USER_DEFINED,
-    /**
-     * 外键与分表一起使用
-     */
-    FOREIGN_KEY
+    HASH_WITH_SPLIT_DATABASE,
 }

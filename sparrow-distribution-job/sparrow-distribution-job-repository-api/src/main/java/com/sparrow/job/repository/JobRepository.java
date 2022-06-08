@@ -1,7 +1,7 @@
 package com.sparrow.job.repository;
 
 import com.sparrow.job.po.Job;
-import com.sparrow.protocol.db.DaoSupport;
+import com.sparrow.protocol.dao.DaoSupport;
 
 import java.util.List;
 

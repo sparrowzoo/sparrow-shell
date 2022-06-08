@@ -18,8 +18,8 @@
 package com.sparrow.orm;
 
 import com.sparrow.core.TypeConverter;
-import com.sparrow.protocol.db.Hash;
-import com.sparrow.protocol.enums.HashType;
+import com.sparrow.protocol.dao.Hash;
+import com.sparrow.protocol.dao.enums.HashType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

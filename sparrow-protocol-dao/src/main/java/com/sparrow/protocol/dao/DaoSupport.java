@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.db;
+package com.sparrow.protocol.dao;
 
 import com.sparrow.protocol.pager.PagerQuery;
 

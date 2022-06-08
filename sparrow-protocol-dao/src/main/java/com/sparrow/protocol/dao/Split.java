@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.db;
+package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.enums.DATABASE_SPLIT_STRATEGY;
+import com.sparrow.protocol.dao.enums.DATABASE_SPLIT_STRATEGY;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

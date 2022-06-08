@@ -15,26 +15,24 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.enums;
+package com.sparrow.protocol.dao;
+
+import com.sparrow.protocol.dao.enums.HashType;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * @author harry
+ * Created by harry on 2015/7/14.
  */
-public enum HashType {
-    /**
-     * 不 HASH
-     */
-    NULL,
-    /**
-     * 表打散使用
-     */
-    HASH,
-    /**
-     * only hash只用于hash不入库
-     */
-    ONLY_HASH,
-    /**
-     * 分库
-     */
-    HASH_WITH_SPLIT_DATABASE,
+@Target({METHOD, FIELD})
+@Retention(RUNTIME)
+public @interface Hash {
+    HashType strategy() default HashType.HASH;
+
+    int index() default 0;
 }

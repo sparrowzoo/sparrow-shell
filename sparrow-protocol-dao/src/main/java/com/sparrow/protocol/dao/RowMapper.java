@@ -15,24 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.db;
+package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.enums.HashType;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
- * Created by harry on 2015/7/14.
+ * @author harry
  */
-@Target({METHOD, FIELD})
-@Retention(RUNTIME)
-public @interface Hash {
-    HashType strategy() default HashType.HASH;
-
-    int index() default 0;
+public interface RowMapper<T> {
+    T mapRow(ResultSet rs, int rowNum) throws SQLException;
 }

@@ -1,4 +1,4 @@
-package com.sparrow.protocol.db;
+package com.sparrow.protocol.dao;
 
 public class UniqueKeyCriteria {
     /**

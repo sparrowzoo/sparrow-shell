@@ -17,7 +17,7 @@
 
 package com.sparrow.orm.query;
 
-import com.sparrow.protocol.db.RowMapper;
+import com.sparrow.protocol.dao.RowMapper;
 import com.sparrow.protocol.pager.PagerQuery;
 
 import java.util.ArrayList;

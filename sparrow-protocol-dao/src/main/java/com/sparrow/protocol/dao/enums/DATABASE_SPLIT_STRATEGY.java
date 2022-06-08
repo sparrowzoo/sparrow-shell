@@ -15,14 +15,31 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.db;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
+package com.sparrow.protocol.dao.enums;
 
 /**
  * @author harry
  */
-public interface RowMapper<T> {
-    T mapRow(ResultSet rs, int rowNum) throws SQLException;
+
+public enum DATABASE_SPLIT_STRATEGY {
+    /**
+     * 默认无
+     */
+    DEFAULT,
+    /**
+     * 语言
+     */
+    LANGUAGE,
+    /**
+     * 用户id
+     */
+    USER_ID,
+    /**
+     * 用户自定义
+     */
+    USER_DEFINED,
+    /**
+     * 外键与分表一起使用
+     */
+    FOREIGN_KEY
 }

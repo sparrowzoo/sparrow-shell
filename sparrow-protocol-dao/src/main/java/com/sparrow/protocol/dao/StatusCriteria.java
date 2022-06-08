@@ -1,4 +1,4 @@
-package com.sparrow.protocol.db;
+package com.sparrow.protocol.dao;
 
 import com.sparrow.protocol.enums.STATUS_RECORD;
 

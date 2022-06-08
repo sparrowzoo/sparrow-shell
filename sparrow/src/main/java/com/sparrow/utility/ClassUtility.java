@@ -19,7 +19,8 @@ package com.sparrow.utility;
 
 import com.sparrow.protocol.constant.CONSTANT;
 import com.sparrow.protocol.constant.magic.SYMBOL;
-import com.sparrow.protocol.db.MethodOrder;
+import com.sparrow.protocol.MethodOrder;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
