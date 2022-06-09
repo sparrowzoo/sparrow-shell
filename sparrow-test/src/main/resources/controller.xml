@@ -4,11 +4,14 @@
 <mvc>
     <!--在bean context中定义-->
     <controller id="helloController">
+        <!--/template/index.jsp 兼容欢迎页-->
         <action name="/template/welcome.jsp" method="welcome"/>
         <!---一定以 /开头-->
-        <action name="/hello" method="hello"/>
+        <action name="/hello" method="hello" login="NO_AUTHENTICATE"/>
         <action name="/fly" method="fly"/>
-        <action name="/transit-test" method="transit"/>
+        <action name="/transit-test" method="transit">
+            <result name="success">transit-here</result>
+        </action>
         <action name="/thread-{threadId}-{pageIndex}" method="thread"/>
         <action name="/json-test.json" method="json"/>
     </controller>

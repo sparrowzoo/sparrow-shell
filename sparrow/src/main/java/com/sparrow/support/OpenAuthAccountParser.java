@@ -18,6 +18,7 @@
 package com.sparrow.support;
 
 import com.sparrow.constant.Config;
+import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.protocol.constant.CONSTANT;
 import com.sparrow.protocol.OpenAuthAccount;
 import com.sparrow.protocol.enums.PLATFORM;
@@ -39,7 +40,7 @@ public class OpenAuthAccountParser {
      * @return
      * @see OpenAuthAccount getKey
      */
-    public static OpenAuthAccount parse(String configKey) {
+    public static OpenAuthAccount parse(String configKey) throws CacheNotFoundException {
         OpenAuthAccount openAuthProtocol = new OpenAuthAccount();
         String[] keyArray = configKey.split("_");
         openAuthProtocol.setPlatform(PLATFORM.valueOf(keyArray[0].toUpperCase()));
@@ -69,7 +70,7 @@ public class OpenAuthAccountParser {
     }
 
 
-    private static String getConfig(String prefix, String key) {
+    private static String getConfig(String prefix, String key) throws CacheNotFoundException {
         return ConfigUtility.getValue(prefix + "_" + key);
     }
 }

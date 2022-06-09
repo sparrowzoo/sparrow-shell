@@ -18,15 +18,13 @@
 package com.sparrow.enums;
 
 /**
- * 0:不需要登录 1:正常登录 2:框架内登录 default.jsp内登录 3:管理员登录
- *
  * @author harry
  */
 public enum LoginType {
     /**
      * 0不需求登录
      */
-    NO_LOGIN,
+    NO_AUTHENTICATE,
     /**
      * 1正常网站登录
      */

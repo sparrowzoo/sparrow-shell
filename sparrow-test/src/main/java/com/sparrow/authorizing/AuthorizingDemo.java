@@ -1,4 +1,4 @@
-package com.sparrow.facade.authorizing;
+package com.sparrow.authorizing;
 
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginToken;

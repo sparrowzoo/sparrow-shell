@@ -17,6 +17,7 @@
 
 package com.sparrow.mvc;
 
+import com.sparrow.enums.LoginType;
 import com.sparrow.protocol.constant.magic.DIGIT;
 import com.sparrow.mvc.resolver.impl.HandlerMethodArgumentResolverComposite;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
@@ -35,14 +36,14 @@ import java.util.List;
 public class ServletInvokableHandlerMethod {
     /**
      * 登录类型
-     *  0:不需要登录
+     * 0:不需要认证
      * 1:正常登录
      * 2:框架内登录 default.jsp内登录
      * 3:管理员登录
      * 4:对话框登录
      * 5:json 提示
      */
-    private int loginType = DIGIT.ZERO;
+    private LoginType loginType = LoginType.NO_AUTHENTICATE;
     /**
      * 是否为json返回
      */
@@ -74,9 +75,9 @@ public class ServletInvokableHandlerMethod {
      */
     private List<String> pathParameterNameList;
     /**
-     * 权限验证
+     * 是否需要授权
      */
-    private boolean validatePrivilege;
+    private boolean needAuthorizing;
     /**
      * 是否需要权限验证
      */
@@ -165,20 +166,20 @@ public class ServletInvokableHandlerMethod {
         this.actionName = actionName;
     }
 
-    public int getLoginType() {
+    public LoginType getLoginType() {
         return loginType;
     }
 
-    public void setLoginType(int loginType) {
+    public void setLoginType(LoginType loginType) {
         this.loginType = loginType;
     }
 
-    public boolean isValidatePrivilege() {
-        return validatePrivilege;
+    public boolean isNeedAuthorizing() {
+        return needAuthorizing;
     }
 
-    public void setValidatePrivilege(boolean validatePrivilege) {
-        this.validatePrivilege = validatePrivilege;
+    public void setNeedAuthorizing(boolean needAuthorizing) {
+        this.needAuthorizing = needAuthorizing;
     }
 
     public boolean isJson() {
@@ -191,16 +192,16 @@ public class ServletInvokableHandlerMethod {
 
     private MethodParameter[] initMethodParameters() {
         Class<?>[] parameterClass = this.method
-            .getParameterTypes();
+                .getParameterTypes();
         if (parameterClass == null || parameterClass.length == 0) {
             return null;
         }
         int count = parameterClass.length;
         MethodParameter[] result = new MethodParameter[count];
         for (int i = 0; i < count; i++) {
-            String parameterName=null;
-            if(!CollectionsUtility.isNullOrEmpty(parameterNameList)&&parameterNameList.size()>i){
-                parameterName=parameterNameList.get(i);
+            String parameterName = null;
+            if (!CollectionsUtility.isNullOrEmpty(parameterNameList) && parameterNameList.size() > i) {
+                parameterName = parameterNameList.get(i);
             }
             result[i] = new MethodParameter(method, i, parameterClass[i], parameterName);
         }
@@ -208,14 +209,14 @@ public class ServletInvokableHandlerMethod {
     }
 
     public Object invokeAndHandle(FilterChain chain, HttpServletRequest request,
-        HttpServletResponse response) throws Exception {
-        Object[] args = getMethodArgumentValues(request,response);
+                                  HttpServletResponse response) throws Exception {
+        Object[] args = getMethodArgumentValues(request, response);
         Object returnValue = this.method.invoke(this.controller, args);
         methodReturnValueResolverHandler.resolve(this, returnValue, chain, request, response);
         return returnValue;
     }
 
-    private Object[] getMethodArgumentValues(HttpServletRequest request,HttpServletResponse response) throws Exception {
+    private Object[] getMethodArgumentValues(HttpServletRequest request, HttpServletResponse response) throws Exception {
         MethodParameter[] parameters = this.methodParameters;
         if (this.methodParameters == null || this.methodParameters.length == 0) {
             return null;
@@ -223,17 +224,17 @@ public class ServletInvokableHandlerMethod {
         Object[] args = new Object[parameters.length];
         for (int i = 0; i < parameters.length; i++) {
             MethodParameter parameter = parameters[i];
-            if(parameter.getParameterType().equals(HttpServletRequest.class)){
-                args[i]=request;
+            if (parameter.getParameterType().equals(HttpServletRequest.class)) {
+                args[i] = request;
                 continue;
             }
-            if(parameter.getParameterType().equals(HttpServletResponse.class)){
-                args[i]=response;
+            if (parameter.getParameterType().equals(HttpServletResponse.class)) {
+                args[i] = response;
                 continue;
             }
             if (this.handlerMethodArgumentResolverComposite.supportsParameter(parameter)) {
                 args[i] = this.handlerMethodArgumentResolverComposite.resolveArgument(
-                    parameter, this, request);
+                        parameter, this, request);
             }
         }
         return args;
@@ -265,7 +266,7 @@ public class ServletInvokableHandlerMethod {
     }
 
     public void setHandlerMethodArgumentResolverComposite(
-        HandlerMethodArgumentResolverComposite handlerMethodArgumentResolverComposite) {
+            HandlerMethodArgumentResolverComposite handlerMethodArgumentResolverComposite) {
         this.handlerMethodArgumentResolverComposite = handlerMethodArgumentResolverComposite;
     }
 

@@ -97,14 +97,14 @@ public class Config {
     public static final String LOG_PRINT_CONSOLE = "print_console";
 
     public static final String PASSPORT_ROOT="passport_root";
-    public static final Map<Integer, String> LOGIN_TYPE_KEY = new HashMap<Integer, String>() {
+    public static final Map<LoginType, String> LOGIN_TYPE_KEY = new HashMap<LoginType, String>() {
         private static final long serialVersionUID = 1L;
 
         {
-            put(LoginType.LOGIN.ordinal(), "login_url");
-            put(LoginType.LOGIN_IFRAME.ordinal(), "frame_login_url");
-            put(LoginType.ADMINISTRATOR_LOGIN.ordinal(), "manager_login_url");
-            put(LoginType.DIALOG_LOGIN.ordinal(), "dialog_login_url");
+            put(LoginType.LOGIN, "login_url");
+            put(LoginType.LOGIN_IFRAME, "frame_login_url");
+            put(LoginType.ADMINISTRATOR_LOGIN, "manager_login_url");
+            put(LoginType.DIALOG_LOGIN, "dialog_login_url");
         }
     };
 

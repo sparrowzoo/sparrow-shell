@@ -74,15 +74,17 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
     /**
      * 根据返回结果判断url
      *
-     * @param actionResult direct:login
-     *                     <p>
-     *                     direct:login.jsp
-     *                     <p>
-     *                     direct:success
-     *                     <p>
-     *                     login
-     *                     <p>
-     *                     login.jsp success
+     * @param actionResult      direct:login
+     *                          <p>
+     *                          direct:login.jsp
+     *                          <p>
+     *                          direct:success
+     *                          <p>
+     *                          login
+     *                          <p>
+     *                          login.jsp success
+     * @param referer           当前refer
+     * @param defaultSuccessUrl 默认成功页
      */
     private ViewWithModel parse(String actionResult, String referer, String defaultSuccessUrl) {
         String url;
@@ -95,7 +97,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         } else {
             url = actionResult;
         }
-        url = assembleUrl(referer, defaultSuccessUrl, url, pageSwitchMode,null);
+        url = assembleUrl(referer, defaultSuccessUrl, url, pageSwitchMode, null);
         switch (pageSwitchMode) {
             case FORWARD:
                 return ViewWithModel.forward(url);
@@ -108,7 +110,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         }
     }
 
-    private String assembleUrl(String referer, String defaultSuccessUrl, String url, PageSwitchMode pageSwitchMode,String []urlArgs) {
+    private String assembleUrl(String referer, String defaultSuccessUrl, String url, PageSwitchMode pageSwitchMode, String[] urlArgs) {
         if (CONSTANT.SUCCESS.equals(url) || StringUtility.isNullOrEmpty(url)) {
             url = defaultSuccessUrl;
         }
@@ -155,7 +157,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
             url = viewWithModel.getUrl();
         } else if (returnValue instanceof ViewWithModel) {
             viewWithModel = (ViewWithModel) returnValue;
-            url = this.assembleUrl(referer, handlerExecutionChain.getSuccessUrl(), viewWithModel.getUrl(), viewWithModel.getSwitchMode(),viewWithModel.getUrlArgs());
+            url = this.assembleUrl(referer, handlerExecutionChain.getSuccessUrl(), viewWithModel.getUrl(), viewWithModel.getSwitchMode(), viewWithModel.getUrlArgs());
         }
 
         //无返回值，直接返回 不处理
@@ -163,23 +165,27 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
             chain.doFilter(request, response);
             return;
         }
+
         if (url == null) {
+            //兼容默认首页 /template/index.jsp 的场景
+            VO data = viewWithModel.getVo();
+            if (data != null) {
+                request.setAttribute(ClassUtility.getEntityNameByClass(data.getClass()), data);
+            }
             chain.doFilter(request, response);
             return;
         }
 
 
-        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-        if (rootPath != null && url.startsWith(rootPath)) {
-            url = url.substring(rootPath.length());
-        }
         String flashUrl;
-
+        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
         switch (viewWithModel.getSwitchMode()) {
-
             case REDIRECT:
                 flashUrl = servletUtility.assembleActualUrl(url);
                 this.flash(request, flashUrl, CONSTANT.FLASH_SUCCESS_RESULT, viewWithModel.getVo());
+                if (!url.startsWith(CONSTANT.HTTP_PROTOCOL)) {
+                    url = rootPath + url;
+                }
                 response.sendRedirect(url);
                 break;
             case TRANSIT:
@@ -187,14 +193,21 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
                 this.flash(request, flashUrl, CONSTANT.FLASH_SUCCESS_RESULT, viewWithModel.getVo());
                 String transitUrl = viewWithModel.getTransitUrl();
                 if (StringUtility.isNullOrEmpty(transitUrl)) {
-                    transitUrl = ConfigUtility.getValue(Config.SUCCESS_TRANSIT_URL);
+                    transitUrl = ConfigUtility.getValue(Config.TRANSIT_URL);
                 }
                 if (transitUrl != null && !transitUrl.startsWith(CONSTANT.HTTP_PROTOCOL)) {
                     transitUrl = rootPath + transitUrl;
                 }
+
+                if (!url.startsWith(CONSTANT.HTTP_PROTOCOL)) {
+                    url = rootPath + url;
+                }
                 response.sendRedirect(transitUrl + "?" + url);
                 break;
             case FORWARD:
+                if (rootPath != null && url.startsWith(rootPath)) {
+                    url = url.substring(rootPath.length());
+                }
                 VO data = viewWithModel.getVo();
                 if (data != null) {
                     request.setAttribute(ClassUtility.getEntityNameByClass(data.getClass()), data);

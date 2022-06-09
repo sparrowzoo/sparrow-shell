@@ -18,12 +18,12 @@ public class HelloController {
     }
 
     public ViewWithModel transit() throws BusinessException {
-        return ViewWithModel.transit("transit-here", new HelloVO("我从你这歇一会，最终我要到transit-here"));
+        return ViewWithModel.transit(new HelloVO("我从你这歇一会，最终我要到transit-here"));
     }
 
     @RequestParameters("threadId,pageIndex")
     public ViewWithModel thread(Long threadId, Integer pageIndex) {
-        return ViewWithModel.forward("thread", new HelloVO("服务器的thread" + threadId + "-" + pageIndex));
+        return ViewWithModel.forward("thread", new HelloVO("服务器的threadId=" + threadId + ",pageIndex=" + pageIndex));
     }
 
     public HelloVO json() {

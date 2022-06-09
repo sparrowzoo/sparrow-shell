@@ -4,6 +4,6 @@
     <title>hello sparrow mvc</title>
 </head>
 <body>
-hi ${helloVO.hello}
+hi ${flash_success_result.hello}
 </body>
 </html>

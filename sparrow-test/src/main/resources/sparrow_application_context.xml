@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
-    "beans.dtd">
+        "beans.dtd">
 <beans>
     <!---当前进程的所有datasource实例-->
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
@@ -30,7 +30,6 @@
     </bean>
 
 
-
     <bean name="cacheClient" class="com.sparrow.cache.impl.redis.RedisCacheClient">
         <property name="redisPool" ref="redisPool"/>
     </bean>
@@ -40,6 +39,8 @@
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
+
+    <bean name="authorizingService" class="com.sparrow.authorizing.AuthorizingDemo"/>
     <bean name="helloController" class="com.sparrow.controller.HelloController" controller="true"/>
     <bean name="elasticSearchController" class="com.sparrow.controller.ElasticSearchController" controller="true"/>
     <bean name="sparrowHandlerInterceptor" class="com.sparrow.interceptor.SparrowHandlerInterceptor"

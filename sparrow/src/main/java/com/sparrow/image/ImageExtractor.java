@@ -1,5 +1,6 @@
 package com.sparrow.image;
 
+import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Downloader;
 import com.sparrow.protocol.dto.ImageDTO;

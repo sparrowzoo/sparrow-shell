@@ -21,6 +21,7 @@ import com.sparrow.cache.CacheClient;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.constant.cache.key.KeyUser;
+import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.JSUtility;
 import com.sparrow.utility.StringUtility;

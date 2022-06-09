@@ -15,40 +15,13 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol;
+package com.sparrow.exception;
 
 /**
- * 谁证授权接口
- *
  * @author harry
  */
-public interface AuthorizingSupport {
-    /**
-     * 签名
-     *
-     * @param login login token
-     * @param secret password
-     * @return
-     */
-    String sign(LoginToken login,String secret);
-
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    LoginToken authenticate(String token, String deviceId);
-
-    /**
-     * 授权某资源
-     *
-     * @param user
-     * @param url
-     * @param code
-     * @return
-     * @throws BusinessException
-     */
-    boolean isAuthorized(LoginToken user,
-                         String url, String code) throws BusinessException;
+public class CacheNotFoundException extends Exception {
+    public CacheNotFoundException(String message) {
+        super(message);
+    }
 }

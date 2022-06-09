@@ -1,5 +1,6 @@
 package com.sparrow.facade.authorizing;
 
+import com.sparrow.authorizing.AuthorizingDemo;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.AuthorizingSupport;
 import com.sparrow.protocol.LoginToken;
@@ -20,10 +21,10 @@ public class Test {
         loginToken.setUserName("zhangsan");
         loginToken.setActivate(true);
 
-        String sign = authorizingSupport.sign(loginToken);
+        String sign = authorizingSupport.sign(loginToken, "111111");
         System.out.printf(sign);
 
-        loginToken= authorizingSupport.authenticate(sign,"192.168.1.1");
+        loginToken = authorizingSupport.authenticate(sign, "192.168.1.1");
         System.out.printf(loginToken.getUserName());
     }
 }

@@ -17,6 +17,8 @@
 
 package com.sparrow.servlet;
 
+import com.sparrow.exception.CacheNotFoundException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +34,7 @@ public interface ServletContainer {
 
     HttpServletResponse getResponse();
 
-    String getActionKey();
+    String getActionKey() throws CacheNotFoundException;
 
     String getClientIp();
 
@@ -60,9 +62,9 @@ public interface ServletContainer {
 
     Cookie[] cookies();
 
-    void cookie(String key, String value, Integer expireDays);
+    void cookie(String key, String value, Integer expireDays) throws CacheNotFoundException;
 
-    void rootCookie(String key, String value, Integer expireDays);
+    void rootCookie(String key, String value, Integer expireDays) throws CacheNotFoundException;
 
     Map<String, String> getParameters();
 

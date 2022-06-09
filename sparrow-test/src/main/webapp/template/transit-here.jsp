@@ -21,6 +21,6 @@
     <title>welcome sparrow mvc transit demo</title>
 </head>
 <body>
-hi 内容还在吧...${helloVO.hello}
+hi 内容还在吧...${flash_success_result.hello}
 </body>
 </html>

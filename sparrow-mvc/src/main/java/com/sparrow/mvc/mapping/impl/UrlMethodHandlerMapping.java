@@ -18,6 +18,7 @@
 package com.sparrow.mvc.mapping.impl;
 
 import com.sparrow.constant.Config;
+import com.sparrow.enums.LoginType;
 import com.sparrow.protocol.constant.CONSTANT;
 import com.sparrow.protocol.constant.EXTENSION;
 import com.sparrow.protocol.constant.magic.SYMBOL;
@@ -98,17 +99,17 @@ public class UrlMethodHandlerMapping implements HandlerMapping {
 
                 invokableHandlerMethod.setActionName(actionName);
                 invokableHandlerMethod.setJson(actionName.endsWith(EXTENSION.JSON));
-                invokableHandlerMethod.setValidatePrivilege(Boolean.valueOf(actionElement
-                        .getAttribute("validatePrivilege")));
+                invokableHandlerMethod.setNeedAuthorizing(Boolean.parseBoolean(actionElement
+                        .getAttribute("needAuthorizing")));
                 String loginType = actionElement.getAttribute("login");
                 String validateRequest = actionElement.getAttribute("validateRequest");
                 if (StringUtility.isNullOrEmpty(validateRequest)) {
                     validateRequest = "true";
                 }
-                int intLoginType = StringUtility.isNullOrEmpty(loginType) ? 0
-                        : Integer.valueOf(loginType);
-                invokableHandlerMethod.setValidateRequest(Boolean.valueOf(validateRequest));
-                invokableHandlerMethod.setLoginType(intLoginType);
+                LoginType loginTypeEnum = StringUtility.isNullOrEmpty(loginType) ?LoginType.NO_AUTHENTICATE
+                        : LoginType.valueOf(loginType);
+                invokableHandlerMethod.setValidateRequest(Boolean.parseBoolean(validateRequest));
+                invokableHandlerMethod.setLoginType(loginTypeEnum);
                 String actionMethodName = actionElement.getAttribute("method");
                 Map<String, Method> actionMethodMap = container.getControllerMethod(beanName);
                 if (actionMethodMap == null) {

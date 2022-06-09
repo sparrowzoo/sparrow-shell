@@ -90,7 +90,7 @@ public class DatasourceKey {
      *
      * @return
      */
-    public String getKey() {
+    public String getKey()  {
         return this.getSchema() + SYMBOL.UNDERLINE + this.getSuffix();
     }
 }

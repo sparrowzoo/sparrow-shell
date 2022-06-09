@@ -5,6 +5,7 @@ import com.sparrow.constant.Regex;
 import com.sparrow.constant.SparrowError;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
+import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Downloader;
 import com.sparrow.protocol.constant.EXTENSION;

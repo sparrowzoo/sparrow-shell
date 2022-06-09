@@ -318,12 +318,12 @@ public class DispatcherFilter implements Filter {
      * flash key -->/template/action-url.jsp  final url
      * <p>
      * direct mode
-     * action url-->action-url or /template/action-url.jsp
+     * action url-->action-url
      * <p>
      * <p>
      * transit mode
      * transit url-->
-     * transit-url?action_url or /template/action_url.jsp
+     * transit-url?action_url
      */
     private boolean matchUrl(String flashKey, String actionKey, HttpServletRequest request) {
         //redirect final jsp url
@@ -371,7 +371,8 @@ public class DispatcherFilter implements Filter {
             return true;
         }
 
-        if (handlerExecutionChain.getLoginType() == LoginType.NO_LOGIN.ordinal()) {
+        //未授权F
+        if (LoginType.NO_AUTHENTICATE.equals(handlerExecutionChain.getLoginType())) {
             return true;
         }
 
@@ -386,7 +387,7 @@ public class DispatcherFilter implements Filter {
 
         if (user.getUserId().equals(User.VISITOR_ID)) {
             String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-            if (handlerExecutionChain.getLoginType() == LoginType.MESSAGE.ordinal()) {
+            if (LoginType.MESSAGE.equals(handlerExecutionChain.getLoginType())) {
                 Result result = new Result(SparrowError.USER_NOT_LOGIN.getCode(), SparrowError.USER_NOT_LOGIN.getMessage());
                 httpResponse.getWriter().write(JsonFactory.getProvider().toString(result));
                 return false;
@@ -398,8 +399,8 @@ public class DispatcherFilter implements Filter {
             if (StringUtility.isNullOrEmpty(loginUrl)) {
                 logger.error("please config login url 【{}】", loginKey);
             }
-            boolean isInFrame = handlerExecutionChain.getLoginType() == LoginType.LOGIN_IFRAME
-                    .ordinal();
+            boolean isInFrame = LoginType.LOGIN_IFRAME
+                    .equals(handlerExecutionChain.getLoginType());
             if (!StringUtility.isNullOrEmpty(loginUrl)) {
                 String defaultSystemPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_SYSTEM_INDEX);
                 String defaultMenuPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_MENU_PAGE);
@@ -441,7 +442,7 @@ public class DispatcherFilter implements Filter {
             return false;
         }
 
-        if (!handlerExecutionChain.isValidatePrivilege()) {
+        if (!handlerExecutionChain.isNeedAuthorizing()) {
             return true;
         }
 

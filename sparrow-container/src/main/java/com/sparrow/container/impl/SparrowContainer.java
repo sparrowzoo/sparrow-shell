@@ -9,6 +9,7 @@ import com.sparrow.container.BeanDefinitionReader;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.container.SimpleBeanDefinitionRegistry;
 import com.sparrow.container.XmlBeanDefinitionReader;
+import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.CONSTANT;
@@ -100,7 +101,7 @@ public class SparrowContainer extends AbstractContainer {
         }
     }
 
-    private void initSystemConfig() {
+    private void initSystemConfig() throws CacheNotFoundException {
         if (StringUtility.isNullOrEmpty(this.configLocation)) {
             return;
         }

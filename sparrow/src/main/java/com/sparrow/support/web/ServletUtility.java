@@ -18,6 +18,7 @@
 package com.sparrow.support.web;
 
 import com.sparrow.constant.Config;
+import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.protocol.constant.CLIENT_INFORMATION;
 import com.sparrow.protocol.constant.CONSTANT;
 import com.sparrow.protocol.constant.EXTENSION;
@@ -60,7 +61,11 @@ public class ServletUtility {
         }
         String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, EXTENSION.JSP);
         String pagePrefix = ConfigUtility.getValue(Config.DEFAULT_PAGE_PREFIX, "/template");
-        return pagePrefix + url + extension;
+        url = url + extension;
+        if (!url.startsWith(pagePrefix)) {
+            url = pagePrefix + url;
+        }
+        return url;
     }
 
     public String getActionKey(ServletRequest request) {

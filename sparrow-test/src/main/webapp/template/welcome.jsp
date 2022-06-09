@@ -7,7 +7,7 @@
 
 <a href="/elastic/search/index">elastic search</a>
 
-<h1>com from server ［ ${helloVO.hello}］</h1>
+<h1>com from server ［ ${hello.hello}］</h1>
 
 <h1>hi</h1>
 welcome to java sparrow framework mvc
@@ -20,7 +20,7 @@ welcome to java sparrow framework mvc
 <a href="fly" target="_blank">fly</a>
 
 <h2>中转站</h2>
-<a href="transit" target="_blank">到中转站歇一会再走</a>
+<a href="transit-test" target="_blank">到中转站歇一会再走</a>
 </body>
 
 <h2>URL重写</h2>

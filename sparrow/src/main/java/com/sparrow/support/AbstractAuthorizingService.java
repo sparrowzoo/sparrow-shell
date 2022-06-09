@@ -100,7 +100,7 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
         }
     }
 
-    public String sign(LoginToken login) {
+    public String sign(LoginToken login,String secret) {
         String userInfo = String.format(
                 "id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&cent=%5$s&avatar=%6$s&deviceId=%7$s&activate=%8$s&days=%9$s",
                 login.getUserId(),
@@ -113,7 +113,7 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
                 login.getActivate(),
                 login.getDays());
         String signature = Hmac.getInstance().getSHA1Base64(userInfo,
-                this.getSecret(login.getUserId()));
+                secret);
         try {
             return Base64.encodeBytes(userInfo.getBytes(PREFERRED_ENCODING)) + "." + signature;
         } catch (UnsupportedEncodingException ignore) {

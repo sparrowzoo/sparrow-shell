@@ -20,6 +20,9 @@ package com.sparrow.utility;
 import com.sparrow.constant.CacheKey;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.core.cache.StrongDurationCache;
+import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.exception.CacheNotFoundException;
+import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.constant.CONSTANT;
 import com.sparrow.protocol.constant.magic.SYMBOL;
 import com.sparrow.support.EnvironmentSupport;
@@ -52,7 +55,7 @@ public class ConfigUtility {
         return getLanguageValue(propertiesKey, language);
     }
 
-    public static String getLanguageValue(String key, String language) {
+    public static String getLanguageValue(String key, String language)  {
         if (StringUtility.isNullOrEmpty(language)) {
             language = "zh_cn";
         }
@@ -187,23 +190,17 @@ public class ConfigUtility {
         return getValue(key, null);
     }
 
-    public static String getValue(String key, String defaultValue) {
-        try {
-            Object value = configCache.get(key);
-            if (value == null) {
-                return defaultValue;
-            }
-            String v = value.toString();
-            v = StringUtility.replace(v, CONSTANT.REPLACE_MAP);
-            return v;
-        } catch (Exception e) {
-            logger.error("get value error", e);
+    public static String getValue(String key, String defaultValue){
+        Object value = configCache.get(key);
+        if (value == null) {
+            return defaultValue;
         }
-        //不存在 并不等于""
-        return null;
+        String v = value.toString();
+        v = StringUtility.replace(v, CONSTANT.REPLACE_MAP);
+        return v;
     }
 
-    public static boolean getBooleanValue(String config) {
+    public static boolean getBooleanValue(String config){
         String value = getValue(config);
         return !StringUtility.isNullOrEmpty(value) && Boolean.TRUE.toString().equalsIgnoreCase(value);
     }
