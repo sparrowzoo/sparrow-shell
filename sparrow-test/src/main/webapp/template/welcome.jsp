@@ -6,8 +6,7 @@
 <body>
 
 <a href="/elastic/search/index">elastic search</a>
-
-<h1>com from server ［ ${hello.hello}］</h1>
+<h1>come from server ［ ${hello.hello}］</h1>
 
 <h1>hi</h1>
 welcome to java sparrow framework mvc

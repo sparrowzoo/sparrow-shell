@@ -14,13 +14,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   --%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>welcome sparrow mvc transit demo</title>
 </head>
 <body>
-hi 内容还在吧...${flash_success_result.hello}
+ 内容还在吧...${flash_success_result.hello}
 </body>
 </html>
