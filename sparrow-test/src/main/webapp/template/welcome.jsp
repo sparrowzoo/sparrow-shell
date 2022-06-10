@@ -42,6 +42,9 @@ welcome to java sparrow framework mvc
 <h2>exception</h2>
 <a href="exception" target="_blank">exception</a>
 
+<h2>authorizing</h2>
+<a href="authorizing" target="_blank">authorizing</a>
+
 <h2>服务器控件支持</h2>
 敬请期待 ....
 

@@ -35,7 +35,7 @@ public class File {
     /**
      * 是否允许文件下载的策略编码
      */
-    public static final String DOWNLOAD_POLICY_CODE = "download_policy_code";
+    public static final String DOWNLOAD_URL = "download_url";
 
     /**
      * 图片格式

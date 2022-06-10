@@ -26,11 +26,11 @@ public interface AuthorizingSupport {
     /**
      * 签名
      *
-     * @param login login token
+     * @param login  login token
      * @param secret password
      * @return
      */
-    String sign(LoginToken login,String secret);
+    String sign(LoginToken login, String secret);
 
     /**
      * 认证
@@ -43,12 +43,12 @@ public interface AuthorizingSupport {
     /**
      * 授权某资源
      *
-     * @param user
-     * @param url
-     * @param code
+     * @param user       当前用户
+     * @param resource 请求的资源(标识)
+     * @param code       当前资源（当前资源下的编码 比如forum code）
      * @return
      * @throws BusinessException
      */
     boolean isAuthorized(LoginToken user,
-                         String url, String code) throws BusinessException;
+                         String resource, String code) throws BusinessException;
 }

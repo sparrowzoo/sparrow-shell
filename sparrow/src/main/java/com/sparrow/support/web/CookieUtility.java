@@ -105,42 +105,4 @@ public class CookieUtility {
     public String getPermission(HttpServletRequest request){
        return this.get(request.getCookies(),permissionBusiness.getKey());
     }
-//    public LoginToken getUser(HttpServletRequest request) {
-//        final String sessionId = request.getSession().getId();
-//        String permission;
-//        KEY permissionKey = new KEY.Builder().business(permissionBusiness).businessId(sessionId).build();
-//
-//        try {
-//            //如果支持redis,nginx ip_hash 配置
-//            if (cacheClient != null) {
-//                permission = cacheClient.string().get(permissionKey);
-//            } else {
-//                //用户量较大时侯jvm 存储有压力
-//                permission = (String) request.getSession().getAttribute(permissionKey.getBusiness());
-//            }
-//        } catch (CacheConnectionException e) {
-//            permission = (String) request.getSession().getAttribute(permissionKey.getBusiness());
-//        }
-//
-//        if (StringUtility.isNullOrEmpty(permission)) {
-//            permission =         this.get(request.getCookies(),permissionKey.getBusiness());
-//
-//            if (!StringUtility.isNullOrEmpty(permission)) {
-//                if (cacheClient != null) {
-//                    try {
-//                        cacheClient.string().setExpire(permissionKey, 60 * 60, permission);
-//                    } catch (CacheConnectionException ignore) {
-//                        logger.error("cookie connection break", ignore);
-//                    }
-//                } else {
-//                    request.getSession().setAttribute(permissionKey.getBusiness(), permission);
-//                }
-//            }
-//        }
-//        String deviceId = request.getHeader(CLIENT_INFORMATION.DEVICE_ID);
-//        if (StringUtility.isNullOrEmpty(deviceId)) {
-//            deviceId = ServletUtility.getInstance().getClientIp(request);
-//        }
-//        return LoginParser.parse(permission, deviceId);
-//    }
 }

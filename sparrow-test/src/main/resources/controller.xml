@@ -16,6 +16,9 @@
         <action name="/json-test.json" method="json"/>
         <action name="/exception" method="exception"/>
         <action name="/exception.json" method="exception"/>
+        <action name="/authorizing" method="authorizing"
+                login="LOGIN" needAuthorizing="true"/>
+        <action name="/login.do" method="login"/>
     </controller>
 
     <controller id="elasticSearchController">

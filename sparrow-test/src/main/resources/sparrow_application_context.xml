@@ -9,11 +9,7 @@
     <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-
-
-    <bean name="sparrowServletContainer" class="com.sparrow.web.support.SparrowServletContainer"/>
     <bean name="initializer" class="com.sparrow.web.WebApplicationInitializer"/>
-
     <bean name="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxActive" value="${redis.pool.maxActive}"/>
         <property name="maxIdle" value="${redis.pool.maxIdle}"/>
@@ -35,16 +31,27 @@
     </bean>
     <bean name="cookieUtility" class="com.sparrow.support.web.CookieUtility">
         <property name="cacheClient" ref="cacheClient"/>
+        <property name="backend" value="false"/>
     </bean>
+
+    <bean name="sparrowServletContainer" class="com.sparrow.web.support.SparrowServletContainer">
+        <property name="cookieUtility" ref="cookieUtility"/>
+    </bean>
+
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
 
     <bean name="authorizingService" class="com.sparrow.authorizing.AuthorizingDemo"/>
-    <bean name="helloController" class="com.sparrow.controller.HelloController" controller="true"/>
+    <bean name="helloController" class="com.sparrow.controller.HelloController" controller="true">
+        <property name="authorizingSupport" ref="authorizingService"/>
+        <property name="servletContainer" ref="sparrowServletContainer"/>
+    </bean>
     <bean name="elasticSearchController" class="com.sparrow.controller.ElasticSearchController" controller="true"/>
     <bean name="sparrowHandlerInterceptor" class="com.sparrow.interceptor.SparrowHandlerInterceptor"
           interceptor="true"/>
 
-    <bean name="classLoaderController" class="com.sparrow.controller.ClassLoaderController" controller="true"/>
+    <bean name="classLoaderController" class="com.sparrow.controller.ClassLoaderController" controller="true">
+
+    </bean>
 </beans>
