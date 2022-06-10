@@ -14,6 +14,8 @@
         </action>
         <action name="/thread-{threadId}-{pageIndex}" method="thread"/>
         <action name="/json-test.json" method="json"/>
+        <action name="/exception" method="exception"/>
+        <action name="/exception.json" method="exception"/>
     </controller>
 
     <controller id="elasticSearchController">

@@ -99,12 +99,11 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         }
         url = assembleUrl(referer, defaultSuccessUrl, url, pageSwitchMode, null);
         switch (pageSwitchMode) {
-            case FORWARD:
-                return ViewWithModel.forward(url);
             case REDIRECT:
                 return ViewWithModel.redirect(url);
             case TRANSIT:
                 return ViewWithModel.transit(url);
+            case FORWARD:
             default:
                 return ViewWithModel.forward(url);
         }
@@ -237,9 +236,6 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
             businessException = new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
         }
         Result result = ResultErrorAssembler.assemble(businessException, null);
-        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-        String referer = servletUtility.referer(request);
-        String relativeReferer = referer.substring(rootPath.length() + 1);
         String flashUrl;
         switch (errorPageSwitch) {
             case FORWARD:
@@ -252,15 +248,6 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
                 this.flash(request, flashUrl, CONSTANT.FLASH_EXCEPTION_RESULT, result);
                 response.sendRedirect(url);
                 break;
-            case TRANSIT:
-                flashUrl = servletUtility.assembleActualUrl(relativeReferer);
-                this.flash(request, flashUrl, CONSTANT.FLASH_EXCEPTION_RESULT, result);
-                String transitUrl = ConfigUtility.getValue(Config.TRANSIT_URL);
-                if (transitUrl != null && !transitUrl.startsWith(CONSTANT.HTTP_PROTOCOL)) {
-                    transitUrl = ConfigUtility.getValue(Config.ROOT_PATH) + transitUrl;
-                }
-                response.sendRedirect(transitUrl + "?" + relativeReferer);
-            default:
         }
     }
 }

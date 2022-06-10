@@ -1,5 +1,6 @@
 package com.sparrow.controller;
 
+import com.sparrow.constant.SparrowError;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.vo.HelloVO;
@@ -11,6 +12,10 @@ import com.sparrow.mvc.ViewWithModel;
 public class HelloController {
     public ViewWithModel hello() throws BusinessException {
         return ViewWithModel.forward("hello", new HelloVO("我来自遥远的sparrow 星球,累死我了..."));
+    }
+
+    public ViewWithModel exception() throws BusinessException {
+        throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
     }
 
     public ViewWithModel fly() throws BusinessException {
@@ -30,7 +35,7 @@ public class HelloController {
         return new HelloVO("够意思吧，json不用页面");
     }
 
-    public ViewWithModel welcome(){
+    public ViewWithModel welcome() {
         return ViewWithModel.forward(new HelloVO("jsp page content from server ..."));
     }
 }

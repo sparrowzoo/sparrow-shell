@@ -12,6 +12,10 @@
 welcome to java sparrow framework mvc
 你可以直接访问jsp文件 毛配置都不用!!!
 
+<h2>这是最简单的实例 hello-world.jsp 不需要controller</h2>
+<a href="hello-world" target="_blank">hello-world</a>
+
+
 <h2>这是最简单的实例 hello.jsp 把服务器的内容读出来</h2>
 <a href="hello" target="_blank">hello</a>
 
@@ -30,6 +34,13 @@ welcome to java sparrow framework mvc
 
 <h2>json</h2>
 <a href="json-test.json" target="_blank">走起json</a>
+
+
+<h2>exception-json</h2>
+<a href="exception.json" target="_blank">exception-json</a>
+
+<h2>exception</h2>
+<a href="exception" target="_blank">exception</a>
 
 <h2>服务器控件支持</h2>
 敬请期待 ....
