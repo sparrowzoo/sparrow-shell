@@ -24,7 +24,7 @@ public class Test {
         String sign = authorizingSupport.sign(loginToken, "111111");
         System.out.printf(sign);
 
-        loginToken = authorizingSupport.authenticate(sign, "192.168.1.1");
+        loginToken = authorizingSupport.authenticate(sign, "192.168.1.2");
         System.out.printf(loginToken.getUserName());
     }
 }
