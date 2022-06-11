@@ -1,6 +1,7 @@
 package com.sparrow.jdk.collections;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class ThreadPoolTest {
     public static void main(String[] args) {

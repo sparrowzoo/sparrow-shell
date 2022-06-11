@@ -19,9 +19,10 @@ package com.sparrow.facade.compress;
 
 import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.utility.CompressUtility;
+import org.junit.Test;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
-import org.junit.Test;
 
 /**
  * @author by harry

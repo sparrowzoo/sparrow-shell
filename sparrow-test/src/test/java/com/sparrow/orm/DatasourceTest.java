@@ -17,15 +17,14 @@
 package com.sparrow.orm;
 
 import com.sparrow.container.Container;
-
-import java.sql.SQLException;
-import javax.sql.DataSource;
-
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.datasource.DataSourceValidChecker;
 import com.sparrow.datasource.DataSourceFactory;
+import com.sparrow.datasource.DataSourceValidChecker;
 import com.sparrow.datasource.checker.ConnectionValidCheckerAdapter;
 import org.junit.Test;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * @author by harry

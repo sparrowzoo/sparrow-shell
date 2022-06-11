@@ -18,15 +18,15 @@
 package com.sparrow.facade.unzip;
 
 import com.sparrow.protocol.constant.CONSTANT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Decoder;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
 
 /**
  * 对字符串进行加解密和加解压

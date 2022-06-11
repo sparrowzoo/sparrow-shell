@@ -20,9 +20,9 @@ public class UserDaoTest {
     @Test
     public void userTest() {
         JDBCTemplateTest jdbcTemplateTest=new JDBCTemplateTest();
-        jdbcTemplateTest.initStruction();
+        jdbcTemplateTest.initStructure();
         Container container = ApplicationContext.getContainer();
-        container.setConfigLocation("/dao.xml");
+        container.setContextConfigLocation("/dao.xml");
         container.init();
         UserDAO userDAO = container.getBean("userDao");
 
@@ -43,7 +43,6 @@ public class UserDaoTest {
         System.out.println(user.getAvatar());
 
         List<User> userList = userDAO.query("harry", "nickName", 1, 1);
-        System.out.println(userList.size());
         while (true) {
             try {
                 Thread.sleep(10000L);

@@ -1,14 +1,10 @@
 package com.sparrow.jdk.gc;
 
 import com.caucho.hessian.io.Hessian2Output;
-import com.sparrow.json.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author zhanglz

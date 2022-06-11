@@ -1,13 +1,7 @@
 package com.sparrow.jdk.threadlocal;
 
-import com.sparrow.tracer.Span;
 import com.sparrow.tracer.Tracer;
 import com.sparrow.tracer.TracerBuilder;
-import com.sparrow.tracer.impl.SpanImpl;
-import com.sparrow.tracer.impl.TracerImpl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author by harry

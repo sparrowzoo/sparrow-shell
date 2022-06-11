@@ -17,7 +17,7 @@
   -->
 
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
-    "beans.dtd">
+        "beans.dtd">
 <beans>
 
     <bean name="initializer" class="com.sparrow.facade.initializer.SparrowContextInitializer"/>
@@ -31,12 +31,14 @@
     </bean>
 
 
-
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
-        <constructor-arg index="1" name="sparrow_default" value="sparrow_default"/>
+        <constructor-arg index="1" name="initDatasourceKeys" value="sparrow_default,user_default"/>
     </bean>
 
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
+        <property name="dataSourceFactory" ref="dataSourceFactory"/>
+    </bean>
+    <bean name="user_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
     <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
@@ -47,4 +49,8 @@
     <!--必须定义，且必须为prototype-->
     <bean name="user" class="com.sparrow.orm.po.User" scope="prototype"/>
     <bean name="userDao" class="com.sparrow.orm.dao.impl.UserDaoImpl"/>
+
+    <!--必须定义，且必须为prototype-->
+    <bean name="event" class="com.sparrow.orm.po.Event" scope="prototype"/>
+    <bean name="eventDao" class="com.sparrow.orm.dao.impl.EventDAOImpl"/>
 </beans>

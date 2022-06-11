@@ -19,8 +19,6 @@ package com.sparrow.cg;
 
 import com.sparrow.cg.impl.DynamicCompiler;
 
-import java.util.logging.Logger;
-
 /**
  * @author harry
  */

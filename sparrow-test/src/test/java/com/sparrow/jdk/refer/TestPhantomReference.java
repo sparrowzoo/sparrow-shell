@@ -1,6 +1,7 @@
 package com.sparrow.jdk.refer;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;

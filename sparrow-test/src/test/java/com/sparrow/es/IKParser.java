@@ -11,7 +11,10 @@ import org.wltea.analyzer.core.Lexeme;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class IKParser {
     static {

@@ -18,16 +18,11 @@
 package com.sparrow.redis;
 
 import com.sparrow.cache.CacheClient;
-import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.ModuleSupport;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by harry on 2018/1/26.

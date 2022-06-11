@@ -19,7 +19,6 @@ package com.sparrow.facade.utility;
 
 import com.sparrow.cryptogram.MessageSignature;
 import com.sparrow.utility.QueryStringParser;
-import com.sparrow.utility.StringUtility;
 
 import java.util.Map;
 import java.util.TreeMap;

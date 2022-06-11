@@ -10,9 +10,9 @@ import org.junit.Test;
  */
 public class JDBCTemplateTest {
     @Test
-    public void initStruction() {
+    public void initStructure() {
         Container container = ApplicationContext.getContainer();
-        container.setConfigLocation("/dao.xml");
+        container.setContextConfigLocation("/dao.xml");
         container.init();
         JDBCSupport jdbcSupport = JDBCTemplate.getInstance();
         int affectCount= jdbcSupport.executeUpdate("DROP TABLE IF EXISTS `user`;");
