@@ -18,8 +18,8 @@
 package com.sparrow.orm;
 
 import com.sparrow.core.TypeConverter;
-import com.sparrow.protocol.dao.Hash;
-import com.sparrow.protocol.dao.enums.HashType;
+import com.sparrow.protocol.dao.SplitTable;
+import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +30,7 @@ import javax.persistence.Id;
  */
 public class Field extends TypeConverter {
 
-    private HashType hashStrategy;
+    private TableSplitStrategy hashStrategy;
     private GenerationType generationType;
     private String columnName;
     private Integer hashIndex = -1;
@@ -43,7 +43,7 @@ public class Field extends TypeConverter {
     private boolean persistence = true;
     private String columnDefinition;
 
-    public Field(String property, Class type, Column column, Hash hash, GeneratedValue generatedValue, Id id) {
+    public Field(String property, Class type, Column column, SplitTable splitTable, GeneratedValue generatedValue, Id id) {
         this.name = property;
         this.type = type;
         if (column != null) {
@@ -54,10 +54,10 @@ public class Field extends TypeConverter {
             this.columnDefinition = column.columnDefinition();
         }
 
-        if (hash != null) {
-            this.hashStrategy = hash.strategy();
-            this.hashIndex = hash.index();
-            if (this.hashStrategy.equals(HashType.ONLY_HASH)) {
+        if (splitTable != null) {
+            this.hashStrategy = splitTable.strategy();
+            this.hashIndex = splitTable.index();
+            if (this.hashStrategy.equals(TableSplitStrategy.ORIGIN_NOT_PERSISTENCE)) {
                 this.persistence = false;
             }
         }
@@ -75,7 +75,7 @@ public class Field extends TypeConverter {
         return generationType;
     }
 
-    public HashType getHashStrategy() {
+    public TableSplitStrategy getHashStrategy() {
         return hashStrategy;
     }
 

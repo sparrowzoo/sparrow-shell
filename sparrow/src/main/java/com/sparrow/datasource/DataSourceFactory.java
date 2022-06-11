@@ -16,6 +16,9 @@
  */
 package com.sparrow.datasource;
 
+import com.sparrow.enums.Dialect;
+import com.sparrow.orm.DialectReader;
+
 import java.sql.Connection;
 import javax.sql.DataSource;
 
@@ -29,7 +32,7 @@ public interface DataSourceFactory {
      * get datasource by key
      *
      * @param dataSourceKey the identify of the datasource to confirm one datasource it's same to the file name of
-     * datasource properties config file
+     *                      datasource properties config file
      * @return return datasource
      * @see javax.sql.DataSource
      */
@@ -53,7 +56,7 @@ public interface DataSourceFactory {
      * get datasource config object by datasource key
      *
      * @param dataSourceKey the identify of the datasource to confirm one datasource it's same to the file name of
-     * datasource properties config file
+     *                      datasource properties config file
      * @return
      */
     DatasourceConfig getDatasourceConfig(String dataSourceKey);

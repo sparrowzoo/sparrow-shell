@@ -25,7 +25,7 @@ import com.sparrow.datasource.ConnectionContextHolder;
 import com.sparrow.datasource.DatasourceKey;
 import com.sparrow.orm.type.TypeHandler;
 import com.sparrow.orm.type.TypeHandlerRegistry;
-import com.sparrow.protocol.dao.enums.DATABASE_SPLIT_STRATEGY;
+import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.support.db.JDBCSupport;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.StringUtility;
@@ -51,10 +51,11 @@ public class JDBCTemplate implements JDBCSupport {
     private static Map<String, JDBCSupport> executorPool = new ConcurrentHashMap<String, JDBCSupport>();
 
     /**
-     * dataSource与dataSourceSplitStrategy 两者唯一标识一个template 实际上是可以唯一确定一个数据源
+     * schema与dataSourceSplitStrategy 两者唯一标识一个jdbc template
+     * 通过这两个信息可以唯一确定一个数据源（唯一数据库）
      */
     private String schema;
-    private DATABASE_SPLIT_STRATEGY dataSourceSplitStrategy;
+    private DatabaseSplitStrategy dataSourceSplitStrategy;
     /**
      * 连接支持器
      */
@@ -62,12 +63,14 @@ public class JDBCTemplate implements JDBCSupport {
 
 
     /**
+     * 串行执行 而且只加载一次
+     *
      * @return
      */
-    public static JDBCSupport getInstance(String schema, DATABASE_SPLIT_STRATEGY databaseSplitStrategy) {
+    public static JDBCSupport getInstance(String schema, DatabaseSplitStrategy databaseSplitStrategy) {
 
         if (databaseSplitStrategy == null) {
-            databaseSplitStrategy = DATABASE_SPLIT_STRATEGY.DEFAULT;
+            databaseSplitStrategy = DatabaseSplitStrategy.DEFAULT;
         }
         if (StringUtility.isNullOrEmpty(schema)) {
             schema = DatasourceKey.getDefault().getSchema();
@@ -75,18 +78,17 @@ public class JDBCTemplate implements JDBCSupport {
         String jdbcIdentify = schema + "_" + databaseSplitStrategy.toString().toLowerCase();
         if (schema != null && executorPool.containsKey(jdbcIdentify)) {
             return executorPool.get(jdbcIdentify);
-        } else {
-            JDBCSupport jdbcSupport = new JDBCTemplate(schema, databaseSplitStrategy);
-            executorPool.put(jdbcIdentify, jdbcSupport);
-            return jdbcSupport;
         }
+        JDBCSupport jdbcSupport = new JDBCTemplate(schema, databaseSplitStrategy);
+        executorPool.put(jdbcIdentify, jdbcSupport);
+        return jdbcSupport;
     }
 
     public static JDBCSupport getInstance() {
         return getInstance(null, null);
     }
 
-    private JDBCTemplate(String schema, DATABASE_SPLIT_STRATEGY databaseSplitStrategy) {
+    private JDBCTemplate(String schema, DatabaseSplitStrategy databaseSplitStrategy) {
         if (StringUtility.isNullOrEmpty(schema)) {
             schema = DatasourceKey.getDefault().getSchema();
         }
@@ -120,7 +122,7 @@ public class JDBCTemplate implements JDBCSupport {
         try {
             TypeHandler typeHandler = typeHandlerRegistry.getTypeHandler(fieldType, null);
             typeHandler.setParameter(preparedStatement, index, value);
-            logger.debug("JDBCTemplate set SQLParameter error sqlType {} not exist",fieldType);
+            logger.debug("JDBCTemplate set SQLParameter error sqlType {} not exist", fieldType);
         } catch (Exception e) {
             logger.error(
                     "Executor JDBCTemplate error attribute:"
@@ -137,10 +139,6 @@ public class JDBCTemplate implements JDBCSupport {
             case LANGUAGE:
                 suffix = (String) httpContext.get(CONSTANT.REQUEST_LANGUAGE);
                 break;
-            case USER_ID:
-                suffix = (String) httpContext.get(CONSTANT.REQUEST_USER_ID);
-                break;
-            case FOREIGN_KEY:
             case USER_DEFINED:
                 suffix = (String) httpContext.get(CONSTANT.REQUEST_DATABASE_SUFFIX);
                 break;
@@ -155,12 +153,14 @@ public class JDBCTemplate implements JDBCSupport {
      * 获取数据库连接
      *
      * @return
+     * @see DatasourceKey
+     * schema+suffix（运行时确定）定位唯一 datasource
+     * <p>
+     * @see com.sparrow.datasource.DatasourceKey 与 connection url一致，在
+     * @see com.sparrow.datasource.DataSourceFactory 中已做映射
+     * schema+ DATABASE_SPLIT_STRATEGY（注解） 确定唯一 jdbc template（最小粒度）
      */
     private synchronized Connection getConnection() {
-        //todo data source key 与 connection url不一致
-        //todo data source+suffix determine datasource
-        //todo data source+database_split_key determine jdbc template
-        // todo determine object
         DatasourceKey dataSourceKey = new DatasourceKey(this.schema, this.getDataSourceSuffix());
         Connection connection = this.connectionHolder.getConnection(dataSourceKey.getKey());
         //当前未绑定链接或已经绑定但不是事务

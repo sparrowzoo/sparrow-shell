@@ -46,4 +46,5 @@ public class CacheKey {
 
     public static final String DATA_SOURCE_URL_PAIR = "DATA_SOURCE_URL_PAIR";
 
+    public static final String DIALECT_READER_CACHE = "DIALECT_READER_CACHE";
 }

@@ -15,31 +15,27 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.dao.enums;
+package com.sparrow.protocol.dao;
+
+import com.sparrow.protocol.dao.enums.TableSplitStrategy;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * @author harry
+ * Created by harry
+ * <p>
+ * 根据类型与索引生成表后缀
+ *
  */
+@Target({METHOD, FIELD})
+@Retention(RUNTIME)
+public @interface SplitTable {
+    TableSplitStrategy strategy() default TableSplitStrategy.HASH;
 
-public enum DATABASE_SPLIT_STRATEGY {
-    /**
-     * 默认无
-     */
-    DEFAULT,
-    /**
-     * 语言
-     */
-    LANGUAGE,
-    /**
-     * 用户id
-     */
-    USER_ID,
-    /**
-     * 用户自定义
-     */
-    USER_DEFINED,
-    /**
-     * 外键与分表一起使用
-     */
-    FOREIGN_KEY
+    int index() default 0;
 }

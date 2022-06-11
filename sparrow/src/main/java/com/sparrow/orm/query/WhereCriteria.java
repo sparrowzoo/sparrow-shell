@@ -92,6 +92,10 @@ public class WhereCriteria extends PagerQuery {
         return tableSuffix;
     }
 
+    /**
+     * 自定义条件，需要手动设置表后缀f
+     * @param tableSuffix
+     */
     public void setTableSuffix(Object... tableSuffix) {
         List<Object> suffixList = new ArrayList<Object>(tableSuffix.length);
         Collections.addAll(suffixList, tableSuffix);

@@ -18,23 +18,21 @@
 package com.sparrow.protocol.dao.enums;
 
 /**
+ * 分表hash 类型
+ *
  * @author harry
  */
-public enum HashType {
+public enum TableSplitStrategy {
     /**
-     * 不 HASH
+     * 字段值直接作为表后缀
      */
-    NULL,
+    ORIGIN,
     /**
      * 表打散使用
      */
     HASH,
     /**
-     * only hash只用于hash不入库
+     * 字段值只作为表后缀 但不入库
      */
-    ONLY_HASH,
-    /**
-     * 分库
-     */
-    HASH_WITH_SPLIT_DATABASE,
+    ORIGIN_NOT_PERSISTENCE
 }

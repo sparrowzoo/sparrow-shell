@@ -21,6 +21,8 @@ import com.sparrow.constant.CacheKey;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.core.cache.StrongDurationCache;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.enums.Dialect;
+import com.sparrow.orm.DialectReader;
 import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.StringUtility;
@@ -36,16 +38,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
 /**
- * getDatasourceConfig 初始化ContextLoaderListener.java 中配置 database identify
+ * getDatasourceConfig 初始化ContextLoaderListener.java
+ * 中配置 database identify
  *
  * @author harry
  */
 public class DataSourceFactoryImpl implements DataSourceFactory {
-
     private static Logger logger = LoggerFactory.getLogger(DataSourceFactoryImpl.class);
     private static Map<String, DatasourceConfig> datasourceConfigMap = new ConcurrentHashMap<String, DatasourceConfig>();
-    private static Cache<String,DatasourceKey> datasourceUrlPair=new StrongDurationCache<>(CacheKey.DATA_SOURCE_URL_PAIR);
-
+    private static Cache<String,DatasourceKey> datasourceUrlMap =new StrongDurationCache<>(CacheKey.DATA_SOURCE_URL_PAIR);
     public DataSourceFactoryImpl(String initDatasourceKeys) {
         String[] datasourceKeyArray = initDatasourceKeys.split(",");
         if (CollectionsUtility.isNullOrEmpty(datasourceKeyArray)) {
@@ -106,11 +107,9 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
             DatasourceConfig datasourceConfig = new DatasourceConfig();
             try {
                 Properties props = new Properties();
-
                 String filePath = "/" + dataSourceKey
                         + ".properties";
                 props.load(EnvironmentSupport.getInstance().getFileInputStream(filePath));
-
                 datasourceConfig.setDriverClassName(props.getProperty("driverClassName"));
                 datasourceConfig.setUsername(props.getProperty("username"));
                 datasourceConfig.setPassword(props.getProperty("password"));
@@ -127,8 +126,9 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
                 statement = connection.createStatement();
                 boolean effectCount = statement.execute("SELECT 1");
                 if (effectCount) {
-                    datasourceUrlPair.put(connection.getMetaData().getURL(), key);
+                    datasourceUrlMap.put(connection.getMetaData().getURL(), key);
                 }
+                datasourceConfigMap.put(dataSourceKey, datasourceConfig);
             } catch (SQLException e) {
                 logger.error(" cat't connection", e);
             } finally {
@@ -141,7 +141,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
                     logger.error("test connection close error", e);
                 }
             }
-            datasourceConfigMap.put(dataSourceKey, datasourceConfig);
             return datasourceConfig;
         }
     }
@@ -152,7 +151,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
             return null;
         }
         try {
-            return datasourceUrlPair.get(connection.getMetaData().getURL());
+            return datasourceUrlMap.get(connection.getMetaData().getURL());
         } catch (SQLException e) {
             return null;
         }

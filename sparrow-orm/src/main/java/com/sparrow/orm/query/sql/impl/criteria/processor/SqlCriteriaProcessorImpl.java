@@ -43,6 +43,15 @@ import java.util.List;
  * @author harry
  */
 public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
+    private static SqlCriteriaProcessorImpl sqlCriteriaProcessor = new SqlCriteriaProcessorImpl();
+
+    private SqlCriteriaProcessorImpl() {
+    }
+
+    public static SqlCriteriaProcessorImpl getInstance() {
+        return sqlCriteriaProcessor;
+    }
+
     private Logger logger = LoggerFactory.getLogger(SqlCriteriaProcessorImpl.class);
     private ClassFactoryBean<EntityManager> entityManagerFactoryBean = EntityManagerFactoryBean.getInstance();
 
@@ -136,7 +145,7 @@ public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
             for (BooleanCriteria.BooleanCriteriaLinker linker : boolOperationEntityList) {
                 OperationEntity oe = this.where(linker.getCriteria());
                 if (oe != null && !StringUtility.isNullOrEmpty(oe.getClause())) {
-                    if (linker.getKey() != null&&!StringUtility.isNullOrEmpty(operationEntity.getClause())) {
+                    if (linker.getKey() != null && !StringUtility.isNullOrEmpty(operationEntity.getClause())) {
                         operationEntity.getClause().append(linker.getKey().name());
                     }
                     operationEntity.add(oe);
@@ -156,7 +165,7 @@ public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
             if (sb.length() > 0) {
                 sb.append(",");
             }
-            String column= entityManagerFactoryBean.getObject(orderCriteria.getField().getAlias()).getColumnName(orderCriteria.getField().getName());
+            String column = entityManagerFactoryBean.getObject(orderCriteria.getField().getAlias()).getColumnName(orderCriteria.getField().getName());
             sb.append(column + SYMBOL.BLANK + orderCriteria.getOrder().name());
         }
         return sb.toString();

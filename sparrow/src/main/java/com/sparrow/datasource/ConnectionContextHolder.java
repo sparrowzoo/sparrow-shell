@@ -23,7 +23,7 @@ import java.sql.Connection;
  */
 public interface ConnectionContextHolder {
     /**
-     * get datasource factory for refer class
+     * get datasource factory
      *
      * @return
      */
@@ -44,7 +44,7 @@ public interface ConnectionContextHolder {
     void unbindConnection(Connection connection);
 
     /**
-     * get connectin from current thread
+     * get connection from current thread
      *
      * @param datasourceKey
      * @return

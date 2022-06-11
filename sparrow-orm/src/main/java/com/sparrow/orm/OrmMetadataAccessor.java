@@ -37,7 +37,6 @@ import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -50,8 +49,8 @@ import java.util.TreeMap;
 /**
  * @author harry
  */
-public class PrepareORM<T> {
-    private static Logger logger = LoggerFactory.getLogger(PrepareORM.class);
+public class OrmMetadataAccessor<T> {
+    private static Logger logger = LoggerFactory.getLogger(OrmMetadataAccessor.class);
 
     private CriteriaProcessor criteriaProcessor;
     /**
@@ -95,7 +94,7 @@ public class PrepareORM<T> {
     /**
      * JORM.java的构造函数
      */
-    public PrepareORM(Class modelClazz, CriteriaProcessor criteriaProcessor) {
+    public OrmMetadataAccessor(Class modelClazz, CriteriaProcessor criteriaProcessor) {
         this.modelClazz = modelClazz;
         this.methodAccessor = container.getProxyBean(
                 this.modelClazz);
@@ -217,33 +216,6 @@ public class PrepareORM<T> {
         }
         return new JDBCParameter(delete, where.getParameterList());
     }
-
-    public T setEntity(
-            Map<String, Object> values) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        if (values == null || values.size() == 0) {
-            return null;
-        }
-
-        T model = (T) this.modelClazz.getConstructor().newInstance();
-        for (Field field : this.entityManager.getFieldMap().values()) {
-            if (field == null) {
-                continue;
-            }
-            try {
-                if (!field.isPersistence()) {
-                    continue;
-                }
-                if (values.containsKey(field.getColumnName())) {
-                    this.methodAccessor.set(model, field.getName(),
-                            values.get(field.getColumnName()));
-                }
-            } catch (Exception e) {
-                logger.error("set entity error", e);
-            }
-        }
-        return model;
-    }
-
     public T setEntity(ResultSet rs, ResultSetCallback resultSetCallback) {
         try {
             ResultSetMetaData resultSetMetaData = rs.getMetaData();

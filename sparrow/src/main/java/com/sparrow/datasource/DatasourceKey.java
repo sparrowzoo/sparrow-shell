@@ -48,7 +48,9 @@ public class DatasourceKey {
     }
 
     /**
-     * 数据库模式 从entity 匹配中读取 通过该属性与上下文的suffix唯一确定一个datasource key
+     * 数据库模式 从entity 匹配中读取
+     *
+     * 通过该属性与上下文的suffix唯一确定一个datasource key
      *
      * @see javax.persistence.Table
      **/

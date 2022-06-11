@@ -18,6 +18,7 @@
 package com.sparrow.orm.template.impl;
 
 import com.sparrow.enums.Dialect;
+import com.sparrow.orm.DialectReader;
 import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.query.UpdateCriteria;
 import com.sparrow.orm.template.SparrowDaoSupport;
@@ -48,7 +49,7 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     public ORMStrategy(String schema) {
-        Dialect dialect = com.sparrow.orm.Dialect.getInstance(schema).getDialect();
+        Dialect dialect = DialectReader.getInstance(schema).getDialect();
         Class clazz = null;
         Type type = getClass()
                 .getGenericSuperclass();
@@ -56,13 +57,11 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
             clazz = (Class<?>) ((ParameterizedType) type).getActualTypeArguments()[0];
         }
         switch (dialect) {
-            case MYSQL:
-            case SQL_SERVER:
-                ormDaoSupport = new DBORMTemplate<T, I>(clazz);
-                break;
             case ELASTIC_SEARCH:
                 ormDaoSupport = null;
                 break;
+            case MYSQL:
+            case SQL_SERVER:
             default:
                 ormDaoSupport = new DBORMTemplate<T, I>(clazz);
         }

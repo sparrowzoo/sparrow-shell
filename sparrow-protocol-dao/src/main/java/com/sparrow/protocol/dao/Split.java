@@ -17,7 +17,7 @@
 
 package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.dao.enums.DATABASE_SPLIT_STRATEGY;
+import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -44,18 +44,11 @@ public @interface Split {
     int table_bucket_count() default 1;
 
     /**
-     * 分库的最大id
-     *
-     * @return 2014-5-2下午12:05:53 harry
-     */
-    int database_max_id() default -1;
-
-    /**
      * 数据库拆分的key
      * <p>
      * 用作数据库名称的后缀
      *
      * @return 2014-5-2下午12:06:14 harry
      */
-    DATABASE_SPLIT_STRATEGY strategy() default DATABASE_SPLIT_STRATEGY.DEFAULT;
+    DatabaseSplitStrategy strategy() default DatabaseSplitStrategy.DEFAULT;
 }

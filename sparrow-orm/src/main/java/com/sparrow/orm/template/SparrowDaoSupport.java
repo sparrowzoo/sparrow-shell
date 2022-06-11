@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author harry sparrow 跨jdbc 和elastic search接口
+ * @author harry sparrow 跨jdbc
  */
 public interface SparrowDaoSupport<T, I> extends DaoSupport<T, I> {
 
@@ -37,7 +37,7 @@ public interface SparrowDaoSupport<T, I> extends DaoSupport<T, I> {
      */
     <P, Q> Map<P, Q> getMap(SearchCriteria criteria);
 
-    Map<I,T> getEntityMap(SearchCriteria criteria);
+    Map<I, T> getEntityMap(SearchCriteria criteria);
 
     <Z> Set<Z> firstList(SearchCriteria criteria);
 

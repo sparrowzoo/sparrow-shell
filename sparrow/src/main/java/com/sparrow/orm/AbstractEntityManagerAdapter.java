@@ -5,10 +5,10 @@ import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.enums.OrmEntityMetadata;
 import com.sparrow.protocol.constant.CONSTANT;
 import com.sparrow.protocol.constant.magic.SYMBOL;
-import com.sparrow.protocol.dao.Hash;
+import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.Split;
-import com.sparrow.protocol.dao.enums.DATABASE_SPLIT_STRATEGY;
-import com.sparrow.protocol.dao.enums.HashType;
+import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
+import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
@@ -17,10 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected static Logger logger = LoggerFactory.getLogger(AbstractEntityManagerAdapter.class);
@@ -37,15 +34,14 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
      */
     protected Map<String, String> columnPropertyMap;
     protected Map<String, Field> uniqueFieldMap;
-    protected List<Field> hashFieldList;
+    protected Map<Integer,Field> hashFieldMap;
     protected String tableName;
     protected String dialectTableName;
     protected String className;
     protected String simpleClassName;
-    protected Dialect dialect;
+    protected DialectReader dialectReader;
     protected int tableBucketCount;
-    protected int databaseSplitMaxId;
-    protected DATABASE_SPLIT_STRATEGY databaseSplitStrategy;
+    protected DatabaseSplitStrategy databaseSplitStrategy;
     protected String insert;
     protected String update;
     protected String delete;
@@ -56,13 +52,13 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     public AbstractEntityManagerAdapter(Class clazz) {
         this.className = clazz.getName();
         this.simpleClassName = clazz.getSimpleName();
-        Method[] methods = ClassUtility.getOrderedMethod(clazz.getDeclaredMethods());
-        int fieldCount = methods.length;
+        Method[] orderedMethods = ClassUtility.getOrderedMethod(clazz.getDeclaredMethods());
+        int fieldCount = orderedMethods.length;
 
         List<Field> fields = new ArrayList<Field>(fieldCount);
         uniqueFieldMap = new LinkedHashMap<>();
         columnPropertyMap = new LinkedHashMap<String, String>(fieldCount);
-        hashFieldList = new ArrayList<Field>();
+        hashFieldMap = new TreeMap<>();
 
         StringBuilder insertSQL = new StringBuilder("insert into ");
         StringBuilder insertParameter = new StringBuilder();
@@ -78,25 +74,25 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         String primaryCreateDDL = "";
         insertSQL.append("(");
         updateSQL.append(" set ");
-        for (Method method : methods) {
+        for (Method method : orderedMethods) {
             if (method.getName().startsWith("set")) {
                 continue;
             }
-            if (!method.isAnnotationPresent(Column.class) && !method.isAnnotationPresent(Hash.class)) {
+            if (!method.isAnnotationPresent(Column.class) && !method.isAnnotationPresent(SplitTable.class)) {
                 continue;
             }
 
             Column column = method.getAnnotation(Column.class);
-            Hash hash = method.getAnnotation(Hash.class);
+            SplitTable splitTable = method.getAnnotation(SplitTable.class);
             GeneratedValue generatedValue = method.getAnnotation(GeneratedValue.class);
             Id id = method.getAnnotation(Id.class);
 
             String propertyName = StringUtility.setFirstByteLowerCase(PropertyNamer.methodToProperty(method.getName()));
-            Field field = new Field(propertyName, method.getReturnType(), column, hash, generatedValue, id);
+            Field field = new Field(propertyName, method.getReturnType(), column, splitTable, generatedValue, id);
             fields.add(field);
 
-            if (hash != null) {
-                this.hashFieldList.add(field);
+            if (splitTable != null) {
+                this.hashFieldMap.put(splitTable.index(),field);
                 if (!field.isPersistence()) {
                     continue;
                 }
@@ -121,10 +117,10 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
 
             this.columnPropertyMap.put(column.name(), propertyName);
-            String fieldName = dialect.getOpenQuote() + column.name()
-                    + dialect.getCloseQuote();
+            String fieldName = dialectReader.getOpenQuote() + column.name()
+                    + dialectReader.getCloseQuote();
             // insertSQL
-            if (!HashType.ONLY_HASH.equals(field.getHashStrategy()) && !GenerationType.IDENTITY.equals(field.getGenerationType())) {
+            if (!TableSplitStrategy.ORIGIN_NOT_PERSISTENCE.equals(field.getHashStrategy()) && !GenerationType.IDENTITY.equals(field.getGenerationType())) {
                 insertSQL.append(fieldName);
                 insertSQL.append(SYMBOL.COMMA);
                 insertParameter.append(this.parsePropertyParameter(column.name(), propertyName));
@@ -171,7 +167,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
                 fieldBuilder.append(",");
             }
             if (field.isPersistence()) {
-                fieldBuilder.append(dialect.getOpenQuote() + field.getColumnName() + dialect.getCloseQuote());
+                fieldBuilder.append(dialectReader.getOpenQuote() + field.getColumnName() + dialectReader.getCloseQuote());
             }
             this.fieldMap.put(field.getName(), field);
         }
@@ -189,13 +185,13 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         Split split = (Split) clazz.getAnnotation(Split.class);
         this.tableName = table.name();
         this.schema = table.schema();
-        this.dialect = Dialect.getInstance(schema);
+        this.dialectReader = DialectReader.getInstance(schema);
         if (split == null) {
             //`table-name`
-            this.dialectTableName = String.format("%s%s%s", dialect.getOpenQuote(), tableName, dialect.getCloseQuote());
+            this.dialectTableName = String.format("%s%s%s", dialectReader.getOpenQuote(), tableName, dialectReader.getCloseQuote());
             return false;
         }
-        this.dialectTableName = String.format("%s%s%s%s", dialect.getOpenQuote(), tableName, CONSTANT.TABLE_SUFFIX, dialect.getCloseQuote());
+        this.dialectTableName = String.format("%s%s%s%s", dialectReader.getOpenQuote(), tableName, CONSTANT.TABLE_SUFFIX, dialectReader.getCloseQuote());
         // 分表的桶数
         int bucketCount;
         if (split.table_bucket_count() > 1) {
@@ -203,10 +199,9 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             String bucketCountConfigKey = this.simpleClassName.toLowerCase() + "." + OrmEntityMetadata.TABLE_BUCKET_COUNT.toString().toLowerCase();
             Object configBucketCount = ConfigUtility.getValue(bucketCountConfigKey);
             if (configBucketCount != null) {
-                bucketCount = Integer.valueOf(configBucketCount.toString());
+                bucketCount = Integer.parseInt(configBucketCount.toString());
             }
             this.tableBucketCount = bucketCount;
-            this.databaseSplitMaxId = split.database_max_id();
             this.databaseSplitStrategy = split.strategy();
         }
         return true;
@@ -233,8 +228,8 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     }
 
     @Override
-    public Dialect getDialect() {
-        return dialect;
+    public DialectReader getDialect() {
+        return dialectReader;
     }
 
     @Override

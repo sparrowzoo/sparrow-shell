@@ -59,8 +59,7 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public synchronized void close() {
-        System.err.println("proxy connection close");
+    public void close() throws SQLException {
         if (this.connectionPool == null) {
             try {
                 this.conn.close();
@@ -69,19 +68,7 @@ public class ProxyConnection implements Connection {
             }
             return;
         }
-        try {
-            if (this.conn == null) {
-                return;
-            }
-            if (this.connectionPool.usedPool.containsKey(this)) {
-                this.connectionPool.usedPool.remove(this);
-            }
-            if (!this.conn.isClosed()) {
-                this.connectionPool.pool.add(this);
-            }
-        } catch (SQLException e) {
-            logger.error("close connection error", e);
-        }
+        this.connectionPool.release(conn);
         logger.debug("release-->connection pool size:"
                 + this.connectionPool.pool.size() + "used pool size:"
                 + this.connectionPool.usedPool.size());

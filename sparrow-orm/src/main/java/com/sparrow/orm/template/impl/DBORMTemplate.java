@@ -31,7 +31,7 @@ import com.sparrow.orm.template.SparrowDaoSupport;
 import com.sparrow.protocol.dao.AggregateCriteria;
 import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
-import com.sparrow.protocol.dao.enums.DATABASE_SPLIT_STRATEGY;
+import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.protocol.pager.PagerQuery;
 import com.sparrow.support.db.JDBCSupport;
 import com.sparrow.utility.ClassUtility;
@@ -47,39 +47,38 @@ import java.util.*;
  * @author harry
  */
 public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
-    private static Logger logger = LoggerFactory.getLogger(PrepareORM.class);
-
-    protected CriteriaProcessor criteriaProcessor = new SqlCriteriaProcessorImpl();
+    private static Logger logger = LoggerFactory.getLogger(OrmMetadataAccessor.class);
+    protected CriteriaProcessor criteriaProcessor = SqlCriteriaProcessorImpl.getInstance();
     /**
      * 实体类
      */
     private Class<?> modelClazz = null;
 
-    private String modelName = null;
+    private String modelName;
     /**
      * 数据库辅助对象
      */
     protected final JDBCSupport jdbcSupport;
 
-    private PrepareORM<T> prepareORM;
+    private OrmMetadataAccessor<T> ormMetadataAccessor;
 
     public DBORMTemplate(Class clazz) {
         this.modelClazz = clazz;
         if (this.modelClazz != null) {
             this.modelName = ClassUtility.getEntityNameByClass(this.modelClazz);
         }
-        this.prepareORM = new PrepareORM<T>(this.modelClazz, this.criteriaProcessor);
-        DATABASE_SPLIT_STRATEGY databaseSplitKey = this.prepareORM.getEntityManager().getDatabaseSplitStrategy();
-        this.jdbcSupport = JDBCTemplate.getInstance(this.prepareORM.getEntityManager().getSchema(), databaseSplitKey);
+        this.ormMetadataAccessor = new OrmMetadataAccessor<T>(this.modelClazz, this.criteriaProcessor);
+        DatabaseSplitStrategy databaseSplitKey = this.ormMetadataAccessor.getEntityManager().getDatabaseSplitStrategy();
+        this.jdbcSupport = JDBCTemplate.getInstance(this.ormMetadataAccessor.getEntityManager().getSchema(), databaseSplitKey);
     }
 
     @Override
     public Long insert(T model) {
         try {
-            JDBCParameter jdbcParameter = this.prepareORM.insert(model);
+            JDBCParameter jdbcParameter = this.ormMetadataAccessor.insert(model);
             if (jdbcParameter.isAutoIncrement()) {
                 Long id = this.jdbcSupport.executeAutoIncrementInsert(jdbcParameter);
-                this.prepareORM.getMethodAccessor().set(model, this.prepareORM.getEntityManager().getPrimary().getName(), id);
+                this.ormMetadataAccessor.getMethodAccessor().set(model, this.ormMetadataAccessor.getEntityManager().getPrimary().getName(), id);
                 return id;
             } else {
                 this.jdbcSupport.executeUpdate(jdbcParameter);
@@ -92,27 +91,27 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public int update(T model) {
-        return this.jdbcSupport.executeUpdate(this.prepareORM.update(model));
+        return this.jdbcSupport.executeUpdate(this.ormMetadataAccessor.update(model));
     }
 
     @Override
     public int update(UpdateCriteria criteria) {
-        return this.jdbcSupport.executeUpdate(this.prepareORM.update(criteria));
+        return this.jdbcSupport.executeUpdate(this.ormMetadataAccessor.update(criteria));
     }
 
     @Override
     public int delete(I id) {
-        return this.jdbcSupport.executeUpdate(this.prepareORM.delete(id));
+        return this.jdbcSupport.executeUpdate(this.ormMetadataAccessor.delete(id));
     }
 
     @Override
     public int delete(SearchCriteria criteria) {
-        return this.jdbcSupport.executeUpdate(this.prepareORM.delete(criteria));
+        return this.jdbcSupport.executeUpdate(this.ormMetadataAccessor.delete(criteria));
     }
 
     @Override
     public int batchDelete(String ids) {
-        JDBCParameter parameter = this.prepareORM.batchDelete(ids);
+        JDBCParameter parameter = this.ormMetadataAccessor.batchDelete(ids);
         return this.jdbcSupport.executeUpdate(parameter);
     }
 
@@ -136,7 +135,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
             String columns = this.criteriaProcessor.aggregate(searchCriteria.getAggregate(), searchCriteria.getFields());
             selectSql.append(columns);
         }
-        selectSql.append(" from " + this.prepareORM.getTableName(searchCriteria.getTableSuffix()));
+        selectSql.append(" from " + this.ormMetadataAccessor.getTableName(searchCriteria.getTableSuffix()));
         if (!StringUtility.isNullOrEmpty(whereClause)) {
             selectSql.append(" where " + whereClause);
         }
@@ -169,10 +168,10 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     @Override
     public T getEntityByUnique(UniqueKeyCriteria uniqueKeyCriteria) {
         StringBuilder select = new StringBuilder("select ");
-        select.append(this.prepareORM.getEntityManager().getFields());
+        select.append(this.ormMetadataAccessor.getEntityManager().getFields());
         select.append(" from "
-                + this.prepareORM.getEntityManager().getDialectTableName());
-        Field uniqueField = this.prepareORM.getEntityManager().getUniqueField(uniqueKeyCriteria.getUniqueFieldName());
+                + this.ormMetadataAccessor.getEntityManager().getDialectTableName());
+        Field uniqueField = this.ormMetadataAccessor.getEntityManager().getUniqueField(uniqueKeyCriteria.getUniqueFieldName());
         select.append(" where " + uniqueField.getColumnName() + "=?");
         JDBCParameter jdbcParameter = new JDBCParameter(select.toString(), Collections.singletonList(new Parameter(uniqueField, uniqueField.convert(uniqueKeyCriteria.getKey().toString()))));
         ResultSet rs = this.jdbcSupport.executeQuery(jdbcParameter);
@@ -183,7 +182,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
         T t = null;
         try {
             if (rs.next()) {
-                t = this.prepareORM.setEntity(rs, null);
+                t = this.ormMetadataAccessor.setEntity(rs, null);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -206,7 +205,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
                 if (criteria != null && criteria.getRowMapper() != null) {
                     model = (T) criteria.getRowMapper().mapRow(rs, rs.getRow());
                 } else {
-                    model = this.prepareORM.setEntity(rs, null);
+                    model = this.ormMetadataAccessor.setEntity(rs, null);
                 }
             }
         } catch (SQLException e) {
@@ -239,7 +238,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
                 if (criteria != null && criteria.getRowMapper() != null) {
                     m = (T) criteria.getRowMapper().mapRow(rs, rs.getRow());
                 } else {
-                    m = this.prepareORM.setEntity(rs, null);
+                    m = this.ormMetadataAccessor.setEntity(rs, null);
                 }
                 list.add(m);
             }
@@ -270,9 +269,9 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
         try {
             while (rs.next()) {
-                String primaryName = this.prepareORM.getEntityManager().getPrimary().getName();
-                T m = this.prepareORM.setEntity(rs, null);
-                I key = (I) this.prepareORM.getMethodAccessor().get(m, primaryName);
+                String primaryName = this.ormMetadataAccessor.getEntityManager().getPrimary().getName();
+                T m = this.ormMetadataAccessor.setEntity(rs, null);
+                I key = (I) this.ormMetadataAccessor.getMethodAccessor().get(m, primaryName);
                 map.put(key, m);
             }
         } catch (SQLException e) {
@@ -322,8 +321,8 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     @Override
     public List<T> getList(Collection<I> ids) {
         SearchCriteria searchCriteria = new SearchCriteria();
-        String entityClassName=ClassUtility.getEntityNameByClass(this.prepareORM.getModelClazz());
-        String primaryProperty = this.prepareORM.getEntityManager().getPrimary().getName();
+        String entityClassName=ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
+        String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getName();
         searchCriteria.setWhere(Criteria.field(entityClassName+"."+primaryProperty).in(ids));
         return this.getList(searchCriteria);
     }
@@ -331,8 +330,8 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     @Override
     public Map<I, T> getEntityMap(Collection<I> ids) {
         SearchCriteria searchCriteria = new SearchCriteria();
-        String entityClassName=ClassUtility.getEntityNameByClass(this.prepareORM.getModelClazz());
-        String primaryProperty = this.prepareORM.getEntityManager().getPrimary().getName();
+        String entityClassName=ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
+        String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getName();
         searchCriteria.setWhere(Criteria.field(entityClassName+"."+primaryProperty).in(ids));
         return this.getEntityMap(searchCriteria);
     }
@@ -375,7 +374,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public Long getCountByUnique(UniqueKeyCriteria uniqueKeyCriteria) {
-        JDBCParameter jdbcParameter = this.prepareORM.getCount(uniqueKeyCriteria.getKey(), uniqueKeyCriteria.getUniqueFieldName());
+        JDBCParameter jdbcParameter = this.ormMetadataAccessor.getCount(uniqueKeyCriteria.getKey(), uniqueKeyCriteria.getUniqueFieldName());
         Object count = this.jdbcSupport.executeScalar(jdbcParameter);
         if (count == null) {
             return 0L;
@@ -390,7 +389,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public Long getCount(SearchCriteria criteria) {
-        JDBCParameter jdbcParameter = this.prepareORM.getCount(criteria);
+        JDBCParameter jdbcParameter = this.ormMetadataAccessor.getCount(criteria);
         Long count = this.jdbcSupport.executeScalar(jdbcParameter);
         if (count == null) {
             return 0L;
@@ -418,7 +417,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public <X> X getFieldValueByUnique(UniqueKeyCriteria uniqueKeyCriteria) {
-        JDBCParameter jdbcParameter = this.prepareORM.getFieldValue(uniqueKeyCriteria.getResultFiled(), uniqueKeyCriteria.getKey(), uniqueKeyCriteria.getUniqueFieldName());
+        JDBCParameter jdbcParameter = this.ormMetadataAccessor.getFieldValue(uniqueKeyCriteria.getResultFiled(), uniqueKeyCriteria.getKey(), uniqueKeyCriteria.getUniqueFieldName());
         Object fieldValue = this.jdbcSupport.executeScalar(jdbcParameter);
         if (fieldValue == null) {
             return null;
@@ -438,7 +437,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public int changeStatus(StatusCriteria statusCriteria) {
-        JDBCParameter jdbcParameter = this.prepareORM.changeStatus(statusCriteria.getIds(), statusCriteria.getStatus());
+        JDBCParameter jdbcParameter = this.ormMetadataAccessor.changeStatus(statusCriteria.getIds(), statusCriteria.getStatus());
         return this.jdbcSupport.executeUpdate(jdbcParameter);
     }
 }

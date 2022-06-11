@@ -17,9 +17,6 @@
 
 package com.sparrow.datasource;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
-import com.sparrow.utility.StringUtility;
-
 /**
  * datasource config
  *
@@ -89,16 +86,6 @@ public class DatasourceConfig {
 
     public void setPoolSize(int poolSize) {
         this.poolSize = poolSize;
-    }
-
-    public String getSchema() {
-        if (StringUtility.isNullOrEmpty(url)) {
-            return SYMBOL.EMPTY;
-        }
-        if (url.contains(SYMBOL.QUESTION_MARK)) {
-            return url.substring(url.lastIndexOf(SYMBOL.SLASH) + 1, url.indexOf(SYMBOL.QUESTION_MARK));
-        }
-        return url.substring(url.lastIndexOf(SYMBOL.SLASH));
     }
 
     @Override

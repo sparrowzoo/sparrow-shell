@@ -28,6 +28,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -44,9 +45,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ConnectionPool implements DataSource,ContainerAware{
     private static Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
-
     private DataSourceFactory dataSourceFactory;
-    
     private int openedConnectionCount = 0;
     private int closedConnectionCount = 0;
 
@@ -75,9 +74,9 @@ public class ConnectionPool implements DataSource,ContainerAware{
      * 初始化数据库链接池
      */
     @Override
-    public void aware(Container container, String beanName) {
-        this.connectionConfig = this.dataSourceFactory.getDatasourceConfig(beanName);
-        pool = new Vector<Connection>(this.connectionConfig.getPoolSize());
+    public void aware(Container container, String datasourceName) {
+        this.connectionConfig = this.dataSourceFactory.getDatasourceConfig(datasourceName);
+        pool = new ArrayList<>(this.connectionConfig.getPoolSize());
         this.usedPool = new ConcurrentHashMap<Connection, Long>(this.connectionConfig.getPoolSize());
         for (int i = 0; i < this.connectionConfig.getPoolSize(); i++) {
             pool.add(this.newConnection());
@@ -95,11 +94,14 @@ public class ConnectionPool implements DataSource,ContainerAware{
                     if(ConnectionPool.this.loginTimeout==0){
                         return;
                     }
-                    if ((System.currentTimeMillis() - usedPool.get(c)) / 1000 / 60d > ConnectionPool.this
+                    if ((System.currentTimeMillis() - usedPool.get(c)) / 1000 / 60 > ConnectionPool.this
                         .getLoginTimeout()) {
                         //expire connection
-                        usedPool.remove(c);
-                        pool.add(c);
+                        try {
+                            ConnectionPool.this.release(c);
+                        } catch (SQLException e) {
+                            logger.error("connection release error",e);
+                        }
                     }
                 }
             }
@@ -157,6 +159,15 @@ public class ConnectionPool implements DataSource,ContainerAware{
         }
     }
 
+    public synchronized void release(Connection c) throws SQLException {
+        if(c==null){
+            return;
+        }
+        usedPool.remove(c);
+        if(!c.isClosed()) {
+            pool.add(c);
+        }
+    }
     private Connection newConnection() {
         Connection conn = null;
         // 此处不要放入池中.release时即放回池中
