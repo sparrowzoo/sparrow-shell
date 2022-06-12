@@ -16,9 +16,6 @@
  */
 package com.sparrow.datasource;
 
-import com.sparrow.enums.Dialect;
-import com.sparrow.orm.DialectReader;
-
 import java.sql.Connection;
 import javax.sql.DataSource;
 

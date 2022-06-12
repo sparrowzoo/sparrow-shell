@@ -2,7 +2,6 @@ package com.sparrow.orm;
 
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.support.db.JDBCSupport;
 import org.junit.Test;
 
 /**

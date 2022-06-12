@@ -33,7 +33,7 @@ import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.protocol.pager.PagerQuery;
-import com.sparrow.support.db.JDBCSupport;
+import com.sparrow.orm.JDBCSupport;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;

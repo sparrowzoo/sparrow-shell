@@ -26,7 +26,6 @@ import com.sparrow.datasource.DatasourceKey;
 import com.sparrow.orm.type.TypeHandler;
 import com.sparrow.orm.type.TypeHandlerRegistry;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
-import com.sparrow.support.db.JDBCSupport;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;

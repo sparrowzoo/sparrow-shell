@@ -1,6 +1,6 @@
 package com.sparrow.container;
 
-import com.sparrow.mvc.HandlerInterceptor;
+import com.sparrow.servlet.HandlerInterceptor;
 
 import java.util.HashMap;
 import java.util.Iterator;

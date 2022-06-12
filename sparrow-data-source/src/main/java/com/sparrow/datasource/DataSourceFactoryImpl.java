@@ -21,8 +21,6 @@ import com.sparrow.constant.CacheKey;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.core.cache.StrongDurationCache;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.enums.Dialect;
-import com.sparrow.orm.DialectReader;
 import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.StringUtility;

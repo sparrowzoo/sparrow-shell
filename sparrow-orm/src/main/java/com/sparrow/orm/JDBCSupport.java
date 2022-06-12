@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.db;
+package com.sparrow.orm;
 
 import com.sparrow.orm.JDBCParameter;
 import java.sql.ResultSet;
