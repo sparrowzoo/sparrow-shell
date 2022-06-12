@@ -94,7 +94,6 @@ public class DispatcherFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String actionKey = sparrowServletUtility.getServletUtility().getActionKey(request);
-
         if (StringUtility.existInArray(this.exceptUrl, actionKey)) {
             try {
                 chain.doFilter(request, response);

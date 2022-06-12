@@ -47,7 +47,7 @@ public class Config {
     public static final String DEFAULT_FORUM_ICO = "default_forum_ico";
     public static final String DEFAULT_AVATAR = "default_avatar";
     public static final String DEFAULT_BLOG_URL = "default_blog_url";
-    public static final String DEFAULT_DATA_SOURCE_KEY = "data_source";
+    public static final String DEFAULT_DATA_SOURCE_KEY = "default_data_source";
     public static final String DEFAULT_USER_PASSWORD = "default_user_password";
     public static final String DEFAULT_PAGE_EXTENSION = "default_page_extension";
     public static final String DEFAULT_PAGE_PREFIX = "default_page_prefix";

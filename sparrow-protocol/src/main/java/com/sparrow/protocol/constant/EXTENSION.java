@@ -32,6 +32,11 @@ public class EXTENSION {
     public static final String PDF = ".pdf";
     public static final String DO = ".do";
     public static final String JSON = ".json";
+    public static final String JAVASCRIPT = ".js";
+    public static final String CSS = ".css";
+
+
+
     public static final String JSP = ".jsp";
     public static final String HTML = ".html";
     public static final String ZIP=".zip";
