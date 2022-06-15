@@ -28,30 +28,27 @@
     <!-- (bill of materials)-->
     <artifactId>sparrow-bom</artifactId>
     <properties>
-        <sparrow_version>1.0-SNAPSHOT</sparrow_version>
-        <sparrow_loader_version>1.0-SNAPSHOT</sparrow_loader_version>
-        <sparrow_json_version>1.0-SNAPSHOT</sparrow_json_version>
-        <sparrow_orm_version>1.0-SNAPSHOT</sparrow_orm_version>
-        <sparrow_mvc_version>1.0-SNAPSHOT</sparrow_mvc_version>
-        <sparrow_data_source_version>1.0-SNAPSHOT</sparrow_data_source_version>
-        <sparrow_container_version>1.0-SNAPSHOT</sparrow_container_version>
-        <sparrow_log>1.0-SNAPSHOT</sparrow_log>
-        <sparrow_sharded_jedis_version>1.0-SNAPSHOT</sparrow_sharded_jedis_version>
-
-        <sparrow_log_version>1.0-SNAPSHOT</sparrow_log_version>
-        <sparrow_rocketmq_client_version>1.0-SNAPSHOT</sparrow_rocketmq_client_version>
-        <sparrow_kafka_client_version>1.0-SNAPSHOT</sparrow_kafka_client_version>
-        <sparrow_redis_client_version>1.0-SNAPSHOT</sparrow_redis_client_version>
-        <sparrow_aop_version>1.0-SNAPSHOT</sparrow_aop_version>
-        <sparrow_distribution_job_version>1.0-SNAPSHOT</sparrow_distribution_job_version>
-        <sparrow_distribution_config_version>1.0-SNAPSHOT</sparrow_distribution_config_version>
-        <sparrow_markdown_version>1.0-SNAPSHOT</sparrow_markdown_version>
-        <sparrow_registry_version>1.0-SNAPSHOT</sparrow_registry_version>
-        <sparrow_protocol_version>1.0-SNAPSHOT</sparrow_protocol_version>
-        <sparrow_protocol_dao_version>1.0-SNAPSHOT</sparrow_protocol_dao_version>
-
+        <sparrow_version>1.0.0</sparrow_version>
+        <sparrow_loader_version>1.0.0</sparrow_loader_version>
+        <sparrow_json_version>1.0.0</sparrow_json_version>
+        <sparrow_orm_version>1.0.0</sparrow_orm_version>
+        <sparrow_mvc_version>1.0.0</sparrow_mvc_version>
+        <sparrow_data_source_version>1.0.0</sparrow_data_source_version>
+        <sparrow_container_version>1.0.0</sparrow_container_version>
+        <sparrow_log>1.0.0</sparrow_log>
+        <sparrow_sharded_jedis_version>1.0.0</sparrow_sharded_jedis_version>
+        <sparrow_log_version>1.0.0</sparrow_log_version>
+        <sparrow_rocketmq_client_version>1.0.0</sparrow_rocketmq_client_version>
+        <sparrow_kafka_client_version>1.0.0</sparrow_kafka_client_version>
+        <sparrow_redis_client_version>1.0.0</sparrow_redis_client_version>
+        <sparrow_aop_version>1.0.0</sparrow_aop_version>
+        <sparrow_distribution_job_version>1.0.0</sparrow_distribution_job_version>
+        <sparrow_distribution_config_version>1.0.0</sparrow_distribution_config_version>
+        <sparrow_markdown_version>1.0.0</sparrow_markdown_version>
+        <sparrow_registry_version>1.0.0</sparrow_registry_version>
+        <sparrow_protocol_version>1.0.0</sparrow_protocol_version>
+        <sparrow_protocol_dao_version>1.0.0</sparrow_protocol_dao_version>
         <sparrow_lettuce_cluster_version>1.0.0-SNAPSHOT</sparrow_lettuce_cluster_version>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Build Environment -->
         <maven.compile.source>1.8</maven.compile.source>
