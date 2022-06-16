@@ -8,7 +8,7 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <version>${sparrow_aop_version}</version>
     <artifactId>sparrow-aop</artifactId>
     <properties>
         <curator.version>2.10.0</curator.version>
@@ -18,25 +18,25 @@
             <groupId>com.sparrow</groupId>
             <artifactId>sparrow</artifactId>
         </dependency>
-            <!--必须 spring aop 使用-->
-                <dependency>
-                    <groupId>org.aspectj</groupId>
-                    <artifactId>aspectjweaver</artifactId>
-                    <version>1.9.4</version>
-                </dependency>
+        <!--必须 spring aop 使用-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.4</version>
+        </dependency>
         <!--非必要aspectjweaver 中已包含-->
-<!--        <dependency>-->
-<!--            <groupId>org.aspectj</groupId>-->
-<!--            <artifactId>aspectjrt</artifactId>-->
-<!--            <version>1.9.4</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.aspectj</groupId>-->
+        <!--            <artifactId>aspectjrt</artifactId>-->
+        <!--            <version>1.9.4</version>-->
+        <!--        </dependency>-->
 
-                <!--        非必须 在spring aop 中已集成-->
-                <!--        <dependency>-->
-                <!--            <groupId>aopalliance</groupId>-->
-                <!--            <artifactId>aopalliance</artifactId>-->
-                <!--            <version>1.0</version>-->
-                <!--        </dependency>-->
+        <!--        非必须 在spring aop 中已集成-->
+        <!--        <dependency>-->
+        <!--            <groupId>aopalliance</groupId>-->
+        <!--            <artifactId>aopalliance</artifactId>-->
+        <!--            <version>1.0</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>

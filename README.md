@@ -17,6 +17,8 @@ sparrow 源自中国俗语 麻雀虽小，但五脏俱全，全力打造一个�
 
 为此基于oop的基本思想，构建一层api,最大化的解耦。
 
+![架构图](https://user-images.githubusercontent.com/5276088/172513968-9a6b1e84-3b92-4834-b374-a58a1fac7438.png)
+
 框架特点
 ---
 - 相信程序员
