@@ -17,6 +17,8 @@
 
 package com.sparrow.datasource;
 
+import com.sparrow.constant.SysObjectName;
+import com.sparrow.core.spi.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,10 @@ public class ProxyConnection implements Connection {
     private static Logger logger = LoggerFactory.getLogger(ProxyConnection.class);
     private Connection conn = null;
     private ConnectionPool connectionPool;
+
+    public Connection getOriginConnection(){
+        return this.conn;
+    }
 
     public ProxyConnection(DatasourceConfig datasourceConfig, ConnectionPool connectionPool) {
         try {
@@ -59,7 +65,8 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void close() throws SQLException {
+    public synchronized void close() {
+        System.err.println("proxy connection close");
         if (this.connectionPool == null) {
             try {
                 this.conn.close();
@@ -68,7 +75,19 @@ public class ProxyConnection implements Connection {
             }
             return;
         }
-        this.connectionPool.release(conn);
+        try {
+            if (this.conn == null) {
+                return;
+            }
+            if (this.connectionPool.usedPool.containsKey(this)) {
+                this.connectionPool.usedPool.remove(this);
+            }
+            if (!this.conn.isClosed()) {
+                this.connectionPool.pool.add(this);
+            }
+        } catch (SQLException e) {
+            logger.error("close connection error", e);
+        }
         logger.debug("release-->connection pool size:"
                 + this.connectionPool.pool.size() + "used pool size:"
                 + this.connectionPool.usedPool.size());

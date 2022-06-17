@@ -22,8 +22,9 @@ import java.sql.Connection;
  * @author by harry
  */
 public interface ConnectionContextHolder {
+    void addOriginProxy(Connection proxy);
     /**
-     * get datasource factory
+     * get datasource factory for refer class
      *
      * @return
      */

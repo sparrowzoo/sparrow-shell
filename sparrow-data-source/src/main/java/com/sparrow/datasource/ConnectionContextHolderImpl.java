@@ -39,14 +39,19 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
      */
     private ThreadLocal<Map<String, Connection>> transactionContainer = new ThreadLocal<Map<String, Connection>>();
 
-    /**
-     * 请求过程中的普通数据库链接
-     * 同一个线程，可能查不同的数据源
-     */
-    private ThreadLocal<Map<String, Stack<Connection>>> connectionContainer = new ThreadLocal<Map<String, Stack<Connection>>>();
 
+    private Map<Connection,ProxyConnection> originProxyMap=new HashMap<>();
     public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
         this.dataSourceFactory = dataSourceFactory;
+    }
+
+    @Override
+    public void addOriginProxy(Connection proxy) {
+        if(proxy instanceof ProxyConnection){
+            ProxyConnection proxyConnection=(ProxyConnection) proxy;
+            Connection origin= proxyConnection.getOriginConnection();
+            this.originProxyMap.put(origin,proxyConnection);
+        }
     }
 
     @Override public DataSourceFactory getDataSourceFactory() {
@@ -61,13 +66,6 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
         return this.transactionContainer.get();
     }
 
-    private Map<String, Stack<Connection>> getConnectionHolder() {
-        if (this.connectionContainer.get() == null) {
-            this.connectionContainer.set(new HashMap<String, Stack<Connection>>());
-        }
-        return this.connectionContainer.get();
-    }
-
     @Override public void bindConnection(Connection connection) {
         try {
             DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(connection);
@@ -75,12 +73,6 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
                 this.getTransactionHolder().put(dataSourceKey.getKey(), connection);
                 return;
             }
-            Stack<Connection> stack = this.getConnectionHolder().get(dataSourceKey.getKey());
-            if (stack == null) {
-                stack = new Stack<Connection>();
-                this.getConnectionHolder().put(dataSourceKey.getKey(), stack);
-            }
-            stack.push(connection);
         } catch (SQLException ignore) {
             throw new RuntimeException(ignore);
         }
@@ -91,15 +83,15 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
             DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(connection);
             Connection proxyConnection = this.getConnection(dataSourceKey.getKey());
             if (proxyConnection == null) {
+                proxyConnection=this.originProxyMap.get(connection);
+                proxyConnection.close();
                 return;
             }
+
             if (!connection.getAutoCommit()) {
                 this.getTransactionHolder().remove(dataSourceKey.getKey());
-            } else {
-                Stack<Connection> connectionStack=this.getConnectionHolder().get(dataSourceKey.getKey());
-                connectionStack.pop();
+                proxyConnection.close();
             }
-            proxyConnection.close();
         } catch (SQLException ignore) {
             throw new RuntimeException(ignore);
         }
@@ -107,15 +99,7 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
 
     @Override public Connection getConnection(String datasourceKey) {
         //以事务为优先，如果当前开启事务，未commit则用事务链接执行
-        Connection connection = this.getTransactionHolder().get(datasourceKey);
-        if (connection != null) {
-            return connection;
-        }
-        Stack<Connection> connectionStack = this.getConnectionHolder().get(datasourceKey);
-        if (connectionStack != null && connectionStack.size() > 0) {
-            connection = connectionStack.peek();
-        }
-        return connection;
+        return this.getTransactionHolder().get(datasourceKey);
     }
 
     @Override public void removeAll() {
@@ -128,20 +112,6 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
                 }
             }
         }
-        Map<String, Stack<Connection>> connectionContainer =
-                this.connectionContainer.get();
-        if (connectionContainer != null) {
-            for (String key : connectionContainer.keySet()) {
-                Stack<Connection> connectionStack = connectionContainer.get(key);
-                while (!connectionStack.empty()) {
-                    try {
-                        connectionStack.pop().close();
-                    } catch (SQLException ignore) {
-                    }
-                }
-            }
-        }
         this.transactionContainer.remove();
-        this.connectionContainer.remove();
     }
 }
