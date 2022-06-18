@@ -19,8 +19,6 @@ import java.util.List;
 public class UserDaoTest {
     @Test
     public void userTest() {
-        JDBCTemplateTest jdbcTemplateTest=new JDBCTemplateTest();
-        jdbcTemplateTest.initStructure();
         Container container = ApplicationContext.getContainer();
         container.setContextConfigLocation("/dao.xml");
         container.init();

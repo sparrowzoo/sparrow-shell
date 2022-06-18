@@ -34,6 +34,14 @@
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
         <constructor-arg index="1" name="initDatasourceKeys" value="sparrow_default,user_default"/>
     </bean>
+    <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
+        <property name="dataSourceFactory" ref="dataSourceFactory"/>
+    </bean>
+
+    <bean name="transactionManager" class="com.sparrow.datasource.SparrowTransactionManager">
+        <property name="connectionHolder" ref="connectionContextHolder"/>
+        <property name="dataSourceFactory" ref="dataSourceFactory"/>
+    </bean>
 
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
@@ -41,9 +49,7 @@
     <bean name="user_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-    <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
-        <property name="dataSourceFactory" ref="dataSourceFactory"/>
-    </bean>
+
 
 
     <!--必须定义，且必须为prototype-->
