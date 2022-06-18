@@ -20,7 +20,6 @@ package com.sparrow.datasource;
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
-import com.sparrow.core.spi.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
