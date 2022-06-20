@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc\:mysql\://127.0.0.1/sparrow?useSSL=false&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC" />
         <property name="username" value="root"/>
-        <property name="password" value="111111"/>
+        <property name="password" value="11111111"/>
         <property name="maxActive" value="10"/>
         <property name="initialSize" value="1"/>
         <property name="maxWait" value="6000"/>
