@@ -33,9 +33,10 @@ public class DatasourceTest {
     @Test
     public void datasourceTest() throws SQLException {
         Container container = ApplicationContext.getContainer();
+        container.setContextConfigLocation("/dao.xml");
         container.init();
         DataSourceFactory dataSourceFactory = container.getBean("dataSourceFactory");
-        DataSource dataSource = dataSourceFactory.getDataSource();
+        DataSource dataSource = dataSourceFactory.getDataSource("user_default");
 
         System.err.println("datasource valid before "+dataSource);
         DataSourceValidChecker connectionValidChecker = new ConnectionValidCheckerAdapter();
