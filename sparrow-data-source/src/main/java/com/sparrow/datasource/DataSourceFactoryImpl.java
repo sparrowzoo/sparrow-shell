@@ -94,6 +94,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
         if (StringUtility.isNullOrEmpty(dataSourceKey)) {
             dataSourceKey = "sparrow_default";
         }
+        DatasourceKey dsKey=DatasourceKey.parse(dataSourceKey);
         if (datasourceConfigMap.containsKey(dataSourceKey)) {
             return datasourceConfigMap.get(dataSourceKey);
         }
@@ -107,16 +108,16 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
                 Properties props = new Properties();
                 String filePath = "/" + dataSourceKey
                         + ".properties";
+                String schema=dsKey.getSchema();
                 props.load(EnvironmentSupport.getInstance().getFileInputStream(filePath));
-                datasourceConfig.setDriverClassName(props.getProperty("driverClassName"));
-                datasourceConfig.setUsername(props.getProperty("username"));
-                datasourceConfig.setPassword(props.getProperty("password"));
-                datasourceConfig.setUrl(props.getProperty("url"));
-                datasourceConfig.setPoolSize(Integer.parseInt(props.getProperty("poolSize")));
+                datasourceConfig.setDriverClassName(props.getProperty(schema+".driverClassName"));
+                datasourceConfig.setUsername(props.getProperty(schema+".username"));
+                datasourceConfig.setPassword(props.getProperty(schema+".password"));
+                datasourceConfig.setUrl(props.getProperty(schema+".url"));
+                datasourceConfig.setPoolSize(Integer.parseInt(props.getProperty(schema+".poolSize")));
             } catch (Exception ignore) {
                 throw new RuntimeException(ignore);
             }
-            DatasourceKey key = DatasourceKey.parse(dataSourceKey);
             //detection jdbc config useful
             Connection connection = new ProxyConnection(datasourceConfig, null);
             Statement statement = null;
@@ -124,7 +125,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
                 statement = connection.createStatement();
                 boolean effectCount = statement.execute("SELECT 1");
                 if (effectCount) {
-                    datasourceUrlMap.put(connection.getMetaData().getURL(), key);
+                    datasourceUrlMap.put(connection.getMetaData().getURL(), dsKey);
                 }
                 datasourceConfigMap.put(dataSourceKey, datasourceConfig);
             } catch (SQLException e) {

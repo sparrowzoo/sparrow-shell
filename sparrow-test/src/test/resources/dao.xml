@@ -32,7 +32,7 @@
 
 
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
-        <constructor-arg index="1" name="initDatasourceKeys" value="sparrow_default,user_default"/>
+        <constructor-arg index="1" name="initDatasourceKeys" value="user_default"/>
     </bean>
     <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
@@ -43,24 +43,23 @@
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
 
-    <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
+    <bean name="user_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-<!--    <bean name="user_default" class="com.sparrow.datasource.ConnectionPool">-->
-<!--        <property name="dataSourceFactory" ref="dataSourceFactory"/>-->
-<!--    </bean>-->
 
-    <bean name="user_default" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc\:mysql\://127.0.0.1/sparrow?useSSL=false&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC" />
-        <property name="username" value="root"/>
-        <property name="password" value="111111"/>
-        <property name="maxActive" value="10"/>
-        <property name="initialSize" value="1"/>
-        <property name="maxWait" value="6000"/>
-        <property name="maxIdle" value="10"/>
-        <property name="minIdle" value="3"/>
-    </bean>
+
+<!--    <bean name="user_default" class="org.apache.commons.dbcp2.BasicDataSource">-->
+<!--        <property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+<!--        &lt;!&ndash; <property name="url" value="jdbc\:mysql\://127.0.0.1/sparrow?useSSL=false&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC" />&ndash;&gt;-->
+<!--        <property name="url" value="${user.url}" />-->
+<!--        <property name="username" value="${user.username}"/>-->
+<!--        <property name="password" value="${user.password}"/>-->
+<!--        <property name="maxActive" value="10"/>-->
+<!--        <property name="initialSize" value="1"/>-->
+<!--        <property name="maxWait" value="6000"/>-->
+<!--        <property name="maxIdle" value="10"/>-->
+<!--        <property name="minIdle" value="3"/>-->
+<!--    </bean>-->
 
 
     <!--必须定义，且必须为prototype-->

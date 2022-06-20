@@ -71,7 +71,6 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
             DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(connection);
             if (!connection.getAutoCommit()) {
                 this.getTransactionHolder().put(dataSourceKey.getKey(), connection);
-                return;
             }
         } catch (SQLException ignore) {
             throw new RuntimeException(ignore);
@@ -83,16 +82,20 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
             DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(connection);
             Connection proxyConnection = this.getConnection(dataSourceKey.getKey());
             if (proxyConnection == null) {
-                proxyConnection=this.originProxyMap.get(connection);
-                proxyConnection.close();
+                proxyConnection = this.originProxyMap.get(connection);
+                if(proxyConnection!=null){
+                    proxyConnection.close();
+                }
+                else {
+                  connection.close();
+                }
                 return;
             }
-
             if (!connection.getAutoCommit()) {
                 this.getTransactionHolder().remove(dataSourceKey.getKey());
                 proxyConnection.close();
             }
-        } catch (SQLException ignore) {
+        }catch (SQLException ignore) {
             throw new RuntimeException(ignore);
         }
     }
