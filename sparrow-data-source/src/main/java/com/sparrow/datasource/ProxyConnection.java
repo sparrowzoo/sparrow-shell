@@ -20,6 +20,7 @@ package com.sparrow.datasource;
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.utility.HtmlUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +44,7 @@ public class ProxyConnection implements Connection {
     public ProxyConnection(DatasourceConfig datasourceConfig, ConnectionPool connectionPool) {
         try {
             Class.forName(datasourceConfig.getDriverClassName());
+
             this.conn = DriverManager.getConnection(datasourceConfig.getUrl(), datasourceConfig.getUsername(), datasourceConfig.getPassword());
             this.connectionPool = connectionPool;
             Container container = ApplicationContext.getContainer();
