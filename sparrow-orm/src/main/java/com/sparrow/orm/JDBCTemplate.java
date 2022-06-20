@@ -55,10 +55,13 @@ public class JDBCTemplate implements JDBCSupport {
      */
     private String schema;
     private DatabaseSplitStrategy dataSourceSplitStrategy;
+
     /**
      * 连接支持器
      */
-    private ConnectionContextHolder connectionHolder;
+    private ConnectionContextHolder getConnectionHolder() {
+        return ApplicationContext.getContainer().getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
+    }
 
 
     /**
@@ -93,7 +96,6 @@ public class JDBCTemplate implements JDBCSupport {
         }
         this.schema = schema;
         this.dataSourceSplitStrategy = databaseSplitStrategy;
-        this.connectionHolder = ApplicationContext.getContainer().getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
     }
 
     /************************************* 执行基础SQL调用 参数与存储过程 ***************************************************/
@@ -160,8 +162,9 @@ public class JDBCTemplate implements JDBCSupport {
      * schema+ DATABASE_SPLIT_STRATEGY（注解） 确定唯一 jdbc template（最小粒度）
      */
     private synchronized Connection getConnection() {
+        ConnectionContextHolder connectionHolder=this.getConnectionHolder();
         DatasourceKey dataSourceKey = new DatasourceKey(this.schema, this.getDataSourceSuffix());
-        Connection connection = this.connectionHolder.getConnection(dataSourceKey.getKey());
+        Connection connection = connectionHolder.getConnection(dataSourceKey.getKey());
         //当前未绑定链接或已经绑定但不是事务
         try {
             if (connection == null || connection.getAutoCommit()) {
@@ -170,7 +173,7 @@ public class JDBCTemplate implements JDBCSupport {
                 connection = dataSource.getConnection();
                 //不管是否为事务都需要绑定到线程上，以便执行完后关闭proxyConnection
                 //(ProxyConnection)connection会报错，故getConnection之后无法放回池中
-                this.connectionHolder
+                connectionHolder
                         .bindConnection(connection);
             }
         } catch (SQLException e) {
@@ -188,6 +191,7 @@ public class JDBCTemplate implements JDBCSupport {
     private PreparedStatement getPreparedStatement(JDBCParameter jdbcParameter) {
         PreparedStatement preparedStatement = null;
         Connection connection = null;
+        ConnectionContextHolder connectionContextHolder=this.getConnectionHolder();
         try {
             connection = this.getConnection();
             connection.setReadOnly(jdbcParameter.isReadOnly());
@@ -221,14 +225,14 @@ public class JDBCTemplate implements JDBCSupport {
         } catch (Exception e) {
             if (connection != null) {
                 //自动提交，非事务
-                Boolean autoCommit = false;
+                boolean autoCommit = false;
                 try {
                     autoCommit = connection.getAutoCommit();
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
                 if (!autoCommit) {
-                    this.connectionHolder.unbindConnection(connection);
+                    connectionContextHolder.unbindConnection(connection);
                 } else {
                     //如果是事务则抛出异常 rollback
                     throw new RuntimeException(e);
@@ -441,7 +445,7 @@ public class JDBCTemplate implements JDBCSupport {
             if (!statement.getConnection().getAutoCommit()) {
                 return;
             }
-            this.connectionHolder
+            this.getConnectionHolder()
                     .unbindConnection(statement.getConnection());
             statement.close();
         } catch (SQLException e) {

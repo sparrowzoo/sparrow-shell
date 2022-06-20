@@ -35,7 +35,6 @@
         <sparrow_mvc_version>1.0.0</sparrow_mvc_version>
         <sparrow_data_source_version>1.0.0</sparrow_data_source_version>
         <sparrow_container_version>1.0.0</sparrow_container_version>
-        <sparrow_log>1.0.0</sparrow_log>
         <sparrow_sharded_jedis_version>1.0.0</sparrow_sharded_jedis_version>
         <sparrow_log_version>1.0.0</sparrow_log_version>
         <sparrow_rocketmq_client_version>1.0.0</sparrow_rocketmq_client_version>

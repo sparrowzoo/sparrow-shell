@@ -19,7 +19,7 @@ package com.sparrow.datasource;
 
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.Container;
-import com.sparrow.container.ContainerAware;
+import com.sparrow.core.spi.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ import java.util.concurrent.Executor;
 /**
  * @author harry
  */
-public class ProxyConnection implements Connection, ContainerAware {
+public class ProxyConnection implements Connection {
     private static Logger logger = LoggerFactory.getLogger(ProxyConnection.class);
     private Connection conn = null;
     private ConnectionPool connectionPool;
@@ -45,6 +45,9 @@ public class ProxyConnection implements Connection, ContainerAware {
             Class.forName(datasourceConfig.getDriverClassName());
             this.conn = DriverManager.getConnection(datasourceConfig.getUrl(), datasourceConfig.getUsername(), datasourceConfig.getPassword());
             this.connectionPool = connectionPool;
+            Container container = ApplicationContext.getContainer();
+            ConnectionContextHolder connectionContextHolder = container.getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
+            connectionContextHolder.addOriginProxy(this);
         } catch (Exception e) {
             logger.error("for driver class name error", e);
         }
@@ -386,11 +389,5 @@ public class ProxyConnection implements Connection, ContainerAware {
      * @throws SQLException
      */
     public void setSchema(String arg0) throws SQLException {
-    }
-
-    @Override
-    public void aware(Container container, String beanName) {
-        ConnectionContextHolder connectionContextHolder = container.getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
-        connectionContextHolder.addOriginProxy(container.getBean(beanName));
     }
 }
