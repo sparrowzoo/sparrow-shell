@@ -61,6 +61,7 @@ public class DefaultIdempotent implements MQIdempotent {
                 return false;
             } catch (CacheConnectionException e) {
                 logger.error("consumable connection break ", e);
+                return false;
             }
         }
     }
