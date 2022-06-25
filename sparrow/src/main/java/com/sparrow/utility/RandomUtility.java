@@ -24,13 +24,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
-/**
- * @author harry
- */
 public class RandomUtility {
     /**
-     * @param rules 规则为treeMap 概率小的在前边
-     * @param poolSize 奖池大小
+     * @param rules        规则为treeMap 概率小的在前边
+     * @param poolSize     奖池大小
      * @param defaultValue 未中默认奖
      * @return
      */

@@ -21,7 +21,7 @@ import com.sparrow.cg.Generator4MethodAccessor;
 import com.sparrow.cg.MethodAccessor;
 import com.sparrow.cg.PropertyNamer;
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
@@ -30,9 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
-/**
- * @author harry
- */
 public class Generator4MethodAccessorImpl implements Generator4MethodAccessor {
     private static Logger logger = LoggerFactory.getLogger(Generator4MethodAccessor.class);
 
@@ -45,18 +42,18 @@ public class Generator4MethodAccessorImpl implements Generator4MethodAccessor {
 
         String operatorClassName = clazz.getName();
         String operatorObjectName = StringUtility.setFirstByteLowerCase(clazz
-                .getSimpleName());
+            .getSimpleName());
 
         String methodAccessorClassName = clazz.getSimpleName() + "MethodAccess";
         getJavaSource.append("public Object get(Object o, String methodName){");
-        getJavaSource.append(CONSTANT.ENTER_TEXT);
+        getJavaSource.append(Constant.ENTER_TEXT);
         getJavaSource.append(String.format("%1$s %2$s=(%1$s)o;",
-                operatorClassName, operatorObjectName));
+            operatorClassName, operatorObjectName));
         setJavaSource
-                .append("public void set(Object o, String methodName,Object arg){");
-        setJavaSource.append(CONSTANT.ENTER_TEXT);
+            .append("public void set(Object o, String methodName,Object arg){");
+        setJavaSource.append(Constant.ENTER_TEXT);
         setJavaSource.append(String.format("%1$s %2$s=(%1$s)o;",
-                operatorClassName, operatorObjectName));
+            operatorClassName, operatorObjectName));
 
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
@@ -65,47 +62,47 @@ public class Generator4MethodAccessorImpl implements Generator4MethodAccessor {
             }
             Class<?>[] parameterType = method.getParameterTypes();
             if (PropertyNamer.isSetter(method.getName()) && parameterType.length == 1) {
-                setJavaSource.append(CONSTANT.ENTER_TEXT);
+                setJavaSource.append(Constant.ENTER_TEXT);
                 setJavaSource.append(String.format(
-                        "if(methodName.equalsIgnoreCase(\"%1$s\")||methodName.equalsIgnoreCase(\"%2$s\")){",
-                        method.getName(),
-                        PropertyNamer.methodToProperty(method.getName())));
+                    "if(methodName.equalsIgnoreCase(\"%1$s\")||methodName.equalsIgnoreCase(\"%2$s\")){",
+                    method.getName(),
+                    PropertyNamer.methodToProperty(method.getName())));
 
                 setJavaSource.append(String.format("%1$s.%2$s((%3$s)arg);}",
-                        operatorObjectName, method.getName(),
-                        ClassUtility.getWrapClass(parameterType[0])));
-                setJavaSource.append(CONSTANT.ENTER_TEXT);
+                    operatorObjectName, method.getName(),
+                    ClassUtility.getWrapClass(parameterType[0])));
+                setJavaSource.append(Constant.ENTER_TEXT);
 
             } else if (PropertyNamer.isGetter(method.getName())
-                    && parameterType.length == 0
-                    && !method.getReturnType().equals(void.class)) {
-                getJavaSource.append(CONSTANT.ENTER_TEXT);
+                && parameterType.length == 0
+                && !method.getReturnType().equals(void.class)) {
+                getJavaSource.append(Constant.ENTER_TEXT);
                 getJavaSource.append(String.format(
-                        "if(methodName.equalsIgnoreCase(\"%1$s\")||methodName.equalsIgnoreCase(\"%2$s\")){", method.getName().toLowerCase(), PropertyNamer.methodToProperty(method.getName()).toLowerCase()));
+                    "if(methodName.equalsIgnoreCase(\"%1$s\")||methodName.equalsIgnoreCase(\"%2$s\")){", method.getName().toLowerCase(), PropertyNamer.methodToProperty(method.getName()).toLowerCase()));
                 getJavaSource.append(String.format("return %1$s.%2$s();}",
-                        operatorObjectName, method.getName()));
-                getJavaSource.append(CONSTANT.ENTER_TEXT);
+                    operatorObjectName, method.getName()));
+                getJavaSource.append(Constant.ENTER_TEXT);
             }
         }
         setJavaSource.append("}");
-        setJavaSource.append(CONSTANT.ENTER_TEXT);
+        setJavaSource.append(Constant.ENTER_TEXT);
         getJavaSource.append("return null;");
         getJavaSource.append("}");
-        getJavaSource.append(CONSTANT.ENTER_TEXT);
-        String sourceCode = "package " + PACKAGE_NAME + ";" + CONSTANT.ENTER_TEXT
-                + "import com.sparrow.cg.MethodAccessor;"
-                + CONSTANT.ENTER_TEXT + " public class "
-                + methodAccessorClassName + "  implements MethodAccessor{"
-                + CONSTANT.ENTER_TEXT + getJavaSource.toString()
-                + setJavaSource.toString() + "}";
+        getJavaSource.append(Constant.ENTER_TEXT);
+        String sourceCode = "package " + PACKAGE_NAME + ";" + Constant.ENTER_TEXT
+            + "import com.sparrow.cg.MethodAccessor;"
+            + Constant.ENTER_TEXT + " public class "
+            + methodAccessorClassName + "  implements MethodAccessor{"
+            + Constant.ENTER_TEXT + getJavaSource.toString()
+            + setJavaSource.toString() + "}";
         if (ConfigUtility.getBooleanValue(Config.DEBUG_METHOD_ACCESS, false)) {
             logger.debug(sourceCode);
         }
         try {
             return (MethodAccessor) DynamicCompiler
-                    .getInstance().sourceToObject(
-                            PACKAGE_NAME + "." + methodAccessorClassName,
-                            sourceCode);
+                .getInstance().sourceToObject(
+                    PACKAGE_NAME + "." + methodAccessorClassName,
+                    sourceCode);
         } catch (Exception e) {
             logger.error("DynamicCompiler get sourceToObject error", e);
         }

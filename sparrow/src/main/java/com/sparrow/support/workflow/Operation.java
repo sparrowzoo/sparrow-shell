@@ -22,9 +22,6 @@ import com.sparrow.exception.Asserts;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 public class Operation {
     private String[] allowStatus;
     private String[] allowRole;
@@ -41,8 +38,8 @@ public class Operation {
     }
 
     public Operation(String allowStatus, String allowRole, String name, String description, Integer resultStatus) {
-        this.allowStatus = new String[]{allowStatus};
-        this.allowRole = new String[]{allowRole};
+        this.allowStatus = new String[] {allowStatus};
+        this.allowRole = new String[] {allowRole};
         this.name = name;
         this.description = description;
         this.resultStatus = resultStatus;

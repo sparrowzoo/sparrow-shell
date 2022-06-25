@@ -20,15 +20,9 @@ package com.sparrow.utility;
 import com.sparrow.constant.CacheKey;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.core.cache.StrongDurationCache;
-import com.sparrow.exception.CacheConnectionException;
-import com.sparrow.exception.CacheNotFoundException;
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,10 +30,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class ConfigUtility {
     private static Logger logger = LoggerFactory.getLogger(ConfigUtility.class);
     private static Cache<String, String> configCache;
@@ -55,7 +48,7 @@ public class ConfigUtility {
         return getLanguageValue(propertiesKey, language);
     }
 
-    public static String getLanguageValue(String key, String language)  {
+    public static String getLanguageValue(String key, String language) {
         if (StringUtility.isNullOrEmpty(language)) {
             language = "zh_cn";
         }
@@ -74,7 +67,7 @@ public class ConfigUtility {
         }
 
         Map<String, String> internationalizationMap = internationalization
-                .get(language);
+            .get(language);
         if (internationalizationMap == null) {
             return defaultValue;
         }
@@ -83,8 +76,8 @@ public class ConfigUtility {
             return defaultValue;
         }
         String rootPath = ConfigUtility.getValue(com.sparrow.constant.Config.ROOT_PATH);
-        if (!StringUtility.isNullOrEmpty(rootPath) && value.contains(SYMBOL.DOLLAR + com.sparrow.constant.Config.ROOT_PATH)) {
-            value = value.replace(SYMBOL.DOLLAR + com.sparrow.constant.Config.ROOT_PATH, rootPath);
+        if (!StringUtility.isNullOrEmpty(rootPath) && value.contains(Symbol.DOLLAR + com.sparrow.constant.Config.ROOT_PATH)) {
+            value = value.replace(Symbol.DOLLAR + com.sparrow.constant.Config.ROOT_PATH, rootPath);
         }
         return value;
     }
@@ -107,10 +100,10 @@ public class ConfigUtility {
             String strKey = key.toString();
             String value = props.getProperty(strKey);
             if (StringUtility.isNullOrEmpty(charset)) {
-                charset = CONSTANT.CHARSET_UTF_8;
+                charset = Constant.CHARSET_UTF_8;
             }
             try {
-                value = new String(value.getBytes(CONSTANT.CHARSET_ISO_8859_1), charset);
+                value = new String(value.getBytes(Constant.CHARSET_ISO_8859_1), charset);
             } catch (UnsupportedEncodingException ignore) {
             }
             if (value.startsWith("${") && value.endsWith("}")) {
@@ -163,13 +156,13 @@ public class ConfigUtility {
         }
         configCache.putAll(systemMessage);
         if (systemMessage.get(com.sparrow.constant.Config.RESOURCE_PHYSICAL_PATH) != null) {
-            CONSTANT.REPLACE_MAP.put("$physical_resource", systemMessage.get(com.sparrow.constant.Config.RESOURCE_PHYSICAL_PATH));
+            Constant.REPLACE_MAP.put("$physical_resource", systemMessage.get(com.sparrow.constant.Config.RESOURCE_PHYSICAL_PATH));
         }
         if (systemMessage.get(com.sparrow.constant.Config.RESOURCE) != null) {
-            CONSTANT.REPLACE_MAP.put("$resource", systemMessage.get(com.sparrow.constant.Config.RESOURCE));
+            Constant.REPLACE_MAP.put("$resource", systemMessage.get(com.sparrow.constant.Config.RESOURCE));
         }
         if (systemMessage.get(com.sparrow.constant.Config.IMAGE_WEBSITE) != null) {
-            CONSTANT.REPLACE_MAP.put("$image_website", systemMessage.get(com.sparrow.constant.Config.IMAGE_WEBSITE));
+            Constant.REPLACE_MAP.put("$image_website", systemMessage.get(com.sparrow.constant.Config.IMAGE_WEBSITE));
         }
         logger.info("==========system config init============");
     }
@@ -179,8 +172,8 @@ public class ConfigUtility {
             language = getValue(com.sparrow.constant.Config.LANGUAGE);
         }
         Map<String, String> properties = loadFromClassesPath("/messages_"
-                + language
-                + ".properties", CONSTANT.CHARSET_UTF_8);
+            + language
+            + ".properties", Constant.CHARSET_UTF_8);
         if (properties != null) {
             internationalization.put(language, properties);
         }
@@ -190,17 +183,17 @@ public class ConfigUtility {
         return getValue(key, null);
     }
 
-    public static String getValue(String key, String defaultValue){
+    public static String getValue(String key, String defaultValue) {
         Object value = configCache.get(key);
         if (value == null) {
             return defaultValue;
         }
         String v = value.toString();
-        v = StringUtility.replace(v, CONSTANT.REPLACE_MAP);
+        v = StringUtility.replace(v, Constant.REPLACE_MAP);
         return v;
     }
 
-    public static boolean getBooleanValue(String config){
+    public static boolean getBooleanValue(String config) {
         String value = getValue(config);
         return !StringUtility.isNullOrEmpty(value) && Boolean.TRUE.toString().equalsIgnoreCase(value);
     }

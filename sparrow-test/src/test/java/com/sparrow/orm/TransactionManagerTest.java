@@ -6,7 +6,7 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.Gender;
 import com.sparrow.orm.dao.UserDAO;
 import com.sparrow.orm.po.User;
-import com.sparrow.protocol.enums.STATUS_RECORD;
+import com.sparrow.protocol.enums.StatusRecord;
 import com.sparrow.transaction.Transaction;
 import com.sparrow.transaction.TransactionManager;
 import com.sparrow.utility.DateTimeUtility;
@@ -33,7 +33,7 @@ public class TransactionManagerTest {
                 user.setUpdateTime(System.currentTimeMillis());
                 user.setCreateTime(System.currentTimeMillis());
                 user.setSex((byte) Gender.FEMALE.ordinal());
-                user.setStatus((byte) STATUS_RECORD.ENABLE.ordinal());
+                user.setStatus((byte) StatusRecord.ENABLE.ordinal());
                 Long id = userDAO.insert(user);
                 User user1 = userDAO.getEntity(id);
                 userDAO.delete(id);

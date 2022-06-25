@@ -19,11 +19,8 @@ package com.sparrow.markdown.mark;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author by harry
- */
 public class TagListEntity {
-    private List<TagListEntity> children=new ArrayList<TagListEntity>(16);
+    private List<TagListEntity> children = new ArrayList<TagListEntity>(16);
     private int indent;
     private TagListEntity parent;
     private String title;
@@ -69,7 +66,7 @@ public class TagListEntity {
         this.content = content;
     }
 
-    public void  addChild(TagListEntity tagListEntity){
+    public void addChild(TagListEntity tagListEntity) {
         this.children.add(tagListEntity);
     }
 }

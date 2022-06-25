@@ -1,3 +1,19 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.container;
 
 import com.sparrow.cg.Generator4MethodAccessor;
@@ -9,7 +25,6 @@ import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.DuplicateActionMethodException;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -19,20 +34,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author by harry
- */
 public abstract class AbstractContainer implements Container {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected String contextConfigLocation = "/beans.xml";
     protected String configLocation = "/system_config.properties";
-
 
     protected SimpleSingletonRegistry singletonRegistry = new SimpleSingletonRegistry();
 
@@ -46,7 +56,6 @@ public abstract class AbstractContainer implements Container {
 
     private Generator4MethodAccessor generator4MethodAccessor = null;
 
-
     /**
      * controller class-name-->method-name-->method
      */
@@ -57,7 +66,6 @@ public abstract class AbstractContainer implements Container {
      */
     final Map<String, List<TypeConverter>> fieldCache = new ConcurrentHashMap<String, List<TypeConverter>>();
 
-
     /**
      * class-name -->set method list
      */
@@ -67,7 +75,6 @@ public abstract class AbstractContainer implements Container {
      * class-name -->get method list
      */
     final Map<String, List<Method>> getMethods = new ConcurrentHashMap<String, List<Method>>();
-
 
     @Override
     public FactoryBean getSingletonRegister() {
@@ -171,7 +178,6 @@ public abstract class AbstractContainer implements Container {
         return Pair.create(types, args);
     }
 
-
     private <T> void set(T currentObject, String beanName, Object val) {
         Class<?> currentClass = currentObject.getClass();
         List<Method> methods = this.setMethods.get(currentClass.getSimpleName());
@@ -246,7 +252,6 @@ public abstract class AbstractContainer implements Container {
         }
         return instance;
     }
-
 
     @Override
     public <T> T getBean(SysObjectName objectName) {

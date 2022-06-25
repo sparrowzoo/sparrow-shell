@@ -24,9 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class WhereCriteria extends PagerQuery {
     public WhereCriteria() {
         super(0, 0);
@@ -94,6 +91,7 @@ public class WhereCriteria extends PagerQuery {
 
     /**
      * 自定义条件，需要手动设置表后缀f
+     *
      * @param tableSuffix
      */
     public void setTableSuffix(Object... tableSuffix) {

@@ -25,11 +25,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * @author harry
- */
 public class Field extends TypeConverter {
-
     private TableSplitStrategy hashStrategy;
     private GenerationType generationType;
     private String columnName;
@@ -43,7 +39,8 @@ public class Field extends TypeConverter {
     private boolean persistence = true;
     private String columnDefinition;
 
-    public Field(String property, Class type, Column column, SplitTable splitTable, GeneratedValue generatedValue, Id id) {
+    public Field(String property, Class type, Column column, SplitTable splitTable, GeneratedValue generatedValue,
+        Id id) {
         this.name = property;
         this.type = type;
         if (column != null) {

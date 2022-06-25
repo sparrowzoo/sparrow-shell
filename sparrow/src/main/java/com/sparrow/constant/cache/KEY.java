@@ -17,11 +17,9 @@
 
 package com.sparrow.constant.cache;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
-import com.sparrow.core.Pair;
 import com.sparrow.protocol.ModuleSupport;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.StringUtility;
-
 import java.util.Arrays;
 
 /**
@@ -39,13 +37,12 @@ public class KEY {
         this.business = builder.business.getKey();
         this.module = builder.business.getModule();
         if (builder.businessId != null) {
-            this.businessId = StringUtility.join(Arrays.asList(builder.businessId), SYMBOL.COLON);
+            this.businessId = StringUtility.join(Arrays.asList(builder.businessId), Symbol.COLON);
         }
     }
 
     /**
-     * module:business.b2:businessId.id2.id3
-     * user:register.times.validate:{userId}:{k2}
+     * module:business.b2:businessId.id2.id3 user:register.times.validate:{userId}:{k2}
      *
      * @param key
      * @return
@@ -55,10 +52,10 @@ public class KEY {
             return null;
         }
         KEY k = new KEY();
-        String[] keyArray = key.split(SYMBOL.COLON);
+        String[] keyArray = key.split(Symbol.COLON);
         k.module = keyArray[0];
         k.business = keyArray[1];
-        if(keyArray.length>2) {
+        if (keyArray.length > 2) {
             k.businessId = keyArray[2];
         }
         return k;
@@ -66,9 +63,9 @@ public class KEY {
 
     public String key() {
         if (StringUtility.isNullOrEmpty(this.businessId)) {
-            return (this.module+SYMBOL.COLON+this.business).toLowerCase();
+            return (this.module + Symbol.COLON + this.business).toLowerCase();
         }
-        return (this.module+SYMBOL.COLON+this.business + SYMBOL.COLON + this.businessId).toLowerCase();
+        return (this.module + Symbol.COLON + this.business + Symbol.COLON + this.businessId).toLowerCase();
     }
 
     public String getBusiness() {
@@ -86,10 +83,10 @@ public class KEY {
         public Business(ModuleSupport module, String... business) {
             this.module = module.name();
             if (business != null && business.length > 0) {
-                if(this.key.length()>0) {
-                    this.key.append(SYMBOL.COLON);
+                if (this.key.length() > 0) {
+                    this.key.append(Symbol.COLON);
                 }
-                this.key.append(StringUtility.join(Arrays.asList(business), SYMBOL.DOT));
+                this.key.append(StringUtility.join(Arrays.asList(business), Symbol.DOT));
             }
         }
 
@@ -97,8 +94,8 @@ public class KEY {
             if (business == null || business.length == 0) {
                 return this;
             }
-            this.key.append(SYMBOL.DOT);
-            this.key.append(StringUtility.join(Arrays.asList(business), SYMBOL.DOT));
+            this.key.append(Symbol.DOT);
+            this.key.append(StringUtility.join(Arrays.asList(business), Symbol.DOT));
             return this;
         }
 

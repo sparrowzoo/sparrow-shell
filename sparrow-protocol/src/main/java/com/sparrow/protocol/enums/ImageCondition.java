@@ -15,13 +15,23 @@
  * limitations under the License.
  */
 
-package com.sparrow.mq;
+package com.sparrow.protocol.enums;
 
-/**
- * Created by harry on 2018/1/19.
- */
-public class MQ_CLIENT {
-    public static final String CLASS_NAME="CLASS_NAME";
-    public static final String INSTANCE_NAME="SPARROW_MQ_INSTANCE";
-    public static final String CONSUMER_KEY="CONSUMER_KEY";
+public enum ImageCondition {
+    /**
+     * 所有帖，包括图文
+     */
+    ALL,
+    /**
+     * 显示封面图
+     */
+    COVER,
+    /**
+     * 显示图片
+     */
+    IMAGE,
+    /**
+     * 不显示图片
+     */
+    NONE
 }

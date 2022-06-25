@@ -17,7 +17,7 @@
 
 package com.sparrow.cryptogram;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.StringUtility;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -32,12 +32,9 @@ import javax.crypto.spec.IvParameterSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class ThreeDES {
 
-    private Logger logger = LoggerFactory.getLogger(ThreeDES.class);
+    private static Logger logger = LoggerFactory.getLogger(ThreeDES.class);
 
     private static ThreeDES threeDES = new ThreeDES();
 
@@ -108,7 +105,7 @@ public class ThreeDES {
         byte[] encrypted = null;
         try {
             Cipher encrypter = createCipher(key, Cipher.ENCRYPT_MODE, cipherAlgorithm);
-            encrypted = encrypter.doFinal(text.getBytes(CONSTANT.CHARSET_UTF_8));
+            encrypted = encrypter.doFinal(text.getBytes(Constant.CHARSET_UTF_8));
         } catch (Exception e) {
             logger.error("encrypt error", e);
         }
@@ -123,7 +120,7 @@ public class ThreeDES {
         try {
             Cipher encrypter = createCipher(key, Cipher.DECRYPT_MODE, cipherAlgorithm);
             decrypted = new String(encrypter.doFinal(encrypted),
-                CONSTANT.CHARSET_UTF_8);
+                Constant.CHARSET_UTF_8);
         } catch (Exception e) {
             logger.error("encrypt error", e);
         }

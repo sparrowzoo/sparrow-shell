@@ -20,26 +20,9 @@ package com.sparrow.cache;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
 
-/**
- * @author harry
- * @date 2018/1/26
- */
 public interface CacheDataNotFound<T> {
-
-    /**
-     * 未发现则读源
-     *
-     * @param key
-     * @return
-     */
     T read(KEY key);
 
-    /**
-     * 将结果写回cache
-     *
-     * @param data
-     * @return 是否执行默认回写
-     */
     default boolean backWrite(T data) throws CacheConnectionException {
         return true;
     }

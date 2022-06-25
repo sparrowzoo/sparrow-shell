@@ -18,23 +18,20 @@
 package com.sparrow.mvc.ui.grid.impl;
 
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.mvc.ui.grid.FieldParser;
 import com.sparrow.mvc.ui.grid.attribute.ImageAttribute;
 import com.sparrow.utility.ConfigUtility;
 
 import java.util.List;
 
-/**
- * @author harry
- */
 public class ImageFieldParserImpl implements FieldParser {
     @Override
     public String parse(String[] config, List<String> valueList) {
         ImageAttribute imageAttribute = new ImageAttribute(config);
         String title = imageAttribute.getTitle(valueList);
         String url = valueList.get(0);
-        if (!url.startsWith(CONSTANT.HTTP_PROTOCOL)) {
+        if (!url.startsWith(Constant.HTTP_PROTOCOL)) {
             url = ConfigUtility.getValue(Config.RESOURCE) + url;
         }
         if (title.equals(imageAttribute.getDefaultValue())) {

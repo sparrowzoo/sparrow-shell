@@ -17,9 +17,6 @@
 
 package com.sparrow.support;
 
-/**
- * @author harry
- */
 public class LinkedNode {
     private String id;
     private String nodeType;

@@ -20,7 +20,7 @@ package com.sparrow.protocol.constant.magic;
 /**
  * Created by harry on 2018/1/11.
  */
-public class CAPITAL_RMB {
+public class CapitalRmb {
     public static final String ZERO = "零";
     public static final String ONE = "壹";
     public static final String TOW = "贰";

@@ -21,21 +21,15 @@ import com.sparrow.cache.CacheClient;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.constant.cache.key.KeyUser;
-import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.JSUtility;
 import com.sparrow.utility.StringUtility;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class CookieUtility {
     private static Logger logger = LoggerFactory.getLogger(CookieUtility.class);
 
@@ -61,18 +55,18 @@ public class CookieUtility {
     }
 
     public void set(HttpServletResponse response, String key,
-                    String value, int days) {
+        String value, int days) {
         set(response, key, value, days, null);
     }
 
     public void setRoot(HttpServletResponse response, String key,
-                        String value, int days) {
+        String value, int days) {
         String domain = ConfigUtility.getValue(Config.ROOT_DOMAIN);
         set(response, key, value, days, domain);
     }
 
     public void set(HttpServletResponse response, String key,
-                    String value, int days, String domain) {
+        String value, int days, String domain) {
         if (StringUtility.isNullOrEmpty(domain)) {
             domain = ConfigUtility.getValue(Config.DOMAIN);
         }
@@ -102,7 +96,7 @@ public class CookieUtility {
         return null;
     }
 
-    public String getPermission(HttpServletRequest request){
-       return this.get(request.getCookies(),permissionBusiness.getKey());
+    public String getPermission(HttpServletRequest request) {
+        return this.get(request.getCookies(), permissionBusiness.getKey());
     }
 }

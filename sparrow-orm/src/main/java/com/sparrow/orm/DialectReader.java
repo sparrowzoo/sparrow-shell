@@ -28,24 +28,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * @author harry
- */
 public class DialectReader {
     private Dialect dialect;
     private static Map<String, DialectReader> dialectMap = new HashMap<String, DialectReader>();
 
     /**
-     * 从配置文件poolName_default.properties 中获取dialect <p>
-     * driverClassName=org.gjt.mm.mysql.Driver
+     * 从配置文件poolName_default.properties 中获取dialect <p> driverClassName=org.gjt.mm.mysql.Driver
      * <p>
      * username=root
      * <p>
      * password=123456
      * <p>
      * url=jdbc\:mysql\://127.0.0.1/db_name?autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
-     * poolSize=1
-     * dialect=mysql
+     * poolSize=1 dialect=mysql
      *
      * @param schema
      * @return
@@ -66,7 +61,7 @@ public class DialectReader {
             }
             Properties props = new Properties();
             String filePath = "/" + schema + "_default"
-                    + ".properties";
+                + ".properties";
             try {
                 props.load(EnvironmentSupport.getInstance().getFileInputStream(filePath));
             } catch (IOException e) {

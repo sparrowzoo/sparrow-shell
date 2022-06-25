@@ -23,9 +23,7 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import java.io.IOException;
 
-/**
- * @author harry
- */
+@SuppressWarnings("unchecked")
 public class ClassFileManager extends ForwardingJavaFileManager {
     JavaClassFileObject getJavaClassObject() {
         return javaClassFileObject;

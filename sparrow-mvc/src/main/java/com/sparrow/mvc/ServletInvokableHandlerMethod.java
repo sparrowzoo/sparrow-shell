@@ -18,30 +18,19 @@
 package com.sparrow.mvc;
 
 import com.sparrow.enums.LoginType;
-import com.sparrow.protocol.constant.magic.DIGIT;
 import com.sparrow.mvc.resolver.impl.HandlerMethodArgumentResolverComposite;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.web.support.MethodParameter;
-
+import java.lang.reflect.Method;
+import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Method;
-import java.util.List;
 
-/**
- * @author harry
- */
 public class ServletInvokableHandlerMethod {
     /**
-     * 登录类型
-     * 0:不需要认证
-     * 1:正常登录
-     * 2:框架内登录 default.jsp内登录
-     * 3:管理员登录
-     * 4:对话框登录
-     * 5:json 提示
+     * 登录类型 0:不需要认证 1:正常登录 2:框架内登录 default.jsp内登录 3:管理员登录 4:对话框登录 5:json 提示
      */
     private LoginType loginType = LoginType.NO_AUTHENTICATE;
     /**
@@ -192,7 +181,7 @@ public class ServletInvokableHandlerMethod {
 
     private MethodParameter[] initMethodParameters() {
         Class<?>[] parameterClass = this.method
-                .getParameterTypes();
+            .getParameterTypes();
         if (parameterClass == null || parameterClass.length == 0) {
             return null;
         }
@@ -209,14 +198,15 @@ public class ServletInvokableHandlerMethod {
     }
 
     public Object invokeAndHandle(FilterChain chain, HttpServletRequest request,
-                                  HttpServletResponse response) throws Exception {
+        HttpServletResponse response) throws Exception {
         Object[] args = getMethodArgumentValues(request, response);
         Object returnValue = this.method.invoke(this.controller, args);
         methodReturnValueResolverHandler.resolve(this, returnValue, chain, request, response);
         return returnValue;
     }
 
-    private Object[] getMethodArgumentValues(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    private Object[] getMethodArgumentValues(HttpServletRequest request,
+        HttpServletResponse response) throws Exception {
         MethodParameter[] parameters = this.methodParameters;
         if (this.methodParameters == null || this.methodParameters.length == 0) {
             return null;
@@ -234,7 +224,7 @@ public class ServletInvokableHandlerMethod {
             }
             if (this.handlerMethodArgumentResolverComposite.supportsParameter(parameter)) {
                 args[i] = this.handlerMethodArgumentResolverComposite.resolveArgument(
-                        parameter, this, request);
+                    parameter, this, request);
             }
         }
         return args;
@@ -266,7 +256,7 @@ public class ServletInvokableHandlerMethod {
     }
 
     public void setHandlerMethodArgumentResolverComposite(
-            HandlerMethodArgumentResolverComposite handlerMethodArgumentResolverComposite) {
+        HandlerMethodArgumentResolverComposite handlerMethodArgumentResolverComposite) {
         this.handlerMethodArgumentResolverComposite = handlerMethodArgumentResolverComposite;
     }
 

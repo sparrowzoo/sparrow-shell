@@ -23,15 +23,12 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.web.support.MethodParameter;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author harry
- */
 public class JsonBodyArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
 
     private Container container = ApplicationContext.getContainer();
@@ -43,10 +40,10 @@ public class JsonBodyArgumentResolver implements HandlerMethodArgumentResolver, 
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ServletInvokableHandlerMethod executionChain,
-                                  HttpServletRequest request) throws Exception {
-        if (request.getInputStream() != null&&
-                CONSTANT.CONTENT_TYPE_JSON.equalsIgnoreCase(request.getHeader("Content-Type"))) {
-            String body = FileUtility.getInstance().readFileContent(request.getInputStream(), CONSTANT.CHARSET_UTF_8);
+        HttpServletRequest request) throws Exception {
+        if (request.getInputStream() != null &&
+            Constant.CONTENT_TYPE_JSON.equalsIgnoreCase(request.getHeader("Content-Type"))) {
+            String body = FileUtility.getInstance().readFileContent(request.getInputStream(), Constant.CHARSET_UTF_8);
             return JsonFactory.getProvider().parse(body, methodParameter.getParameterType());
         }
         return null;

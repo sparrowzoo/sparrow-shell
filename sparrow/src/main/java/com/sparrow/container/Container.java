@@ -25,11 +25,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public interface Container {
-
 
     FactoryBean getSingletonRegister();
 
@@ -38,6 +34,7 @@ public interface Container {
     FactoryBean getProxyBeanRegister();
 
     FactoryBean getInterceptorRegister();
+
     /**
      * 获取类的代理对象
      */

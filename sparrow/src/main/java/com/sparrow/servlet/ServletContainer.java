@@ -25,9 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public interface ServletContainer {
 
     HttpServletRequest getRequest();

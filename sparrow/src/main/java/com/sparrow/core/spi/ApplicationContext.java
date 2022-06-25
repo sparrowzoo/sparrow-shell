@@ -22,9 +22,6 @@ import com.sparrow.container.Container;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-/**
- * @author harry
- */
 public class ApplicationContext {
     private static volatile Container container = null;
 
@@ -32,8 +29,6 @@ public class ApplicationContext {
      * 第三方类解耦
      * <p/>
      * Law of Demeter Principle
-     *
-     * @return
      */
     public static Container getContainer() {
         if (container != null) {

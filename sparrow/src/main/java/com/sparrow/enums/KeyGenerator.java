@@ -17,31 +17,10 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
-
 public enum KeyGenerator {
-    /**
-     * 全局唯一id
-     */
     uuid,
-    /**
-     * 自增长
-     */
     increment,
-    /**
-     * 非key
-     */
     not_key,
-    /**
-     * 预先生成的key
-     */
     prepare_id,
-    /**
-     * 表要加别名否则会报错
-     * <p/>
-     * You cant't specify target table 'TABLE_NAME' for update in FROM clause
-     */
     sql
 }

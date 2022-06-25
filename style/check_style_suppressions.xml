@@ -26,5 +26,5 @@
 <suppressions>
     <suppress checks="RegexpSingleline"
               files="SparrowLoggerImpl.java"
-              lines="400-410"/>
+              lines="400-420"/>
 </suppressions>

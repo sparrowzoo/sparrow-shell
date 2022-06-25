@@ -19,10 +19,6 @@ package com.sparrow.core.algorithm.gouping;
 
 import java.util.*;
 
-/**
- * E 为段类型 D为点类型
- * @author harry
- */
 public class Coordinate<E extends Segment<D>, D extends Comparable> {
     public Coordinate(List<E> dataList) {
         this.dataList = dataList;

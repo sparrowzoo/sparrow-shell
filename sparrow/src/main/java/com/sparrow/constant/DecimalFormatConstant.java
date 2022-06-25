@@ -17,9 +17,6 @@
 
 package com.sparrow.constant;
 
-/**
- * @author harry
- */
 public class DecimalFormatConstant {
 
     /**

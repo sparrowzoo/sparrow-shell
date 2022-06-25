@@ -19,8 +19,6 @@ package com.sparrow.protocol.dao.enums;
 
 /**
  * 分表hash 类型
- *
- * @author harry
  */
 public enum TableSplitStrategy {
     /**

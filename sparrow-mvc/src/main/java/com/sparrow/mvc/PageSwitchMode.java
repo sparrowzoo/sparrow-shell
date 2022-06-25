@@ -17,9 +17,6 @@
 
 package com.sparrow.mvc;
 
-/**
- * @author harry
- */
 public enum PageSwitchMode {
     /**
      * 转发

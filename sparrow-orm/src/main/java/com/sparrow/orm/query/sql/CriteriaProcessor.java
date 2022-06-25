@@ -20,13 +20,10 @@ package com.sparrow.orm.query.sql;
 import com.sparrow.orm.query.BooleanCriteria;
 import com.sparrow.orm.query.OrderCriteria;
 import com.sparrow.orm.query.UpdateSetClausePair;
-import com.sparrow.protocol.enums.AGGREGATE;
+import com.sparrow.protocol.enums.Aggregate;
 
 import java.util.List;
 
-/**
- * @author harry
- */
 public interface CriteriaProcessor {
     String fields(String fields);
 
@@ -36,5 +33,5 @@ public interface CriteriaProcessor {
 
     OperationEntity setClause(List<UpdateSetClausePair> setClausePairs);
 
-    String aggregate(AGGREGATE aggregate, String field);
+    String aggregate(Aggregate aggregate, String field);
 }

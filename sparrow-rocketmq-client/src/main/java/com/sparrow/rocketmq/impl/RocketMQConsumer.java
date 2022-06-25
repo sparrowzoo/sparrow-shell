@@ -17,11 +17,11 @@
 
 package com.sparrow.rocketmq.impl;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.mq.MQClient;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
-import com.sparrow.mq.MQ_CLIENT;
 import com.sparrow.utility.StringUtility;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by harry on 2017/6/14.
  */
-public class RocketMQConsumer implements ContainerAware{
+public class RocketMQConsumer implements ContainerAware {
     private static Logger log = LoggerFactory.getLogger(RocketMQConsumer.class);
 
     private String instanceName;
@@ -61,13 +61,10 @@ public class RocketMQConsumer implements ContainerAware{
 
     private Integer threadCount;
 
-    private int batchSize=1;
+    private int batchSize = 1;
     private int pullSize;
 
-    private long pullInterval=0;
-
-
-
+    private long pullInterval = 0;
 
     /**
      * 消费线程的数量
@@ -103,9 +100,8 @@ public class RocketMQConsumer implements ContainerAware{
      * @param topicConfig
      */
     public void setTopicConfig(String topicConfig) {
-       this.topicConfig=topicConfig;
+        this.topicConfig = topicConfig;
     }
-
 
     public void setMessageModel(String messageModel) {
         this.messageModel = messageModel;
@@ -124,17 +120,17 @@ public class RocketMQConsumer implements ContainerAware{
     }
 
     public List<TopicTagPair> getTopicConfigList() {
-        if(this.topicConfigList!=null){
-          return   this.topicConfigList;
+        if (this.topicConfigList != null) {
+            return this.topicConfigList;
         }
         this.topicConfigList = new ArrayList<TopicTagPair>();
-        if (!topicConfig.contains(SYMBOL.COLON)) {
+        if (!topicConfig.contains(Symbol.COLON)) {
             throw new UnknownFormatConversionException("format error for example topic1:tag1,tag1,tag3|topic2:tag1,tag2,tag3");
         }
         String[] topicArray = topicConfig.split("\\|");
         for (String topic : topicArray) {
             TopicTagPair topicTagPair = new TopicTagPair();
-            Pair<String, String> topicTagsPair = Pair.split(topic, SYMBOL.COLON);
+            Pair<String, String> topicTagsPair = Pair.split(topic, Symbol.COLON);
             topicTagPair.setTopic(topicTagsPair.getFirst());
             String[] tagArray = topicTagsPair.getSecond().split(",");
             topicTagPair.setTags(Arrays.asList(tagArray));
@@ -158,17 +154,16 @@ public class RocketMQConsumer implements ContainerAware{
 
     public String getInstanceName() {
         if (this.instanceName == null) {
-            this.instanceName = MQ_CLIENT.INSTANCE_NAME;
+            this.instanceName = MQClient.INSTANCE_NAME;
         }
         return instanceName;
     }
-
 
     private volatile MQPushConsumer consumer;
 
     public synchronized void start() {
         try {
-            consumer = createConsumer(this.batchSize,this.pullSize);
+            consumer = createConsumer(this.batchSize, this.pullSize);
             log.info("begin start ROCKET MQ client, group={}, nameServerAddr, topic={},config={}", groupName, nameServerAddress, topicConfig, consumer);
             consumer.start();
         } catch (Exception e) {
@@ -204,7 +199,7 @@ public class RocketMQConsumer implements ContainerAware{
                 defaultMQPushConsumer.setConsumeMessageBatchMaxSize(batchSize);
             }
             if (pullSize != null && pullSize > 0) {
-                System.err.println("pull size:"+pullSize);
+                System.err.println("pull size:" + pullSize);
                 defaultMQPushConsumer.setPullBatchSize(pullSize);
             }
             //消费一批消息，最大数。因为一批消息如果有一个失败，都会失败，所以这里设置为1
@@ -212,9 +207,9 @@ public class RocketMQConsumer implements ContainerAware{
             //setConsumeThread(defaultMQPushConsumer);
             //订阅多个topic
             for (TopicTagPair topicTagPair : this.getTopicConfigList()) {
-                defaultMQPushConsumer.subscribe(topicTagPair.getTopic(), StringUtility.join(topicTagPair.getTags(), SYMBOL.VERTICAL_LINE));
+                defaultMQPushConsumer.subscribe(topicTagPair.getTopic(), StringUtility.join(topicTagPair.getTags(), Symbol.VERTICAL_LINE));
             }
-            defaultMQPushConsumer.setInstanceName(getInstanceName() + SYMBOL.UNDERLINE + groupName);
+            defaultMQPushConsumer.setInstanceName(getInstanceName() + Symbol.UNDERLINE + groupName);
             defaultMQPushConsumer.registerMessageListener(messageListener);
             defaultMQPushConsumer.setPullInterval(this.pullInterval);
             defaultMQPushConsumer.setConsumeThreadMin(this.threadCount);
@@ -230,7 +225,6 @@ public class RocketMQConsumer implements ContainerAware{
         this.consumer.shutdown();
         this.consumer = this.createConsumer(batchSize, pullSize);
     }
-
 
     public synchronized void shutdown() {
         try {

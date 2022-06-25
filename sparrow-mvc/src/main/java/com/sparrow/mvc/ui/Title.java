@@ -21,9 +21,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
 public class Title extends TagSupport {
 

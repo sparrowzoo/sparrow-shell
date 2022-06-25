@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sparrow.core.algorithm.similarity;
 
 import com.sparrow.support.lucence.KeyAnalyzer;
@@ -12,13 +29,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public class CosineSimilarity {
-    protected static final Logger logger = LoggerFactory.getLogger(CosineSimilarity.class);
+    protected static Logger logger = LoggerFactory.getLogger(CosineSimilarity.class);
     private KeyAnalyzer analyzer;
+
     public void setAnalyzer(KeyAnalyzer analyzer) {
         this.analyzer = analyzer;
     }
+
     public double getSimilarity(String text1, String text2) {
         //""==""
         if (StringUtility.isNullOrEmpty(text1) && StringUtility.isNullOrEmpty(text2)) {
@@ -50,31 +68,31 @@ public class CosineSimilarity {
     public static double getSimilarityImpl(List<LexemeWithBoost> words1, List<LexemeWithBoost> words2) {
         Map<String, AtomicInteger> frequency1 = getFrequency(words1);
         Map<String, AtomicInteger> frequency2 = getFrequency(words2);
-        Map<String,AtomicInteger> allWords=new HashMap<>(frequency1.size()+frequency2.size());
+        Map<String, AtomicInteger> allWords = new HashMap<>(frequency1.size() + frequency2.size());
         allWords.putAll(frequency1);
         allWords.putAll(frequency2);
         int ab = 0;// a.b =x1x2+y1y2
         int aa = 0;// |a| square
         int bb = 0;// |b| square
 
-        for (String word:allWords.keySet()) {
+        for (String word : allWords.keySet()) {
             AtomicInteger atomicX1 = frequency1.get(word);
             AtomicInteger atomicX2 = frequency2.get(word);
-            int x1=0;
-            int x2=0;
-            if(atomicX1!=null){
-                x1=atomicX1.get();
+            int x1 = 0;
+            int x2 = 0;
+            if (atomicX1 != null) {
+                x1 = atomicX1.get();
             }
-            if(atomicX2!=null){
-                x2=atomicX2.get();
+            if (atomicX2 != null) {
+                x2 = atomicX2.get();
             }
-            if (x1>0 && x2>0) {
+            if (x1 > 0 && x2 > 0) {
                 ab += x1 * x2;
             }
-            if (x1>0) {
+            if (x1 > 0) {
                 aa += x1 * x1;
             }
-            if (x2>0) {
+            if (x2 > 0) {
                 bb += x2 * x2;
             }
         }
@@ -85,6 +103,7 @@ public class CosineSimilarity {
         //similarity=a.b/|a|*|b|
         return BigDecimal.valueOf(ab).divide(aabb, 9, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
+
     /**
      * getFrequency
      *

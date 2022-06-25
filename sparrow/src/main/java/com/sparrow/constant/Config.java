@@ -22,9 +22,6 @@ import com.sparrow.enums.LoginType;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class Config {
 
     public static final String INTERNATIONALIZATION = "internationalization";
@@ -35,7 +32,7 @@ public class Config {
     public static final String REDIS_HOST = "redis_host";
     public static final String REDIS_PORT = "redis_port";
     public static final String RESOURCE = "resource";
-    public static final String UPLOAD_PATH="upload_path";
+    public static final String UPLOAD_PATH = "upload_path";
     public static final String THEMES = "themes";
     public static final String RESOURCE_PHYSICAL_PATH = "resource_physical_path";
     public static final String TEMP = "temp";
@@ -65,7 +62,7 @@ public class Config {
     public static final String USER_CENTER_URL_FORMAT = "user_center_url_format";
     public static final String ERROR_URL = "error_url";
     public static final String TRANSIT_URL = "transit_url";
-    public static final String SUCCESS_TRANSIT_URL="success_transit_url";
+    public static final String SUCCESS_TRANSIT_URL = "success_transit_url";
     public static final String EXCEPTION_SWITCH_MODE = "exception_switch_mode";
 
     public static final String EMAIL_HOST = "email_host";
@@ -90,13 +87,13 @@ public class Config {
      */
     public static final String VALIDATE_TOKEN_AVAILABLE_DAY = "validate_token_available_day";
     public static final String DEBUG = "debug";
-    public static final String DEBUG_METHOD_ACCESS="debug_method_access";
+    public static final String DEBUG_METHOD_ACCESS = "debug_method_access";
     public static final String DB_POOL_NAME_ENUM = "db_pool_name_enum";
     public static final String LOG_CLASS = "log_class";
     public static final String LOG_LEVEL = "log_level";
     public static final String LOG_PRINT_CONSOLE = "print_console";
 
-    public static final String PASSPORT_ROOT="passport_root";
+    public static final String PASSPORT_ROOT = "passport_root";
     public static final Map<LoginType, String> LOGIN_TYPE_KEY = new HashMap<LoginType, String>() {
         private static final long serialVersionUID = 1L;
 

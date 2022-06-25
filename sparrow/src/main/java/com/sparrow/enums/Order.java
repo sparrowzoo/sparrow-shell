@@ -17,22 +17,11 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
-
 public enum Order {
-    /**
-     * 正顺排列
-     */
+
     ASC,
 
-    /**
-     * 倒序排列
-     */
     DESC,
-    /**
-     * 按IN子句中的顺序排序
-     */
+    
     IN
 }

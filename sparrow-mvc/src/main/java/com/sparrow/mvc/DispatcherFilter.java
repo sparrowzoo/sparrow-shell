@@ -33,10 +33,10 @@ import com.sparrow.protocol.AuthorizingSupport;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.Result;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.EXTENSION;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.LoginDialog;
 import com.sparrow.support.web.CookieUtility;
@@ -56,9 +56,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class DispatcherFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(DispatcherFilter.class);
@@ -89,7 +86,7 @@ public class DispatcherFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) {
+        FilterChain chain) {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -116,8 +113,8 @@ public class DispatcherFilter implements Filter {
             this.initAttribute(httpRequest, httpResponse);
             if (invokableHandlerMethod == null || invokableHandlerMethod.getMethod() == null) {
                 logger.warn("invokableHandlerMethod is null or method not exist ");
-                String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, EXTENSION.JSP);
-                if (actionKey.endsWith(extension) || actionKey.endsWith(EXTENSION.JSON)) {
+                String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.JSP);
+                if (actionKey.endsWith(extension) || actionKey.endsWith(Extension.JSON)) {
                     chain.doFilter(request, response);
                 } else {
                     String dispatcherUrl = sparrowServletUtility.getServletUtility().assembleActualUrl(actionKey);
@@ -138,7 +135,7 @@ public class DispatcherFilter implements Filter {
     }
 
     private void errorHandler(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                              ServletInvokableHandlerMethod invocableHandlerMethod, Exception e) {
+        ServletInvokableHandlerMethod invocableHandlerMethod, Exception e) {
         Throwable target = e;
         if (e.getCause() == null) {
             logger.error("e.getCause==null", e);
@@ -231,11 +228,11 @@ public class DispatcherFilter implements Filter {
             }
         }
         throw new ServletException("No adapter for handler [" + handler +
-                "]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
+            "]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
     }
 
     private void initAttribute(HttpServletRequest request,
-                               HttpServletResponse response) {
+        HttpServletResponse response) {
         //初始化 request
         HttpContext.getContext().setRequest(request);
         //初始化 response
@@ -248,31 +245,31 @@ public class DispatcherFilter implements Filter {
         logger.debug("PARAMETERS:" + sparrowServletUtility.getServletUtility().getAllParameter(request));
         logger.debug("ACTION KEY:" + actionKey);
         String forumCode = request.getParameter("forumCode");
-        request.setAttribute(CONSTANT.REQUEST_ACTION_CURRENT_FORUM, forumCode);
+        request.setAttribute(Constant.REQUEST_ACTION_CURRENT_FORUM, forumCode);
         request.setAttribute("divNavigation.current", forumCode);
 
         String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
         if (!StringUtility.isNullOrEmpty(rootPath)) {
             request.setAttribute(Config.ROOT_PATH, rootPath);
             request.setAttribute(Config.WEBSITE,
-                    ConfigUtility.getValue(Config.WEBSITE));
+                ConfigUtility.getValue(Config.WEBSITE));
         }
 
         //国际化
         String internationalization = ConfigUtility
-                .getValue(Config.INTERNATIONALIZATION);
+            .getValue(Config.INTERNATIONALIZATION);
         if (internationalization != null) {
             //设置当前请求语言
             String language = request.getParameter(Config.LANGUAGE);
             if (language == null
-                    || !internationalization.contains(language)) {
+                || !internationalization.contains(language)) {
                 language = ConfigUtility.getValue(Config.LANGUAGE);
             }
-            HttpContext.getContext().put(CONSTANT.REQUEST_LANGUAGE, language);
+            HttpContext.getContext().put(Constant.REQUEST_LANGUAGE, language);
         }
         //设置资源根路径
         request.setAttribute(Config.RESOURCE,
-                ConfigUtility.getValue(Config.RESOURCE));
+            ConfigUtility.getValue(Config.RESOURCE));
 
         request.setAttribute(Config.UPLOAD_PATH, ConfigUtility.getValue(Config.UPLOAD_PATH));
 
@@ -280,26 +277,25 @@ public class DispatcherFilter implements Filter {
         request.setAttribute(Config.IMAGE_WEBSITE, ConfigUtility.getValue(Config.IMAGE_WEBSITE));
 
         String configWebsiteName = ConfigUtility.getLanguageValue(
-                ConfigKeyLanguage.WEBSITE_NAME, ConfigUtility.getValue(Config.LANGUAGE));
+            ConfigKeyLanguage.WEBSITE_NAME, ConfigUtility.getValue(Config.LANGUAGE));
         request.setAttribute(ConfigKeyLanguage.WEBSITE_NAME, configWebsiteName);
 
         if (configWebsiteName != null) {
             String currentWebsiteName = cookieUtility.get(request.getCookies(),
-                    ConfigKeyLanguage.WEBSITE_NAME);
+                ConfigKeyLanguage.WEBSITE_NAME);
             if (!configWebsiteName.equals(currentWebsiteName)) {
                 cookieUtility.set(response, ConfigKeyLanguage.WEBSITE_NAME,
-                        configWebsiteName, DIGIT.ALL);
+                    configWebsiteName, DIGIT.ALL);
             }
         }
         if (request.getQueryString() != null) {
             request.setAttribute("previous_url", request.getQueryString());
         }
 
-        Pair<String, Map<String, Object>> sessionPair = (Pair<String, Map<String, Object>>) request.getSession().getAttribute(CONSTANT.FLASH_KEY);
+        Pair<String, Map<String, Object>> sessionPair = (Pair<String, Map<String, Object>>) request.getSession().getAttribute(Constant.FLASH_KEY);
         if (sessionPair == null) {
             return;
         }
-
 
         if (this.matchUrl(sessionPair.getFirst(), actionKey, request)) {
             Map<String, Object> values = sessionPair.getSecond();
@@ -309,19 +305,16 @@ public class DispatcherFilter implements Filter {
             return;
         }
         //url换掉时，则session 被清空 （非include）
-        request.getSession().removeAttribute(CONSTANT.FLASH_KEY);
+        request.getSession().removeAttribute(Constant.FLASH_KEY);
     }
 
     /**
      * flash key -->/template/action-url.jsp  final url
      * <p>
-     * direct mode
-     * action url-->action-url
+     * direct mode action url-->action-url
      * <p>
      * <p>
-     * transit mode
-     * transit url-->
-     * transit-url?action_url
+     * transit mode transit url--> transit-url?action_url
      */
     private boolean matchUrl(String flashKey, String actionKey, HttpServletRequest request) {
         //redirect final jsp url
@@ -353,7 +346,7 @@ public class DispatcherFilter implements Filter {
     }
 
     private boolean validateUser(
-            HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException, BusinessException {
+        HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException, BusinessException {
         if (sparrowServletUtility.getServletUtility().include(httpRequest)) {
             return true;
         }
@@ -382,7 +375,6 @@ public class DispatcherFilter implements Filter {
         httpRequest.setAttribute(User.ID, user.getUserId());
         httpRequest.setAttribute(User.LOGIN_TOKEN, user);
 
-
         if (user.getUserId().equals(User.VISITOR_ID)) {
             String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
             if (LoginType.MESSAGE.equals(handlerExecutionChain.getLoginType())) {
@@ -392,32 +384,32 @@ public class DispatcherFilter implements Filter {
             }
 
             String loginKey = Config.LOGIN_TYPE_KEY
-                    .get(handlerExecutionChain.getLoginType());
+                .get(handlerExecutionChain.getLoginType());
             String loginUrl = ConfigUtility.getValue(loginKey);
             if (StringUtility.isNullOrEmpty(loginUrl)) {
                 logger.error("please config login url 【{}】", loginKey);
             }
             boolean isInFrame = LoginType.LOGIN_IFRAME
-                    .equals(handlerExecutionChain.getLoginType());
+                .equals(handlerExecutionChain.getLoginType());
             if (!StringUtility.isNullOrEmpty(loginUrl)) {
                 String defaultSystemPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_SYSTEM_INDEX);
                 String defaultMenuPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_MENU_PAGE);
                 String redirectUrl = httpRequest.getRequestURL().toString();
-                if (redirectUrl.endsWith(EXTENSION.DO) || redirectUrl.endsWith(EXTENSION.JSON)) {
+                if (redirectUrl.endsWith(Extension.DO) || redirectUrl.endsWith(Extension.JSON)) {
                     redirectUrl = sparrowServletUtility.getServletUtility().referer(httpRequest);
                 }
                 if (redirectUrl != null && redirectUrl.equals(defaultMenuPage)) {
-                    redirectUrl = SYMBOL.EMPTY;
+                    redirectUrl = Symbol.EMPTY;
                 }
 
                 if (!StringUtility.isNullOrEmpty(redirectUrl)) {
                     if (httpRequest.getQueryString() != null) {
-                        redirectUrl += SYMBOL.QUESTION_MARK + httpRequest.getQueryString();
+                        redirectUrl += Symbol.QUESTION_MARK + httpRequest.getQueryString();
                     }
                     if (isInFrame) {
-                        redirectUrl = defaultSystemPage + SYMBOL.QUESTION_MARK + redirectUrl;
+                        redirectUrl = defaultSystemPage + Symbol.QUESTION_MARK + redirectUrl;
                     }
-                    loginUrl = loginUrl + SYMBOL.QUESTION_MARK + redirectUrl;
+                    loginUrl = loginUrl + Symbol.QUESTION_MARK + redirectUrl;
                 }
             }
             String passport = ConfigUtility.getValue(Config.PASSPORT_ROOT);
@@ -447,13 +439,13 @@ public class DispatcherFilter implements Filter {
         String code = httpRequest.getParameter("resource-code");
 
         if (!authorizingSupport.isAuthorized(
-                user, actionName,
-                code)) {
-            httpResponse.getWriter().write(CONSTANT.ACCESS_DENIED);
+            user, actionName,
+            code)) {
+            httpResponse.getWriter().write(Constant.ACCESS_DENIED);
             this.sparrowServletUtility.moveAttribute(httpRequest);
             return false;
         }
-        HttpContext.getContext().put(CONSTANT.REQUEST_USER_ID, user.getUserId());
+        HttpContext.getContext().put(Constant.REQUEST_USER_ID, user.getUserId());
         return true;
     }
 

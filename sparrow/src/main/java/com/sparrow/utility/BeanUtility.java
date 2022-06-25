@@ -24,11 +24,6 @@ import com.sparrow.core.spi.ApplicationContext;
 
 import java.util.List;
 
-/**
- * bean 操作工具类
- *
- * @author harry
- */
 public class BeanUtility {
     public static void copyProperties(Object source, Object target, String... ignoreProperties) {
         Container container = ApplicationContext.getContainer();

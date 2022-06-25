@@ -17,9 +17,6 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
 public enum LoginType {
     /**
      * 0不需求登录

@@ -17,17 +17,13 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
-import com.sparrow.utility.StringUtility;
+import com.sparrow.protocol.constant.magic.Symbol;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
 public class TextBox extends AbstractJWebInputControl {
     @Override
     public String setTagNameAndGetTagAttributes() {
         super.setType("text");
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 }

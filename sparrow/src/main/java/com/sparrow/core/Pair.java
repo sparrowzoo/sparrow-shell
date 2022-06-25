@@ -21,12 +21,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Container to ease passing around a tuple of two objects. This object provides a sensible implementation of equals(),
- * returning true if equals() is true on each of the contained objects.
- *
- * @author harry
- */
 public class Pair<F, S> {
     private final F first;
     private final S second;
@@ -42,7 +36,7 @@ public class Pair<F, S> {
     /**
      * Constructor for a Pair.
      *
-     * @param first the first object in the Pair
+     * @param first  the first object in the Pair
      * @param second the second object in the pair
      */
     public Pair(F first, S second) {

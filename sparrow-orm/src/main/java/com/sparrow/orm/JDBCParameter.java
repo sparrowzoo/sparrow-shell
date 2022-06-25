@@ -19,9 +19,6 @@ package com.sparrow.orm;
 
 import java.util.List;
 
-/**
- * @author harry
- */
 public class JDBCParameter {
     private boolean autoIncrement;
     private String command;

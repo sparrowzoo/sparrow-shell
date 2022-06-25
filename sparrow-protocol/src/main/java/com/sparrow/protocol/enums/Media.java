@@ -19,11 +19,7 @@ package com.sparrow.protocol.enums;
 
 import java.io.Serializable;
 
-/**
- * @author harry
- */
-
-public enum MEDIA implements Serializable {
+public enum Media implements Serializable {
 
     /**
      * 图片
@@ -68,7 +64,7 @@ public enum MEDIA implements Serializable {
     private String text;
     private String field;
 
-    MEDIA(String text, String field) {
+    Media(String text, String field) {
         this.text = text;
         this.field = field;
     }

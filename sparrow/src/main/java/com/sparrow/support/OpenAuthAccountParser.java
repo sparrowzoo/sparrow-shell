@@ -19,14 +19,11 @@ package com.sparrow.support;
 
 import com.sparrow.constant.Config;
 import com.sparrow.exception.CacheNotFoundException;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.OpenAuthAccount;
 import com.sparrow.protocol.enums.PLATFORM;
 import com.sparrow.utility.ConfigUtility;
 
-/**
- * @author harry
- */
 public class OpenAuthAccountParser {
 
     /**
@@ -35,8 +32,7 @@ public class OpenAuthAccountParser {
      * @param configKey platform_openplatform_appname
      *                  <p>
      *                  <p>
-     *                  e.g..
-     *                  pc_alipay_sparrow
+     *                  e.g.. pc_alipay_sparrow
      * @return
      * @see OpenAuthAccount getKey
      */
@@ -57,18 +53,17 @@ public class OpenAuthAccountParser {
         openAuthProtocol.setNotifyUrl(getConfig(configKey, Config.PLATFORM_NOTIFY_URL));
         openAuthProtocol.setCallBackUrl(getConfig(configKey, Config.PLATFORM_CALL_BACK_URL));
 
-        if (!openAuthProtocol.getNotifyUrl().startsWith(CONSTANT.HTTP_PROTOCOL)) {
+        if (!openAuthProtocol.getNotifyUrl().startsWith(Constant.HTTP_PROTOCOL)) {
             openAuthProtocol.setNotifyUrl(ConfigUtility.getValue(Config.ROOT_PATH) + openAuthProtocol.getNotifyUrl());
         }
 
-        if (!openAuthProtocol.getCallBackUrl().startsWith(CONSTANT.HTTP_PROTOCOL)) {
+        if (!openAuthProtocol.getCallBackUrl().startsWith(Constant.HTTP_PROTOCOL)) {
             openAuthProtocol.setCallBackUrl(ConfigUtility.getValue(Config.ROOT_PATH) + openAuthProtocol.getCallBackUrl());
         }
 
         openAuthProtocol.setCharset(getConfig(configKey, Config.PLATFORM_CHARSET));
         return openAuthProtocol;
     }
-
 
     private static String getConfig(String prefix, String key) throws CacheNotFoundException {
         return ConfigUtility.getValue(prefix + "_" + key);

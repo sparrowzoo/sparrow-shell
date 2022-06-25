@@ -19,9 +19,6 @@ package com.sparrow.orm;
 
 import java.sql.ResultSet;
 
-/**
- * @author harry
- */
 public interface ResultSetCallback {
     void close(ResultSet resultSet);
 }

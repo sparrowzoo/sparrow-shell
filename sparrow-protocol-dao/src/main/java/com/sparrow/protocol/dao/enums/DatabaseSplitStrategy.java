@@ -17,9 +17,6 @@
 
 package com.sparrow.protocol.dao.enums;
 
-/**
- * @author harry
- */
 public enum DatabaseSplitStrategy {
     /**
      * 不拆分

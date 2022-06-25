@@ -16,16 +16,11 @@
  */
 package com.sparrow.markdown.parser.impl;
 
-import com.sparrow.protocol.constant.magic.CHAR_SYMBOL;
+import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.mark.MarkEntity;
 import com.sparrow.markdown.parser.MarkParser;
 
-import static com.sparrow.markdown.mark.MarkContext.BORROWABLE_BLANK;
-
-/**
- * @author by harry
- */
 public abstract class AbstractWithEndTagParser implements MarkParser {
 
     @Override public boolean detectStartMark(MarkContext markContext) {
@@ -34,8 +29,8 @@ public abstract class AbstractWithEndTagParser implements MarkParser {
         }
         int currentPointer = markContext.getCurrentPointer();
         String content = markContext.getContent();
-        int firstBlankIndex=markContext.detectFirstBlank(this.mark(),currentPointer);
-        if(firstBlankIndex==-1){
+        int firstBlankIndex = markContext.detectFirstBlank(this.mark(), currentPointer);
+        if (firstBlankIndex == -1) {
             return false;
         }
         if (!content.startsWith(this.mark().getStart(), firstBlankIndex)) {
@@ -51,7 +46,7 @@ public abstract class AbstractWithEndTagParser implements MarkParser {
         if (endMarkIndex <= 1) {
             return null;
         }
-        if (markContext.getContent().charAt(startIndex) == CHAR_SYMBOL.ENTER || markContext.getContent().charAt(endMarkIndex - 1) == '\n') {
+        if (markContext.getContent().charAt(startIndex) == CharSymbol.ENTER || markContext.getContent().charAt(endMarkIndex - 1) == '\n') {
             return null;
         }
 
@@ -80,7 +75,7 @@ public abstract class AbstractWithEndTagParser implements MarkParser {
             return;
         }
 
-        String innerHTML = markContext.getInnerHtml(this.mark(),content);
+        String innerHTML = markContext.getInnerHtml(this.mark(), content);
         markContext.append(String.format(this.mark().getFormat(), innerHTML));
         markContext.setPointer(markContext.getCurrentMark().getEnd() + this.mark().getEnd().length());
     }

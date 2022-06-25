@@ -17,7 +17,7 @@
 
 package com.sparrow.servlet.impl;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.servlet.ServletContainer;
 import com.sparrow.support.web.CookieUtility;
 import com.sparrow.support.web.ServletUtility;
@@ -36,9 +36,6 @@ import java.util.TreeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public abstract class AbstractServletContainer implements ServletContainer {
     private static Logger logger = LoggerFactory.getLogger(AbstractServletContainer.class);
     private ServletUtility servletUtility = ServletUtility.getInstance();
@@ -52,7 +49,6 @@ public abstract class AbstractServletContainer implements ServletContainer {
     public String getActionKey() {
         return this.servletUtility.getActionKey(this.getRequest());
     }
-
 
     @Override
     public String getClientIp() {
@@ -142,7 +138,7 @@ public abstract class AbstractServletContainer implements ServletContainer {
             return sb.toString();
         } catch (Exception e) {
             logger.error("request body error", e);
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
     }
 }

@@ -19,11 +19,7 @@ package com.sparrow.orm.query;
 
 import com.sparrow.orm.query.impl.SimpleCriteriaField;
 
-/**
- * @author harry
- */
 public class UpdateSetClausePair {
-
     private CriteriaField field;
     private Object value;
     private Boolean add = false;

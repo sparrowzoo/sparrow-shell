@@ -36,15 +36,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
 /**
- * getDatasourceConfig 初始化ContextLoaderListener.java
- * 中配置 database identify
- *
- * @author harry
+ * getDatasourceConfig 初始化ContextLoaderListener.java 中配置 database identify
  */
 public class DataSourceFactoryImpl implements DataSourceFactory {
     private static Logger logger = LoggerFactory.getLogger(DataSourceFactoryImpl.class);
     private static Map<String, DatasourceConfig> datasourceConfigMap = new ConcurrentHashMap<String, DatasourceConfig>();
-    private static Cache<String,DatasourceKey> datasourceUrlMap =new StrongDurationCache<>(CacheKey.DATA_SOURCE_URL_PAIR);
+    private static Cache<String, DatasourceKey> datasourceUrlMap = new StrongDurationCache<>(CacheKey.DATA_SOURCE_URL_PAIR);
+
     public DataSourceFactoryImpl(String initDatasourceKeys) {
         String[] datasourceKeyArray = initDatasourceKeys.split(",");
         if (CollectionsUtility.isNullOrEmpty(datasourceKeyArray)) {
@@ -94,7 +92,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
         if (StringUtility.isNullOrEmpty(dataSourceKey)) {
             dataSourceKey = "sparrow_default";
         }
-        DatasourceKey dsKey=DatasourceKey.parse(dataSourceKey);
+        DatasourceKey dsKey = DatasourceKey.parse(dataSourceKey);
         if (datasourceConfigMap.containsKey(dataSourceKey)) {
             return datasourceConfigMap.get(dataSourceKey);
         }
@@ -107,14 +105,14 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
             try {
                 Properties props = new Properties();
                 String filePath = "/" + dataSourceKey
-                        + ".properties";
-                String schema=dsKey.getSchema();
+                    + ".properties";
+                String schema = dsKey.getSchema();
                 props.load(EnvironmentSupport.getInstance().getFileInputStream(filePath));
-                datasourceConfig.setDriverClassName(props.getProperty(schema+".driverClassName"));
-                datasourceConfig.setUsername(props.getProperty(schema+".username"));
-                datasourceConfig.setPassword(props.getProperty(schema+".password"));
-                datasourceConfig.setUrl(props.getProperty(schema+".url"));
-                datasourceConfig.setPoolSize(Integer.parseInt(props.getProperty(schema+".poolSize")));
+                datasourceConfig.setDriverClassName(props.getProperty(schema + ".driverClassName"));
+                datasourceConfig.setUsername(props.getProperty(schema + ".username"));
+                datasourceConfig.setPassword(props.getProperty(schema + ".password"));
+                datasourceConfig.setUrl(props.getProperty(schema + ".url"));
+                datasourceConfig.setPoolSize(Integer.parseInt(props.getProperty(schema + ".poolSize")));
             } catch (Exception ignore) {
                 throw new RuntimeException(ignore);
             }

@@ -17,9 +17,9 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.ESCAPED;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Escaped;
+import com.sparrow.protocol.constant.magic.Symbol;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +35,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/**
- * @author harry
- */
 public class Xml {
 
     private static Logger logger = LoggerFactory.getLogger(Xml.class);
@@ -55,7 +52,7 @@ public class Xml {
         try {
             if (xml != null) {
                 document = builder.parse(new ByteArrayInputStream(xml
-                        .getBytes(CONSTANT.CHARSET_UTF_8)));
+                    .getBytes(Constant.CHARSET_UTF_8)));
             }
         } catch (Exception e) {
             logger.error("get xml document error", e);
@@ -74,7 +71,7 @@ public class Xml {
             String[] elementName = xmlKey.split("\\.");
             for (String e : elementName) {
                 element = (Element) (element
-                        .getElementsByTagName(e)).item(0);
+                    .getElementsByTagName(e)).item(0);
             }
             return element.getTextContent().trim();
         } catch (Exception ex) {
@@ -83,7 +80,7 @@ public class Xml {
     }
 
     public static Element getElementByTagAttribute(Document doc,
-            String tagName, String attributeName, String attributeValue) {
+        String tagName, String attributeName, String attributeValue) {
         Element element = doc.getDocumentElement();
         NodeList nodeList = element.getElementsByTagName(tagName);
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -98,7 +95,7 @@ public class Xml {
     }
 
     public static List<Element> getElementsByTagName(Document doc,
-            String tagName) {
+        String tagName) {
         Element element = doc.getDocumentElement();
         NodeList nodeList = element.getElementsByTagName(tagName);
         List<Element> elementList = new ArrayList<Element>();
@@ -141,22 +138,22 @@ public class Xml {
      * xml编码
      */
     public static String xmlEncode(String xml) {
-        if (xml.contains(SYMBOL.AND)) {
-            xml = xml.replace(SYMBOL.AND, ESCAPED.AND);
+        if (xml.contains(Symbol.AND)) {
+            xml = xml.replace(Symbol.AND, Escaped.AND);
         }
-        if (xml.contains(SYMBOL.LESS_THEN)) {
-            xml = xml.replace(SYMBOL.LESS_THEN, ESCAPED.LESS_THEN);
+        if (xml.contains(Symbol.LESS_THEN)) {
+            xml = xml.replace(Symbol.LESS_THEN, Escaped.LESS_THEN);
         }
-        if (xml.contains(SYMBOL.GREATER_THAN)) {
-            xml = xml.replace(SYMBOL.GREATER_THAN, ESCAPED.GREAT_THEN);
-        }
-
-        if (xml.contains(SYMBOL.SINGLE_QUOTES)) {
-            xml = xml.replace(SYMBOL.SINGLE_QUOTES, ESCAPED.SINGLE_QUOTES);
+        if (xml.contains(Symbol.GREATER_THAN)) {
+            xml = xml.replace(Symbol.GREATER_THAN, Escaped.GREAT_THEN);
         }
 
-        if (xml.contains(SYMBOL.DOUBLE_QUOTES)) {
-            xml = xml.replace(SYMBOL.DOUBLE_QUOTES, ESCAPED.DOUBLE_QUOTES);
+        if (xml.contains(Symbol.SINGLE_QUOTES)) {
+            xml = xml.replace(Symbol.SINGLE_QUOTES, Escaped.SINGLE_QUOTES);
+        }
+
+        if (xml.contains(Symbol.DOUBLE_QUOTES)) {
+            xml = xml.replace(Symbol.DOUBLE_QUOTES, Escaped.DOUBLE_QUOTES);
         }
         return xml;
     }
@@ -165,20 +162,20 @@ public class Xml {
      * xml解码
      */
     public static String xmlDecode(String xml) {
-        if (xml.contains(ESCAPED.LESS_THEN)) {
-            xml = xml.replace(ESCAPED.LESS_THEN, SYMBOL.LESS_THEN);
+        if (xml.contains(Escaped.LESS_THEN)) {
+            xml = xml.replace(Escaped.LESS_THEN, Symbol.LESS_THEN);
         }
-        if (xml.contains(ESCAPED.GREAT_THEN)) {
-            xml = xml.replace(ESCAPED.GREAT_THEN, SYMBOL.GREATER_THAN);
+        if (xml.contains(Escaped.GREAT_THEN)) {
+            xml = xml.replace(Escaped.GREAT_THEN, Symbol.GREATER_THAN);
         }
-        if (xml.contains(ESCAPED.AND)) {
-            xml = xml.replace(ESCAPED.AND, SYMBOL.AND);
+        if (xml.contains(Escaped.AND)) {
+            xml = xml.replace(Escaped.AND, Symbol.AND);
         }
-        if (xml.contains(ESCAPED.SINGLE_QUOTES)) {
-            xml = xml.replace(ESCAPED.SINGLE_QUOTES, SYMBOL.SINGLE_QUOTES);
+        if (xml.contains(Escaped.SINGLE_QUOTES)) {
+            xml = xml.replace(Escaped.SINGLE_QUOTES, Symbol.SINGLE_QUOTES);
         }
-        if (xml.contains(ESCAPED.DOUBLE_QUOTES)) {
-            xml = xml.replace(ESCAPED.DOUBLE_QUOTES, SYMBOL.DOUBLE_QUOTES);
+        if (xml.contains(Escaped.DOUBLE_QUOTES)) {
+            xml = xml.replace(Escaped.DOUBLE_QUOTES, Symbol.DOUBLE_QUOTES);
         }
         return xml;
     }

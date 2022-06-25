@@ -17,7 +17,7 @@
 
 package com.sparrow.facade.unzip;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
@@ -52,7 +52,7 @@ public class GZipUtil {
         try {
             out = new ByteArrayOutputStream();
             gout = new GZIPOutputStream(out);
-            gout.write(primStr.getBytes(CONSTANT.CHARSET_UTF_8));
+            gout.write(primStr.getBytes(Constant.CHARSET_UTF_8));
             gout.flush();
         } catch (IOException e) {
             log.error("对字符串进行加压加密操作失败：", e);
@@ -93,7 +93,7 @@ public class GZipUtil {
             while ((offset = gin.read(buffer)) != -1) {
                 out.write(buffer, 0, offset);
             }
-            decompressed = out.toString(CONSTANT.CHARSET_UTF_8);
+            decompressed = out.toString(Constant.CHARSET_UTF_8);
         } catch (IOException e) {
             log.error("对字符串进行解密解压操作失败：", e);
             decompressed = null;

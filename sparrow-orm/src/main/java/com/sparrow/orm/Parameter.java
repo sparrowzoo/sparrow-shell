@@ -26,7 +26,6 @@ package com.sparrow.orm;
  * <p/>
  * 只有ORM反射使用包外不允许使用
  *
- * @author harry
  * @version 1.0
  */
 public class Parameter {

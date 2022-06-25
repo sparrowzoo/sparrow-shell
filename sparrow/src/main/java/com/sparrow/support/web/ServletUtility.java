@@ -18,21 +18,16 @@
 package com.sparrow.support.web;
 
 import com.sparrow.constant.Config;
-import com.sparrow.exception.CacheNotFoundException;
-import com.sparrow.protocol.constant.CLIENT_INFORMATION;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.EXTENSION;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.ClientInformation;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
-
 import java.util.Enumeration;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author harry
- */
 public class ServletUtility {
 
     private static final ServletUtility INSTANCE = new ServletUtility();
@@ -46,9 +41,8 @@ public class ServletUtility {
 
     public boolean include(ServletRequest request) {
         return request
-                .getAttribute(CONSTANT.REQUEST_ACTION_INCLUDE) != null;
+            .getAttribute(Constant.REQUEST_ACTION_INCLUDE) != null;
     }
-
 
     public String assembleActualUrl(String url) {
         //rootPath is null when contain init ...
@@ -56,10 +50,10 @@ public class ServletUtility {
         if (rootPath != null && url.startsWith(rootPath)) {
             url = url.substring(rootPath.length());
         }
-        if (!url.startsWith(SYMBOL.SLASH)) {
-            url = SYMBOL.SLASH + url;
+        if (!url.startsWith(Symbol.SLASH)) {
+            url = Symbol.SLASH + url;
         }
-        String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, EXTENSION.JSP);
+        String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.JSP);
         String pagePrefix = ConfigUtility.getValue(Config.DEFAULT_PAGE_PREFIX, "/template");
         url = url + extension;
         if (!url.startsWith(pagePrefix)) {
@@ -71,7 +65,7 @@ public class ServletUtility {
     public String getActionKey(ServletRequest request) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         Object servletPath = request
-                .getAttribute(CONSTANT.REQUEST_ACTION_INCLUDE);
+            .getAttribute(Constant.REQUEST_ACTION_INCLUDE);
         String actionKey;
         if (servletPath != null) {
             actionKey = servletPath.toString();
@@ -88,13 +82,13 @@ public class ServletUtility {
         String serverName = request.getServerName();
         String path = httpServletRequest.getContextPath();
         rootPath = request.getScheme()
-                + "://"
-                + serverName
-                + (request.getServerPort() == 80 ? "" : ":"
-                + request.getServerPort()) + path;
+            + "://"
+            + serverName
+            + (request.getServerPort() == 80 ? "" : ":"
+            + request.getServerPort()) + path;
         // eclipse tomcat 启动时会默认请求http://localhost故此处加此判断
         //只解析一二级域名 http://www.sparrowzoo.com
-        if (rootPath.indexOf(CONSTANT.LOCALHOST) != 0 && rootPath.indexOf(CONSTANT.LOCALHOST_127) != 0) {
+        if (rootPath.indexOf(Constant.LOCALHOST) != 0 && rootPath.indexOf(Constant.LOCALHOST_127) != 0) {
             String website = serverName.substring(serverName.indexOf(".") + 1);
             website = website.substring(0, website.indexOf("."));
             ConfigUtility.resetKey(Config.WEBSITE, website);
@@ -107,9 +101,9 @@ public class ServletUtility {
             String domain = ConfigUtility.getValue(Config.DOMAIN);
             if (domain == null) {
                 ConfigUtility.resetKey(Config.DOMAIN,
-                        serverName);
+                    serverName);
             }
-            CONSTANT.REPLACE_MAP.put("$website", website);
+            Constant.REPLACE_MAP.put("$website", website);
         }
         ConfigUtility.resetKey(Config.ROOT_PATH, rootPath);
         return actionKey;
@@ -117,7 +111,7 @@ public class ServletUtility {
 
     public String getClientIp(ServletRequest request) {
         if (request == null) {
-            return CONSTANT.LOCALHOST;
+            return Constant.LOCALHOST;
         }
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String ip = httpRequest.getHeader("x-forwarded-for");
@@ -130,14 +124,14 @@ public class ServletUtility {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if (ip.indexOf(SYMBOL.COLON) > 0) {
-            ip = ip.split(SYMBOL.COLON)[0];
+        if (ip.indexOf(Symbol.COLON) > 0) {
+            ip = ip.split(Symbol.COLON)[0];
         }
         return ip;
     }
 
     public String getDeviceId(HttpServletRequest request) {
-        String deviceId = request.getHeader(CLIENT_INFORMATION.DEVICE_ID);
+        String deviceId = request.getHeader(ClientInformation.DEVICE_ID);
         if (StringUtility.isNullOrEmpty(deviceId)) {
             deviceId = ServletUtility.getInstance().getClientIp(request);
         }

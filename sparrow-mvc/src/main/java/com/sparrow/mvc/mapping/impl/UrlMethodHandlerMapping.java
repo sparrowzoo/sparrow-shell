@@ -18,20 +18,31 @@
 package com.sparrow.mvc.mapping.impl;
 
 import com.sparrow.constant.Config;
-import com.sparrow.enums.LoginType;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.EXTENSION;
-import com.sparrow.protocol.constant.magic.SYMBOL;
 import com.sparrow.container.Container;
 import com.sparrow.core.Pair;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.mvc.ServletInvokableHandlerMethod;
+import com.sparrow.enums.LoginType;
 import com.sparrow.mvc.RequestParameters;
+import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.mapping.HandlerMapping;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.ServletUtility;
-import com.sparrow.utility.*;
+import com.sparrow.utility.ConfigUtility;
+import com.sparrow.utility.RegexUtility;
+import com.sparrow.utility.StringUtility;
+import com.sparrow.utility.Xml;
 import com.sparrow.xml.DefaultDocumentLoader;
 import com.sparrow.xml.DocumentLoader;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -39,18 +50,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-/**
- * @author harry
- */
 public class UrlMethodHandlerMapping implements HandlerMapping {
 
     private static Logger logger = LoggerFactory.getLogger(UrlMethodHandlerMapping.class);
@@ -88,26 +87,25 @@ public class UrlMethodHandlerMapping implements HandlerMapping {
             return;
         }
 
-
         List<Element> actionElementList = Xml.getElementsByTagName(document, "action");
         for (Element actionElement : actionElementList) {
             String actionName = actionElement.getAttribute("name");
             try {
                 ServletInvokableHandlerMethod invokableHandlerMethod = new ServletInvokableHandlerMethod();
                 String beanName = ((Element) actionElement.getParentNode())
-                        .getAttribute("id");
+                    .getAttribute("id");
 
                 invokableHandlerMethod.setActionName(actionName);
-                invokableHandlerMethod.setJson(actionName.endsWith(EXTENSION.JSON));
+                invokableHandlerMethod.setJson(actionName.endsWith(Extension.JSON));
                 invokableHandlerMethod.setNeedAuthorizing(Boolean.parseBoolean(actionElement
-                        .getAttribute("needAuthorizing")));
+                    .getAttribute("needAuthorizing")));
                 String loginType = actionElement.getAttribute("login");
                 String validateRequest = actionElement.getAttribute("validateRequest");
                 if (StringUtility.isNullOrEmpty(validateRequest)) {
                     validateRequest = "true";
                 }
-                LoginType loginTypeEnum = StringUtility.isNullOrEmpty(loginType) ?LoginType.NO_AUTHENTICATE
-                        : LoginType.valueOf(loginType);
+                LoginType loginTypeEnum = StringUtility.isNullOrEmpty(loginType) ? LoginType.NO_AUTHENTICATE
+                    : LoginType.valueOf(loginType);
                 invokableHandlerMethod.setValidateRequest(Boolean.parseBoolean(validateRequest));
                 invokableHandlerMethod.setLoginType(loginTypeEnum);
                 String actionMethodName = actionElement.getAttribute("method");
@@ -119,14 +117,14 @@ public class UrlMethodHandlerMapping implements HandlerMapping {
                 Method method = actionMethodMap.get(actionMethodName);
                 if (method == null) {
                     mapping.put(actionName,
-                            invokableHandlerMethod);
+                        invokableHandlerMethod);
                     continue;
                 }
                 // 获取所有参数名称列表
                 RequestParameters
-                        requestParameters = method.getAnnotation(RequestParameters.class);
+                    requestParameters = method.getAnnotation(RequestParameters.class);
                 if (requestParameters != null) {
-                    String[] names = requestParameters.value().split(SYMBOL.COMMA);
+                    String[] names = requestParameters.value().split(Symbol.COMMA);
                     List<String> parameterNameList = new ArrayList<String>(names.length);
                     for (String parameter : names) {
                         parameterNameList.add(parameter.trim());
@@ -142,12 +140,12 @@ public class UrlMethodHandlerMapping implements HandlerMapping {
                     }
                     Element resultElement = (Element) resultList.item(i);
                     String resultName = resultElement.getAttribute("name");
-                    if (CONSTANT.ERROR.equalsIgnoreCase(resultName.trim())) {
+                    if (Constant.ERROR.equalsIgnoreCase(resultName.trim())) {
                         invokableHandlerMethod.setErrorUrl(resultElement
-                                .getTextContent().trim());
-                    } else if (CONSTANT.SUCCESS.equalsIgnoreCase(resultName.trim())) {
+                            .getTextContent().trim());
+                    } else if (Constant.SUCCESS.equalsIgnoreCase(resultName.trim())) {
                         invokableHandlerMethod.setSuccessUrl(resultElement
-                                .getTextContent().trim());
+                            .getTextContent().trim());
                     }
                 }
 
@@ -158,14 +156,14 @@ public class UrlMethodHandlerMapping implements HandlerMapping {
                     }
                 }
 
-                if (actionName.contains(SYMBOL.BIG_LEFT_PARENTHESIS) && actionName.contains(SYMBOL.BIG_RIGHT_PARENTHESIS)) {
+                if (actionName.contains(Symbol.BIG_LEFT_PARENTHESIS) && actionName.contains(Symbol.BIG_RIGHT_PARENTHESIS)) {
                     Pair<String, List<String>> pathParameters = RegexUtility.getActionRegex(actionName);
                     invokableHandlerMethod.setActionRegex(pathParameters.getFirst());
                     invokableHandlerMethod.setPathParameterNameList(pathParameters.getSecond());
                     dynamicMapping.put(pathParameters.getFirst(), invokableHandlerMethod);
                 } else {
                     mapping.put(actionName,
-                            invokableHandlerMethod);
+                        invokableHandlerMethod);
                 }
             } catch (Throwable e) {
                 logger.error("controller parse error action-key {}", actionName);

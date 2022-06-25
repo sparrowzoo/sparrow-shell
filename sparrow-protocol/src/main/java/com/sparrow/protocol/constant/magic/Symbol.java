@@ -17,10 +17,7 @@
 
 package com.sparrow.protocol.constant.magic;
 
-/**
- * @author harry
- */
-public class SYMBOL {
+public class Symbol {
     /**
      * EMPTY
      */

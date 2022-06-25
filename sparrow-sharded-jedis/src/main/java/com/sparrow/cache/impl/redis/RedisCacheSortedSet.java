@@ -29,9 +29,6 @@ import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPipeline;
 import redis.clients.jedis.Tuple;
 
-/**
- * @author harry
- */
 public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedSet {
     RedisCacheSortedSet(RedisPool redisPool) {
         this.redisPool = redisPool;

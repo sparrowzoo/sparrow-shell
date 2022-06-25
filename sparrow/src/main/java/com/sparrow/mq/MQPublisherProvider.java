@@ -20,11 +20,6 @@ package com.sparrow.mq;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-/**
- * created by harry on 2016/4/12.
- *
- * @author harry
- */
 public class MQPublisherProvider {
 
     private static MQPublisher publisher;

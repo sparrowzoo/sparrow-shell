@@ -17,10 +17,7 @@
 
 package com.sparrow.protocol.constant;
 
-/**
- * @author harry
- */
-public class EXTENSION {
+public class Extension {
     public static final String EXCEL2003 = ".xls";
     public static final String EXCEL2007 = ".xlsx";
     public static final String JPG = ".jpg";
@@ -35,15 +32,12 @@ public class EXTENSION {
     public static final String JAVASCRIPT = ".js";
     public static final String CSS = ".css";
 
-
-
     public static final String JSP = ".jsp";
     public static final String HTML = ".html";
-    public static final String ZIP=".zip";
-    public static final String JAR=".jar";
-    public static final String WAR=".war";
-    public static final String CLASS=".class";
-
+    public static final String ZIP = ".zip";
+    public static final String JAR = ".jar";
+    public static final String WAR = ".war";
+    public static final String CLASS = ".class";
 
     public static final String EXCEL2003_WITHOUT_DOT = "xls";
     public static final String EXCEL2007_WITHOUT_DOT = "xlsx";
@@ -58,5 +52,5 @@ public class EXTENSION {
     public static final String JSON_WITHOUT_DOT = "json";
     public static final String JSP_WITHOUT_DOT = "jsp";
     public static final String HTML_WITHOUT_DOT = "html";
-    public static final String ZIP_WITHOUT_DOT="zip";
+    public static final String ZIP_WITHOUT_DOT = "zip";
 }

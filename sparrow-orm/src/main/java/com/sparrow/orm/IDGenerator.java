@@ -16,10 +16,6 @@
  */
 
 package com.sparrow.orm;
-
-/**
- * @author harry
- */
 public interface IDGenerator {
     String generate();
 }

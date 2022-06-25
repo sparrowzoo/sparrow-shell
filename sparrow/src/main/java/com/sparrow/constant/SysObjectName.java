@@ -17,12 +17,6 @@
 
 package com.sparrow.constant;
 
-/**
- * 系统对象
- *
- * @author harry
- * @version 1.0
- */
 public enum SysObjectName {
     THREAD_SERVICE,
     CODE_SERVICE,

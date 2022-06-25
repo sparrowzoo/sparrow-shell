@@ -17,9 +17,6 @@
 
 package com.sparrow.support.excel.exception;
 
-/**
- * @author harry
- */
 public class TemplateCellValidateException extends Exception {
     public TemplateCellValidateException(String message) {
         super(message);

@@ -1,10 +1,26 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.orm;
 
 import com.sparrow.cg.PropertyNamer;
 import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.enums.OrmEntityMetadata;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.Split;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
@@ -34,7 +50,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
      */
     protected Map<String, String> columnPropertyMap;
     protected Map<String, Field> uniqueFieldMap;
-    protected Map<Integer,Field> hashFieldMap;
+    protected Map<Integer, Field> hashFieldMap;
     protected String tableName;
     protected String dialectTableName;
     protected String className;
@@ -47,7 +63,6 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected String delete;
     protected String fields;
     protected String createDDL;
-
 
     public AbstractEntityManagerAdapter(Class clazz) {
         this.className = clazz.getName();
@@ -68,7 +83,6 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
         updateSQL.append(this.dialectTableName);
         insertSQL.append(this.dialectTableName);
-
 
         String createDDLHeader = String.format("DROP TABLE IF EXISTS %1$s;\nCREATE TABLE %1$s (\n", this.dialectTableName);
         String primaryCreateDDL = "";
@@ -92,7 +106,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             fields.add(field);
 
             if (splitTable != null) {
-                this.hashFieldMap.put(splitTable.index(),field);
+                this.hashFieldMap.put(splitTable.index(), field);
                 if (!field.isPersistence()) {
                     continue;
                 }
@@ -115,14 +129,13 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
                 primaryCreateDDL = String.format(" `%s` %s NOT NULL ,\n", column.name(), column.columnDefinition());
             }
 
-
             this.columnPropertyMap.put(column.name(), propertyName);
             String fieldName = dialectReader.getOpenQuote() + column.name()
-                    + dialectReader.getCloseQuote();
+                + dialectReader.getCloseQuote();
             // insertSQL
             if (!TableSplitStrategy.ORIGIN_NOT_PERSISTENCE.equals(field.getHashStrategy()) && !GenerationType.IDENTITY.equals(field.getGenerationType())) {
                 insertSQL.append(fieldName);
-                insertSQL.append(SYMBOL.COMMA);
+                insertSQL.append(Symbol.COMMA);
                 insertParameter.append(this.parsePropertyParameter(column.name(), propertyName));
                 insertParameter.append(",");
             }
@@ -134,7 +147,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             }
 
             if (column.updatable()) {
-                updateSQL.append(fieldName + SYMBOL.EQUAL);
+                updateSQL.append(fieldName + Symbol.EQUAL);
                 updateSQL.append(this.parsePropertyParameter(column.name(), propertyName));
                 updateSQL.append(",");
             }
@@ -143,12 +156,12 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         insertParameter.deleteCharAt(insertParameter.length() - 1);
         insertSQL.append(")values(");
         insertSQL.append(insertParameter);
-        insertSQL.append(SYMBOL.RIGHT_PARENTHESIS);
+        insertSQL.append(Symbol.RIGHT_PARENTHESIS);
 
         updateSQL.deleteCharAt(updateSQL.length() - 1).append(
-                " where " + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName()));
+            " where " + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName()));
         String deleteSQL = "delete from " + this.dialectTableName + " where "
-                + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName());
+            + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName());
 
         createDDLField.append(String.format("PRIMARY KEY (`%s`)\n", this.primary.getColumnName()));
         createDDLField.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='" + tableName + "';\n");
@@ -191,7 +204,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             this.dialectTableName = String.format("%s%s%s", dialectReader.getOpenQuote(), tableName, dialectReader.getCloseQuote());
             return false;
         }
-        this.dialectTableName = String.format("%s%s%s%s", dialectReader.getOpenQuote(), tableName, CONSTANT.TABLE_SUFFIX, dialectReader.getCloseQuote());
+        this.dialectTableName = String.format("%s%s%s%s", dialectReader.getOpenQuote(), tableName, Constant.TABLE_SUFFIX, dialectReader.getCloseQuote());
         // 分表的桶数
         int bucketCount;
         if (split.table_bucket_count() > 1) {

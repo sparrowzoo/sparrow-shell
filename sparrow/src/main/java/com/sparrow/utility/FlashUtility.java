@@ -25,9 +25,6 @@ import com.sparrow.protocol.constant.magic.DIGIT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class FlashUtility {
     Logger logger = LoggerFactory.getLogger(FlashUtility.class);
     private final String youku = "http:\\/\\/player.youku.com\\/player.php.*?sid\\/(.*?)\\/v\\.swf";
@@ -119,9 +116,9 @@ public class FlashUtility {
 
     /**
      * 视频的html
-     *
+     * <p>
      * 因为.jpg形式无法编码，使视频无法播放，故此处过滤掉
-     *
+     * <p>
      * 上传 时使用
      *
      * @param flashUrl

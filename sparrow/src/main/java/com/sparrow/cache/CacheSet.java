@@ -22,11 +22,6 @@ import com.sparrow.exception.CacheConnectionException;
 
 import java.util.Set;
 
-/**
- *
- * @author harry
- * @date 2018/1/26
- */
 public interface CacheSet {
 
     Long getSize(KEY key) throws CacheConnectionException;
@@ -39,7 +34,7 @@ public interface CacheSet {
 
     <T> Boolean remove(KEY key, T value) throws CacheConnectionException;
 
-   <T>  Boolean exist(KEY key, T value) throws CacheConnectionException;
+    <T> Boolean exist(KEY key, T value) throws CacheConnectionException;
 
     Set<String> list(KEY key) throws CacheConnectionException;
 

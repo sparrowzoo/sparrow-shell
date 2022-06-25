@@ -49,8 +49,6 @@ import com.sparrow.protocol.ModuleSupport;
  * <p>
  * <p>
  * 对于开发者和接口的调用者都隐藏着一个信息（当前操作的接口名称）
- *
- * @author harry 2013-11-9下午10:01:03
  */
 public enum SparrowError implements ErrorSupport {
     SYSTEM_SERVER_ERROR(true, SparrowModule.GLOBAL, "01", "System error"),
@@ -70,10 +68,10 @@ public enum SparrowError implements ErrorSupport {
     GLOBAL_CONTENT_IS_ILLEGAL(true, SparrowModule.GLOBAL, "16", "Content is illegal"),
     GLOBAL_CONTENT_DUPLICATE(true, SparrowModule.GLOBAL, "17", "Content duplicate"),
     GLOBAL_UNSUPPORTED_IMAGE_TYPE(true, SparrowModule.GLOBAL, "18",
-            "Unsupported image type only support JPG, GIF, PNG"),
+        "Unsupported image type only support JPG, GIF, PNG"),
     GLOBAL_IMAGE_SIZE_TOO_LARGE(true, SparrowModule.GLOBAL, "19", "Image size too large"),
     GLOBAL_ACCOUNT_ILLEGAL(true, SparrowModule.GLOBAL, "20",
-            "Account or ip or app is illegal, can not continue"),
+        "Account or ip or app is illegal, can not continue"),
     GLOBAL_OUT_OF_TIMES_LIMIT(true, SparrowModule.GLOBAL, "21", "Out of times limit"),
     GLOBAL_ADMIN_CAN_NOT_OPERATION(true, SparrowModule.GLOBAL, "22", "Admin can't operation"),
     GLOBAL_PARAMETER_NULL(true, SparrowModule.GLOBAL, "23", "Parameter is null"),

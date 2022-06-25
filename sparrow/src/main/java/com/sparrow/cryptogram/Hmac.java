@@ -24,21 +24,12 @@ import org.slf4j.LoggerFactory;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * （Message Authentication Code,即MAC）with key
- *
- * @author harry
- */
 public class Hmac {
-    private static Logger logger=LoggerFactory.getLogger(Hmac.class);
+    private static Logger logger = LoggerFactory.getLogger(Hmac.class);
     public static final String HMAC_SHA1 = "HmacSHA1";
-
     public static final String HMAC_SHA256 = "HmacSHA256";
-
     public static final String HMAC_SHA512 = "HmacSHA512";
-
     public static final String HMAC_MD5 = "HmacMD5";
-
     private static final int[] DIGITS_POWER
         // 0 1 2 3 4 5 6 7 8
         = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
@@ -73,7 +64,7 @@ public class Hmac {
             oauthSignature = mac.doFinal(srcString.getBytes("US-ASCII"));
             return oauthSignature;
         } catch (Exception e) {
-            logger.error("{} is error",algorithm,e);
+            logger.error("{} is error", algorithm, e);
             return null;
         }
     }
@@ -83,7 +74,7 @@ public class Hmac {
             byte[] oauthSignature = this.cryptogram(algorithm, srcString, secretKey);
             return Base64.encodeBytes(oauthSignature);
         } catch (Exception e) {
-            logger.error("encoder bytes error",e);
+            logger.error("encoder bytes error", e);
             return null;
         }
     }

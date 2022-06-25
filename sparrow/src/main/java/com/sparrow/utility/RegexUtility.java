@@ -17,7 +17,7 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.Regex;
 import com.sparrow.core.Pair;
 
@@ -26,23 +26,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author harry
- */
 public class RegexUtility {
-
-
     /**
-     * 只判断是否匹配 且不做后续处理
-     * 例如:判断电子邮件或手机号码是否匹配等
+     * 只判断是否匹配 且不做后续处理 例如:判断电子邮件或手机号码是否匹配等
      *
      * @param source
      * @param regex
      * @return
      */
     public static boolean matches(String source, String regex) {
-        if (CONSTANT.REPLACE_MAP != null) {
-            regex = StringUtility.replace(regex, CONSTANT.REPLACE_MAP);
+        if (Constant.REPLACE_MAP != null) {
+            regex = StringUtility.replace(regex, Constant.REPLACE_MAP);
         }
         return Pattern.compile(regex, Regex.OPTION).matcher(source).matches();
     }
@@ -56,11 +50,11 @@ public class RegexUtility {
     }
 
     public static List<String> groups(String source, String regex) {
-        if (CONSTANT.REPLACE_MAP != null) {
-            regex = StringUtility.replace(regex, CONSTANT.REPLACE_MAP);
+        if (Constant.REPLACE_MAP != null) {
+            regex = StringUtility.replace(regex, Constant.REPLACE_MAP);
         }
         Pattern p = Pattern
-                .compile(regex, Regex.OPTION);
+            .compile(regex, Regex.OPTION);
         Matcher m = p.matcher(source);
         List<String> groupList = null;
         if (!m.find()) {
@@ -74,11 +68,11 @@ public class RegexUtility {
     }
 
     public static List<List<String>> multiGroups(String source, String regex) {
-        if (CONSTANT.REPLACE_MAP != null) {
-            regex = StringUtility.replace(regex, CONSTANT.REPLACE_MAP);
+        if (Constant.REPLACE_MAP != null) {
+            regex = StringUtility.replace(regex, Constant.REPLACE_MAP);
         }
         Pattern p = Pattern
-                .compile(regex, Regex.OPTION);
+            .compile(regex, Regex.OPTION);
         Matcher m = p.matcher(source);
         List<List<String>> multiGroupList = new ArrayList<List<String>>();
         while (m.find()) {
@@ -92,19 +86,14 @@ public class RegexUtility {
     }
 
     /**
-     *
      * @param actionKey thread-{thread_id}-{page_index}
-     * @return
-     *
-     * thread-([a-z0-9]*)-([a-z0-9]*)
-     * -- thread_id
-     * -- page_index
+     * @return thread-([a-z0-9]*)-([a-z0-9]*) -- thread_id -- page_index
      */
     public static Pair<String, List<String>> getActionRegex(String actionKey) {
         String configParameter = "(\\{[a-z0-9]*\\})";
         String digitalAndLetter = "([a-z0-9]*)";
         Pattern p = Pattern
-                .compile(configParameter, Regex.OPTION);
+            .compile(configParameter, Regex.OPTION);
         Matcher m = p.matcher(actionKey);
         String urlRegex = actionKey;
         List<String> parameters = new ArrayList<String>();

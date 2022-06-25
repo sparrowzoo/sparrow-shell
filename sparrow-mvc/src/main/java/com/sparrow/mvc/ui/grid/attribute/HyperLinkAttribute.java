@@ -26,8 +26,6 @@ import com.sparrow.utility.ConfigUtility;
  * 格式hyperLink#name&id#format#url#target#css#textLength#defaultValue
  * //todo 加是否可见表达式
  * 例子hyperLink#filedName&idField#{0}#url?id={1}#_blank#css#100#查看
- *
- * @author harry
  */
 public class HyperLinkAttribute extends BaseAttribute {
     private String target = "_blank";

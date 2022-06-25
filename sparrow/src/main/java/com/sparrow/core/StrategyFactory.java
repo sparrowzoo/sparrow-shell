@@ -27,11 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 策略模式 类的名称定义规则:key+interface.getSimpleName() + "Impl"
- *
- * @author harry
- */
 public class StrategyFactory {
     private static Logger logger = LoggerFactory.getLogger(StrategyFactory.class);
 

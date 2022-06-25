@@ -16,9 +16,6 @@
  */
 package com.sparrow.mq;
 
-/**
- * @author by harry
- */
 public interface MQIdempotent {
     boolean duplicate(String keys);
 

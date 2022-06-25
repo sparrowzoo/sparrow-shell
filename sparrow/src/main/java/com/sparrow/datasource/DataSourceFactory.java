@@ -19,11 +19,6 @@ package com.sparrow.datasource;
 import java.sql.Connection;
 import javax.sql.DataSource;
 
-/**
- * 完成connection 与datasource key 的对应关系，用于数据源与线程的绑定
- *
- * @author by harry
- */
 public interface DataSourceFactory {
     /**
      * get datasource by key

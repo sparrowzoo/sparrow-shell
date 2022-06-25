@@ -20,9 +20,6 @@ package com.sparrow.servlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author harry
- */
 public interface HandlerInterceptor {
 
     /**

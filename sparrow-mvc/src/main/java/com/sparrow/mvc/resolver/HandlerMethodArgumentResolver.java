@@ -21,9 +21,6 @@ import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.web.support.MethodParameter;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author harry
- */
 public interface HandlerMethodArgumentResolver {
 
     boolean supportsParameter(MethodParameter parameter);

@@ -19,7 +19,7 @@ package com.sparrow.mvc.ui.grid;
 
 import com.sparrow.cg.MethodAccessor;
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.core.StrategyFactory;
 import com.sparrow.protocol.POJO;
 import org.slf4j.Logger;
@@ -28,9 +28,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class CellAttribute {
     private static Logger logger = LoggerFactory.getLogger(CellAttribute.class);
     private String[] fieldAttributeArray;
@@ -68,13 +65,13 @@ public class CellAttribute {
             String[] array = fieldAttribute.split("#");
             try {
                 FieldParser parser = StrategyFactory.getInstance().get(FieldParser.class, array[0].trim().toLowerCase());
-                String[] fieldArray = array[DIGIT.ONE].split(SYMBOL.AND);
+                String[] fieldArray = array[DIGIT.ONE].split(Symbol.AND);
                 for (String field : fieldArray) {
                     Object value = methodAccessor.get(entity, field);
                     if (value != null) {
                         valuesList.add(value.toString());
                     } else {
-                        valuesList.add(SYMBOL.EMPTY);
+                        valuesList.add(Symbol.EMPTY);
                     }
                 }
                 htmlLabel.append(parser.parse(array, valuesList));
@@ -83,7 +80,7 @@ public class CellAttribute {
             }
         }
         return String.format("%4$s<td width=\"%2$s\" align=\"%3$s\">%1$s</td>\r\n",
-                htmlLabel.toString(), this.getWidth(), this.getAlign(), indent);
+            htmlLabel.toString(), this.getWidth(), this.getAlign(), indent);
     }
 
     /**

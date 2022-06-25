@@ -17,27 +17,23 @@
 
 package com.sparrow.orm.query.sql.impl.operation;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.container.ClassFactoryBean;
 import com.sparrow.orm.EntityManager;
 import com.sparrow.orm.EntityManagerFactoryBean;
-import com.sparrow.orm.SparrowEntityManager;
 import com.sparrow.orm.query.Criteria;
 import com.sparrow.orm.query.sql.RelationOperationEntity;
 import com.sparrow.orm.query.sql.RelationalOperation;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 public class InOperation implements RelationalOperation {
-    private ClassFactoryBean<EntityManager> entityManagerFactoryBean=EntityManagerFactoryBean.getInstance();
+    private ClassFactoryBean<EntityManager> entityManagerFactoryBean = EntityManagerFactoryBean.getInstance();
 
     private <T> String join(Iterable<T> iterable) {
         StringBuilder sb = new StringBuilder();
         for (Object key : iterable) {
             if (sb.length() > 0) {
-                sb.append(SYMBOL.COMMA);
+                sb.append(Symbol.COMMA);
             }
             if (key instanceof Number) {
                 sb.append(key);
@@ -54,7 +50,7 @@ public class InOperation implements RelationalOperation {
         StringBuilder sb = new StringBuilder();
         for (Object key : array) {
             if (sb.length() > 0) {
-                sb.append(SYMBOL.COMMA);
+                sb.append(Symbol.COMMA);
             }
             if (key instanceof Number) {
                 sb.append(key);
@@ -69,11 +65,11 @@ public class InOperation implements RelationalOperation {
 
     public String safe(String value) {
         if (StringUtility.isNullOrEmpty(value)) {
-            value = SYMBOL.EMPTY;
+            value = Symbol.EMPTY;
         } else {
             // mysql 转义字符
-            value = value.replace(SYMBOL.SINGLE_QUOTES, "\\'");
-            value = value.replace(SYMBOL.PERCENT, "\\%").replace(SYMBOL.UNDERLINE, "\\_");
+            value = value.replace(Symbol.SINGLE_QUOTES, "\\'");
+            value = value.replace(Symbol.PERCENT, "\\%").replace(Symbol.UNDERLINE, "\\_");
         }
         return value;
     }
@@ -92,7 +88,7 @@ public class InOperation implements RelationalOperation {
             throw new UnsupportedOperationException("unsupoort" + iterable);
         }
         String column = entityManagerFactoryBean.getObject(criteria.getField().getAlias()).getColumnName(criteria.getField().getName());
-        String condition = (criteria.isAlias() ? criteria.getField().getAlias() + SYMBOL.DOT : "") + column + SYMBOL.BLANK + criteria.getCriteriaEntry().getKey().rendered() + "(" + in + ")";
+        String condition = (criteria.isAlias() ? criteria.getField().getAlias() + Symbol.DOT : "") + column + Symbol.BLANK + criteria.getCriteriaEntry().getKey().rendered() + "(" + in + ")";
         return new RelationOperationEntity(condition, null);
     }
 }

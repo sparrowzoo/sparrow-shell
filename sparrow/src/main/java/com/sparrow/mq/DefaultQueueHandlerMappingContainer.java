@@ -24,9 +24,6 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
-/**
- * @author harry
- */
 public class DefaultQueueHandlerMappingContainer implements EventHandlerMappingContainer {
     private Logger logger = LoggerFactory.getLogger(DefaultQueueHandlerMappingContainer.class);
 
@@ -40,7 +37,7 @@ public class DefaultQueueHandlerMappingContainer implements EventHandlerMappingC
 
     @Override
     public void put(MQHandler handler) {
-        Class parameterClass =(Class) ((ParameterizedType) handler.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        Class parameterClass = (Class) ((ParameterizedType) handler.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         if (parameterClass != null) {
             queueHandlerMappings.put(parameterClass.getName(), handler);
         }

@@ -17,8 +17,8 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.MethodOrder;
 
 import java.io.File;
@@ -35,9 +35,6 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-/**
- * @author harry
- */
 public class ClassUtility {
 
     public static String getEntityNameByClass(Class entity) {
@@ -87,33 +84,33 @@ public class ClassUtility {
      * @throws ClassNotFoundException, IOException, URISyntaxException
      */
     public static List<Class> getClasses(
-            String packageName) throws ClassNotFoundException, IOException, URISyntaxException {
+        String packageName) throws ClassNotFoundException, IOException, URISyntaxException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        String path = packageName.replace(SYMBOL.DOT, SYMBOL.SLASH);
+        String path = packageName.replace(Symbol.DOT, Symbol.SLASH);
         Enumeration<URL> resources = classLoader.getResources(path);
         ArrayList<Class> classes = new ArrayList<Class>();
         while (resources.hasMoreElements()) {
             URL resource = resources.nextElement();
             if ("file".equalsIgnoreCase(resource.getProtocol())) {
-                File directory = new File(URLDecoder.decode(resource.getFile(), CONSTANT.CHARSET_UTF_8));
+                File directory = new File(URLDecoder.decode(resource.getFile(), Constant.CHARSET_UTF_8));
                 classes.addAll(findClass(directory, packageName));
             } else if ("jar".equalsIgnoreCase(resource.getProtocol())) {
                 classes.addAll(findClass(((JarURLConnection) resource.openConnection())
-                        .getJarFile(), path));
+                    .getJarFile(), path));
             }
         }
         return classes;
     }
 
     private static List<Class> findClass(JarFile jarFile, String packagePath)
-            throws ClassNotFoundException, URISyntaxException {
+        throws ClassNotFoundException, URISyntaxException {
         List<Class> classes = new ArrayList<Class>();
         Enumeration<JarEntry> entrys = jarFile.entries();
         while (entrys.hasMoreElements()) {
             JarEntry jarEntry = entrys.nextElement();
             if (jarEntry.getName().startsWith(packagePath) && jarEntry.getName().endsWith(".class")) {
-                Class implClass = Class.forName(jarEntry.getName().replace(SYMBOL.SLASH, SYMBOL.DOT)
-                        .substring(0, jarEntry.getName().indexOf(SYMBOL.DOT)));
+                Class implClass = Class.forName(jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
+                    .substring(0, jarEntry.getName().indexOf(Symbol.DOT)));
                 if (!implClass.isInterface()) {
                     classes.add(implClass);
                 }
@@ -123,7 +120,7 @@ public class ClassUtility {
     }
 
     private static List<Class> findClass(File directory, String packageName)
-            throws ClassNotFoundException, URISyntaxException {
+        throws ClassNotFoundException, URISyntaxException {
         List<Class> classes = new ArrayList<Class>();
         if (directory == null || !directory.exists()) {
             return null;
@@ -134,10 +131,10 @@ public class ClassUtility {
         }
         for (File file : fileList) {
             if (file.isDirectory()) {
-                classes.addAll(findClass(file, packageName + SYMBOL.DOT + file.getName()));
+                classes.addAll(findClass(file, packageName + Symbol.DOT + file.getName()));
             } else if (file.getName().endsWith(".class")) {
                 classes.add(Class.forName(
-                        packageName + SYMBOL.DOT + file.getName().substring(0, file.getName().length() - 6)));
+                    packageName + Symbol.DOT + file.getName().substring(0, file.getName().length() - 6)));
             }
         }
 

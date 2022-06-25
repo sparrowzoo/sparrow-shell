@@ -17,9 +17,6 @@
 
 package com.sparrow.exception;
 
-/**
- * @author harry
- */
 public class DuplicateActionMethodException extends RuntimeException {
     public DuplicateActionMethodException(String message) {
         super(message);

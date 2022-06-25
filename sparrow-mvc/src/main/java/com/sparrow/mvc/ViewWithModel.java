@@ -18,11 +18,8 @@
 package com.sparrow.mvc;
 
 import com.sparrow.protocol.VO;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 
-/**
- * @author harry
- */
 public class ViewWithModel {
     private VO vo;
     /**
@@ -47,27 +44,27 @@ public class ViewWithModel {
     }
 
     public static ViewWithModel forward() {
-        return new ViewWithModel(null,CONSTANT.SUCCESS, PageSwitchMode.FORWARD, null);
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.FORWARD, null);
     }
 
     public static ViewWithModel forward(VO vo) {
-        return new ViewWithModel(null,CONSTANT.SUCCESS, PageSwitchMode.FORWARD, vo);
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.FORWARD, vo);
     }
 
     public static ViewWithModel forward(String targetUrl) {
-        return new ViewWithModel(null,targetUrl, PageSwitchMode.FORWARD, null);
+        return new ViewWithModel(null, targetUrl, PageSwitchMode.FORWARD, null);
     }
 
     public static ViewWithModel forward(String targetUrl, VO vo) {
-        return new ViewWithModel(null,targetUrl, PageSwitchMode.FORWARD, vo);
+        return new ViewWithModel(null, targetUrl, PageSwitchMode.FORWARD, vo);
     }
 
     public static ViewWithModel transit() {
-        return new ViewWithModel(null,CONSTANT.SUCCESS, PageSwitchMode.TRANSIT, null);
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.TRANSIT, null);
     }
 
     public static ViewWithModel transit(VO vo) {
-        return new ViewWithModel(null, CONSTANT.SUCCESS, PageSwitchMode.TRANSIT, vo);
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.TRANSIT, vo);
     }
 
     public static ViewWithModel transit(String url) {
@@ -78,26 +75,24 @@ public class ViewWithModel {
         return new ViewWithModel(null, targetUrl, PageSwitchMode.TRANSIT, vo);
     }
 
-    public static ViewWithModel transit(String transitUrl,String targetUrl, VO vo) {
+    public static ViewWithModel transit(String transitUrl, String targetUrl, VO vo) {
         return new ViewWithModel(transitUrl, targetUrl, PageSwitchMode.TRANSIT, vo);
     }
 
     public static ViewWithModel redirect(VO vo) {
-        return new ViewWithModel(null,CONSTANT.SUCCESS, PageSwitchMode.REDIRECT, vo);
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.REDIRECT, vo);
     }
 
     public static ViewWithModel redirect() {
-        return new ViewWithModel(null,CONSTANT.SUCCESS, PageSwitchMode.REDIRECT, null);
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.REDIRECT, null);
     }
-
 
     public static ViewWithModel redirect(String url) {
-        return new ViewWithModel(null,url, PageSwitchMode.REDIRECT, null);
+        return new ViewWithModel(null, url, PageSwitchMode.REDIRECT, null);
     }
 
-
     public static ViewWithModel redirect(String url, VO vo) {
-        return new ViewWithModel(null,url, PageSwitchMode.REDIRECT, vo);
+        return new ViewWithModel(null, url, PageSwitchMode.REDIRECT, vo);
     }
 
     public VO getVo() {

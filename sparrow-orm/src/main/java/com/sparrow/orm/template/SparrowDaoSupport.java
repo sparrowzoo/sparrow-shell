@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author harry sparrow 跨jdbc
+ * sparrow 跨jdbc
  */
 public interface SparrowDaoSupport<T, I> extends DaoSupport<T, I> {
 

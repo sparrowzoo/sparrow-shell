@@ -19,8 +19,6 @@ package com.sparrow.protocol.pager;
 
 /**
  * simple pager search parameter
- *
- * @author harry
  */
 public class PagerQuery extends SimplePager {
     public PagerQuery() {
@@ -33,11 +31,9 @@ public class PagerQuery extends SimplePager {
         super(pageSize, 0);
     }
 
-
     public PagerQuery(Integer pageSize, Integer currentPageIndex) {
         super(pageSize, currentPageIndex);
     }
-
 
     public String getLimitClause() {
         //no page
@@ -47,7 +43,7 @@ public class PagerQuery extends SimplePager {
         if (this.currentPageIndex == null) {
             this.currentPageIndex = 1;
         }
-        int offset = pageSize * (this.currentPageIndex <= 1 ? 0 : this.currentPageIndex-1);
+        int offset = pageSize * (this.currentPageIndex <= 1 ? 0 : this.currentPageIndex - 1);
         return " limit " + offset + "," + this.getPageSize();
     }
 }

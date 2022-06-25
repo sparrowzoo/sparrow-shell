@@ -17,11 +17,8 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
 public class RadioBox extends AbstractJWebInputControl {
     private String checked;
@@ -37,7 +34,7 @@ public class RadioBox extends AbstractJWebInputControl {
         if (isChecked == null) {
             isChecked = this.getChecked();
         }
-        return !Boolean.FALSE.toString().equalsIgnoreCase(isChecked.toString()) ? SYMBOL.EMPTY : " checked=\"checked\" ";
+        return !Boolean.FALSE.toString().equalsIgnoreCase(isChecked.toString()) ? Symbol.EMPTY : " checked=\"checked\" ";
     }
 
     public String getChecked() {

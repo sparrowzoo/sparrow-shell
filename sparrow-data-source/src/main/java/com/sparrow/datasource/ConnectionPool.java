@@ -20,30 +20,24 @@ package com.sparrow.datasource;
 import com.sparrow.concurrent.SparrowThreadFactory;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Mysql数据库链接池
- *
- * @author harry
- * @version 1.0
  */
-public class ConnectionPool implements DataSource,ContainerAware{
+public class ConnectionPool implements DataSource, ContainerAware {
     private static Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
     private DataSourceFactory dataSourceFactory;
     private int openedConnectionCount = 0;
@@ -91,7 +85,7 @@ public class ConnectionPool implements DataSource,ContainerAware{
                 Map<Connection, Long> usedPool = ConnectionPool.this.usedPool;
                 List<Connection> pool = ConnectionPool.this.pool;
                 for (Connection c : usedPool.keySet()) {
-                    if(ConnectionPool.this.loginTimeout==0){
+                    if (ConnectionPool.this.loginTimeout == 0) {
                         return;
                     }
                     if ((System.currentTimeMillis() - usedPool.get(c)) / 1000 / 60 > ConnectionPool.this
@@ -100,7 +94,7 @@ public class ConnectionPool implements DataSource,ContainerAware{
                         try {
                             ConnectionPool.this.release(c);
                         } catch (SQLException e) {
-                            logger.error("connection release error",e);
+                            logger.error("connection release error", e);
                         }
                     }
                 }
@@ -160,14 +154,15 @@ public class ConnectionPool implements DataSource,ContainerAware{
     }
 
     public synchronized void release(Connection c) throws SQLException {
-        if(c==null){
+        if (c == null) {
             return;
         }
         usedPool.remove(c);
-        if(!c.isClosed()) {
+        if (!c.isClosed()) {
             pool.add(c);
         }
     }
+
     private Connection newConnection() {
         Connection conn = null;
         // 此处不要放入池中.release时即放回池中
@@ -245,7 +240,7 @@ public class ConnectionPool implements DataSource,ContainerAware{
     }
 
     //jdk1.6 without this api
-    public java.util.logging.Logger getParentLogger(){
+    public java.util.logging.Logger getParentLogger() {
         return null;
     }
 }

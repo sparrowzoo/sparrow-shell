@@ -17,7 +17,7 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.EnumUtility;
 import com.sparrow.utility.StringUtility;
 
@@ -34,9 +34,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * value:name,value2:name2
- *
- * @author harry
- * @version 1.0
  */
 public class DropDownList extends WebControl {
     private static final long serialVersionUID = 8678128692032102460L;
@@ -79,7 +76,7 @@ public class DropDownList extends WebControl {
     public String getItemList() {
         // 后台可以设置 OPTION
         Map<String, String> listItem = (Map<String, String>) super.pageContext
-                .getRequest().getAttribute(super.getId() + ".options");
+            .getRequest().getAttribute(super.getId() + ".options");
         // 如果为空则获取前台的设置值0:女,1:男,2:保密
         if (listItem == null) {
             listItem = new LinkedHashMap<String, String>();
@@ -94,7 +91,7 @@ public class DropDownList extends WebControl {
             }
 
             if (listItem.size() == 0
-                    && !StringUtility.isNullOrEmpty(this.getEnums())) {
+                && !StringUtility.isNullOrEmpty(this.getEnums())) {
                 listItem = EnumUtility.getMap(this.getEnums());
             }
         }
@@ -102,10 +99,10 @@ public class DropDownList extends WebControl {
         Iterator<String> it = keySet.iterator();
         String listKey;
         Object selectValue = super.pageContext.getRequest().getAttribute(
-                this.getCtrlName());
+            this.getCtrlName());
         if (StringUtility.isNullOrEmpty(selectValue)) {
             selectValue = super.pageContext.getRequest().getParameter(
-                    this.getCtrlName());
+                this.getCtrlName());
         }
         if (StringUtility.isNullOrEmpty(selectValue)) {
             selectValue = this.getSelectKey();
@@ -115,12 +112,12 @@ public class DropDownList extends WebControl {
             listKey = it.next();
             if (listKey.equals(selectValue)) {
                 options.append(String
-                        .format("\n<option selected=\"selected\" value=\"%1$s\">%2$s</option>",
-                                listKey, listItem.get(listKey)));
+                    .format("\n<option selected=\"selected\" value=\"%1$s\">%2$s</option>",
+                        listKey, listItem.get(listKey)));
             } else {
                 options.append(String.format(
-                        "\n<option value=\"%1$s\">%2$s</option>", listKey,
-                        listItem.get(listKey)));
+                    "\n<option value=\"%1$s\">%2$s</option>", listKey,
+                    listItem.get(listKey)));
             }
         }
         return options.toString();
@@ -136,17 +133,17 @@ public class DropDownList extends WebControl {
 
     public String getReadonly() {
         Object requestReadonly = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".readonly");
+            this.getId() + ".readonly");
         if (requestReadonly != null) {
             if (!requestReadonly.toString().toLowerCase().trim().equalsIgnoreCase(Boolean.FALSE.toString())) {
                 return " readonly= \"readonly\" ";
             }
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         if (this.readonly != null && this.readonly.trim().equalsIgnoreCase(Boolean.FALSE.toString())) {
             return " readonly= \"readonly\" ";
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setReadonly(String readonly) {
@@ -155,17 +152,17 @@ public class DropDownList extends WebControl {
 
     public String getDisabled() {
         Object requestDisabled = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".disabled");
+            this.getId() + ".disabled");
         if (requestDisabled != null) {
             if (!requestDisabled.toString().toLowerCase().trim().equalsIgnoreCase(Boolean.FALSE.toString())) {
                 return " disabled= \"disabled\" ";
             }
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         if (this.disabled != null && this.disabled.trim().equalsIgnoreCase(Boolean.FALSE.toString())) {
             return " disabled= \"disabled\" ";
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
 
     }
 
@@ -177,7 +174,7 @@ public class DropDownList extends WebControl {
         if (this.multiple != null) {
             return "multiple=\"" + multiple + "\"";
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setMultiple(String multiple) {
@@ -214,7 +211,7 @@ public class DropDownList extends WebControl {
         }
         StringBuilder writeHTML = new StringBuilder();
         writeHTML.append(String.format("<%1$s id=\"%2$s\"", "select",
-                this.getId()));
+            this.getId()));
         writeHTML.append(this.getName());
         writeHTML.append(this.getCssClass());
         writeHTML.append(this.getCssText());

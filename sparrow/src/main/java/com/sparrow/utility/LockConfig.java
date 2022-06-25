@@ -21,9 +21,6 @@ import com.sparrow.enums.DateTimeUnit;
 
 import java.util.Calendar;
 
-/**
- * @author harry
- */
 public class LockConfig {
 
     /**
@@ -36,7 +33,7 @@ public class LockConfig {
      * @param containOperationId key是否包含operation id
      */
     private LockConfig(Boolean absolute, int lockTime, int maxTimes,
-                       boolean isContinueLockTime, boolean containOperationId, DateTimeUnit dateTimeUnit) {
+        boolean isContinueLockTime, boolean containOperationId, DateTimeUnit dateTimeUnit) {
         this.absolute = absolute;
         this.lockTime = lockTime;
         this.maxTimes = maxTimes;
@@ -47,6 +44,7 @@ public class LockConfig {
 
     /**
      * 获取相对过期锁
+     *
      * @param lockTime
      * @param maxTimes
      * @param isContinueLockTime 允许延长过期时间
@@ -54,7 +52,7 @@ public class LockConfig {
      * @return
      */
     public static LockConfig getRelativeLock(int lockTime, int maxTimes,
-                                             boolean isContinueLockTime, boolean containOperationId) {
+        boolean isContinueLockTime, boolean containOperationId) {
         return new LockConfig(false, lockTime, maxTimes, isContinueLockTime, containOperationId, null);
     }
 
@@ -70,10 +68,7 @@ public class LockConfig {
     }
 
     /**
-     * 是否绝对时间
-     * 举例说明...
-     * 过期时间为当天,当天的最大时间减去当前时间，即剩余绝对过期时间
-     * 相对过期时间为24小时(1天)
+     * 是否绝对时间 举例说明... 过期时间为当天,当天的最大时间减去当前时间，即剩余绝对过期时间 相对过期时间为24小时(1天)
      */
     private boolean absolute;
     /**

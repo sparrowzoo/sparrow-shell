@@ -21,9 +21,6 @@ import com.sparrow.utility.DateTimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public abstract class AbstractLock {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -33,7 +30,7 @@ public abstract class AbstractLock {
         Boolean lock = this.readLock(key);
         int times = 1;
         int timeout = 0;
-        while (lock==null||!lock) {
+        while (lock == null || !lock) {
             lock = this.readLock(key);
             try {
                 if (timeout < 1024) {

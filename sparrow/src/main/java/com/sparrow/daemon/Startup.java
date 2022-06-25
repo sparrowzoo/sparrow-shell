@@ -20,13 +20,8 @@ package com.sparrow.daemon;
 import com.sparrow.container.Container;
 import com.sparrow.container.FactoryBean;
 import com.sparrow.core.spi.ApplicationContext;
-
 import java.util.Iterator;
-import java.util.Map;
 
-/**
- * @author harry
- */
 public class Startup {
     public static void main(String[] args) {
         Container container =

@@ -17,9 +17,6 @@
 
 package com.sparrow.support;
 
-/**
- * @author harry
- */
 public abstract class AbstractBitStatusSupport {
 
     /**

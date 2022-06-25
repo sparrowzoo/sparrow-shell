@@ -19,7 +19,7 @@ package com.sparrow.cache.impl.redis;
 
 import com.sparrow.cache.CacheMonitor;
 import com.sparrow.constant.cache.KEY;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
@@ -40,9 +40,6 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.util.Hashing;
 import redis.clients.util.Sharded;
 
-/**
- * @author harry
- */
 public class RedisPool implements ContainerAware {
     private Logger logger = LoggerFactory.getLogger(RedisPool.class);
     private ShardedJedisPool pool = null;
@@ -76,7 +73,7 @@ public class RedisPool implements ContainerAware {
     <T> T execute(Executor<T> executor, KEY key) throws CacheConnectionException {
         ShardedJedis jedis = null;
         try {
-            jedis=pool.getResource();
+            jedis = pool.getResource();
             Long startTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
                 if (!this.cacheMonitor.before(startTime, key)) {
@@ -93,7 +90,7 @@ public class RedisPool implements ContainerAware {
             return result;
         } catch (JedisConnectionException e) {
             this.pool.returnBrokenResource(jedis);
-            logger.error(this.getInfo() + SYMBOL.COLON + e.getMessage());
+            logger.error(this.getInfo() + Symbol.COLON + e.getMessage());
             throw new CacheConnectionException(e.getMessage());
         }
     }
@@ -102,14 +99,14 @@ public class RedisPool implements ContainerAware {
     public void aware(Container container, String beanName) {
         // 超过时则报错 阻塞 或增加链接数
         config.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_FAIL);
-        String[] urlArray = this.urls.split(SYMBOL.COMMA);
+        String[] urlArray = this.urls.split(Symbol.COMMA);
         List<JedisShardInfo> jdsInfoList = new ArrayList<JedisShardInfo>(urlArray.length);
         for (String url : urlArray) {
-            Pair<String, String> urlPortPair = Pair.split(url, SYMBOL.COLON);
+            Pair<String, String> urlPortPair = Pair.split(url, Symbol.COLON);
             JedisShardInfo infoA = new JedisShardInfo(urlPortPair.getFirst(), urlPortPair.getSecond());
             jdsInfoList.add(infoA);
         }
         pool = new ShardedJedisPool(config, jdsInfoList, Hashing.MURMUR_HASH,
-                Sharded.DEFAULT_KEY_TAG_PATTERN);
+            Sharded.DEFAULT_KEY_TAG_PATTERN);
     }
 }

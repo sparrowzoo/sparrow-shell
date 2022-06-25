@@ -499,9 +499,8 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configLocation>google_checks.xml</configLocation>
-                    <!--<configLocation>../style/sparrow_checkstyle.xml</configLocation>-->
-                    <!--<suppressionsLocation>../style/check_style_suppressions.xml</suppressionsLocation>-->
+                    <configLocation>../style/sparrow_checkstyle.xml</configLocation>
+                    <suppressionsLocation>../style/check_style_suppressions.xml</suppressionsLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>

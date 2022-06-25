@@ -21,10 +21,10 @@ import com.sparrow.constant.Config;
 import com.sparrow.constant.ConfigKeyLanguage;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.protocol.POJO;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.EXTENSION;
-import com.sparrow.protocol.constant.magic.CHAR_SYMBOL;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.magic.CharSymbol;
+import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.io.*;
 import java.util.Collection;
@@ -32,13 +32,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * @author harry
- */
 public class StringUtility {
 
     public static String newUuid() {
-        return UUID.randomUUID().toString().replace(SYMBOL.HORIZON_LINE, SYMBOL.EMPTY);
+        return UUID.randomUUID().toString().replace(Symbol.HORIZON_LINE, Symbol.EMPTY);
     }
 
     /**
@@ -71,18 +68,18 @@ public class StringUtility {
      * @param str 需要折分的字符串 格式如:key1:value1,key2:value2
      */
     public static String encodeSplitKey(String str, boolean onlyDot) {
-        if (str.contains(SYMBOL.POUND_SIGN)) {
-            str = str.replace(SYMBOL.POUND_SIGN, "#limit");
+        if (str.contains(Symbol.POUND_SIGN)) {
+            str = str.replace(Symbol.POUND_SIGN, "#limit");
         }
 
         if (!onlyDot) {
-            if (str.contains(SYMBOL.COLON)) {
-                str = str.replace(SYMBOL.COLON, "#colon#");
+            if (str.contains(Symbol.COLON)) {
+                str = str.replace(Symbol.COLON, "#colon#");
             }
         }
 
-        if (str.contains(SYMBOL.COMMA)) {
-            str = str.replace(SYMBOL.COMMA, "#dot#");
+        if (str.contains(Symbol.COMMA)) {
+            str = str.replace(Symbol.COMMA, "#dot#");
         }
         return str;
     }
@@ -93,15 +90,15 @@ public class StringUtility {
     public static String decodeSplitKey(String str, boolean onlyDot) {
         if (!onlyDot) {
             if (str.contains("#colon#")) {
-                str = str.replace("#colon#", SYMBOL.COLON);
+                str = str.replace("#colon#", Symbol.COLON);
             }
         }
         if (str.contains("#dot#")) {
-            str = str.replace("#dot#", SYMBOL.COMMA);
+            str = str.replace("#dot#", Symbol.COMMA);
         }
 
         if (str.contains("#limit")) {
-            str = str.replace("#limit", SYMBOL.POUND_SIGN);
+            str = str.replace("#limit", Symbol.POUND_SIGN);
         }
         return str;
     }
@@ -125,7 +122,7 @@ public class StringUtility {
      */
     public static String subStringByByte(String str, int len, String elide) {
         if (str == null) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         int strLen = length(str);
         if (len >= strLen || len < 1) {
@@ -136,7 +133,7 @@ public class StringUtility {
         StringBuilder descBuilder = new StringBuilder();
         for (char c : charArray) {
             try {
-                length += String.valueOf(c).getBytes(CONSTANT.CHARSET_UTF_8).length;
+                length += String.valueOf(c).getBytes(Constant.CHARSET_UTF_8).length;
             } catch (UnsupportedEncodingException ignore) {
             }
             if (length > len) {
@@ -152,7 +149,7 @@ public class StringUtility {
             return 0;
         }
         try {
-            return str.getBytes(CONSTANT.CHARSET_UTF_8).length;
+            return str.getBytes(Constant.CHARSET_UTF_8).length;
         } catch (UnsupportedEncodingException ignore) {
             return 0;
         }
@@ -172,13 +169,12 @@ public class StringUtility {
         return imageURL;
     }
 
-
     /**
      * 设置首字母大写
      */
     public static String setFirstByteUpperCase(String srcString) {
         if (srcString == null || srcString.length() == 0) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         char[] s = srcString.toCharArray();
         int firstCase = s[0];
@@ -194,7 +190,7 @@ public class StringUtility {
      */
     public static String setFirstByteLowerCase(String srcString) {
         if (srcString == null || srcString.length() == 0) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         char[] s = srcString.toCharArray();
         int firstCase = s[0];
@@ -205,12 +201,11 @@ public class StringUtility {
         return new String(s);
     }
 
-
     /**
      * 获取缩进字符
      */
     public static String getIndent(int indentCount) {
-        return generateSomeCharacter(indentCount, SYMBOL.BLANK);
+        return generateSomeCharacter(indentCount, Symbol.BLANK);
     }
 
     /**
@@ -219,7 +214,7 @@ public class StringUtility {
     public static String generateSomeCharacter(int characterCount, String c) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < characterCount; i++) {
-            sb.append(c == null ? SYMBOL.UNDERLINE : c);
+            sb.append(c == null ? Symbol.UNDERLINE : c);
         }
         return sb.toString();
     }
@@ -228,7 +223,7 @@ public class StringUtility {
      * null或""为true 否则为false
      */
     public static boolean isNullOrEmpty(Object str) {
-        return str == null || SYMBOL.EMPTY.equals(str.toString().trim());
+        return str == null || Symbol.EMPTY.equals(str.toString().trim());
     }
 
     /**
@@ -236,10 +231,10 @@ public class StringUtility {
      */
     public static String getOnlineQQ(String qq) {
         return "<a target=blank href=\"http://wpa.qq.com/msgrd?V=1&Uin={0}&Exe=QQ&Site="
-                + ConfigUtility.getLanguageValue(ConfigKeyLanguage.WEBSITE_NAME,
-                "zh_cn")
-                + "&Menu=No\"><img border=\"0\" src=\"http://wpa.qq.com/pa?p=1:"
-                + qq + ":1\" alt=\"给我发消息\"></a>";
+            + ConfigUtility.getLanguageValue(ConfigKeyLanguage.WEBSITE_NAME,
+            "zh_cn")
+            + "&Menu=No\"><img border=\"0\" src=\"http://wpa.qq.com/pa?p=1:"
+            + qq + ":1\" alt=\"给我发消息\"></a>";
     }
 
     /**
@@ -249,17 +244,17 @@ public class StringUtility {
         if (!html.contains("<br/>")) {
             return html;
         }
-        return html.toLowerCase().replace("<br/>", CONSTANT.ENTER_TEXT);
+        return html.toLowerCase().replace("<br/>", Constant.ENTER_TEXT);
     }
 
     /**
      * 将回车文本转换成html中的br
      */
     public static String convertEnterTextToHtmlBr(String text) {
-        if (!text.contains(CONSTANT.ENTER_TEXT)) {
+        if (!text.contains(Constant.ENTER_TEXT)) {
             return text;
         }
-        return text.replace(CONSTANT.ENTER_TEXT, "<br/>");
+        return text.replace(Constant.ENTER_TEXT, "<br/>");
     }
 
     /**
@@ -292,9 +287,9 @@ public class StringUtility {
         for (int i = 0; i < tmp.length / 2; i++) {
             byte src0 = tmp[i * 2];
             byte src1 = tmp[i * 2 + 1];
-            byte b0 = Byte.decode("0x" + new String(new byte[]{src0}));
+            byte b0 = Byte.decode("0x" + new String(new byte[] {src0}));
             b0 = (byte) (b0 << 4);
-            byte b1 = Byte.decode("0x" + new String(new byte[]{src1}));
+            byte b1 = Byte.decode("0x" + new String(new byte[] {src1}));
             ret[i] = (byte) (b0 ^ b1);
         }
         return ret;
@@ -304,7 +299,7 @@ public class StringUtility {
      * 从数组array中排除exceptArray并拼接成数组 用于标签删除时的帖子标签更新
      */
     public static String join(Object[] array, char separator,
-            Object[] exceptArray) {
+        Object[] exceptArray) {
         StringBuilder sb = new StringBuilder();
         for (Object object : array) {
             if (existInArray(exceptArray, object)) {
@@ -333,7 +328,7 @@ public class StringUtility {
     }
 
     public static String join(Map<Integer, String> map) {
-        return join(map, SYMBOL.COMMA);
+        return join(map, Symbol.COMMA);
     }
 
     public static String join(Map<Integer, String> map, String joinChar) {
@@ -349,9 +344,9 @@ public class StringUtility {
 
     public static String join(Iterable<?> collection) {
         if (collection == null) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
-        return join(collection, SYMBOL.COMMA);
+        return join(collection, Symbol.COMMA);
     }
 
     public static String join(Iterable<?> collection, String joinChar) {
@@ -381,7 +376,7 @@ public class StringUtility {
 
     public static String decodeForGet(String text) {
         try {
-            return new String(text.getBytes(CONSTANT.CHARSET_ISO_8859_1), CONSTANT.CHARSET_UTF_8);
+            return new String(text.getBytes(Constant.CHARSET_ISO_8859_1), Constant.CHARSET_UTF_8);
         } catch (UnsupportedEncodingException e) {
             return null;
         }
@@ -391,7 +386,7 @@ public class StringUtility {
      * 驼峰格式变小写_分隔串
      */
     public static String humpToLower(String source) {
-        return humpToLower(source, CHAR_SYMBOL.UNDERLINE);
+        return humpToLower(source, CharSymbol.UNDERLINE);
     }
 
     public static String humpToLower(String source, char split) {
@@ -400,7 +395,7 @@ public class StringUtility {
     }
 
     public static String underlineToHump(String source) {
-        return toHump(source, SYMBOL.UNDERLINE);
+        return toHump(source, Symbol.UNDERLINE);
     }
 
     public static String toHump(String source, String split) {
@@ -424,12 +419,12 @@ public class StringUtility {
     }
 
     public static InputStream inputStream(String s) throws UnsupportedEncodingException {
-        return new ByteArrayInputStream(s.getBytes(CONSTANT.CHARSET_UTF_8));
+        return new ByteArrayInputStream(s.getBytes(Constant.CHARSET_UTF_8));
     }
 
     public static String replace(String source, Map<String, String> rep) {
         if (isNullOrEmpty(source)) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         for (String key : rep.keySet()) {
             if (source.contains(key) && rep.containsKey(key) && rep.get(key) != null) {
@@ -443,7 +438,7 @@ public class StringUtility {
      * 将字节数组转换为十六进制字符串
      */
     public static String byteToStr(byte[] byteArray) {
-        String strDigest = SYMBOL.EMPTY;
+        String strDigest = Symbol.EMPTY;
         for (byte b : byteArray) {
             strDigest += byteToHexStr(b);
         }
@@ -461,10 +456,9 @@ public class StringUtility {
         return new String(tempArr);
     }
 
-
     public static String wrap(String source, String wrap, String lineSplit) {
         if (isNullOrEmpty(source)) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
 
         if (isNullOrEmpty(wrap)) {
@@ -472,7 +466,7 @@ public class StringUtility {
         }
 
         if (isNullOrEmpty(lineSplit)) {
-            lineSplit = CONSTANT.ENTER_TEXT;
+            lineSplit = Constant.ENTER_TEXT;
         }
 
         String[] lineArray = source.split(lineSplit);
@@ -484,16 +478,16 @@ public class StringUtility {
     }
 
     public static String wrap(String source, String wrap) {
-        return wrap(source, wrap, CONSTANT.ENTER_TEXT);
+        return wrap(source, wrap, Constant.ENTER_TEXT);
     }
 
     public static String wrap(String source) {
-        return wrap(source, "<p>%1$s</p>", CONSTANT.ENTER_TEXT);
+        return wrap(source, "<p>%1$s</p>", Constant.ENTER_TEXT);
     }
 
     public static String subString(String source, String c) {
         if (isNullOrEmpty(source)) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         if (source.contains(c)) {
             source = source.substring(0, source.indexOf(c));
@@ -523,27 +517,27 @@ public class StringUtility {
         if (target.startsWith(rootPath)) {
             target = target.substring(rootPath.length());
         }
-        source = subString(source, SYMBOL.POUND_SIGN);
-        target = subString(target, SYMBOL.POUND_SIGN);
+        source = subString(source, Symbol.POUND_SIGN);
+        target = subString(target, Symbol.POUND_SIGN);
         if (!withParameter) {
-            source = subString(source, SYMBOL.QUESTION_MARK);
-            target = subString(target, SYMBOL.QUESTION_MARK);
+            source = subString(source, Symbol.QUESTION_MARK);
+            target = subString(target, Symbol.QUESTION_MARK);
         }
 
-        String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, EXTENSION.JSP);
+        String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.JSP);
         if (source.endsWith(extension)) {
-            source = source.replace(extension, SYMBOL.EMPTY);
+            source = source.replace(extension, Symbol.EMPTY);
         }
 
         if (target.endsWith(extension)) {
-            target = target.replace(extension, SYMBOL.EMPTY);
+            target = target.replace(extension, Symbol.EMPTY);
         }
 
-        if (source.startsWith(SYMBOL.SLASH)) {
-            source = source.replace(SYMBOL.SLASH, SYMBOL.EMPTY);
+        if (source.startsWith(Symbol.SLASH)) {
+            source = source.replace(Symbol.SLASH, Symbol.EMPTY);
         }
-        if (target.startsWith(SYMBOL.SLASH)) {
-            target = target.replace(SYMBOL.SLASH, SYMBOL.EMPTY);
+        if (target.startsWith(Symbol.SLASH)) {
+            target = target.replace(Symbol.SLASH, Symbol.EMPTY);
         }
         return source.equals(target);
     }
@@ -560,10 +554,9 @@ public class StringUtility {
         return true;
     }
 
-
     public static String format(String format, Object... args) {
         if (format == null) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
 
         if (!format.contains("{}") || args == null || args.length == 0) {
@@ -586,7 +579,7 @@ public class StringUtility {
             StringBuilder exceptionString = new StringBuilder();
             if (!StringUtility.isNullOrEmpty(msg)) {
                 exceptionString.append(msg);
-                exceptionString.append(CONSTANT.ENTER_TEXT);
+                exceptionString.append(Constant.ENTER_TEXT);
             }
             exceptionString.append(sw.toString());
             return exceptionString.toString();
@@ -626,8 +619,8 @@ public class StringUtility {
     /**
      * Check whether the given {@code CharSequence} contains actual <em>text</em>.
      * <p>More specifically, this method returns {@code true} if the
-     * {@code CharSequence} is not {@code null}, its length is greater than
-     * 0, and it contains at least one non-whitespace character.
+     * {@code CharSequence} is not {@code null}, its length is greater than 0, and it contains at least one
+     * non-whitespace character.
      * <p><pre class="code">
      * StringUtils.hasText(null) = false
      * StringUtils.hasText("") = false
@@ -637,8 +630,8 @@ public class StringUtility {
      * </pre>
      *
      * @param str the {@code CharSequence} to check (may be {@code null})
-     * @return {@code true} if the {@code CharSequence} is not {@code null},
-     * its length is greater than 0, and it does not contain whitespace only
+     * @return {@code true} if the {@code CharSequence} is not {@code null}, its length is greater than 0, and it does
+     * not contain whitespace only
      * @see Character#isWhitespace
      */
     public static boolean hasText(CharSequence str) {

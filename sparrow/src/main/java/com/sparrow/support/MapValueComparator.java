@@ -22,9 +22,6 @@ import com.sparrow.enums.Order;
 import java.util.Comparator;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class MapValueComparator<T> implements Comparator<T> {
     Map<T, Double> map;
 

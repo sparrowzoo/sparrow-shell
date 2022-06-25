@@ -17,8 +17,8 @@
 
 package com.sparrow.support;
 
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ConfigUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +26,6 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.URL;
 
-/**
- * @author harry
- */
 public class EnvironmentSupport {
     private static Logger logger = LoggerFactory.getLogger(EnvironmentSupport.class);
 
@@ -49,13 +46,13 @@ public class EnvironmentSupport {
      */
     public String getClassesPhysicPath() {
         URL url = Thread.currentThread().getContextClassLoader()
-                .getResource("");
+            .getResource("");
         if (url != null) {
             return url.getPath().replace("%20", " ");
         }
         String path = this.getClass().getProtectionDomain().getCodeSource()
-                .getLocation().getPath();
-        return path.substring(0, path.lastIndexOf(SYMBOL.SLASH));
+            .getLocation().getPath();
+        return path.substring(0, path.lastIndexOf(Symbol.SLASH));
     }
 
     /**
@@ -102,8 +99,8 @@ public class EnvironmentSupport {
     }
 
     public String getWorkspace() {
-        if (ConfigUtility.getValue(CONSTANT.WORKSPACE) != null) {
-            return ConfigUtility.getValue(CONSTANT.WORKSPACE);
+        if (ConfigUtility.getValue(Constant.WORKSPACE) != null) {
+            return ConfigUtility.getValue(Constant.WORKSPACE);
         }
         String classPath = this.getClassesPhysicPath();
         if (classPath.contains("/bin")) {
@@ -113,19 +110,18 @@ public class EnvironmentSupport {
         } else if (classPath.contains("/WebRoot")) {
             classPath = classPath.substring(0, classPath.indexOf("/WebRoot"));
         }
-        classPath = classPath.substring(0, classPath.lastIndexOf(SYMBOL.SLASH));
-        if (classPath.startsWith(SYMBOL.SLASH)) {
+        classPath = classPath.substring(0, classPath.lastIndexOf(Symbol.SLASH));
+        if (classPath.startsWith(Symbol.SLASH)) {
             classPath = classPath.substring(1);
         }
-        if (classPath.contains(SYMBOL.SLASH)) {
-            classPath = classPath.replace(SYMBOL.SLASH, SYMBOL.BACKSLASH);
+        if (classPath.contains(Symbol.SLASH)) {
+            classPath = classPath.replace(Symbol.SLASH, Symbol.BACKSLASH);
         }
         return classPath;
     }
 
     /**
-     * 文件相对路径 path 不以’/'开头时默认是从此类所在的包下取资源，
-     * 以’/'开头则是从ClassPath根下获取。其只是通过path构造一个绝对路径，最终还是由ClassLoader获取资源。
+     * 文件相对路径 path 不以’/'开头时默认是从此类所在的包下取资源， 以’/'开头则是从ClassPath根下获取。其只是通过path构造一个绝对路径，最终还是由ClassLoader获取资源。
      * <p/>
      * <p/>
      * tomcat exception :org.apache.catalina.loader.WebappClassLoader findResourceInternal INFO: Illegal access: this
@@ -133,8 +129,7 @@ public class EnvironmentSupport {
      * stack trace is caused by an error thrown for debugging purposes as well as to attempt to terminate the thread
      * which caused the illegal access, and has no functional impact. java.lang.NullPointerException at
      * org.apache.catalina.loader.WebappClassLoader.getResource(WebappClassLoader.java:1604) at
-     * java.lang.Class.getResource(Class.java:2076)
-     * at com.sparrow.support.EnvironmentSupport.getFileInputStream(EnvironmentSupport.java:123)
+     * java.lang.Class.getResource(Class.java:2076) at com.sparrow.support.EnvironmentSupport.getFileInputStream(EnvironmentSupport.java:123)
      * <p/>
      * resolve solution :reloadable="false"
      * <p/>

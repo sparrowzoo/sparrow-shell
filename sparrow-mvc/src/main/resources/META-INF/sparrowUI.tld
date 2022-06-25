@@ -878,7 +878,7 @@
     <!-- JRadioBoxList -->
     <tag>
         <name>radio_box_list</name>
-        <tag-class>com.sparrow.mvc.ui.RedioBoxList</tag-class>
+        <tag-class>com.sparrow.mvc.ui.RadioBoxList</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>id</name>

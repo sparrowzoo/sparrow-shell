@@ -17,7 +17,7 @@
 
 package com.sparrow.orm;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
@@ -28,10 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-
-/**
- * @author harry
- */
 public class SparrowEntityManager extends AbstractEntityManagerAdapter {
     private static Logger logger = LoggerFactory.getLogger(SparrowEntityManager.class);
 
@@ -48,7 +44,6 @@ public class SparrowEntityManager extends AbstractEntityManagerAdapter {
     public String parsePropertyParameter(String column, String property) {
         return "?";
     }
-
 
     public int getTableBucketCount() {
         return tableBucketCount;
@@ -71,9 +66,7 @@ public class SparrowEntityManager extends AbstractEntityManagerAdapter {
     /**
      * 自定义条件，手动设置表
      *
-     * @param suffixParameters 与hashFieldMap 一一映射
-     *                         suffixParameters为运行时通过参数获取，
-     *                         hashFieldMap 为对象载时获取
+     * @param suffixParameters 与hashFieldMap 一一映射 suffixParameters为运行时通过参数获取， hashFieldMap 为对象载时获取
      * @return
      */
     public String getTableSuffix(List<Object> suffixParameters) {
@@ -113,9 +106,9 @@ public class SparrowEntityManager extends AbstractEntityManagerAdapter {
             resultSuffix.put(field.getHashIndex(), hash);
         }
         if (resultSuffix.size() > 0) {
-            return SYMBOL.UNDERLINE + StringUtility.join(resultSuffix, SYMBOL.UNDERLINE);
+            return Symbol.UNDERLINE + StringUtility.join(resultSuffix, Symbol.UNDERLINE);
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public DatabaseSplitStrategy getDatabaseSplitStrategy() {
@@ -126,7 +119,7 @@ public class SparrowEntityManager extends AbstractEntityManagerAdapter {
     }
 
     public void parseField(Field field, List<Parameter> parameters, Object o, Map<Integer, Object> tableSuffix,
-                           boolean update) {
+        boolean update) {
         if (field.isPersistence()) {
             if (!update || field.isUpdatable()) {
                 parameters.add(new Parameter(field, o));

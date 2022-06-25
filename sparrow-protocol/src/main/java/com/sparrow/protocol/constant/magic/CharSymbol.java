@@ -17,10 +17,7 @@
 
 package com.sparrow.protocol.constant.magic;
 
-/**
- * @author harry
- */
-public class CHAR_SYMBOL {
+public class CharSymbol {
     /**
      * 空格
      */

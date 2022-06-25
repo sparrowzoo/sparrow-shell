@@ -21,9 +21,6 @@ import com.sparrow.mvc.ui.grid.FieldParser;
 import com.sparrow.mvc.ui.grid.attribute.CheckBoxAttribute;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class CheckBoxFieldParserImpl implements FieldParser {
     @Override
     public String parse(String[] config, List<String> valueList) {

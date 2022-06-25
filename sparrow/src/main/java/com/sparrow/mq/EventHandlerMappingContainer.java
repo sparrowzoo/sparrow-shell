@@ -17,11 +17,6 @@
 
 package com.sparrow.mq;
 
-/**
- * created by harry on 2016/4/13.
- *
- * @author harry
- */
 public interface EventHandlerMappingContainer {
 
     void put(MQHandler handler);

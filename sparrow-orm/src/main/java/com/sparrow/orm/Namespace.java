@@ -23,9 +23,7 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-/**
- * Created by harry on 2015/7/14.
- */
+
 @Target({TYPE})
 @Retention(RUNTIME)
 public @interface Namespace {

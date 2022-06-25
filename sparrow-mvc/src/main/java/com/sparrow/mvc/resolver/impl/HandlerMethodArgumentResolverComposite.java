@@ -30,18 +30,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class HandlerMethodArgumentResolverComposite implements HandlerMethodArgumentResolver {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final List<HandlerMethodArgumentResolver> argumentResolvers =
-            new LinkedList<HandlerMethodArgumentResolver>();
+        new LinkedList<HandlerMethodArgumentResolver>();
 
     private final Map<MethodParameter, HandlerMethodArgumentResolver> argumentResolverCache =
-            new ConcurrentHashMap<MethodParameter, HandlerMethodArgumentResolver>(256);
+        new ConcurrentHashMap<MethodParameter, HandlerMethodArgumentResolver>(256);
 
     public HandlerMethodArgumentResolverComposite addResolver(HandlerMethodArgumentResolver resolver) {
         this.argumentResolvers.add(resolver);
@@ -49,7 +46,7 @@ public class HandlerMethodArgumentResolverComposite implements HandlerMethodArgu
     }
 
     public HandlerMethodArgumentResolverComposite addResolvers(
-            List<? extends HandlerMethodArgumentResolver> resolvers) {
+        List<? extends HandlerMethodArgumentResolver> resolvers) {
         if (resolvers != null) {
             for (HandlerMethodArgumentResolver resolver : resolvers) {
                 this.argumentResolvers.add(resolver);
@@ -58,7 +55,6 @@ public class HandlerMethodArgumentResolverComposite implements HandlerMethodArgu
         return this;
     }
 
-
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return true;
@@ -66,23 +62,23 @@ public class HandlerMethodArgumentResolverComposite implements HandlerMethodArgu
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ServletInvokableHandlerMethod executionChain,
-                                  HttpServletRequest request) throws Exception {
+        HttpServletRequest request) throws Exception {
         HandlerMethodArgumentResolver resolver = this.argumentResolverCache.get(parameter);
         if (resolver != null) {
             return resolver.resolveArgument(parameter, executionChain, request);
         }
         //先从request resolver
-        Object result=null;
+        Object result = null;
         for (HandlerMethodArgumentResolver methodArgumentResolver : this.argumentResolvers) {
             if (methodArgumentResolver.supportsParameter(parameter)) {
-                result= methodArgumentResolver.resolveArgument(parameter, executionChain, request);
+                result = methodArgumentResolver.resolveArgument(parameter, executionChain, request);
                 if (result != null) {
                     this.argumentResolverCache.put(parameter, methodArgumentResolver);
                     return result;
                 }
             }
         }
-        logger.warn("[{}] can't parse please check parameter name is correct",parameter.getParameterName());
+        logger.warn("[{}] can't parse please check parameter name is correct", parameter.getParameterName());
         return null;
     }
 }

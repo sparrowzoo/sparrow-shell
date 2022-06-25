@@ -17,14 +17,11 @@
 
 package com.sparrow.support;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.enums.Language;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 public class ErrorMessage {
 
     private static ErrorMessage errorSupport = new ErrorMessage();
@@ -49,7 +46,7 @@ public class ErrorMessage {
             return message;
         }
 
-        if (key.contains(SYMBOL.DOT)) {
+        if (key.contains(Symbol.DOT)) {
             key = key.split("\\.")[0];
         }
         message = ConfigUtility.getLanguageValue(key, language.toString().toLowerCase());

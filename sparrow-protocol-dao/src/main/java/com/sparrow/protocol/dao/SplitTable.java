@@ -27,10 +27,7 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Created by harry
- * <p>
  * 根据类型与索引生成表后缀
- *
  */
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)

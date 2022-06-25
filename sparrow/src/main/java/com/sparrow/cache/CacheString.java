@@ -20,11 +20,6 @@ package com.sparrow.cache;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
 
-/**
- *
- * @author harry
- * @date 2018/1/26
- */
 public interface CacheString {
     String set(KEY key, Object value) throws CacheConnectionException;
 

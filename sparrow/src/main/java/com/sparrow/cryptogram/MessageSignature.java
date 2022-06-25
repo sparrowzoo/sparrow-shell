@@ -17,18 +17,13 @@
 
 package com.sparrow.cryptogram;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.StringUtility;
 
 import java.security.MessageDigest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * 对md5 或sha1加密 不需要密钥
- *
- * @author harry
- */
 public class MessageSignature {
     private Logger logger = LoggerFactory.getLogger(MessageSignature.class);
     private static MessageSignature messageDigest = new MessageSignature();
@@ -67,7 +62,7 @@ public class MessageSignature {
      * @return
      */
     public String md5(String source) {
-        return this.cryptogram(source, MD5, CONSTANT.CHARSET_UTF_8);
+        return this.cryptogram(source, MD5, Constant.CHARSET_UTF_8);
     }
 
     /**
@@ -77,7 +72,7 @@ public class MessageSignature {
      * @return
      */
     public String sha1(String source) {
-        return this.cryptogram(source, SHA1, CONSTANT.CHARSET_UTF_8);
+        return this.cryptogram(source, SHA1, Constant.CHARSET_UTF_8);
     }
 
     public String md5(String source, String charset) {

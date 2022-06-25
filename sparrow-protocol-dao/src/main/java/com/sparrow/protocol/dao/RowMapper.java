@@ -20,9 +20,6 @@ package com.sparrow.protocol.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * @author harry
- */
 public interface RowMapper<T> {
     T mapRow(ResultSet rs, int rowNum) throws SQLException;
 }

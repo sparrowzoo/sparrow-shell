@@ -19,11 +19,6 @@ package com.sparrow.datasource;
 
 import com.sparrow.utility.HtmlUtility;
 
-/**
- * datasource config
- *
- * @author harry
- */
 public class DatasourceConfig {
 
     /**
@@ -55,7 +50,7 @@ public class DatasourceConfig {
     }
 
     public void setUrl(String url) {
-        this.url =  HtmlUtility.decode(url);
+        this.url = HtmlUtility.decode(url);
     }
 
     public String getUsername() {

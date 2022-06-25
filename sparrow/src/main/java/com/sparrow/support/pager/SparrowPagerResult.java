@@ -1,13 +1,30 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sparrow.support.pager;
 
 import com.sparrow.constant.Pager;
-import com.sparrow.protocol.constant.magic.ESCAPED;
+import com.sparrow.protocol.constant.magic.Escaped;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.utility.StringUtility;
 
 import java.util.List;
 
-public class SparrowPagerResult<T,A> extends PagerResult<T,A> {
+public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
 
     private String indexPageFormat = Pager.ACTION_PAGE_FORMAT;
     private String pageFormat = Pager.ACTION_PAGE_FORMAT;
@@ -20,7 +37,6 @@ public class SparrowPagerResult<T,A> extends PagerResult<T,A> {
     public SparrowPagerResult(PagerResult pagerResult) {
         this(pagerResult.getPageSize(), pagerResult.getCurrentPageIndex(), pagerResult.getRecordCount(), pagerResult.getList());
     }
-
 
     public SparrowPagerResult(Integer pageSize, Integer currentPageIndex, Long recordCount, List<T> list) {
         super(pageSize, currentPageIndex);
@@ -79,38 +95,37 @@ public class SparrowPagerResult<T,A> extends PagerResult<T,A> {
         StringBuilder pageString = new StringBuilder();
         pageString.append("<div id=\"divPage\" class=\"page\">\n");
 
-
         if (this.currentPageIndex != 1) {
             if (StringUtility.isNullOrEmpty(this.indexPageFormat)) {
                 pageString.append("<a " + pageFirstStyle + " href=\""
-                        + this.pageFormat.replace(Pager.PAGE_INDEX, "1")
-                        + "\">首页</a>\n");
+                    + this.pageFormat.replace(Pager.PAGE_INDEX, "1")
+                    + "\">首页</a>\n");
             } else {
                 pageString.append("<a " + pageFirstStyle + " href=\""
-                        + this.indexPageFormat.replace(Pager.PAGE_INDEX, "1")
-                        + "\">首页</a>\n");
+                    + this.indexPageFormat.replace(Pager.PAGE_INDEX, "1")
+                    + "\">首页</a>\n");
             }
             if (!StringUtility.isNullOrEmpty(this.indexPageFormat)
-                    && this.currentPageIndex - 1 == 1) {
+                && this.currentPageIndex - 1 == 1) {
                 pageString.append("<a "
-                        + pageNumberStyle
-                        + " href=\""
-                        + this.indexPageFormat.replace(Pager.PAGE_INDEX,
-                        String.valueOf(this.currentPageIndex - 1)));
+                    + pageNumberStyle
+                    + " href=\""
+                    + this.indexPageFormat.replace(Pager.PAGE_INDEX,
+                    String.valueOf(this.currentPageIndex - 1)));
                 pageString.append("\">上一页");
                 pageString.append("</a>\n");
             } else {
                 pageString.append("<a "
-                        + pageNumberStyle
-                        + " href=\""
-                        + this.pageFormat.replace(Pager.PAGE_INDEX,
-                        String.valueOf(this.currentPageIndex - 1)));
+                    + pageNumberStyle
+                    + " href=\""
+                    + this.pageFormat.replace(Pager.PAGE_INDEX,
+                    String.valueOf(this.currentPageIndex - 1)));
                 pageString.append("\">上一页");
                 pageString.append("</a>\n");
             }
         } else {
             pageString.append("<a " + pageFirstDisableStyle + ">首页</a>\n<a "
-                    + disablePageNumStyle + ">上一页</a>\n");
+                + disablePageNumStyle + ">上一页</a>\n");
         }
 
         int remainderOfPage = this.currentPageIndex % pageNumberCount;
@@ -127,14 +142,14 @@ public class SparrowPagerResult<T,A> extends PagerResult<T,A> {
                 pageString.append("</a>\n");
             } else if (i == 1 && !StringUtility.isNullOrEmpty(this.indexPageFormat)) {
                 pageString.append("<a " + pageNumberStyle + " href=\""
-                        + this.indexPageFormat.replace(Pager.PAGE_INDEX, "1")
-                        + "\">" + i + "</a>\n");
+                    + this.indexPageFormat.replace(Pager.PAGE_INDEX, "1")
+                    + "\">" + i + "</a>\n");
             } else {
                 pageString.append(" <a "
-                        + pageNumberStyle
-                        + " href=\""
-                        + this.pageFormat.replace(Pager.PAGE_INDEX,
-                        String.valueOf(i)) + "\">");
+                    + pageNumberStyle
+                    + " href=\""
+                    + this.pageFormat.replace(Pager.PAGE_INDEX,
+                    String.valueOf(i)) + "\">");
                 pageString.append(i);
                 pageString.append("</a>\n");
             }
@@ -142,26 +157,26 @@ public class SparrowPagerResult<T,A> extends PagerResult<T,A> {
 
         if (this.currentPageIndex < pageCount) {
             pageString.append("<a "
-                    + pageNumberStyle
-                    + " href=\""
-                    + this.pageFormat.replace(Pager.PAGE_INDEX,
-                    String.valueOf(this.currentPageIndex + 1)));
+                + pageNumberStyle
+                + " href=\""
+                + this.pageFormat.replace(Pager.PAGE_INDEX,
+                String.valueOf(this.currentPageIndex + 1)));
             pageString.append("\">下一页");
             pageString.append("</a>\n");
             pageString.append("<a "
-                    + pageNumberStyle
-                    + " href=\""
-                    + this.pageFormat.replace(Pager.PAGE_INDEX,
-                    String.valueOf(pageCount)) + "\">末页</a>\n");
+                + pageNumberStyle
+                + " href=\""
+                + this.pageFormat.replace(Pager.PAGE_INDEX,
+                String.valueOf(pageCount)) + "\">末页</a>\n");
         } else {
             pageString.append("<a " + disablePageNumStyle + ">下一页</a>\n<a "
-                    + disablePageNumStyle + "\">末页</a>\n");
+                + disablePageNumStyle + "\">末页</a>\n");
         }
         if (!this.simple) {
             pageString.append("<input id=\"defPageIndex\" onmouseover=\"this.select();\" onkeyup=\"this.value=this.value.replace(/\\D/g,'');\"  onafterpaste=\"this.value=this.value.replace(/\\D/g,'');\""
-                    + "onblur=\"if(this.value.trim()==''){this.value=parseInt($('currentPageIndex').value)+1;}\" value=\""
-                    + (this.currentPageIndex + 1)
-                    + "\" type=\"text\" />\n");
+                + "onblur=\"if(this.value.trim()==''){this.value=parseInt($('currentPageIndex').value)+1;}\" value=\""
+                + (this.currentPageIndex + 1)
+                + "\" type=\"text\" />\n");
             pageString.append("<a id=\"go\" onclick=\"$.page.toTargetPage(");
             pageString.append(pageCount);
             pageString.append(",'");
@@ -173,11 +188,11 @@ public class SparrowPagerResult<T,A> extends PagerResult<T,A> {
             pageString.append("</span>共<span>\n");
             pageString.append(pageCount);
             pageString.append("</span>页");
-            pageString.append(ESCAPED.EM_SPACE);
+            pageString.append(Escaped.EM_SPACE);
             pageString.append("每页<span id='rowCountPerPage'>");
             pageString.append(this.pageSize);
             pageString.append("</span>条");
-            pageString.append(ESCAPED.EM_SPACE);
+            pageString.append(Escaped.EM_SPACE);
             pageString.append("共<span id='sumOfRecord'>");
             pageString.append(this.recordCount);
             pageString.append("</span>条");

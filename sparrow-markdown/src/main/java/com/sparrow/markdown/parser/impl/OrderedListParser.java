@@ -16,8 +16,8 @@
  */
 package com.sparrow.markdown.parser.impl;
 
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.CHAR_SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.markdown.mark.MARK;
 import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.mark.TagListEntity;
@@ -25,9 +25,6 @@ import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.StringUtility;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class OrderedListParser extends AbstractListParser {
 
     @Override
@@ -47,12 +44,12 @@ public class OrderedListParser extends AbstractListParser {
         }
         tempPointer += digit.length();
         //the next letter must be .
-        if (content.charAt(tempPointer) != CHAR_SYMBOL.DOT) {
+        if (content.charAt(tempPointer) != CharSymbol.DOT) {
             return false;
         }
         //next letter must by ' '
         tempPointer++;
-        if (content.charAt(tempPointer) != CHAR_SYMBOL.BLANK) {
+        if (content.charAt(tempPointer) != CharSymbol.BLANK) {
             return false;
         }
         return true;
@@ -60,7 +57,7 @@ public class OrderedListParser extends AbstractListParser {
 
     @Override
     protected TagListEntity validate(MarkContext markContext, TagListEntity currentEntity, String line) {
-        if (line.equals(CONSTANT.ENTER_TEXT_N)) {
+        if (line.equals(Constant.ENTER_TEXT_N)) {
             return currentEntity;
         }
 
@@ -78,16 +75,16 @@ public class OrderedListParser extends AbstractListParser {
             return currentEntity;
         }
 
-        int tempPointer=digit.length();
+        int tempPointer = digit.length();
         //the next letter must be .
-        if (tempPointer>=innerLine.length()||innerLine.charAt(tempPointer) != CHAR_SYMBOL.DOT) {
+        if (tempPointer >= innerLine.length() || innerLine.charAt(tempPointer) != CharSymbol.DOT) {
             currentEntity.setContent(currentEntity.getContent() + markContext.getInnerHtml(this.mark(), innerLine));
             return currentEntity;
         }
 
         //the next letter must be ' '
         tempPointer++;
-        if (tempPointer>=innerLine.length()||innerLine.charAt(tempPointer) != CHAR_SYMBOL.BLANK) {
+        if (tempPointer >= innerLine.length() || innerLine.charAt(tempPointer) != CharSymbol.BLANK) {
             currentEntity.setContent(currentEntity.getContent() + markContext.getInnerHtml(this.mark(), innerLine));
             return currentEntity;
         }

@@ -1,31 +1,42 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.container;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.xml.DefaultDocumentLoader;
 import com.sparrow.xml.DocumentLoader;
-import com.sparrow.xml.DtdSchemaResolverAdapter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/**
- * @author by harry
- */
 public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
     private BeanDefinitionParserDelegate delegate;
 
-    public XmlBeanDefinitionReader(SimpleBeanDefinitionRegistry registry,BeanDefinitionParserDelegate delegate) {
+    public XmlBeanDefinitionReader(SimpleBeanDefinitionRegistry registry, BeanDefinitionParserDelegate delegate) {
         super(registry);
-        this.delegate=delegate;
+        this.delegate = delegate;
     }
 
-    protected void beforeParse(String xmlFileName){
-
+    protected void beforeParse(String xmlFileName) {
     }
 
-    protected  void afterParse(String xmlFileName){
+    protected void afterParse(String xmlFileName) {
 
     }
 
@@ -36,15 +47,15 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
         if (delegate.isBeanElement(element)) {
             String beanName = element.getAttribute(BeanDefinitionParserDelegate.NAME_ATTRIBUTE).trim();
-            BeanDefinition bd=  delegate.processBeanElement(element);
-            this.getRegistry().pubObject(beanName,bd);
+            BeanDefinition bd = delegate.processBeanElement(element);
+            this.getRegistry().pubObject(beanName, bd);
         }
     }
 
     public void processImportElement(Element element) throws Exception {
         String resource = element.getAttribute("resource");
-        if (!resource.startsWith(SYMBOL.SLASH)) {
-            resource = SYMBOL.SLASH + resource;
+        if (!resource.startsWith(Symbol.SLASH)) {
+            resource = Symbol.SLASH + resource;
         }
         logger.info("-------------init bean " + resource + " ...---------------------------");
         this.loadBeanDefinitions(resource);
@@ -59,21 +70,19 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                     Element ele = (Element) node;
                     if (delegate.isDefaultNamespace(ele)) {
                         parseDefaultElement(ele);
-                    }
-                    else {
+                    } else {
                         delegate.parseCustomElement(ele);
                     }
                 }
             }
-        }
-        else {
+        } else {
             delegate.parseCustomElement(root);
         }
     }
 
     @Override public void loadBeanDefinitions(String xmlFileName) throws Exception {
         DocumentLoader documentLoader = new DefaultDocumentLoader();
-        Document doc = documentLoader.loadDocument(xmlFileName,false);
+        Document doc = documentLoader.loadDocument(xmlFileName, false);
         this.beforeParse(xmlFileName);
         this.parse(doc.getDocumentElement());
         this.afterParse(xmlFileName);

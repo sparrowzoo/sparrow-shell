@@ -18,20 +18,15 @@
 package com.sparrow.datasource;
 
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.core.Pair;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 
-/**
- * 唯一标识一个数据源
- *
- * @author harry
- */
 public class DatasourceKey {
     public static DatasourceKey parse(String key) {
-        Pair<String, String> pair = Pair.split(key, SYMBOL.UNDERLINE);
+        Pair<String, String> pair = Pair.split(key, Symbol.UNDERLINE);
         return new DatasourceKey(pair.getFirst(), pair.getSecond());
     }
 
@@ -49,7 +44,7 @@ public class DatasourceKey {
 
     /**
      * 数据库模式 从entity 匹配中读取
-     *
+     * <p>
      * 通过该属性与上下文的suffix唯一确定一个datasource key
      *
      * @see javax.persistence.Table
@@ -66,7 +61,7 @@ public class DatasourceKey {
         }
         String schema = ConfigUtility.getValue(Config.DEFAULT_DATA_SOURCE_KEY);
         if (StringUtility.isNullOrEmpty(schema)) {
-            schema = CONSTANT.SPARROW;
+            schema = Constant.SPARROW;
         }
         this.schema = schema;
         return schema;
@@ -78,7 +73,7 @@ public class DatasourceKey {
 
     public String getSuffix() {
         if (StringUtility.isNullOrEmpty(suffix)) {
-            suffix = CONSTANT.DEFAULT;
+            suffix = Constant.DEFAULT;
         }
         return suffix;
     }
@@ -92,7 +87,7 @@ public class DatasourceKey {
      *
      * @return
      */
-    public String getKey()  {
-        return this.getSchema() + SYMBOL.UNDERLINE + this.getSuffix();
+    public String getKey() {
+        return this.getSchema() + Symbol.UNDERLINE + this.getSuffix();
     }
 }

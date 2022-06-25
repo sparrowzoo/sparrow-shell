@@ -30,24 +30,26 @@ import java.sql.SQLException;
  * @author by harry
  */
 public class DatasourceTest {
-    @Test
-    public void datasourceTest() throws SQLException {
-        Container container = ApplicationContext.getContainer();
-        container.setContextConfigLocation("/dao.xml");
-        container.init();
-        DataSourceFactory dataSourceFactory = container.getBean("dataSourceFactory");
-        DataSource dataSource = dataSourceFactory.getDataSource("user_default");
 
-        System.err.println("datasource valid before "+dataSource);
-        DataSourceValidChecker connectionValidChecker = new ConnectionValidCheckerAdapter();
-        try {
-            while (true) {
-                connectionValidChecker.isValid(dataSource);
-            }
-            //System.err.println("datasource valid after "+dataSource);
+  @Test
+  public void datasourceTest() throws SQLException {
+    Container container = ApplicationContext.getContainer();
+    container.setContextConfigLocation("/dao.xml");
+    //container.setConfigLocation("/syste2.properties");
+    container.init();
+    DataSourceFactory dataSourceFactory = container.getBean("dataSourceFactory");
+    DataSource dataSource = dataSourceFactory.getDataSource("user_default");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    System.err.println("datasource valid before " + dataSource);
+    DataSourceValidChecker connectionValidChecker = new ConnectionValidCheckerAdapter();
+    try {
+      while (true) {
+        connectionValidChecker.isValid(dataSource);
+      }
+      //System.err.println("datasource valid after "+dataSource);
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 }

@@ -17,24 +17,18 @@
 
 package com.sparrow.support.lucence;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.*;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
-
 import java.io.File;
 import java.io.IOException;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.LogByteSizeMergePolicy;
+import org.apache.lucene.index.LogMergePolicy;
+import org.apache.lucene.search.IndexSearcher;
 
-/**
- * @author harry
- */
 public class IndexManager {
     /**
-     * 创建一个分词器
-     * Analyzer analyzer = new IKAnalyzer(true);
+     * 创建一个分词器 Analyzer analyzer = new IKAnalyzer(true);
      */
     private Analyzer analyzer;
 

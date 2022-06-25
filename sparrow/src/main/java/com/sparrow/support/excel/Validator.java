@@ -19,7 +19,7 @@ package com.sparrow.support.excel;
 
 import com.sparrow.constant.Regex;
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.enums.DataType;
 import com.sparrow.support.excel.exception.TemplateCellValidateException;
 import com.sparrow.utility.FileUtility;
@@ -30,11 +30,6 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.regex.Pattern;
 
-/**
- * 字段与标题映射对象
- *
- * @author harry
- */
 public class Validator {
     public static final String VALIDATOR = "validator";
     public static final String CELL = "cell";
@@ -132,7 +127,7 @@ public class Validator {
                     return new CellValue(dataType, date, this.excelTitle);
                 case DECIMAL:
                     Double v;
-                    if (content.endsWith(SYMBOL.PERCENT)) {
+                    if (content.endsWith(Symbol.PERCENT)) {
                         v = Double.valueOf(content.substring(0, content.length() - 1)) / 100d;
                     } else {
                         v = Double.valueOf(content);
@@ -164,12 +159,12 @@ public class Validator {
      */
     public Validator(String line) {
 
-        String[] metadataArray = line.split(SYMBOL.COMMA);
+        String[] metadataArray = line.split(Symbol.COMMA);
         if (metadataArray.length < DIGIT.SIX) {
             throw new RuntimeException("length of fields must be great equal 6");
         }
 
-        if (metadataArray[DIGIT.ONE].contains(SYMBOL.DOLLAR)) {
+        if (metadataArray[DIGIT.ONE].contains(Symbol.DOLLAR)) {
             String[] array = metadataArray[DIGIT.ONE].split("\\$");
             this.table = array[DIGIT.ZERO];
             this.dbField = array[DIGIT.ONE];
@@ -240,7 +235,7 @@ public class Validator {
             String[] options = this.regex.split("\\|");
             Map<String, String> map = new HashMap<String, String>();
             for (String option : options) {
-                String[] optionArray = option.split(SYMBOL.COLON);
+                String[] optionArray = option.split(Symbol.COLON);
                 map.put(optionArray[DIGIT.ZERO].trim(), optionArray[DIGIT.ONE]);
             }
             this.optionMap = map;
@@ -261,7 +256,7 @@ public class Validator {
         List<String> lines = FileUtility.getInstance().readLines(inputStream);
         for (String line : lines) {
             if (line.trim().length() > DIGIT.ZERO) {
-                String[] metadataArray = line.split(SYMBOL.COMMA);
+                String[] metadataArray = line.split(Symbol.COMMA);
                 Integer configSheetIndex = Integer.valueOf(metadataArray[DIGIT.ZERO]);
                 if (!sheetIndex.equals(configSheetIndex)) {
                     continue;

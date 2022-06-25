@@ -1,14 +1,27 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.job.po;
 
-import com.sparrow.protocol.enums.STATUS_RECORD;
+import com.sparrow.protocol.enums.StatusRecord;
 
-/**
- * created by harry on 2018/5/25.
- * @author harry
- */
 public class Job {
 
-    public static Job newJob(Integer jobId, String jobName, String cron, String description, Long effectTime, Long disableTime, Integer createUserId, Integer allowNext, String taskHandler) {
+    public static Job newJob(Integer jobId, String jobName, String cron, String description, Long effectTime,
+        Long disableTime, Integer createUserId, Integer allowNext, String taskHandler) {
         Job job = new Job();
         job.jobId = jobId;
         job.jobName = jobName;
@@ -22,7 +35,7 @@ public class Job {
         job.updateTime = job.createTime;
         job.allowNext = allowNext;
         job.taskHandler = taskHandler;
-        job.status = STATUS_RECORD.ENABLE.ordinal();
+        job.status = StatusRecord.ENABLE.ordinal();
         return job;
     }
 
@@ -43,8 +56,7 @@ public class Job {
     private Long nextTriggerTime;
     private Long lastTriggerTime;
     /**
-     * 是否可以通过creator自动创建trigger
-     * 有些 schedule 是需要运行时，动态确定任务 即下一个trigger或者任务需要依赖上一个任务的结果
+     * 是否可以通过creator自动创建trigger 有些 schedule 是需要运行时，动态确定任务 即下一个trigger或者任务需要依赖上一个任务的结果
      */
     private Integer allowNext;
     private String taskHandler;

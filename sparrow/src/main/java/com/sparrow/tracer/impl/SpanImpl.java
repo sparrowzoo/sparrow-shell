@@ -1,5 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.tracer.impl;
-
 
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.json.Json;
@@ -39,7 +54,6 @@ public class SpanImpl implements Span {
         this.tagPairs.add(new TagPair(key, value));
     }
 
-
     public void setFollower(Span follower) {
         this.follower = follower;
     }
@@ -54,7 +68,6 @@ public class SpanImpl implements Span {
         }
         this.children.add(child);
     }
-
 
     public boolean isFinished() {
         return this.finished;
@@ -161,7 +174,6 @@ public class SpanImpl implements Span {
         return tracer;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -172,10 +184,10 @@ public class SpanImpl implements Span {
         }
         SpanImpl span = (SpanImpl) o;
         return Objects.equals(startTime, span.startTime) &&
-                Objects.equals(name, span.name) &&
-                Objects.equals(endTime, span.endTime) &&
-                Objects.equals(children, span.children) &&
-                Objects.equals(follower, span.follower);
+            Objects.equals(name, span.name) &&
+            Objects.equals(endTime, span.endTime) &&
+            Objects.equals(children, span.children) &&
+            Objects.equals(follower, span.follower);
     }
 
     public List<Span> getChildren() {
@@ -197,7 +209,6 @@ public class SpanImpl implements Span {
     public Long getEndTime() {
         return endTime;
     }
-
 
     public List<TagPair> getTag() {
         return tagPairs;

@@ -24,8 +24,8 @@ import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
 import com.sparrow.mvc.result.ResultErrorAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
-import com.sparrow.protocol.constant.EXTENSION;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.HttpContext;
 
 import javax.servlet.FilterChain;
@@ -33,9 +33,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author harry
- */
 public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnValueResolverHandler {
 
     public JsonMethodReturnValueResolverHandlerImpl() {
@@ -43,13 +40,13 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
 
     @Override
     public boolean support(ServletInvokableHandlerMethod executionChain) {
-        return executionChain.getActionName().endsWith(EXTENSION.JSON);
+        return executionChain.getActionName().endsWith(Extension.JSON);
     }
 
     @Override
     public void errorResolve(Throwable exception, HttpServletRequest request,
         HttpServletResponse response) throws IOException {
-        if(exception instanceof BusinessException){
+        if (exception instanceof BusinessException) {
             Result result = ResultErrorAssembler.assemble((BusinessException) exception, null);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
@@ -69,11 +66,11 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
     public void resolve(ServletInvokableHandlerMethod handlerExecutionChain, Object returnValue, FilterChain chain,
         HttpServletRequest request,
         HttpServletResponse response) throws IOException {
-        if(returnValue==null){
-            returnValue= SYMBOL.EMPTY;
+        if (returnValue == null) {
+            returnValue = Symbol.EMPTY;
         }
         try {
-            Result result=new Result(returnValue);
+            Result result = new Result(returnValue);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
         } finally {
             HttpContext.getContext().remove();

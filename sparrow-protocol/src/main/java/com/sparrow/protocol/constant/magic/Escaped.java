@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.constant;
+package com.sparrow.protocol.constant.magic;
 
-/**
- * @author harry
- */
-public class OPEN_TYPE {
-    public static final String BLANK = "_blank";
-    public static final String SELF = "_self";
-    public static final String PARENT = "_parent";
+public class Escaped {
+    public static final String LESS_THEN = "&lt;";
+    public static final String GREAT_THEN = "&gt;";
+    public static final String AND = "&amp;";
+    public static final String SINGLE_QUOTES = "&apos;";
+    public static final String DOUBLE_QUOTES = "&apos;";
+    public static final String NO_BREAK_SPACE = "&nbsp;";
+    public static final String EM_SPACE = "&emsp;";
 }

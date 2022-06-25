@@ -43,9 +43,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-/**
- * @author harry
- */
 public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     private static Logger logger = LoggerFactory.getLogger(OrmMetadataAccessor.class);
     protected CriteriaProcessor criteriaProcessor = SqlCriteriaProcessorImpl.getInstance();
@@ -145,7 +142,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
         }
 
         if (!StringUtility.isNullOrEmpty(searchCriteria.getPageSize())
-                && searchCriteria.getPageSize() != DIGIT.ALL) {
+            && searchCriteria.getPageSize() != DIGIT.ALL) {
             selectSql.append(searchCriteria.getLimitClause());
         }
         logger.info(selectSql.toString());
@@ -170,7 +167,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
         StringBuilder select = new StringBuilder("select ");
         select.append(this.ormMetadataAccessor.getEntityManager().getFields());
         select.append(" from "
-                + this.ormMetadataAccessor.getEntityManager().getDialectTableName());
+            + this.ormMetadataAccessor.getEntityManager().getDialectTableName());
         Field uniqueField = this.ormMetadataAccessor.getEntityManager().getUniqueField(uniqueKeyCriteria.getUniqueFieldName());
         select.append(" where " + uniqueField.getColumnName() + "=?");
         JDBCParameter jdbcParameter = new JDBCParameter(select.toString(), Collections.singletonList(new Parameter(uniqueField, uniqueField.convert(uniqueKeyCriteria.getKey().toString()))));
@@ -250,7 +247,6 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
         return list;
     }
 
-
     @Override
     @SuppressWarnings("unchecked")
     public Map<I, T> getEntityMap(SearchCriteria criteria) {
@@ -321,18 +317,18 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     @Override
     public List<T> getList(Collection<I> ids) {
         SearchCriteria searchCriteria = new SearchCriteria();
-        String entityClassName=ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
+        String entityClassName = ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
         String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getName();
-        searchCriteria.setWhere(Criteria.field(entityClassName+"."+primaryProperty).in(ids));
+        searchCriteria.setWhere(Criteria.field(entityClassName + "." + primaryProperty).in(ids));
         return this.getList(searchCriteria);
     }
 
     @Override
     public Map<I, T> getEntityMap(Collection<I> ids) {
         SearchCriteria searchCriteria = new SearchCriteria();
-        String entityClassName=ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
+        String entityClassName = ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
         String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getName();
-        searchCriteria.setWhere(Criteria.field(entityClassName+"."+primaryProperty).in(ids));
+        searchCriteria.setWhere(Criteria.field(entityClassName + "." + primaryProperty).in(ids));
         return this.getEntityMap(searchCriteria);
     }
 

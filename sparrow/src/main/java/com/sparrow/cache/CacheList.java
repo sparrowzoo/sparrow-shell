@@ -22,11 +22,6 @@ import com.sparrow.exception.CacheConnectionException;
 
 import java.util.List;
 
-/**
- *
- * @author harry
- * @date 2018/1/26
- */
 public interface CacheList {
     Long getSize(KEY key) throws CacheConnectionException;
 

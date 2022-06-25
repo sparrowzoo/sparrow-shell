@@ -17,23 +17,19 @@
 
 package com.sparrow.orm;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.core.Pair;
 import com.sparrow.enums.ComparisonOperator;
 import com.sparrow.utility.StringUtility;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class Expression {
-
     private boolean showAlias;
     private String alias;
     private Field field;
 
     public String getAlias() {
-        return showAlias ? this.alias + SYMBOL.DOT : SYMBOL.EMPTY;
+        return showAlias ? this.alias + Symbol.DOT : Symbol.EMPTY;
     }
 
     public Field getField() {
@@ -53,12 +49,12 @@ public class Expression {
     }
 
     public static Expression create(String property, ComparisonOperator comparisonOperator, boolean showAlias,
-            Object value, List<Parameter> parameters, List<String> clause) {
+        Object value, List<Parameter> parameters, List<String> clause) {
         return create(property, comparisonOperator, showAlias, value, parameters, clause, true);
     }
 
     public static Expression create(String property, ComparisonOperator comparisonOperator, boolean showAlias,
-            Object value, List<Parameter> parameters, List<String> clause, boolean ignoreEmpty) {
+        Object value, List<Parameter> parameters, List<String> clause, boolean ignoreEmpty) {
         Expression expression = new Expression();
         Pair<String, String> propertyPair = Pair.split(property, "\\.");
         expression.alias = propertyPair.getFirst();
@@ -78,20 +74,20 @@ public class Expression {
 
         String result;
         if (comparisonOperator != null && clause != null && value != null) {
-            String alias = expression.showAlias ? expression.alias + SYMBOL.DOT : SYMBOL.EMPTY;
-            result = alias + expression.field.getColumnName() + SYMBOL.BLANK;
+            String alias = expression.showAlias ? expression.alias + Symbol.DOT : Symbol.EMPTY;
+            result = alias + expression.field.getColumnName() + Symbol.BLANK;
 //            if (!StringUtility.isNullOrEmpty(fieldPair.getSecond())) {
 //                String operator = fieldPair.getSecond().substring(0, 1);
 //                result = result + operator + fieldPair.getSecond().substring(1);
 //            }
             result = result + comparisonOperator.rendered();
             if (parameters != null) {
-                result = result + SYMBOL.QUESTION_MARK;
+                result = result + Symbol.QUESTION_MARK;
             } else {
                 if (StringUtility.isNullOrEmpty(value)) {
                     value = "''";
                 }
-                result = result + SYMBOL.BLANK + value;
+                result = result + Symbol.BLANK + value;
             }
             clause.add(result);
         }
@@ -99,10 +95,10 @@ public class Expression {
     }
 
     public static Expression empty(String property, boolean showAlias, List<String> clause) {
-        return create(property, ComparisonOperator.EQUAL, showAlias, SYMBOL.EMPTY, null, clause, false);
+        return create(property, ComparisonOperator.EQUAL, showAlias, Symbol.EMPTY, null, clause, false);
     }
 
     public static Expression notEmpty(String property, boolean showAlias, List<String> clause) {
-        return create(property, ComparisonOperator.NOT_EQUAL, showAlias, SYMBOL.EMPTY, null, clause, false);
+        return create(property, ComparisonOperator.NOT_EQUAL, showAlias, Symbol.EMPTY, null, clause, false);
     }
 }

@@ -17,7 +17,7 @@
 
 package com.sparrow.utility.web;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.core.Pair;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.support.web.ServletUtility;
@@ -26,11 +26,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class SparrowServletUtility {
-
     private static final SparrowServletUtility INSTANCE = new SparrowServletUtility();
 
     private ServletUtility servletUtility = ServletUtility.getInstance();
@@ -55,7 +51,7 @@ public class SparrowServletUtility {
     public void flash(HttpServletRequest request, String sourceUrl) {
         Map<String, Object> values = HttpContext.getContext().getHolder();
         Pair<String, Map<String, Object>> sessionMap = Pair.create(sourceUrl, values);
-        request.getSession().setAttribute(CONSTANT.FLASH_KEY, sessionMap);
+        request.getSession().setAttribute(Constant.FLASH_KEY, sessionMap);
         HttpContext.getContext().remove();
     }
 }

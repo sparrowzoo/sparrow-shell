@@ -20,10 +20,10 @@ package com.sparrow.rocketmq.impl;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.JsonFactory;
+import com.sparrow.mq.MQClient;
 import com.sparrow.mq.MQEvent;
 import com.sparrow.mq.MQMessageSendException;
 import com.sparrow.mq.MQPublisher;
-import com.sparrow.mq.MQ_CLIENT;
 import com.sparrow.rocketmq.MessageConverter;
 import com.sparrow.support.latch.DistributedCountDownLatch;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -137,7 +137,7 @@ public class SparrowRocketMQPublisher implements MQPublisher {
         String key = UUID.randomUUID().toString();
         msg.setKeys(Collections.singletonList(key));
         if (productKey != null) {
-            msg.getProperties().put(MQ_CLIENT.CONSUMER_KEY, productKey.key());
+            msg.getProperties().put(MQClient.CONSUMER_KEY, productKey.key());
         }
         logger.info("event {} ,monitor key {},msgKey {}", JsonFactory.getProvider().toString(event), productKey == null ? "" : productKey.key(), key);
         SendResult sendResult = null;
@@ -175,7 +175,7 @@ public class SparrowRocketMQPublisher implements MQPublisher {
     public void start() throws MQClientException {
         DefaultMQProducer producer = new DefaultMQProducer(group);
         producer.setNamesrvAddr(nameServerAddress);
-        producer.setInstanceName(MQ_CLIENT.INSTANCE_NAME);
+        producer.setInstanceName(MQClient.INSTANCE_NAME);
         //for product
         if (this.debug == null || !this.debug) {
             producer.setCreateTopicKey(this.getTopic());

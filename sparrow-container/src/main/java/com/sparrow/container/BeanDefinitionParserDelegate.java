@@ -1,19 +1,31 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.container;
 
 import com.sparrow.exception.Asserts;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.StringUtility;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/**
- * @author by harry
- */
 public class BeanDefinitionParserDelegate {
-
-    public static final String SCOPE_SINGLETON="singleton";
-    public static final String SCOPE_PROTOTYPE="prototype";
+    public static final String SCOPE_SINGLETON = "singleton";
+    public static final String SCOPE_PROTOTYPE = "prototype";
 
     public static final String BEANS_NAMESPACE_URI = "http://www.sparrowzoo.com/schema/beans";
 
@@ -30,7 +42,6 @@ public class BeanDefinitionParserDelegate {
     public static final String NAME_ATTRIBUTE = "name";
 
     public static final String ALIAS_ATTRIBUTE = "alias";
-
 
     public static final String BEAN_ELEMENT = "bean";
 
@@ -60,9 +71,9 @@ public class BeanDefinitionParserDelegate {
 
     public static final String VALUE_ATTRIBUTE = "value";
 
-    public static final String CONTROLLER_ATTRIBUTE="controller";
+    public static final String CONTROLLER_ATTRIBUTE = "controller";
 
-    public static final String INTERCEPTOR_ATTRIBUTE="interceptor";
+    public static final String INTERCEPTOR_ATTRIBUTE = "interceptor";
 
     public static final String PLACEHOLDER_ATTRIBUTE = "placeholder";
 
@@ -71,7 +82,7 @@ public class BeanDefinitionParserDelegate {
     public static final String DEFAULT_DESTROY_METHOD_ATTRIBUTE = "default-destroy-method";
 
     public boolean isDefaultNamespace(Node node) {
-        String namespaceUri=node.getNamespaceURI();
+        String namespaceUri = node.getNamespaceURI();
         return (StringUtility.isNullOrEmpty(namespaceUri) || BEANS_NAMESPACE_URI.equals(namespaceUri));
     }
 
@@ -79,19 +90,19 @@ public class BeanDefinitionParserDelegate {
         return desiredName.equals(node.getNodeName()) || desiredName.equals(node.getLocalName());
     }
 
-    public boolean isBeanElement(Node node){
-        return nodeNameEquals(node,BEAN_ELEMENT);
+    public boolean isBeanElement(Node node) {
+        return nodeNameEquals(node, BEAN_ELEMENT);
     }
 
-    public boolean isImport(Node node){
-        return nodeNameEquals(node,IMPORT_ELEMENT);
+    public boolean isImport(Node node) {
+        return nodeNameEquals(node, IMPORT_ELEMENT);
     }
 
     public void parseCustomElement(Element element) {
 
     }
 
-    private void parseBeanDefinitionAttributes(Element element,AbstractBeanDefinition bd){
+    private void parseBeanDefinitionAttributes(Element element, AbstractBeanDefinition bd) {
         String className = null;
         if (element.hasAttribute(CLASS_ATTRIBUTE)) {
             className = element.getAttribute(CLASS_ATTRIBUTE).trim();
@@ -102,42 +113,39 @@ public class BeanDefinitionParserDelegate {
             bd.setScope(element.getAttribute(SCOPE_ATTRIBUTE));
             bd.setSingleton(SCOPE_SINGLETON.equalsIgnoreCase(bd.getScope()));
             bd.setPrototype(SCOPE_PROTOTYPE.equalsIgnoreCase(bd.getScope()));
-        }
-        else
-        {
+        } else {
             bd.setSingleton(true);
             bd.setPrototype(false);
         }
 
-        if(element.hasAttribute(CONTROLLER_ATTRIBUTE)){
+        if (element.hasAttribute(CONTROLLER_ATTRIBUTE)) {
             bd.setController(TRUE_VALUE.equalsIgnoreCase(element.getAttribute(CONTROLLER_ATTRIBUTE)));
         }
 
-        if(element.hasAttribute(INTERCEPTOR_ATTRIBUTE)){
+        if (element.hasAttribute(INTERCEPTOR_ATTRIBUTE)) {
             bd.setInterceptor(TRUE_VALUE.equalsIgnoreCase(element.getAttribute(INTERCEPTOR_ATTRIBUTE)));
         }
 
-        if(element.hasAttribute(ALIAS_ATTRIBUTE)){
+        if (element.hasAttribute(ALIAS_ATTRIBUTE)) {
             bd.setAlias(element.getAttribute(ALIAS_ATTRIBUTE));
         }
     }
 
     public ValueHolder parsePropertyValue(Element ele) {
-        String name=  ele.getAttribute(NAME_ATTRIBUTE);
+        String name = ele.getAttribute(NAME_ATTRIBUTE);
         boolean hasRefAttribute = ele.hasAttribute(REF_ATTRIBUTE);
         boolean hasValueAttribute = ele.hasAttribute(VALUE_ATTRIBUTE);
         if (hasRefAttribute) {
             String ref = ele.getAttribute(REF_ATTRIBUTE);
-            return new ValueHolder(name,ref,true);
+            return new ValueHolder(name, ref, true);
         }
 
         if (hasValueAttribute) {
-            String value=ele.getAttribute(VALUE_ATTRIBUTE);
-            return new ValueHolder(name,value,false);
+            String value = ele.getAttribute(VALUE_ATTRIBUTE);
+            return new ValueHolder(name, value, false);
         }
         return null;
     }
-
 
     public ValueHolder parseConstructorArgElement(Element ele) throws ClassNotFoundException {
 
@@ -147,7 +155,6 @@ public class BeanDefinitionParserDelegate {
         boolean hasRefAttribute = ele.hasAttribute(REF_ATTRIBUTE);
         boolean hasValueAttribute = ele.hasAttribute(VALUE_ATTRIBUTE);
 
-
         if (hasRefAttribute) {
             String ref = ele.getAttribute(REF_ATTRIBUTE);
             return new ValueHolder(name, ref, true);
@@ -155,20 +162,18 @@ public class BeanDefinitionParserDelegate {
 
         if (hasValueAttribute) {
             String value = ele.getAttribute(VALUE_ATTRIBUTE);
-            if(StringUtility.isNullOrEmpty(typeAttr)){
-                typeAttr="java.lang.String";
+            if (StringUtility.isNullOrEmpty(typeAttr)) {
+                typeAttr = "java.lang.String";
             }
-            if(!typeAttr.contains(SYMBOL.DOT)){
-                typeAttr="java.lang."+StringUtility.setFirstByteUpperCase(typeAttr);
+            if (!typeAttr.contains(Symbol.DOT)) {
+                typeAttr = "java.lang." + StringUtility.setFirstByteUpperCase(typeAttr);
             }
             return new ValueHolder(name, value, Class.forName(typeAttr), false);
         }
         return null;
     }
 
-
-
-    public BeanDefinition  processBeanElement(Element element) throws ClassNotFoundException {
+    public BeanDefinition processBeanElement(Element element) throws ClassNotFoundException {
         AbstractBeanDefinition bd = new GenericBeanDefinition();
         parseBeanDefinitionAttributes(element, bd);
 
@@ -178,17 +183,17 @@ public class BeanDefinitionParserDelegate {
         }
         NodeList nl = element.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
-            Node node=nl.item(i);
-            if(!(node instanceof Element)){
+            Node node = nl.item(i);
+            if (!(node instanceof Element)) {
                 continue;
             }
-            Element ele =(Element) node;
+            Element ele = (Element) node;
             if (nodeNameEquals(node, PROPERTY_ELEMENT)) {
-                boolean hasPlaceholder=ele.hasAttribute(PLACEHOLDER_ATTRIBUTE);
+                boolean hasPlaceholder = ele.hasAttribute(PLACEHOLDER_ATTRIBUTE);
                 ValueHolder valueHolder = this.parsePropertyValue(ele);
                 bd.addProperty(valueHolder);
-                if(hasPlaceholder){
-                    bd.addPlaceholder(ele.getAttribute(PLACEHOLDER_ATTRIBUTE),valueHolder);
+                if (hasPlaceholder) {
+                    bd.addPlaceholder(ele.getAttribute(PLACEHOLDER_ATTRIBUTE), valueHolder);
                 }
                 continue;
             }

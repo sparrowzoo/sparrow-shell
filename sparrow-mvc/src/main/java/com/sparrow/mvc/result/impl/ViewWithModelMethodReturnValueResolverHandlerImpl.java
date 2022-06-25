@@ -26,8 +26,8 @@ import com.sparrow.mvc.result.ResultErrorAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.VO;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.mvc.PageSwitchMode;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.support.web.HttpContext;
@@ -46,9 +46,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author harry
- */
 public class ViewWithModelMethodReturnValueResolverHandlerImpl implements MethodReturnValueResolverHandler {
 
     private ServletUtility servletUtility = ServletUtility.getInstance();
@@ -67,7 +64,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
             values.put(key, o);
         }
         Pair<String, Map<String, Object>> sessionMap = Pair.create(flashUrl, values);
-        request.getSession().setAttribute(CONSTANT.FLASH_KEY, sessionMap);
+        request.getSession().setAttribute(Constant.FLASH_KEY, sessionMap);
         HttpContext.getContext().remove();
     }
 
@@ -90,8 +87,8 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         String url;
         PageSwitchMode pageSwitchMode = PageSwitchMode.REDIRECT;
         //手动返回url
-        if (actionResult.contains(SYMBOL.COLON)) {
-            Pair<String, String> switchModeAndUrl = Pair.split(actionResult, SYMBOL.COLON);
+        if (actionResult.contains(Symbol.COLON)) {
+            Pair<String, String> switchModeAndUrl = Pair.split(actionResult, Symbol.COLON);
             pageSwitchMode = PageSwitchMode.valueOf(switchModeAndUrl.getFirst().toUpperCase());
             url = switchModeAndUrl.getSecond();
         } else {
@@ -109,8 +106,9 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         }
     }
 
-    private String assembleUrl(String referer, String defaultSuccessUrl, String url, PageSwitchMode pageSwitchMode, String[] urlArgs) {
-        if (CONSTANT.SUCCESS.equals(url) || StringUtility.isNullOrEmpty(url)) {
+    private String assembleUrl(String referer, String defaultSuccessUrl, String url, PageSwitchMode pageSwitchMode,
+        String[] urlArgs) {
+        if (Constant.SUCCESS.equals(url) || StringUtility.isNullOrEmpty(url)) {
             url = defaultSuccessUrl;
         }
 
@@ -122,12 +120,12 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
             return null;
         }
         //index-->/index
-        if (!url.startsWith(CONSTANT.HTTP_PROTOCOL) && !url.startsWith(CONSTANT.HTTPS_PROTOCOL) && !url.startsWith(SYMBOL.SLASH)) {
-            url = SYMBOL.SLASH + url;
+        if (!url.startsWith(Constant.HTTP_PROTOCOL) && !url.startsWith(Constant.HTTPS_PROTOCOL) && !url.startsWith(Symbol.SLASH)) {
+            url = Symbol.SLASH + url;
         }
 
         // /index-->template/index.jsp
-        if (PageSwitchMode.FORWARD.equals(pageSwitchMode) && !url.contains(SYMBOL.DOT)) {
+        if (PageSwitchMode.FORWARD.equals(pageSwitchMode) && !url.contains(Symbol.DOT)) {
             url = servletUtility.assembleActualUrl(url);
         }
 
@@ -136,8 +134,8 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         }
         for (int i = 0; i < urlArgs.length; i++) {
             if (urlArgs[i] != null) {
-                url = url.replace(SYMBOL.DOLLAR, SYMBOL.AND).replace(
-                        "{" + i + "}", urlArgs[i]);
+                url = url.replace(Symbol.DOLLAR, Symbol.AND).replace(
+                    "{" + i + "}", urlArgs[i]);
             }
         }
         return url;
@@ -145,8 +143,8 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
 
     @Override
     public void resolve(ServletInvokableHandlerMethod handlerExecutionChain, Object returnValue, FilterChain chain,
-                        HttpServletRequest request,
-                        HttpServletResponse response) throws IOException, ServletException {
+        HttpServletRequest request,
+        HttpServletResponse response) throws IOException, ServletException {
         String referer = servletUtility.referer(request);
         ViewWithModel viewWithModel = null;
 
@@ -175,30 +173,29 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
             return;
         }
 
-
         String flashUrl;
         String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
         switch (viewWithModel.getSwitchMode()) {
             case REDIRECT:
                 flashUrl = servletUtility.assembleActualUrl(url);
-                this.flash(request, flashUrl, CONSTANT.FLASH_SUCCESS_RESULT, viewWithModel.getVo());
-                if (!url.startsWith(CONSTANT.HTTP_PROTOCOL)) {
+                this.flash(request, flashUrl, Constant.FLASH_SUCCESS_RESULT, viewWithModel.getVo());
+                if (!url.startsWith(Constant.HTTP_PROTOCOL)) {
                     url = rootPath + url;
                 }
                 response.sendRedirect(url);
                 break;
             case TRANSIT:
                 flashUrl = servletUtility.assembleActualUrl(url);
-                this.flash(request, flashUrl, CONSTANT.FLASH_SUCCESS_RESULT, viewWithModel.getVo());
+                this.flash(request, flashUrl, Constant.FLASH_SUCCESS_RESULT, viewWithModel.getVo());
                 String transitUrl = viewWithModel.getTransitUrl();
                 if (StringUtility.isNullOrEmpty(transitUrl)) {
                     transitUrl = ConfigUtility.getValue(Config.TRANSIT_URL);
                 }
-                if (transitUrl != null && !transitUrl.startsWith(CONSTANT.HTTP_PROTOCOL)) {
+                if (transitUrl != null && !transitUrl.startsWith(Constant.HTTP_PROTOCOL)) {
                     transitUrl = rootPath + transitUrl;
                 }
 
-                if (!url.startsWith(CONSTANT.HTTP_PROTOCOL)) {
+                if (!url.startsWith(Constant.HTTP_PROTOCOL)) {
                     url = rootPath + url;
                 }
                 response.sendRedirect(transitUrl + "?" + url);
@@ -220,8 +217,8 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
 
     @Override
     public void errorResolve(Throwable exception,
-                             HttpServletRequest request,
-                             HttpServletResponse response) throws IOException, ServletException {
+        HttpServletRequest request,
+        HttpServletResponse response) throws IOException, ServletException {
 
         PageSwitchMode errorPageSwitch = PageSwitchMode.REDIRECT;
         String exceptionSwitchMode = ConfigUtility.getValue(Config.EXCEPTION_SWITCH_MODE);
@@ -245,7 +242,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
                     url = "/500";
                 }
                 flashUrl = servletUtility.assembleActualUrl(url);
-                this.flash(request, flashUrl, CONSTANT.FLASH_EXCEPTION_RESULT, result);
+                this.flash(request, flashUrl, Constant.FLASH_EXCEPTION_RESULT, result);
                 response.sendRedirect(url);
                 break;
         }

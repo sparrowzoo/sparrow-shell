@@ -17,9 +17,6 @@
 
 package com.sparrow.exception;
 
-/**
- * @author harry
- */
 public class CacheConnectionException extends Exception {
     public CacheConnectionException(String message) {
         super(message);

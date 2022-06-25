@@ -17,16 +17,12 @@
 
 package com.sparrow.core.algorithm.gouping;
 
-/**
- * @author by harry
- */
 public class Point<T extends Comparable> {
-
     private T point;
     private Boolean start;
     private Boolean end;
 
-    public static <D extends Comparable>Point<D> copy(Point<D> point) {
+    public static <D extends Comparable> Point<D> copy(Point<D> point) {
         return new Point<D>(point.point, point.start, point.end);
     }
 

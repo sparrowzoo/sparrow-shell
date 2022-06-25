@@ -21,43 +21,38 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 /**
  * 保持线程请求中的数据 与web应用程序解耦
- *
- * @author harry
  */
 public class ConnectionContextHolderImpl implements ConnectionContextHolder {
 
     private DataSourceFactory dataSourceFactory;
 
     /**
-     * 这里的功能主要针对thread local 中的映射，将datasource的具体实现分离
-     * datasource 的connection close功能各链接池已实现
-     * 请求过程中的事务链接 同一个线程，同一个事务中只允许一个链接
+     * 这里的功能主要针对thread local 中的映射，将datasource的具体实现分离 datasource 的connection close功能各链接池已实现 请求过程中的事务链接
+     * 同一个线程，同一个事务中只允许一个链接
      */
     private ThreadLocal<Map<String, Connection>> transactionContainer = new ThreadLocal<Map<String, Connection>>();
 
+    private Map<Connection, ProxyConnection> originProxyMap = new HashMap<>();
 
-    private Map<Connection,ProxyConnection> originProxyMap=new HashMap<>();
     public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
         this.dataSourceFactory = dataSourceFactory;
     }
 
     @Override
     public void addOriginProxy(Connection proxy) {
-        if(proxy instanceof ProxyConnection){
-            ProxyConnection proxyConnection=(ProxyConnection) proxy;
-            Connection origin= proxyConnection.getOriginConnection();
-            this.originProxyMap.put(origin,proxyConnection);
+        if (proxy instanceof ProxyConnection) {
+            ProxyConnection proxyConnection = (ProxyConnection) proxy;
+            Connection origin = proxyConnection.getOriginConnection();
+            this.originProxyMap.put(origin, proxyConnection);
         }
     }
 
     @Override public DataSourceFactory getDataSourceFactory() {
         return dataSourceFactory;
     }
-
 
     private Map<String, Connection> getTransactionHolder() {
         if (this.transactionContainer.get() == null) {
@@ -83,11 +78,10 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
             Connection proxyConnection = this.getConnection(dataSourceKey.getKey());
             if (proxyConnection == null) {
                 proxyConnection = this.originProxyMap.get(connection);
-                if(proxyConnection!=null){
+                if (proxyConnection != null) {
                     proxyConnection.close();
-                }
-                else {
-                  connection.close();
+                } else {
+                    connection.close();
                 }
                 return;
             }
@@ -95,7 +89,7 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
                 this.getTransactionHolder().remove(dataSourceKey.getKey());
                 proxyConnection.close();
             }
-        }catch (SQLException ignore) {
+        } catch (SQLException ignore) {
             throw new RuntimeException(ignore);
         }
     }

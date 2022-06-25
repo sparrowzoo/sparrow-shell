@@ -17,25 +17,25 @@
 
 package com.sparrow.protocol.enums;
 
-/**
- * @author harry
- */
-
-public enum DIMENSION_LEVEL {
+public enum OrderBy {
     /**
-     * 本人
+     * 默认
      */
-    SELF,
+    DEFAULT,
     /**
-     * 当前维度
+     * 最新
      */
-    DIMENSION,
+    NEWEST,
     /**
-     * 当前维度及子维度
+     * 最热
      */
-    DIMENSION_CHILD,
+    HOTTEST,
     /**
-     * 所有
+     * 随机
      */
-    ALL
+    RANDOM,
+    /**
+     * 排序号
+     */
+    SORT
 }

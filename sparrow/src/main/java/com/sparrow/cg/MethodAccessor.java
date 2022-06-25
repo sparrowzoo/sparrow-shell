@@ -17,9 +17,6 @@
 
 package com.sparrow.cg;
 
-/**
- * @author harry
- */
 public interface MethodAccessor {
     Object get(Object o, String methodName);
 

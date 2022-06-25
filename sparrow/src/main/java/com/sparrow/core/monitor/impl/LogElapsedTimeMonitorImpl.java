@@ -23,11 +23,8 @@ import java.util.Stack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author by harry
- */
 public class LogElapsedTimeMonitorImpl implements ElapsedTimeMonitor {
-    private Logger logger = LoggerFactory.getLogger(LogElapsedTimeMonitorImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(LogElapsedTimeMonitorImpl.class);
     private ThreadLocal<Stack<Long>> start = new ThreadLocal<Stack<Long>>();
 
     @Override public void start() {
@@ -55,7 +52,8 @@ public class LogElapsedTimeMonitorImpl implements ElapsedTimeMonitor {
         this.start();
     }
 
-    @Override public String toString() {
-        return "[log elapsed time info ] "+(this.start.get() == null ? "null" : this.start.get().toString());
+    @Override
+    public String toString() {
+        return "[log elapsed time info ] " + (this.start.get() == null ? "null" : this.start.get().toString());
     }
 }

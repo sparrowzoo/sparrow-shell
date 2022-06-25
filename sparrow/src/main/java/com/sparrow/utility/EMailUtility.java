@@ -30,9 +30,6 @@ import javax.mail.internet.MimeMessage;
 import java.util.Collections;
 import java.util.Properties;
 
-/**
- * @author harry
- */
 public class EMailUtility {
     private Logger logger = LoggerFactory.getLogger(EMailUtility.class);
     private String localAddress;

@@ -23,7 +23,7 @@ import com.sparrow.core.TypeConverter;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.utility.HtmlUtility;
 import com.sparrow.utility.RegexUtility;
@@ -37,9 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class PathParameterArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
 
     private Logger logger = LoggerFactory.getLogger(PathParameterArgumentResolver.class);
@@ -53,8 +50,7 @@ public class PathParameterArgumentResolver implements HandlerMethodArgumentResol
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ServletInvokableHandlerMethod executionChain,
-                                  HttpServletRequest request) throws Exception {
-
+        HttpServletRequest request) throws Exception {
 
         if (StringUtility.isNullOrEmpty(executionChain.getActionRegex())) {
             return null;
@@ -68,7 +64,6 @@ public class PathParameterArgumentResolver implements HandlerMethodArgumentResol
         //actual url
         String currentPath = ServletUtility.getInstance().getActionKey(request);
 
-
         List<List<String>> lists = RegexUtility.multiGroups(currentPath, executionChain.getActionRegex());
         for (List<String> list : lists) {
             for (String parameter : list) {
@@ -79,7 +74,7 @@ public class PathParameterArgumentResolver implements HandlerMethodArgumentResol
         String parameter = pathParameterValueMap.get(methodParameter.getParameterName());
         if (methodParameter.getParameterType().equals(String.class)) {
             if (StringUtility.isNullOrEmpty(parameter)) {
-                return SYMBOL.EMPTY;
+                return Symbol.EMPTY;
             }
             if (executionChain.isValidateRequest()) {
                 parameter = HtmlUtility.encode(parameter);

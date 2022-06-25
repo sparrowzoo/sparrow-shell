@@ -17,8 +17,5 @@
 
 package com.sparrow.protocol;
 
-/**
- * @author harry
- */
 public interface VO extends POJO {
 }

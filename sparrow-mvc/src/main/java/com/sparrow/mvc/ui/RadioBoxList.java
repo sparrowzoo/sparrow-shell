@@ -30,12 +30,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
-public class RedioBoxList extends WebControl {
-    Logger logger = LoggerFactory.getLogger(RedioBoxList.class);
+public class RadioBoxList extends WebControl {
+    private static Logger logger = LoggerFactory.getLogger(RadioBoxList.class);
     private String col = "3";
     private boolean isShowTable = true;
     private String selectedValue;
@@ -43,8 +40,7 @@ public class RedioBoxList extends WebControl {
     private String valueText;
     private String indent = "0";
     /**
-     * com.sparrow.enums.Status:10:true
-     * enums:maxCount:isShowName
+     * com.sparrow.enums.Status:10:true enums:maxCount:isShowName
      */
     private String enums;
 

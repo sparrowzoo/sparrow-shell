@@ -17,12 +17,6 @@
 
 package com.sparrow.constant;
 
-/**
- * 数据库相关配置
- *
- * @author harry
- * @version 1.0
- */
 public class ConfigKeyDB {
     /**
      * 每页记录数
@@ -53,7 +47,7 @@ public class ConfigKeyDB {
 
     public static final String WEBSITE_CONFIG_PARENT = "WEBSITE_CONFIG";
 
-    public static class WEBSITE_CONFIG {
+    public static final class WebsiteConfig {
         public static final String TITLE = "Title";
         public static final String DESCRIPTION = "Description";
         public static final String BANNER = "Banner";

@@ -13,7 +13,7 @@ public class JDBCTemplateTest {
         Container container = ApplicationContext.getContainer();
         container.setContextConfigLocation("/dao.xml");
         container.init();
-        JDBCSupport jdbcSupport = JDBCTemplate.getInstance();
+        JDBCSupport jdbcSupport = JDBCTemplate.getInstance("user",null);
         int affectCount= jdbcSupport.executeUpdate("DROP TABLE IF EXISTS `user`;");
         affectCount=jdbcSupport.executeUpdate("CREATE TABLE `user` (\n" +
                 "  `user_id` bigint(11) NOT NULL AUTO_INCREMENT,\n" +

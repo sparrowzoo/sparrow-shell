@@ -17,9 +17,6 @@
 
 package com.sparrow.support.excel.exception;
 
-/**
- * @author harry
- */
 public class TemplateFileException extends Exception {
     public TemplateFileException(Exception e) {
         super(e);

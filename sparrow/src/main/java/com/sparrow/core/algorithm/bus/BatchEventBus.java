@@ -24,10 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-/**
- * @author by harry
- * 批量事件处理总线
- */
 public class BatchEventBus<T> {
     private Logger logger = LoggerFactory.getLogger(BatchEventBus.class);
 
@@ -47,7 +43,6 @@ public class BatchEventBus<T> {
 
     private boolean flush = false;
 
-
     private BatchEventBus(BatchEventBus.Builder builder) {
 
         this.queue = new ArrayBlockingQueue<>(builder.capacity, true);
@@ -58,12 +53,10 @@ public class BatchEventBus<T> {
 
         this.overflowProcessor = builder.overflowProcessor;
 
-
         this.consumerThreadPool = new ThreadPoolExecutor(builder.threadPoolCoreSize, builder.threadPoolMaxSize,
-                5L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(builder.threadPoolCapacity),
-                new SparrowThreadFactory.Builder().namingPattern("batch-event-consumer-%d").build(), new ThreadPoolExecutor.CallerRunsPolicy());
-
+            5L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>(builder.threadPoolCapacity),
+            new SparrowThreadFactory.Builder().namingPattern("batch-event-consumer-%d").build(), new ThreadPoolExecutor.CallerRunsPolicy());
 
         ExecutorService dispatcherThread = Executors.newSingleThreadExecutor(new SparrowThreadFactory.Builder().namingPattern("batch-event-dispatcher-%d").build());
         dispatcherThread.submit(new Runnable() {
@@ -102,7 +95,6 @@ public class BatchEventBus<T> {
         });
     }
 
-
     public void publish(T item) throws InterruptedException {
         if (item == null) {
             return;
@@ -125,7 +117,6 @@ public class BatchEventBus<T> {
     public Integer getBatchCount() {
         return batchCount + (this.queue.size() > 0 ? 1 : 0);
     }
-
 
     public static class Builder {
         Integer capacity = 10000000;
@@ -154,30 +145,25 @@ public class BatchEventBus<T> {
             return this;
         }
 
-
         public Builder threadPoolCore(int threadPoolCoreSize) {
             this.threadPoolCoreSize = threadPoolCoreSize;
             return this;
         }
-
 
         public Builder threadPoolMaxSize(int threadPoolMaxSize) {
             this.threadPoolMaxSize = threadPoolMaxSize;
             return this;
         }
 
-
         public Builder threadPoolCapacity(int threadPoolCapacity) {
             this.threadPoolCapacity = threadPoolCapacity;
             return this;
         }
 
-
         public Builder batchSecondTimeout(int batchSecondTimeout) {
             this.batchSecondTimeout = batchSecondTimeout;
             return this;
         }
-
 
         public BatchEventBus build() {
             return new BatchEventBus(this);

@@ -17,9 +17,6 @@
 
 package com.sparrow.exception;
 
-/**
- * @author harry
- */
 public class CacheNotFoundException extends Exception {
     public CacheNotFoundException(String message) {
         super(message);

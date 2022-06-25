@@ -14,27 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.job.dispacher;
 
-package com.sparrow.protocol.enums;
-
-/**
- * @author harry
- */
-public enum IMAGE_CONDITION {
-    /**
-     * 所有帖，包括图文
-     */
-    ALL,
-    /**
-     * 显示封面图
-     */
-    COVER,
-    /**
-     * 显示图片
-     */
-    IMAGE,
-    /**
-     * 不显示图片
-     */
-    NONE
+public class DispatcherJob {
 }

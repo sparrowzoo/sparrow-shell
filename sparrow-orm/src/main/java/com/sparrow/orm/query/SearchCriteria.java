@@ -17,20 +17,17 @@
 
 package com.sparrow.orm.query;
 
-import com.sparrow.protocol.enums.AGGREGATE;
+import com.sparrow.protocol.enums.Aggregate;
 import com.sparrow.protocol.pager.PagerQuery;
 
 import java.util.List;
 
-/**
- * @author harry
- */
 public class SearchCriteria extends WhereCriteria {
     public SearchCriteria() {
     }
 
     public SearchCriteria(PagerQuery query) {
-        super(query.getCurrentPageIndex(),query.getPageSize());
+        super(query.getCurrentPageIndex(), query.getPageSize());
     }
 
     public SearchCriteria(Integer currentPageIndex, Integer pageSize) {
@@ -41,7 +38,7 @@ public class SearchCriteria extends WhereCriteria {
 
     private Boolean distinct;
 
-    private AGGREGATE aggregate;
+    private Aggregate aggregate;
 
     /**
      * 分组字段
@@ -75,11 +72,11 @@ public class SearchCriteria extends WhereCriteria {
         this.distinct = distinct;
     }
 
-    public AGGREGATE getAggregate() {
+    public Aggregate getAggregate() {
         return aggregate;
     }
 
-    public void setAggregate(AGGREGATE aggregate) {
+    public void setAggregate(Aggregate aggregate) {
         this.aggregate = aggregate;
     }
 

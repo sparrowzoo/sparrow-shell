@@ -29,7 +29,6 @@ import java.util.List;
 /**
  * Sparrow framework controller support class that used by sparrow only
  *
- * @author harry
  * @version 1.0
  */
 public class SparrowServletContainer extends AbstractServletContainer {

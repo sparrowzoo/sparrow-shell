@@ -24,9 +24,6 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class HttpContext {
     private static HttpContext context = new HttpContext();
 
@@ -39,14 +36,12 @@ public class HttpContext {
      */
     private ThreadLocal<Map<String, Object>> holder = new ThreadLocal<Map<String, Object>>();
 
-
     public Map<String, Object> getHolder() {
         if (this.holder.get() == null) {
             this.holder.set(new HashMap<String, Object>());
         }
         return this.holder.get();
     }
-
 
     public void remove() {
         Map<String, Object> values = this.holder.get();
@@ -57,7 +52,6 @@ public class HttpContext {
         }
         this.holder.remove();
     }
-
 
     public Object get(String key) {
         return this.getHolder().get(key);

@@ -15,18 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.enums;
+package com.sparrow.protocol.constant;
 
-/**
- * @author by harry
- */
-public enum AGGREGATE {
-    /**
-     * 总数
-     */
-    COUNT,
-    SUM,
-    AVG,
-    MIN,
-    MAX
+public class OpenType {
+    public static final String BLANK = "_blank";
+    public static final String SELF = "_self";
+    public static final String PARENT = "_parent";
 }

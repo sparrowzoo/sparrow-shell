@@ -36,13 +36,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author harry
- */
 public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
-
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
-
 
     public ORMStrategy() {
         this(null);
@@ -52,7 +47,7 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
         Dialect dialect = DialectReader.getInstance(schema).getDialect();
         Class clazz = null;
         Type type = getClass()
-                .getGenericSuperclass();
+            .getGenericSuperclass();
         if (type instanceof ParameterizedType) {
             clazz = (Class<?>) ((ParameterizedType) type).getActualTypeArguments()[0];
         }

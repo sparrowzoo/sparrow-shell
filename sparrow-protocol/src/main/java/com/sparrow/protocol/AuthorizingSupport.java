@@ -19,8 +19,6 @@ package com.sparrow.protocol;
 
 /**
  * 谁证授权接口
- *
- * @author harry
  */
 public interface AuthorizingSupport {
     /**
@@ -43,12 +41,12 @@ public interface AuthorizingSupport {
     /**
      * 授权某资源
      *
-     * @param user       当前用户
+     * @param user     当前用户
      * @param resource 请求的资源(标识)
-     * @param code       当前资源（当前资源下的编码 比如forum code）
+     * @param code     当前资源（当前资源下的编码 比如forum code）
      * @return
      * @throws BusinessException
      */
     boolean isAuthorized(LoginToken user,
-                         String resource, String code) throws BusinessException;
+        String resource, String code) throws BusinessException;
 }

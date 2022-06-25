@@ -15,41 +15,13 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.enums;
+package com.sparrow.mq;
 
 /**
- * 记录状态
- *
- * @author harry
- * @version 1.0
+ * Created by harry on 2018/1/19.
  */
-public enum STATUS_RECORD {
-    /**
-     * 被屏蔽(0)
-     */
-    DISABLE,
-    /**
-     * 可用(1)
-     */
-    ENABLE,
-    /**
-     * 草搞(2)
-     */
-    DRAFT,
-    /**
-     * 已发布(3)
-     */
-    PUBLISHED,
-    /**
-     * 排队中(4)...
-     */
-    QUEUE,
-    /**
-     * 队列发布出错(5)
-     */
-    ERROR,
-    /**
-     * 销毁(6)
-     */
-    DESTROYED
+public class MQClient {
+    public static final String CLASS_NAME = "CLASS_NAME";
+    public static final String INSTANCE_NAME = "SPARROW_MQ_INSTANCE";
+    public static final String CONSUMER_KEY = "CONSUMER_KEY";
 }

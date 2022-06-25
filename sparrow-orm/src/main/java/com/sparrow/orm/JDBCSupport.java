@@ -17,14 +17,11 @@
 
 package com.sparrow.orm;
 
-import com.sparrow.orm.JDBCParameter;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
  * jdbc support datasouse + DATABASE_SPLIT_STRATEGY=identify
- *
- * @author harry
  */
 public interface JDBCSupport {
 

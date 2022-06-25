@@ -18,8 +18,8 @@
 package com.sparrow.rocketmq.impl;
 
 import com.sparrow.core.spi.JsonFactory;
+import com.sparrow.mq.MQClient;
 import com.sparrow.mq.MQEvent;
-import com.sparrow.mq.MQ_CLIENT;
 import com.sparrow.rocketmq.MessageConverter;
 import org.apache.rocketmq.common.message.Message;
 import org.slf4j.Logger;
@@ -43,29 +43,30 @@ public class SparrowJsonMessageConverter implements MessageConverter {
         try {
             json = new String(message.getBody(), charset);
         } catch (UnsupportedEncodingException e) {
-            logger.error("unsupported encodingException {}",charset);
+            logger.error("unsupported encodingException {}", charset);
             throw new RuntimeException(e);
         }
-        String className=message.getProperties().get(MQ_CLIENT.CLASS_NAME);
+        
+        String className = message.getProperties().get(MQClient.CLASS_NAME);
         try {
             return (MQEvent) JsonFactory.getProvider().parse(json, Class.forName(className));
         } catch (ClassNotFoundException e) {
-            logger.error("class{} not found",className);
+            logger.error("class{} not found", className);
             return null;
         }
     }
 
     @Override
     public Message createMessage(String topic, String tag, MQEvent event) {
-        String jsonString =JsonFactory.getProvider().toString(event);
+        String jsonString = JsonFactory.getProvider().toString(event);
         try {
             byte[] bytes = jsonString.getBytes(charset);
             Message message = new Message(topic, tag, bytes);
-            message.getProperties().put(MQ_CLIENT.CLASS_NAME, event.getClass().getName());
+            message.getProperties().put(MQClient.CLASS_NAME, event.getClass().getName());
             return message;
         } catch (UnsupportedEncodingException e) {
-           logger.error("unsupported encodingException {}",charset);
-           throw new RuntimeException(e);
+            logger.error("unsupported encodingException {}", charset);
+            throw new RuntimeException(e);
         }
     }
 }

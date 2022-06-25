@@ -1,20 +1,35 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.jvm.hotspot;
 
 import com.sparrow.utility.StringUtility;
 
 /**
- * https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html
- * https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
+ * https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
  * https://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html
  */
 public class JvmParameter {
     /**
-     * @param memory      jvm 进程可用的最大内存K为单位
-     *                    包括heap+stack+DirectMemory
+     * @param memory      jvm 进程可用的最大内存K为单位 包括heap+stack+DirectMemory
      * @param threadCount 总线程数
      * @param threadStack 每线程内存大小默认为1024K
      */
-    public JvmParameter(long memory, int threadCount, int threadStack, int survivorRatio, long directMemory, String gcLogFilePath, String dumpLogPath, String errorPath) {
+    public JvmParameter(long memory, int threadCount, int threadStack, int survivorRatio, long directMemory,
+        String gcLogFilePath, String dumpLogPath, String errorPath) {
         this.memory = memory;
         if (directMemory > 0) {
             this.directMemory = directMemory;
@@ -57,9 +72,9 @@ public class JvmParameter {
 
         if (!StringUtility.isNullOrEmpty(dumpLogPath)) {
             this.dumpLog = String.format(" -XX:+HeapDumpOnOutOfMemoryError" +
-                    " -XX:+HeapDumpBeforeFullGC" +
-                    " -XX:+HeapDumpBeforeFullGC" +
-                    " -XX:HeapDumpPath=%s.hprof", dumpLogPath);
+                " -XX:+HeapDumpBeforeFullGC" +
+                " -XX:+HeapDumpBeforeFullGC" +
+                " -XX:HeapDumpPath=%s.hprof", dumpLogPath);
         }
     }
 
@@ -86,10 +101,7 @@ public class JvmParameter {
     private long maxNewSize;
 
     /**
-     * 默认直接内存256M
-     * DirectMemory 的JVM 默认大小是64M，
-     * 而JDK6之前和JDK6的某些版本的SUN JVM，存在一个BUG，
-     * 在用-Xmx设定堆空间大小的时候，也设置了DirectMemory的大小。假如设置了-Xmx2048m，那么jvm最终可
+     * 默认直接内存256M DirectMemory 的JVM 默认大小是64M， 而JDK6之前和JDK6的某些版本的SUN JVM，存在一个BUG， 在用-Xmx设定堆空间大小的时候，也设置了DirectMemory的大小。假如设置了-Xmx2048m，那么jvm最终可
      * 分配的内存大小为4G多一些，是预期的两倍。
      */
     private long directMemory = 256 * 1024;
@@ -115,8 +127,7 @@ public class JvmParameter {
      */
     private int newRatio = 2;
     /**
-     * Eden区与Survivor区的大小比值
-     * Eden+Survivor*2=10
+     * Eden区与Survivor区的大小比值 Eden+Survivor*2=10
      */
     private int survivorRatio = 8;
 
@@ -208,59 +219,59 @@ public class JvmParameter {
         long eden = this.xmn / (this.survivorRatio + 2) * this.survivorRatio;
 
         return String.format(
-                "key| value\n" +
-                        "---|---\n" +
-                        "jvm memory(heap+stack+direct memory)|%sM\n" +
-                        "max heap | %sM\n " +
-                        "small heap |%sM \n " +
-                        "young generation |%sM \n  " +
-                        "old generation memory| %sM\n" +
-                        "permanent generation |%sM\n " +
-                        "max permanent generation |%sM \n " +
-                        "thread stack memory| %sK \n " +
-                        "stack memory| %sM \n " +
-                        "survivor ratio| %s\n" +
-                        "new ratio|%s\n " +
-                        "eden ratio,memory| %s, %sM\n " +
-                        "survivor ratio,memory| %s,%sM\n" +
-                        "direct memory| %sM\n" +
-                        "error flag| %s\n" +
-                        "gc log flag| %s\n" +
-                        "dump flag| %s\n",
-                this.memory / 1024,
-                this.xmx / 1024,
-                this.xms / 1024,
-                this.xmn / 1024,
-                (this.memory - this.newSize) / 1024,
-                this.permSize / 1024,
-                this.maxPermSize / 1024,
-                this.xss,
-                this.xss * this.threadCount / 1024,
-                this.survivorRatio,
-                this.newRatio,
-                this.survivorRatio,
-                eden / 1024,
-                1,
-                (this.xmn - eden) / 2 / 1024,
-                this.directMemory / 1024,
-                this.errorLog,
-                this.gcLog,
-                this.dumpLog);
+            "key| value\n" +
+                "---|---\n" +
+                "jvm memory(heap+stack+direct memory)|%sM\n" +
+                "max heap | %sM\n " +
+                "small heap |%sM \n " +
+                "young generation |%sM \n  " +
+                "old generation memory| %sM\n" +
+                "permanent generation |%sM\n " +
+                "max permanent generation |%sM \n " +
+                "thread stack memory| %sK \n " +
+                "stack memory| %sM \n " +
+                "survivor ratio| %s\n" +
+                "new ratio|%s\n " +
+                "eden ratio,memory| %s, %sM\n " +
+                "survivor ratio,memory| %s,%sM\n" +
+                "direct memory| %sM\n" +
+                "error flag| %s\n" +
+                "gc log flag| %s\n" +
+                "dump flag| %s\n",
+            this.memory / 1024,
+            this.xmx / 1024,
+            this.xms / 1024,
+            this.xmn / 1024,
+            (this.memory - this.newSize) / 1024,
+            this.permSize / 1024,
+            this.maxPermSize / 1024,
+            this.xss,
+            this.xss * this.threadCount / 1024,
+            this.survivorRatio,
+            this.newRatio,
+            this.survivorRatio,
+            eden / 1024,
+            1,
+            (this.xmn - eden) / 2 / 1024,
+            this.directMemory / 1024,
+            this.errorLog,
+            this.gcLog,
+            this.dumpLog);
     }
 
     public String toString() {
         return String.format("-Xmx%sM -Xms%sM -Xmn%sM -XX:PermSize=%sM -XX:MaxPermSize=%sM -Xss%sK XX:SurvivorRatio=%s XX:NewRatio=%s -XX:MaxDirectMemorySize =%sM %s %s %s",
-                this.xmx / 1024,
-                this.xms / 1024,
-                this.xmn / 1024,
-                this.permSize / 1024,
-                this.maxPermSize / 1024,
-                this.xss,
-                this.survivorRatio,
-                this.newRatio,
-                this.directMemory / 1024,
-                this.errorLog,
-                this.gcLog,
-                this.dumpLog);
+            this.xmx / 1024,
+            this.xms / 1024,
+            this.xmn / 1024,
+            this.permSize / 1024,
+            this.maxPermSize / 1024,
+            this.xss,
+            this.survivorRatio,
+            this.newRatio,
+            this.directMemory / 1024,
+            this.errorLog,
+            this.gcLog,
+            this.dumpLog);
     }
 }

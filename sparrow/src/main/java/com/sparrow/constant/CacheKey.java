@@ -17,10 +17,6 @@
 
 package com.sparrow.constant;
 
-/**
- * @author harry
- * @version 1.0
- */
 public class CacheKey {
     /**
      * 保存system_config.properties配置参数
@@ -30,7 +26,7 @@ public class CacheKey {
      * 保存字典表配置参数
      */
     public static final String CONFIG_CODE_DB = "CACHE_KEY_CONFIG_CODE_DB";
-     /**
+    /**
      * 保存ORM参数
      */
     public static final String ORM = "CACHE_KEY_ORM";

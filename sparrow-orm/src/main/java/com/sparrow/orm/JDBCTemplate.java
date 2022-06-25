@@ -17,9 +17,9 @@
 
 package com.sparrow.orm;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.SysObjectName;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.datasource.ConnectionContextHolder;
 import com.sparrow.datasource.DatasourceKey;
@@ -39,8 +39,6 @@ import java.util.regex.Matcher;
 
 /**
  * 兼顾事务异常必须全部抛出
- *
- * @author harry
  */
 public class JDBCTemplate implements JDBCSupport {
     private static Logger logger = LoggerFactory.getLogger(JDBCTemplate.class);
@@ -50,8 +48,7 @@ public class JDBCTemplate implements JDBCSupport {
     private static Map<String, JDBCSupport> executorPool = new ConcurrentHashMap<String, JDBCSupport>();
 
     /**
-     * schema与dataSourceSplitStrategy 两者唯一标识一个jdbc template
-     * 通过这两个信息可以唯一确定一个数据源（唯一数据库）
+     * schema与dataSourceSplitStrategy 两者唯一标识一个jdbc template 通过这两个信息可以唯一确定一个数据源（唯一数据库）
      */
     private String schema;
     private DatabaseSplitStrategy dataSourceSplitStrategy;
@@ -62,7 +59,6 @@ public class JDBCTemplate implements JDBCSupport {
     private ConnectionContextHolder getConnectionHolder() {
         return ApplicationContext.getContainer().getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
     }
-
 
     /**
      * 串行执行 而且只加载一次
@@ -112,7 +108,7 @@ public class JDBCTemplate implements JDBCSupport {
      * @param index
      */
     private void bindParameter(PreparedStatement preparedStatement,
-                               Parameter parameter, int index) {
+        Parameter parameter, int index) {
         Object value = parameter.getParameterValue();
         Class<?> fieldType = parameter.getType();
         TypeHandlerRegistry typeHandlerRegistry = TypeHandlerRegistry.getInstance();
@@ -126,9 +122,9 @@ public class JDBCTemplate implements JDBCSupport {
             logger.debug("JDBCTemplate set SQLParameter error sqlType {} not exist", fieldType);
         } catch (Exception e) {
             logger.error(
-                    "Executor JDBCTemplate error attribute:"
-                            + parameter.getName() + " value:" + value
-                            + " type:" + fieldType, e);
+                "Executor JDBCTemplate error attribute:"
+                    + parameter.getName() + " value:" + value
+                    + " type:" + fieldType, e);
             throw new RuntimeException(e);
         }
     }
@@ -138,10 +134,10 @@ public class JDBCTemplate implements JDBCSupport {
         String suffix = null;
         switch (this.dataSourceSplitStrategy) {
             case LANGUAGE:
-                suffix = (String) httpContext.get(CONSTANT.REQUEST_LANGUAGE);
+                suffix = (String) httpContext.get(Constant.REQUEST_LANGUAGE);
                 break;
             case USER_DEFINED:
-                suffix = (String) httpContext.get(CONSTANT.REQUEST_DATABASE_SUFFIX);
+                suffix = (String) httpContext.get(Constant.REQUEST_DATABASE_SUFFIX);
                 break;
             default:
                 suffix = "default";
@@ -154,15 +150,13 @@ public class JDBCTemplate implements JDBCSupport {
      * 获取数据库连接
      *
      * @return
-     * @see DatasourceKey
-     * schema+suffix（运行时确定）定位唯一 datasource
+     * @see DatasourceKey schema+suffix（运行时确定）定位唯一 datasource
      * <p>
      * @see com.sparrow.datasource.DatasourceKey 与 connection url一致，在
-     * @see com.sparrow.datasource.DataSourceFactory 中已做映射
-     * schema+ DATABASE_SPLIT_STRATEGY（注解） 确定唯一 jdbc template（最小粒度）
+     * @see com.sparrow.datasource.DataSourceFactory 中已做映射 schema+ DATABASE_SPLIT_STRATEGY（注解） 确定唯一 jdbc template（最小粒度）
      */
     private synchronized Connection getConnection() {
-        ConnectionContextHolder connectionHolder=this.getConnectionHolder();
+        ConnectionContextHolder connectionHolder = this.getConnectionHolder();
         DatasourceKey dataSourceKey = new DatasourceKey(this.schema, this.getDataSourceSuffix());
         Connection connection = connectionHolder.getConnection(dataSourceKey.getKey());
         //当前未绑定链接或已经绑定但不是事务
@@ -174,7 +168,7 @@ public class JDBCTemplate implements JDBCSupport {
                 //不管是否为事务都需要绑定到线程上，以便执行完后关闭proxyConnection
                 //(ProxyConnection)connection会报错，故getConnection之后无法放回池中
                 connectionHolder
-                        .bindConnection(connection);
+                    .bindConnection(connection);
             }
         } catch (SQLException e) {
             logger.error("get connection error", e);
@@ -191,28 +185,28 @@ public class JDBCTemplate implements JDBCSupport {
     private PreparedStatement getPreparedStatement(JDBCParameter jdbcParameter) {
         PreparedStatement preparedStatement = null;
         Connection connection = null;
-        ConnectionContextHolder connectionContextHolder=this.getConnectionHolder();
+        ConnectionContextHolder connectionContextHolder = this.getConnectionHolder();
         try {
             connection = this.getConnection();
             connection.setReadOnly(jdbcParameter.isReadOnly());
             if (jdbcParameter.isAutoIncrement()) {
                 preparedStatement = connection.prepareStatement(jdbcParameter.getCommand(),
-                        Statement.RETURN_GENERATED_KEYS);
+                    Statement.RETURN_GENERATED_KEYS);
             } else {
                 // 存储过程
                 if (jdbcParameter.getCommand().trim().toLowerCase().startsWith("call")) {
                     if (jdbcParameter.isReadOnly()) {
                         preparedStatement = connection.prepareCall(jdbcParameter.getCommand(),
-                                ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                ResultSet.CONCUR_READ_ONLY);
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
                     } else {
                         preparedStatement = connection.prepareCall(jdbcParameter.getCommand());
                     }
                 } else {
                     if (jdbcParameter.isReadOnly()) {
                         preparedStatement = connection.prepareStatement(jdbcParameter.getCommand(),
-                                ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                ResultSet.CONCUR_READ_ONLY);
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
                     } else {
                         preparedStatement = connection.prepareStatement(jdbcParameter.getCommand());
                     }
@@ -245,10 +239,10 @@ public class JDBCTemplate implements JDBCSupport {
             for (Parameter parameter : jdbcParameter.getParameters()) {
                 Object parameterValue = parameter.getParameterValue();
                 if (parameterValue == null) {
-                    parameterValue = SYMBOL.EMPTY;
+                    parameterValue = Symbol.EMPTY;
                 }
                 commandString = commandString.replaceFirst("\\?",
-                        Matcher.quoteReplacement(parameterValue.toString()));
+                    Matcher.quoteReplacement(parameterValue.toString()));
             }
             logger.debug("SQL:" + commandString);
         }
@@ -376,8 +370,8 @@ public class JDBCTemplate implements JDBCSupport {
             if (jdbcParameter.getParameters() == null || jdbcParameter.getParameters().size() == 0) {
                 connection = this.getConnection();
                 statement = connection.createStatement(
-                        ResultSet.TYPE_SCROLL_SENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
                 logger.debug("SQL:" + jdbcParameter.getCommand());
                 resultSet = statement.executeQuery(jdbcParameter.getCommand());
             } else {
@@ -446,7 +440,7 @@ public class JDBCTemplate implements JDBCSupport {
                 return;
             }
             this.getConnectionHolder()
-                    .unbindConnection(statement.getConnection());
+                .unbindConnection(statement.getConnection());
             statement.close();
         } catch (SQLException e) {
             logger.error("release statement", e);

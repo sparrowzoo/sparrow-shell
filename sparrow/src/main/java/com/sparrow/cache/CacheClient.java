@@ -17,10 +17,6 @@
 
 package com.sparrow.cache;
 
-/**
- * @author harry
- * @date 2018/1/19
- */
 public interface CacheClient {
 
     CacheString string();

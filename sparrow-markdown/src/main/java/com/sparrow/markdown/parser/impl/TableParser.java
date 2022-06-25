@@ -16,39 +16,35 @@
  */
 package com.sparrow.markdown.parser.impl;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.markdown.mark.MARK;
 import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.mark.MarkEntity;
-import com.sparrow.markdown.parser.MarkParser;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class TableParser extends AbstractWithEndTagParser {
 
     @Override
     public MarkEntity validate(MarkContext markContext) {
         int pointer = markContext.getCurrentPointer() + this.mark().getStart().length();
         String title = markContext.readLine(pointer);
-        if (!title.contains(SYMBOL.VERTICAL_LINE)) {
+        if (!title.contains(Symbol.VERTICAL_LINE)) {
             return null;
         }
         pointer += title.length();
         String split = markContext.readLine(pointer);
-        if (!split.contains(SYMBOL.VERTICAL_LINE)) {
+        if (!split.contains(Symbol.VERTICAL_LINE)) {
             return null;
         }
 
         pointer += split.length();
         String tdLine = markContext.readLine(pointer);
-        if (!tdLine.contains(SYMBOL.VERTICAL_LINE)) {
+        if (!tdLine.contains(Symbol.VERTICAL_LINE)) {
             return null;
         }
 
-        String verticalLineSplit="\\|";
+        String verticalLineSplit = "\\|";
         String[] titleArray = title.trim().split(verticalLineSplit);
         String[] splitArray = split.trim().split(verticalLineSplit);
         String[] tdArray = tdLine.trim().split(verticalLineSplit);

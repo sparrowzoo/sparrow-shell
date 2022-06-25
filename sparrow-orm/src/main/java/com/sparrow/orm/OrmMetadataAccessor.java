@@ -28,9 +28,9 @@ import com.sparrow.orm.query.sql.OperationEntity;
 import com.sparrow.orm.type.JdbcType;
 import com.sparrow.orm.type.TypeHandler;
 import com.sparrow.orm.type.TypeHandlerRegistry;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
-import com.sparrow.protocol.enums.STATUS_RECORD;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
+import com.sparrow.protocol.enums.StatusRecord;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
 
@@ -46,9 +46,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
- * @author harry
- */
 public class OrmMetadataAccessor<T> {
     private static Logger logger = LoggerFactory.getLogger(OrmMetadataAccessor.class);
 
@@ -88,7 +85,7 @@ public class OrmMetadataAccessor<T> {
         if (tableSuffix == null) {
             return this.entityManager.getDialectTableName();
         }
-        return this.entityManager.getDialectTableName().replace(CONSTANT.TABLE_SUFFIX, this.entityManager.getTableSuffix(tableSuffix));
+        return this.entityManager.getDialectTableName().replace(Constant.TABLE_SUFFIX, this.entityManager.getTableSuffix(tableSuffix));
     }
 
     /**
@@ -97,7 +94,7 @@ public class OrmMetadataAccessor<T> {
     public OrmMetadataAccessor(Class modelClazz, CriteriaProcessor criteriaProcessor) {
         this.modelClazz = modelClazz;
         this.methodAccessor = container.getProxyBean(
-                this.modelClazz);
+            this.modelClazz);
         this.entityManager = new SparrowEntityManager(this.modelClazz);
         EntityManagerFactoryBean.getInstance().pubObject(this.modelClazz, this.entityManager);
         this.modelName = ClassUtility.getEntityNameByClass(this.modelClazz);
@@ -138,7 +135,7 @@ public class OrmMetadataAccessor<T> {
                         id = idGenerator.generate();
                         parameters.add(new Parameter(field, id));
                         this.methodAccessor
-                                .set(model, field.getName(), id);
+                            .set(model, field.getName(), id);
                     }
                     break;
                 case IDENTITY:
@@ -148,8 +145,8 @@ public class OrmMetadataAccessor<T> {
             }
         }
         if (tableSuffix.size() > 0) {
-            if (insertSQL.contains(CONSTANT.TABLE_SUFFIX)) {
-                insertSQL = insertSQL.replace(CONSTANT.TABLE_SUFFIX, this.entityManager.getTableSuffix(tableSuffix));
+            if (insertSQL.contains(Constant.TABLE_SUFFIX)) {
+                insertSQL = insertSQL.replace(Constant.TABLE_SUFFIX, this.entityManager.getTableSuffix(tableSuffix));
             }
         }
         return new JDBCParameter(insertSQL, parameters, isIncrement);
@@ -172,8 +169,8 @@ public class OrmMetadataAccessor<T> {
             }
         }
         if (tableSuffix.size() > 0) {
-            if (updateSQL.contains(CONSTANT.TABLE_SUFFIX)) {
-                updateSQL = updateSQL.replace(CONSTANT.TABLE_SUFFIX, this.entityManager.getTableSuffix(tableSuffix));
+            if (updateSQL.contains(Constant.TABLE_SUFFIX)) {
+                updateSQL = updateSQL.replace(Constant.TABLE_SUFFIX, this.entityManager.getTableSuffix(tableSuffix));
             }
         }
         parameters.add(whereParameter);
@@ -187,8 +184,8 @@ public class OrmMetadataAccessor<T> {
         OperationEntity where = this.criteriaProcessor.where(criteria.getWhere());
         OperationEntity setClause = this.criteriaProcessor.setClause(criteria.getSetClausePairList());
         String update = String.format("update %1$s set %2$s where %3$s",
-                this.getTableName(criteria.getTableSuffix()), setClause.getClause(),
-                where.getClause());
+            this.getTableName(criteria.getTableSuffix()), setClause.getClause(),
+            where.getClause());
         List<Parameter> updateParameters = new ArrayList<Parameter>();
         updateParameters.addAll(setClause.getParameterList());
         updateParameters.addAll(where.getParameterList());
@@ -201,7 +198,7 @@ public class OrmMetadataAccessor<T> {
         }
         Field primaryField = this.entityManager.getPrimary();
         return new JDBCParameter(this.entityManager.getDelete(),
-                Collections.singletonList(new Parameter(primaryField, primaryField.convert(id.toString()))));
+            Collections.singletonList(new Parameter(primaryField, primaryField.convert(id.toString()))));
     }
 
     public JDBCParameter delete(SearchCriteria searchCriteria) {
@@ -216,6 +213,7 @@ public class OrmMetadataAccessor<T> {
         }
         return new JDBCParameter(delete, where.getParameterList());
     }
+
     public T setEntity(ResultSet rs, ResultSetCallback resultSetCallback) {
         try {
             ResultSetMetaData resultSetMetaData = rs.getMetaData();
@@ -233,7 +231,7 @@ public class OrmMetadataAccessor<T> {
                 try {
                     this.getMethodAccessor().set(model, propertyName, fieldValue);
                 } catch (Exception e) {
-                    logger.error(this.modelClazz.getSimpleName() + SYMBOL.VERTICAL_LINE + columnName, e);
+                    logger.error(this.modelClazz.getSimpleName() + Symbol.VERTICAL_LINE + columnName, e);
                 }
             }
             return model;
@@ -251,17 +249,17 @@ public class OrmMetadataAccessor<T> {
         StringBuilder select = new StringBuilder("select ");
         select.append(this.entityManager.getFields());
         select.append(" from "
-                + this.entityManager.getDialectTableName());
+            + this.entityManager.getDialectTableName());
         select.append(" where " + this.entityManager.getPrimary().getColumnName() + "=?");
         return new JDBCParameter(select.toString(), Collections.singletonList(new Parameter(this.entityManager.getUniqueField(uniqueKey), key)));
     }
 
     public JDBCParameter getCount(Object key, String uniqueKey) {
         StringBuilder select = new StringBuilder("select count(*) from "
-                + this.entityManager.getDialectTableName());
+            + this.entityManager.getDialectTableName());
         Field uniqueField = this.entityManager.getUniqueField(uniqueKey);
         select.append(" where "
-                + uniqueField.getColumnName() + "=?");
+            + uniqueField.getColumnName() + "=?");
         return new JDBCParameter(select.toString(), Collections.singletonList(new Parameter(uniqueField, key)));
     }
 
@@ -284,7 +282,7 @@ public class OrmMetadataAccessor<T> {
 
         tableName = this.getTableName(criteria.getTableSuffix());
         select.append(String.format("select count(%1$s) from %2$s",
-                field, tableName));
+            field, tableName));
         if (!StringUtility.isNullOrEmpty(whereClause)) {
             select.append(" where " + whereClause);
         }
@@ -292,7 +290,7 @@ public class OrmMetadataAccessor<T> {
     }
 
     public JDBCParameter getFieldValue(String fieldName, Object key, String uniqueKey) {
-        if (fieldName.contains(SYMBOL.COMMA)) {
+        if (fieldName.contains(Symbol.COMMA)) {
             fieldName = fieldName.split("\\.")[1];
         }
 
@@ -305,52 +303,52 @@ public class OrmMetadataAccessor<T> {
 
         fieldName = this.entityManager.getField(fieldName).getColumnName();
         String select = String.format("select %1$s from %2$s where %3$s=?", fieldName,
-                this.entityManager.getDialectTableName(), uniqueField.getColumnName());
+            this.entityManager.getDialectTableName(), uniqueField.getColumnName());
         return new JDBCParameter(select, Collections.singletonList(new Parameter(uniqueField, key)));
     }
 
-    public JDBCParameter changeStatus(String primaryKey, STATUS_RECORD status) {
+    public JDBCParameter changeStatus(String primaryKey, StatusRecord status) {
         String whereClause = null;
-        if (primaryKey.contains(SYMBOL.COMMA)) {
-            whereClause = " in(" + primaryKey + SYMBOL.RIGHT_PARENTHESIS;
+        if (primaryKey.contains(Symbol.COMMA)) {
+            whereClause = " in(" + primaryKey + Symbol.RIGHT_PARENTHESIS;
         } else {
             whereClause = " =?";
         }
         String updateSql = String.format("update %1$s set %2$s=? where %3$s %4$s",
-                this.entityManager.getDialectTableName(),
-                this.entityManager.getStatus().getColumnName(),
-                this.entityManager.getPrimary().getColumnName(),
-                whereClause);
+            this.entityManager.getDialectTableName(),
+            this.entityManager.getStatus().getColumnName(),
+            this.entityManager.getPrimary().getColumnName(),
+            whereClause);
 
         Parameter[] sqlParameters;
-        if (primaryKey.contains(SYMBOL.COMMA)) {
-            sqlParameters = new Parameter[]{
-                    new Parameter(this.entityManager.getStatus(), status)};
+        if (primaryKey.contains(Symbol.COMMA)) {
+            sqlParameters = new Parameter[] {
+                new Parameter(this.entityManager.getStatus(), status)};
         } else {
-            sqlParameters = new Parameter[]{
-                    new Parameter(this.entityManager.getStatus(), status),
-                    new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(primaryKey))};
+            sqlParameters = new Parameter[] {
+                new Parameter(this.entityManager.getStatus(), status),
+                new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(primaryKey))};
         }
         return new JDBCParameter(updateSql, Arrays.asList(sqlParameters));
     }
 
     public JDBCParameter batchDelete(String ids) {
         String whereClause;
-        if (ids.contains(SYMBOL.COMMA)) {
-            whereClause = " in(" + ids + SYMBOL.RIGHT_PARENTHESIS;
+        if (ids.contains(Symbol.COMMA)) {
+            whereClause = " in(" + ids + Symbol.RIGHT_PARENTHESIS;
         } else {
             whereClause = " =?";
         }
         String updateSql = String.format("DELETE FROM %1$s where %2$s %3$s",
-                this.entityManager.getDialectTableName(),
-                this.entityManager.getPrimary().getColumnName(),
-                whereClause);
+            this.entityManager.getDialectTableName(),
+            this.entityManager.getPrimary().getColumnName(),
+            whereClause);
 
         Parameter[] sqlParameters = new Parameter[0];
-        if (!ids.contains(SYMBOL.COMMA)) {
-            sqlParameters = new Parameter[]{
-                    new Parameter(this.entityManager.getPrimary(),
-                            this.entityManager.getPrimary().convert(ids))
+        if (!ids.contains(Symbol.COMMA)) {
+            sqlParameters = new Parameter[] {
+                new Parameter(this.entityManager.getPrimary(),
+                    this.entityManager.getPrimary().convert(ids))
             };
         }
         return new JDBCParameter(updateSql, Arrays.asList(sqlParameters));

@@ -20,9 +20,6 @@ package com.sparrow.orm.query;
 import com.sparrow.enums.Order;
 import com.sparrow.orm.query.impl.SimpleCriteriaField;
 
-/**
- * @author harry
- */
 public class OrderCriteria {
     private CriteriaField field;
     private Order order;

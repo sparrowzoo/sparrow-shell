@@ -17,7 +17,7 @@
 
 package com.sparrow.protocol;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 
 import java.util.List;
 
@@ -25,15 +25,13 @@ import java.util.List;
  * 可用于协议 规范服务端返回格式 <p> <p> BusinessException KEY ErrorSupport SPARROW_ERROR name+suffix=key suffix 与界面name 对应 <p> <p>
  * 为什么用该类型？与异常相比 考虑继承的问题 枚举不可以继承 考虑该类要求稳定不经常修改 不要影响数据协议 考虑第三调用的泛型
  *
- * @author harry
- *
  * json 反序列化，set get 方法一定要存在
  */
 public class Result<T> implements VO {
 
 
     private Result() {
-        this.code = CONSTANT.RESULT_OK_CODE;
+        this.code = Constant.RESULT_OK_CODE;
     }
 
     public Result(T data) {
@@ -42,7 +40,7 @@ public class Result<T> implements VO {
             this.code = error.getCode();
             this.error = error.getMessage();
         } else {
-            this.code = CONSTANT.RESULT_OK_CODE;
+            this.code = Constant.RESULT_OK_CODE;
             this.data = data;
         }
     }
@@ -99,7 +97,7 @@ public class Result<T> implements VO {
     }
 
     public boolean ok() {
-        return this.code.equals(CONSTANT.RESULT_OK_CODE);
+        return this.code.equals(Constant.RESULT_OK_CODE);
     }
 
     public String getCode() {

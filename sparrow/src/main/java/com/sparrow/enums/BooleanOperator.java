@@ -17,10 +17,6 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
-
 public enum BooleanOperator {
     /**
      * 与关系

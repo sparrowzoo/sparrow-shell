@@ -20,9 +20,6 @@ package com.sparrow.orm.query;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class BooleanCriteria {
 
     private List<CriteriaLinker> criteriaList = new ArrayList<CriteriaLinker>();

@@ -17,34 +17,11 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
-
 public enum HttpMethod {
-    /**
-     * GET
-     */
     GET,
-    /**
-     * POST
-     */
     POST,
-
-    /**
-     * DELETE
-     */
     DELETE,
-    /**
-     * PUT
-     */
     PUT,
-    /**
-     * HEAD
-     */
     HEAD,
-    /**
-     * OPTION
-     */
     OPTION
 }

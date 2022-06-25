@@ -17,12 +17,6 @@
 
 package com.sparrow.constant;
 
-/**
- * 文件（附件相关配置）
- *
- * @author harry
- * @version 1.0
- */
 public class File {
     /**
      * 正确文件类型的配置前缀字符.使用举例:right_file_type(_userhead) userhead为pathKey
@@ -59,8 +53,7 @@ public class File {
     }
 
     /**
-     * upload file path
-     * file_upload 代表上传的路径，不需要多站点打散
+     * upload file path file_upload 代表上传的路径，不需要多站点打散
      */
     public class PATH {
         public static final String IMG_URL = "img_url";

@@ -17,17 +17,14 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
 public class Span extends AbstractJWebBodyControl {
 
     @Override
     public String setTagNameAndGetTagAttributes() {
         super.setTagName("span");
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 }

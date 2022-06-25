@@ -17,10 +17,6 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
-
 public enum LogLevel {
     /**
      * trace

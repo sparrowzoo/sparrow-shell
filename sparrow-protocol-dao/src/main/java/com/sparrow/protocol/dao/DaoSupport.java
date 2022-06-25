@@ -25,9 +25,6 @@ import java.util.Map;
 
 /**
  * table identify 可以跨db mybatis hibernate jdbc elastic search
- *
- * @param <T>
- * @author harry
  */
 public interface DaoSupport<T, I> {
 

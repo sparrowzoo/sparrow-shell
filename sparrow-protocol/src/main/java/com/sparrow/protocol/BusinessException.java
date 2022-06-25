@@ -17,16 +17,12 @@
 
 package com.sparrow.protocol;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
-
-import java.util.ArrayList;
+import com.sparrow.protocol.constant.magic.Symbol;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * 业务异常 程序中断
- *
- * @author harry
  */
 public class BusinessException extends Exception {
     /**
@@ -67,7 +63,7 @@ public class BusinessException extends Exception {
             this.key = this.key + "." + suffix.toLowerCase();
         }
         this.code = errorSupport.getCode();
-        if (parameters != null && parameters.size() > 0 && !parameters.get(0).equals(SYMBOL.EMPTY)) {
+        if (parameters != null && parameters.size() > 0 && !parameters.get(0).equals(Symbol.EMPTY)) {
             this.parameters = parameters;
         }
     }
@@ -85,7 +81,7 @@ public class BusinessException extends Exception {
     }
 
     public BusinessException(ErrorSupport errorSupport) {
-        this(errorSupport, null, SYMBOL.EMPTY);
+        this(errorSupport, null, Symbol.EMPTY);
     }
 
     public String getCode() {
@@ -112,12 +108,12 @@ public class BusinessException extends Exception {
         if (parameters != null) {
             for (Object object : parameters) {
                 if (sb.length() > 0) {
-                    sb.append(SYMBOL.COMMA);
+                    sb.append(Symbol.COMMA);
                 }
                 sb.append(object.toString().trim());
             }
         }
         return String.format("key:%s,code:%s,parameters:%s", key, code,
-                sb.toString());
+            sb.toString());
     }
 }

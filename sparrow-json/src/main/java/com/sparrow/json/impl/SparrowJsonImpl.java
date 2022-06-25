@@ -18,7 +18,7 @@
 package com.sparrow.json.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.json.Json;
 import com.sparrow.protocol.POJO;
 import org.slf4j.Logger;
@@ -28,9 +28,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class SparrowJsonImpl implements Json {
     private static Logger logger = LoggerFactory.getLogger(SparrowJsonImpl.class);
 
@@ -42,7 +39,7 @@ public class SparrowJsonImpl implements Json {
     @Override
     public String toString(Map<String, Object> map) {
         if (map == null || map.size() == 0) {
-            return CONSTANT.NULL_JSON;
+            return Constant.NULL_JSON;
         }
         return JSON.toJSONString(map);
     }
@@ -55,7 +52,7 @@ public class SparrowJsonImpl implements Json {
     /**
      * 解析json至实体对象
      *
-     * @param json {"name":"zlz","age":"28"}
+     * @param json  {"name":"zlz","age":"28"}
      * @param clazz
      * @return
      */
@@ -64,14 +61,13 @@ public class SparrowJsonImpl implements Json {
         return JSON.parseObject(json, clazz);
     }
 
-
     @Override
     public <T> List<T> parseList(String json, Class<T> clazz) {
         return JSON.parseArray(json, clazz);
     }
 
     @Override
-    public Map<String,Object>  parse(String json) {
+    public Map<String, Object> parse(String json) {
         return JSON.parseObject(json);
     }
 }

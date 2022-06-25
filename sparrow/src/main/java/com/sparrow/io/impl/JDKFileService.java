@@ -27,9 +27,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class JDKFileService implements FileService {
     private static Logger logger = LoggerFactory.getLogger(JDKFileService.class);
 

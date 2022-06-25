@@ -17,8 +17,5 @@
 
 package com.sparrow.cg;
 
-/**
- * @author harry
- */
 public interface Unloadable {
 }

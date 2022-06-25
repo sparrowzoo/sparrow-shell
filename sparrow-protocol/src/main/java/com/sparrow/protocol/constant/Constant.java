@@ -22,11 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 常用常量
- *
- * @author harry
- * @version 1.0
  */
-public class CONSTANT {
+public class Constant {
     public static final String SPARROW = "sparrow";
     public static final String DEFAULT = "default";
     public static final String ERROR = "error";
@@ -92,7 +89,6 @@ public class CONSTANT {
     public static final String REQUEST_ACTION_CURRENT_FORUM = "request_action_current_forum";
     public static final String REQUEST_CLIENT_INFORMATION = "client";
 
-
     public static final String STRING_ALL = "all";
     /**
      * 空链接
@@ -103,8 +99,6 @@ public class CONSTANT {
     public static final String HTTP_PROTOCOL = "http://";
     public static final String HTTPS_PROTOCOL = "https://";
     public static final String LOCALHOST_IP = "127.0.0.1";
-
-
 
     /**
      * 用于宏替换的常量

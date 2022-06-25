@@ -17,21 +17,16 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
-/**
- * @author harry
- */
 public class JSUtility {
     /**
-     * 获取js的安全脚本
-     * '单引号
-     * " 双引号
+     * 获取js的安全脚本 '单引号 " 双引号
      *
      * @param str
      * @return
@@ -41,7 +36,7 @@ public class JSUtility {
             return null;
         }
         return str.replace("'", "&apos;").replace("\"", "&quot;")
-                .replace("\r\n", "<br/>").replace("\n", "<br/>");
+            .replace("\r\n", "<br/>").replace("\n", "<br/>");
     }
 
     /**
@@ -53,11 +48,11 @@ public class JSUtility {
     public static String encodeURIComponent(String content) {
         try {
             if (StringUtility.isNullOrEmpty(content)) {
-                return SYMBOL.EMPTY;
+                return Symbol.EMPTY;
             }
-            return URLEncoder.encode(content, CONSTANT.CHARSET_UTF_8).replace(SYMBOL.ADD, "%20");
+            return URLEncoder.encode(content, Constant.CHARSET_UTF_8).replace(Symbol.ADD, "%20");
         } catch (Exception e) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
     }
 
@@ -69,9 +64,9 @@ public class JSUtility {
      */
     public static String decodeURIComponent(String content) {
         try {
-            return URLDecoder.decode(content, CONSTANT.CHARSET_UTF_8);
+            return URLDecoder.decode(content, Constant.CHARSET_UTF_8);
         } catch (UnsupportedEncodingException e) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
     }
 

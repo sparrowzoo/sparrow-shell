@@ -16,7 +16,7 @@
  */
 package com.sparrow.markdown.mark;
 
-import com.sparrow.protocol.constant.magic.CHAR_SYMBOL;
+import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.markdown.parser.MarkParser;
 import com.sparrow.markdown.parser.impl.*;
 
@@ -26,9 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author by harry
- */
 public class MarkContext {
 
     public MarkContext(String content) {
@@ -246,7 +243,6 @@ public class MarkContext {
             if (markEntity == null) {
                 continue;
             }
-            System.out.println(mark);
             this.setPointer(originalPointer);
             this.setTempNextMark(markEntity);
             return true;
@@ -267,7 +263,7 @@ public class MarkContext {
 
     public int detectFirstBlank(MARK mark, Integer pointer) {
         //the first letter must be \n
-        if (content.charAt(pointer) == CHAR_SYMBOL.ENTER) {
+        if (content.charAt(pointer) == CharSymbol.ENTER) {
             return pointer;
         }
         if (!BORROWABLE_BLANK.contains(mark)) {
@@ -276,12 +272,11 @@ public class MarkContext {
         if (pointer < 1) {
             return -1;
         }
-        if (content.charAt(--pointer) != CHAR_SYMBOL.ENTER) {
+        if (content.charAt(--pointer) != CharSymbol.ENTER) {
             return -1;
         }
         return pointer;
     }
-
 
     public MarkEntity getTempNextMark() {
         return tempNextMark;

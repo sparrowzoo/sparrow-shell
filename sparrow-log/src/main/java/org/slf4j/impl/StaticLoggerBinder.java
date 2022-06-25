@@ -33,9 +33,6 @@ import com.sparrow.utility.ConfigUtility;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.spi.LoggerFactoryBinder;
 
-/**
- * @author harry
- */
 public class StaticLoggerBinder implements LoggerFactoryBinder {
 
     /**
@@ -55,12 +52,12 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
     private static final String LOGGER_FACTORY_CLASS = SparrowLoggerFactory.class
         .getName();
 
-    private static Cache<String,Object> logCache;
+    private static Cache<String, Object> logCache;
 
     private final ILoggerFactory loggerFactory;
 
     private StaticLoggerBinder() {
-        logCache=new StrongDurationCache<>(CacheKey.LOG);
+        logCache = new StrongDurationCache<>(CacheKey.LOG);
         Integer level = LogLevel.INFO.ordinal();
         logCache.put(Config.LOG_LEVEL, level);
         logCache.put(Config.LOG_PRINT_CONSOLE, true);

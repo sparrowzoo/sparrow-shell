@@ -22,9 +22,6 @@ import com.sparrow.utility.FileUtility;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author by harry
- */
 public class ElapsedSection {
 
     private static final String SECTION_FILE_NAME = "monitor_section_config.properties";

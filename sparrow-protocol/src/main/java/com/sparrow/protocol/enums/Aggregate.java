@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.constant.magic;
+package com.sparrow.protocol.enums;
 
-/**
- * @author by harry
- */
-public class ESCAPED {
-    public static final String LESS_THEN = "&lt;";
-    public static final String GREAT_THEN = "&gt;";
-    public static final String AND = "&amp;";
-    public static final String SINGLE_QUOTES = "&apos;";
-    public static final String DOUBLE_QUOTES = "&apos;";
-    public static final String NO_BREAK_SPACE = "&nbsp;";
-    public static final String EM_SPACE = "&emsp;";
+public enum Aggregate {
+    /**
+     * 总数
+     */
+    COUNT,
+    SUM,
+    AVG,
+    MIN,
+    MAX
 }

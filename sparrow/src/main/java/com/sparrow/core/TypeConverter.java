@@ -20,16 +20,14 @@ package com.sparrow.core;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.json.Json;
 import com.sparrow.protocol.POJO;
-import com.sparrow.protocol.enums.STATUS_RECORD;
+import com.sparrow.protocol.enums.StatusRecord;
 import com.sparrow.utility.StringUtility;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-/**
- * @author harry
- */
+@SuppressWarnings("unchecked")
 public class TypeConverter {
     public TypeConverter() {
     }
@@ -111,19 +109,16 @@ public class TypeConverter {
         return (Timestamp) new TypeConverter(Timestamp.class).convert(value);
     }
 
-
     public Object convert() {
         if (StringUtility.isNullOrEmpty(value)) {
             return null;
         }
 
-        if(this.getType()==Object.class){
+        if (this.getType() == Object.class) {
             return value;
         }
         try {
             Class valueType = value.getClass();
-
-            //转成string
             if (this.getType() == String.class) {
                 //当前值是entity对象则转json
                 if (POJO.class.isAssignableFrom(valueType)) {
@@ -153,8 +148,8 @@ public class TypeConverter {
             if (this.getType() == boolean.class || this.getType() == Boolean.class) {
                 boolean b = false;
                 if (!StringUtility.isNullOrEmpty(stringValue)) {
-                    if (String.valueOf(STATUS_RECORD.ENABLE
-                            .ordinal()).equals(stringValue) || Boolean.TRUE.toString().equalsIgnoreCase(stringValue)) {
+                    if (String.valueOf(StatusRecord.ENABLE
+                        .ordinal()).equals(stringValue) || Boolean.TRUE.toString().equalsIgnoreCase(stringValue)) {
                         b = true;
                     }
                 }

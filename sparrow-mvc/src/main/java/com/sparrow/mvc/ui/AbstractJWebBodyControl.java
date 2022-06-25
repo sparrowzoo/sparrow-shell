@@ -23,9 +23,6 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-/**
- * @author harry
- */
 public abstract class AbstractJWebBodyControl extends WebControl {
     /**
      *
@@ -52,11 +49,11 @@ public abstract class AbstractJWebBodyControl extends WebControl {
         int returnValue = TagSupport.SKIP_BODY;
         StringBuilder writeHTML = new StringBuilder();
 
-        String htmlId=this.getId() + ".innerHTML";
+        String htmlId = this.getId() + ".innerHTML";
         Object innerHTML = this.pageContext.getRequest().getAttribute(
             htmlId);
-        if(innerHTML==null){
-            innerHTML= HttpContext.getContext().get(htmlId);
+        if (innerHTML == null) {
+            innerHTML = HttpContext.getContext().get(htmlId);
         }
         if (innerHTML == null) {
             innerHTML = this.pageContext.getRequest().getAttribute(
@@ -90,7 +87,7 @@ public abstract class AbstractJWebBodyControl extends WebControl {
             this.pageContext.getOut().print(content);
             this.pageContext.getOut().print("</" + this.getTagName() + ">");
         } catch (IOException e) {
-            logger.error("body control error {}",e);
+            logger.error("body control error {}", e);
         }
         return returnValue;
     }

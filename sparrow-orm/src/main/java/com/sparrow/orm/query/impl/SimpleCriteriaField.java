@@ -17,18 +17,15 @@
 
 package com.sparrow.orm.query.impl;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.orm.query.CriteriaField;
 
-/**
- * @author harry
- */
 public class SimpleCriteriaField implements CriteriaField {
     private String fieldName;
     private String alias;
 
     public SimpleCriteriaField(String filedName) {
-        if (!filedName.contains(SYMBOL.DOT)) {
+        if (!filedName.contains(Symbol.DOT)) {
             throw new RuntimeException("field name must contain .");
         }
         String[] fieldArray = filedName.split("\\.");

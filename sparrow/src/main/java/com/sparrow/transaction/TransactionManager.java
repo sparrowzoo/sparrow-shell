@@ -17,11 +17,6 @@
 
 package com.sparrow.transaction;
 
-/**
- * 在start 之前要手动将suffix设置
- *
- * @author harry
- */
 public interface TransactionManager {
 
     <T> T start(Transaction<T> transaction);

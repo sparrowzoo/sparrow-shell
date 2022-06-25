@@ -17,7 +17,7 @@
 
 package com.sparrow.orm.query.sql.impl.operation;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.container.ClassFactoryBean;
 import com.sparrow.orm.*;
 import com.sparrow.orm.query.Criteria;
@@ -25,21 +25,18 @@ import com.sparrow.orm.query.CriteriaField;
 import com.sparrow.orm.query.sql.RelationOperationEntity;
 import com.sparrow.orm.query.sql.RelationalOperation;
 
-/**
- * @author by harry
- */
 public class BinaryOperation implements RelationalOperation {
-    private ClassFactoryBean<EntityManager> entityManagerFactoryBean=EntityManagerFactoryBean.getInstance();
+    private ClassFactoryBean<EntityManager> entityManagerFactoryBean = EntityManagerFactoryBean.getInstance();
 
     @Override
     public RelationOperationEntity operation(Criteria criteria) {
         CriteriaField criteriaField = criteria.getField();
         EntityManager entityManager = entityManagerFactoryBean.getObject(criteriaField.getAlias());
         Field field = entityManager.getField(criteriaField.getName());
-        if(field==null){
-            throw new IllegalArgumentException(criteriaField.getAlias()+SYMBOL.DOT+criteriaField.getName()+" not found");
+        if (field == null) {
+            throw new IllegalArgumentException(criteriaField.getAlias() + Symbol.DOT + criteriaField.getName() + " not found");
         }
-        String condition = (criteria.isAlias() ? criteriaField.getAlias() + SYMBOL.DOT : SYMBOL.EMPTY) + field.getColumnName() + SYMBOL.BLANK + criteria.getCriteriaEntry().getKey().rendered() + " ? ";
+        String condition = (criteria.isAlias() ? criteriaField.getAlias() + Symbol.DOT : Symbol.EMPTY) + field.getColumnName() + Symbol.BLANK + criteria.getCriteriaEntry().getKey().rendered() + " ? ";
         Parameter parameter = new Parameter(field, criteria.getCriteriaEntry().getValue());
         return new RelationOperationEntity(condition, parameter);
     }

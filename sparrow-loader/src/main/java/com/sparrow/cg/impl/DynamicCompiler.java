@@ -20,8 +20,8 @@ package com.sparrow.cg.impl;
 import com.sparrow.cg.Unloadable;
 import com.sparrow.classloader.DynamicClassLoader;
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import java.io.File;
@@ -40,9 +40,6 @@ import javax.tools.ToolProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class DynamicCompiler {
     private static Logger logger = LoggerFactory.getLogger(DynamicCompiler.class);
 
@@ -62,7 +59,7 @@ public class DynamicCompiler {
         this.classLoader = (URLClassLoader) this.getClass().getClassLoader();
         this.encoding = ConfigUtility.getValue(Config.COMPILER_OPTION_ENCODING);
         if (StringUtility.isNullOrEmpty(this.encoding)) {
-            this.encoding = CONSTANT.CHARSET_UTF_8;
+            this.encoding = Constant.CHARSET_UTF_8;
         }
         this.buildClassPath();
     }
@@ -99,7 +96,7 @@ public class DynamicCompiler {
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
         ClassFileManager fileManager = new ClassFileManager(
             compiler.getStandardFileManager(diagnostics, Locale.CHINA,
-                Charset.forName(CONSTANT.CHARSET_UTF_8)));
+                Charset.forName(Constant.CHARSET_UTF_8)));
 
         List<JavaFileObject> javaFileObjectList = new ArrayList<JavaFileObject>();
         javaFileObjectList.add(new JavaSourceFileObject(fullClassName, javaCode));
@@ -166,7 +163,7 @@ public class DynamicCompiler {
             Class<?> clazz = dynamicClassLoader.loadClass(fullClassName, javaClassFileObject);
             instance = clazz.newInstance();
         } else {
-            String error = SYMBOL.EMPTY;
+            String error = Symbol.EMPTY;
             for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
                 error = error + compilePrint(diagnostic);
                 logger.info(error);

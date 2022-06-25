@@ -27,8 +27,6 @@ import java.sql.SQLException;
 
 /**
  * 在start 之前要手动将suffix设置
- *
- * @author harry
  */
 public class SparrowTransactionManager implements com.sparrow.transaction.TransactionManager {
     private static Logger logger = LoggerFactory.getLogger(SparrowTransactionManager.class);
@@ -46,7 +44,7 @@ public class SparrowTransactionManager implements com.sparrow.transaction.Transa
     }
 
     @Override
-    public <T> T start(Transaction<T> transaction){
+    public <T> T start(Transaction<T> transaction) {
         return this.start(transaction, null);
     }
 
@@ -71,7 +69,7 @@ public class SparrowTransactionManager implements com.sparrow.transaction.Transa
                 }
             }
             logger.error("db transaction error", e);
-            throw new RuntimeException("db transaction error",e);
+            throw new RuntimeException("db transaction error", e);
         } finally {
             this.connectionHolder.unbindConnection(connection);
         }

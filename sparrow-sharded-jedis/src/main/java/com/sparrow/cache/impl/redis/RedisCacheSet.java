@@ -73,8 +73,8 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
             @Override
             public Integer execute(ShardedJedis jedis) {
                 int i = 0;
-                TypeConverter typeConverter=new TypeConverter(String.class);
-                ShardedJedisPipeline shardedJedisPipeline= jedis.pipelined();
+                TypeConverter typeConverter = new TypeConverter(String.class);
+                ShardedJedisPipeline shardedJedisPipeline = jedis.pipelined();
                 for (Object value : values) {
                     if (value == null) {
                         continue;
@@ -93,8 +93,8 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
             public Boolean execute(ShardedJedis jedis) {
-                TypeConverter typeConverter=new TypeConverter(String.class);
-                return jedis.srem(key.key(),typeConverter.convert(value).toString())>0;
+                TypeConverter typeConverter = new TypeConverter(String.class);
+                return jedis.srem(key.key(), typeConverter.convert(value).toString()) > 0;
             }
         }, key);
     }
@@ -104,7 +104,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
             public Boolean execute(ShardedJedis jedis) {
-                TypeConverter typeConverter=new TypeConverter(String.class);
+                TypeConverter typeConverter = new TypeConverter(String.class);
                 return jedis.sismember(key.key(), typeConverter.convert(value).toString());
             }
         }, key);
@@ -122,7 +122,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
             public Set<T> execute(ShardedJedis jedis) throws CacheConnectionException {
                 Set<String> set = jedis.smembers(key.key());
                 Set<T> typeSet = new HashSet<T>(set.size());
-                TypeConverter typeConverter=new TypeConverter(clazz);
+                TypeConverter typeConverter = new TypeConverter(clazz);
                 for (String json : set) {
                     typeSet.add((T) typeConverter.convert(json));
                 }
@@ -130,7 +130,6 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
             }
         }, key);
     }
-
 
     @Override
     public Set<String> list(final KEY key, CacheDataNotFound<Set<String>> hook) {
@@ -155,9 +154,9 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
                     }
 
                     typeSet = new HashSet<T>(list.size());
-                    TypeConverter typeConverter=new TypeConverter(clazz);
+                    TypeConverter typeConverter = new TypeConverter(clazz);
                     for (String s : list) {
-                        typeSet.add((T)typeConverter.convert(s));
+                        typeSet.add((T) typeConverter.convert(s));
                     }
                     return typeSet;
                 }

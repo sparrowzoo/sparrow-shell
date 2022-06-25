@@ -29,13 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class MethodReturnValueResolverHandlerComposite implements MethodReturnValueResolverHandler {
-
     private static Logger logger = LoggerFactory.getLogger(MethodReturnValueResolverHandlerComposite.class);
-
     private List<MethodReturnValueResolverHandler> resolverHandlers = new ArrayList<MethodReturnValueResolverHandler>();
 
     public MethodReturnValueResolverHandlerComposite() {

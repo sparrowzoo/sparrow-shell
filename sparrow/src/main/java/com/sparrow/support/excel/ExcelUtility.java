@@ -18,7 +18,7 @@
 package com.sparrow.support.excel;
 
 import com.sparrow.enums.DataType;
-import com.sparrow.protocol.constant.EXTENSION;
+import com.sparrow.protocol.constant.Extension;
 import com.sparrow.support.excel.exception.TemplateCellValidateException;
 import com.sparrow.support.excel.exception.TemplateFieldNotMatchException;
 import com.sparrow.support.excel.exception.TemplateFileException;
@@ -33,11 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * on 2015/6/26.
- *
- * @author harry
- */
 public class ExcelUtility {
     public static Workbook getWorkbook(String fullFileName) throws TemplateFileException {
         File file = new File(fullFileName);
@@ -54,13 +49,13 @@ public class ExcelUtility {
 
         Workbook workbook = null;
         String extension = FileUtility.getInstance().getFileNameProperty(fullFileName).getExtension();
-        if (EXTENSION.EXCEL2003.equals(extension)) {
+        if (Extension.EXCEL2003.equals(extension)) {
             try {
                 workbook = new HSSFWorkbook(fin);
             } catch (IOException e) {
                 throw new TemplateFileException(e);
             }
-        } else if (EXTENSION.EXCEL2007.equals(extension)) {
+        } else if (Extension.EXCEL2007.equals(extension)) {
             try {
                 workbook = new XSSFWorkbook(fin);
             } catch (IOException e) {

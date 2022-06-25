@@ -14,13 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.sparrow.log.impl;
 
 import com.sparrow.constant.CacheKey;
 import com.sparrow.constant.Config;
 import com.sparrow.core.cache.CacheRegistry;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.DateTime;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.enums.LogLevel;
@@ -34,9 +33,6 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 
-/**
- * @author harry
- */
 public class SparrowLoggerImpl implements Logger {
     private String className;
 
@@ -374,9 +370,9 @@ public class SparrowLoggerImpl implements Logger {
     private void writeLog(String str, LogLevel logLevel) {
         FileOutputStream fileOutputStream = null;
         try {
-            Cache<String,Object> logCache= CacheRegistry.getInstance().getObject(CacheKey.LOG);
-            int minLevel = Integer.valueOf(logCache.get(Config.LOG_LEVEL).toString());
-            String logPrintConsole =logCache.get(Config.LOG_PRINT_CONSOLE).toString();
+            Cache<String, Object> logCache = CacheRegistry.getInstance().getObject(CacheKey.LOG);
+            int minLevel = Integer.parseInt(logCache.get(Config.LOG_LEVEL).toString());
+            String logPrintConsole = logCache.get(Config.LOG_PRINT_CONSOLE).toString();
             if (logLevel.ordinal() < minLevel) {
                 return;
             }
@@ -386,15 +382,15 @@ public class SparrowLoggerImpl implements Logger {
                 directory.mkdirs();
             }
             fileOutputStream = new FileOutputStream(path
-                    + String.format("/log%1$s.log",
-                    DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYYMMDD)),
-                    true);
+                + String.format("/log%1$s.log",
+                DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYYMMDD)),
+                true);
 
             String log = logLevel.toString() + "|"
-                    + DateTimeUtility.getFormatCurrentTime() + "|"
-                    + this.className + CONSTANT.ENTER_TEXT +
-                    "--------------------------------------------------------------" + CONSTANT.ENTER_TEXT +
-                    str + CONSTANT.ENTER_TEXT;
+                + DateTimeUtility.getFormatCurrentTime() + "|"
+                + this.className + Constant.ENTER_TEXT +
+                "--------------------------------------------------------------" + Constant.ENTER_TEXT +
+                str + Constant.ENTER_TEXT;
 
             //https://blog.csdn.net/shijinupc/article/details/7875826
             //阻塞文件锁
@@ -413,7 +409,7 @@ public class SparrowLoggerImpl implements Logger {
                     } catch (OverlappingFileLockException ignore) {
                     }
                 }
-                fileOutputStream.write(log.getBytes(CONSTANT.CHARSET_UTF_8));
+                fileOutputStream.write(log.getBytes(Constant.CHARSET_UTF_8));
                 if (Boolean.TRUE.toString().equalsIgnoreCase(logPrintConsole)) {
                     System.out.println(log);
                 }
