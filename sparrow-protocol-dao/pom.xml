@@ -8,10 +8,8 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>sparrow-protocol-dao</artifactId>
     <version>${sparrow_protocol_dao_version}</version>
-
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -23,5 +21,16 @@
             <artifactId>sparrow-protocol</artifactId>
         </dependency>
     </dependencies>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

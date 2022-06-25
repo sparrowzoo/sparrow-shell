@@ -53,6 +53,7 @@ jedis和rocket mq 客户端已具备基本的生产环境使用条件
 email:zh_harry#163.com
 
 
+# Quick start
 
 ```aidl
 cd sparrow-bom
@@ -60,7 +61,8 @@ mvn clean install -Dmaven.test.skip
 cd ..
 mvn clean install -Dmaven.test.skip
 ```
-
+## 项目demo演示
+https://github.com/sparrowzoo/sparrow-shell/issues/13
 - sparrow 为保持代码整洁，所有的test 项目单独由一个sparrow-test 项目管理，该项目已有部分功能通过test case,朋友们可以下载了解sparrow 运行
 
      [测试用例 https://github.com/sparrowzoo/sparrow-shell/tree/master/sparrow-test](https://github.com/sparrowzoo/sparrow-shell/tree/master/sparrow-test)

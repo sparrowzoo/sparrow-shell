@@ -8,7 +8,7 @@ import com.sparrow.utility.StringUtility;
 import javax.persistence.*;
 import java.sql.Date;
 
-@Table(name = "user",schema = "user")
+@Table(name = "user", schema = "user")
 public class User implements POJO, Cloneable {
     /*-------基本信息-------------*/
     private Long userId;
