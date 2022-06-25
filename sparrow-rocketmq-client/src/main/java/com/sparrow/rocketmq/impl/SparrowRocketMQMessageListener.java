@@ -112,7 +112,6 @@ public class SparrowRocketMQMessageListener implements MessageListenerConcurrent
                 }
                 handler.handle(event);
                 this.consumed(event, consumerKey, message.getKeys());
-
             } catch (Throwable e) {
                 logger.error("process failed, msg : " + message, e);
                 return ConsumeConcurrentlyStatus.RECONSUME_LATER;
