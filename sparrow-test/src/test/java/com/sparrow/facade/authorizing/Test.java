@@ -24,7 +24,9 @@ public class Test {
         String sign = authorizingSupport.sign(loginToken, "111111");
         System.out.printf(sign);
 
-        loginToken = authorizingSupport.authenticate(sign, "192.168.1.2");
+
+        sign="aWQ9MSZuYW1lPXpoYW5nc2FuJmxvZ2luPW5pY2stemhhbmdzYW4mZXhwaXJlQXQ9MTY1NjMyMzYyMjAxOSZjZW50PTEwMCZhdmF0YXI9aHR0cDovL2xvY2FsaG9zdCZkZXZpY2VJZD0wJmFjdGl2YXRlPXRydWUmZGF5cz0yMA==.Q+EOCIcH0A7ah/Zbn4QPbu8ZBvk=";
+        loginToken = authorizingSupport.authenticate(sign, "218.247.142.217");
         System.out.printf(loginToken.getUserName());
     }
 }

@@ -18,12 +18,13 @@
 package com.sparrow.cg;
 
 import com.sparrow.cg.impl.DynamicCompiler;
+import java.net.URISyntaxException;
 
 /**
  * @author harry
  */
 public class CGTest {
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException, URISyntaxException {
         Printer printer = (Printer) DynamicCompiler
             .getInstance().sourceToObject("com.sparrow.cg.Demo1",
                 "package com.sparrow.cg;\n" +
