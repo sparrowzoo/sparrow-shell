@@ -89,7 +89,7 @@ public class CookieUtility {
             return null;
         } else {
             for (Cookie cookie : cookies) {
-                logger.debug("cookie {} value {}", key, cookie.getValue());
+                logger.debug("cookie {} value {}", cookie.getName(), cookie.getValue());
                 if (cookie.getName().equalsIgnoreCase(key)) {
                     return JSUtility.decodeURIComponent(cookie.getValue());
                 }

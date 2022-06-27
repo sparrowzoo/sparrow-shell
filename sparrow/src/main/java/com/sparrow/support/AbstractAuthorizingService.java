@@ -40,6 +40,7 @@ public abstract class AbstractAuthorizingService implements AuthorizingSupport {
 
     @Override
     public LoginToken authenticate(String permission, String deviceId) {
+        logger.debug("permission {},deviceId {}", permission, deviceId);
         LoginToken login = new LoginToken();
         login.setUserId(User.VISITOR_ID);
         login.setUserName(ConfigUtility.getLanguageValue(
