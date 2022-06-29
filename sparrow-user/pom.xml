@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<project
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <parent>
+        <groupId>com.sparrow</groupId>
+        <artifactId>sparrow-bom</artifactId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>sparrow-user</artifactId>
+    <packaging>pom</packaging>
+    <name>sparrow-user</name>
+    <version>${sparrow_e_user_version}</version>
+    <modules>
+        <module>user-api</module>
+        <module>user-controller</module>
+        <module>user-application</module>
+        <module>user-domain</module>
+        <module>user-sparrow-repository</module>
+        <module>user-test</module>
+    </modules>
+</project>

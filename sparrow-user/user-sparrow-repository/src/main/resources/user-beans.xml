@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
+        "http://www.sparrowzoo.com/dtds/beans.dtd">
+<beans>
+    <bean name="basicUserCache" class="com.sparrow.user.support.cache.impl.BasicUserCacheImpl">
+        <property name="cacheClient" ref="cacheClient"/>
+    </bean>
+    <bean name="user" class="com.sparrow.user.po.User" scope="prototype"/>
+    <bean name="userDao" class="com.sparrow.user.repos.com.sparrow.user.repository.impl.UserDAOImpl"/>
+    <bean name="userLoginService" class="com.sparrow.user.service.impl.UserLoginServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="codeService" ref="codeService"/>
+        <property name="eventService" ref="eventService"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="basicUserCache" ref="basicUserCache"/>
+        <property name="shortMessageService" ref="shortMessageService"/>
+    </bean>
+
+
+    <bean name="userAssemble" class="com.sparrow.user.data.mapper.UserAssemble"/>
+    <bean name="userProfileService" class="com.sparrow.user.service.impl.UserProfileServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="codeService" ref="codeService"/>
+        <property name="eventService" ref="eventService"/>
+        <property name="basicUserCache" ref="basicUserCache"/>
+        <property name="ipSupport" ref="ipSupport"/>
+        <property name="shortMessageService" ref="shortMessageService"/>
+        <property name="userAssemble" ref="userAssemble"/>
+    </bean>
+
+
+    <bean name="registerAssemble" class="com.sparrow.user.data.mapper.RegisterAssemble">
+        <property name="ipSupport" ref="ipSupport"/>
+        <property name="codeService" ref="codeService"/>
+        <property name="shortMessageService" ref="shortMessageService"/>
+    </bean>
+
+    <bean name="userRegisterService" class="com.sparrow.user.service.impl.UserRegisterServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="codeService" ref="codeService"/>
+        <property name="eventService" ref="eventService"/>
+        <property name="basicUserCache" ref="basicUserCache"/>
+        <property name="registerAssemble" ref="registerAssemble"/>
+        <property name="userProfileService" ref="userProfileService"/>
+    </bean>
+    <bean name="userSecurityService" class="com.sparrow.user.service.impl.UserSecurityServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="codeService" ref="codeService"/>
+        <property name="eventService" ref="eventService"/>
+        <property name="shortMessageService" ref="shortMessageService"/>
+        <property name="userProfileService" ref="userProfileService"/>
+    </bean>
+
+    <bean name="userLockService" class="com.sparrow.user.service.impl.UserLockServiceImpl">
+        <property name="userCache" ref="basicUserCache"/>
+    </bean>
+
+</beans>

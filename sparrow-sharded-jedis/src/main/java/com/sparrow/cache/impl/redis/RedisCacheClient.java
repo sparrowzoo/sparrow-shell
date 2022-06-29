@@ -24,10 +24,6 @@ import com.sparrow.cache.CacheList;
 import com.sparrow.cache.CacheSet;
 import com.sparrow.cache.CacheSortedSet;
 import com.sparrow.cache.CacheString;
-
-/**
- * Created by harry on 2018/1/18.
- */
 public class RedisCacheClient extends AbstractCommand implements CacheClient {
 
     private CacheString cacheString;

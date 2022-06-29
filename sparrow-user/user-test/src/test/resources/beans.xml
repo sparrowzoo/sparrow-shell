@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
+    "http://www.sparrowzoo.com/dtds/beanFactory.dtd">
+<beans>
+    <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool" constructor-arg="sparrow_default"/>
+    <import resource="code-beans.xml"/>
+    <import resource="file-beans.xml"/>
+    <import resource="event-beans.xml"/>
+    <import resource="user-beans.xml"/>
+</beans>
