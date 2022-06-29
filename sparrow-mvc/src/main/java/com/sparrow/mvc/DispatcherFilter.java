@@ -87,6 +87,7 @@ public class DispatcherFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
         FilterChain chain) {
+        logger.debug("begin do filter");
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -118,6 +119,7 @@ public class DispatcherFilter implements Filter {
                     chain.doFilter(request, response);
                 } else {
                     String dispatcherUrl = sparrowServletUtility.getServletUtility().assembleActualUrl(actionKey);
+                    logger.debug("dispatcher url is {}", dispatcherUrl);
                     RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherUrl);
                     dispatcher.forward(request, response);
                 }

@@ -84,10 +84,12 @@ public class CookieUtility {
     }
 
     public String get(Cookie[] cookies, String key) {
+        logger.debug("get cookie {}", key);
         if (cookies == null || cookies.length == 0) {
             return null;
         } else {
             for (Cookie cookie : cookies) {
+                logger.debug("cookie {} value {}", cookie.getName(), cookie.getValue());
                 if (cookie.getName().equalsIgnoreCase(key)) {
                     return JSUtility.decodeURIComponent(cookie.getValue());
                 }

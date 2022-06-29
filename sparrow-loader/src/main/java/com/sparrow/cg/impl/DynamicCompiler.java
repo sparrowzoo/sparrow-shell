@@ -26,6 +26,7 @@ import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.Charset;
@@ -61,17 +62,18 @@ public class DynamicCompiler {
         if (StringUtility.isNullOrEmpty(this.encoding)) {
             this.encoding = Constant.CHARSET_UTF_8;
         }
-        this.buildClassPath();
+        URLClassLoader urlClassLoader = this.classLoader;
+        this.buildClassPath(urlClassLoader);
     }
 
-    private void buildClassPath() {
+    private void buildClassPath(URLClassLoader classLoader) {
         this.classpath = null;
-        StringBuilder sb = new StringBuilder();
-        for (URL url : this.classLoader.getURLs()) {
+        StringBuilder classPath = new StringBuilder();
+        for (URL url : classLoader.getURLs()) {
             String p = url.getFile();
-            sb.append(p).append(File.pathSeparator);
+            classPath.append(p).append(File.pathSeparator);
         }
-        this.classpath = sb.toString();
+        this.classpath = classPath.toString();
     }
 
     public void unload(Unloadable unloadable) {
@@ -81,7 +83,7 @@ public class DynamicCompiler {
     }
 
     public Object sourceToObject(String fullClassName, String javaCode)
-        throws IllegalAccessException, InstantiationException {
+        throws IllegalAccessException, InstantiationException, URISyntaxException {
         long start = System.currentTimeMillis();
         Object instance = null;
         // 获取系统的java 编译器
