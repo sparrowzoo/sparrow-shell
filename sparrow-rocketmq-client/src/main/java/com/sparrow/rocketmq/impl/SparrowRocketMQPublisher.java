@@ -38,9 +38,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.UUID;
 
-/**
- * Created by harry on 2017/6/14.
- */
 public class SparrowRocketMQPublisher implements MQPublisher {
     protected static Logger logger = LoggerFactory.getLogger(SparrowRocketMQPublisher.class);
     private String nameServerAddress;
@@ -108,16 +105,7 @@ public class SparrowRocketMQPublisher implements MQPublisher {
     public void setDebug(Boolean debug) {
         this.debug = debug;
     }
-
-    /**
-     * 发送后count+1
-     * 如果有多个consumer 则+n
-     * 每个consumer 由不同的应用（进程处理）
-     *
-     * @param event
-     * @param productKey
-     * @param msgKey
-     */
+    
     public void after(MQEvent event, KEY productKey, String msgKey) {
         if (distributedCountDownLatch == null || productKey == null) {
             return;
@@ -129,7 +117,6 @@ public class SparrowRocketMQPublisher implements MQPublisher {
     public void publish(MQEvent event) {
         this.publish(event, null);
     }
-
 
     @Override
     public void publish(MQEvent event, KEY productKey) {
