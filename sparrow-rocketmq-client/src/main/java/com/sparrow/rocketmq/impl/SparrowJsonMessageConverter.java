@@ -46,7 +46,7 @@ public class SparrowJsonMessageConverter implements MessageConverter {
             logger.error("unsupported encodingException {}", charset);
             throw new RuntimeException(e);
         }
-        
+
         String className = message.getProperties().get(MQClient.CLASS_NAME);
         try {
             return (MQEvent) JsonFactory.getProvider().parse(json, Class.forName(className));

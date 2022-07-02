@@ -36,9 +36,6 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Created by harry on 2017/6/14.
- */
 public class SparrowRocketMQMessageListener implements MessageListenerConcurrently {
     private static Logger logger = LoggerFactory.getLogger(SparrowRocketMQMessageListener.class);
 

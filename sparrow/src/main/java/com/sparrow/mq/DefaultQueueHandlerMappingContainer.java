@@ -44,7 +44,7 @@ public class DefaultQueueHandlerMappingContainer implements EventHandlerMappingC
     }
 
     @Override
-    public void init(String packageName) throws IllegalAccessException, InstantiationException {
+    public void init(String packageName) {
         try {
             List<Class> clazzList = ClassUtility.getClasses(packageName);
             for (Class clazz : clazzList) {

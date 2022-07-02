@@ -37,9 +37,6 @@ import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Created by harry on 2017/6/14.
- */
 public class RocketMQConsumer implements ContainerAware {
     private static Logger log = LoggerFactory.getLogger(RocketMQConsumer.class);
 
@@ -164,7 +161,7 @@ public class RocketMQConsumer implements ContainerAware {
     public synchronized void start() {
         try {
             consumer = createConsumer(this.batchSize, this.pullSize);
-            log.info("begin start ROCKET MQ client, group={}, nameServerAddr, topic={},config={}", groupName, nameServerAddress, topicConfig, consumer);
+            log.info("begin start ROCKET MQ client, group={}, nameServerAddr {}, topic={},config={}", groupName, nameServerAddress, topicConfig, consumer);
             consumer.start();
         } catch (Exception e) {
             log.error("start mq " + this.getClass().getName() + " failed：", e);

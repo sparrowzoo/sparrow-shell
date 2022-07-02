@@ -19,9 +19,6 @@ package com.sparrow.rocketmq.impl;
 
 import java.util.List;
 
-/**
- * Created by harry on 2017/6/14.
- */
 public class TopicTagPair {
     private String topic;
     private List<String> tags;

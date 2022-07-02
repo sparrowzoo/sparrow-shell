@@ -38,7 +38,7 @@ public class MQPublisherProvider {
                 publisher = it.next();
                 return publisher;
             }
-            String defaultProvider = "com.sparrow.rabbitmq.impl.RabbitPublisher";
+            String defaultProvider = "com.sparrow.rocketmq.impl.SparrowRocketMQPublisher";
             try {
                 Class<?> rabbitPublisher = Class.forName(defaultProvider);
                 publisher = (MQPublisher) rabbitPublisher.newInstance();
