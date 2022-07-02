@@ -437,12 +437,8 @@ public class DispatcherFilter implements Filter {
         if (!handlerExecutionChain.isNeedAuthorizing()) {
             return true;
         }
-
-        String code = httpRequest.getParameter("resource-code");
-
         if (!authorizingSupport.isAuthorized(
-            user, actionName,
-            code)) {
+            user, actionName)) {
             httpResponse.getWriter().write(Constant.ACCESS_DENIED);
             this.sparrowServletUtility.moveAttribute(httpRequest);
             return false;

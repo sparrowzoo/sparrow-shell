@@ -43,10 +43,9 @@ public interface AuthorizingSupport {
      *
      * @param user     当前用户
      * @param resource 请求的资源(标识)
-     * @param code     当前资源（当前资源下的编码 比如forum code）
      * @return
      * @throws BusinessException
      */
     boolean isAuthorized(LoginToken user,
-        String resource, String code) throws BusinessException;
+        String resource) throws BusinessException;
 }

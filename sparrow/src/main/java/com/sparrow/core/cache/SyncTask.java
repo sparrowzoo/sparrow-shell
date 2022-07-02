@@ -14,21 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.authorizing;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginToken;
-import com.sparrow.support.AbstractAuthorizingService;
+package com.sparrow.core.cache;
 
-public class AuthorizingDemo extends AbstractAuthorizingService {
-    @Override
-    protected String getSecret(Long userId) {
-        //getPasswordByUserId();
-        return "111111";
-    }
+import java.util.Map;
 
-    @Override
-    public boolean isAuthorized(LoginToken user, String url) throws BusinessException {
-        return true;
-    }
+public interface SyncTask {
+    Map<String, Object> sync();
+
+    int getExpire(String key);
 }
