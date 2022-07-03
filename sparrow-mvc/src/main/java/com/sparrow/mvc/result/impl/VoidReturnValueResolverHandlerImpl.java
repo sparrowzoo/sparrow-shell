@@ -45,11 +45,11 @@ public class VoidReturnValueResolverHandlerImpl implements MethodReturnValueReso
     public void errorResolve(Throwable exception, HttpServletRequest request,
         HttpServletResponse response) throws IOException, ServletException {
         if (exception.getCause() != null && exception.getCause() instanceof BusinessException) {
-            Result result = Result.FAIL((BusinessException) exception.getCause());
+            Result result = Result.fail((BusinessException) exception.getCause());
             response.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
         }
-        Result result = Result.FAIL(new BusinessException(SparrowError.SYSTEM_SERVER_ERROR));
+        Result result = Result.fail(new BusinessException(SparrowError.SYSTEM_SERVER_ERROR));
         response.getWriter().write(JsonFactory.getProvider().toString(result));
     }
 }

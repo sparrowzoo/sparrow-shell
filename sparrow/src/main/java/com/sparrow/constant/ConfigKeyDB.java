@@ -59,7 +59,7 @@ public class ConfigKeyDB {
     }
 
     public static final String STRATAGEM_SYSTEM = "S-SYS";
-    public static final String STRAEAGEM_LEVEL = "S-LEL";
+    public static final String STRATAGEM_LEVEL = "S-LEL";
 
     public static final String TAG_FRONT_COLOR = "TAG-FRONT-COLOR";
     public static final String TAG_BACKGROUND_COLOR = "TAG-BACKGROUND-COLOR";

@@ -16,19 +16,34 @@
  */
 package com.sparrow.mvc.result;
 
+import com.sparrow.constant.Config;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.ConfigUtility;
+import com.sparrow.utility.StringUtility;
 
-public class ResultErrorAssembler {
+public class ResultAssembler {
     public static Result assemble(BusinessException exception, String language) {
-        Result result = Result.FAIL(exception);
-        String error = ConfigUtility.getLanguageValue(result.getKey(), language, result.getError());
+        Result result = Result.fail(exception);
+        String error = ConfigUtility.getLanguageValue(result.getKey(), language, result.getMessage());
         if (!CollectionsUtility.isNullOrEmpty(exception.getParameters())) {
             error = String.format(error, exception.getParameters().toArray());
         }
-        result.setError(error);
+        result.setMessage(error);
+        return result;
+    }
+
+    public static Result assemble(Result result) {
+        return assemble(result, ConfigUtility.getValue(Config.LANGUAGE));
+    }
+
+    public static Result assemble(Result result, String language) {
+        String message = ConfigUtility.getLanguageValue(result.getKey(), language, result.getMessage());
+        if (StringUtility.isNullOrEmpty(message)) {
+            message = result.getMessage();
+        }
+        result.setMessage(message);
         return result;
     }
 }
