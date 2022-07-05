@@ -1,0 +1,1 @@
+133 = {URL@2958} "file:/C:/Users/tarena/.m2/repository/net/java/dev/jna/jna/5.3.1/jna-5.3.1.jar"
