@@ -21,7 +21,7 @@ import com.sparrow.constant.SparrowError;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
-import com.sparrow.mvc.result.ResultErrorAssembler;
+import com.sparrow.mvc.result.ResultAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Extension;
@@ -47,17 +47,17 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
     public void errorResolve(Throwable exception, HttpServletRequest request,
         HttpServletResponse response) throws IOException {
         if (exception instanceof BusinessException) {
-            Result result = ResultErrorAssembler.assemble((BusinessException) exception, null);
+            Result result = ResultAssembler.assemble((BusinessException) exception, null);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
         }
         //业务异常
         if (exception.getCause() != null && exception.getCause() instanceof BusinessException) {
-            Result result = ResultErrorAssembler.assemble((BusinessException) exception.getCause(), null);
+            Result result = ResultAssembler.assemble((BusinessException) exception.getCause(), null);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
         }
-        Result result = Result.FAIL(new BusinessException(SparrowError.SYSTEM_SERVER_ERROR));
+        Result result = Result.fail(new BusinessException(SparrowError.SYSTEM_SERVER_ERROR));
         //result.setError();
         response.getWriter().write(JsonFactory.getProvider().toString(result));
     }

@@ -14,21 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.authorizing;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginToken;
-import com.sparrow.support.AbstractAuthorizingService;
+package com.sparrow.core.cache;
 
-public class AuthorizingDemo extends AbstractAuthorizingService {
-    @Override
-    protected String getSecret(Long userId) {
-        //getPasswordByUserId();
-        return "111111";
+public class ExpirableData<V> {
+    private long t;
+    private int seconds;
+    private V data;
+
+    public ExpirableData(int seconds, V data) {
+        this.seconds = seconds;
+        this.data = data;
+        this.t = System.currentTimeMillis();
     }
 
-    @Override
-    public boolean isAuthorized(LoginToken user, String url) throws BusinessException {
-        return true;
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public V getData() {
+        return data;
+    }
+
+    public void setTimestamp(long t) {
+        this.t = t;
+    }
+
+    public boolean isExpire() {
+        return (System.currentTimeMillis() - t) / 1000 > seconds;
     }
 }

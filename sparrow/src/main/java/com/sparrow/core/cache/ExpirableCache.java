@@ -14,21 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.authorizing;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginToken;
-import com.sparrow.support.AbstractAuthorizingService;
 
-public class AuthorizingDemo extends AbstractAuthorizingService {
-    @Override
-    protected String getSecret(Long userId) {
-        //getPasswordByUserId();
-        return "111111";
-    }
+package com.sparrow.core.cache;
 
-    @Override
-    public boolean isAuthorized(LoginToken user, String url) throws BusinessException {
-        return true;
-    }
+public interface ExpirableCache<K, V> extends Cache<K, V> {
+
+    void invalidate(K key);
+
+    void invalidateAll(Iterable<K> keys);
+
+    void invalidateAll();
+
+    void put(K key, V value, int expire);
+
+    V get(K key, LocalCacheNotFound<K, V> hook, int expire);
+
+    void continueKey(K key);
 }

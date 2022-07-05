@@ -22,7 +22,7 @@ import com.sparrow.constant.SparrowError;
 import com.sparrow.core.Pair;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
-import com.sparrow.mvc.result.ResultErrorAssembler;
+import com.sparrow.mvc.result.ResultAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.VO;
@@ -232,7 +232,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         } else {
             businessException = new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
         }
-        Result result = ResultErrorAssembler.assemble(businessException, null);
+        Result result = ResultAssembler.assemble(businessException, null);
         String flashUrl;
         switch (errorPageSwitch) {
             case FORWARD:

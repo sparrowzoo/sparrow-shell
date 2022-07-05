@@ -380,7 +380,7 @@ public class DispatcherFilter implements Filter {
         if (user.getUserId().equals(User.VISITOR_ID)) {
             String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
             if (LoginType.MESSAGE.equals(handlerExecutionChain.getLoginType())) {
-                Result result = new Result(SparrowError.USER_NOT_LOGIN.getCode(), SparrowError.USER_NOT_LOGIN.getMessage());
+                Result result = Result.fail(SparrowError.USER_NOT_LOGIN);
                 httpResponse.getWriter().write(JsonFactory.getProvider().toString(result));
                 return false;
             }
@@ -437,12 +437,8 @@ public class DispatcherFilter implements Filter {
         if (!handlerExecutionChain.isNeedAuthorizing()) {
             return true;
         }
-
-        String code = httpRequest.getParameter("resource-code");
-
         if (!authorizingSupport.isAuthorized(
-            user, actionName,
-            code)) {
+            user, actionName)) {
             httpResponse.getWriter().write(Constant.ACCESS_DENIED);
             this.sparrowServletUtility.moveAttribute(httpRequest);
             return false;

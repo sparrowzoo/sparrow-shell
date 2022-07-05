@@ -14,21 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.mvc.result;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.Result;
-import com.sparrow.utility.CollectionsUtility;
-import com.sparrow.utility.ConfigUtility;
+package com.sparrow.core.cache;
 
-public class ResultErrorAssembler {
-    public static Result assemble(BusinessException exception, String language) {
-        Result result = Result.FAIL(exception);
-        String error = ConfigUtility.getLanguageValue(result.getKey(), language, result.getError());
-        if (!CollectionsUtility.isNullOrEmpty(exception.getParameters())) {
-            error = String.format(error, exception.getParameters().toArray());
-        }
-        result.setError(error);
-        return result;
-    }
+public interface LocalCacheNotFound<K, V> {
+    V read(K key);
 }

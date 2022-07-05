@@ -17,7 +17,7 @@ public class FastJsonTest {
         User user=new User();
         user.setUserId("1");
         user.setUserName("userName");
-        Result<User> result=Result.FAIL(new BusinessException(SparrowError.GLOBAL_DB_ADD_ERROR));
+        Result<User> result=Result.fail(new BusinessException(SparrowError.GLOBAL_DB_ADD_ERROR));
 
         String jsonString= JSON.toJSONString(result);
         System.out.println(JSON.toJSONString(result));
