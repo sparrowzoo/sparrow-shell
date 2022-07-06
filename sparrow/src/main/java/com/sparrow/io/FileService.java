@@ -43,7 +43,7 @@ public interface FileService {
 
     void move(String fileName, String destDir) throws IOException;
 
-    boolean delete(String fileName) throws IOException;
+    boolean delete(String fileName);
 
     void close() throws IOException;
 
