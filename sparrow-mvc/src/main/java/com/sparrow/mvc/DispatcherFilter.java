@@ -365,7 +365,7 @@ public class DispatcherFilter implements Filter {
         }
 
         //未授权F
-        if (LoginType.NO_AUTHENTICATE.equals(handlerExecutionChain.getLoginType())) {
+        if (!handlerExecutionChain.isNeedAuthorizing()) {
             return true;
         }
 
