@@ -21,9 +21,12 @@ import com.sparrow.constant.CacheKey;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.core.cache.StrongDurationCache;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.datasource.checker.ConnectionValidCheckerAdapter;
 import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.utility.CollectionsUtility;
+import com.sparrow.utility.JDBCUtils;
 import com.sparrow.utility.StringUtility;
+import java.sql.DriverManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,26 +120,22 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
                 throw new RuntimeException(ignore);
             }
             //detection jdbc config useful
-            Connection connection = new ProxyConnection(datasourceConfig, null);
+            Connection connection = null;
             Statement statement = null;
             try {
+                Class.forName(datasourceConfig.getDriverClassName());
+                connection = DriverManager.getConnection(datasourceConfig.getUrl(), datasourceConfig.getUsername(), datasourceConfig.getPassword());
                 statement = connection.createStatement();
                 boolean effectCount = statement.execute("SELECT 1");
                 if (effectCount) {
                     datasourceUrlMap.put(connection.getMetaData().getURL(), dsKey);
                 }
                 datasourceConfigMap.put(dataSourceKey, datasourceConfig);
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 logger.error(" cat't connection", e);
             } finally {
-                try {
-                    if (statement != null) {
-                        statement.close();
-                    }
-                    connection.close();
-                } catch (SQLException e) {
-                    logger.error("test connection close error", e);
-                }
+                JDBCUtils.close(statement);
+                JDBCUtils.close(connection);
             }
             return datasourceConfig;
         }
