@@ -100,7 +100,6 @@ public class Config {
         {
             put(LoginType.LOGIN, "login_url");
             put(LoginType.LOGIN_IFRAME, "frame_login_url");
-            put(LoginType.ADMINISTRATOR_LOGIN, "manager_login_url");
             put(LoginType.DIALOG_LOGIN, "dialog_login_url");
         }
     };
