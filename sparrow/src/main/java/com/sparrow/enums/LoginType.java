@@ -31,10 +31,6 @@ public enum LoginType {
      */
     LOGIN_IFRAME,
     /**
-     * 3管理员登录
-     */
-    ADMINISTRATOR_LOGIN,
-    /**
      * 4对话框登录(对话框不允许在框架内，如果在框架内则重定向至父页面)
      */
     DIALOG_LOGIN,

@@ -21,7 +21,6 @@ import com.sparrow.constant.CacheKey;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.core.cache.StrongDurationCache;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.datasource.checker.ConnectionValidCheckerAdapter;
 import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.JDBCUtils;

@@ -29,14 +29,6 @@
              <!DOCTYPE mvc-config PUBLIC "-//sparrow Framework//DTD mvc Configuration//EN"
              "http://www.sparrowzoo.com/dtds/mvc-config.dtd">
              $Id: mvc-config.dtd $
-
-             login:
-             0:不需要登录
-             1:正常登录
-             2:框架内登录 default.jsp内登录
-             3:管理员登录
-             4:对话框登录
-             5:json 提示
         -->
         <!ELEMENT mvc (controller*)>
         <!ELEMENT controller (action+)>
@@ -50,7 +42,7 @@
         <!ATTLIST action
                 name   CDATA #REQUIRED
                 method CDATA #IMPLIED
-                login  (NO_AUTHENTICATE|LOGIN|LOGIN_IFRAME|ADMINISTRATOR_LOGIN|DIALOG_LOGIN|MESSAGE) #IMPLIED
+                login  (NO_AUTHENTICATE|LOGIN|LOGIN_IFRAME|DIALOG_LOGIN|MESSAGE) #IMPLIED
                 needAuthorizing (true|false) #IMPLIED
                 validateRequest (true|false) #IMPLIED>
 
