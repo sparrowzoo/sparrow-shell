@@ -26,24 +26,12 @@ public class ConfigKeyDB {
     public static final String PAGESIZE_THREAD = "PAGESIZE-THREAD";
 
     public static final String PAGESIZE_COMMENT = "PAGESIZE-COMMENT";
-    /**
-     * 数据库空 数值型的默认值
-     */
-    public static final String DEFAULT_VALUE = "0";
+
 
     /**
      * ORM 主键的唯一性索引由0开始
      */
     public static final String ORM_PRIMARY_KEY_UNIQUE = "PRIMARY";
-
-    /**
-     * int 型函数数据库访问错误 或者是记录不存在
-     */
-    public static final long ERROR_INT = -1L;
-    /**
-     * String 型函数数据库访问错误
-     */
-    public static final String ERROR = "-1";
 
     public static final String WEBSITE_CONFIG_PARENT = "WEBSITE_CONFIG";
 

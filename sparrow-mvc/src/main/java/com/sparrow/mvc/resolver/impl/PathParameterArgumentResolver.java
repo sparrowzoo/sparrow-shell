@@ -39,7 +39,7 @@ import java.util.Map;
 
 public class PathParameterArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
 
-    private Logger logger = LoggerFactory.getLogger(PathParameterArgumentResolver.class);
+    private static Logger logger = LoggerFactory.getLogger(PathParameterArgumentResolver.class);
 
     private Container container = ApplicationContext.getContainer();
 

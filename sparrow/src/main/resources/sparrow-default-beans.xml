@@ -14,6 +14,10 @@
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
+    <bean name="transactionManager" class="com.sparrow.datasource.SparrowTransactionManager">
+        <property name="dataSourceFactory" ref="dataSourceFactory"/>
+        <property name="connectionHolder" ref="connectionContextHolder"/>
+    </bean>
     <bean name="imageExtractorRegistry" class="com.sparrow.image.ImageExtractorRegistry"/>
     <bean name="htmlImageExtractor" class="com.sparrow.image.HtmlImageExtractor">
         <property name="imageExtractorRegistry" ref="imageExtractorRegistry"/>

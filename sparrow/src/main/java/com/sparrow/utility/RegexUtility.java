@@ -91,7 +91,7 @@ public class RegexUtility {
      */
     public static Pair<String, List<String>> getActionRegex(String actionKey) {
         String configParameter = "(\\{[a-z0-9]*\\})";
-        String digitalAndLetter = "([a-z0-9]*)";
+        String digitalAndLetter = "([a-z0-9\\-]*)";
         Pattern p = Pattern
             .compile(configParameter, Regex.OPTION);
         Matcher m = p.matcher(actionKey);

@@ -22,8 +22,6 @@ import com.sparrow.protocol.constant.magic.Escaped;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.utility.StringUtility;
 
-import java.util.List;
-
 public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
 
     private String indexPageFormat = Pager.ACTION_PAGE_FORMAT;
@@ -34,15 +32,20 @@ public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
 
     private String html;
 
-    public SparrowPagerResult(PagerResult pagerResult) {
-        this(pagerResult.getPageSize(), pagerResult.getCurrentPageIndex(), pagerResult.getRecordCount(), pagerResult.getList());
+    public SparrowPagerResult(PagerResult<T, A> pagerResult) {
+        this(pagerResult.getPageSize(), pagerResult.getCurrentPageIndex(), pagerResult.getRecordCount());
+        this.list = pagerResult.getList();
+        this.addition = pagerResult.getAddition();
     }
 
-    public SparrowPagerResult(Integer pageSize, Integer currentPageIndex, Long recordCount, List<T> list) {
+    private SparrowPagerResult(Integer pageSize, Integer currentPageIndex, Long recordCount) {
         super(pageSize, currentPageIndex);
         super.setRecordCount(recordCount);
-        super.setList(list);
         this.pageCount = (int) Math.ceil(this.recordCount / (double) this.pageSize);
+    }
+
+    public static SparrowPagerResult page(Integer pageSize, Integer currentPageIndex, Long recordCount) {
+        return new SparrowPagerResult(pageSize, currentPageIndex, recordCount);
     }
 
     public String getIndexPageFormat() {
@@ -124,8 +127,7 @@ public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
                 pageString.append("</a>\n");
             }
         } else {
-            pageString.append("<a " + pageFirstDisableStyle + ">首页</a>\n<a "
-                + disablePageNumStyle + ">上一页</a>\n");
+            pageString.append("<a ").append(pageFirstDisableStyle).append(">首页</a>\n<a ").append(disablePageNumStyle).append(">上一页</a>\n");
         }
 
         int remainderOfPage = this.currentPageIndex % pageNumberCount;
@@ -141,9 +143,7 @@ public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
                 pageString.append(i);
                 pageString.append("</a>\n");
             } else if (i == 1 && !StringUtility.isNullOrEmpty(this.indexPageFormat)) {
-                pageString.append("<a " + pageNumberStyle + " href=\""
-                    + this.indexPageFormat.replace(Pager.PAGE_INDEX, "1")
-                    + "\">" + i + "</a>\n");
+                pageString.append("<a ").append(pageNumberStyle).append(" href=\"").append(this.indexPageFormat.replace(Pager.PAGE_INDEX, "1")).append("\">").append(i).append("</a>\n");
             } else {
                 pageString.append(" <a "
                     + pageNumberStyle

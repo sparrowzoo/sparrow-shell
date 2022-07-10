@@ -73,7 +73,6 @@ public class Constant {
 
     public static final String DEFAULT_LANGUAGE = "zh_cn";
     public static final String RESULT_OK_CODE = "0";
-    public static final String MESSAGE_KEY_PREFIX = "mk_";
 
     /**
      * flash key非业务key

@@ -25,17 +25,16 @@ import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.JDBCUtils;
 import com.sparrow.utility.StringUtility;
-import java.sql.DriverManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * getDatasourceConfig 初始化ContextLoaderListener.java 中配置 database identify
@@ -112,7 +111,11 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
                 props.load(EnvironmentSupport.getInstance().getFileInputStream(filePath));
                 datasourceConfig.setDriverClassName(props.getProperty(schema + ".driverClassName"));
                 datasourceConfig.setUsername(props.getProperty(schema + ".username"));
-                datasourceConfig.setPassword(props.getProperty(schema + ".password"));
+                String envPasswordKey = "mysql_" + schema + "_password";
+                datasourceConfig.setPassword(System.getenv(envPasswordKey));
+                if (StringUtility.isNullOrEmpty(datasourceConfig.getPassword())) {
+                    datasourceConfig.setPassword(props.getProperty(schema + ".password"));
+                }
                 datasourceConfig.setUrl(props.getProperty(schema + ".url"));
                 datasourceConfig.setPoolSize(Integer.parseInt(props.getProperty(schema + ".poolSize")));
             } catch (Exception ignore) {

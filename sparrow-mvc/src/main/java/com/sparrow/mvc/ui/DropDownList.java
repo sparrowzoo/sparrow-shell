@@ -98,12 +98,7 @@ public class DropDownList extends WebControl {
         Set<String> keySet = listItem.keySet();
         Iterator<String> it = keySet.iterator();
         String listKey;
-        Object selectValue = super.pageContext.getRequest().getAttribute(
-            this.getCtrlName());
-        if (StringUtility.isNullOrEmpty(selectValue)) {
-            selectValue = super.pageContext.getRequest().getParameter(
-                this.getCtrlName());
-        }
+        Object selectValue = this.getRequestValue();
         if (StringUtility.isNullOrEmpty(selectValue)) {
             selectValue = this.getSelectKey();
         }
