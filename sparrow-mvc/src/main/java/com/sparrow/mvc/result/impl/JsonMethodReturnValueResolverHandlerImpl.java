@@ -24,6 +24,7 @@ import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
 import com.sparrow.mvc.result.ResultAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.HttpContext;
@@ -46,6 +47,7 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
     @Override
     public void errorResolve(Throwable exception, HttpServletRequest request,
         HttpServletResponse response) throws IOException {
+        response.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
         if (exception instanceof BusinessException) {
             Result result = ResultAssembler.assemble((BusinessException) exception, null);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
@@ -66,6 +68,7 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
     public void resolve(ServletInvokableHandlerMethod handlerExecutionChain, Object returnValue, FilterChain chain,
         HttpServletRequest request,
         HttpServletResponse response) throws IOException {
+        response.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
         if (returnValue == null) {
             returnValue = Symbol.EMPTY;
         }
