@@ -17,11 +17,6 @@
 
 package com.sparrow.enums;
 
-/**
- * created by harry on 2016/3/5.
- *
- * @author harry
- */
 public enum Language {
     /**
      * 中文

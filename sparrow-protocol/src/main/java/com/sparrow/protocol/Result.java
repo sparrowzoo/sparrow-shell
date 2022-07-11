@@ -17,39 +17,41 @@
 
 package com.sparrow.protocol;
 
-import com.sparrow.protocol.constant.CONSTANT;
-
+import com.sparrow.protocol.constant.Constant;
 import java.util.List;
 
 /**
  * 可用于协议 规范服务端返回格式 <p> <p> BusinessException KEY ErrorSupport SPARROW_ERROR name+suffix=key suffix 与界面name 对应 <p> <p>
  * 为什么用该类型？与异常相比 考虑继承的问题 枚举不可以继承 考虑该类要求稳定不经常修改 不要影响数据协议 考虑第三调用的泛型
- *
- * @author harry
- *
+ * <p>
  * json 反序列化，set get 方法一定要存在
  */
 public class Result<T> implements VO {
 
-
     private Result() {
-        this.code = CONSTANT.RESULT_OK_CODE;
+        this.code = Constant.RESULT_OK_CODE;
+    }
+
+    public Result(T data, String key) {
+        this.code = Constant.RESULT_OK_CODE;
+        this.data = data;
+        this.key = key;
     }
 
     public Result(T data) {
         if (data instanceof ErrorSupport) {
             ErrorSupport error = (ErrorSupport) data;
             this.code = error.getCode();
-            this.error = error.getMessage();
+            this.message = error.getMessage();
         } else {
-            this.code = CONSTANT.RESULT_OK_CODE;
+            this.code = Constant.RESULT_OK_CODE;
             this.data = data;
         }
     }
 
-    public Result(String code, String message) {
+    private Result(String code, String message) {
         this.code = code;
-        this.error = message;
+        this.message = message;
     }
 
     /**
@@ -57,10 +59,9 @@ public class Result<T> implements VO {
      */
     private String code;
     /**
-     * 错误文本
-     * 需要业务自定义获取错误信息获取器
+     * 错误文本 需要业务自定义获取错误信息获取器
      */
-    private String error;
+    private String message;
     /**
      * 错误 key= key.suffix
      * <p>
@@ -77,18 +78,22 @@ public class Result<T> implements VO {
 
     private static Result ok = new Result();
 
-    public static Result OK() {
+    public static Result success() {
         return ok;
     }
 
-    public static Result FAIL(BusinessException business) {
+    public static Result fail(ErrorSupport errorSupport) {
+        return new Result(errorSupport.getCode(), errorSupport.getMessage());
+    }
+
+    public static Result fail(BusinessException business) {
         Result result = new Result(business.getCode(), business.getMessage());
         result.key = business.getKey();
         result.parameters = business.getParameters();
         return result;
     }
 
-    public static Result FAIL() {
+    public static Result fail() {
         String code = "-1";
         String msg = "system error";
         return new Result(code, msg);
@@ -98,24 +103,24 @@ public class Result<T> implements VO {
         return this.data;
     }
 
-    public boolean ok() {
-        return this.code.equals(CONSTANT.RESULT_OK_CODE);
+    public boolean isSuccess() {
+        return this.code.equals(Constant.RESULT_OK_CODE);
     }
 
     public String getCode() {
         return this.code;
     }
 
-    public String getError() {
-        return error;
+    public String getMessage() {
+        return this.message;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setData(T data) {
@@ -136,13 +141,5 @@ public class Result<T> implements VO {
 
     public void setParameters(List<Object> parameters) {
         this.parameters = parameters;
-    }
-
-    public static Result getOk() {
-        return ok;
-    }
-
-    public static void setOk(Result ok) {
-        Result.ok = ok;
     }
 }

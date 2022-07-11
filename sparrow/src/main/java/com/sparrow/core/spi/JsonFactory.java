@@ -21,10 +21,6 @@ import com.sparrow.json.Json;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
-
-/**
- * @author harry
- */
 public class JsonFactory {
     private static final String DEFAULT_PROVIDER = "com.sparrow.json.impl.SparrowJsonImpl";
     private volatile static Json json;
@@ -49,7 +45,7 @@ public class JsonFactory {
                 Class<?> jsonClazz = Class.forName(DEFAULT_PROVIDER);
                 json = (Json) jsonClazz.newInstance();
                 return json;
-            }catch (Exception x) {
+            } catch (Exception x) {
                 throw new RuntimeException(
                     "Provider " + DEFAULT_PROVIDER + " could not be instantiated: " + x,
                     x);

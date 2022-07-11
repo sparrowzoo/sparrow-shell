@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sparrow.tracer.impl;
 
 import com.sparrow.tracer.*;
@@ -27,8 +44,7 @@ public class TracerImpl implements Tracer {
     }
 
     /**
-     * cursor 当前span指针
-     * thread local 需要remove 防止内存泄露，这里直接用map
+     * cursor 当前span指针 thread local 需要remove 防止内存泄露，这里直接用map
      */
     private Map<Long, Span> cursor = new HashMap<>();
     /**
@@ -63,8 +79,8 @@ public class TracerImpl implements Tracer {
     public TracerImpl(String traceId, long timeoutThreshold) {
         this.timeoutThreshold = timeoutThreshold;
         this.traceId = traceId;
-        if(traceId==null){
-            this.traceId=UUID.randomUUID().toString();
+        if (traceId == null) {
+            this.traceId = UUID.randomUUID().toString();
         }
         this.nextId = new AtomicInteger(0);
         this.logFormatter = LogFormatterProvider.getLogFormatter();
@@ -104,7 +120,6 @@ public class TracerImpl implements Tracer {
         return this.spanBuilder;
     }
 
-
     private void recursion(Span span, Map<Span, Integer> container, int depth) {
         if (span.follower() == null && CollectionsUtility.isNullOrEmpty(span.children())) {
             return;
@@ -140,8 +155,8 @@ public class TracerImpl implements Tracer {
     @Override
     public void log(Logger logger, String parameters) {
         logger.info("tracer id:{} parameter:{} execute duration {}",
-                this.getId(),
-                parameters,
-                this.walking());
+            this.getId(),
+            parameters,
+            this.walking());
     }
 }

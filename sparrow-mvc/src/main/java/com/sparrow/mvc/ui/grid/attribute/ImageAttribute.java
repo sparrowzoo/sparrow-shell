@@ -18,15 +18,13 @@
 package com.sparrow.mvc.ui.grid.attribute;
 
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.DIGIT;
 import com.sparrow.mvc.ui.grid.BaseAttribute;
 import com.sparrow.utility.ConfigUtility;
 
 /**
  * 格式image#fielName#format#width#height#defaultIco 例子image#filedName#图片显示文本 title#60px#40px#http://r.**.net/defualt.ico
- *
- * @author harry
  */
 public class ImageAttribute extends BaseAttribute {
     private String width = "60px";
@@ -50,7 +48,7 @@ public class ImageAttribute extends BaseAttribute {
         }
         if (config.length > DIGIT.FIVE) {
             this.defaultValue = config[DIGIT.FIVE];
-            if (!this.defaultValue.startsWith(CONSTANT.HTTP_PROTOCOL)) {
+            if (!this.defaultValue.startsWith(Constant.HTTP_PROTOCOL)) {
                 this.defaultValue = ConfigUtility.getValue(Config.RESOURCE) + this.defaultValue;
             }
         }

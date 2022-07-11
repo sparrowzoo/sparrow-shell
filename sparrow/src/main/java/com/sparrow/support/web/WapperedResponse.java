@@ -22,9 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.*;
 
-/**
- * @author harry
- */
 public class WapperedResponse extends HttpServletResponseWrapper {
     private ByteArrayOutputStream buffer = null;
     private ServletOutputStream out = null;

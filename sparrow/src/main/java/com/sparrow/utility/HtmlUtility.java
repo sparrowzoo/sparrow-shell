@@ -19,16 +19,13 @@ package com.sparrow.utility;
 
 import com.sparrow.constant.Regex;
 
-import com.sparrow.protocol.constant.magic.ESCAPED;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Escaped;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dto.SimpleItemDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class HtmlUtility {
 
     public static int getCountWithoutHtml(String sourceHTML) {
@@ -147,7 +144,7 @@ public class HtmlUtility {
                 }
                 // 当前字符不是空
                 if (currentChar != '\n' && currentChar != '\r'
-                        && currentChar != ' ' && currentChar != '\t') {
+                    && currentChar != ' ' && currentChar != '\t') {
                     desc.append(currentChar);
                 }
             }
@@ -176,19 +173,19 @@ public class HtmlUtility {
         char[] array = html.toCharArray();
         StringBuilder sb = new StringBuilder();
         for (char c : array) {
-            String s = c + SYMBOL.EMPTY;
+            String s = c + Symbol.EMPTY;
             switch (c) {
                 case '&':
-                    s = ESCAPED.AND;
+                    s = Escaped.AND;
                     break;
                 case '<':
-                    s = ESCAPED.LESS_THEN;
+                    s = Escaped.LESS_THEN;
                     break;
                 case '>':
-                    s = ESCAPED.GREAT_THEN;
+                    s = Escaped.GREAT_THEN;
                     break;
                 case '"':
-                    s = ESCAPED.DOUBLE_QUOTES;
+                    s = Escaped.DOUBLE_QUOTES;
                     break;
                 //case ' ':
                 //    s = "&nbsp;";
@@ -201,11 +198,11 @@ public class HtmlUtility {
     }
 
     public static String decode(String html) {
-        html = html.replace(ESCAPED.AND, SYMBOL.AND);
-        html = html.replace(ESCAPED.LESS_THEN, SYMBOL.LESS_THEN);
-        html = html.replace(ESCAPED.GREAT_THEN, SYMBOL.GREATER_THAN);
-        html = html.replace(ESCAPED.DOUBLE_QUOTES, SYMBOL.DOUBLE_QUOTES);
-        html = html.replace(ESCAPED.NO_BREAK_SPACE, SYMBOL.BLANK);
+        html = html.replace(Escaped.AND, Symbol.AND);
+        html = html.replace(Escaped.LESS_THEN, Symbol.LESS_THEN);
+        html = html.replace(Escaped.GREAT_THEN, Symbol.GREATER_THAN);
+        html = html.replace(Escaped.DOUBLE_QUOTES, Symbol.DOUBLE_QUOTES);
+        html = html.replace(Escaped.NO_BREAK_SPACE, Symbol.BLANK);
         return html;
     }
 
@@ -213,10 +210,10 @@ public class HtmlUtility {
         String title = simpleItem.getTitle();
         if (!StringUtility.isNullOrEmpty(simpleItem.getCoverImage())) {
             title = "<img title='" + title + "' src='" + simpleItem.getCoverImage()
-                    + "'/>";
+                + "'/>";
         }
         return String.format("<a href=\"%1$s\" target=\"%2$s\">%3$s</a>",
-                simpleItem.getUrl() == null ? "" : simpleItem.getUrl().trim(), openType,
-                title);
+            simpleItem.getUrl() == null ? "" : simpleItem.getUrl().trim(), openType,
+            title);
     }
 }

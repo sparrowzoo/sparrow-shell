@@ -39,7 +39,6 @@ public class KeyUser {
      */
     public static final KEY.Business BACKEND_PERMISSION = new KEY.Business(SparrowModule.USER, "BACKEND_PERMISSION");
 
-
     /**
      * attention list
      */
@@ -55,39 +54,38 @@ public class KeyUser {
     /**
      * user find password lock
      */
-    public static final KEY.Business LOCK_FIND_PASSWORD =new KEY.Business(SparrowModule.USER,"LOCK","FIND","PASSWORD");
+    public static final KEY.Business LOCK_FIND_PASSWORD = new KEY.Business(SparrowModule.USER, "LOCK", "FIND", "PASSWORD");
     /**
      * user login times lock
      */
-    public static final KEY.Business LOCK_LOGIN = new KEY.Business(SparrowModule.USER,"LOCK","LOGIN");
+    public static final KEY.Business LOCK_LOGIN = new KEY.Business(SparrowModule.USER, "LOCK", "LOGIN");
     /**
      * user cent lock
      */
-    public static final KEY.Business LOCK_LOGIN_CENT = new KEY.Business(SparrowModule.USER,"LOCK","LOGIN","CENT");
+    public static final KEY.Business LOCK_LOGIN_CENT = new KEY.Business(SparrowModule.USER, "LOCK", "LOGIN", "CENT");
     /**
      * user register lock
      */
-    public static final KEY.Business LOCK_REGISTER =new KEY.Business(SparrowModule.USER,"LOCK","REGISTER");
+    public static final KEY.Business LOCK_REGISTER = new KEY.Business(SparrowModule.USER, "LOCK", "REGISTER");
     /**
      * user dig lock
      */
-    public static final KEY.Business LOCK_DIG =new KEY.Business(SparrowModule.USER,"LOCK","DIG");
+    public static final KEY.Business LOCK_DIG = new KEY.Business(SparrowModule.USER, "LOCK", "DIG");
     /**
      * user like lock
      */
-    public static final KEY.Business LOCK_LIKE =new KEY.Business(SparrowModule.USER,"LOCK","LIKE");
+    public static final KEY.Business LOCK_LIKE = new KEY.Business(SparrowModule.USER, "LOCK", "LIKE");
 
     /**
      * user cent sort
      */
-    public static final KEY.Business SORT_CENT =new KEY.Business(SparrowModule.USER,"SORT","CENT");
+    public static final KEY.Business SORT_CENT = new KEY.Business(SparrowModule.USER, "SORT", "CENT");
     /**
      * lastest login and high cent
      */
-    public static final KEY.Business SORT_POPULARITY = new KEY.Business(SparrowModule.USER,"SORT","POPULARITY");
+    public static final KEY.Business SORT_POPULARITY = new KEY.Business(SparrowModule.USER, "SORT", "POPULARITY");
 
     public static final Map<KEY.Business, LockConfig> LOCK_CONFIG = new HashMap<KEY.Business, LockConfig>();
-
 
     static {
         // 5分钟不能超10次 不顺延

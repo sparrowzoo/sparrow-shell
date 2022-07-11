@@ -27,7 +27,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sparrow-orm</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${sparrow_orm_version}</version>
     <dependencies>
         <dependency>
             <groupId>com.sparrow</groupId>
@@ -36,5 +36,15 @@
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>

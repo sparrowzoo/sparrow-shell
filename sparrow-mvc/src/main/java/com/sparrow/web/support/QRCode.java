@@ -31,8 +31,6 @@ import java.io.IOException;
 
 /**
  * QRCode
- *
- * @author harry
  */
 public class QRCode extends HttpServlet {
     private int qrWidth = 300;

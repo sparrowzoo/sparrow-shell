@@ -19,17 +19,12 @@ package com.sparrow.datasource;
 import java.sql.Connection;
 import javax.sql.DataSource;
 
-/**
- * 完成connection 与datasource key 的对应关系，用于数据源与线程的绑定
- *
- * @author by harry
- */
 public interface DataSourceFactory {
     /**
      * get datasource by key
      *
      * @param dataSourceKey the identify of the datasource to confirm one datasource it's same to the file name of
-     * datasource properties config file
+     *                      datasource properties config file
      * @return return datasource
      * @see javax.sql.DataSource
      */
@@ -53,7 +48,7 @@ public interface DataSourceFactory {
      * get datasource config object by datasource key
      *
      * @param dataSourceKey the identify of the datasource to confirm one datasource it's same to the file name of
-     * datasource properties config file
+     *                      datasource properties config file
      * @return
      */
     DatasourceConfig getDatasourceConfig(String dataSourceKey);

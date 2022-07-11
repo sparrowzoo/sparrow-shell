@@ -18,14 +18,9 @@
 package com.sparrow.concurrent;
 
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
-/**
- * @author harry
- */
 public class SparrowThreadFactory implements ThreadFactory {
     private final AtomicLong threadCounter;
     private final ThreadFactory wrappedFactory;
@@ -33,8 +28,6 @@ public class SparrowThreadFactory implements ThreadFactory {
     private final String namingPattern;
     private final Integer priority;
     private final Boolean daemonFlag;
-
-
 
     private SparrowThreadFactory(SparrowThreadFactory.Builder builder) {
         if (builder.wrappedFactory == null) {
@@ -100,7 +93,6 @@ public class SparrowThreadFactory implements ThreadFactory {
         }
 
     }
-
 
     public static class Builder {
         private ThreadFactory wrappedFactory;

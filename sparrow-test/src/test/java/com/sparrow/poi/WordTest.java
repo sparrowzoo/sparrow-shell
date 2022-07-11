@@ -7,7 +7,6 @@ import org.apache.poi.hwpf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.*;
 
 /**

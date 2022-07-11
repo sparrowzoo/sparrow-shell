@@ -1,7 +1,23 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.registry.zookeeper;
 
 import com.google.common.base.Preconditions;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.registry.RegistryCenter;
 import com.sparrow.utility.StringUtility;
 import org.apache.curator.framework.CuratorFramework;
@@ -23,10 +39,6 @@ import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author harry
- * @date 2018/4/13
- */
 public class ZookeeperRegistryCenter implements RegistryCenter {
 
     private Logger log = LoggerFactory.getLogger(ZookeeperRegistryCenter.class);
@@ -44,9 +56,9 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     public void init() throws InterruptedException, KeeperException.OperationTimeoutException {
         log.debug("Elastic job: zookeeper registry center init, server lists is: {}.", zkConfig.getServerLists());
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
-                .connectString(zkConfig.getServerLists())
-                .retryPolicy(new ExponentialBackoffRetry(zkConfig.getWaitRetryIntervalTime(), zkConfig.getMaxRetryTimes(), zkConfig.getMaxWaitRetryIntervalTime()))
-                .namespace(zkConfig.getNamespace());
+            .connectString(zkConfig.getServerLists())
+            .retryPolicy(new ExponentialBackoffRetry(zkConfig.getWaitRetryIntervalTime(), zkConfig.getMaxRetryTimes(), zkConfig.getMaxWaitRetryIntervalTime()))
+            .namespace(zkConfig.getNamespace());
         if (0 != zkConfig.getSessionTimeout()) {
             builder.sessionTimeoutMs(zkConfig.getSessionTimeout());
         }
@@ -54,19 +66,19 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             builder.connectionTimeoutMs(zkConfig.getConnectionTimeout());
         }
         if (!StringUtility.isNullOrEmpty(zkConfig.getDigest())) {
-            builder.authorization("digest", zkConfig.getDigest().getBytes(Charset.forName(CONSTANT.CHARSET_UTF_8)))
-                    .aclProvider(new ACLProvider() {
+            builder.authorization("digest", zkConfig.getDigest().getBytes(Charset.forName(Constant.CHARSET_UTF_8)))
+                .aclProvider(new ACLProvider() {
 
-                        @Override
-                        public List<ACL> getDefaultAcl() {
-                            return ZooDefs.Ids.CREATOR_ALL_ACL;
-                        }
+                    @Override
+                    public List<ACL> getDefaultAcl() {
+                        return ZooDefs.Ids.CREATOR_ALL_ACL;
+                    }
 
-                        @Override
-                        public List<ACL> getAclForPath(final String path) {
-                            return ZooDefs.Ids.CREATOR_ALL_ACL;
-                        }
-                    });
+                    @Override
+                    public List<ACL> getAclForPath(final String path) {
+                        return ZooDefs.Ids.CREATOR_ALL_ACL;
+                    }
+                });
         }
         client = builder.build();
         client.start();
@@ -104,7 +116,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         }
         ChildData resultInCache = cache.getCurrentData(key);
         if (null != resultInCache) {
-            return null == resultInCache.getData() ? null : new String(resultInCache.getData(), Charset.forName(CONSTANT.CHARSET_UTF_8));
+            return null == resultInCache.getData() ? null : new String(resultInCache.getData(), Charset.forName(Constant.CHARSET_UTF_8));
         }
         return getFromRemote(key);
     }
@@ -121,7 +133,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     @Override
     public String getFromRemote(final String key) {
         try {
-            return new String(client.getData().forPath(key), Charset.forName(CONSTANT.CHARSET_UTF_8));
+            return new String(client.getData().forPath(key), Charset.forName(Constant.CHARSET_UTF_8));
         } catch (Exception e) {
             log.error("get from remote", e);
             return null;
@@ -173,7 +185,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     public void persist(final String key, final String value) {
         try {
             if (!exist(key)) {
-                client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(key, value.getBytes(Charset.forName(CONSTANT.CHARSET_UTF_8)));
+                client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(key, value.getBytes(Charset.forName(Constant.CHARSET_UTF_8)));
             } else {
                 modify(key, value);
             }
@@ -185,7 +197,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     @Override
     public void modify(final String key, final String value) {
         try {
-            client.inTransaction().check().forPath(key).and().setData().forPath(key, value.getBytes(Charset.forName(CONSTANT.CHARSET_UTF_8))).and().commit();
+            client.inTransaction().check().forPath(key).and().setData().forPath(key, value.getBytes(Charset.forName(Constant.CHARSET_UTF_8))).and().commit();
         } catch (final Exception ex) {
             log.error("modify", ex);
         }
@@ -197,7 +209,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             if (exist(key)) {
                 client.delete().deletingChildrenIfNeeded().forPath(key);
             }
-            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(key, value.getBytes(Charset.forName(CONSTANT.CHARSET_UTF_8)));
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(key, value.getBytes(Charset.forName(Constant.CHARSET_UTF_8)));
         } catch (final Exception ex) {
             log.error("persist ephemeral", ex);
         }
@@ -206,7 +218,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     @Override
     public String persistSequential(final String key, final String value) {
         try {
-            return client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(key, value.getBytes(Charset.forName(CONSTANT.CHARSET_UTF_8)));
+            return client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(key, value.getBytes(Charset.forName(Constant.CHARSET_UTF_8)));
         } catch (final Exception ex) {
             log.error("persist sequential", ex);
         }

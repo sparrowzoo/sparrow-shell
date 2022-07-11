@@ -19,9 +19,6 @@ package com.sparrow.protocol;
 
 import java.io.Serializable;
 
-/**
- * @author harry
- */
 public interface EventSupport extends Serializable {
     String event();
 }

@@ -16,20 +16,9 @@
  */
 package com.sparrow.core.monitor;
 
-/**
- * @author by harry
- */
 public interface ElapsedTimeMonitor {
-    /**
-     * mark start time
-     */
     void start();
 
-    /**
-     * elapse end time
-     *
-     * @param keys keys
-     */
     void elapsed(Object... keys);
 
     void elapsedAndRestart(Object... keys);

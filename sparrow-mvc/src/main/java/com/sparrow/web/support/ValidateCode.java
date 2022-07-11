@@ -32,11 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 
-/**
- * @author harry
- */
 public class ValidateCode extends HttpServlet {
     public ValidateCode() {
         super();
@@ -50,9 +47,9 @@ public class ValidateCode extends HttpServlet {
     private int codeY;
     private int codeWidth;
     char[] codeSequence = {
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K',
-            'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', '3',
-            '4', '5', '6', '7', '8', '9'};
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K',
+        'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', '3',
+        '4', '5', '6', '7', '8', '9'};
 
     @Override
     public void init() throws ServletException {
@@ -80,9 +77,9 @@ public class ValidateCode extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         BufferedImage buffImg = new BufferedImage(this.imagewidth,
-                this.imageheight, BufferedImage.TYPE_INT_RGB);
+            this.imageheight, BufferedImage.TYPE_INT_RGB);
         Graphics2D gd = buffImg.createGraphics();
         Random random = new Random();
         gd.setColor(Color.white);
@@ -95,18 +92,18 @@ public class ValidateCode extends HttpServlet {
         int red = 0, green = 0, blue = 0;
         for (int i = 0; i < codeCount; i++) {
             String strRand = String.valueOf(codeSequence[random
-                    .nextInt(this.codeSequence.length)]);
+                .nextInt(this.codeSequence.length)]);
             red = random.nextInt(254);
             green = random.nextInt(254);
             blue = random.nextInt(254);
             gd.setColor(new Color(red, green, blue));
             gd.drawString(strRand, (i * this.codeWidth) + this.codeWidth / 2,
-                    codeY);
+                codeY);
             randomCode.append(strRand);
         }
         HttpSession session = req.getSession();
-        session.setAttribute(CONSTANT.VALIDATE_CODE, randomCode
-                .toString());
+        session.setAttribute(Constant.VALIDATE_CODE, randomCode
+            .toString());
         resp.setHeader("Pragma", "no-cache");
         resp.setHeader("Cache-Control", "no-cache");
         resp.setDateHeader("Expires", 0);
@@ -118,11 +115,11 @@ public class ValidateCode extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        if (req.getParameter(CONSTANT.VALIDATE_CODE) != null
-                && req.getParameter(CONSTANT.VALIDATE_CODE).equalsIgnoreCase(req.getSession().getAttribute(
-                CONSTANT.VALIDATE_CODE)
-                .toString().toLowerCase())) {
+        throws IOException {
+        if (req.getParameter(Constant.VALIDATE_CODE) != null
+            && req.getParameter(Constant.VALIDATE_CODE).equalsIgnoreCase(req.getSession().getAttribute(
+            Constant.VALIDATE_CODE)
+            .toString().toLowerCase())) {
             resp.getWriter().write("OK");
             return;
         }

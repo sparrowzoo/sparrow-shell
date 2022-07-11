@@ -17,7 +17,7 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.StringUtility;
 import java.io.IOException;
 import javax.servlet.jsp.JspException;
@@ -27,8 +27,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <input type="text" id="" value="" name="" maxlength="3" disabled="disabled" readonly="readonly" visible="false" />
- *
- * @author harry
  */
 public abstract class AbstractJWebInputControl extends WebControl {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -52,7 +50,7 @@ public abstract class AbstractJWebInputControl extends WebControl {
         } else if (this.tabIndex != null) {
             tabIndex = Integer.valueOf(this.tabIndex);
         }
-        return tabIndex > 0 ? String.format(" tabindex=\"%1$s\" ", tabIndex) : SYMBOL.EMPTY;
+        return tabIndex > 0 ? String.format(" tabindex=\"%1$s\" ", tabIndex) : Symbol.EMPTY;
     }
 
     public void setTabIndex(String tabIndex) {
@@ -100,7 +98,7 @@ public abstract class AbstractJWebInputControl extends WebControl {
     }
 
     public String getReadonly() {
-        String readonly = SYMBOL.EMPTY;
+        String readonly = Symbol.EMPTY;
         Object requestReadonly = this.pageContext.getRequest().getAttribute(
             this.getId() + ".readonly");
 
@@ -109,8 +107,8 @@ public abstract class AbstractJWebInputControl extends WebControl {
         } else if (this.readonly != null) {
             readonly = this.readonly;
         }
-        boolean isReadonly= Boolean.TRUE.toString().equalsIgnoreCase(readonly.trim())||"readonly".equalsIgnoreCase(readonly.trim());
-        return isReadonly ? " readonly=\"readonly\" " : SYMBOL.EMPTY;
+        boolean isReadonly = Boolean.TRUE.toString().equalsIgnoreCase(readonly.trim()) || "readonly".equalsIgnoreCase(readonly.trim());
+        return isReadonly ? " readonly=\"readonly\" " : Symbol.EMPTY;
     }
 
     public void setReadonly(String readonly) {
@@ -119,7 +117,7 @@ public abstract class AbstractJWebInputControl extends WebControl {
 
     public String getDisabled() {
 
-        String disabled = SYMBOL.EMPTY;
+        String disabled = Symbol.EMPTY;
         Object requestDisabled = this.pageContext.getRequest().getAttribute(
             this.getId() + ".disabled");
         if (requestDisabled != null) {
@@ -128,7 +126,7 @@ public abstract class AbstractJWebInputControl extends WebControl {
             disabled = this.disabled;
         }
 
-        return disabled.trim().equalsIgnoreCase(Boolean.TRUE.toString()) ? " disabled=\"disabled\" " : SYMBOL.EMPTY;
+        return disabled.trim().equalsIgnoreCase(Boolean.TRUE.toString()) ? " disabled=\"disabled\" " : Symbol.EMPTY;
     }
 
     public void setDisabled(String disabled) {
@@ -136,7 +134,7 @@ public abstract class AbstractJWebInputControl extends WebControl {
     }
 
     public String getMaxLength() {
-        String maxLength = SYMBOL.EMPTY;
+        String maxLength = Symbol.EMPTY;
         Object requestMaxLength = this.pageContext.getRequest().getAttribute(
             this.getId() + ".maxLength");
         if (requestMaxLength != null) {
@@ -145,7 +143,7 @@ public abstract class AbstractJWebInputControl extends WebControl {
             maxLength = this.maxLength;
         }
 
-        return SYMBOL.EMPTY.equals(maxLength) ? SYMBOL.EMPTY : String.format(" maxlength=\"%1$s\" ", maxLength);
+        return Symbol.EMPTY.equals(maxLength) ? Symbol.EMPTY : String.format(" maxlength=\"%1$s\" ", maxLength);
     }
 
     public void setMaxLength(String maxLength) {
@@ -173,7 +171,7 @@ public abstract class AbstractJWebInputControl extends WebControl {
         }
 
         if (requestValue == null) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         requestValue = requestValue.toString().replace("\"", "\\\"");
         return String.format(" value=\"%1$s\"", requestValue);
@@ -197,14 +195,14 @@ public abstract class AbstractJWebInputControl extends WebControl {
 
     public String getPlaceHolder() {
         if (StringUtility.isNullOrEmpty(this.placeHolder)) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         return " placeholder=\"" + this.placeHolder + "\" ";
     }
 
     public String getAutocomplete() {
         if (StringUtility.isNullOrEmpty(this.autocomplete)) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         return " autocomplete=\"off\" ";
     }

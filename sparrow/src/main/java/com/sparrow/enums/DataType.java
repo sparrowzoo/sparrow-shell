@@ -17,32 +17,12 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
 public enum DataType {
-    /**
-     * 字符串
-     */
+
     STRING,
-    /**
-     * 选项卡
-     */
     OPTION,
-    /**
-     * 日期
-     */
     DATE,
-    /**
-     * 数值型
-     */
     DECIMAL,
-    /**
-     * 布尔型
-     */
     BOOLEAN,
-    /**
-     * 数值型
-     */
     INT
 }

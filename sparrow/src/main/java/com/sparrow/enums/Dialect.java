@@ -17,22 +17,8 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
-
 public enum Dialect {
-    /**
-     * mysql
-     */
     MYSQL,
-    /**
-     * sql server
-     */
     SQL_SERVER,
-
-    /**
-     * ELASTIC SEARCH
-     */
     ELASTIC_SEARCH
 }

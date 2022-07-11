@@ -18,7 +18,6 @@
 package com.sparrow.facade.segment;
 
 import com.sparrow.constant.DateTime;
-import com.sparrow.constant.DateTime;
 import com.sparrow.core.algorithm.gouping.Coordinate;
 import com.sparrow.core.algorithm.gouping.Point;
 import com.sparrow.core.algorithm.gouping.Segment;

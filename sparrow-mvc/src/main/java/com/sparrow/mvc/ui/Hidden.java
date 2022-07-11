@@ -17,16 +17,13 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 
-/**
- * @author harry
- */
 public class Hidden extends AbstractJWebInputControl {
 
     @Override
     public String setTagNameAndGetTagAttributes() {
         super.setType("hidden");
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 }

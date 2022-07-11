@@ -19,14 +19,14 @@ package com.sparrow.orm.template;
 
 import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.query.UpdateCriteria;
-import com.sparrow.protocol.db.DaoSupport;
+import com.sparrow.protocol.dao.DaoSupport;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * @author harry sparrow 跨jdbc 和elastic search接口
+ * sparrow 跨jdbc
  */
 public interface SparrowDaoSupport<T, I> extends DaoSupport<T, I> {
 
@@ -37,7 +37,7 @@ public interface SparrowDaoSupport<T, I> extends DaoSupport<T, I> {
      */
     <P, Q> Map<P, Q> getMap(SearchCriteria criteria);
 
-    Map<I,T> getEntityMap(SearchCriteria criteria);
+    Map<I, T> getEntityMap(SearchCriteria criteria);
 
     <Z> Set<Z> firstList(SearchCriteria criteria);
 

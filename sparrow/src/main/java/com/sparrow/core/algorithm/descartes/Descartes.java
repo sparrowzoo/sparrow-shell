@@ -22,13 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-/**
- * A1 B1 C1 ... N1 A2 B2 C2 ... N2 A3 B3 C3 ... N3 ||
- *
- * A1 B1 C1 N1 A1 B1 C1 N2 .... A3 B3 C3 N3
- *
- * @author harry
- */
 public class Descartes {
     private List<LinkedNode> source;
     private List<LinkedNode> destination = new ArrayList<LinkedNode>();

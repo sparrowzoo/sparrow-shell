@@ -20,9 +20,6 @@ package com.sparrow.tracer;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-/**
- * @author harry
- */
 public class LogFormatterProvider {
     private static volatile LogFormatter logFormatter;
 

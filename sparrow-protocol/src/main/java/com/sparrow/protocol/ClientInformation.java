@@ -1,17 +1,31 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.protocol;
 
 import com.sparrow.protocol.enums.PLATFORM;
 import java.io.Serializable;
 
 /**
- * @author: zh_harry@163.com
- * @date: 2019-03-23 16:38
- * @description:
- * iOS: {"end_time":"1535971770858","os":"iOS","longitude":"116.446014","model":"iPhone10,1","start_time":"1535971439568","ssid":"sparrow-zoo.com","bssid":"10:c1:72:92:b4:c0","version":"11.4.1","latitude":"39.970479","resume_time":"1535971802314","idfa":"EF4F9CCD-3B6A-4553-95FB-486FB33885B7"}
- * Android: {"version":"8.0.0","os":"Android","start_time":"0","resume_time":"1535980166621","channel":"200","model":"Xiaomi||MI 6","ssid":"\"sparrow-zoo.com\"","bssid":"10:c1:72:92:b4:d0","imei":"99000939602526","longitude":116.445757,"dzt":0,"latitude":39.970334,"network":"WIFI"}
+ * @description: iOS: {"end_time":"1535971770858","os":"iOS","longitude":"116.446014","model":"iPhone10,1","start_time":"1535971439568","ssid":"sparrow-zoo.com","bssid":"10:c1:72:92:b4:c0","version":"11.4.1","latitude":"39.970479","resume_time":"1535971802314","idfa":"EF4F9CCD-3B6A-4553-95FB-486FB33885B7"}
+ * Android: {"version":"8.0.0","os":"Android","start_time":"0","resume_time":"1535980166621","channel":"200","model":"Xiaomi||MI
+ * 6","ssid":"\"sparrow-zoo.com\"","bssid":"10:c1:72:92:b4:d0","imei":"99000939602526","longitude":116.445757,"dzt":0,"latitude":39.970334,"network":"WIFI"}
  */
 
-public class ClientInformation implements Serializable{
+public class ClientInformation implements Serializable {
     /**
      * 子站域名
      */
@@ -40,8 +54,7 @@ public class ClientInformation implements Serializable{
     private int appId;
 
     /**
-     * app version
-     * e.g 7.02
+     * app version e.g 7.02
      */
     private float appVersion;
 
@@ -54,7 +67,6 @@ public class ClientInformation implements Serializable{
      * 操作系统
      */
     private String os;
-
 
     private String userAgent;
 
@@ -79,9 +91,7 @@ public class ClientInformation implements Serializable{
     private double latitude;
 
     /**
-     * 中国移动
-     * 中国联通
-     * wifi
+     * 中国移动 中国联通 wifi
      */
     private String network;
 
@@ -113,7 +123,6 @@ public class ClientInformation implements Serializable{
      * 重启时间
      */
     private long resumeTime;
-
 
     public String getWebsite() {
         return website;

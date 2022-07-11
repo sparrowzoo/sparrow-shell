@@ -20,9 +20,6 @@ package com.sparrow.orm.impl;
 import com.sparrow.orm.IDGenerator;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 public class UuidIDGeneratorImpl implements IDGenerator {
     @Override
     public String generate() {

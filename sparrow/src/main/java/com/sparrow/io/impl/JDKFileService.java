@@ -27,9 +27,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class JDKFileService implements FileService {
     private static Logger logger = LoggerFactory.getLogger(JDKFileService.class);
 
@@ -112,8 +109,21 @@ public class JDKFileService implements FileService {
     }
 
     @Override
-    public boolean delete(String fileName) throws IOException {
-        return new File(fileName).delete();
+    public boolean delete(String fileName) {
+        if (StringUtility.isNullOrEmpty(fileName)) {
+            logger.error("file name is null {}", fileName);
+            return false;
+        }
+        File file = new File(fileName);
+        if (!file.exists()) {
+            logger.error("{} not exist", fileName);
+            return false;
+        }
+        if (!file.delete()) {
+            logger.error("{} not deleted", fileName);
+            return false;
+        }
+        return true;
     }
 
     @Override

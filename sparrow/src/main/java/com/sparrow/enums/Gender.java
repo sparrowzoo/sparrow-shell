@@ -19,9 +19,6 @@ package com.sparrow.enums;
 
 import com.sparrow.utility.ConfigUtility;
 
-/**
- * @author harry
- */
 public enum Gender {
     /**
      * 保密

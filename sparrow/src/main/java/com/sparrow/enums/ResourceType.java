@@ -17,10 +17,6 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
-
 public enum ResourceType {
     /**
      * 空类别

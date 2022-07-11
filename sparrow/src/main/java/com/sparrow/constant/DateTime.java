@@ -29,9 +29,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author harry
- */
 public class DateTime {
 
     /**
@@ -75,7 +72,6 @@ public class DateTime {
 
     private static final ThreadLocal<Map<String, DateFormat>> DATE_FORMAT_CONTAINER = new ThreadLocal<>();
 
-
     public static DateFormat getInstance(final String format) {
         Map<String, DateFormat> dateFormatMap = DATE_FORMAT_CONTAINER.get();
         if (dateFormatMap == null) {
@@ -93,8 +89,7 @@ public class DateTime {
      * min unix timestamp
      */
     public static final Timestamp MIN_UNIX_TIMESTAMP = Timestamp
-            .valueOf("1970-01-01 08:00:00");
-
+        .valueOf("1970-01-01 08:00:00");
 
     public static final Timestamp MAX_UNIX_TIMESTAMP = Timestamp.valueOf("9999-12-31 23:59:59");
 
@@ -104,9 +99,9 @@ public class DateTime {
     @SuppressWarnings("serial")
     public static final Map<String, Integer> BEFORE_FORMAT = new LinkedHashMap<String, Integer>();
 
-    public static Map<DateTimeUnit, Integer> DEFAULT_FIRST_VALUE = new HashMap<DateTimeUnit, Integer>(6);
-    public static Map<DateTimeUnit, Integer> DATE_TIME_UNIT_CALENDER_CONVERTER = new HashMap<DateTimeUnit, Integer>(7);
-    public static Map<DateTimeUnit, Long> MILLISECOND_UNIT = new HashMap<DateTimeUnit, Long>(6);
+    public static final Map<DateTimeUnit, Integer> DEFAULT_FIRST_VALUE = new HashMap<DateTimeUnit, Integer>(6);
+    public static final Map<DateTimeUnit, Integer> DATE_TIME_UNIT_CALENDER_CONVERTER = new HashMap<DateTimeUnit, Integer>(7);
+    public static final Map<DateTimeUnit, Long> MILLISECOND_UNIT = new HashMap<DateTimeUnit, Long>(6);
 
     static {
         BEFORE_FORMAT.put("s", 60);

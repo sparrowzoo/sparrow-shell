@@ -17,9 +17,6 @@
 
 package com.sparrow.protocol;
 
-/**
- * @author harry
- */
 public class WebsiteConfig implements POJO {
     private static final long serialVersionUID = -214177209049269222L;
     private String title;
@@ -33,8 +30,6 @@ public class WebsiteConfig implements POJO {
 
     public WebsiteConfig() {
     }
-
-
 
     public String getTitle() {
         return title;

@@ -32,9 +32,6 @@ import java.util.Stack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class DateTimeUtility {
 
     private static Logger logger = LoggerFactory.getLogger(DateTimeUtility.class);
@@ -129,7 +126,7 @@ public class DateTimeUtility {
      * @return
      */
     public static int getInterval(Long startTime, Long endTime,
-                                  DateTimeUnit dateTimeUnit) {
+        DateTimeUnit dateTimeUnit) {
         if (startTime == null || endTime == null) {
             return Integer.MIN_VALUE;
         }
@@ -151,9 +148,9 @@ public class DateTimeUtility {
             mm %= 60;
         }
         return String.format("%1$s:%2$s:%3$s",
-                StringUtility.leftPad(String.valueOf(hh), '0', DIGIT.TOW),
-                StringUtility.leftPad(String.valueOf(mm), '0', DIGIT.TOW),
-                StringUtility.leftPad(String.valueOf(ss), '0', DIGIT.TOW));
+            StringUtility.leftPad(String.valueOf(hh), '0', DIGIT.TOW),
+            StringUtility.leftPad(String.valueOf(mm), '0', DIGIT.TOW),
+            StringUtility.leftPad(String.valueOf(ss), '0', DIGIT.TOW));
     }
 
     /**
@@ -311,7 +308,6 @@ public class DateTimeUtility {
         }
         return calendar.getTimeInMillis();
     }
-
 
     public static long roundingExpire(Long timestamp, Long expire) {
         return timestamp / expire;

@@ -1,11 +1,12 @@
 /*
- * Copyright 2002-2018 the original author or authors.
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,18 +29,17 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
-/**
- * @author harry
- */
 public class SystemIdSchemaMappingResolver implements EntityResolver {
 
     public static final String DEFAULT_SCHEMA_MAPPINGS_LOCATION = "/META-INF/sparrow.schemas";
 
-    private static final Logger logger = LoggerFactory.getLogger(SystemIdSchemaMappingResolver.class);
+    private static Logger logger = LoggerFactory.getLogger(SystemIdSchemaMappingResolver.class);
 
     private final String schemaMappingsLocation;
 
-    /** Stores the mapping of schema URL -> local schema path. */
+    /**
+     * Stores the mapping of schema URL -> local schema path.
+     */
     private volatile Map<String, String> schemaMappings;
 
     public SystemIdSchemaMappingResolver() {
@@ -60,9 +60,9 @@ public class SystemIdSchemaMappingResolver implements EntityResolver {
         if (systemId != null) {
             String resourceLocation = getSchemaMappings().get(systemId);
             if (resourceLocation != null) {
-                InputStream inputStream = EnvironmentSupport.getInstance().getFileInputStream("/"+resourceLocation);
-                if(inputStream==null){
-                    logger.warn("system id {} local schema file is not exits",systemId,resourceLocation);
+                InputStream inputStream = EnvironmentSupport.getInstance().getFileInputStream("/" + resourceLocation);
+                if (inputStream == null) {
+                    logger.warn("system id {} local schema file is not exits", systemId, resourceLocation);
                     return null;
                 }
                 InputSource source = new InputSource(inputStream);
@@ -100,7 +100,7 @@ public class SystemIdSchemaMappingResolver implements EntityResolver {
                     logger.trace("Loaded schema mappings: " + mappings);
                 }
                 schemaMappings = new ConcurrentHashMap<>(mappings.size());
-                CollectionsUtility.fillMapWithProperties(schemaMappings,mappings);
+                CollectionsUtility.fillMapWithProperties(schemaMappings, mappings);
                 this.schemaMappings = schemaMappings;
             } catch (IOException ex) {
                 throw new IllegalStateException(

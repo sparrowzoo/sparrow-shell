@@ -3,7 +3,6 @@ package com.sparrow.jdk.gc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 在 jvm 参数里添加-XX:PrintCMSStatistics=1 通过 gc 日志可以看到 cms 回收器在 preclean 阶段执行的操作：

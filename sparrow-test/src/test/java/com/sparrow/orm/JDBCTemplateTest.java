@@ -2,7 +2,6 @@ package com.sparrow.orm;
 
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.support.db.JDBCSupport;
 import org.junit.Test;
 
 /**
@@ -10,11 +9,11 @@ import org.junit.Test;
  */
 public class JDBCTemplateTest {
     @Test
-    public void initStruction() {
+    public void initStructure() {
         Container container = ApplicationContext.getContainer();
-        container.setConfigLocation("/dao.xml");
+        container.setContextConfigLocation("/dao.xml");
         container.init();
-        JDBCSupport jdbcSupport = JDBCTemplate.getInstance();
+        JDBCSupport jdbcSupport = JDBCTemplate.getInstance("user",null);
         int affectCount= jdbcSupport.executeUpdate("DROP TABLE IF EXISTS `user`;");
         affectCount=jdbcSupport.executeUpdate("CREATE TABLE `user` (\n" +
                 "  `user_id` bigint(11) NOT NULL AUTO_INCREMENT,\n" +

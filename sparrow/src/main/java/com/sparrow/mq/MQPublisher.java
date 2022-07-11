@@ -20,13 +20,8 @@ package com.sparrow.mq;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.container.ContainerAware;
 
-/**
- * created by harry on 2016/4/8.
- *
- * @author harry
- */
-public interface MQPublisher extends ContainerAware{
-    void publish(MQEvent event,KEY productKey) throws Throwable;
+public interface MQPublisher extends ContainerAware {
+    void publish(MQEvent event, KEY productKey) throws Throwable;
 
     void publish(MQEvent event) throws Throwable;
 }

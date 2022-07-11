@@ -19,10 +19,6 @@ package com.sparrow.mq;
 
 import com.sparrow.container.Container;
 
-/**
- * @author harry
- * @date 2018/1/19
- */
 public abstract class AbstractMQHandler<T extends MQEvent> implements MQHandler<T> {
     private EventHandlerMappingContainer queueHandlerMappingContainer;
 

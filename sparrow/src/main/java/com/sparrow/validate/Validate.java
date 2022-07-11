@@ -17,35 +17,17 @@
 
 package com.sparrow.validate;
 
-/**
- * 根据bean 生成validate 和ctrl
- *
- * @author harry
- */
 public class Validate {
-    /**
-     * 控件 ID
-     */
     private String id;
-    /**
-     * 控件类型 用来获取控件内容
-     */
+
     private String control;
-    /**
-     * 是否为空
-     */
+
     private Boolean nullable;
-    /**
-     * 是否为数字
-     */
+
     private Boolean digital;
-    /**
-     * 对比
-     */
+
     private String compareId;
-    /**
-     * 正则
-     */
+    
     private String regex;
 
     private String errorNullable;

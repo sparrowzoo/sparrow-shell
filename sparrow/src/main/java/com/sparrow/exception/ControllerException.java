@@ -19,9 +19,6 @@ package com.sparrow.exception;
 
 import com.sparrow.protocol.ErrorSupport;
 
-/**
- * @author harry
- */
 public class ControllerException extends RuntimeException {
     public ControllerException(ErrorSupport message) {
         super(message.getMessage());

@@ -24,10 +24,6 @@ import com.sparrow.cache.CacheList;
 import com.sparrow.cache.CacheSet;
 import com.sparrow.cache.CacheSortedSet;
 import com.sparrow.cache.CacheString;
-
-/**
- * Created by harry on 2018/1/18.
- */
 public class RedisCacheClient extends AbstractCommand implements CacheClient {
 
     private CacheString cacheString;
@@ -42,9 +38,9 @@ public class RedisCacheClient extends AbstractCommand implements CacheClient {
         this.cacheKey = new RedisCacheKey(redisPool);
         this.cacheString = new RedisCacheString(redisPool);
         this.cacheSet = new RedisCacheSet(redisPool);
-        this.cacheSortedSet= new RedisCacheSortedSet(redisPool);
+        this.cacheSortedSet = new RedisCacheSortedSet(redisPool);
         this.cacheHash = new RedisCacheHash(redisPool);
-        this.cacheList=new RedisCacheList(redisPool);
+        this.cacheList = new RedisCacheList(redisPool);
     }
 
     @Override
@@ -52,12 +48,10 @@ public class RedisCacheClient extends AbstractCommand implements CacheClient {
         return cacheString;
     }
 
-
     @Override
     public CacheSet set() {
         return cacheSet;
     }
-
 
     @Override
     public CacheSortedSet sortedSet() {

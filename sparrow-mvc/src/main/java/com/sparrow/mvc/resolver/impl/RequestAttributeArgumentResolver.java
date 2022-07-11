@@ -23,17 +23,11 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
 import com.sparrow.web.support.MethodParameter;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author harry
- */
 public class RequestAttributeArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
 
-    private Container container= ApplicationContext.getContainer();
+    private Container container = ApplicationContext.getContainer();
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -44,17 +38,18 @@ public class RequestAttributeArgumentResolver implements HandlerMethodArgumentRe
     public Object resolveArgument(MethodParameter methodParameter, ServletInvokableHandlerMethod executionChain,
         HttpServletRequest request) throws Exception {
 
-        Object arg= request.getAttribute(methodParameter.getParameterName());
-        if(arg==null){
+        Object arg = request.getAttribute(methodParameter.getParameterName());
+        if (arg == null) {
             return null;
         }
-        if(arg.getClass().equals(methodParameter.getParameterType())){
-           return arg;
+        if (arg.getClass().equals(methodParameter.getParameterType())) {
+            return arg;
         }
         return null;
     }
+
     @Override
     public void aware(Container container, String beanName) {
-        this.container=container;
+        this.container = container;
     }
 }

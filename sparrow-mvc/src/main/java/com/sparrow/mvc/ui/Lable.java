@@ -17,12 +17,9 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 public class Lable extends AbstractJWebBodyControl {
 
     private String forCtrl;
@@ -49,6 +46,6 @@ public class Lable extends AbstractJWebBodyControl {
         if (!StringUtility.isNullOrEmpty(this.getForCtrl())) {
             return String.format(" for='%1$s' ", this.getForCtrl());
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 }

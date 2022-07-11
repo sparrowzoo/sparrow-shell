@@ -23,9 +23,6 @@ import com.sparrow.utility.ConfigUtility;
 
 import java.util.List;
 
-/**
- * @author harry
- */
 public class HyperLinkFieldParserImpl implements FieldParser {
     @Override
     public String parse(String[] config, List<String> valueList) {

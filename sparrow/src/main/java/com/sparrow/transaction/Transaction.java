@@ -17,9 +17,6 @@
 
 package com.sparrow.transaction;
 
-/**
- * @author harry
- */
 public interface Transaction<T> {
     T execute() throws Exception;
 }

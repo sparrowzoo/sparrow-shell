@@ -16,19 +16,15 @@
  */
 package com.sparrow.markdown.parser.impl;
 
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.CHAR_SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.mark.MarkEntity;
 import com.sparrow.markdown.mark.TagListEntity;
 import com.sparrow.markdown.parser.MarkParser;
 
-/**
- * @author by harry
- */
 public abstract class AbstractListParser implements MarkParser {
     protected abstract TagListEntity validate(MarkContext markContext, TagListEntity currentEntity, String line);
-
 
     @Override
     public MarkEntity validate(MarkContext markContext) {
@@ -39,7 +35,7 @@ public abstract class AbstractListParser implements MarkParser {
         markContext.skipPointer(1);
         do {
             String line = markContext.readLine(markContext.getCurrentPointer());
-            if (line.equals(CONSTANT.ENTER_TEXT_N) && markContext.getCurrentPointer() > 0 && markContext.getContent().charAt(markContext.getCurrentPointer() - 1) == CHAR_SYMBOL.ENTER) {
+            if (line.equals(Constant.ENTER_TEXT_N) && markContext.getCurrentPointer() > 0 && markContext.getContent().charAt(markContext.getCurrentPointer() - 1) == CharSymbol.ENTER) {
                 markContext.skipPointer(line.length());
                 break;
             }

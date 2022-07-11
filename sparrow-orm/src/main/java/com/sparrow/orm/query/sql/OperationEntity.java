@@ -21,9 +21,6 @@ import com.sparrow.orm.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class OperationEntity {
     private StringBuilder clause = new StringBuilder();
     private List<Parameter> parameterList = new ArrayList<Parameter>();

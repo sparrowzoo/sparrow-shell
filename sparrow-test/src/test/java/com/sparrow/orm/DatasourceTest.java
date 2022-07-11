@@ -17,37 +17,39 @@
 package com.sparrow.orm;
 
 import com.sparrow.container.Container;
-
-import java.sql.SQLException;
-import javax.sql.DataSource;
-
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.datasource.DataSourceValidChecker;
 import com.sparrow.datasource.DataSourceFactory;
+import com.sparrow.datasource.DataSourceValidChecker;
 import com.sparrow.datasource.checker.ConnectionValidCheckerAdapter;
 import org.junit.Test;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * @author by harry
  */
 public class DatasourceTest {
-    @Test
-    public void datasourceTest() throws SQLException {
-        Container container = ApplicationContext.getContainer();
-        container.init();
-        DataSourceFactory dataSourceFactory = container.getBean("dataSourceFactory");
-        DataSource dataSource = dataSourceFactory.getDataSource();
 
-        System.err.println("datasource valid before "+dataSource);
-        DataSourceValidChecker connectionValidChecker = new ConnectionValidCheckerAdapter();
-        try {
-            while (true) {
-                connectionValidChecker.isValid(dataSource);
-            }
-            //System.err.println("datasource valid after "+dataSource);
+  @Test
+  public void datasourceTest() throws SQLException {
+    Container container = ApplicationContext.getContainer();
+    container.setContextConfigLocation("/dao.xml");
+    //container.setConfigLocation("/syste2.properties");
+    container.init();
+    DataSourceFactory dataSourceFactory = container.getBean("dataSourceFactory");
+    DataSource dataSource = dataSourceFactory.getDataSource("user_default");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    System.err.println("datasource valid before " + dataSource);
+    DataSourceValidChecker connectionValidChecker = new ConnectionValidCheckerAdapter();
+    try {
+      while (true) {
+        connectionValidChecker.isValid(dataSource);
+      }
+      //System.err.println("datasource valid after "+dataSource);
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 }

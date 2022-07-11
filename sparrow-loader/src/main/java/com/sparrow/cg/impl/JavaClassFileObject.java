@@ -24,9 +24,6 @@ import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
 
-/**
- * @author harry
- */
 public class JavaClassFileObject extends SimpleJavaFileObject {
 
     final ByteArrayOutputStream bos =

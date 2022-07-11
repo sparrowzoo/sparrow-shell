@@ -18,14 +18,11 @@
 package com.sparrow.utility;
 
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class EnumUtility {
 
     /**
@@ -89,8 +86,8 @@ public class EnumUtility {
     public static String getValue(String enumClassName, int index) {
         try {
             Class clazz = Class.forName(enumClassName);
-            String key = "enum" + SYMBOL.UNDERLINE + clazz.getSimpleName() + SYMBOL.UNDERLINE + clazz
-                    .getEnumConstants()[index].toString().toLowerCase();
+            String key = "enum" + Symbol.UNDERLINE + clazz.getSimpleName() + Symbol.UNDERLINE + clazz
+                .getEnumConstants()[index].toString().toLowerCase();
             return ConfigUtility.getLanguageValue(key);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -100,7 +97,7 @@ public class EnumUtility {
     public static String getValue(Enum enumInstance) {
         String simpleName = enumInstance.getDeclaringClass().getSimpleName();
         String classKey = StringUtility.humpToLower(simpleName);
-        String key = "enum" + SYMBOL.UNDERLINE + classKey + SYMBOL.UNDERLINE + enumInstance.name().toLowerCase();
+        String key = "enum" + Symbol.UNDERLINE + classKey + Symbol.UNDERLINE + enumInstance.name().toLowerCase();
         return ConfigUtility.getLanguageValue(key);
     }
 }

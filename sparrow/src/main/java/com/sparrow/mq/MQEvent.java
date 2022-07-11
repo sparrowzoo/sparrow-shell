@@ -19,9 +19,6 @@ package com.sparrow.mq;
 
 import com.sparrow.protocol.POJO;
 
-/**
- * @author harry
- */
 public interface MQEvent extends POJO {
 
 }

@@ -31,9 +31,6 @@ import java.util.Map;
 
 import redis.clients.jedis.ShardedJedis;
 
-/**
- * Created by harry on 2018/1/26.
- */
 public class RedisCacheHash extends AbstractCommand implements CacheHash {
     RedisCacheHash(RedisPool redisPool) {
         this.redisPool = redisPool;

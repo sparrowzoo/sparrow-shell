@@ -18,14 +18,6 @@ package com.sparrow.core.algorithm.bus;
 
 import java.util.List;
 
-/**
- * @author by harry
- */
 public interface OverflowProcessor<T> {
-    /**
-     *
-     * @param list
-     * @return
-     */
     boolean hook(List<T> list);
 }

@@ -18,12 +18,9 @@
 package com.sparrow.protocol;
 
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 
-/**
- * @author harry
- */
-public class Size implements POJO{
+public class Size implements POJO {
     private String width;
     private String height;
 
@@ -43,7 +40,7 @@ public class Size implements POJO{
     }
 
     public String getHeightPX() {
-        if (SYMBOL.STAR.equals(height)) {
+        if (Symbol.STAR.equals(height)) {
             return "auto";
         }
         return height + "px";
@@ -54,13 +51,13 @@ public class Size implements POJO{
     }
 
     public int getHeight() {
-        return SYMBOL.STAR.equals(height) ? DIGIT.ALL : Integer.valueOf(this.height);
+        return Symbol.STAR.equals(height) ? DIGIT.ALL : Integer.valueOf(this.height);
     }
 
     @Override
     public String toString() {
         String size = "width:" + this.width + "px";
-        if (!SYMBOL.STAR.equals(height)) {
+        if (!Symbol.STAR.equals(height)) {
             size += "-height:" + this.height + "px";
         } else {
             size += "-height:auto";
@@ -80,7 +77,7 @@ public class Size implements POJO{
     }
 
     public String getContainerHeightPX() {
-        if (SYMBOL.STAR.equals(this.height)) {
+        if (Symbol.STAR.equals(this.height)) {
             return "auto";
         }
         double scale = Double.valueOf(this.getContainerWidth()) / Integer.valueOf(this.width);

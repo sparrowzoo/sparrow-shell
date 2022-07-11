@@ -17,9 +17,6 @@
 
 package com.sparrow.mvc.ui;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
 public class Div extends AbstractJWebBodyControl {
 

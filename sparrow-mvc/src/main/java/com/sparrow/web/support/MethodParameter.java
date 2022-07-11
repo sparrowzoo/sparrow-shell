@@ -20,9 +20,6 @@ package com.sparrow.web.support;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-/**
- * @author harry
- */
 public class MethodParameter {
     private final Method method;
     private final int parameterIndex;

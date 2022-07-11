@@ -17,9 +17,6 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
 public enum StatusOrder {
     /**
      * 供应商取消

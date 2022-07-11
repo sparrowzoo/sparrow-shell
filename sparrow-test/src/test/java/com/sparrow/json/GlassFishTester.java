@@ -20,10 +20,11 @@ package com.sparrow.json;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.core.spi.JsonFactory;
+
+import javax.json.spi.JsonProvider;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import javax.json.spi.JsonProvider;
 
 /**
  * Created by harry on 2015/5/13.

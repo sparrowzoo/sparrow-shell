@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
-        "beans.dtd">
+    "beans.dtd">
 <beans>
     <!---当前进程的所有datasource实例-->
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
@@ -14,9 +14,13 @@
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-    <bean name="criteriaProcessor" class="com.sparrow.orm.query.sql.impl.criteria.processor.SqlCriteriaProcessorImpl"/>
+    <bean name="transactionManager" class="com.sparrow.datasource.SparrowTransactionManager">
+        <property name="dataSourceFactory" ref="dataSourceFactory"/>
+        <property name="connectionHolder" ref="connectionContextHolder"/>
+    </bean>
     <bean name="imageExtractorRegistry" class="com.sparrow.image.ImageExtractorRegistry"/>
     <bean name="htmlImageExtractor" class="com.sparrow.image.HtmlImageExtractor">
-        <property name="imageExtractorRegistry"  ref="imageExtractorRegistry"/>
+        <property name="imageExtractorRegistry" ref="imageExtractorRegistry"/>
     </bean>
+    <bean name="fileService" class="com.sparrow.io.impl.JDKFileService"/>
 </beans>

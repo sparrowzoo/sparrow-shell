@@ -1,11 +1,26 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.markdown.parser.impl;
 
-import com.sparrow.protocol.constant.magic.CHAR_SYMBOL;
+import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.markdown.mark.MARK;
 import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.mark.MarkEntity;
 import com.sparrow.markdown.parser.MarkParser;
-import com.sparrow.utility.StringUtility;
 
 /**
  * Created by harry on 2018/2/6.
@@ -31,21 +46,21 @@ public class MarkdownParserComposite implements MarkParser {
 
     @Override
     public void parse(MarkContext markContext) {
-        if(markContext.getContentLength()==0){
+        if (markContext.getContentLength() == 0) {
             return;
         }
         //if first char is not \n then fill
         if (markContext.getParentMark() == null) {
-            if(markContext.getContent().charAt(0)!= CHAR_SYMBOL.ENTER) {
-                markContext.setContent(CHAR_SYMBOL.ENTER + markContext.getContent());
+            if (markContext.getContent().charAt(0) != CharSymbol.ENTER) {
+                markContext.setContent(CharSymbol.ENTER + markContext.getContent());
             }
-            if(markContext.getContent().charAt(markContext.getContentLength()-1)!=CHAR_SYMBOL.ENTER) {
-                markContext.setContent(markContext.getContent()+CHAR_SYMBOL.ENTER);
+            if (markContext.getContent().charAt(markContext.getContentLength() - 1) != CharSymbol.ENTER) {
+                markContext.setContent(markContext.getContent() + CharSymbol.ENTER);
             }
         }
         do {
             //detect start mark
-            if (markContext.getCurrentMark()!=null&&markContext.getCurrentMark().getNextEntity()!= null) {
+            if (markContext.getCurrentMark() != null && markContext.getCurrentMark().getNextEntity() != null) {
                 markContext.setCurrentMark(markContext.getCurrentMark().getNextEntity());
             } else {
                 markContext.setCurrentMark(null);

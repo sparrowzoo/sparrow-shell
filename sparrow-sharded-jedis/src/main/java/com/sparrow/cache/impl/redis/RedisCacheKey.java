@@ -22,12 +22,9 @@ import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
 import redis.clients.jedis.ShardedJedis;
 
-/**
- * Created by harry on 2018/1/26.
- */
-public class RedisCacheKey extends AbstractCommand implements CacheKey{
-    RedisCacheKey(RedisPool redisPool){
-        this.redisPool=redisPool;
+public class RedisCacheKey extends AbstractCommand implements CacheKey {
+    RedisCacheKey(RedisPool redisPool) {
+        this.redisPool = redisPool;
     }
 
     @Override
@@ -37,7 +34,7 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey{
             public Long execute(ShardedJedis jedis) {
                 return jedis.expire(key.key(), expire);
             }
-        },key)>0;
+        }, key) > 0;
     }
 
     @Override
@@ -47,7 +44,7 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey{
             public Long execute(ShardedJedis jedis) {
                 return jedis.expireAt(key.key(), -1L);
             }
-        },key)>0;
+        }, key) > 0;
     }
 
     @Override
@@ -57,6 +54,6 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey{
             public Long execute(ShardedJedis jedis) {
                 return jedis.expireAt(key.key(), expire);
             }
-        },key)>0;
+        }, key) > 0;
     }
 }

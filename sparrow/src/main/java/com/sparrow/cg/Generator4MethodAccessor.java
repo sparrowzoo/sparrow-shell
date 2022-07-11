@@ -17,9 +17,6 @@
 
 package com.sparrow.cg;
 
-/**
- * @author harry
- */
 public interface Generator4MethodAccessor {
     MethodAccessor newMethodAccessor(Class<?> clazz);
 }

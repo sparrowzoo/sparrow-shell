@@ -17,7 +17,7 @@
 
 package com.sparrow.orm.query.sql.impl.operation;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.container.ClassFactoryBean;
 import com.sparrow.orm.*;
 import com.sparrow.orm.query.Criteria;
@@ -25,11 +25,8 @@ import com.sparrow.orm.query.CriteriaField;
 import com.sparrow.orm.query.sql.RelationOperationEntity;
 import com.sparrow.orm.query.sql.RelationalOperation;
 
-/**
- * @author by harry
- */
 public class WildcardOperation implements RelationalOperation {
-    private ClassFactoryBean<EntityManager> entityManagerFactoryBean=EntityManagerFactoryBean.getInstance();
+    private ClassFactoryBean<EntityManager> entityManagerFactoryBean = EntityManagerFactoryBean.getInstance();
 
     private String wildcard;
 
@@ -42,7 +39,7 @@ public class WildcardOperation implements RelationalOperation {
         CriteriaField criteriaField = criteria.getField();
         EntityManager entityManager = entityManagerFactoryBean.getObject(criteriaField.getAlias());
         Field field = entityManager.getField(criteriaField.getName());
-        String condition = (criteria.isAlias() ? criteria.getField().getAlias() + SYMBOL.DOT : SYMBOL.EMPTY) + field.getColumnName() + SYMBOL.BLANK + criteria.getCriteriaEntry().getKey().rendered() + SYMBOL.BLANK +  wildcard;
+        String condition = (criteria.isAlias() ? criteria.getField().getAlias() + Symbol.DOT : Symbol.EMPTY) + field.getColumnName() + Symbol.BLANK + criteria.getCriteriaEntry().getKey().rendered() + Symbol.BLANK + wildcard;
         Parameter parameter = new Parameter(field, criteria.getCriteriaEntry().getValue());
         return new RelationOperationEntity(condition, parameter);
     }

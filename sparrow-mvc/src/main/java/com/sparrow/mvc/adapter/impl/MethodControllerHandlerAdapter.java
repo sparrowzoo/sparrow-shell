@@ -33,9 +33,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author harry
- */
 public class MethodControllerHandlerAdapter implements HandlerAdapter {
 
     private HandlerMethodArgumentResolverComposite argumentResolverComposite;

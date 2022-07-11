@@ -25,7 +25,7 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0-SNAPSHOT</version>
+    <version>${sparrow_json_version}</version>
 
     <artifactId>sparrow-json</artifactId>
     <dependencies>
@@ -36,10 +36,20 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.1.41</version>
+            <version>1.2.83</version>
         </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>

@@ -20,9 +20,6 @@ package com.sparrow.mq;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-/**
- * @author harry
- */
 public class MQContainerProvider {
     private static volatile EventHandlerMappingContainer queueHandlerMappingContainer;
 

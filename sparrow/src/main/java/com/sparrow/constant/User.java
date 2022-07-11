@@ -17,15 +17,9 @@
 
 package com.sparrow.constant;
 
-/**
- * 用户相关信息 session中保存常量。积分会发生变化不考虑保存到session。
- *
- * @author harry
- * @version 1.0
- */
 public class User {
-    public static final String PERMISSION="PERMISSION";
-    public static final String BACKEND_PERMISSION="BACKEND_PERMISSION";
+    public static final String PERMISSION = "PERMISSION";
+    public static final String BACKEND_PERMISSION = "BACKEND_PERMISSION";
     /**
      * 游客ID
      */
@@ -42,9 +36,6 @@ public class User {
      * 用户登录帐号
      */
     public static final String LOGIN_TOKEN = "login_token";
-
-
-
 
     /**
      * 用户状态

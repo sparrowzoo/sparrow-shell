@@ -24,8 +24,6 @@ import com.sparrow.utility.ConfigUtility;
 
 /**
  * 格式button#fieldName&fieldName2#format#javascriptClickEvent({0},{1})#cssClass#"" 例子button#filedName&idField#{0}查看详情#Sparrow.alert({0},{1})#button#defautValue
- *
- * @author harry
  */
 public class ButtonAttribute extends BaseAttribute {
     private String click;

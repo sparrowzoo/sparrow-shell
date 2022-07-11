@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 /**
  * 错误接口定义 枚举不可以继承
- *
- * @author harry
  */
 public interface ErrorSupport extends Serializable {
     boolean system();

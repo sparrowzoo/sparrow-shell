@@ -17,15 +17,8 @@
 
 package com.sparrow.enums;
 
-/**
- * Defines the comparison operators.  We could also get away with only 3 and use negation...
- *
- * @author harry
- */
 public enum ComparisonOperator {
-    /**
-     * 等于
-     */
+
     EQUAL {
         @Override
         public ComparisonOperator negated() {
@@ -169,6 +162,7 @@ public enum ComparisonOperator {
         @Override public ComparisonOperator negated() {
             return null;
         }
+
         @Override public String rendered() {
             return "%";
         }

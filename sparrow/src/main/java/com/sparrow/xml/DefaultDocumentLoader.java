@@ -1,11 +1,12 @@
 /*
- * Copyright 2002-2018 the original author or authors.
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,7 +43,7 @@ public class DefaultDocumentLoader implements DocumentLoader {
      */
     private static final String XSD_SCHEMA_LANGUAGE = "http://www.w3.org/2001/XMLSchema";
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultDocumentLoader.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultDocumentLoader.class);
 
     private final XmlValidationModeDetector xmlValidationModeDetector = new XmlValidationModeDetector();
 
@@ -51,7 +52,8 @@ public class DefaultDocumentLoader implements DocumentLoader {
      */
     @Override
     public Document loadDocument(String xmlFilePath, EntityResolver entityResolver,
-        ErrorHandler errorHandler, boolean namespaceAware) throws IOException, ParserConfigurationException, SAXException {
+        ErrorHandler errorHandler,
+        boolean namespaceAware) throws IOException, ParserConfigurationException, SAXException {
         int validationMode = xmlValidationModeDetector.detectValidationMode(xmlFilePath);
         DocumentBuilderFactory factory = createDocumentBuilderFactory(validationMode, namespaceAware);
         DocumentBuilder builder = createDocumentBuilder(factory, entityResolver, errorHandler);
@@ -64,13 +66,14 @@ public class DefaultDocumentLoader implements DocumentLoader {
         }
     }
 
-    @Override public Document loadDocument(String xmlFilePath,EntityResolver entityResolver,boolean namespaceAware) throws ParserConfigurationException, SAXException, IOException {
-        return this.loadDocument(xmlFilePath,entityResolver,new SimpleSaxErrorHandler(logger),namespaceAware);
+    @Override public Document loadDocument(String xmlFilePath, EntityResolver entityResolver,
+        boolean namespaceAware) throws ParserConfigurationException, SAXException, IOException {
+        return this.loadDocument(xmlFilePath, entityResolver, new SimpleSaxErrorHandler(logger), namespaceAware);
     }
 
     @Override public Document loadDocument(
         String xmlFilePath, boolean namespaceAware) throws IOException, SAXException, ParserConfigurationException {
-        return this.loadDocument(xmlFilePath,new DtdSchemaResolverAdapter(),namespaceAware);
+        return this.loadDocument(xmlFilePath, new DtdSchemaResolverAdapter(), namespaceAware);
     }
 
     protected DocumentBuilderFactory createDocumentBuilderFactory(int validationMode, boolean namespaceAware)

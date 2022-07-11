@@ -19,9 +19,6 @@ package com.sparrow.utility;
 
 import java.util.*;
 
-/**
- * @author harry
- */
 public class CollectionsUtility {
 
     public static <T extends Comparable<T>> T getLevel(List<T> list, T currentValue) {

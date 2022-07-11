@@ -19,9 +19,6 @@ package com.sparrow.mvc.ui.grid;
 
 import java.util.List;
 
-/**
- * @author harry
- */
 public interface FieldParser {
     public String parse(String[] config, List<String> valueList);
 }

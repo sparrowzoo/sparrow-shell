@@ -17,12 +17,6 @@
 
 package com.sparrow.constant;
 
-/**
- * 分页控件配置
- *
- * @author harry
- * @version 1.0
- */
 public class Pager {
     /**
      * 分页控件的码页
@@ -31,5 +25,5 @@ public class Pager {
     /**
      * FORM表单提交的action的格式
      */
-    public static final String ACTION_PAGE_FORMAT ="javascript:$.page.submit($pageIndex);";
+    public static final String ACTION_PAGE_FORMAT = "javascript:$.page.submit($pageIndex);";
 }

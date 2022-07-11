@@ -25,11 +25,8 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-/**
- * @author harry
- */
 public class DynamicClassLoader extends URLClassLoader {
-    private Logger logger = LoggerFactory.getLogger(DynamicClassLoader.class);
+    private static Logger logger = LoggerFactory.getLogger(DynamicClassLoader.class);
 
     public DynamicClassLoader(ClassLoader classLoader) {
         super(new URL[DIGIT.ZERO], classLoader);

@@ -17,29 +17,19 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
 public class UserType {
 
-    /**
-     * 普通类型
-     */
-    public static enum common {
-        /**
-         * 注册用户
-         */
+    public enum Common {
+
         REGISTER,
-        /**
-         * 管理员
-         */
+
         ADMINISTRATOR
     }
 
     /**
      * 电商用户
      */
-    public static enum e_commerce {
+    public enum ElectronicCommerce {
         /**
          * 买家
          */

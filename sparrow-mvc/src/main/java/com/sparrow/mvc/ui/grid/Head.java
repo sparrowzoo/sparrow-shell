@@ -18,12 +18,9 @@
 package com.sparrow.mvc.ui.grid;
 
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 public class Head {
     private boolean checkBox;
     private int colSpan;
@@ -38,7 +35,7 @@ public class Head {
             this.head = config;
         } else {
             this.checkBox = false;
-            if (config.contains(SYMBOL.DOLLAR)) {
+            if (config.contains(Symbol.DOLLAR)) {
                 String[] headArray = config.split("\\$");
                 this.head = headArray[DIGIT.ZERO];
                 this.colSpan = Integer.valueOf(headArray[DIGIT.ONE]);

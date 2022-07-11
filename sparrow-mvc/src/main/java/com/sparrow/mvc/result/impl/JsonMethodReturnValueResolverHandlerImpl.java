@@ -21,11 +21,12 @@ import com.sparrow.constant.SparrowError;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
-import com.sparrow.mvc.result.ResultErrorAssembler;
+import com.sparrow.mvc.result.ResultAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
-import com.sparrow.protocol.constant.EXTENSION;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.HttpContext;
 
 import javax.servlet.FilterChain;
@@ -33,9 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author harry
- */
 public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnValueResolverHandler {
 
     public JsonMethodReturnValueResolverHandlerImpl() {
@@ -43,24 +41,25 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
 
     @Override
     public boolean support(ServletInvokableHandlerMethod executionChain) {
-        return executionChain.getActionName().endsWith(EXTENSION.JSON);
+        return executionChain.getActionName().endsWith(Extension.JSON);
     }
 
     @Override
     public void errorResolve(Throwable exception, HttpServletRequest request,
         HttpServletResponse response) throws IOException {
-        if(exception instanceof BusinessException){
-            Result result = ResultErrorAssembler.assemble((BusinessException) exception, null);
+        response.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
+        if (exception instanceof BusinessException) {
+            Result result = ResultAssembler.assemble((BusinessException) exception, null);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
         }
         //业务异常
         if (exception.getCause() != null && exception.getCause() instanceof BusinessException) {
-            Result result = ResultErrorAssembler.assemble((BusinessException) exception.getCause(), null);
+            Result result = ResultAssembler.assemble((BusinessException) exception.getCause(), null);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
         }
-        Result result = Result.FAIL(new BusinessException(SparrowError.SYSTEM_SERVER_ERROR));
+        Result result = Result.fail(new BusinessException(SparrowError.SYSTEM_SERVER_ERROR));
         //result.setError();
         response.getWriter().write(JsonFactory.getProvider().toString(result));
     }
@@ -69,11 +68,12 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
     public void resolve(ServletInvokableHandlerMethod handlerExecutionChain, Object returnValue, FilterChain chain,
         HttpServletRequest request,
         HttpServletResponse response) throws IOException {
-        if(returnValue==null){
-            returnValue= SYMBOL.EMPTY;
+        response.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
+        if (returnValue == null) {
+            returnValue = Symbol.EMPTY;
         }
         try {
-            Result result=new Result(returnValue);
+            Result result = new Result(returnValue);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
         } finally {
             HttpContext.getContext().remove();

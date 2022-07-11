@@ -17,20 +17,10 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
 public enum Container {
-    /**
-     * SPARROW
-     */
     SPARROW,
-    /**
-     * DUBBO容器
-     */
+
     DUBBO,
-    /**
-     * 拦截器
-     */
+    
     INTERCEPTOR
 }

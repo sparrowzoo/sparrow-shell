@@ -29,11 +29,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public class RowMapperHelper {
-    private static ClassFactoryBean<EntityManager> entityManagerFactoryBean=EntityManagerFactoryBean.getInstance();
+    private static ClassFactoryBean<EntityManager> entityManagerFactoryBean = EntityManagerFactoryBean.getInstance();
 
     public static void mapper(ResultSet rs, POJO... entities) {
         Map<String, POJO> entityMap = new HashMap<String, POJO>();
@@ -49,7 +46,7 @@ public class RowMapperHelper {
                 String column = resultSetMetaData.getColumnName(i);
                 Container container = ApplicationContext.getContainer();
                 MethodAccessor methodAccessor = container.getProxyBean(entity.getClass());
-                EntityManager entityManager =entityManagerFactoryBean.getObject(entity.getClass());
+                EntityManager entityManager = entityManagerFactoryBean.getObject(entity.getClass());
                 methodAccessor.set(entity, entityManager.getProperty(column), rs.getObject(i));
             }
         } catch (SQLException e) {

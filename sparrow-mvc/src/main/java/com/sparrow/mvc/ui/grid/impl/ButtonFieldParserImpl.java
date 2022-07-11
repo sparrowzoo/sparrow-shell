@@ -21,12 +21,8 @@ import com.sparrow.mvc.ui.grid.FieldParser;
 import com.sparrow.mvc.ui.grid.attribute.ButtonAttribute;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
-
 import java.util.List;
 
-/**
- * @author harry
- */
 public class ButtonFieldParserImpl implements FieldParser {
     @Override
     public String parse(String[] config, List<String> valueList) {

@@ -25,9 +25,6 @@ import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class RedisDistributedCountDownLatch implements DistributedCountDownLatch {
     private static Logger logger = LoggerFactory.getLogger(RedisDistributedCountDownLatch.class);
     private CacheClient cacheClient;
@@ -58,8 +55,6 @@ public class RedisDistributedCountDownLatch implements DistributedCountDownLatch
         }
 
     }
-
-
 
     @Override
     public void product(KEY productKey, final String key) {

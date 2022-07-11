@@ -3,7 +3,7 @@ package com.sparrow.jdk.refer;
 import com.sparrow.jdk.volatilekey.User;
 
 import java.io.IOException;
-import java.lang.ref.*;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -25,9 +25,8 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
 import com.sparrow.protocol.POJO;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ClassUtility;
-import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.HtmlUtility;
 import com.sparrow.utility.StringUtility;
 import com.sparrow.web.support.MethodParameter;
@@ -35,12 +34,9 @@ import com.sparrow.web.support.MethodParameter;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author harry
- */
 public class RequestParameterArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
 
-    private Container container= ApplicationContext.getContainer();
+    private Container container = ApplicationContext.getContainer();
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -68,12 +64,12 @@ public class RequestParameterArgumentResolver implements HandlerMethodArgumentRe
                 String parameterName4Request = StringUtility.setFirstByteLowerCase(field.getName());
                 parameter = request.getParameter(parameterName4Request);
 
-                if(parameter==null) {
+                if (parameter == null) {
                     String entityName = ClassUtility.getEntityNameByClass(methodParameter.getParameterType());
                     parameter = request.getParameter(entityName + "." + parameterName4Request);
                 }
 
-                if (parameter==null) {
+                if (parameter == null) {
                     continue;
                 }
                 if (executionChain.isValidateRequest() && field.getType().equals(String.class)) {
@@ -97,7 +93,7 @@ public class RequestParameterArgumentResolver implements HandlerMethodArgumentRe
         parameter = request.getParameter(methodParameter.getParameterName());
         if (methodParameter.getParameterType().equals(String.class)) {
             if (StringUtility.isNullOrEmpty(parameter)) {
-                return SYMBOL.EMPTY;
+                return Symbol.EMPTY;
             }
             if (executionChain.isValidateRequest()) {
                 parameter = HtmlUtility.encode(parameter);
@@ -106,8 +102,9 @@ public class RequestParameterArgumentResolver implements HandlerMethodArgumentRe
         }
         return new TypeConverter(parameterName, methodParameter.getParameterType()).convert(parameter);
     }
+
     @Override
     public void aware(Container container, String beanName) {
-        this.container=container;
+        this.container = container;
     }
 }

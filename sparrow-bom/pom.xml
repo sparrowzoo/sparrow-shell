@@ -19,8 +19,8 @@
 <!--http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies-->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>com.sparrow</groupId>
     <version>1.0</version>
     <modelVersion>4.0.0</modelVersion>
@@ -28,28 +28,26 @@
     <!-- (bill of materials)-->
     <artifactId>sparrow-bom</artifactId>
     <properties>
-        <sparrow_version>1.0-SNAPSHOT</sparrow_version>
-        <sparrow_loader_version>1.0-SNAPSHOT</sparrow_loader_version>
-        <sparrow_json_version>1.0-SNAPSHOT</sparrow_json_version>
-        <sparrow_orm_version>1.0-SNAPSHOT</sparrow_orm_version>
-        <sparrow_mvc_version>1.0-SNAPSHOT</sparrow_mvc_version>
-        <sparrow_data_source_version>1.0-SNAPSHOT</sparrow_data_source_version>
-        <sparrow_container_version>1.0-SNAPSHOT</sparrow_container_version>
-        <sparrow_log>1.0-SNAPSHOT</sparrow_log>
-        <sparrow_sharded_jedis_version>1.0-SNAPSHOT</sparrow_sharded_jedis_version>
-
-        <sparrow_log_version>1.0-SNAPSHOT</sparrow_log_version>
-        <sparrow_rocketmq_client_version>1.0-SNAPSHOT</sparrow_rocketmq_client_version>
-        <sparrow_kafka_client_version>1.0-SNAPSHOT</sparrow_kafka_client_version>
-        <sparrow_redis_client_version>1.0-SNAPSHOT</sparrow_redis_client_version>
-        <sparrow_aop_version>1.0-SNAPSHOT</sparrow_aop_version>
-        <sparrow_distribution_job_version>1.0-SNAPSHOT</sparrow_distribution_job_version>
-        <sparrow_distribution_config_version>1.0-SNAPSHOT</sparrow_distribution_config_version>
-        <sparrow_markdown_version>1.0-SNAPSHOT</sparrow_markdown_version>
-        <sparrow_registry_version>1.0-SNAPSHOT</sparrow_registry_version>
-        <sparrow_protocol_version>1.0-SNAPSHOT</sparrow_protocol_version>
-        <sparrow_lettuce_cluster_version>1.0.0-SNAPSHOT</sparrow_lettuce_cluster_version>
-
+        <sparrow_version>1.0.0-SNAPSHOT</sparrow_version>
+        <sparrow_loader_version>1.0.0-SNAPSHOT</sparrow_loader_version>
+        <sparrow_json_version>1.0.0-SNAPSHOT</sparrow_json_version>
+        <sparrow_orm_version>1.0.0-SNAPSHOT</sparrow_orm_version>
+        <sparrow_mvc_version>1.0.0-SNAPSHOT</sparrow_mvc_version>
+        <sparrow_data_source_version>1.0.0-SNAPSHOT</sparrow_data_source_version>
+        <sparrow_container_version>1.0.0-SNAPSHOT</sparrow_container_version>
+        <sparrow_sharded_jedis_version>1.0.0-SNAPSHOT</sparrow_sharded_jedis_version>
+        <sparrow_log_version>1.0.0-SNAPSHOT</sparrow_log_version>
+        <sparrow_rocketmq_client_version>1.0.0-SNAPSHOT</sparrow_rocketmq_client_version>
+        <sparrow_kafka_client_version>1.0.0-SNAPSHOT</sparrow_kafka_client_version>
+        <sparrow_redis_client_version>1.0.0-SNAPSHOT</sparrow_redis_client_version>
+        <sparrow_aop_version>1.0.0-SNAPSHOT</sparrow_aop_version>
+        <sparrow_distribution_job_version>1.0.0-SNAPSHOT</sparrow_distribution_job_version>
+        <sparrow_distribution_config_version>1.0.0-SNAPSHOT</sparrow_distribution_config_version>
+        <sparrow_markdown_version>1.0.0-SNAPSHOT</sparrow_markdown_version>
+        <sparrow_registry_version>1.0.0-SNAPSHOT</sparrow_registry_version>
+        <sparrow_protocol_version>1.0.0-SNAPSHOT</sparrow_protocol_version>
+        <sparrow_protocol_dao_version>1.0.0-SNAPSHOT</sparrow_protocol_dao_version>
+        <sparrow_lettuce_cluster_version>1.0.0-SNAPSHOT-SNAPSHOT</sparrow_lettuce_cluster_version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Build Environment -->
         <maven.compile.source>1.8</maven.compile.source>
@@ -62,8 +60,8 @@
         <javax.jstl.version>1.2</javax.jstl.version>
         <javax.servlet_api_version>3.0.1</javax.servlet_api_version>
         <javax.persistence.version>1.0</javax.persistence.version>
-        <mysql.version>5.1.46</mysql.version>
-        <tomcat.version>7.0.73</tomcat.version>
+        <mysql.version>8.0.29</mysql.version>
+        <tomcat.version>7.0.81</tomcat.version>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <jna.version>5.3.1</jna.version>
         <yaml.version>1.19</yaml.version>
@@ -134,7 +132,7 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
-                <version>3.12</version>
+                <version>4.1.1</version>
             </dependency>
 
             <dependency>
@@ -247,6 +245,12 @@
                 <version>${sparrow_protocol_version}</version>
             </dependency>
             <dependency>
+                <groupId>com.sparrow</groupId>
+                <artifactId>sparrow-protocol-dao</artifactId>
+                <version>${sparrow_protocol_dao_version}</version>
+
+            </dependency>
+            <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch-analysis-ik</artifactId>
                 <version>6.1.1</version>
@@ -319,214 +323,215 @@
         </profile>
     </profiles>
     <build>
+        <pluginManagement>
+            <plugins>
+                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>8.44</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <configLocation>../style/sparrow_checkstyle.xml</configLocation>
+                        <suppressionsLocation>../style/check_style_suppressions.xml</suppressionsLocation>
+                        <encoding>UTF-8</encoding>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>checkstyle</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compile.version}</version>
+                    <configuration>
+                        <source>${maven.compile.source}</source>
+                        <target>${maven.compile.target}</target>
+                        <encoding>${maven.compile.encoding}</encoding>
+                        <debug>true</debug>
+                    </configuration>
+                </plugin>
+                <!--JDK 要用 6或 7 tomcat 8的插件会报错-->
+                <!--org.eclipse.jdt.internal.compiler.classfmt.ClassFormatException-->
+                <!--TOMCAT 8 配置方法 http://blog.csdn.net/u011781521/article/details/75194071-->
+
+                <!--https://stackoverflow.com/questions/9260555/tomcat-7-in-eclipse-indigo-javax-naming-namenotfoundexception-resource-web-in/9261392#9261392-->
+                <!--https://relentlesscoding.com/2018/04/24/tomcat7-maven-plugin-invalid-byte-tag-in-constant-pool-19/-->
+
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>${tomcat.plugin.version}</version>
+                    <configuration>
+                        <path>/</path>
+                        <port>7777</port>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.tomcat.embed</groupId>
+                            <artifactId>tomcat-embed-core</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-util</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-coyote</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-api</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-jdbc</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-dbcp</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-servlet-api</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-jsp-api</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-jasper</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-jasper-el</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-el-api</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-catalina</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-tribes</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-catalina-ha</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-annotations-api</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat-juli</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat.embed</groupId>
+                            <artifactId>tomcat-embed-logging-juli</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tomcat.embed</groupId>
+                            <artifactId>tomcat-embed-logging-log4j</artifactId>
+                            <version>${tomcat.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.10</version>
+                    <configuration>
+                        <testFailureIgnore>true</testFailureIgnore>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>1.4.1</version>
+                    <configuration>
+                        <rules>
+                            <DependencyConvergence/>
+                        </rules>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+
+
+                <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-javadoc-plugin</artifactId>-->
+                <!--<version>2.9.1</version>-->
+                <!--<executions>-->
+                <!--<execution>-->
+                <!--<id>attach-javadocs</id>-->
+                <!--<goals>-->
+                <!--<goal>jar</goal>-->
+                <!--</goals>-->
+                <!--</execution>-->
+                <!--</executions>-->
+                <!--</plugin>-->
+            </plugins>
+        </pluginManagement>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compile.version}</version>
-                <configuration>
-                    <source>${maven.compile.source}</source>
-                    <target>${maven.compile.target}</target>
-                    <encoding>${maven.compile.encoding}</encoding>
-                    <debug>true</debug>
-                </configuration>
-            </plugin>
-            <!--JDK 要用 6或 7 tomcat 8的插件会报错-->
-            <!--org.eclipse.jdt.internal.compiler.classfmt.ClassFormatException-->
-            <!--TOMCAT 8 配置方法 http://blog.csdn.net/u011781521/article/details/75194071-->
-
-            <!--https://stackoverflow.com/questions/9260555/tomcat-7-in-eclipse-indigo-javax-naming-namenotfoundexception-resource-web-in/9261392#9261392-->
-            <!--https://relentlesscoding.com/2018/04/24/tomcat7-maven-plugin-invalid-byte-tag-in-constant-pool-19/-->
-
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>${tomcat.plugin.version}</version>
-                <configuration>
-                    <path>/</path>
-                    <port>7777</port>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.tomcat.embed</groupId>
-                        <artifactId>tomcat-embed-core</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-util</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-coyote</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-api</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-jdbc</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-dbcp</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-servlet-api</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-jsp-api</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-jasper</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-jasper-el</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-el-api</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-catalina</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-tribes</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-catalina-ha</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-annotations-api</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-juli</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat.embed</groupId>
-                        <artifactId>tomcat-embed-logging-juli</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat.embed</groupId>
-                        <artifactId>tomcat-embed-logging-log4j</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.10</version>
-                <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.4.1</version>
-                <configuration>
-                    <rules>
-                        <DependencyConvergence/>
-                    </rules>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
-            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.2</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>8.44</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <configLocation>google_checks.xml</configLocation>
-                    <!--<configLocation>../style/sparrow_checkstyle.xml</configLocation>-->
-                    <!--<suppressionsLocation>../style/check_style_suppressions.xml</suppressionsLocation>-->
-                    <encoding>UTF-8</encoding>
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
-                    <includeTestSourceDirectory>false</includeTestSourceDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>checkstyle</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-javadoc-plugin</artifactId>-->
-            <!--<version>2.9.1</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>attach-javadocs</id>-->
-            <!--<goals>-->
-            <!--<goal>jar</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
-        </plugins>
     </build>
 </project>

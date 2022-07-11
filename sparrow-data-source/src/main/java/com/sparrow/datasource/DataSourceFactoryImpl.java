@@ -23,28 +23,26 @@ import com.sparrow.core.cache.StrongDurationCache;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.utility.CollectionsUtility;
+import com.sparrow.utility.JDBCUtils;
 import com.sparrow.utility.StringUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * getDatasourceConfig 初始化ContextLoaderListener.java 中配置 database identify
- *
- * @author harry
  */
 public class DataSourceFactoryImpl implements DataSourceFactory {
-
     private static Logger logger = LoggerFactory.getLogger(DataSourceFactoryImpl.class);
     private static Map<String, DatasourceConfig> datasourceConfigMap = new ConcurrentHashMap<String, DatasourceConfig>();
-    private static Cache<String,DatasourceKey> datasourceUrlPair=new StrongDurationCache<>(CacheKey.DATA_SOURCE_URL_PAIR);
+    private static Cache<String, DatasourceKey> datasourceUrlMap = new StrongDurationCache<>(CacheKey.DATA_SOURCE_URL_PAIR);
 
     public DataSourceFactoryImpl(String initDatasourceKeys) {
         String[] datasourceKeyArray = initDatasourceKeys.split(",");
@@ -95,6 +93,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
         if (StringUtility.isNullOrEmpty(dataSourceKey)) {
             dataSourceKey = "sparrow_default";
         }
+        DatasourceKey dsKey = DatasourceKey.parse(dataSourceKey);
         if (datasourceConfigMap.containsKey(dataSourceKey)) {
             return datasourceConfigMap.get(dataSourceKey);
         }
@@ -106,42 +105,40 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
             DatasourceConfig datasourceConfig = new DatasourceConfig();
             try {
                 Properties props = new Properties();
-
                 String filePath = "/" + dataSourceKey
-                        + ".properties";
+                    + ".properties";
+                String schema = dsKey.getSchema();
                 props.load(EnvironmentSupport.getInstance().getFileInputStream(filePath));
-
-                datasourceConfig.setDriverClassName(props.getProperty("driverClassName"));
-                datasourceConfig.setUsername(props.getProperty("username"));
-                datasourceConfig.setPassword(props.getProperty("password"));
-                datasourceConfig.setUrl(props.getProperty("url"));
-                datasourceConfig.setPoolSize(Integer.parseInt(props.getProperty("poolSize")));
+                datasourceConfig.setDriverClassName(props.getProperty(schema + ".driverClassName"));
+                datasourceConfig.setUsername(props.getProperty(schema + ".username"));
+                String envPasswordKey = "mysql_" + schema + "_password";
+                datasourceConfig.setPassword(System.getenv(envPasswordKey));
+                if (StringUtility.isNullOrEmpty(datasourceConfig.getPassword())) {
+                    datasourceConfig.setPassword(props.getProperty(schema + ".password"));
+                }
+                datasourceConfig.setUrl(props.getProperty(schema + ".url"));
+                datasourceConfig.setPoolSize(Integer.parseInt(props.getProperty(schema + ".poolSize")));
             } catch (Exception ignore) {
                 throw new RuntimeException(ignore);
             }
-            DatasourceKey key = DatasourceKey.parse(dataSourceKey);
             //detection jdbc config useful
-            Connection connection = new ProxyConnection(datasourceConfig, null);
+            Connection connection = null;
             Statement statement = null;
             try {
+                Class.forName(datasourceConfig.getDriverClassName());
+                connection = DriverManager.getConnection(datasourceConfig.getUrl(), datasourceConfig.getUsername(), datasourceConfig.getPassword());
                 statement = connection.createStatement();
                 boolean effectCount = statement.execute("SELECT 1");
                 if (effectCount) {
-                    datasourceUrlPair.put(connection.getMetaData().getURL(), key);
+                    datasourceUrlMap.put(connection.getMetaData().getURL(), dsKey);
                 }
-            } catch (SQLException e) {
+                datasourceConfigMap.put(dataSourceKey, datasourceConfig);
+            } catch (Exception e) {
                 logger.error(" cat't connection", e);
             } finally {
-                try {
-                    if (statement != null) {
-                        statement.close();
-                    }
-                    connection.close();
-                } catch (SQLException e) {
-                    logger.error("test connection close error", e);
-                }
+                JDBCUtils.close(statement);
+                JDBCUtils.close(connection);
             }
-            datasourceConfigMap.put(dataSourceKey, datasourceConfig);
             return datasourceConfig;
         }
     }
@@ -152,7 +149,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
             return null;
         }
         try {
-            return datasourceUrlPair.get(connection.getMetaData().getURL());
+            return datasourceUrlMap.get(connection.getMetaData().getURL());
         } catch (SQLException e) {
             return null;
         }

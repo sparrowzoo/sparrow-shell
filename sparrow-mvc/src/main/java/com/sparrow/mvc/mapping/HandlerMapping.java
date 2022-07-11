@@ -23,8 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * mapping handler by request <p> ServletInvocableHandlerMethod for spring mvc refer
- *
- * @author harry
  */
 public interface HandlerMapping {
     ServletInvokableHandlerMethod getHandler(HttpServletRequest request) throws Exception;

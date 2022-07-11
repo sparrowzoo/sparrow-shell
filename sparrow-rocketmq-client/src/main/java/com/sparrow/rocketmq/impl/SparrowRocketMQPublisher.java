@@ -20,10 +20,10 @@ package com.sparrow.rocketmq.impl;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.JsonFactory;
+import com.sparrow.mq.MQClient;
 import com.sparrow.mq.MQEvent;
 import com.sparrow.mq.MQMessageSendException;
 import com.sparrow.mq.MQPublisher;
-import com.sparrow.mq.MQ_CLIENT;
 import com.sparrow.rocketmq.MessageConverter;
 import com.sparrow.support.latch.DistributedCountDownLatch;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -38,9 +38,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.UUID;
 
-/**
- * Created by harry on 2017/6/14.
- */
 public class SparrowRocketMQPublisher implements MQPublisher {
     protected static Logger logger = LoggerFactory.getLogger(SparrowRocketMQPublisher.class);
     private String nameServerAddress;
@@ -108,16 +105,7 @@ public class SparrowRocketMQPublisher implements MQPublisher {
     public void setDebug(Boolean debug) {
         this.debug = debug;
     }
-
-    /**
-     * 发送后count+1
-     * 如果有多个consumer 则+n
-     * 每个consumer 由不同的应用（进程处理）
-     *
-     * @param event
-     * @param productKey
-     * @param msgKey
-     */
+    
     public void after(MQEvent event, KEY productKey, String msgKey) {
         if (distributedCountDownLatch == null || productKey == null) {
             return;
@@ -130,14 +118,13 @@ public class SparrowRocketMQPublisher implements MQPublisher {
         this.publish(event, null);
     }
 
-
     @Override
     public void publish(MQEvent event, KEY productKey) {
         Message msg = this.messageConverter.createMessage(topic, tag, event);
         String key = UUID.randomUUID().toString();
         msg.setKeys(Collections.singletonList(key));
         if (productKey != null) {
-            msg.getProperties().put(MQ_CLIENT.CONSUMER_KEY, productKey.key());
+            msg.getProperties().put(MQClient.CONSUMER_KEY, productKey.key());
         }
         logger.info("event {} ,monitor key {},msgKey {}", JsonFactory.getProvider().toString(event), productKey == null ? "" : productKey.key(), key);
         SendResult sendResult = null;
@@ -175,7 +162,7 @@ public class SparrowRocketMQPublisher implements MQPublisher {
     public void start() throws MQClientException {
         DefaultMQProducer producer = new DefaultMQProducer(group);
         producer.setNamesrvAddr(nameServerAddress);
-        producer.setInstanceName(MQ_CLIENT.INSTANCE_NAME);
+        producer.setInstanceName(MQClient.INSTANCE_NAME);
         //for product
         if (this.debug == null || !this.debug) {
             producer.setCreateTopicKey(this.getTopic());

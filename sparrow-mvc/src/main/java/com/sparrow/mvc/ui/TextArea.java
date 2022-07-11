@@ -17,12 +17,9 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
 public class TextArea extends AbstractJWebBodyControl {
 
@@ -38,7 +35,7 @@ public class TextArea extends AbstractJWebBodyControl {
         if (tabIndex == null) {
             tabIndex = this.tabIndex;
         }
-        return !StringUtility.isNullOrEmpty(tabIndex) ? String.format(" tabindex=\"%1$s\" ", tabIndex) : SYMBOL.EMPTY;
+        return !StringUtility.isNullOrEmpty(tabIndex) ? String.format(" tabindex=\"%1$s\" ", tabIndex) : Symbol.EMPTY;
     }
 
     public void setTabIndex(String tabIndex) {

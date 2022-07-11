@@ -18,7 +18,7 @@
 package com.sparrow.mvc.ui;
 
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
@@ -27,9 +27,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
-/**
- * @author harry
- */
 public class Internationalization extends TagSupport {
     private static final long serialVersionUID = -4455912995732848670L;
     private String key;
@@ -46,7 +43,7 @@ public class Internationalization extends TagSupport {
     public int doStartTag() throws JspException {
         int returnValue = TagSupport.SKIP_BODY;
         try {
-            String language = (String) HttpContext.getContext().get(CONSTANT.REQUEST_LANGUAGE);
+            String language = (String) HttpContext.getContext().get(Constant.REQUEST_LANGUAGE);
             if (StringUtility.isNullOrEmpty(language)) {
                 language = ConfigUtility.getValue(Config.LANGUAGE);
             }

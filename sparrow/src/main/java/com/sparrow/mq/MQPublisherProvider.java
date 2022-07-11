@@ -20,11 +20,6 @@ package com.sparrow.mq;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-/**
- * created by harry on 2016/4/12.
- *
- * @author harry
- */
 public class MQPublisherProvider {
 
     private static MQPublisher publisher;
@@ -43,7 +38,7 @@ public class MQPublisherProvider {
                 publisher = it.next();
                 return publisher;
             }
-            String defaultProvider = "com.sparrow.rabbitmq.impl.RabbitPublisher";
+            String defaultProvider = "com.sparrow.rocketmq.impl.SparrowRocketMQPublisher";
             try {
                 Class<?> rabbitPublisher = Class.forName(defaultProvider);
                 publisher = (MQPublisher) rabbitPublisher.newInstance();

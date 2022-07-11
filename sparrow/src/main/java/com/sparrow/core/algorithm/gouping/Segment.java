@@ -17,9 +17,6 @@
 
 package com.sparrow.core.algorithm.gouping;
 
-/**
- * @author by harry
- */
 public class Segment<T extends Comparable> {
     private Point<T> start;
     private Point<T> end;
@@ -93,7 +90,6 @@ public class Segment<T extends Comparable> {
         return null;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -117,8 +113,8 @@ public class Segment<T extends Comparable> {
     @Override
     public String toString() {
         return "Segment{" +
-                "start=" + start.getPoint() +
-                ", end=" + end.getPoint() +
-                '}';
+            "start=" + start.getPoint() +
+            ", end=" + end.getPoint() +
+            '}';
     }
 }

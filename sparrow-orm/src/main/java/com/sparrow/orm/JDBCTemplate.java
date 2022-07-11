@@ -17,16 +17,15 @@
 
 package com.sparrow.orm;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.SysObjectName;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.datasource.ConnectionContextHolder;
 import com.sparrow.datasource.DatasourceKey;
 import com.sparrow.orm.type.TypeHandler;
 import com.sparrow.orm.type.TypeHandlerRegistry;
-import com.sparrow.protocol.enums.DATABASE_SPLIT_STRATEGY;
-import com.sparrow.support.db.JDBCSupport;
+import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
@@ -40,8 +39,6 @@ import java.util.regex.Matcher;
 
 /**
  * 兼顾事务异常必须全部抛出
- *
- * @author harry
  */
 public class JDBCTemplate implements JDBCSupport {
     private static Logger logger = LoggerFactory.getLogger(JDBCTemplate.class);
@@ -51,23 +48,27 @@ public class JDBCTemplate implements JDBCSupport {
     private static Map<String, JDBCSupport> executorPool = new ConcurrentHashMap<String, JDBCSupport>();
 
     /**
-     * dataSource与dataSourceSplitStrategy 两者唯一标识一个template 实际上是可以唯一确定一个数据源
+     * schema与dataSourceSplitStrategy 两者唯一标识一个jdbc template 通过这两个信息可以唯一确定一个数据源（唯一数据库）
      */
     private String schema;
-    private DATABASE_SPLIT_STRATEGY dataSourceSplitStrategy;
+    private DatabaseSplitStrategy dataSourceSplitStrategy;
+
     /**
      * 连接支持器
      */
-    private ConnectionContextHolder connectionHolder;
-
+    private ConnectionContextHolder getConnectionHolder() {
+        return ApplicationContext.getContainer().getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
+    }
 
     /**
+     * 串行执行 而且只加载一次
+     *
      * @return
      */
-    public static JDBCSupport getInstance(String schema, DATABASE_SPLIT_STRATEGY databaseSplitStrategy) {
+    public static JDBCSupport getInstance(String schema, DatabaseSplitStrategy databaseSplitStrategy) {
 
         if (databaseSplitStrategy == null) {
-            databaseSplitStrategy = DATABASE_SPLIT_STRATEGY.DEFAULT;
+            databaseSplitStrategy = DatabaseSplitStrategy.DEFAULT;
         }
         if (StringUtility.isNullOrEmpty(schema)) {
             schema = DatasourceKey.getDefault().getSchema();
@@ -75,24 +76,22 @@ public class JDBCTemplate implements JDBCSupport {
         String jdbcIdentify = schema + "_" + databaseSplitStrategy.toString().toLowerCase();
         if (schema != null && executorPool.containsKey(jdbcIdentify)) {
             return executorPool.get(jdbcIdentify);
-        } else {
-            JDBCSupport jdbcSupport = new JDBCTemplate(schema, databaseSplitStrategy);
-            executorPool.put(jdbcIdentify, jdbcSupport);
-            return jdbcSupport;
         }
+        JDBCSupport jdbcSupport = new JDBCTemplate(schema, databaseSplitStrategy);
+        executorPool.put(jdbcIdentify, jdbcSupport);
+        return jdbcSupport;
     }
 
     public static JDBCSupport getInstance() {
         return getInstance(null, null);
     }
 
-    private JDBCTemplate(String schema, DATABASE_SPLIT_STRATEGY databaseSplitStrategy) {
+    private JDBCTemplate(String schema, DatabaseSplitStrategy databaseSplitStrategy) {
         if (StringUtility.isNullOrEmpty(schema)) {
             schema = DatasourceKey.getDefault().getSchema();
         }
         this.schema = schema;
         this.dataSourceSplitStrategy = databaseSplitStrategy;
-        this.connectionHolder = ApplicationContext.getContainer().getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
     }
 
     /************************************* 执行基础SQL调用 参数与存储过程 ***************************************************/
@@ -109,7 +108,7 @@ public class JDBCTemplate implements JDBCSupport {
      * @param index
      */
     private void bindParameter(PreparedStatement preparedStatement,
-                               Parameter parameter, int index) {
+        Parameter parameter, int index) {
         Object value = parameter.getParameterValue();
         Class<?> fieldType = parameter.getType();
         TypeHandlerRegistry typeHandlerRegistry = TypeHandlerRegistry.getInstance();
@@ -120,12 +119,12 @@ public class JDBCTemplate implements JDBCSupport {
         try {
             TypeHandler typeHandler = typeHandlerRegistry.getTypeHandler(fieldType, null);
             typeHandler.setParameter(preparedStatement, index, value);
-            logger.debug("JDBCTemplate set SQLParameter error sqlType {} not exist",fieldType);
+            logger.debug("JDBCTemplate set SQLParameter error sqlType {} not exist", fieldType);
         } catch (Exception e) {
             logger.error(
-                    "Executor JDBCTemplate error attribute:"
-                            + parameter.getName() + " value:" + value
-                            + " type:" + fieldType, e);
+                "Executor JDBCTemplate error attribute:"
+                    + parameter.getName() + " value:" + value
+                    + " type:" + fieldType, e);
             throw new RuntimeException(e);
         }
     }
@@ -135,14 +134,10 @@ public class JDBCTemplate implements JDBCSupport {
         String suffix = null;
         switch (this.dataSourceSplitStrategy) {
             case LANGUAGE:
-                suffix = (String) httpContext.get(CONSTANT.REQUEST_LANGUAGE);
+                suffix = (String) httpContext.get(Constant.REQUEST_LANGUAGE);
                 break;
-            case USER_ID:
-                suffix = (String) httpContext.get(CONSTANT.REQUEST_USER_ID);
-                break;
-            case FOREIGN_KEY:
             case USER_DEFINED:
-                suffix = (String) httpContext.get(CONSTANT.REQUEST_DATABASE_SUFFIX);
+                suffix = (String) httpContext.get(Constant.REQUEST_DATABASE_SUFFIX);
                 break;
             default:
                 suffix = "default";
@@ -155,14 +150,15 @@ public class JDBCTemplate implements JDBCSupport {
      * 获取数据库连接
      *
      * @return
+     * @see DatasourceKey schema+suffix（运行时确定）定位唯一 datasource
+     * <p>
+     * @see com.sparrow.datasource.DatasourceKey 与 connection url一致，在
+     * @see com.sparrow.datasource.DataSourceFactory 中已做映射 schema+ DATABASE_SPLIT_STRATEGY（注解） 确定唯一 jdbc template（最小粒度）
      */
     private synchronized Connection getConnection() {
-        //todo data source key 与 connection url不一致
-        //todo data source+suffix determine datasource
-        //todo data source+database_split_key determine jdbc template
-        // todo determine object
+        ConnectionContextHolder connectionHolder = this.getConnectionHolder();
         DatasourceKey dataSourceKey = new DatasourceKey(this.schema, this.getDataSourceSuffix());
-        Connection connection = this.connectionHolder.getConnection(dataSourceKey.getKey());
+        Connection connection = connectionHolder.getConnection(dataSourceKey.getKey());
         //当前未绑定链接或已经绑定但不是事务
         try {
             if (connection == null || connection.getAutoCommit()) {
@@ -171,8 +167,8 @@ public class JDBCTemplate implements JDBCSupport {
                 connection = dataSource.getConnection();
                 //不管是否为事务都需要绑定到线程上，以便执行完后关闭proxyConnection
                 //(ProxyConnection)connection会报错，故getConnection之后无法放回池中
-                this.connectionHolder
-                        .bindConnection(connection);
+                connectionHolder
+                    .bindConnection(connection);
             }
         } catch (SQLException e) {
             logger.error("get connection error", e);
@@ -189,27 +185,28 @@ public class JDBCTemplate implements JDBCSupport {
     private PreparedStatement getPreparedStatement(JDBCParameter jdbcParameter) {
         PreparedStatement preparedStatement = null;
         Connection connection = null;
+        ConnectionContextHolder connectionContextHolder = this.getConnectionHolder();
         try {
             connection = this.getConnection();
             connection.setReadOnly(jdbcParameter.isReadOnly());
             if (jdbcParameter.isAutoIncrement()) {
                 preparedStatement = connection.prepareStatement(jdbcParameter.getCommand(),
-                        Statement.RETURN_GENERATED_KEYS);
+                    Statement.RETURN_GENERATED_KEYS);
             } else {
                 // 存储过程
                 if (jdbcParameter.getCommand().trim().toLowerCase().startsWith("call")) {
                     if (jdbcParameter.isReadOnly()) {
                         preparedStatement = connection.prepareCall(jdbcParameter.getCommand(),
-                                ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                ResultSet.CONCUR_READ_ONLY);
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
                     } else {
                         preparedStatement = connection.prepareCall(jdbcParameter.getCommand());
                     }
                 } else {
                     if (jdbcParameter.isReadOnly()) {
                         preparedStatement = connection.prepareStatement(jdbcParameter.getCommand(),
-                                ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                ResultSet.CONCUR_READ_ONLY);
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
                     } else {
                         preparedStatement = connection.prepareStatement(jdbcParameter.getCommand());
                     }
@@ -222,14 +219,14 @@ public class JDBCTemplate implements JDBCSupport {
         } catch (Exception e) {
             if (connection != null) {
                 //自动提交，非事务
-                Boolean autoCommit = false;
+                boolean autoCommit = false;
                 try {
                     autoCommit = connection.getAutoCommit();
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
                 if (!autoCommit) {
-                    this.connectionHolder.unbindConnection(connection);
+                    connectionContextHolder.unbindConnection(connection);
                 } else {
                     //如果是事务则抛出异常 rollback
                     throw new RuntimeException(e);
@@ -242,10 +239,10 @@ public class JDBCTemplate implements JDBCSupport {
             for (Parameter parameter : jdbcParameter.getParameters()) {
                 Object parameterValue = parameter.getParameterValue();
                 if (parameterValue == null) {
-                    parameterValue = SYMBOL.EMPTY;
+                    parameterValue = Symbol.EMPTY;
                 }
                 commandString = commandString.replaceFirst("\\?",
-                        Matcher.quoteReplacement(parameterValue.toString()));
+                    Matcher.quoteReplacement(parameterValue.toString()));
             }
             logger.debug("SQL:" + commandString);
         }
@@ -373,8 +370,8 @@ public class JDBCTemplate implements JDBCSupport {
             if (jdbcParameter.getParameters() == null || jdbcParameter.getParameters().size() == 0) {
                 connection = this.getConnection();
                 statement = connection.createStatement(
-                        ResultSet.TYPE_SCROLL_SENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
                 logger.debug("SQL:" + jdbcParameter.getCommand());
                 resultSet = statement.executeQuery(jdbcParameter.getCommand());
             } else {
@@ -442,8 +439,8 @@ public class JDBCTemplate implements JDBCSupport {
             if (!statement.getConnection().getAutoCommit()) {
                 return;
             }
-            this.connectionHolder
-                    .unbindConnection(statement.getConnection());
+            this.getConnectionHolder()
+                .unbindConnection(statement.getConnection());
             statement.close();
         } catch (SQLException e) {
             logger.error("release statement", e);

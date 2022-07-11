@@ -16,8 +16,8 @@
  */
 package com.sparrow.markdown.parser.impl;
 
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.CHAR_SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.markdown.mark.MARK;
 import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.mark.TagListEntity;
@@ -25,9 +25,6 @@ import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.StringUtility;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class UnorderedListParser extends AbstractListParser {
 
     @Override
@@ -42,12 +39,12 @@ public class UnorderedListParser extends AbstractListParser {
 
         //the next letter must be -
         tempPointer = firstBlankIndex + 1;
-        if (tempPointer >= markContext.getContentLength() || content.charAt(tempPointer) != CHAR_SYMBOL.HORIZON_LINE) {
+        if (tempPointer >= markContext.getContentLength() || content.charAt(tempPointer) != CharSymbol.HORIZON_LINE) {
             return false;
         }
         //next letter must by ' '
         tempPointer++;
-        if (tempPointer >= markContext.getContentLength() || content.charAt(tempPointer) != CHAR_SYMBOL.BLANK) {
+        if (tempPointer >= markContext.getContentLength() || content.charAt(tempPointer) != CharSymbol.BLANK) {
             return false;
         }
         return true;
@@ -56,19 +53,19 @@ public class UnorderedListParser extends AbstractListParser {
     @Override
     protected TagListEntity validate(MarkContext markContext, TagListEntity currentEntity, String line) {
 
-        if (line.equals(CONSTANT.ENTER_TEXT_N)) {
+        if (line.equals(Constant.ENTER_TEXT_N)) {
             return currentEntity;
         }
 
         String innerLine = line.trim();
 
         //the next letter must be -
-        if (innerLine.charAt(0) != CHAR_SYMBOL.HORIZON_LINE) {
+        if (innerLine.charAt(0) != CharSymbol.HORIZON_LINE) {
             currentEntity.setContent(currentEntity.getContent() + markContext.getInnerHtml(this.mark(), innerLine));
             return currentEntity;
         }
         //the next letter must be ' '
-        if (innerLine.charAt(1) != CHAR_SYMBOL.BLANK) {
+        if (innerLine.charAt(1) != CharSymbol.BLANK) {
             currentEntity.setContent(currentEntity.getContent() + markContext.getInnerHtml(this.mark(), innerLine));
             return currentEntity;
         }

@@ -18,12 +18,9 @@
 package com.sparrow.mvc.ui;
 
 import com.sparrow.protocol.constant.magic.LETTER;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 public class HyperLink extends AbstractJWebBodyControl {
 
     private String href;
@@ -42,10 +39,10 @@ public class HyperLink extends AbstractJWebBodyControl {
         if (requestHref != null) {
             return String.format(" href=\"%1$s\"", requestHref);
         }
-        if (this.href != null && !SYMBOL.EMPTY.equals(this.href.trim())) {
+        if (this.href != null && !Symbol.EMPTY.equals(this.href.trim())) {
             return String.format(" href=\"%1$s\"", this.href);
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setHref(String href) {
@@ -61,7 +58,7 @@ public class HyperLink extends AbstractJWebBodyControl {
         if (!StringUtility.isNullOrEmpty(this.target)) {
             return String.format(" target=\"%1$s\" ", this.href);
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setTarget(String target) {

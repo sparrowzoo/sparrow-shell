@@ -21,9 +21,6 @@ import com.sparrow.log.impl.SparrowLoggerImpl;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
-/**
- * @author harry
- */
 public class SparrowLoggerFactory implements ILoggerFactory {
     @Override
     public Logger getLogger(String name) {

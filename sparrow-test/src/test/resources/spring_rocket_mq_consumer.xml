@@ -48,7 +48,7 @@
     <bean id="rocketMQMessageListener" class="com.sparrow.rocketmq.impl.SparrowRocketMQMessageListener">
         <property name="messageConverter" ref="messageConverter"/>
         <property name="queueHandlerMappingContainer" ref="queueHandlerMappingContainer"/>
-    <property name="distributedCountDownLatch" ref="distributedCountDownLatch"/>
+        <property name="distributedCountDownLatch" ref="distributedCountDownLatch"/>
         <property name="mqIdempotent" ref="mqIdempotent"/>
     </bean>
 

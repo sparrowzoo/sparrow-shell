@@ -20,12 +20,13 @@ package com.sparrow.cg.impl;
 import com.sparrow.cg.Unloadable;
 import com.sparrow.classloader.DynamicClassLoader;
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.Charset;
@@ -40,9 +41,6 @@ import javax.tools.ToolProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class DynamicCompiler {
     private static Logger logger = LoggerFactory.getLogger(DynamicCompiler.class);
 
@@ -62,19 +60,20 @@ public class DynamicCompiler {
         this.classLoader = (URLClassLoader) this.getClass().getClassLoader();
         this.encoding = ConfigUtility.getValue(Config.COMPILER_OPTION_ENCODING);
         if (StringUtility.isNullOrEmpty(this.encoding)) {
-            this.encoding = CONSTANT.CHARSET_UTF_8;
+            this.encoding = Constant.CHARSET_UTF_8;
         }
-        this.buildClassPath();
+        URLClassLoader urlClassLoader = this.classLoader;
+        this.buildClassPath(urlClassLoader);
     }
 
-    private void buildClassPath() {
+    private void buildClassPath(URLClassLoader classLoader) {
         this.classpath = null;
-        StringBuilder sb = new StringBuilder();
-        for (URL url : this.classLoader.getURLs()) {
+        StringBuilder classPath = new StringBuilder();
+        for (URL url : classLoader.getURLs()) {
             String p = url.getFile();
-            sb.append(p).append(File.pathSeparator);
+            classPath.append(p).append(File.pathSeparator);
         }
-        this.classpath = sb.toString();
+        this.classpath = classPath.toString();
     }
 
     public void unload(Unloadable unloadable) {
@@ -84,7 +83,7 @@ public class DynamicCompiler {
     }
 
     public Object sourceToObject(String fullClassName, String javaCode)
-        throws IllegalAccessException, InstantiationException {
+        throws IllegalAccessException, InstantiationException, URISyntaxException {
         long start = System.currentTimeMillis();
         Object instance = null;
         // 获取系统的java 编译器
@@ -99,7 +98,7 @@ public class DynamicCompiler {
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
         ClassFileManager fileManager = new ClassFileManager(
             compiler.getStandardFileManager(diagnostics, Locale.CHINA,
-                Charset.forName(CONSTANT.CHARSET_UTF_8)));
+                Charset.forName(Constant.CHARSET_UTF_8)));
 
         List<JavaFileObject> javaFileObjectList = new ArrayList<JavaFileObject>();
         javaFileObjectList.add(new JavaSourceFileObject(fullClassName, javaCode));
@@ -166,7 +165,7 @@ public class DynamicCompiler {
             Class<?> clazz = dynamicClassLoader.loadClass(fullClassName, javaClassFileObject);
             instance = clazz.newInstance();
         } else {
-            String error = SYMBOL.EMPTY;
+            String error = Symbol.EMPTY;
             for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
                 error = error + compilePrint(diagnostic);
                 logger.info(error);

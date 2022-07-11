@@ -19,11 +19,6 @@ package com.sparrow.support.excel;
 
 import com.sparrow.enums.DataType;
 
-/**
- * created by harry on 2016/3/12. 单元格值(供应用层使用，可以直接入库操作)
- *
- * @author harry
- */
 public class CellValue {
     private DataType dataType;
     private Object value;

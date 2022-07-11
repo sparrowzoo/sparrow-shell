@@ -22,8 +22,8 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.sparrow.protocol.Size;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.EXTENSION;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.Extension;
 import com.sparrow.utility.StringUtility;
 import com.sparrow.web.support.BufferedImageLuminanceSource;
 
@@ -35,18 +35,13 @@ import java.io.File;
 import java.io.OutputStream;
 import java.util.Hashtable;
 
-/**
- * QRCodeUtility
- *
- * @author harry
- */
 public class QRCodeUtility {
 
     private static BufferedImage createImage(String content, String logo,
-                                             boolean needCompress, Size size, Size logoSize) throws Exception {
+        boolean needCompress, Size size, Size logoSize) throws Exception {
         Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-        hints.put(EncodeHintType.CHARACTER_SET, CONSTANT.CHARSET_UTF_8);
+        hints.put(EncodeHintType.CHARACTER_SET, Constant.CHARSET_UTF_8);
         hints.put(EncodeHintType.MARGIN, 1);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(content,
             BarcodeFormat.QR_CODE, size.getWidth(), size.getHeight(), hints);
@@ -71,8 +66,8 @@ public class QRCodeUtility {
     /**
      * 插入LOGO
      *
-     * @param source 二维码图片
-     * @param imgPath LOGO图片地址
+     * @param source       二维码图片
+     * @param imgPath      LOGO图片地址
      * @param needCompress 是否压缩
      * @throws Exception
      */
@@ -117,28 +112,28 @@ public class QRCodeUtility {
      * 生成二维码
      *
      * @param content 内容
-     * @param output 输出流
+     * @param output  输出流
      * @throws Exception
      */
     public static void encode(String content, OutputStream output, String logoPath, Size size, Size logoSize)
         throws Exception {
         BufferedImage image = QRCodeUtility.createImage(content, logoPath,
             true, size, logoSize);
-        ImageIO.write(image, EXTENSION.JPG_WITHOUT_DOT, output);
+        ImageIO.write(image, Extension.JPG_WITHOUT_DOT, output);
     }
 
     /**
      * 生成二维码
      *
      * @param content 内容
-     * @param output 输出流
+     * @param output  输出流
      * @throws Exception
      */
     public static void encode(String content, OutputStream output)
         throws Exception {
         BufferedImage image = QRCodeUtility.createImage(content, null,
             true, new Size(300, 300), new Size(60, 60));
-        ImageIO.write(image, EXTENSION.JPG_WITHOUT_DOT, output);
+        ImageIO.write(image, Extension.JPG_WITHOUT_DOT, output);
     }
 
     /**
@@ -159,7 +154,7 @@ public class QRCodeUtility {
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
         com.google.zxing.Result result;
         Hashtable<DecodeHintType, Object> hints = new Hashtable<DecodeHintType, Object>();
-        hints.put(DecodeHintType.CHARACTER_SET, CONSTANT.CHARSET_UTF_8);
+        hints.put(DecodeHintType.CHARACTER_SET, Constant.CHARSET_UTF_8);
         result = new MultiFormatReader().decode(bitmap, hints);
         return result.getText();
     }

@@ -25,9 +25,6 @@ import com.sparrow.constant.Config;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
 public class Script extends TagSupport {
     private String src;
@@ -55,13 +52,12 @@ public class Script extends TagSupport {
         StringBuilder writeHTML = new StringBuilder();
         if (this.getSrc().contains("$language")) {
             Object language = this.pageContext.getSession().getAttribute(
-                    "language");
+                "language");
             if (language == null) {
                 language = ConfigUtility.getValue(Config.LANGUAGE);
             }
             this.setSrc(this.getSrc().replace("$language", language.toString()));
         }
-
 
         writeHTML.append("<script language=\"javascript\" type=\"text/javascript\"");
         if (this.asyn) {
@@ -71,12 +67,12 @@ public class Script extends TagSupport {
         String src = this.getSrc();
         if (src.contains("$resource")) {
             src = src.replace("$resource",
-                    ConfigUtility.getValue(Config.RESOURCE));
+                ConfigUtility.getValue(Config.RESOURCE));
         }
 
         if (src.contains("$rootPath")) {
             src = src.replace("$rootPath",
-                    ConfigUtility.getValue(Config.ROOT_PATH));
+                ConfigUtility.getValue(Config.ROOT_PATH));
         }
 
         if (src.contains("$website")) {
@@ -92,7 +88,7 @@ public class Script extends TagSupport {
         }
 
         writeHTML.append("v=" + ConfigUtility.getValue(Config.RESOURCE_VERSION, "1.0")
-                + "\"></script>");
+            + "\"></script>");
 
         try {
             if (!StringUtility.isNullOrEmpty(writeHTML)) {

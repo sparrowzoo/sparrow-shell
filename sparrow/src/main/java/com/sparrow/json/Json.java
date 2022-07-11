@@ -23,9 +23,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author harry
- */
 public interface Json {
 
     String toString(POJO model);

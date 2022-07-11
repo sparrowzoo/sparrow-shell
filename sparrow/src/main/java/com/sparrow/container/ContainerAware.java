@@ -17,9 +17,6 @@
 
 package com.sparrow.container;
 
-/**
- * @author harry
- */
 public interface ContainerAware {
 
     /**

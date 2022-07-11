@@ -19,16 +19,13 @@ package com.sparrow.mvc.ui;
 
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-/**
- * @author harry
- */
 @SuppressWarnings("serial")
 public class Frame extends TagSupport {
     private String id;
@@ -36,8 +33,8 @@ public class Frame extends TagSupport {
     private String src;
     private int frameborder = DIGIT.ZERO;
     private String scrolling = "no";
-    private String cssText = SYMBOL.EMPTY;
-    private String cssClass = SYMBOL.EMPTY;
+    private String cssText = Symbol.EMPTY;
+    private String cssClass = Symbol.EMPTY;
 
     public String getCssText() {
         if (!StringUtility.isNullOrEmpty(this.cssText)) {
@@ -72,7 +69,7 @@ public class Frame extends TagSupport {
                 "$rootPath", ConfigUtility
                     .getValue(Config.ROOT_PATH)));
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setSrc(String src) {
@@ -127,7 +124,7 @@ public class Frame extends TagSupport {
         if (!StringUtility.isNullOrEmpty(this.name)) {
             return String.format(" name=\"%1$s\"", this.name);
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setName(String name) {

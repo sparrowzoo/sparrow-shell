@@ -19,9 +19,6 @@ package com.sparrow.orm.query.sql;
 
 import com.sparrow.orm.Parameter;
 
-/**
- * @author by harry
- */
 public class RelationOperationEntity {
     private String criteria;
     private Parameter parameter;

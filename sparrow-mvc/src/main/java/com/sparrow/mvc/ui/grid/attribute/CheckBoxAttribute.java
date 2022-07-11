@@ -21,8 +21,6 @@ import com.sparrow.mvc.ui.grid.BaseAttribute;
 
 /**
  * 格式checkBox#userId 例子checkBox#userId#gridViewId
- *
- * @author harry
  */
 public class CheckBoxAttribute extends BaseAttribute {
     private String gridViewId;

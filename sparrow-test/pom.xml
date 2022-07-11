@@ -115,17 +115,17 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.1.41</version>
+            <version>1.2.83</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.2.4</version>
+            <version>2.8.9</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.8.8</version>
+            <version>2.12.6.1</version>
         </dependency>
         <!--json end-->
 
@@ -211,7 +211,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.193</version>
+            <version>2.1.210</version>
         </dependency>
         <dependency>
             <groupId>org.ow2.asm</groupId>
@@ -233,10 +233,19 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
         <!--<dependency>-->
         <!--<groupId>com.sparrow</groupId>-->
         <!--<artifactId>sparrow-lettuce-cluster</artifactId>-->
@@ -268,25 +277,45 @@
             <artifactId>dubbo-serialization-native-hession</artifactId>
             <version>2.7.9</version>
         </dependency>
-
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>
         <filters>
             <filter>src/main/resources/sparrow_system_config.properties</filter>
+            <filter>src/main/resources/sparrow_default.properties</filter>
+            <filter>src/main/resources/user_default.properties</filter>
         </filters>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>*.xml</include>
                     <include>*.properties</include>
+                    <include>*.xml</include>
                     <include>config/**/**</include>
                     <include>META-INF/</include>
                 </includes>
                 <filtering>true</filtering>
                 <targetPath>${project.build.directory}/classes/</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/test-classes/</targetPath>
+            </resource>
+            <resource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>*.properties</include>
+                    <include>*.xml</include>
+                    <include>config/**/**</include>
+                    <include>META-INF/</include>
+                </includes>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/test-classes/</targetPath>
             </resource>
         </resources>
         <plugins>

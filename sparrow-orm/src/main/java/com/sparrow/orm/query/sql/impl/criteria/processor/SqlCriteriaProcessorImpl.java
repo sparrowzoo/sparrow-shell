@@ -17,7 +17,7 @@
 
 package com.sparrow.orm.query.sql.impl.criteria.processor;
 
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.container.ClassFactoryBean;
 import com.sparrow.enums.ComparisonOperator;
 import com.sparrow.orm.EntityManager;
@@ -30,33 +30,38 @@ import com.sparrow.orm.query.sql.CriteriaProcessor;
 import com.sparrow.orm.query.sql.OperationEntity;
 import com.sparrow.orm.query.sql.RelationOperationEntity;
 import com.sparrow.orm.query.sql.impl.operation.*;
-import com.sparrow.protocol.enums.AGGREGATE;
+import com.sparrow.protocol.enums.Aggregate;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLClientInfoException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author harry
- */
 public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
+    private static SqlCriteriaProcessorImpl sqlCriteriaProcessor = new SqlCriteriaProcessorImpl();
+
+    private SqlCriteriaProcessorImpl() {
+    }
+
+    public static SqlCriteriaProcessorImpl getInstance() {
+        return sqlCriteriaProcessor;
+    }
+
     private Logger logger = LoggerFactory.getLogger(SqlCriteriaProcessorImpl.class);
     private ClassFactoryBean<EntityManager> entityManagerFactoryBean = EntityManagerFactoryBean.getInstance();
 
     @Override
     public String fields(String fields) {
         if (StringUtility.isNullOrEmpty(fields)) {
-            return SYMBOL.STAR;
+            return Symbol.STAR;
         }
-        if (fields.contains(SYMBOL.COMMA)) {
-            String[] fieldArray = fields.split(SYMBOL.COMMA);
+        if (fields.contains(Symbol.COMMA)) {
+            String[] fieldArray = fields.split(Symbol.COMMA);
             StringBuilder fieldBuilder = new StringBuilder();
             for (String field : fieldArray) {
                 if (!StringUtility.isNullOrEmpty(fieldBuilder)) {
-                    fieldBuilder.append(SYMBOL.COMMA);
+                    fieldBuilder.append(Symbol.COMMA);
                 }
                 CriteriaField criteriaField = new SimpleCriteriaField(field);
                 String column = entityManagerFactoryBean.getObject(criteriaField.getAlias()).getColumnName(criteriaField.getName());
@@ -115,18 +120,18 @@ public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
                     }
                 }
                 if (linker.getKey() != null && whereClause.length() > 0) {
-                    whereClause.append(SYMBOL.BLANK);
+                    whereClause.append(Symbol.BLANK);
                     whereClause.append(linker.getKey().name());
                 }
-                whereClause.append(SYMBOL.BLANK);
+                whereClause.append(Symbol.BLANK);
                 whereClause.append(relationOperationEntity.getCriteria());
                 if (relationOperationEntity.getParameter() != null) {
                     parameters.add(relationOperationEntity.getParameter());
                 }
             }
             if (whereClause.length() > 1) {
-                whereClause.insert(0, SYMBOL.LEFT_PARENTHESIS);
-                whereClause.append(SYMBOL.RIGHT_PARENTHESIS);
+                whereClause.insert(0, Symbol.LEFT_PARENTHESIS);
+                whereClause.append(Symbol.RIGHT_PARENTHESIS);
                 operationEntity.add(new OperationEntity(whereClause, parameters));
             }
         }
@@ -136,7 +141,7 @@ public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
             for (BooleanCriteria.BooleanCriteriaLinker linker : boolOperationEntityList) {
                 OperationEntity oe = this.where(linker.getCriteria());
                 if (oe != null && !StringUtility.isNullOrEmpty(oe.getClause())) {
-                    if (linker.getKey() != null&&!StringUtility.isNullOrEmpty(operationEntity.getClause())) {
+                    if (linker.getKey() != null && !StringUtility.isNullOrEmpty(operationEntity.getClause())) {
                         operationEntity.getClause().append(linker.getKey().name());
                     }
                     operationEntity.add(oe);
@@ -149,15 +154,15 @@ public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
     @Override
     public String order(List<OrderCriteria> orderCriteriaList) {
         if (orderCriteriaList == null || orderCriteriaList.size() == 0) {
-            return SYMBOL.BLANK;
+            return Symbol.BLANK;
         }
         StringBuilder sb = new StringBuilder();
         for (OrderCriteria orderCriteria : orderCriteriaList) {
             if (sb.length() > 0) {
                 sb.append(",");
             }
-            String column= entityManagerFactoryBean.getObject(orderCriteria.getField().getAlias()).getColumnName(orderCriteria.getField().getName());
-            sb.append(column + SYMBOL.BLANK + orderCriteria.getOrder().name());
+            String column = entityManagerFactoryBean.getObject(orderCriteria.getField().getAlias()).getColumnName(orderCriteria.getField().getName());
+            sb.append(column + Symbol.BLANK + orderCriteria.getOrder().name());
         }
         return sb.toString();
     }
@@ -175,9 +180,9 @@ public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
                 throw new RuntimeException("field is not found \nalias is '" + setClausePair.getField().getAlias() + "' set-clause-name is '" + setClausePair.getField().getName() + "'");
             }
             String column = field.getColumnName();
-            clause.append(column + SYMBOL.EQUAL);
+            clause.append(column + Symbol.EQUAL);
             if (setClausePair.getAdd()) {
-                clause.append(column + SYMBOL.ADD);
+                clause.append(column + Symbol.ADD);
             }
             clause.append("?");
             Parameter parameter = new Parameter(field, setClausePair.getValue());
@@ -187,7 +192,7 @@ public class SqlCriteriaProcessorImpl implements CriteriaProcessor {
     }
 
     @Override
-    public String aggregate(AGGREGATE aggregate, String field) {
+    public String aggregate(Aggregate aggregate, String field) {
         String column = this.fields(field);
         switch (aggregate) {
             case COUNT:

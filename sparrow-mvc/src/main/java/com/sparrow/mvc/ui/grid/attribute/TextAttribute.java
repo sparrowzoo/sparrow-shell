@@ -21,8 +21,6 @@ import com.sparrow.mvc.ui.grid.BaseAttribute;
 
 /**
  * 格式text#filedName#format#textLength#defaultValue 例子text#name&sex#姓名+姓别#100#200 {0}+{2}
- *
- * @author harry
  */
 public class TextAttribute extends BaseAttribute {
     public TextAttribute(String[] config) {

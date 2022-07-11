@@ -18,7 +18,7 @@
 package com.sparrow.mvc.ui;
 
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.EnumUtility;
 import com.sparrow.utility.StringUtility;
 import java.io.IOException;
@@ -29,20 +29,16 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**
- * @author harry
- * @version 1.0
- *          <p/>
- *          调用说明
- *          <p/>
- *          前台设置
- *          <p/>
- *          <J:JCheckBoxList name="chlDemo" showTable="false" valueText="0:女,1:男,2:保密" col="2"
- *          id="chlDemo"></J:JCheckBoxList>
- *          <p/>
- *          后台设置
- *          <p/>
- *          String[] selectedList =new String[]; Map<String, String> allItems=null; super.getRequest().setAttribute("chlRoleList.valueText",
- *          allItems); super .getRequest().setAttribute("chlRoleList.selectedValue",selectedList );
+ * 调用说明
+ * <p/>
+ * 前台设置
+ * <p/>
+ * <J:JCheckBoxList name="chlDemo" showTable="false" valueText="0:女,1:男,2:保密" col="2" id="chlDemo"></J:JCheckBoxList>
+ * <p/>
+ * 后台设置
+ * <p/>
+ * String[] selectedList =new String[]; Map<String, String> allItems=null; super.getRequest().setAttribute("chlRoleList.valueText",
+ * allItems); super .getRequest().setAttribute("chlRoleList.selectedValue",selectedList );
  */
 public class CheckBoxList extends WebControl {
     private static final long serialVersionUID = -2203780367514791117L;
@@ -50,8 +46,7 @@ public class CheckBoxList extends WebControl {
     private int col = DIGIT.THREE;
     private Object[] selectedValue;
     /**
-     * com.sparrow.enums.Status:10:true
-     * enums:maxCount:isShowName
+     * com.sparrow.enums.Status:10:true enums:maxCount:isShowName
      */
     private String enums;
 
@@ -87,9 +82,9 @@ public class CheckBoxList extends WebControl {
             String[] options;
             String[] option;
             if (!StringUtility.isNullOrEmpty(this.valueText)) {
-                options = this.valueText.split(SYMBOL.DOT);
+                options = this.valueText.split(Symbol.DOT);
                 for (String keyValue : options) {
-                    option = keyValue.split(SYMBOL.COLON);
+                    option = keyValue.split(Symbol.COLON);
                     valueTextList.put(option[DIGIT.ZERO], option[DIGIT.ONE]);
                 }
             }
@@ -169,10 +164,10 @@ public class CheckBoxList extends WebControl {
 
     private String checked(Object key) {
         if (this.selectedValue == null) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
         if (this.selectedValue.length == 0) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
 
         //已选值为all
@@ -184,7 +179,7 @@ public class CheckBoxList extends WebControl {
             key.toString())) {
             return "checked=true";
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public int getCol() {

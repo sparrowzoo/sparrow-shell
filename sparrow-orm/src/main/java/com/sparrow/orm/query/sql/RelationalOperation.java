@@ -19,9 +19,6 @@ package com.sparrow.orm.query.sql;
 
 import com.sparrow.orm.query.Criteria;
 
-/**
- * @author by harry
- */
 public interface RelationalOperation {
     RelationOperationEntity operation(Criteria criteria);
 }

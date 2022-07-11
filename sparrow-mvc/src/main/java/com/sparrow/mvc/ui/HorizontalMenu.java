@@ -1,10 +1,26 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.mvc.ui;
 
 import com.sparrow.constant.Config;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.constant.OPEN_TYPE;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.OpenType;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dto.SimpleItemDTO;
 import com.sparrow.support.MenuService;
 import com.sparrow.utility.CollectionsUtility;
@@ -20,7 +36,7 @@ public class HorizontalMenu extends TagSupport {
     private static Logger logger = LoggerFactory.getLogger(HorizontalMenu.class);
     private String id;
     private String currentUrl;
-    private String target = OPEN_TYPE.SELF;
+    private String target = OpenType.SELF;
     private String indexUrl = "hot";
 
     public String getTarget() {
@@ -32,19 +48,19 @@ public class HorizontalMenu extends TagSupport {
     }
 
     private MenuService menuService = ApplicationContext.getContainer().getBean(
-            "menuService");
+        "menuService");
 
     public String getCurrentUrl() {
         if (this.getId() == null) {
             return this.currentUrl;
         }
         Object currentUrl = this.pageContext.getRequest().getAttribute(
-                this.getId() + "." + "currentUrl");
+            this.getId() + "." + "currentUrl");
         if (currentUrl != null) {
             this.currentUrl = currentUrl.toString();
         }
         if (this.currentUrl == null) {
-            this.currentUrl = SYMBOL.EMPTY;
+            this.currentUrl = Symbol.EMPTY;
         }
         return this.currentUrl;
     }
@@ -67,7 +83,7 @@ public class HorizontalMenu extends TagSupport {
         menuList.append("<div class=\"list\">");
 
         writeHTML
-                .append("<div class=\"index_menu\" onmouseover=\"function(e){$.event(e).cancelBubble();};\"");
+            .append("<div class=\"index_menu\" onmouseover=\"function(e){$.event(e).cancelBubble();};\"");
         writeHTML.append(" id=\"" + this.getId() + "\">");
         writeHTML.append("<div class=\"menu\">");
         writeHTML.append("<ul>");
@@ -78,10 +94,10 @@ public class HorizontalMenu extends TagSupport {
                     currentUrl = ConfigUtility.getValue(Config.ROOT_PATH);
                 } else {
                     currentUrl = ConfigUtility.getValue(Config.ROOT_PATH) + "/"
-                            + this.getCurrentUrl().trim();
+                        + this.getCurrentUrl().trim();
                 }
                 if (menu.getUrl() != null
-                        && currentUrl.equals(menu.getUrl().trim())) {
+                    && currentUrl.equals(menu.getUrl().trim())) {
                     writeHTML.append("<li class=\"select\">");
                 } else {
                     writeHTML.append("<li>");

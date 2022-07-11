@@ -50,12 +50,11 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(ShardedJedis jedis) {
-                TypeConverter typeConverter=new TypeConverter(String.class);
+                TypeConverter typeConverter = new TypeConverter(String.class);
                 return jedis.rpush(key.key(), typeConverter.convert(value).toString());
             }
         }, key);
     }
-
 
     @Override
     public Long add(final KEY key, final String... values) throws CacheConnectionException {
@@ -72,15 +71,15 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
         return redisPool.execute(new Executor<Integer>() {
             @Override
             public Integer execute(ShardedJedis jedis) {
-                ShardedJedisPipeline shardedJedisPipeline= jedis.pipelined();
+                ShardedJedisPipeline shardedJedisPipeline = jedis.pipelined();
                 int i = 0;
-                TypeConverter typeConverter=new TypeConverter(String.class);
+                TypeConverter typeConverter = new TypeConverter(String.class);
                 for (T value : values) {
                     if (value == null) {
                         continue;
                     }
                     i++;
-                    shardedJedisPipeline.lpush(key.key(),typeConverter.convert(value).toString());
+                    shardedJedisPipeline.lpush(key.key(), typeConverter.convert(value).toString());
                 }
                 shardedJedisPipeline.sync();
                 return i;
@@ -93,12 +92,11 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(ShardedJedis jedis) {
-                TypeConverter typeConverter=new TypeConverter(value.getClass());
+                TypeConverter typeConverter = new TypeConverter(value.getClass());
                 return jedis.lrem(key.key(), 1L, typeConverter.convert(value).toString());
             }
         }, key);
     }
-
 
     @Override
     public List<String> list(final KEY key) throws CacheConnectionException {
@@ -110,9 +108,9 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
         return redisPool.execute(new Executor<List<T>>() {
             @Override
             public List<T> execute(ShardedJedis jedis) throws CacheConnectionException {
-                List<String> list = jedis.lrange(key.key(), 0,- 1);
+                List<String> list = jedis.lrange(key.key(), 0, -1);
                 List<T> tList = new ArrayList<T>(list.size());
-                TypeConverter typeConverter=new TypeConverter(clazz);
+                TypeConverter typeConverter = new TypeConverter(clazz);
                 for (String s : list) {
                     tList.add((T) typeConverter.convert(s));
                 }
@@ -120,7 +118,6 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
             }
         }, key);
     }
-
 
     @Override
     public List<String> list(final KEY key, CacheDataNotFound<List<String>> hook) {
@@ -133,20 +130,20 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
             return redisPool.execute(new Executor<List<T>>() {
                 @Override
                 public List<T> execute(ShardedJedis jedis) throws CacheConnectionException {
-                    List<String> list = jedis.lrange(key.key(), 0, - 1);
-                    List<T> typeList =null;
+                    List<String> list = jedis.lrange(key.key(), 0, -1);
+                    List<T> typeList = null;
                     if (list == null || list.size() == 0) {
                         if (redisPool.getCacheMonitor() != null) {
                             redisPool.getCacheMonitor().penetrate(key);
                         }
-                        typeList=hook.read(key);
-                        RedisCacheList.this.add(key,list);
+                        typeList = hook.read(key);
+                        RedisCacheList.this.add(key, list);
                         return typeList;
                     }
-                    typeList =  new ArrayList<T>(list.size());
-                    TypeConverter typeConverter=new TypeConverter(clazz);
+                    typeList = new ArrayList<T>(list.size());
+                    TypeConverter typeConverter = new TypeConverter(clazz);
                     for (String s : list) {
-                        typeList.add((T)typeConverter.convert(s));
+                        typeList.add((T) typeConverter.convert(s));
                     }
                     return typeList;
                 }

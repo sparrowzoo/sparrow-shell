@@ -24,9 +24,6 @@ import com.sparrow.exception.CacheConnectionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author by harry
- */
 public class DefaultIdempotent implements MQIdempotent {
     private static Logger logger = LoggerFactory.getLogger(DefaultIdempotent.class);
     private CacheClient cacheClient;
@@ -61,6 +58,7 @@ public class DefaultIdempotent implements MQIdempotent {
                 return false;
             } catch (CacheConnectionException e) {
                 logger.error("consumable connection break ", e);
+                return false;
             }
         }
     }

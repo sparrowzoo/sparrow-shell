@@ -17,9 +17,6 @@
 
 package com.sparrow.protocol;
 
-/**
- * @author harry
- */
 public class Neighbor<F, S> {
     private final F current;
     private final S next;

@@ -1,10 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.sparrow.protocol;
 
-/**
- * @author: zh_harry@163.com
- * @date: 2019-04-06 12:20
- * @description:
- */
 public class MobileShortMessaging {
     private MobileShortMessaging() {
     }
@@ -57,46 +68,37 @@ public class MobileShortMessaging {
         return key;
     }
 
-
     public String getMobile() {
         return mobile;
     }
-
 
     public String getTemplateId() {
         return templateId;
     }
 
-
     public String getUserId() {
         return userId;
     }
-
 
     public String getValidateCode() {
         return validateCode;
     }
 
-
     public Long getSendTime() {
         return sendTime;
     }
-
 
     public String getCompanyName() {
         return companyName;
     }
 
-
     public String getContent() {
         return content;
     }
 
-
     public String getBusiness() {
         return business;
     }
-
 
     public static class Builder {
         private String key;
@@ -190,20 +192,18 @@ public class MobileShortMessaging {
             return this;
         }
 
-
-
         public MobileShortMessaging build() {
             MobileShortMessaging msm = new MobileShortMessaging();
-            msm.companyName=this.companyName;
-            msm.content=this.content;
-            msm.key=this.key;
-            msm.mobile=this.mobile;
-            msm.sendTime=this.sendTime;
-            msm.templateId=this.templateId;
-            msm.mobile=this.mobile;
-            msm.userId=this.userId;
-            msm.validateCode=this.validateCode;
-            msm.business=this.business;
+            msm.companyName = this.companyName;
+            msm.content = this.content;
+            msm.key = this.key;
+            msm.mobile = this.mobile;
+            msm.sendTime = this.sendTime;
+            msm.templateId = this.templateId;
+            msm.mobile = this.mobile;
+            msm.userId = this.userId;
+            msm.validateCode = this.validateCode;
+            msm.business = this.business;
             return msm;
         }
     }

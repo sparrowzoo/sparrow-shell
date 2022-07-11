@@ -17,9 +17,6 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry 2016/6/12
- */
 public enum StatusPay {
     /**
      * 默认

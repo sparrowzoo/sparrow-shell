@@ -24,8 +24,6 @@ import java.awt.image.BufferedImage;
 
 /**
  * BufferedImageLuminanceSource
- *
- * @author harry
  */
 public class BufferedImageLuminanceSource extends LuminanceSource {
     private final BufferedImage image;

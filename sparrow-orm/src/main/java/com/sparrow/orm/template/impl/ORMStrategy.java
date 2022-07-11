@@ -18,12 +18,13 @@
 package com.sparrow.orm.template.impl;
 
 import com.sparrow.enums.Dialect;
+import com.sparrow.orm.DialectReader;
 import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.query.UpdateCriteria;
 import com.sparrow.orm.template.SparrowDaoSupport;
-import com.sparrow.protocol.db.AggregateCriteria;
-import com.sparrow.protocol.db.StatusCriteria;
-import com.sparrow.protocol.db.UniqueKeyCriteria;
+import com.sparrow.protocol.dao.AggregateCriteria;
+import com.sparrow.protocol.dao.StatusCriteria;
+import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import com.sparrow.protocol.pager.PagerQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,34 +36,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author harry
- */
 public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
-
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
-
 
     public ORMStrategy() {
         this(null);
     }
 
     public ORMStrategy(String schema) {
-        Dialect dialect = com.sparrow.orm.Dialect.getInstance(schema).getDialect();
+        Dialect dialect = DialectReader.getInstance(schema).getDialect();
         Class clazz = null;
         Type type = getClass()
-                .getGenericSuperclass();
+            .getGenericSuperclass();
         if (type instanceof ParameterizedType) {
             clazz = (Class<?>) ((ParameterizedType) type).getActualTypeArguments()[0];
         }
         switch (dialect) {
-            case MYSQL:
-            case SQL_SERVER:
-                ormDaoSupport = new DBORMTemplate<T, I>(clazz);
-                break;
             case ELASTIC_SEARCH:
                 ormDaoSupport = null;
                 break;
+            case MYSQL:
+            case SQL_SERVER:
             default:
                 ormDaoSupport = new DBORMTemplate<T, I>(clazz);
         }

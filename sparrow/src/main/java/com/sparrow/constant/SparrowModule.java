@@ -19,11 +19,6 @@ package com.sparrow.constant;
 
 import com.sparrow.protocol.ModuleSupport;
 
-/**
- * @author harry
- *         <p/>
- *         2013-11-9下午10:01:03
- */
 public class SparrowModule {
     public static final ModuleSupport GLOBAL = new ModuleSupport() {
         @Override

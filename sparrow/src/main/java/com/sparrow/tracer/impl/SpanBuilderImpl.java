@@ -1,5 +1,21 @@
-package com.sparrow.tracer.impl;
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+package com.sparrow.tracer.impl;
 
 import com.sparrow.tracer.Span;
 import com.sparrow.tracer.SpanBuilder;
@@ -23,15 +39,13 @@ public class SpanBuilderImpl implements SpanBuilder {
      */
     private String category;
     /**
-     * 当前span 的parent
-     * parent 为上一个span
+     * 当前span 的parent parent 为上一个span
      */
     private SpanImpl parent;
     /**
      * tracer 对象，全局
      */
     private TracerImpl tracer;
-
 
     @Override
     public SpanBuilder asChild() {
@@ -61,7 +75,6 @@ public class SpanBuilderImpl implements SpanBuilder {
         this.category = category;
         return this;
     }
-
 
     @Override
     public Span start() {

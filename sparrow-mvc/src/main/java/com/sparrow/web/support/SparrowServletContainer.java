@@ -29,7 +29,6 @@ import java.util.List;
 /**
  * Sparrow framework controller support class that used by sparrow only
  *
- * @author harry
  * @version 1.0
  */
 public class SparrowServletContainer extends AbstractServletContainer {
@@ -50,17 +49,13 @@ public class SparrowServletContainer extends AbstractServletContainer {
         if (CollectionsUtility.isNullOrEmpty(list)) {
             return;
         }
-        this.grid(gridView, new SparrowPagerResult(1, list.size(), (long) list.size(), list));
+        this.grid(gridView, SparrowPagerResult.page(1, list.size(), (long) list.size()));
     }
 
     public <T> void grid(String gridView, SparrowPagerResult pagerSearch) {
-        httpContext.put(gridView + ".dataSource", pagerSearch.getList());
-        httpContext.put(gridView + ".recordCount",
-            pagerSearch.getRecordCount());
+        httpContext.put(gridView, pagerSearch);
         httpContext.put("spanRecordCount.innerHTML",
             pagerSearch.getRecordCount());
-        httpContext.put(gridView + ".pageSize",
-            pagerSearch.getPageSize());
     }
 
     @Override

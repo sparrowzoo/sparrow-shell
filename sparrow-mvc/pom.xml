@@ -24,15 +24,11 @@
         <version>1.0</version>
     </parent>
     <artifactId>sparrow-mvc</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${sparrow_mvc_version}</version>
     <dependencies>
         <dependency>
             <groupId>com.sparrow</groupId>
-            <artifactId>sparrow-data-source</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sparrow</groupId>
-            <artifactId>sparrow-orm</artifactId>
+            <artifactId>sparrow</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -55,5 +51,15 @@
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>

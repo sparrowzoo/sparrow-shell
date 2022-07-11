@@ -17,9 +17,6 @@
 
 package com.sparrow.enums;
 
-/**
- * @author harry
- */
 public enum AuditCommand {
     /**
      * audit ok

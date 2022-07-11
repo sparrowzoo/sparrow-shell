@@ -12,6 +12,16 @@
     <artifactId>sparrow-distribution-job-service</artifactId>
     <build>
         <finalName>${artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencies>
@@ -26,4 +36,6 @@
             <version>${sparrow_distribution_job_version}</version>
         </dependency>
     </dependencies>
+
+
 </project>

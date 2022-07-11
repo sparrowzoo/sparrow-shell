@@ -17,9 +17,6 @@
 
 package com.sparrow.mvc.ui;
 
-/**
- * @author harry
- */
 public class Button extends AbstractJWebInputControl {
     private static final long serialVersionUID = 1L;
 

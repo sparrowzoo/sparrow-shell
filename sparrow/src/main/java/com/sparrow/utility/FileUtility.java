@@ -17,11 +17,11 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.File;
-import com.sparrow.protocol.constant.EXTENSION;
+import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
 
 import java.io.BufferedReader;
@@ -45,9 +45,6 @@ import com.sparrow.support.file.FileNameProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author harry
- */
 public class FileUtility {
 
     private static Logger logger = LoggerFactory.getLogger(FileUtility.class);
@@ -65,11 +62,11 @@ public class FileUtility {
     }
 
     public List<String> readLines(String fileName) {
-        return this.readLines(fileName, CONSTANT.CHARSET_UTF_8);
+        return this.readLines(fileName, Constant.CHARSET_UTF_8);
     }
 
     public List<String> readLines(InputStream inputStream) {
-        return this.readLines(inputStream, CONSTANT.CHARSET_UTF_8);
+        return this.readLines(inputStream, Constant.CHARSET_UTF_8);
     }
 
     public List<String> readLines(InputStream inputStream, String charset) {
@@ -79,7 +76,7 @@ public class FileUtility {
 
         List<String> fileLines = new ArrayList<String>();
         if (StringUtility.isNullOrEmpty(charset)) {
-            charset = CONSTANT.CHARSET_UTF_8;
+            charset = Constant.CHARSET_UTF_8;
         }
         BufferedReader reader = null;
         try {
@@ -105,7 +102,7 @@ public class FileUtility {
 
     public List<String> readLines(String fileName, String charset) {
         if (StringUtility.isNullOrEmpty(charset)) {
-            charset = CONSTANT.CHARSET_UTF_8;
+            charset = Constant.CHARSET_UTF_8;
         }
         InputStream inputStream = null;
         try {
@@ -122,7 +119,7 @@ public class FileUtility {
      */
     public String readFileContent(InputStream inputStream, String charset) {
         if (StringUtility.isNullOrEmpty(charset)) {
-            charset = CONSTANT.CHARSET_UTF_8;
+            charset = Constant.CHARSET_UTF_8;
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
@@ -134,7 +131,7 @@ public class FileUtility {
             return bos.toString(charset);
         } catch (IOException e) {
             logger.error("write error", e);
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         } finally {
             try {
                 bos.close();
@@ -149,7 +146,7 @@ public class FileUtility {
      */
     public String readFileContent(String fileName, String charset) {
         if (StringUtility.isNullOrEmpty(charset)) {
-            charset = CONSTANT.CHARSET_UTF_8;
+            charset = Constant.CHARSET_UTF_8;
         }
         InputStream inputStream = null;
         try {
@@ -162,7 +159,7 @@ public class FileUtility {
     }
 
     public boolean writeFile(String filePath, String s) {
-        String charset = CONSTANT.CHARSET_UTF_8;
+        String charset = Constant.CHARSET_UTF_8;
         return writeFile(filePath, s, charset);
     }
 
@@ -317,12 +314,12 @@ public class FileUtility {
             reader.skip(skip);
             reader.readLine();
             boolean isSkip = true;
-            String lastWord = SYMBOL.EMPTY;
+            String lastWord = Symbol.EMPTY;
             while ((tempString = reader.readLine()) != null) {
                 if (compare.compare(tempString, keyword) == 0) {
                     return tempString;
                 } else if (tempString.equals(lastWord)) {
-                    return SYMBOL.EMPTY;
+                    return Symbol.EMPTY;
                 }
                 // 是否需要skip
                 if (!isSkip) {
@@ -356,10 +353,10 @@ public class FileUtility {
                     }
                 }
             }
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         } catch (IOException e) {
             logger.error("reade file error", e);
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         } finally {
             if (reader != null) {
                 try {
@@ -379,7 +376,7 @@ public class FileUtility {
      */
     public String getHumanReadableFileLength(Long length) {
         if (length == null) {
-            return SYMBOL.EMPTY;
+            return Symbol.EMPTY;
         }
 
         if (length < DIGIT.K) {
@@ -428,13 +425,13 @@ public class FileUtility {
 
         String imageExtensionConfig = ConfigUtility.getValue(File.IMAGE_EXTENSION);
         if (imageExtensionConfig == null) {
-            imageExtensionConfig = CONSTANT.IMAGE_EXTENSION;
+            imageExtensionConfig = Constant.IMAGE_EXTENSION;
         }
         String[] imageExtension = imageExtensionConfig
                 .split("\\|");
         // jpeg 或者是其他格式都转换成jpg
-        if (EXTENSION.JPEG.equalsIgnoreCase(extension)) {
-            extension = EXTENSION.JPG;
+        if (Extension.JPEG.equalsIgnoreCase(extension)) {
+            extension = Extension.JPG;
         }
         fileNameProperty.setExtension(extension);
         fileNameProperty.setImage(StringUtility.existInArray(imageExtension, extension));
@@ -487,7 +484,7 @@ public class FileUtility {
         String imageExtension = ConfigUtility
                 .getValue(File.IMAGE_EXTENSION);
         if (StringUtility.isNullOrEmpty(imageExtension)) {
-            imageExtension = CONSTANT.IMAGE_EXTENSION;
+            imageExtension = Constant.IMAGE_EXTENSION;
         }
         return StringUtility.existInArray(imageExtension.split("\\|"), extension);
     }
@@ -543,7 +540,7 @@ public class FileUtility {
             separator = java.io.File.separator;
         }
 
-        String[] splits = fullPath.split(SYMBOL.DOT.equals(separator) ? "\\." : separator);
+        String[] splits = fullPath.split(Symbol.DOT.equals(separator) ? "\\." : separator);
         for (int i = 0; i < splits.length; i++) {
             if (splits[i].equalsIgnoreCase(source)) {
                 splits[i] = destination;

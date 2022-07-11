@@ -18,41 +18,16 @@ package com.sparrow.datasource;
 
 import java.sql.Connection;
 
-/**
- * @author by harry
- */
 public interface ConnectionContextHolder {
-    /**
-     * get datasource factory for refer class
-     *
-     * @return
-     */
+    void addOriginProxy(Connection proxy);
+
     DataSourceFactory getDataSourceFactory();
 
-    /**
-     * bind connection to current thread
-     *
-     * @param connection
-     */
     void bindConnection(Connection connection);
 
-    /**
-     * unbind from the current thread
-     *
-     * @param connection
-     */
     void unbindConnection(Connection connection);
 
-    /**
-     * get connectin from current thread
-     *
-     * @param datasourceKey
-     * @return
-     */
     Connection getConnection(String datasourceKey);
 
-    /**
-     * remove all connection of current thread
-     */
     void removeAll();
 }

@@ -19,12 +19,6 @@ package com.sparrow.constant;
 
 import java.util.regex.Pattern;
 
-/**
- * 常用正则表达式
- *
- * @author harry
- * @version 1.0
- */
 public class Regex {
 
     /**
@@ -70,7 +64,7 @@ public class Regex {
     /**
      * MARK DOWN 图片标签
      */
-    public static final String TAG_MARKDOWN_IMAGE="!\\[(.*)]\\((.*)\\)";
+    public static final String TAG_MARKDOWN_IMAGE = "!\\[(.*)]\\((.*)\\)";
     /**
      * flashTag标签
      */
@@ -110,8 +104,6 @@ public class Regex {
      * 密码格式
      */
     public static final String PASSWORD = "^[\\w!@#$%\\^&\\*\\(\\)_]{6,20}$";
-
-
 
     public static final Pattern BAIDU_IMAGE_SEARCH = Pattern.compile(
         "var imgdata=([\\s\\S]*?)<\\/script>", Regex.OPTION);

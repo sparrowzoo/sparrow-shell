@@ -19,14 +19,13 @@ package com.sparrow.protocol;
 
 /**
  * 谁证授权接口
- * @author harry
  */
 public interface AuthorizingSupport {
     /**
      * 签名
      *
-     * @param login login token
-     * @param secret user's password
+     * @param login  login token
+     * @param secret password
      * @return
      */
     String sign(LoginToken login, String secret);
@@ -42,12 +41,11 @@ public interface AuthorizingSupport {
     /**
      * 授权某资源
      *
-     * @param user
-     * @param url
-     * @param code
+     * @param user     当前用户
+     * @param resource 请求的资源(标识)
      * @return
      * @throws BusinessException
      */
     boolean isAuthorized(LoginToken user,
-                         String url, String code) throws BusinessException;
+        String resource) throws BusinessException;
 }

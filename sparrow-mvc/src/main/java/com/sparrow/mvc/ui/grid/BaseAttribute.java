@@ -18,7 +18,7 @@
 package com.sparrow.mvc.ui.grid;
 
 import com.sparrow.protocol.constant.magic.DIGIT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.DateTimeUtility;
 import com.sparrow.utility.EnumUtility;
 import com.sparrow.utility.StringUtility;
@@ -27,18 +27,16 @@ import java.util.List;
 
 /**
  * text#filedName#format
- *
- * @author harry
  */
 public class BaseAttribute {
     protected String[] fieldName;
     protected String css;
     protected int textLength = DIGIT.ALL;
-    protected String defaultValue = SYMBOL.HORIZON_LINE;
+    protected String defaultValue = Symbol.HORIZON_LINE;
     protected String format;
 
     public BaseAttribute(String[] config) {
-        this.fieldName = config[DIGIT.ONE].split(SYMBOL.AND);
+        this.fieldName = config[DIGIT.ONE].split(Symbol.AND);
         if (config.length > DIGIT.TOW) {
             this.format = config[DIGIT.TOW];
         }

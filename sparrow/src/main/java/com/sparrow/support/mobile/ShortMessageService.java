@@ -21,11 +21,6 @@ import com.sparrow.core.Pair;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.MobileShortMessaging;
 
-/**
- * MobileSupport
- *
- * @author harry
- */
 public interface ShortMessageService {
 
     /**
@@ -73,10 +68,9 @@ public interface ShortMessageService {
 
     /**
      * secret mobile
+     *
      * @param mobile mobile no
-     * @return
-     * 135****1111
-     * ****  secret
+     * @return 135****1111 ****  secret
      */
     Pair<String, String> secretMobile(String mobile);
 }

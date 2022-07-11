@@ -1,30 +1,24 @@
-/**
- * IK 中文分词  版本 5.0
- * IK Analyzer release 5.0
- * <p>
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * <p>
- * 源代码由林良益(linliangyi2005@gmail.com)提供
- * 版权声明 2012，乌龙茶工作室
- * provided by Linliangyi and copyright 2012 by Oolong studio
  */
+
 package com.sparrow.support.lucence;
 
 /**
- * IK词元对象 
+ * IK词元对象
  */
 public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
     public static final Integer LIMIT_SCORE = 50;
@@ -68,7 +62,6 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
     //权重
     private int boost;
 
-
     public LexemeWithBoost(int offset, int begin, int length, String lexemeType) {
         this.offset = offset;
         this.begin = begin;
@@ -96,15 +89,13 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
         if (o instanceof LexemeWithBoost) {
             LexemeWithBoost other = (LexemeWithBoost) o;
             if (this.offset == other.getOffset()
-                    && this.begin == other.getBegin()
-                    && this.length == other.getLength()) {
+                && this.begin == other.getBegin()
+                && this.length == other.getLength()) {
                 return true;
-            } else {
-                return false;
             }
-        } else {
             return false;
         }
+        return false;
     }
 
     /*
@@ -131,11 +122,11 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
                 return -1;
             } else if (this.length == other.getLength()) {
                 return 0;
-            } else {//this.length < other.getLength()
+            } else {
                 return 1;
             }
 
-        } else {//this.begin > other.getBegin()
+        } else {
             return 1;
         }
     }
@@ -154,6 +145,7 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
 
     /**
      * 获取词元在文本中的起始位置
+     *
      * @return int
      */
     public int getBeginPosition() {
@@ -166,6 +158,7 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
 
     /**
      * 获取词元在文本中的结束位置
+     *
      * @return int
      */
     public int getEndPosition() {
@@ -174,6 +167,7 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
 
     /**
      * 获取词元的字符长度
+     *
      * @return int
      */
     public int getLength() {
@@ -189,6 +183,7 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
 
     /**
      * 获取词元的文本内容
+     *
      * @return String
      */
     public String getLexemeText() {
@@ -210,12 +205,12 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
 
     /**
      * 获取词元类型
+     *
      * @return int
      */
     public String getLexemeType() {
         return lexemeType;
     }
-
 
     public static int getLexemeType(String type) {
         switch (type) {
@@ -273,6 +268,7 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
 
     /**
      * 合并两个相邻的词元
+     *
      * @param l
      * @param lexemeType
      * @return boolean 词元是否成功合并
@@ -301,13 +297,13 @@ public class LexemeWithBoost implements Comparable<LexemeWithBoost> {
     @Override
     public String toString() {
         return "LexemeWithBoost{" +
-                "offset=" + offset +
-                ", begin=" + begin +
-                ", length=" + length +
-                ", lexemeText='" + lexemeText + '\'' +
-                ", lexemeType=" + lexemeType +
-                ", parent=" + (parent == null ? "" : parent.getLexemeText()) +
-                ", boost=" + boost +
-                '}';
+            "offset=" + offset +
+            ", begin=" + begin +
+            ", length=" + length +
+            ", lexemeText='" + lexemeText + '\'' +
+            ", lexemeType=" + lexemeType +
+            ", parent=" + (parent == null ? "" : parent.getLexemeText()) +
+            ", boost=" + boost +
+            '}';
     }
 }

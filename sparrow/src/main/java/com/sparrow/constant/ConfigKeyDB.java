@@ -17,12 +17,6 @@
 
 package com.sparrow.constant;
 
-/**
- * 数据库相关配置
- *
- * @author harry
- * @version 1.0
- */
 public class ConfigKeyDB {
     /**
      * 每页记录数
@@ -32,28 +26,16 @@ public class ConfigKeyDB {
     public static final String PAGESIZE_THREAD = "PAGESIZE-THREAD";
 
     public static final String PAGESIZE_COMMENT = "PAGESIZE-COMMENT";
-    /**
-     * 数据库空 数值型的默认值
-     */
-    public static final String DEFAULT_VALUE = "0";
+
 
     /**
      * ORM 主键的唯一性索引由0开始
      */
     public static final String ORM_PRIMARY_KEY_UNIQUE = "PRIMARY";
 
-    /**
-     * int 型函数数据库访问错误 或者是记录不存在
-     */
-    public static final long ERROR_INT = -1L;
-    /**
-     * String 型函数数据库访问错误
-     */
-    public static final String ERROR = "-1";
-
     public static final String WEBSITE_CONFIG_PARENT = "WEBSITE_CONFIG";
 
-    public static class WEBSITE_CONFIG {
+    public static final class WebsiteConfig {
         public static final String TITLE = "Title";
         public static final String DESCRIPTION = "Description";
         public static final String BANNER = "Banner";
@@ -65,7 +47,7 @@ public class ConfigKeyDB {
     }
 
     public static final String STRATAGEM_SYSTEM = "S-SYS";
-    public static final String STRAEAGEM_LEVEL = "S-LEL";
+    public static final String STRATAGEM_LEVEL = "S-LEL";
 
     public static final String TAG_FRONT_COLOR = "TAG-FRONT-COLOR";
     public static final String TAG_BACKGROUND_COLOR = "TAG-BACKGROUND-COLOR";

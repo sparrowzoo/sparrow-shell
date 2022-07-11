@@ -20,9 +20,6 @@ package com.sparrow.cache.impl.redis;
 import com.sparrow.exception.CacheConnectionException;
 import redis.clients.jedis.ShardedJedis;
 
-/**
- * @author harry
- */
 interface Executor<T> {
     T execute(ShardedJedis jedis) throws CacheConnectionException;
 }

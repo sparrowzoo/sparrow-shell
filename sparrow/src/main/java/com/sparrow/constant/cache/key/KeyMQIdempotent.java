@@ -19,9 +19,6 @@ package com.sparrow.constant.cache.key;
 import com.sparrow.constant.SparrowModule;
 import com.sparrow.constant.cache.KEY;
 
-/**
- * @author by harry
- */
 public class KeyMQIdempotent {
     public static final KEY.Business IDEMPOTENT = new KEY.Business(SparrowModule.GLOBAL, "IDEMPOTENT");
 

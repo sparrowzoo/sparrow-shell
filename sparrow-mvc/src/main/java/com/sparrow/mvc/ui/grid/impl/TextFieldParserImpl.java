@@ -24,9 +24,6 @@ import com.sparrow.utility.StringUtility;
 
 import java.util.List;
 
-/**
- * @author harry
- */
 public class TextFieldParserImpl implements FieldParser {
     @Override
     public String parse(String[] config, List<String> valueList) {

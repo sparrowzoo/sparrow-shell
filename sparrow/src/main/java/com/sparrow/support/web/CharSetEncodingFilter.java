@@ -17,15 +17,12 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.protocol.constant.CONSTANT;
+import com.sparrow.protocol.constant.Constant;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author harry
- */
 public class CharSetEncodingFilter implements Filter {
 
     @Override
@@ -37,8 +34,8 @@ public class CharSetEncodingFilter implements Filter {
         FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        res.setCharacterEncoding(CONSTANT.CHARSET_UTF_8);
-        req.setCharacterEncoding(CONSTANT.CHARSET_UTF_8);
+        res.setCharacterEncoding(Constant.CHARSET_UTF_8);
+        req.setCharacterEncoding(Constant.CHARSET_UTF_8);
         res.setHeader("content-type", "text/html; charset=UTF-8");
         chain.doFilter(req, res);
     }

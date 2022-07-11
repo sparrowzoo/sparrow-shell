@@ -6,7 +6,7 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.Gender;
 import com.sparrow.orm.dao.UserDAO;
 import com.sparrow.orm.po.User;
-import com.sparrow.protocol.enums.STATUS_RECORD;
+import com.sparrow.protocol.enums.StatusRecord;
 import com.sparrow.utility.DateTimeUtility;
 import org.junit.Test;
 
@@ -19,10 +19,8 @@ import java.util.List;
 public class UserDaoTest {
     @Test
     public void userTest() {
-        JDBCTemplateTest jdbcTemplateTest=new JDBCTemplateTest();
-        jdbcTemplateTest.initStruction();
         Container container = ApplicationContext.getContainer();
-        container.setConfigLocation("/dao.xml");
+        container.setContextConfigLocation("/dao.xml");
         container.init();
         UserDAO userDAO = container.getBean("userDao");
 
@@ -36,14 +34,13 @@ public class UserDaoTest {
         user.setUpdateTime(System.currentTimeMillis());
         user.setCreateTime(System.currentTimeMillis());
         user.setSex((byte) Gender.FEMALE.ordinal());
-        user.setStatus((byte) STATUS_RECORD.ENABLE.ordinal());
+        user.setStatus((byte) StatusRecord.ENABLE.ordinal());
         Long id = userDAO.insert(user);
 
         user = userDAO.getEntity(id);
         System.out.println(user.getAvatar());
 
         List<User> userList = userDAO.query("harry", "nickName", 1, 1);
-        System.out.println(userList.size());
         while (true) {
             try {
                 Thread.sleep(10000L);

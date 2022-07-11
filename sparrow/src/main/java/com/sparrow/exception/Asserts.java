@@ -22,21 +22,18 @@ import com.sparrow.protocol.ErrorSupport;
 
 import java.util.List;
 
-/**
- * @author harry
- */
 public class Asserts {
     public static void isTrue(boolean expression, ErrorSupport errorSupport) throws BusinessException {
         isTrue(expression, errorSupport, null);
     }
 
     public static void isTrue(boolean expression, ErrorSupport errorSupport,
-                              String suffix) throws BusinessException {
+        String suffix) throws BusinessException {
         isTrue(expression, errorSupport, suffix, null);
     }
 
     public static void isTrue(boolean expression, ErrorSupport errorSupport,
-                              String suffix, List<Object> parameters) throws BusinessException {
+        String suffix, List<Object> parameters) throws BusinessException {
         if (expression) {
             throw new BusinessException(errorSupport, suffix, parameters);
         }

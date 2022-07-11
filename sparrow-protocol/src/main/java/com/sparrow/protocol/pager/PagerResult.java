@@ -18,14 +18,12 @@
 package com.sparrow.protocol.pager;
 
 import com.sparrow.protocol.VO;
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * pager result without html
- *
- * @author harry
+ * T data type
+ * A addition type
  */
 public class PagerResult<T, A> extends SimplePager implements VO {
 

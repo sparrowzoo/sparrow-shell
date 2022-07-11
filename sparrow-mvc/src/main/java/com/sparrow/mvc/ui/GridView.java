@@ -14,36 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.sparrow.mvc.ui;
 
 import com.sparrow.cg.MethodAccessor;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.Pager;
-import com.sparrow.protocol.constant.magic.DIGIT;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.ui.grid.CellAttribute;
 import com.sparrow.mvc.ui.grid.Head;
 import com.sparrow.protocol.POJO;
+import com.sparrow.protocol.constant.magic.DIGIT;
 import com.sparrow.support.pager.SparrowPagerResult;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 数据网格控件
- *
- * @author harry
- * @version 1.0
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unchecked"})
 public class GridView extends WebControl {
     private static Logger logger = LoggerFactory.getLogger(GridView.class);
     private String emptyString = "没有符合条件的记录。";
@@ -63,14 +58,6 @@ public class GridView extends WebControl {
      * 字段信息..
      */
     private String fields;
-    /**
-     * 每页记录数
-     */
-    private int pageSize = DIGIT.TEN;
-    /**
-     * 记录总数
-     */
-    private Long recordCount = 0L;
     /**
      * 是否显示页码
      */
@@ -97,31 +84,16 @@ public class GridView extends WebControl {
      */
     private boolean useAlternatingRowStyle = true;
 
-    /**
-     * 获取ResultSet
-     *
-     * @return
-     */
-    public List<POJO> getDataSource() {
-        String key = this.getId() + ".dataSource";
-        Object ors = super.pageContext.getRequest().getAttribute(key);
-        if (ors == null) {
-            ors = HttpContext.getContext().get(key);
-        }
-        if (ors != null) {
-            List<POJO> dataSource = (List<POJO>) ors;
-            return dataSource;
-        } else {
-            return null;
-        }
-    }
-
     @Override
     public int doStartTag() throws JspException {
         if (Boolean.FALSE.toString().equalsIgnoreCase(this.getVisible())) {
             return TagSupport.SKIP_BODY;
         }
-
+        SparrowPagerResult pagerResult = (SparrowPagerResult) super.pageContext.getRequest().getAttribute(this.getId());
+        List<POJO> datasource = pagerResult.getList();
+        if (datasource == null) {
+            datasource = (List<POJO>) HttpContext.getContext().get(this.getId());
+        }
         StringBuilder writeHTML = new StringBuilder();
         this.drawTable(writeHTML);
 
@@ -132,20 +104,20 @@ public class GridView extends WebControl {
         }
         writeHTML.append("<tbody>");
         try {
-            if (this.getDataSource() != null) {
+            if (datasource != null) {
                 String indent1 = StringUtility.getIndent(this
-                        .indent() + DIGIT.ONE);
+                    .indent() + DIGIT.ONE);
                 String indent2 = StringUtility.getIndent(this
-                        .indent() + DIGIT.TOW);
+                    .indent() + DIGIT.TOW);
                 List<CellAttribute> cellList = CellAttribute.parse(this.getFields());
 
-                if (this.getDataSource().size() > DIGIT.ZERO) {
-                    MethodAccessor methodAccessor = ApplicationContext.getContainer().getProxyBean(this.getDataSource().get(DIGIT.ZERO).getClass());
-                    for (int recordIndex = DIGIT.ZERO; recordIndex < this.getDataSource().size(); recordIndex++) {
-                        POJO entity = this.getDataSource().get(recordIndex);
+                if (datasource.size() > DIGIT.ZERO) {
+                    MethodAccessor methodAccessor = ApplicationContext.getContainer().getProxyBean(datasource.get(DIGIT.ZERO).getClass());
+                    for (int recordIndex = DIGIT.ZERO; recordIndex < datasource.size(); recordIndex++) {
+                        POJO entity = datasource.get(recordIndex);
                         String alternating = this
-                                .isUseAlternatingRowStyle() && (recordIndex % DIGIT.TOW == DIGIT.ZERO) ? " class='pure-table-odd'"
-                                : "";
+                            .isUseAlternatingRowStyle() && (recordIndex % DIGIT.TOW == DIGIT.ZERO) ? " class='pure-table-odd'"
+                            : "";
                         writeHTML.append(indent1);
                         writeHTML.append(String.format("<tr%s>", alternating));
                         for (CellAttribute cell : cellList) {
@@ -155,19 +127,16 @@ public class GridView extends WebControl {
                         writeHTML.append("</tr>");
                     }
                 }
-
-                if (this.getRecordCount() == DIGIT.ZERO && this.isShowEmptyRow()) {
+                if (datasource.size() == DIGIT.ZERO && this.isShowEmptyRow()) {
                     writeHTML.append("<tr><td>");
                     writeHTML.append(this.getEmptyString());
                     writeHTML.append("<td></tr>");
                 }
-
-
             }
             writeHTML.append(StringUtility.getIndent(this.indent()));
             writeHTML.append("</tbody></table>");
             if (this.isShowPage()) {
-                SparrowPagerResult result = new SparrowPagerResult(this.pageSize, this.getCurrentPageIndex(), this.getRecordCount(), this.getDataSource());
+                SparrowPagerResult result = SparrowPagerResult.page(pagerResult.getPageSize(), this.getCurrentPageIndex(), pagerResult.getRecordCount());
                 result.setPageFormat(this.pageFormat);
                 result.setIndexPageFormat(this.pageFormat);
                 result.setSimple(false);
@@ -191,7 +160,7 @@ public class GridView extends WebControl {
 
     public String getHeadTitles() {
         Object requestHeadTitles = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".headTitles");
+            this.getId() + ".headTitles");
         if (requestHeadTitles != null) {
             this.headTitles = requestHeadTitles.toString();
         } else if (this.headTitles == null) {
@@ -206,7 +175,7 @@ public class GridView extends WebControl {
 
     public String getFields() {
         Object requestFields = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".fields");
+            this.getId() + ".fields");
         if (requestFields != null) {
             this.fields = requestFields.toString();
         }
@@ -217,32 +186,6 @@ public class GridView extends WebControl {
         this.fields = fields;
     }
 
-    public Long getRecordCount() {
-        String key =
-                this.getId() + ".recordCount";
-        Object recordCount = super.pageContext.getRequest().getAttribute(key);
-        if (recordCount == null) {
-            recordCount = HttpContext.getContext().get(key);
-        }
-        if (recordCount != null) {
-            this.recordCount = Long.valueOf(recordCount.toString());
-        }
-        return this.recordCount;
-    }
-
-    public int getPageSize() {
-        String key =
-                this.getId() + ".pageSize";
-        Object requestPageSize = this.pageContext.getRequest().getAttribute(key);
-        if (requestPageSize == null) {
-            requestPageSize = HttpContext.getContext().get(key);
-        }
-        if (requestPageSize != null) {
-            this.pageSize = Integer.valueOf(requestPageSize.toString());
-        }
-        return this.pageSize;
-    }
-
     /**
      * 获取当前页码
      *
@@ -251,9 +194,9 @@ public class GridView extends WebControl {
     public int getCurrentPageIndex() {
         int pageIndex = DIGIT.ONE;
         Object currentPageIndex = this.pageContext.getRequest().getParameter(
-                "currentPageIndex");
+            "currentPageIndex");
         if (!StringUtility.isNullOrEmpty(currentPageIndex)) {
-            pageIndex = Integer.valueOf(currentPageIndex.toString().trim());
+            pageIndex = Integer.parseInt(currentPageIndex.toString().trim());
         }
         return pageIndex;
     }
@@ -283,7 +226,7 @@ public class GridView extends WebControl {
     public String getPageFormat() {
         String key = this.getId() + ".pageFormat";
         Object requestPageFormat = this.pageContext.getRequest().getAttribute(
-                key);
+            key);
         if (requestPageFormat == null) {
             requestPageFormat = HttpContext.getContext().get(key);
         }
@@ -291,7 +234,7 @@ public class GridView extends WebControl {
             this.pageFormat = requestPageFormat.toString();
         } else if (!StringUtility.isNullOrEmpty(this.pageFormat)) {
             this.pageFormat = this.pageFormat.replace("$root_path",
-                    ConfigUtility.getValue(Config.ROOT_PATH));
+                ConfigUtility.getValue(Config.ROOT_PATH));
         }
         return this.pageFormat;
     }

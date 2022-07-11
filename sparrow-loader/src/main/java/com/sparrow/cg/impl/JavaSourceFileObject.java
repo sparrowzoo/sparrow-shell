@@ -21,9 +21,6 @@ import javax.tools.JavaFileObject;
 import javax.tools.SimpleJavaFileObject;
 import java.net.URI;
 
-/**
- * @author harry
- */
 public class JavaSourceFileObject extends SimpleJavaFileObject {
     private CharSequence content;
 

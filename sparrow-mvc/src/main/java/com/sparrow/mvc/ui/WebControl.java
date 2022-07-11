@@ -17,34 +17,25 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.cg.PropertyNamer;
-import com.sparrow.protocol.constant.CONSTANT;
-import com.sparrow.protocol.constant.magic.SYMBOL;
-import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.cg.MethodAccessor;
+import com.sparrow.cg.PropertyNamer;
+import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.HttpContext;
-import com.sparrow.utility.QueryStringParser;
 import com.sparrow.utility.StringUtility;
-
+import javax.servlet.jsp.tagext.TagSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.tagext.TagSupport;
-import java.util.Map;
-
-/**
- * @author harry
- */
 public class WebControl extends TagSupport {
     protected static Logger logger = LoggerFactory.getLogger(WebControl.class);
     private String id;
     private String name;
     private String pojo;
-    protected String cssClass = SYMBOL.EMPTY;
-    private String cssText = SYMBOL.EMPTY;
-    private String events = SYMBOL.EMPTY;
-    private String title = SYMBOL.EMPTY;
+    protected String cssClass = Symbol.EMPTY;
+    private String cssText = Symbol.EMPTY;
+    private String events = Symbol.EMPTY;
+    private String title = Symbol.EMPTY;
     private String tagName;
     private String visible = Boolean.TRUE.toString();
     private boolean isNameOfEnum;
@@ -81,11 +72,11 @@ public class WebControl extends TagSupport {
     }
 
     public String getCtrlName() {
-        return this.name == null ? SYMBOL.EMPTY : this.name;
+        return this.name == null ? Symbol.EMPTY : this.name;
     }
 
     public String getName() {
-        return !StringUtility.isNullOrEmpty(this.name) ? String.format(" name=\"%1$s\" ", this.name) : SYMBOL.EMPTY;
+        return !StringUtility.isNullOrEmpty(this.name) ? String.format(" name=\"%1$s\" ", this.name) : Symbol.EMPTY;
     }
 
     public void setName(String name) {
@@ -95,20 +86,15 @@ public class WebControl extends TagSupport {
     public String getCssClass() {
         String format = " class=\"%1$s\" ";
         Object css = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".cssClass");
+            this.getId() + ".cssClass");
         if (css != null) {
             return String.format(format, css);
         }
-
-        if (!StringUtility.isNullOrEmpty(this.pageContext.getRequest().getAttribute(CONSTANT.MESSAGE_KEY_PREFIX + this.getCtrlName()))) {
-            return String.format(format, CONSTANT.ERROR_CSS_CLASS);
-        }
-
         if (this.cssClass != null) {
             return String.format(format, this.cssClass);
         }
 
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setCssClass(String cssClass) {
@@ -118,16 +104,16 @@ public class WebControl extends TagSupport {
     public String getCssText() {
         String format = " style=\"%1$s\" ";
         Object requestCssText = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".cssText");
+            this.getId() + ".cssText");
         if (requestCssText != null) {
             return String.format(format,
-                    requestCssText.toString());
+                requestCssText.toString());
 
         }
         if (!StringUtility.isNullOrEmpty(this.cssText)) {
             return String.format(format, this.cssText);
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setCssText(String cssText) {
@@ -136,14 +122,14 @@ public class WebControl extends TagSupport {
 
     public String getEvents() {
         Object requestEvents = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".events");
+            this.getId() + ".events");
         if (requestEvents != null) {
             return requestEvents.toString();
         }
         if (!StringUtility.isNullOrEmpty(this.events)) {
-            return this.events.trim().replaceAll("\\s", SYMBOL.EMPTY);
+            return this.events.trim().replaceAll("\\s", Symbol.EMPTY);
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setEvents(String events) {
@@ -152,14 +138,14 @@ public class WebControl extends TagSupport {
 
     public String getTitle() {
         Object requestTitle = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".title");
+            this.getId() + ".title");
         if (requestTitle != null) {
             return String.format(" title=\"%1$s\" ", requestTitle.toString());
         }
         if (!StringUtility.isNullOrEmpty(this.title)) {
             return String.format(" title=\"%1$s\" ", this.title);
         }
-        return SYMBOL.EMPTY;
+        return Symbol.EMPTY;
     }
 
     public void setTitle(String title) {
@@ -177,7 +163,7 @@ public class WebControl extends TagSupport {
     public String getVisible() {
         String result = this.visible;
         Object requestVisible = this.pageContext.getRequest().getAttribute(
-                this.getId() + ".visible");
+            this.getId() + ".visible");
 
         if (requestVisible != null) {
             result = requestVisible.toString();
@@ -190,21 +176,18 @@ public class WebControl extends TagSupport {
     }
 
     public String getRequestValue() {
-        String name = this.isInput() ? this.getCtrlName() : CONSTANT.MESSAGE_KEY_PREFIX + this.getCtrlName();
+        String name = this.getCtrlName();
         Object requestValue = this.pageContext.getRequest().getAttribute(name);
         if (requestValue != null) {
             return requestValue.toString();
         }
         requestValue = HttpContext.getContext().get(name);
         if (requestValue != null) {
-            if (!this.isInput()) {
-                this.pageContext.getRequest().setAttribute(this.getId() + ".cssClass", "error");
-            }
             return requestValue.toString();
         }
         if (this.pojo != null) {
             requestValue = this.pageContext.getRequest().getAttribute(
-                    this.pojo);
+                this.pojo);
 
             if (requestValue == null) {
                 requestValue = HttpContext.getContext().get(this.pojo);
@@ -213,11 +196,11 @@ public class WebControl extends TagSupport {
             if (requestValue != null) {
                 try {
                     MethodAccessor methodAccessor = ApplicationContext.getContainer()
-                            .getProxyBean(
-                                    requestValue.getClass());
+                        .getProxyBean(
+                            requestValue.getClass());
                     String getMethodName = PropertyNamer.getter(this.getCtrlName());
                     requestValue = methodAccessor.get(requestValue,
-                            getMethodName);
+                        getMethodName);
                     if (requestValue != null) {
                         if (requestValue instanceof Enum) {
                             Enum en = (Enum) requestValue;
@@ -240,7 +223,6 @@ public class WebControl extends TagSupport {
     }
 
     public void drawTable(StringBuilder writeHTML) {
-
         writeHTML.append("<table class='pure-table'");
         writeHTML.append(String.format(" id=\"%1$s\"", this.getId()));
         writeHTML.append(this.getCssClass());
@@ -249,6 +231,4 @@ public class WebControl extends TagSupport {
         writeHTML.append(this.getEvents());
         writeHTML.append(">");
     }
-
-
 }
