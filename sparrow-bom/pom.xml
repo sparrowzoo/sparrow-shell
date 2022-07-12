@@ -61,7 +61,7 @@
         <javax.servlet_api_version>3.0.1</javax.servlet_api_version>
         <javax.persistence.version>1.0</javax.persistence.version>
         <mysql.version>8.0.29</mysql.version>
-        <tomcat.version>7.0.81</tomcat.version>
+        <tomcat.version>7.0.107</tomcat.version>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <jna.version>5.3.1</jna.version>
         <yaml.version>1.19</yaml.version>
