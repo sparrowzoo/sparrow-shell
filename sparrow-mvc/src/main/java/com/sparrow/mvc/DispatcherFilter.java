@@ -381,6 +381,7 @@ public class DispatcherFilter implements Filter {
             String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
             if (LoginType.MESSAGE.equals(handlerExecutionChain.getLoginType())) {
                 Result result = Result.fail(SparrowError.USER_NOT_LOGIN);
+                httpResponse.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
                 httpResponse.getWriter().write(JsonFactory.getProvider().toString(result));
                 return false;
             }
@@ -426,6 +427,7 @@ public class DispatcherFilter implements Filter {
                 }
             } else {
                 LoginDialog loginDialog = new LoginDialog(false, false, loginUrl, isInFrame);
+                httpResponse.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
                 httpResponse.getWriter().write(JsonFactory.getProvider().toString(loginDialog));
             }
             logger.info("login false{}", actionName);

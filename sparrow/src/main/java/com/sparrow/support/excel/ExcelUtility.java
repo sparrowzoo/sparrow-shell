@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.poi.ss.usermodel.CellType.STRING;
+
 public class ExcelUtility {
     public static Workbook getWorkbook(String fullFileName) throws TemplateFileException {
         File file = new File(fullFileName);
@@ -81,15 +83,14 @@ public class ExcelUtility {
 
     public static String readCell(Cell cell, DataType dataType) {
         switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_STRING:
+            case STRING:
                 return cell.getStringCellValue();
-            case Cell.CELL_TYPE_BLANK:
+            case BLANK:
                 return "";
-            case Cell.CELL_TYPE_BOOLEAN:
+            case BOOLEAN:
                 return String.valueOf(cell.getBooleanCellValue());
-            case Cell.CELL_TYPE_NUMERIC:
+            case NUMERIC:
                 if (DataType.STRING == dataType) {
-                    cell.setCellType(Cell.CELL_TYPE_STRING);
                     return cell.getStringCellValue();
                 } else {
                     return String.valueOf(cell.getNumericCellValue());
@@ -184,7 +185,7 @@ public class ExcelUtility {
         style.setFont(font);
         style.setFillForegroundColor(background);
         if (background != IndexedColors.WHITE.getIndex()) {
-            style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            style.setFillPattern(FillPatternType.BIG_SPOTS);
         }
         return style;
     }

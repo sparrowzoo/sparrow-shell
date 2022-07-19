@@ -61,10 +61,10 @@
         <javax.servlet_api_version>3.0.1</javax.servlet_api_version>
         <javax.persistence.version>1.0</javax.persistence.version>
         <mysql.version>8.0.29</mysql.version>
-        <tomcat.version>7.0.73</tomcat.version>
+        <tomcat.version>7.0.107</tomcat.version>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <jna.version>5.3.1</jna.version>
-        <yaml.version>1.19</yaml.version>
+        <yaml.version>1.26</yaml.version>
         <lettuce.version>5.0.5.RELEASE</lettuce.version>
         <logback.version>1.2.9</logback.version>
     </properties>
@@ -111,7 +111,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.12</version>
+                <version>4.13.1</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -132,13 +132,13 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
-                <version>3.12</version>
+                <version>4.1.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-scratchpad</artifactId>
-                <version>3.12</version>
+                <version>5.2.1</version>
             </dependency>
 
             <dependency>
