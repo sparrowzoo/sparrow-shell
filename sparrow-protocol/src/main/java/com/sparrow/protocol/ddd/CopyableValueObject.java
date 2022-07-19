@@ -19,13 +19,12 @@ package com.sparrow.protocol.ddd;
 /**
  * A value object.
  */
-public interface ValueObject<T> {
-
+public interface CopyableValueObject<T> extends ValueObject<T> {
     /**
-     * Value objects compare by the values of their attributes, they don't have an identity.
+     * Value objects can be freely copied.
      *
-     * @param other The other value object.
-     * @return <code>true</code> if the given value object's and this value object's attributes are the same.
+     * @return A safe, deep copy of this value object.
      */
-    boolean sameValueAs(T other);
+    T copy();
+
 }
