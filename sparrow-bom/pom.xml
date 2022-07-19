@@ -61,7 +61,7 @@
         <javax.servlet_api_version>3.0.1</javax.servlet_api_version>
         <javax.persistence.version>1.0</javax.persistence.version>
         <mysql.version>8.0.29</mysql.version>
-        <tomcat.version>7.0.107</tomcat.version>
+        <tomcat.version>7.0.73</tomcat.version>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <jna.version>5.3.1</jna.version>
         <yaml.version>1.26</yaml.version>
@@ -132,13 +132,13 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
-                <version>4.1.1</version>
+                <version>3.12</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-scratchpad</artifactId>
-                <version>5.2.1</version>
+                <version>3.12</version>
             </dependency>
 
             <dependency>

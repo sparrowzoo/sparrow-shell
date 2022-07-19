@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE mvc PUBLIC "-//sparrow Framework//DTD mvc Configuration//EN"
-        "http://www.sparrowzoo.com/dtds/mvc.dtd">
+    "http://www.sparrowzoo.com/dtds/mvc.dtd">
 <mvc>
     <!--在bean context中定义-->
     <controller id="helloController">
@@ -19,6 +19,8 @@
         <action name="/authorizing" method="authorizing"
                 login="LOGIN" needAuthorizing="true"/>
         <action name="/login.do" method="login"/>
+        <action name="/pager.json" method="pager"/>
+
     </controller>
 
     <controller id="elasticSearchController">
