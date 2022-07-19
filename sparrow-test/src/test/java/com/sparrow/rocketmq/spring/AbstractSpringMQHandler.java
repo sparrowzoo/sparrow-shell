@@ -25,6 +25,6 @@ import com.sparrow.mq.MQEvent;
  */
 public abstract class AbstractSpringMQHandler<T extends MQEvent> extends AbstractMQHandler<T> {
     public void setBeanName(String s) {
-        this.aware(null, s);
+        this.awaenre(null, s);
     }
 }
