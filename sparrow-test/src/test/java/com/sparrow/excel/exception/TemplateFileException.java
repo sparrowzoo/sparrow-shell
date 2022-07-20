@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.excel.exception;
+package com.sparrow.excel.exception;
 
 public class TemplateFileException extends Exception {
     public TemplateFileException(Exception e) {

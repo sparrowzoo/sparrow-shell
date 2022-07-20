@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.excel.exception;
+package com.sparrow.excel.exception;
 
-public class TemplateValidateException extends Exception {
-    public TemplateValidateException(String message) {
+public class TemplateCellValidateException extends Exception {
+    public TemplateCellValidateException(String message) {
         super(message);
+    }
+
+    public TemplateCellValidateException(Exception e) {
+        super(e);
     }
 }

@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.lucence.daemon.impl;
+package com.sparrow.lucence.daemon.impl;
 
 import com.sparrow.concurrent.SparrowThreadFactory;
 import com.sparrow.constant.Config;
-import com.sparrow.support.lucence.IndexManager;
+import com.sparrow.lucence.IndexManager;
 import com.sparrow.utility.ConfigUtility;
 import org.apache.lucene.index.IndexReader;
 

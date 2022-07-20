@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.excel;
+package com.sparrow.excel;
 
 import com.sparrow.enums.DataType;
+import com.sparrow.excel.exception.TemplateCellValidateException;
+import com.sparrow.excel.exception.TemplateFieldNotMatchException;
+import com.sparrow.excel.exception.TemplateFileException;
+import com.sparrow.excel.exception.TemplateValidateException;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.support.excel.exception.TemplateCellValidateException;
-import com.sparrow.support.excel.exception.TemplateFieldNotMatchException;
-import com.sparrow.support.excel.exception.TemplateFileException;
-import com.sparrow.support.excel.exception.TemplateValidateException;
 import com.sparrow.utility.FileUtility;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -32,8 +32,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static org.apache.poi.ss.usermodel.CellType.STRING;
 
 public class ExcelUtility {
     public static Workbook getWorkbook(String fullFileName) throws TemplateFileException {
@@ -83,13 +81,13 @@ public class ExcelUtility {
 
     public static String readCell(Cell cell, DataType dataType) {
         switch (cell.getCellType()) {
-            case STRING:
+            case  Cell.CELL_TYPE_STRING:
                 return cell.getStringCellValue();
-            case BLANK:
+            case Cell.CELL_TYPE_BLANK:
                 return "";
-            case BOOLEAN:
+            case Cell.CELL_TYPE_BOOLEAN:
                 return String.valueOf(cell.getBooleanCellValue());
-            case NUMERIC:
+            case Cell.CELL_TYPE_NUMERIC:
                 if (DataType.STRING == dataType) {
                     return cell.getStringCellValue();
                 } else {
@@ -185,7 +183,7 @@ public class ExcelUtility {
         style.setFont(font);
         style.setFillForegroundColor(background);
         if (background != IndexedColors.WHITE.getIndex()) {
-            style.setFillPattern(FillPatternType.BIG_SPOTS);
+            style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         }
         return style;
     }

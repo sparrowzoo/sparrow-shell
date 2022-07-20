@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.lucence;
+package com.sparrow.lucence;
 
 /**
  * IK词元对象

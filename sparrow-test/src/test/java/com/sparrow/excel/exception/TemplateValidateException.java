@@ -15,30 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.excel;
+package com.sparrow.excel.exception;
 
-import com.sparrow.enums.DataType;
-
-public class CellValue {
-    private DataType dataType;
-    private Object value;
-    private String excelTitle;
-
-    CellValue(DataType dataType, Object content, String excelTitle) {
-        this.dataType = dataType;
-        this.value = content;
-        this.excelTitle = excelTitle;
-    }
-
-    public DataType getDataType() {
-        return dataType;
-    }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public String getExcelTitle() {
-        return excelTitle;
+public class TemplateValidateException extends Exception {
+    public TemplateValidateException(String message) {
+        super(message);
     }
 }

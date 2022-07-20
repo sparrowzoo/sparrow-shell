@@ -17,7 +17,7 @@
 
 package com.sparrow.facade.excel;//package com.sparrow.facade.excel;
 //
-//import com.sparrow.support.excel.Validator;
+//import com.sparrow.excel.Validator;
 //import com.sparrow.support.protocol.Result;
 //
 //import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.sparrow.es;
 
-import com.sparrow.support.lucence.LexemeWithBoost;
+import com.sparrow.lucence.LexemeWithBoost;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 import org.springframework.util.CollectionUtils;
@@ -80,7 +80,7 @@ public class IKParser {
     private static List<LexemeWithBoost> transforList(List<Lexeme> lexemes) {
         List<LexemeWithBoost> semanticList = new ArrayList<LexemeWithBoost>();
         for(Lexeme lexeme:lexemes){
-            com.sparrow.support.lucence.LexemeWithBoost lexeme1=new com.sparrow.support.lucence.LexemeWithBoost(lexeme.getOffset(),lexeme.getBegin(),lexeme.getLength(),lexeme.getLexemeTypeString());
+            com.sparrow.lucence.LexemeWithBoost lexeme1=new com.sparrow.lucence.LexemeWithBoost(lexeme.getOffset(),lexeme.getBegin(),lexeme.getLength(),lexeme.getLexemeTypeString());
             lexeme1.setLexemeText(lexeme.getLexemeText());
             semanticList.add(lexeme1);
         }

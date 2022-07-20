@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.core.algorithm.similarity;
+package com.sparrow.similarity;
 
-import com.sparrow.support.lucence.KeyAnalyzer;
-import com.sparrow.support.lucence.LexemeWithBoost;
+import com.sparrow.lucence.KeyAnalyzer;
+import com.sparrow.lucence.LexemeWithBoost;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

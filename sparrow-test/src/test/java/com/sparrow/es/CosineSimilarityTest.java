@@ -1,7 +1,7 @@
 package com.sparrow.es;
 
-import com.sparrow.core.algorithm.similarity.CosineSimilarity;
-import com.sparrow.support.lucence.KeyAnalyzer;
+import com.sparrow.lucence.KeyAnalyzer;
+import com.sparrow.similarity.CosineSimilarity;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 import org.wltea.analyzer.cfg.Configuration;
