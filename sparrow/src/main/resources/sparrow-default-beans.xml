@@ -9,7 +9,6 @@
     <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-    <bean name="initializer" class="com.sparrow.web.WebApplicationInitializer"/>
     <bean name="ipSupport" class="com.sparrow.support.ip.SparrowIpSupport"/>
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
