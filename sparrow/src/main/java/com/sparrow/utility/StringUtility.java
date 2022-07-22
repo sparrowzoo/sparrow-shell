@@ -264,15 +264,15 @@ public class StringUtility {
      * @return String
      */
     public static String bytes2HexString(byte[] bytes) {
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         for (byte b : bytes) {
             String hex = Integer.toHexString(b & 0xFF);
             if (hex.length() == 1) {
                 hex = '0' + hex;
             }
-            ret += hex.toUpperCase();
+            ret.append(hex.toUpperCase());
         }
-        return ret;
+        return ret.toString();
     }
 
     /**

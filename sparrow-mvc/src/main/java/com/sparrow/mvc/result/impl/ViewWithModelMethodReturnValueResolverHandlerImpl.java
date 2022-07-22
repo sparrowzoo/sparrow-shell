@@ -38,6 +38,7 @@ import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.FilterChain;
@@ -59,9 +60,15 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
     }
 
     private void flash(HttpServletRequest request, String flashUrl, String key, Object o) {
+
         Map<String, Object> values = HttpContext.getContext().getHolder();
         if (o != null) {
             values.put(key, o);
+        }
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String parameterKey = parameterNames.nextElement();
+            values.put(parameterKey, request.getParameter(parameterKey));
         }
         Pair<String, Map<String, Object>> sessionMap = Pair.create(flashUrl, values);
         request.getSession().setAttribute(Constant.FLASH_KEY, sessionMap);
@@ -188,18 +195,17 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         if (exception instanceof BusinessException) {
             businessException = (BusinessException) exception;
         } else {
-            businessException = new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
+            businessException = new BusinessException(SparrowError.SYSTEM_SERVER_ERROR, Constant.ERROR);
         }
         Result result = ResultAssembler.assemble(businessException, null);
-        String flashUrl;
-
         String url = ConfigUtility.getValue(Config.ERROR_URL);
         if (StringUtility.isNullOrEmpty(url)) {
             url = "/500";
         }
-        flashUrl = servletUtility.assembleActualUrl(url);
-        this.flash(request, flashUrl, Constant.FLASH_EXCEPTION_RESULT, result);
+
         String referer = this.servletUtility.referer(request);
+        String flashUrl = this.servletUtility.assembleActualUrl(referer);
+        this.flash(request, flashUrl, Constant.FLASH_EXCEPTION_RESULT, result);
         if (errorPageSwitch.equals(PageSwitchMode.TRANSIT)) {
             url = url + "?" + referer;
         }

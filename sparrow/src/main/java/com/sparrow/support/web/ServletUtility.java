@@ -55,7 +55,9 @@ public class ServletUtility {
         }
         String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.JSP);
         String pagePrefix = ConfigUtility.getValue(Config.DEFAULT_PAGE_PREFIX, "/template");
-        url = url + extension;
+        if (!url.endsWith(extension)) {
+            url = url + extension;
+        }
         if (!url.startsWith(pagePrefix)) {
             url = pagePrefix + url;
         }

@@ -17,6 +17,7 @@
 
 package com.sparrow.protocol;
 
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import java.util.Collections;
 import java.util.List;
@@ -73,7 +74,7 @@ public class BusinessException extends Exception {
     }
 
     public BusinessException(ErrorSupport errorSupport, List<Object> parameters) {
-        this(errorSupport, null, parameters);
+        this(errorSupport, Constant.ERROR, parameters);
     }
 
     public BusinessException(ErrorSupport errorSupport, String suffix) {
