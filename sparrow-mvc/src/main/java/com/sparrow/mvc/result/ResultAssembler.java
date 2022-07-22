@@ -31,10 +31,10 @@ public class ResultAssembler {
         String error = ConfigUtility.getLanguageValue(result.getKey(), language, result.getMessage());
         if (!CollectionsUtility.isNullOrEmpty(exception.getParameters())) {
             error = String.format(error, exception.getParameters().toArray());
-            if (exception.getKey().contains(".")) {
-                String ctrlName = exception.getKey().split("\\.")[1];
-                HttpContext.getContext().put(ctrlName, error);
-            }
+        }
+        if (exception.getKey().contains(".")) {
+            String ctrlName = exception.getKey().split("\\.")[1];
+            HttpContext.getContext().put(ctrlName, error);
         }
         result.setMessage(error);
         return result;
