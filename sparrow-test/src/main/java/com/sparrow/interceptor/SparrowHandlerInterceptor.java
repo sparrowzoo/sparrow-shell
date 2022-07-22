@@ -17,7 +17,6 @@
 package com.sparrow.interceptor;
 
 import com.sparrow.servlet.HandlerInterceptor;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
