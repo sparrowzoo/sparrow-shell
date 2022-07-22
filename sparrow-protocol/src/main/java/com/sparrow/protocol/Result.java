@@ -26,6 +26,7 @@ import java.util.List;
  * <p>
  * json 反序列化，set get 方法一定要存在
  */
+
 public class Result<T> implements VO {
 
     private Result() {

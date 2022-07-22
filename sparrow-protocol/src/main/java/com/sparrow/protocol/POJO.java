@@ -22,5 +22,6 @@ import java.io.Serializable;
 /**
  * 标识为POJO，方便参数注入 与Serializable 区分，保证该对象由sparrow MethodAccessor访问
  */
+
 public interface POJO extends Serializable {
 }
