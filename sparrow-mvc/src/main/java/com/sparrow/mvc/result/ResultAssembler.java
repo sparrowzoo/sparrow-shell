@@ -19,6 +19,7 @@ package com.sparrow.mvc.result;
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
+import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
@@ -26,9 +27,14 @@ import com.sparrow.utility.StringUtility;
 public class ResultAssembler {
     public static Result assemble(BusinessException exception, String language) {
         Result result = Result.fail(exception);
+
         String error = ConfigUtility.getLanguageValue(result.getKey(), language, result.getMessage());
         if (!CollectionsUtility.isNullOrEmpty(exception.getParameters())) {
             error = String.format(error, exception.getParameters().toArray());
+            if (exception.getKey().contains(".")) {
+                String ctrlName = exception.getKey().split("\\.")[1];
+                HttpContext.getContext().put(ctrlName, error);
+            }
         }
         result.setMessage(error);
         return result;
