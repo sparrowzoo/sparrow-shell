@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
-        "beans.dtd">
+    "beans.dtd">
 <beans>
     <!---当前进程的所有datasource实例-->
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
@@ -42,9 +42,11 @@
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
 
-    <bean name="authorizingService" class="com.sparrow.authorizing.AuthorizingDemo"/>
+    <bean name="authenticatorService" class="com.sparrow.authorizing.AuthenticatorDemo"/>
+    <bean name="authorizerService" class="com.sparrow.authorizing.AuthorizerDemo"/>
+
     <bean name="helloController" class="com.sparrow.controller.HelloController" controller="true">
-        <property name="authorizingSupport" ref="authorizingService"/>
+        <property name="authenticatorService" ref="authenticatorService"/>
         <property name="servletContainer" ref="sparrowServletContainer"/>
     </bean>
     <bean name="elasticSearchController" class="com.sparrow.controller.ElasticSearchController" controller="true"/>

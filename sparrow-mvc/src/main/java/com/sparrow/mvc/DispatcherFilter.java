@@ -29,7 +29,8 @@ import com.sparrow.mvc.adapter.HandlerAdapter;
 import com.sparrow.mvc.adapter.impl.MethodControllerHandlerAdapter;
 import com.sparrow.mvc.mapping.HandlerMapping;
 import com.sparrow.mvc.mapping.impl.UrlMethodHandlerMapping;
-import com.sparrow.protocol.AuthorizingSupport;
+import com.sparrow.protocol.Authenticator;
+import com.sparrow.protocol.Authorizer;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.Result;
@@ -370,10 +371,10 @@ public class DispatcherFilter implements Filter {
         }
 
         String actionName = handlerExecutionChain.getActionName();
-        AuthorizingSupport authorizingSupport = this.container.getBean(SysObjectName.AUTHORIZING_SERVICE);
+        Authenticator authenticator = this.container.getBean(SysObjectName.AUTHENTICATOR_SERVICE);
         String permission = this.cookieUtility.getPermission(httpRequest);
         String deviceId = this.sparrowServletUtility.getServletUtility().getDeviceId(httpRequest);
-        LoginToken user = authorizingSupport.authenticate(permission, deviceId);
+        LoginToken user = authenticator.authenticate(permission, deviceId);
         httpRequest.setAttribute(User.ID, user.getUserId());
         httpRequest.setAttribute(User.LOGIN_TOKEN, user);
 
@@ -439,7 +440,9 @@ public class DispatcherFilter implements Filter {
         if (!handlerExecutionChain.isNeedAuthorizing()) {
             return true;
         }
-        if (!authorizingSupport.isAuthorized(
+        Authorizer authorizer = this.container.getBean(SysObjectName.AUTHORIZER_SERVICE);
+
+        if (!authorizer.isPermitted(
             user, actionName)) {
             httpResponse.getWriter().write(Constant.ACCESS_DENIED);
             this.sparrowServletUtility.moveAttribute(httpRequest);

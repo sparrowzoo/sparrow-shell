@@ -21,7 +21,7 @@ import com.sparrow.constant.User;
 import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
-import com.sparrow.protocol.AuthorizingSupport;
+import com.sparrow.protocol.Authenticator;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.pager.PagerResult;
@@ -35,12 +35,12 @@ import javax.servlet.http.HttpServletRequest;
 
 public class HelloController {
 
-    private AuthorizingSupport authorizingSupport;
+    private Authenticator authenticatorService;
 
     private ServletContainer servletContainer;
 
-    public void setAuthorizingSupport(AuthorizingSupport authorizingSupport) {
-        this.authorizingSupport = authorizingSupport;
+    public void setAuthenticatorService(Authenticator authenticatorService) {
+        this.authenticatorService = authenticatorService;
     }
 
     public void setServletContainer(ServletContainer servletContainer) {
@@ -103,7 +103,7 @@ public class HelloController {
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
         loginToken.setActivate(true);
-        String sign = authorizingSupport.sign(loginToken, "111111");
+        String sign = authenticatorService.sign(loginToken, "111111");
         servletContainer.rootCookie(User.PERMISSION, sign, 6);
         return ViewWithModel.redirect("welcome", loginToken);
     }

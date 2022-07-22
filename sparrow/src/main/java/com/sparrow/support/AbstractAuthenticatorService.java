@@ -22,7 +22,7 @@ import com.sparrow.constant.ConfigKeyLanguage;
 import com.sparrow.constant.User;
 import com.sparrow.cryptogram.Base64;
 import com.sparrow.cryptogram.Hmac;
-import com.sparrow.protocol.AuthorizingSupport;
+import com.sparrow.protocol.Authenticator;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
@@ -33,8 +33,8 @@ import java.io.UnsupportedEncodingException;
 
 import static com.sparrow.cryptogram.Base64.PREFERRED_ENCODING;
 
-public abstract class AbstractAuthorizingService implements AuthorizingSupport {
-    static Logger logger = LoggerFactory.getLogger(AbstractAuthorizingService.class);
+public abstract class AbstractAuthenticatorService implements Authenticator {
+    static Logger logger = LoggerFactory.getLogger(AbstractAuthenticatorService.class);
 
     protected abstract String getSecret(Long userId);
 

@@ -6,6 +6,6 @@
 <body>
 ERROR_CODE:${flash_exception_result.code}<br/>
 KEY:${flash_exception_result.key}<br/>
-ERROR:${flash_exception_result.error}
+ERROR:${flash_exception_result.message}
 </body>
 </html>

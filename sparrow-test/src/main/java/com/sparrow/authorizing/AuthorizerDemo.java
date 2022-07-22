@@ -14,28 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.authorizing;
 
-package com.sparrow.constant;
+import com.sparrow.protocol.Authorizer;
+import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.LoginToken;
 
-public enum SysObjectName {
-    THREAD_SERVICE,
-    CODE_SERVICE,
-    USER_SERVICE,
-    ATTACH_SERVICE,
-    AUTHENTICATOR_SERVICE,
-    AUTHORIZER_SERVICE,
-    FORUM_SERVICE,
-    GROUP_SERVICE,
-    USER_GROUP_SERVICE,
-    PARSE_HTML_HELPER,
-    FILE_UPLOAD_HELPER,
-    TEMP_SERVER,
-    USER_COUNT_SERVICE,
-    INITIALIZER,
-    SYSTEM_ACTION_CALLBACK,
-    MOBILE_SUPPORT,
-    CMS_SERVICE,
-    CONNECTION_CONTEXT_HOLDER,
-    COOKIE_UTILITY,
-    TAG_DISABLE_CALL_BACK_BEAN
+public class AuthorizerDemo implements Authorizer {
+
+    @Override public boolean isPermitted(LoginToken user, String resource) throws BusinessException {
+        return true;
+    }
 }

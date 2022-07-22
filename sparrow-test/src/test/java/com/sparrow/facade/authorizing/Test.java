@@ -1,15 +1,15 @@
 package com.sparrow.facade.authorizing;
 
-import com.sparrow.authorizing.AuthorizingDemo;
+import com.sparrow.authorizing.AuthenticatorDemo;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.protocol.AuthorizingSupport;
+import com.sparrow.protocol.Authenticator;
 import com.sparrow.protocol.LoginToken;
 
 public class Test {
 
     public static void main(String[] args) {
         ApplicationContext.getContainer().init();
-        AuthorizingSupport authorizingSupport = new AuthorizingDemo();
+        Authenticator authorizingSupport = new AuthenticatorDemo();
         LoginToken loginToken = new LoginToken();
         loginToken.setNickName("nick-zhangsan");
         loginToken.setAvatar("http://localhost");

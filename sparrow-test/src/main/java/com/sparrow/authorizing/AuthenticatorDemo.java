@@ -14,38 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.authorizing;
 
-package com.sparrow.protocol;
+import com.sparrow.support.AbstractAuthenticatorService;
 
-/**
- * 谁证授权接口
- */
-public interface AuthorizingSupport {
-    /**
-     * 签名
-     *
-     * @param login  login token
-     * @param secret password
-     * @return
-     */
-    String sign(LoginToken login, String secret);
-
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    LoginToken authenticate(String token, String deviceId);
-
-    /**
-     * 授权某资源
-     *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
-     * @return
-     * @throws BusinessException
-     */
-    boolean isAuthorized(LoginToken user,
-        String resource) throws BusinessException;
+public class AuthenticatorDemo extends AbstractAuthenticatorService {
+    @Override
+    protected String getSecret(Long userId) {
+        //getPasswordByUserId();
+        return "111111";
+    }
 }
