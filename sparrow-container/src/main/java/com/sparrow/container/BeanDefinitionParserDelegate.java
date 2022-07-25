@@ -77,6 +77,8 @@ public class BeanDefinitionParserDelegate {
 
     public static final String PLACEHOLDER_ATTRIBUTE = "placeholder";
 
+    public static final String COMPONENT_SCAN = "component-scan";
+
     public static final String DEFAULT_INIT_METHOD_ATTRIBUTE = "default-init-method";
 
     public static final String DEFAULT_DESTROY_METHOD_ATTRIBUTE = "default-destroy-method";
@@ -96,6 +98,10 @@ public class BeanDefinitionParserDelegate {
 
     public boolean isImport(Node node) {
         return nodeNameEquals(node, IMPORT_ELEMENT);
+    }
+
+    public boolean isComponentScan(Node node) {
+        return nodeNameEquals(node, COMPONENT_SCAN);
     }
 
     public void parseCustomElement(Element element) {

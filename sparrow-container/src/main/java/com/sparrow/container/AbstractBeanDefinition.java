@@ -21,6 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.inject.Named;
+import javax.inject.Qualifier;
+import javax.inject.Scope;
+import javax.inject.Singleton;
 
 public class AbstractBeanDefinition implements BeanDefinition {
 

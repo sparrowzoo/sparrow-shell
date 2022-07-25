@@ -16,9 +16,12 @@
  */
 package com.sparrow.container;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Named
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader {
 
     /**
@@ -26,6 +29,7 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
      */
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Inject
     private final SimpleBeanDefinitionRegistry registry;
 
     protected AbstractBeanDefinitionReader(SimpleBeanDefinitionRegistry registry) {
@@ -38,8 +42,8 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
     }
 
     @Override
-    public void loadBeanDefinitions(String... xmlFileName) throws Exception {
-        for (String resource : xmlFileName) {
+    public void loadBeanDefinitions(String... resources) throws Exception {
+        for (String resource : resources) {
             loadBeanDefinitions(resource);
         }
     }
