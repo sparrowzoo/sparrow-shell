@@ -17,7 +17,6 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.cache.CacheClient;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.constant.cache.key.KeyUser;
@@ -33,26 +32,7 @@ import org.slf4j.LoggerFactory;
 public class CookieUtility {
     private static Logger logger = LoggerFactory.getLogger(CookieUtility.class);
 
-    private CacheClient cacheClient;
-
     private KEY.Business permissionBusiness = KeyUser.PERMISSION;
-
-    /**
-     * 初始化后不会变！！！
-     *
-     * @param backend
-     */
-    public void setBackend(Boolean backend) {
-        if (backend == null || !backend) {
-            this.permissionBusiness = KeyUser.PERMISSION;
-            return;
-        }
-        this.permissionBusiness = KeyUser.BACKEND_PERMISSION;
-    }
-
-    public void setCacheClient(CacheClient cacheClient) {
-        this.cacheClient = cacheClient;
-    }
 
     public void set(HttpServletResponse response, String key,
         String value, int days) {

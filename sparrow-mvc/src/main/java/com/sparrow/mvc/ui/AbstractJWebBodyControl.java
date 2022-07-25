@@ -24,19 +24,12 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 public abstract class AbstractJWebBodyControl extends WebControl {
-    /**
-     *
-     */
     @Override
     public int doEndTag() throws JspException {
         return super.doEndTag();
     }
 
-    /**
-     * 设置 tag name和tag 属性
-     *
-     * @return
-     */
+
     public abstract String setTagNameAndGetTagAttributes();
 
     @Override

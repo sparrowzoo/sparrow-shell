@@ -22,4 +22,6 @@
         <property name="imageExtractorRegistry" ref="imageExtractorRegistry"/>
     </bean>
     <bean name="fileService" class="com.sparrow.io.impl.JDKFileService"/>
+    <bean name="cookieUtility" class="com.sparrow.support.web.CookieUtility"/>
+    <bean name="websiteConfigInterceptor" class="com.sparrow.support.WebsiteConfigInterceptor" interceptor="true"/>
 </beans>

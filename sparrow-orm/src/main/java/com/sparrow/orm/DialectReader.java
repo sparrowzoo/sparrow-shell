@@ -43,7 +43,6 @@ public class DialectReader {
      * poolSize=1 dialect=mysql
      *
      * @param schema
-     * @return
      */
     public static DialectReader getInstance(String schema) {
         if (dialectMap.containsKey(schema)) {

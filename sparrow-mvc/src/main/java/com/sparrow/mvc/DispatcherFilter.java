@@ -251,6 +251,7 @@ public class DispatcherFilter implements Filter {
         request.setAttribute(Constant.REQUEST_ACTION_CURRENT_FORUM, forumCode);
         request.setAttribute("divNavigation.current", forumCode);
 
+
         String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
         if (!StringUtility.isNullOrEmpty(rootPath)) {
             request.setAttribute(Config.ROOT_PATH, rootPath);
