@@ -19,6 +19,7 @@ package com.sparrow.container.impl;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.AbstractContainer;
+import com.sparrow.container.AnnotationBeanDefinitionReader;
 import com.sparrow.container.BeanDefinition;
 import com.sparrow.container.BeanDefinitionParserDelegate;
 import com.sparrow.container.BeanDefinitionReader;
@@ -57,7 +58,9 @@ public class SparrowContainer extends AbstractContainer {
             logger.info("-------------init bean ...---------------------------");
             SimpleBeanDefinitionRegistry registry = new SimpleBeanDefinitionRegistry();
             BeanDefinitionParserDelegate delegate = new BeanDefinitionParserDelegate();
-            BeanDefinitionReader definitionReader = new XmlBeanDefinitionReader(registry, delegate);
+            AnnotationBeanDefinitionReader annotationBeanDefinitionReader = new AnnotationBeanDefinitionReader(registry);
+            BeanDefinitionReader definitionReader = new XmlBeanDefinitionReader(registry, annotationBeanDefinitionReader, delegate);
+
             definitionReader.loadBeanDefinitions(this.contextConfigLocation);
 
             this.beanDefinitionRegistry = registry;

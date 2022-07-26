@@ -80,8 +80,32 @@ public class ClassUtility {
 
     /**
      * @param packageName 包名
-     * @return 包下所有类
+     * @param path        the absolute path within the classpath (never a leading slash)
+     * @return a mutable Set of matching Resource instances
      * @throws ClassNotFoundException, IOException, URISyntaxException
+     *
+     * 參考
+     * Find all class location resources with the given path via the ClassLoader. Called by {@link #findAllClassPathResources(String)}.
+     * @since 4.1.1
+     * <p>
+     *
+     * <pre>
+     * protected Set<Resource> doFindAllClassPathResources(String path) throws IOException {
+     * 		Set<Resource> result = new LinkedHashSet<>(16);
+     * 		ClassLoader cl = getClassLoader();
+     * 		Enumeration<URL> resourceUrls = (cl != null ? cl.getResources(path) : ClassLoader.getSystemResources(path));
+     * 		while (resourceUrls.hasMoreElements()) {
+     * 			URL url = resourceUrls.nextElement();
+     * 			result.add(convertClassLoaderURL(url));
+     *          }
+     * 		    if (!StringUtils.hasLength(path)) {
+     * 			    // The above result is likely to be incomplete, i.e. only containing file system references.
+     * 			    // We need to have pointers to each of the jar files on the classpath as well...
+     * 			    addAllClassLoaderJarRoots(cl, result);
+     *        }
+     * 		return result;
+     * 		}
+     * </pre>
      */
     public static List<Class> getClasses(
         String packageName) throws ClassNotFoundException, IOException, URISyntaxException {
@@ -103,7 +127,7 @@ public class ClassUtility {
     }
 
     private static List<Class> findClass(JarFile jarFile, String packagePath)
-        throws ClassNotFoundException, URISyntaxException {
+        throws ClassNotFoundException {
         List<Class> classes = new ArrayList<Class>();
         Enumeration<JarEntry> entrys = jarFile.entries();
         while (entrys.hasMoreElements()) {
@@ -120,7 +144,7 @@ public class ClassUtility {
     }
 
     private static List<Class> findClass(File directory, String packageName)
-        throws ClassNotFoundException, URISyntaxException {
+        throws ClassNotFoundException {
         List<Class> classes = new ArrayList<Class>();
         if (directory == null || !directory.exists()) {
             return null;

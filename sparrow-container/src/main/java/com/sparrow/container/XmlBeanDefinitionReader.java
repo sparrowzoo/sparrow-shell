@@ -27,9 +27,12 @@ import org.w3c.dom.NodeList;
 public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
     private BeanDefinitionParserDelegate delegate;
+    private AnnotationBeanDefinitionReader annotationBeanDefinitionReader;
 
-    public XmlBeanDefinitionReader(SimpleBeanDefinitionRegistry registry, BeanDefinitionParserDelegate delegate) {
+    public XmlBeanDefinitionReader(SimpleBeanDefinitionRegistry registry,
+        AnnotationBeanDefinitionReader annotationBeanDefinitionReader, BeanDefinitionParserDelegate delegate) {
         super(registry);
+        this.annotationBeanDefinitionReader = annotationBeanDefinitionReader;
         this.delegate = delegate;
     }
 
@@ -41,6 +44,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     }
 
     private void parseDefaultElement(Element element) throws Exception {
+        if (delegate.isComponentScan(element)) {
+            String basePackages = element.getTextContent();
+            String[] basePackageArray = basePackages.split(",");
+            this.annotationBeanDefinitionReader.loadBeanDefinitions(basePackageArray);
+            return;
+        }
         if (delegate.isImport(element)) {
             processImportElement(element);
             return;

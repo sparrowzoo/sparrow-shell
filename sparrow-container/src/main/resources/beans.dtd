@@ -15,64 +15,64 @@
   ~ limitations under the License.
   -->
 
-        <!--
-             MyEclipse config method:
-             Preference->MyEclipse->Files and Editors->XML->
-             XML Catalog->Add
-             1)Location: .dtd file address
-             2)Key Type: URI
-             3)Key     : http://www.sparrowzoo.com/dtds/ioc.dtd
-             DTD for the ioc Configuration File
+    <!--
+         MyEclipse config method:
+         Preference->MyEclipse->Files and Editors->XML->
+         XML Catalog->Add
+         1)Location: .dtd file address
+         2)Key Type: URI
+         3)Key     : http://www.sparrowzoo.com/dtds/ioc.dtd
+         DTD for the ioc Configuration File
 
-             To support validation of your configuration file, include the following
-             DOCTYPE element at the beginning (after the "xml" declaration):
-            <!DOCTYPE beanFactory PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
-        "http://www.sparrowzoo.com/dtds/beanFactory.dtd">
-             $Id: ioc.dtd$
-             元素限定符用于在DTD中规定子元素出现的顺序和次数。
-        常用的元素限定符有：
+         To support validation of your configuration file, include the following
+         DOCTYPE element at the beginning (after the "xml" declaration):
+        <!DOCTYPE beanFactory PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
+    "http://www.sparrowzoo.com/dtds/beanFactory.dtd">
+         $Id: ioc.dtd$
+         元素限定符用于在DTD中规定子元素出现的顺序和次数。
+    常用的元素限定符有：
 
-        () - 用来给元素分组;
-        | - 在列出的元素中选择一个;
-        + - 可出的元素至少出现1次（1或多次）;
-        * - 列出的元素允许出现0次到任意多次（0或多次）;
-        ? - 列出的元素出现0次或1次,;
-        , - 列出的元素必须按照指定的顺序出现。
-        -->
-        <!ELEMENT beans (import|bean)*>
-        <!ELEMENT bean (property|constructor-arg)*>
-        <!ELEMENT import (#PCDATA)>
-        <!ELEMENT property (#PCDATA)>
-        <!ELEMENT constructor-arg (#PCDATA)>
+    () - 用来给元素分组;
+    | - 在列出的元素中选择一个;
+    + - 可出的元素至少出现1次（1或多次）;
+    * - 列出的元素允许出现0次到任意多次（0或多次）;
+    ? - 列出的元素出现0次或1次,;
+    , - 列出的元素必须按照指定的顺序出现。
+    -->
+    <!ELEMENT beans (import|bean|component-scan)*>
+    <!ELEMENT bean (property|constructor-arg)*>
+    <!ELEMENT component-scan (#PCDATA)>
+    <!ELEMENT import (#PCDATA)>
+    <!ELEMENT property (#PCDATA)>
+    <!ELEMENT constructor-arg (#PCDATA)>
 
-        <!ATTLIST bean
-                name   ID #REQUIRED
-                alias CDATA #IMPLIED
-                class    CDATA #REQUIRED
-                controller (true|false) #IMPLIED
-                interceptor (true|false) #IMPLIED
-                interface    CDATA #IMPLIED
-                scope (prototype|singleton) #IMPLIED
-                remote (sparrow|dubble|rmi) #IMPLIED
-                >
+    <!ATTLIST bean
+        name   ID #REQUIRED
+        alias CDATA #IMPLIED
+        class    CDATA #REQUIRED
+        controller (true|false) #IMPLIED
+        interceptor (true|false) #IMPLIED
+        interface    CDATA #IMPLIED
+        scope (prototype|singleton) #IMPLIED
+        remote (sparrow|dubble|rmi) #IMPLIED
+        >
 
 
+    <!ATTLIST property
+        name CDATA #REQUIRED
+        ref  CDATA #IMPLIED
+        value  CDATA #IMPLIED
+        placeholder CDATA #IMPLIED
+        >
 
-        <!ATTLIST property
-                name CDATA #REQUIRED
-                ref  CDATA #IMPLIED
-                value  CDATA #IMPLIED
-                placeholder CDATA #IMPLIED
-                >
+    <!ATTLIST constructor-arg
+        index CDATA #REQUIRED
+        name CDATA #REQUIRED
+        ref  CDATA #IMPLIED
+        value  CDATA #IMPLIED
+        type CDATA #IMPLIED
+        >
 
-        <!ATTLIST constructor-arg
-            index CDATA #REQUIRED
-            name CDATA #REQUIRED
-            ref  CDATA #IMPLIED
-            value  CDATA #IMPLIED
-            type CDATA #IMPLIED
-            >
-
-        <!ATTLIST import
-                resource CDATA #REQUIRED
-                >
+    <!ATTLIST import
+        resource CDATA #REQUIRED
+        >
