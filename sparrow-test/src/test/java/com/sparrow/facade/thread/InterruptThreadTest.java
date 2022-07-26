@@ -5,13 +5,15 @@ public class InterruptThreadTest {
        Thread thread= new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(5000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    System.out.println("hello");
-                }
+               while (true){
+                   try {
+                       System.out.println(Thread.currentThread().isInterrupted());
+                       Thread.sleep(100);
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }
+                   System.out.println(Thread.currentThread().isInterrupted());
+               }
             }
         });
        thread.start();
