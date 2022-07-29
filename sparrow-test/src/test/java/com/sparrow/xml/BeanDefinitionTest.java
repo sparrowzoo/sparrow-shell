@@ -14,7 +14,7 @@ public class BeanDefinitionTest {
 
         BeanDefinitionParserDelegate delegate=new BeanDefinitionParserDelegate();
 
-        BeanDefinitionReader definitionReader=new XmlBeanDefinitionReader(registry,delegate);
+        BeanDefinitionReader definitionReader=new XmlBeanDefinitionReader(registry,null,delegate);
         definitionReader.loadBeanDefinitions("/beans.xml");
         System.out.println(definitionReader.getRegistry());
 
