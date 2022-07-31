@@ -17,7 +17,7 @@ public class ReentrantLockTest {
                     }
                 }
             } catch (Exception e) {
-                System.err.println(Thread.currentThread().getName() + "中断...");
+                System.out.println(Thread.currentThread().getName() + "中断...");
             } finally {
                 lock.unlock();
             }
@@ -40,7 +40,7 @@ public class ReentrantLockTest {
 
         thread5.interrupt();
         thread4.interrupt();
-
-        thread1.interrupt();
+        while (true) {
+        }
     }
 }
