@@ -2,7 +2,7 @@ package com.sparrow.facade.thread;
 
 import java.util.concurrent.locks.LockSupport;
 
-public class ThreadInterruptTest {
+public class ThreadSupportTest {
     private static Integer lock = 0;
 
     public static void main(String[] args) throws InterruptedException {
@@ -10,13 +10,8 @@ public class ThreadInterruptTest {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！");
-                synchronized (lock) {
-                    System.out.println("entry " + Thread.currentThread().getName() + "-" + Thread.currentThread().getState());
-                    Thread.sleep(Integer.MAX_VALUE);
-                    //LockSupport.park();
-                    //lock.wait();
-                    System.out.println("exist " + Thread.currentThread().getName());
-                }
+                LockSupport.park();
+                System.out.println("end.....");
             } catch (Exception e) {
                 System.err.println(Thread.currentThread().getName() + "中断...");
             }
@@ -38,7 +33,6 @@ public class ThreadInterruptTest {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //thread.interrupt();
                     thread2.interrupt();
                 }
             }

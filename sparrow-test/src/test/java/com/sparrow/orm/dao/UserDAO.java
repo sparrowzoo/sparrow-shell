@@ -1,9 +1,8 @@
 package com.sparrow.orm.dao;
 
 import com.sparrow.orm.po.User;
-import com.sparrow.protocol.dao.DaoSupport;
-
 import java.util.List;
+import org.springframework.dao.support.DaoSupport;
 
 /**
  * Created by harry on 2018/2/6.

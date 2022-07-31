@@ -1,22 +1,18 @@
 package com.sparrow.facade.thread;
 
 import java.util.concurrent.locks.LockSupport;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class ThreadInterruptTest {
-    private static Integer lock = 0;
+public class ThreadInterruptLockTest {
+    private static ReentrantLock lock = new ReentrantLock();
 
     public static void main(String[] args) throws InterruptedException {
         Runnable runnable = () -> {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！");
-                synchronized (lock) {
-                    System.out.println("entry " + Thread.currentThread().getName() + "-" + Thread.currentThread().getState());
-                    Thread.sleep(Integer.MAX_VALUE);
-                    //LockSupport.park();
-                    //lock.wait();
-                    System.out.println("exist " + Thread.currentThread().getName());
-                }
+                lock.lock();
+                System.out.println(Thread.currentThread().getName()+"-ending ...");
             } catch (Exception e) {
                 System.err.println(Thread.currentThread().getName() + "中断...");
             }
@@ -27,6 +23,10 @@ public class ThreadInterruptTest {
         Thread.sleep(100);
         Thread thread2 = new Thread(runnable, "test2");
         thread2.start();
+        Thread.sleep(100);
+
+        Thread thread3 = new Thread(runnable, "test3");
+        thread3.start();
         //thread.interrupt();
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
@@ -38,7 +38,6 @@ public class ThreadInterruptTest {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //thread.interrupt();
                     thread2.interrupt();
                 }
             }
