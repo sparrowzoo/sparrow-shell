@@ -8,6 +8,8 @@ public class ReentrantLockTest {
 
         final ReentrantLock lock = new ReentrantLock(false);
 
+        lock.lock();
+        lock.lock();
         Runnable runnable = () -> {
                 try {
                     System.out.println(Thread.currentThread().getName() + " 准备拿锁");
