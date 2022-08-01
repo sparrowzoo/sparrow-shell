@@ -37,13 +37,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.inject.Inject;
 
 public abstract class AbstractImageExtractor implements ImageExtractor, ContainerAware {
+    @Inject
     private ImageExtractorRegistry imageExtractorRegistry;
-
-    public void setImageExtractorRegistry(ImageExtractorRegistry imageExtractorRegistry) {
-        this.imageExtractorRegistry = imageExtractorRegistry;
-    }
 
     public boolean hasOuterImage(List<ImageDTO> images) {
         if (CollectionsUtility.isNullOrEmpty(images)) {

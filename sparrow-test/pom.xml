@@ -96,6 +96,12 @@
             <groupId>com.sparrow</groupId>
             <artifactId>sparrow-protocol</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.sparrow</groupId>
+            <artifactId>sparrow-protocol-dao</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.sparrow</groupId>
             <artifactId>sparrow-container</artifactId>

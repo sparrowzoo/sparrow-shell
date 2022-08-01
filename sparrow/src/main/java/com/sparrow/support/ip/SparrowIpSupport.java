@@ -25,7 +25,9 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
+import javax.inject.Named;
 
+@Named("ipSupport")
 public class SparrowIpSupport implements IpSupport {
 
     private static volatile String cachedIpAddress;

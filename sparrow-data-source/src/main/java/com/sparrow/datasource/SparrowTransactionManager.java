@@ -18,6 +18,8 @@
 package com.sparrow.datasource;
 
 import com.sparrow.transaction.Transaction;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,20 +30,15 @@ import java.sql.SQLException;
 /**
  * 在start 之前要手动将suffix设置
  */
+@Named("transactionManager")
 public class SparrowTransactionManager implements com.sparrow.transaction.TransactionManager {
     private static Logger logger = LoggerFactory.getLogger(SparrowTransactionManager.class);
 
+    @Inject
     private ConnectionContextHolderImpl connectionHolder;
 
+    @Inject
     private DataSourceFactoryImpl dataSourceFactory;
-
-    public void setConnectionHolder(ConnectionContextHolderImpl connectionHolder) {
-        this.connectionHolder = connectionHolder;
-    }
-
-    public void setDataSourceFactory(DataSourceFactoryImpl dataSourceFactory) {
-        this.dataSourceFactory = dataSourceFactory;
-    }
 
     @Override
     public <T> T start(Transaction<T> transaction) {

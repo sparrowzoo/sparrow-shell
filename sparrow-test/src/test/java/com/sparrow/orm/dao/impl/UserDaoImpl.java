@@ -8,10 +8,12 @@ import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.template.impl.ORMStrategy;
 
 import java.util.List;
+import javax.inject.Named;
 
 /**
  * Created by harry on 2018/2/6.
  */
+@Named
 public class UserDaoImpl extends ORMStrategy<User, Long> implements UserDAO {
     public UserDaoImpl(){
     }

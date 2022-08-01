@@ -26,6 +26,13 @@ public class ValueHolder {
 
     private boolean ref;
 
+    /**
+     * constructor method Inject
+     * @param name
+     * @param value
+     * @param type
+     * @param ref
+     */
     public ValueHolder(String name, Object value, Class type, boolean ref) {
         this.name = name;
         this.value = value;
@@ -33,6 +40,12 @@ public class ValueHolder {
         this.ref = ref;
     }
 
+    /**
+     * property Inject
+     * @param name
+     * @param value
+     * @param ref
+     */
     public ValueHolder(String name, Object value, boolean ref) {
         this.name = name;
         this.value = value;

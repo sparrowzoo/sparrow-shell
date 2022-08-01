@@ -17,56 +17,17 @@
   -->
 
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
-        "beans.dtd">
+    "beans.dtd">
 <beans>
-
-    <bean name="initializer" class="com.sparrow.facade.initializer.SparrowContextInitializer"/>
-    <bean name="cacheMonitor" class="com.sparrow.redis.SparrowCacheMonitor"/>
-    <bean name="redisPool" class="com.sparrow.cache.impl.redis.RedisPool">
-        <property name="urls" value="127.0.0.1:6379"/>
-        <property name="cacheMonitor" ref="cacheMonitor"/>
-    </bean>
-    <bean name="cacheClient" class="com.sparrow.cache.impl.redis.RedisCacheClient">
-        <property name="redisPool" ref="redisPool"/>
-    </bean>
-
-
+    <component-scan>com.sparrow</component-scan>
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
         <constructor-arg index="1" name="initDatasourceKeys" value="user_default"/>
     </bean>
-    <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
-        <property name="dataSourceFactory" ref="dataSourceFactory"/>
-    </bean>
-
-    <bean name="transactionManager" class="com.sparrow.datasource.SparrowTransactionManager">
-        <property name="connectionHolder" ref="connectionContextHolder"/>
-        <property name="dataSourceFactory" ref="dataSourceFactory"/>
-    </bean>
-
     <bean name="user_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-
-
-<!--    <bean name="user_default" class="org.apache.commons.dbcp2.BasicDataSource">-->
-<!--        <property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
-<!--        &lt;!&ndash; <property name="url" value="jdbc\:mysql\://127.0.0.1/sparrow?useSSL=false&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC" />&ndash;&gt;-->
-<!--        <property name="url" value="${user.url}" />-->
-<!--        <property name="username" value="${user.username}"/>-->
-<!--        <property name="password" value="${user.password}"/>-->
-<!--        <property name="maxActive" value="10"/>-->
-<!--        <property name="initialSize" value="1"/>-->
-<!--        <property name="maxWait" value="6000"/>-->
-<!--        <property name="maxIdle" value="10"/>-->
-<!--        <property name="minIdle" value="3"/>-->
-<!--    </bean>-->
-
-
     <!--必须定义，且必须为prototype-->
     <bean name="user" class="com.sparrow.orm.po.User" scope="prototype"/>
-    <bean name="userDao" class="com.sparrow.orm.dao.impl.UserDaoImpl"/>
-
     <!--必须定义，且必须为prototype-->
     <bean name="event" class="com.sparrow.orm.po.Event" scope="prototype"/>
-    <bean name="eventDao" class="com.sparrow.orm.dao.impl.EventDAOImpl"/>
 </beans>

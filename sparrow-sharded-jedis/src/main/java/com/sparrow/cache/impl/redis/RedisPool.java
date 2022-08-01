@@ -19,19 +19,16 @@ package com.sparrow.cache.impl.redis;
 
 import com.sparrow.cache.CacheMonitor;
 import com.sparrow.constant.cache.KEY;
-import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
 import com.sparrow.exception.CacheConnectionException;
-
+import com.sparrow.protocol.constant.magic.Symbol;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
@@ -42,17 +39,11 @@ import redis.clients.util.Sharded;
 
 public class RedisPool implements ContainerAware {
     private Logger logger = LoggerFactory.getLogger(RedisPool.class);
-    private ShardedJedisPool pool = null;
     private CacheMonitor cacheMonitor;
-    private JedisPoolConfig config;
     private String urls;
 
     public void setCacheMonitor(CacheMonitor cacheMonitor) {
         this.cacheMonitor = cacheMonitor;
-    }
-
-    public CacheMonitor getCacheMonitor() {
-        return cacheMonitor;
     }
 
     public void setUrls(String urls) {
@@ -61,6 +52,14 @@ public class RedisPool implements ContainerAware {
 
     public void setConfig(JedisPoolConfig config) {
         this.config = config;
+    }
+
+    private JedisPoolConfig config;
+
+    private ShardedJedisPool pool = null;
+
+    public CacheMonitor getCacheMonitor() {
+        return cacheMonitor;
     }
 
     public String getInfo() {
