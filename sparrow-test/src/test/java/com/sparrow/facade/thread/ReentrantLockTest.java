@@ -1,5 +1,6 @@
 package com.sparrow.facade.thread;
 
+import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ReentrantLockTest {
@@ -9,21 +10,15 @@ public class ReentrantLockTest {
 
         final ReentrantLock lock = new ReentrantLock(false);
 
+
         Runnable runnable = () -> {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
                 lock.lock();
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！" + 100 + "ms");
-                //LockSupport.park();
-
+                LockSupport.park();
                 System.err.println(Thread.currentThread().getName() + "-" + Thread.currentThread().getState() + "-" + Thread.currentThread().isInterrupted());
-
-                Thread.sleep(Integer.MAX_VALUE);
-//                while (true) {
-//                    if (b == 0) {
-//                        break;
-//                    }
-//                }
+                //Thread.sleep(Integer.MAX_VALUE);
             } catch (Exception e) {
                 System.err.println(Thread.currentThread().getName() + "-" + Thread.currentThread().getState() + "-" + Thread.currentThread().isInterrupted());
                 System.err.println(Thread.currentThread().getName() + "中断...");
@@ -62,6 +57,7 @@ public class ReentrantLockTest {
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
+                    System.out.println("QueueCount"+ lock.getQueueLength());
                     System.out.println(thread1.getName() + "-" + thread1.getState() + "-" + thread1.isInterrupted());
                     System.out.println(thread2.getName() + "-" + thread2.getState() + "-" + thread2.isInterrupted());
                     System.out.println(thread3.getName() + "-" + thread3.getState() + "-" + thread3.isInterrupted());
@@ -73,13 +69,13 @@ public class ReentrantLockTest {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if (b == 1) {
-                        thread1.interrupt();
-                        thread2.interrupt();
+                    //if (b == 1) {
+                       // thread1.interrupt();
+                        //thread2.interrupt();
                         thread3.interrupt();
                         thread4.interrupt();
                         b = 0;
-                    }
+                    //}
                 }
             }
         });
