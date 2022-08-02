@@ -132,9 +132,9 @@ public class ClassUtility {
     private static List<Class> findClass(JarFile jarFile, String packagePath) {
         try {
             List<Class> classes = new ArrayList<Class>();
-            Enumeration<JarEntry> entrys = jarFile.entries();
-            while (entrys.hasMoreElements()) {
-                JarEntry jarEntry = entrys.nextElement();
+            Enumeration<JarEntry> entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                JarEntry jarEntry = entries.nextElement();
                 if (jarEntry.getName().startsWith(packagePath) && jarEntry.getName().endsWith(".class")) {
                     Class implClass = Class.forName(jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
                         .substring(0, jarEntry.getName().indexOf(Symbol.DOT)));
