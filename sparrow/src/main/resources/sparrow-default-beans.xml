@@ -2,12 +2,10 @@
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
     "beans.dtd">
 <beans>
-    <component-scan>com.sparrow</component-scan>
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
         <constructor-arg index="1" name="initDatasourceKeys" value="sparrow_default" type="string"/>
     </bean>
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-    <bean name="websiteConfigInterceptor" class="com.sparrow.support.WebsiteConfigInterceptor" interceptor="true"/>
 </beans>

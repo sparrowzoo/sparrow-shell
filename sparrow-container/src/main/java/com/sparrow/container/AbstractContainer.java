@@ -263,7 +263,7 @@ public abstract class AbstractContainer implements Container {
                     value = earlySingletonRegistry.getObject(refName);
                 }
                 if (value == null) {
-                    logger.error("refName {} is null", refName);
+                    logger.error("beanName {} ,refName {} is null", beanName,refName);
                     continue;
                 }
             }

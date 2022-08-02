@@ -17,9 +17,11 @@
 package com.sparrow.support;
 
 import com.sparrow.servlet.HandlerInterceptor;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Named
 public class WebsiteConfigInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response) {

@@ -129,21 +129,25 @@ public class ClassUtility {
         return classes;
     }
 
-    private static List<Class> findClass(JarFile jarFile, String packagePath)
-        throws ClassNotFoundException {
-        List<Class> classes = new ArrayList<Class>();
-        Enumeration<JarEntry> entrys = jarFile.entries();
-        while (entrys.hasMoreElements()) {
-            JarEntry jarEntry = entrys.nextElement();
-            if (jarEntry.getName().startsWith(packagePath) && jarEntry.getName().endsWith(".class")) {
-                Class implClass = Class.forName(jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
-                    .substring(0, jarEntry.getName().indexOf(Symbol.DOT)));
-                if (!implClass.isInterface()) {
-                    classes.add(implClass);
+    private static List<Class> findClass(JarFile jarFile, String packagePath) {
+        try {
+            List<Class> classes = new ArrayList<Class>();
+            Enumeration<JarEntry> entrys = jarFile.entries();
+            while (entrys.hasMoreElements()) {
+                JarEntry jarEntry = entrys.nextElement();
+                if (jarEntry.getName().startsWith(packagePath) && jarEntry.getName().endsWith(".class")) {
+                    Class implClass = Class.forName(jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
+                        .substring(0, jarEntry.getName().indexOf(Symbol.DOT)));
+                    if (!implClass.isInterface()) {
+                        classes.add(implClass);
+                    }
                 }
             }
+            return classes;
+        } catch (Exception e) {
+            logger.error("find class exception packagePath {}", packagePath);
+            return null;
         }
-        return classes;
     }
 
     private static List<Class> findClass(File directory, String packageName) {
