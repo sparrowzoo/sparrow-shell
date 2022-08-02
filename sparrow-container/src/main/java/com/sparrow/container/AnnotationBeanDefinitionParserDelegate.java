@@ -16,33 +16,27 @@
  */
 package com.sparrow.container;
 
+import java.lang.reflect.Field;
 import javax.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader {
+public class AnnotationBeanDefinitionParserDelegate {
 
-    /**
-     * Logger available to subclasses.
-     */
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-    @Inject
-    private final SimpleBeanDefinitionRegistry registry;
-
-    protected AbstractBeanDefinitionReader(SimpleBeanDefinitionRegistry registry) {
-        this.registry = registry;
-    }
-
-    @Override
-    public final SimpleBeanDefinitionRegistry getRegistry() {
-        return this.registry;
-    }
-
-    @Override
-    public void loadBeanDefinitions(String... resources) throws Exception {
-        for (String resource : resources) {
-            loadBeanDefinitions(resource);
+    public BeanDefinition processBeanDefinition(Class clazz) throws ClassNotFoundException {
+        GenericBeanDefinition bd = new GenericBeanDefinition();
+        bd.setSingleton(true);
+        bd.setClassName(clazz.getName());
+        bd.setController(false);
+        bd.setInterceptor(false);
+        bd.setPrototype(false);
+        Field[] fields = clazz.getFields();
+        for (Field field : fields) {
+            Inject inject = field.getAnnotation(Inject.class);
+            if (inject == null) {
+                continue;
+            }
+            ValueHolder valueHolder = new ValueHolder(field.getName(), field.getName(), true);
+            bd.addProperty(valueHolder);
         }
+        return bd;
     }
 }

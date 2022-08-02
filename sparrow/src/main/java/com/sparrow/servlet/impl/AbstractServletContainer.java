@@ -24,6 +24,7 @@ import com.sparrow.support.web.ServletUtility;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.StringUtility;
 
+import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -39,6 +40,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractServletContainer implements ServletContainer {
     private static Logger logger = LoggerFactory.getLogger(AbstractServletContainer.class);
     private ServletUtility servletUtility = ServletUtility.getInstance();
+    @Inject
     private CookieUtility cookieUtility;
 
     public void setCookieUtility(CookieUtility cookieUtility) {

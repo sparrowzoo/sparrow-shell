@@ -7,8 +7,11 @@ public class ParkTest {
         Thread thread = new Thread(new Runnable() {
             @Override public void run() {
                 LockSupport.park();
-               // Thread.currentThread().interrupt();
-                System.out.println("end...."+Thread.currentThread().isInterrupted());
+//                try {
+//                    Thread.sleep(1L);
+//                } catch (InterruptedException e) {
+//                }
+                System.out.println("end...." + Thread.currentThread().isInterrupted());
             }
         });
         thread.start();

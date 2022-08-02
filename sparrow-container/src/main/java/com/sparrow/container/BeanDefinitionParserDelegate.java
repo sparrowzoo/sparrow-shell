@@ -195,12 +195,8 @@ public class BeanDefinitionParserDelegate {
             }
             Element ele = (Element) node;
             if (nodeNameEquals(node, PROPERTY_ELEMENT)) {
-                boolean hasPlaceholder = ele.hasAttribute(PLACEHOLDER_ATTRIBUTE);
                 ValueHolder valueHolder = this.parsePropertyValue(ele);
                 bd.addProperty(valueHolder);
-                if (hasPlaceholder) {
-                    bd.addPlaceholder(ele.getAttribute(PLACEHOLDER_ATTRIBUTE), valueHolder);
-                }
                 continue;
             }
             if (nodeNameEquals(node, CONSTRUCTOR_ARG_ELEMENT)) {

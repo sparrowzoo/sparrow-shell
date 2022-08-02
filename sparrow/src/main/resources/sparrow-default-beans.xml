@@ -2,26 +2,12 @@
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
     "beans.dtd">
 <beans>
-    <!---当前进程的所有datasource实例-->
+    <component-scan>com.sparrow</component-scan>
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
         <constructor-arg index="1" name="initDatasourceKeys" value="sparrow_default" type="string"/>
     </bean>
-    <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
-        <property name="dataSourceFactory" ref="dataSourceFactory"/>
-    </bean>
-    <bean name="ipSupport" class="com.sparrow.support.ip.SparrowIpSupport"/>
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-    <bean name="transactionManager" class="com.sparrow.datasource.SparrowTransactionManager">
-        <property name="dataSourceFactory" ref="dataSourceFactory"/>
-        <property name="connectionHolder" ref="connectionContextHolder"/>
-    </bean>
-    <bean name="imageExtractorRegistry" class="com.sparrow.image.ImageExtractorRegistry"/>
-    <bean name="htmlImageExtractor" class="com.sparrow.image.HtmlImageExtractor">
-        <property name="imageExtractorRegistry" ref="imageExtractorRegistry"/>
-    </bean>
-    <bean name="fileService" class="com.sparrow.io.impl.JDKFileService"/>
-    <bean name="cookieUtility" class="com.sparrow.support.web.CookieUtility"/>
     <bean name="websiteConfigInterceptor" class="com.sparrow.support.WebsiteConfigInterceptor" interceptor="true"/>
 </beans>

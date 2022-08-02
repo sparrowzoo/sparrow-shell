@@ -26,6 +26,7 @@ import com.sparrow.exception.DuplicateActionMethodException;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public abstract class AbstractContainer implements Container {
     protected String configLocation = "/system_config.properties";
 
     protected SimpleSingletonRegistry singletonRegistry = new SimpleSingletonRegistry();
+
+    protected SimpleSingletonRegistry earlySingletonRegistry = new SimpleSingletonRegistry();
 
     private ControllerRegister controllerRegister = new ControllerRegister();
 
@@ -144,7 +147,7 @@ public abstract class AbstractContainer implements Container {
             return null;
         }
         try {
-            o = (T) this.instance(bd);
+            o = (T) this.instance(bd, beanName);
         } catch (Throwable e) {
             logger.error("get bean error name {}", beanName);
             throw new RuntimeException(e);
@@ -180,32 +183,39 @@ public abstract class AbstractContainer implements Container {
 
     private <T> void set(T currentObject, String beanName, Object val) {
         Class<?> currentClass = currentObject.getClass();
-        List<Method> methods = this.setMethods.get(currentClass.getSimpleName());
-        // set方法
-        String setBeanMethod = PropertyNamer.setter(beanName);
-        for (Method method : methods) {
-            if (!method.getName().equals(setBeanMethod)) {
-                continue;
-            }
+        Field field = null;
+        try {
+            field = currentClass.getDeclaredField(beanName);
+        } catch (NoSuchFieldException e) {
             try {
-                Class parameterType = method.getParameterTypes()[0];
-                if (!parameterType.isAssignableFrom(val.getClass())) {
-                    Object v = new TypeConverter("", val, parameterType).convert();
-                    if (v == null) {
-                        continue;
-                    } else {
-                        val = v;
-                    }
-                }
-                method.invoke(currentObject, val);
-            } catch (Throwable e) {
-                logger.error("set ref error {}, bean name:{}", e, beanName);
+                field = currentClass.getSuperclass().getDeclaredField(beanName);
+            } catch (NoSuchFieldException exception) {
+                logger.error("filed not found {}", field.getName());
+                return;
             }
-            return;
         }
+
+        try {
+            Class parameterType = field.getType();
+            if (!parameterType.isAssignableFrom(val.getClass())) {
+                Object v = new TypeConverter("", val, parameterType).convert();
+                if (v == null) {
+                    logger.error("field value is null");
+                    return;
+                } else {
+                    val = v;
+                }
+            }
+            // set方法
+            field.setAccessible(true);
+            field.set(currentObject, val);
+        } catch (Throwable e) {
+            logger.error("set ref error {}, bean name:{}", e, beanName);
+        }
+        return;
     }
 
-    protected Object instance(BeanDefinition bd) {
+    public Object earlyInstance(BeanDefinition bd) {
         Object instance = null;
         Class clazz = null;
         try {
@@ -236,7 +246,14 @@ public abstract class AbstractContainer implements Container {
                 return null;
             }
         }
+        return instance;
+    }
 
+    protected Object instance(BeanDefinition bd, String beanName) {
+        Object instance = this.earlySingletonRegistry.getObject(beanName);
+        if (instance == null) {
+            instance = this.earlyInstance(bd);
+        }
         List<ValueHolder> valueHolders = bd.getPropertyValues();
         for (ValueHolder valueHolder : valueHolders) {
             Object value = valueHolder.getValue();
@@ -244,7 +261,10 @@ public abstract class AbstractContainer implements Container {
                 String refName = value.toString();
                 value = singletonRegistry.getObject(refName);
                 if (value == null) {
-                    logger.warn("{} ref is null", refName);
+                    value = earlySingletonRegistry.getObject(refName);
+                }
+                if (value == null) {
+                    logger.error("refName {} is null", refName);
                     continue;
                 }
             }

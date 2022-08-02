@@ -23,12 +23,14 @@ import com.sparrow.constant.cache.key.KeyUser;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.JSUtility;
 import com.sparrow.utility.StringUtility;
+import javax.inject.Named;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Named
 public class CookieUtility {
     private static Logger logger = LoggerFactory.getLogger(CookieUtility.class);
 

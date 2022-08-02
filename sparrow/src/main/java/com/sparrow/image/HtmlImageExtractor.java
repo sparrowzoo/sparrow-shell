@@ -25,10 +25,11 @@ import com.sparrow.protocol.dto.ImageDTO;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.HtmlUtility;
-
 import java.util.List;
 import java.util.regex.Matcher;
+import javax.inject.Named;
 
+@Named
 public class HtmlImageExtractor extends AbstractImageExtractor {
 
     @Override

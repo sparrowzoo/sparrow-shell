@@ -19,10 +19,9 @@ package com.sparrow.facade.initializer;
 
 import com.sparrow.container.Container;
 import com.sparrow.support.Initializer;
+import javax.inject.Named;
 
-/**
- * Created by harry on 2018/1/19.
- */
+@Named("initializer")
 public class SparrowContextInitializer implements Initializer {
     @Override
     public void init(Container container) {

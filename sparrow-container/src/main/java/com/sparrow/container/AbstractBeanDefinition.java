@@ -17,14 +17,8 @@
 package com.sparrow.container;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
-import javax.inject.Named;
-import javax.inject.Qualifier;
-import javax.inject.Scope;
-import javax.inject.Singleton;
 
 public class AbstractBeanDefinition implements BeanDefinition {
 
@@ -38,17 +32,11 @@ public class AbstractBeanDefinition implements BeanDefinition {
     private Object[] constructorArgs;
     private List<ValueHolder> propertyList = new ArrayList<>();
 
-    private Map<String, ValueHolder> placeholder = new HashMap();
     private String className;
     private String scope;
 
-
     public void addProperty(ValueHolder valueHolder) {
         this.propertyList.add(valueHolder);
-    }
-
-    public void addPlaceholder(String placeholder, ValueHolder valueHolder) {
-        this.placeholder.put(placeholder, valueHolder);
     }
 
     public void addConstructorArg(int index, ValueHolder valueHolder) {

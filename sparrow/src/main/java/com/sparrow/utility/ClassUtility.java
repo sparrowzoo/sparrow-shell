@@ -34,8 +34,11 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClassUtility {
+    private static Logger logger = LoggerFactory.getLogger(ClassUtility.class);
 
     public static String getEntityNameByClass(Class entity) {
         String entityName = entity.getSimpleName();
@@ -83,28 +86,28 @@ public class ClassUtility {
      * @param path        the absolute path within the classpath (never a leading slash)
      * @return a mutable Set of matching Resource instances
      * @throws ClassNotFoundException, IOException, URISyntaxException
-     *
-     * 參考
-     * Find all class location resources with the given path via the ClassLoader. Called by {@link #findAllClassPathResources(String)}.
+     *                                 <p>
+     *                                 參考 Find all class location resources with the given path via the ClassLoader.
+     *                                 Called by {@link #findAllClassPathResources(String)}.
      * @since 4.1.1
      * <p>
      *
      * <pre>
      * protected Set<Resource> doFindAllClassPathResources(String path) throws IOException {
-     * 		Set<Resource> result = new LinkedHashSet<>(16);
-     * 		ClassLoader cl = getClassLoader();
-     * 		Enumeration<URL> resourceUrls = (cl != null ? cl.getResources(path) : ClassLoader.getSystemResources(path));
-     * 		while (resourceUrls.hasMoreElements()) {
-     * 			URL url = resourceUrls.nextElement();
-     * 			result.add(convertClassLoaderURL(url));
-     *          }
-     * 		    if (!StringUtils.hasLength(path)) {
-     * 			    // The above result is likely to be incomplete, i.e. only containing file system references.
-     * 			    // We need to have pointers to each of the jar files on the classpath as well...
-     * 			    addAllClassLoaderJarRoots(cl, result);
-     *        }
-     * 		return result;
-     * 		}
+     * Set<Resource> result = new LinkedHashSet<>(16);
+     * ClassLoader cl = getClassLoader();
+     * Enumeration<URL> resourceUrls = (cl != null ? cl.getResources(path) : ClassLoader.getSystemResources(path));
+     * while (resourceUrls.hasMoreElements()) {
+     * URL url = resourceUrls.nextElement();
+     * result.add(convertClassLoaderURL(url));
+     * }
+     * if (!StringUtils.hasLength(path)) {
+     * // The above result is likely to be incomplete, i.e. only containing file system references.
+     * // We need to have pointers to each of the jar files on the classpath as well...
+     * addAllClassLoaderJarRoots(cl, result);
+     * }
+     * return result;
+     * }
      * </pre>
      */
     public static List<Class> getClasses(
@@ -143,8 +146,7 @@ public class ClassUtility {
         return classes;
     }
 
-    private static List<Class> findClass(File directory, String packageName)
-        throws ClassNotFoundException {
+    private static List<Class> findClass(File directory, String packageName) {
         List<Class> classes = new ArrayList<Class>();
         if (directory == null || !directory.exists()) {
             return null;
@@ -157,8 +159,12 @@ public class ClassUtility {
             if (file.isDirectory()) {
                 classes.addAll(findClass(file, packageName + Symbol.DOT + file.getName()));
             } else if (file.getName().endsWith(".class")) {
-                classes.add(Class.forName(
-                    packageName + Symbol.DOT + file.getName().substring(0, file.getName().length() - 6)));
+                String clazzName = packageName + Symbol.DOT + file.getName().substring(0, file.getName().length() - 6);
+                try {
+                    classes.add(Class.forName(clazzName));
+                } catch (Throwable e) {
+                    logger.error("class can't  init {}", clazzName);
+                }
             }
         }
 

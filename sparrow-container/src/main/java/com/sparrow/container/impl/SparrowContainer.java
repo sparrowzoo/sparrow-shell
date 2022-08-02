@@ -19,6 +19,7 @@ package com.sparrow.container.impl;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.AbstractContainer;
+import com.sparrow.container.AnnotationBeanDefinitionParserDelegate;
 import com.sparrow.container.AnnotationBeanDefinitionReader;
 import com.sparrow.container.BeanDefinition;
 import com.sparrow.container.BeanDefinitionParserDelegate;
@@ -27,27 +28,37 @@ import com.sparrow.container.ContainerAware;
 import com.sparrow.container.SimpleBeanDefinitionRegistry;
 import com.sparrow.container.XmlBeanDefinitionReader;
 import com.sparrow.exception.CacheNotFoundException;
-import com.sparrow.protocol.LoginToken;
-import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.protocol.dto.AuthorDTO;
-import com.sparrow.protocol.dto.ImageDTO;
-import com.sparrow.protocol.dto.SimpleItemDTO;
-import com.sparrow.protocol.pager.PagerQuery;
 import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.Initializer;
-import com.sparrow.support.LoginDialog;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
-
 import java.util.Iterator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SparrowContainer extends AbstractContainer {
     private static Logger logger = LoggerFactory.getLogger(SparrowContainer.class);
+
+    private void initEarlySingleton() {
+        Iterator<String> iterator = this.beanDefinitionRegistry.keyIterator();
+        while (iterator.hasNext()) {
+            String beanName = iterator.next();
+            try {
+                BeanDefinition bd = beanDefinitionRegistry.getObject(beanName);
+                this.initMethod(bd);
+                if (bd.isSingleton()) {
+                    Object o = this.earlyInstance(bd);
+                    this.earlySingletonRegistry.pubObject(beanName, o);
+                    if (bd.alias() != null) {
+                        this.earlySingletonRegistry.pubObject(bd.alias(), o);
+                    }
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
 
     @Override
     public void init() {
@@ -58,25 +69,28 @@ public class SparrowContainer extends AbstractContainer {
             logger.info("-------------init bean ...---------------------------");
             SimpleBeanDefinitionRegistry registry = new SimpleBeanDefinitionRegistry();
             BeanDefinitionParserDelegate delegate = new BeanDefinitionParserDelegate();
-            AnnotationBeanDefinitionReader annotationBeanDefinitionReader = new AnnotationBeanDefinitionReader(registry);
+
+            AnnotationBeanDefinitionParserDelegate annotationDelegate = new AnnotationBeanDefinitionParserDelegate();
+            AnnotationBeanDefinitionReader annotationBeanDefinitionReader = new AnnotationBeanDefinitionReader(registry, annotationDelegate);
             BeanDefinitionReader definitionReader = new XmlBeanDefinitionReader(registry, annotationBeanDefinitionReader, delegate);
 
             definitionReader.loadBeanDefinitions(this.contextConfigLocation);
 
             this.beanDefinitionRegistry = registry;
-
+            this.initEarlySingleton();
             Iterator<String> iterator = registry.keyIterator();
             while (iterator.hasNext()) {
                 String beanName = iterator.next();
                 try {
                     BeanDefinition bd = registry.getObject(beanName);
-                    this.initMethod(bd);
                     if (bd.isSingleton()) {
-                        Object o = this.instance(bd);
+                        Object o = this.instance(bd, beanName);
                         this.singletonRegistry.pubObject(beanName, o);
                         if (bd.alias() != null) {
                             this.singletonRegistry.pubObject(bd.alias(), o);
                         }
+                        this.earlySingletonRegistry.removeObject(beanName);
+                        this.earlySingletonRegistry.removeObject(bd.alias());
                         if (bd.isController()) {
                             this.assembleController(beanName, o);
                         }
@@ -107,13 +121,7 @@ public class SparrowContainer extends AbstractContainer {
         } catch (Exception e) {
             logger.error("ioc init error", e);
         } finally {
-            this.initProxyBean(Result.class);
-            this.initProxyBean(LoginToken.class);
-            this.initProxyBean(LoginDialog.class);
-            this.initProxyBean(PagerQuery.class);
-            this.initProxyBean(AuthorDTO.class);
-            this.initProxyBean(ImageDTO.class);
-            this.initProxyBean(SimpleItemDTO.class);
+            //annotation proxy
         }
     }
 

@@ -21,10 +21,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Named;
 
 /**
  * 保持线程请求中的数据 与web应用程序解耦
  */
+@Named("connectionContextHolder")
 public class ConnectionContextHolderImpl implements ConnectionContextHolder {
 
     private DataSourceFactory dataSourceFactory;

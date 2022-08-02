@@ -37,6 +37,10 @@
             <groupId>com.sparrow</groupId>
             <artifactId>sparrow</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

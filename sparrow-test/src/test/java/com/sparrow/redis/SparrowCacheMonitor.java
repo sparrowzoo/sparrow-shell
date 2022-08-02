@@ -20,10 +20,9 @@ package com.sparrow.redis;
 import com.sparrow.cache.CacheMonitor;
 import com.sparrow.concurrent.AbstractLock;
 import com.sparrow.constant.cache.KEY;
+import javax.inject.Named;
 
-/**
- * Created by harry on 2018/1/25.
- */
+@Named("cacheMonitor")
 public class SparrowCacheMonitor implements CacheMonitor{
     @Override
     public boolean before(Long startTime, KEY key) {

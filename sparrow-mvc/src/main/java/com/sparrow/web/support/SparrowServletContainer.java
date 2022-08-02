@@ -22,15 +22,15 @@ import com.sparrow.support.pager.SparrowPagerResult;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.CollectionsUtility;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
  * Sparrow framework controller support class that used by sparrow only
- *
- * @version 1.0
  */
+@Named
 public class SparrowServletContainer extends AbstractServletContainer {
 
     private HttpContext httpContext = HttpContext.getContext();

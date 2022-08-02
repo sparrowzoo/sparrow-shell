@@ -24,24 +24,18 @@ import com.sparrow.cache.CacheList;
 import com.sparrow.cache.CacheSet;
 import com.sparrow.cache.CacheSortedSet;
 import com.sparrow.cache.CacheString;
-public class RedisCacheClient extends AbstractCommand implements CacheClient {
+import com.sparrow.container.Container;
+import com.sparrow.container.ContainerAware;
+import javax.inject.Named;
 
+@Named("cacheClient")
+public class RedisCacheClient extends AbstractCommand implements CacheClient, ContainerAware {
     private CacheString cacheString;
     private CacheSet cacheSet;
     private CacheSortedSet cacheSortedSet;
     private CacheHash cacheHash;
     private CacheKey cacheKey;
     private CacheList cacheList;
-
-    public void setRedisPool(RedisPool redisPool) {
-        this.redisPool = redisPool;
-        this.cacheKey = new RedisCacheKey(redisPool);
-        this.cacheString = new RedisCacheString(redisPool);
-        this.cacheSet = new RedisCacheSet(redisPool);
-        this.cacheSortedSet = new RedisCacheSortedSet(redisPool);
-        this.cacheHash = new RedisCacheHash(redisPool);
-        this.cacheList = new RedisCacheList(redisPool);
-    }
 
     @Override
     public CacheString string() {
@@ -71,5 +65,14 @@ public class RedisCacheClient extends AbstractCommand implements CacheClient {
     @Override
     public CacheList list() {
         return cacheList;
+    }
+
+    @Override public void aware(Container container, String beanName) {
+        this.cacheKey = new RedisCacheKey(redisPool);
+        this.cacheString = new RedisCacheString(redisPool);
+        this.cacheSet = new RedisCacheSet(redisPool);
+        this.cacheSortedSet = new RedisCacheSortedSet(redisPool);
+        this.cacheHash = new RedisCacheHash(redisPool);
+        this.cacheList = new RedisCacheList(redisPool);
     }
 }
