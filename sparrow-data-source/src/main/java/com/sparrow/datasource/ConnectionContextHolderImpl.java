@@ -27,7 +27,7 @@ import javax.inject.Named;
 /**
  * 保持线程请求中的数据 与web应用程序解耦
  */
-@Named("connectionContextHolder")
+@Named
 public class ConnectionContextHolderImpl implements ConnectionContextHolder {
 
     @Inject

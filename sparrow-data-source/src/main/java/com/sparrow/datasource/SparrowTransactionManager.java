@@ -35,7 +35,7 @@ public class SparrowTransactionManager implements com.sparrow.transaction.Transa
     private static Logger logger = LoggerFactory.getLogger(SparrowTransactionManager.class);
 
     @Inject
-    private ConnectionContextHolderImpl connectionHolder;
+    private ConnectionContextHolderImpl connectionContextHolder;
 
     @Inject
     private DataSourceFactoryImpl dataSourceFactory;
@@ -54,7 +54,7 @@ public class SparrowTransactionManager implements com.sparrow.transaction.Transa
             connection.setAutoCommit(false);
             connection.setReadOnly(false);
             //绑定到事务的线程上
-            this.connectionHolder.bindConnection(connection);
+            this.connectionContextHolder.bindConnection(connection);
             T result = transaction.execute();
             connection.commit();
             return result;
@@ -68,7 +68,7 @@ public class SparrowTransactionManager implements com.sparrow.transaction.Transa
             logger.error("db transaction error", e);
             throw new RuntimeException("db transaction error", e);
         } finally {
-            this.connectionHolder.unbindConnection(connection);
+            this.connectionContextHolder.unbindConnection(connection);
         }
     }
 }

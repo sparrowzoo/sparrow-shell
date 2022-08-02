@@ -41,8 +41,6 @@ import org.slf4j.LoggerFactory;
 public class SparrowContainer extends AbstractContainer {
     private static Logger logger = LoggerFactory.getLogger(SparrowContainer.class);
 
-
-
     private void initProxyBeans() {
         Iterator<String> iterator = this.beanDefinitionRegistry.keyIterator();
         while (iterator.hasNext()) {
@@ -50,7 +48,7 @@ public class SparrowContainer extends AbstractContainer {
             try {
                 BeanDefinition bd = beanDefinitionRegistry.getObject(beanName);
                 if (!bd.isSingleton()) {
-                    this.initMethod(bd);
+                    //this.initMethod(bd);
                     Class clazz = Class.forName(bd.getBeanClassName());
                     this.initProxyBean(clazz);
                 }
@@ -66,7 +64,7 @@ public class SparrowContainer extends AbstractContainer {
             try {
                 BeanDefinition bd = beanDefinitionRegistry.getObject(beanName);
                 this.initMethod(bd);
-                if (bd.isSingleton()) {
+                if (bd.isSingleton() && !bd.isController()) {
                     Object o = this.earlyInstance(bd);
                     this.earlySingletonRegistry.pubObject(beanName, o);
                     if (bd.alias() != null) {

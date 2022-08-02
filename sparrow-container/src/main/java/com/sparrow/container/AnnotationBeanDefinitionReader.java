@@ -16,6 +16,8 @@
  */
 package com.sparrow.container;
 
+import com.sparrow.protocol.Controller;
+import com.sparrow.protocol.Exclude;
 import com.sparrow.protocol.POJO;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
@@ -36,7 +38,11 @@ public class AnnotationBeanDefinitionReader extends AbstractBeanDefinitionReader
         for (String basePackage : basePackageArray) {
             List<Class> classes = ClassUtility.getClasses(basePackage);
             for (Class clazz : classes) {
-                if (clazz.isAssignableFrom(POJO.class)) {
+                if (POJO.class.isAssignableFrom(clazz)) {
+                    Exclude exclude = (Exclude) clazz.getAnnotation(Exclude.class);
+                    if (exclude != null && "POJO".equals(exclude.value())) {
+                        continue;
+                    }
                     GenericBeanDefinition bd = new GenericBeanDefinition();
                     bd.setClassName(clazz.getName());
                     bd.setPrototype(true);
@@ -44,16 +50,20 @@ public class AnnotationBeanDefinitionReader extends AbstractBeanDefinitionReader
                     continue;
                 }
                 Named named = (Named) clazz.getAnnotation(Named.class);
-                if (named == null) {
+                Controller controller = (Controller) clazz.getAnnotation(Controller.class);
+                if (named == null && controller == null) {
                     continue;
                 }
-                String beanName = named.value();
-                if (StringUtility.isNullOrEmpty(beanName)) {
-                    beanName = StringUtility.setFirstByteLowerCase(clazz.getSimpleName());
-                    int implIndex = beanName.indexOf("Impl");
-                    if (implIndex > 0) {
-                        beanName = beanName.substring(0, implIndex);
-                    }
+                String beanName = StringUtility.setFirstByteLowerCase(clazz.getSimpleName());
+                if (named != null && !StringUtility.isNullOrEmpty(named.value())) {
+                    beanName = named.value();
+                }
+                int implIndex = beanName.indexOf("Impl");
+                if (implIndex > 0) {
+                    beanName = beanName.substring(0, implIndex);
+                }
+                if (beanName.endsWith("DAO")) {
+                    beanName = beanName.replace("DAO", "Dao");
                 }
                 BeanDefinition bd = this.delegate.processBeanDefinition(clazz);
                 this.getRegistry().pubObject(beanName, bd);

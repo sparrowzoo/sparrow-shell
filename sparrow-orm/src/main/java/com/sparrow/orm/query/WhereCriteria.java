@@ -17,13 +17,14 @@
 
 package com.sparrow.orm.query;
 
+import com.sparrow.protocol.Exclude;
 import com.sparrow.protocol.dao.RowMapper;
 import com.sparrow.protocol.pager.PagerQuery;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+@Exclude
 public class WhereCriteria extends PagerQuery {
     public WhereCriteria() {
         super(0, 0);

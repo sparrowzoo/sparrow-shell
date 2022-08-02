@@ -190,7 +190,7 @@ public abstract class AbstractContainer implements Container {
             try {
                 field = currentClass.getSuperclass().getDeclaredField(beanName);
             } catch (NoSuchFieldException exception) {
-                logger.error("filed not found {}", field.getName());
+                logger.error("filed not found {}", beanName);
                 return;
             }
         }
@@ -200,7 +200,7 @@ public abstract class AbstractContainer implements Container {
             if (!parameterType.isAssignableFrom(val.getClass())) {
                 Object v = new TypeConverter("", val, parameterType).convert();
                 if (v == null) {
-                    logger.error("field value is null");
+                    logger.error("field value is null className {},refName {}, value {}", currentClass.getName(), beanName, val);
                     return;
                 } else {
                     val = v;
@@ -263,7 +263,7 @@ public abstract class AbstractContainer implements Container {
                     value = earlySingletonRegistry.getObject(refName);
                 }
                 if (value == null) {
-                    logger.error("beanName {} ,refName {} is null", beanName,refName);
+                    logger.error("beanName {} ,refName {} is null", beanName, refName);
                     continue;
                 }
             }
