@@ -18,6 +18,7 @@ package com.sparrow.container;
 
 import java.lang.reflect.Field;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class AnnotationBeanDefinitionParserDelegate {
 
@@ -28,15 +29,29 @@ public class AnnotationBeanDefinitionParserDelegate {
         bd.setController(false);
         bd.setInterceptor(false);
         bd.setPrototype(false);
-        Field[] fields = clazz.getFields();
+        Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
-            Inject inject = field.getAnnotation(Inject.class);
-            if (inject == null) {
-                continue;
-            }
-            ValueHolder valueHolder = new ValueHolder(field.getName(), field.getName(), true);
-            bd.addProperty(valueHolder);
+            addProperty(bd, field);
+        }
+        Class superClazz = clazz.getSuperclass();
+        fields = superClazz.getDeclaredFields();
+        for (Field field : fields) {
+            addProperty(bd, field);
         }
         return bd;
+    }
+
+    private void addProperty(GenericBeanDefinition bd, Field field) {
+        Inject inject = field.getAnnotation(Inject.class);
+        if (inject == null) {
+            return;
+        }
+        Named refNamed = field.getAnnotation(Named.class);
+        String refName = field.getName();
+        if (refNamed != null) {
+            refName = refNamed.value();
+        }
+        ValueHolder valueHolder = new ValueHolder(field.getName(), refName, true);
+        bd.addProperty(valueHolder);
     }
 }

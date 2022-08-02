@@ -29,10 +29,7 @@
     <bean name="cacheClient" class="com.sparrow.cache.impl.redis.RedisCacheClient">
         <property name="redisPool" ref="redisPool"/>
     </bean>
-    <bean name="cookieUtility" class="com.sparrow.support.web.CookieUtility">
-        <property name="cacheClient" ref="cacheClient"/>
-        <property name="backend" value="false"/>
-    </bean>
+    <bean name="cookieUtility" class="com.sparrow.support.web.CookieUtility"/>
 
     <bean name="sparrowServletContainer" class="com.sparrow.web.support.SparrowServletContainer">
         <property name="cookieUtility" ref="cookieUtility"/>
@@ -53,7 +50,5 @@
     <bean name="sparrowHandlerInterceptor" class="com.sparrow.interceptor.SparrowHandlerInterceptor"
           interceptor="true"/>
 
-    <bean name="classLoaderController" class="com.sparrow.controller.ClassLoaderController" controller="true">
-
-    </bean>
+    <bean name="classLoaderController" class="com.sparrow.controller.ClassLoaderController" controller="true"/>
 </beans>

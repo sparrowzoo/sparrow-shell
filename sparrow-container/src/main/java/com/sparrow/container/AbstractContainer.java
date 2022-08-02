@@ -212,7 +212,6 @@ public abstract class AbstractContainer implements Container {
         } catch (Throwable e) {
             logger.error("set ref error {}, bean name:{}", e, beanName);
         }
-        return;
     }
 
     public Object earlyInstance(BeanDefinition bd) {
@@ -275,8 +274,9 @@ public abstract class AbstractContainer implements Container {
 
     @Override
     public <T> T getBean(SysObjectName objectName) {
-        String defaultBeanName = StringUtility.toHump(objectName.name().toLowerCase(), "_");
-        String beanName = ConfigUtility.getValue(objectName.name().toLowerCase(), defaultBeanName);
+        String beanName = objectName.name().toLowerCase();
+        String defaultBeanName = StringUtility.toHump(beanName, "_");
+        beanName = ConfigUtility.getValue(beanName, defaultBeanName);
         T obj = this.getBean(beanName);
         if (obj == null) {
             logger.warn(beanName + " not exist,please config [" + defaultBeanName + "] in " + this.contextConfigLocation);
