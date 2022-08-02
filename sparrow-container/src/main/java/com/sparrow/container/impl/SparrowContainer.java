@@ -41,6 +41,24 @@ import org.slf4j.LoggerFactory;
 public class SparrowContainer extends AbstractContainer {
     private static Logger logger = LoggerFactory.getLogger(SparrowContainer.class);
 
+
+
+    private void initProxyBeans() {
+        Iterator<String> iterator = this.beanDefinitionRegistry.keyIterator();
+        while (iterator.hasNext()) {
+            String beanName = iterator.next();
+            try {
+                BeanDefinition bd = beanDefinitionRegistry.getObject(beanName);
+                if (!bd.isSingleton()) {
+                    this.initMethod(bd);
+                    Class clazz = Class.forName(bd.getBeanClassName());
+                    this.initProxyBean(clazz);
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
     private void initEarlySingleton() {
         Iterator<String> iterator = this.beanDefinitionRegistry.keyIterator();
         while (iterator.hasNext()) {
@@ -75,40 +93,10 @@ public class SparrowContainer extends AbstractContainer {
             BeanDefinitionReader definitionReader = new XmlBeanDefinitionReader(registry, annotationBeanDefinitionReader, delegate);
 
             definitionReader.loadBeanDefinitions(this.contextConfigLocation);
-
             this.beanDefinitionRegistry = registry;
+            this.initProxyBeans();
             this.initEarlySingleton();
-            Iterator<String> iterator = registry.keyIterator();
-            while (iterator.hasNext()) {
-                String beanName = iterator.next();
-                try {
-                    BeanDefinition bd = registry.getObject(beanName);
-                    if (bd.isSingleton()) {
-                        Object o = this.instance(bd, beanName);
-                        this.singletonRegistry.pubObject(beanName, o);
-                        if (bd.alias() != null) {
-                            this.singletonRegistry.pubObject(bd.alias(), o);
-                        }
-                        this.earlySingletonRegistry.removeObject(beanName);
-                        this.earlySingletonRegistry.removeObject(bd.alias());
-                        if (bd.isController()) {
-                            this.assembleController(beanName, o);
-                        }
-                        if (bd.isInterceptor()) {
-                            this.interceptorRegistry.pubObject(beanName, (HandlerInterceptor) o);
-                        }
-                        if (o instanceof ContainerAware) {
-                            ContainerAware containerAware = (ContainerAware) o;
-                            containerAware.aware(this, beanName);
-                        }
-                    } else {
-                        Class clazz = Class.forName(bd.getBeanClassName());
-                        this.initProxyBean(clazz);
-                    }
-                } catch (Throwable t) {
-                    logger.error("init bean error,bean-name {}", beanName);
-                }
-            }
+            this.initSingletonBeans(registry);
 
             logger.info("-------------init initializer ...--------------------------");
             Initializer initializer = this.getBean(
@@ -122,6 +110,37 @@ public class SparrowContainer extends AbstractContainer {
             logger.error("ioc init error", e);
         } finally {
             //annotation proxy
+        }
+    }
+
+    private void initSingletonBeans(SimpleBeanDefinitionRegistry registry) {
+        Iterator<String> iterator = registry.keyIterator();
+        while (iterator.hasNext()) {
+            String beanName = iterator.next();
+            try {
+                BeanDefinition bd = registry.getObject(beanName);
+                if (bd.isSingleton()) {
+                    Object o = this.instance(bd, beanName);
+                    this.singletonRegistry.pubObject(beanName, o);
+                    this.earlySingletonRegistry.removeObject(beanName);
+                    if (bd.alias() != null) {
+                        this.singletonRegistry.pubObject(bd.alias(), o);
+                        this.earlySingletonRegistry.removeObject(bd.alias());
+                    }
+                    if (bd.isController()) {
+                        this.assembleController(beanName, o);
+                    }
+                    if (bd.isInterceptor()) {
+                        this.interceptorRegistry.pubObject(beanName, (HandlerInterceptor) o);
+                    }
+                    if (o instanceof ContainerAware) {
+                        ContainerAware containerAware = (ContainerAware) o;
+                        containerAware.aware(this, beanName);
+                    }
+                }
+            } catch (Throwable t) {
+                logger.error("init bean error,bean-name {}", beanName);
+            }
         }
     }
 

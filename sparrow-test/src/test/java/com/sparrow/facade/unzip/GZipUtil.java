@@ -29,8 +29,6 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * 对字符串进行加解密和加解压
- *
- * @author wujh
  */
 @SuppressWarnings("restriction")
 public class GZipUtil {
@@ -126,6 +124,5 @@ public class GZipUtil {
     public static void main(String[] args) {
         System.out.println("我爱北京天安门".toCharArray().length);
         System.out.println(gzipString("我爱北京天安门").length);
-
     }
 }
