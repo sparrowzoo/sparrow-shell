@@ -62,11 +62,7 @@ cd ..
 mvn clean install -Dmaven.test.skip
 ```
 ## 项目demo演示
-https://github.com/sparrowzoo/sparrow-shell/issues/13
-- sparrow 为保持代码整洁，所有的test 项目单独由一个sparrow-test 项目管理，该项目已有部分功能通过test case,朋友们可以下载了解sparrow 运行
-
-     [测试用例 https://github.com/sparrowzoo/sparrow-shell/tree/master/sparrow-test](https://github.com/sparrowzoo/sparrow-shell/tree/master/sparrow-test)
- case 逐步完善中...
+http://www.sparrowzoo.com
  
 我们的愿景和未来
 --------
