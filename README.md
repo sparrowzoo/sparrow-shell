@@ -61,6 +61,10 @@ mvn clean install -Dmaven.test.skip
 cd ..
 mvn clean install -Dmaven.test.skip
 ```
+OR
+```aidl
+ sh build.sh
+```
 ## 项目demo演示
 http://www.sparrowzoo.com
  
