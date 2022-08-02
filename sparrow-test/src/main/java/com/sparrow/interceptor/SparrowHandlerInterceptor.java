@@ -17,11 +17,13 @@
 package com.sparrow.interceptor;
 
 import com.sparrow.servlet.HandlerInterceptor;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Named
 public class SparrowHandlerInterceptor implements HandlerInterceptor {
     private static Logger logger = LoggerFactory.getLogger(SparrowHandlerInterceptor.class);
 

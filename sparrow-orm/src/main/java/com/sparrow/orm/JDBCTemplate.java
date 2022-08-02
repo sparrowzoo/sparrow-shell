@@ -170,7 +170,7 @@ public class JDBCTemplate implements JDBCSupport {
                 connectionHolder
                     .bindConnection(connection);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.error("get connection error", e);
         }
         return connection;

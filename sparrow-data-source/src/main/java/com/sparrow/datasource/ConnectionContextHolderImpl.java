@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -29,6 +30,7 @@ import javax.inject.Named;
 @Named("connectionContextHolder")
 public class ConnectionContextHolderImpl implements ConnectionContextHolder {
 
+    @Inject
     private DataSourceFactory dataSourceFactory;
 
     /**

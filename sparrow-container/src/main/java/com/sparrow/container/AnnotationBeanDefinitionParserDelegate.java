@@ -16,18 +16,19 @@
  */
 package com.sparrow.container;
 
+import com.sparrow.servlet.HandlerInterceptor;
 import java.lang.reflect.Field;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 public class AnnotationBeanDefinitionParserDelegate {
 
-    public BeanDefinition processBeanDefinition(Class clazz) throws ClassNotFoundException {
+    public BeanDefinition processBeanDefinition(Class clazz) {
         GenericBeanDefinition bd = new GenericBeanDefinition();
         bd.setSingleton(true);
         bd.setClassName(clazz.getName());
         bd.setController(false);
-        bd.setInterceptor(false);
+        bd.setInterceptor(HandlerInterceptor.class.isAssignableFrom(clazz));
         bd.setPrototype(false);
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {

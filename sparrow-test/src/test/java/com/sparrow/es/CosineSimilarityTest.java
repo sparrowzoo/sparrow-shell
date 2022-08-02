@@ -14,6 +14,8 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
  */
 public class CosineSimilarityTest {
     public static void main(String[] args) {
+        Environment defaultEnv = new Environment(defaultSetting(),null);
+        Configuration defaultConfig = new Configuration(defaultEnv, defaultSetting());
         KeyAnalyzer keyAnalyzer = new KeyAnalyzer();
         IKAnalyzer ikAnalyzer = new IKAnalyzer(defaultConfig);
         keyAnalyzer.setAnalyzer(ikAnalyzer);
@@ -24,12 +26,10 @@ public class CosineSimilarityTest {
         System.out.println(cosineSimilarity.getSimilarity("我爱北京,北京朝阳","我爱北京天安门"));
     }
 
-    private static Environment defaultEnv = new Environment(defaultSetting(),null);
-    private static Configuration defaultConfig = new Configuration(defaultEnv, defaultSetting());
+
     //默认加载路径
     private static final String PATH_HOME = "path.home";
     private static Settings defaultSetting() {
-        return Settings.builder().put(PATH_HOME, "D:\\workspace\\sparrow\\sparrow-shell\\sparrow-test\\target\\classes")
-                .build();
+        return Settings.builder().build();
     }
 }

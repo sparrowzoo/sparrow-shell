@@ -117,6 +117,7 @@
     <logger name="com.sparrow" level="DEBUG" additivity="false">
         <appender-ref ref="@server.name@"/>
         <appender-ref ref="DEBUG"/>
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="rolling_file"/>
     </logger>
 </configuration>

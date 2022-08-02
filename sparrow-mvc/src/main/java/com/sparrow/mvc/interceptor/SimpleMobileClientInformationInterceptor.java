@@ -29,9 +29,11 @@ import eu.bitwalker.useragentutils.DeviceType;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Named
 public class SimpleMobileClientInformationInterceptor implements HandlerInterceptor {
     private ServletUtility servletUtility = ServletUtility.getInstance();
 

@@ -2,14 +2,11 @@
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
     "beans.dtd">
 <beans>
+    <component-scan>com.sparrow</component-scan>
     <!---当前进程的所有datasource实例-->
     <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
         <constructor-arg index="1" name="initDatasourceKeys" value="sparrow_default" type="string"/>
     </bean>
-    <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
-        <property name="dataSourceFactory" ref="dataSourceFactory"/>
-    </bean>
-    <bean name="initializer" class="com.sparrow.web.WebApplicationInitializer"/>
     <bean name="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxActive" value="${redis.pool.maxActive}"/>
         <property name="maxIdle" value="${redis.pool.maxIdle}"/>
@@ -26,15 +23,6 @@
     </bean>
 
 
-    <bean name="cacheClient" class="com.sparrow.cache.impl.redis.RedisCacheClient">
-        <property name="redisPool" ref="redisPool"/>
-    </bean>
-    <bean name="cookieUtility" class="com.sparrow.support.web.CookieUtility"/>
-
-    <bean name="sparrowServletContainer" class="com.sparrow.web.support.SparrowServletContainer">
-        <property name="cookieUtility" ref="cookieUtility"/>
-    </bean>
-
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
@@ -47,8 +35,5 @@
         <property name="servletContainer" ref="sparrowServletContainer"/>
     </bean>
     <bean name="elasticSearchController" class="com.sparrow.controller.ElasticSearchController" controller="true"/>
-    <bean name="sparrowHandlerInterceptor" class="com.sparrow.interceptor.SparrowHandlerInterceptor"
-          interceptor="true"/>
-
     <bean name="classLoaderController" class="com.sparrow.controller.ClassLoaderController" controller="true"/>
 </beans>
