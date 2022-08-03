@@ -25,7 +25,7 @@
 
     <context:component-scan base-package="com.sparrow.rocketmq"/>
     <bean name="cacheMonitor" class="com.sparrow.redis.SparrowCacheMonitor"/>
-    <bean name="redisPool" class="com.sparrow.cache.impl.redis.RedisPool">
+    <bean  name="redisPool" class="com.sparrow.cache.impl.redis.RedisPool">
         <property name="urls" value="127.0.0.1:6379"/>
         <property name="cacheMonitor" ref="cacheMonitor"/>
     </bean>

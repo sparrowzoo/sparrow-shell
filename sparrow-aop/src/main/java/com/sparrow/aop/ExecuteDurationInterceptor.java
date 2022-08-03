@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 @Aspect
 public class ExecuteDurationInterceptor extends AbstractExecuteDurationInterceptor {
 
-    @Pointcut("@annotation(com.sprucetec.search.common.tracer.ExecuteDuration)")
+    @Pointcut("@annotation(com.sparrow.common.tracer.ExecuteDuration)")
     public void executeDuration() {
     }
 

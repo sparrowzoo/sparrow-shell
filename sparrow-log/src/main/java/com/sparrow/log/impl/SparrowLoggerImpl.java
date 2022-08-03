@@ -147,7 +147,6 @@ public class SparrowLoggerImpl implements Logger {
     @Override
     public void debug(Marker marker, String msg) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
@@ -159,13 +158,11 @@ public class SparrowLoggerImpl implements Logger {
     @Override
     public void debug(Marker marker, String format, Object arg1, Object arg2) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
     public void debug(Marker marker, String format, Object... arguments) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
