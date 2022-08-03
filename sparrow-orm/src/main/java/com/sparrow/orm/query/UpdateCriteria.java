@@ -17,9 +17,11 @@
 
 package com.sparrow.orm.query;
 
+import com.sparrow.protocol.Exclude;
 import java.util.ArrayList;
 import java.util.List;
 
+@Exclude
 public class UpdateCriteria extends WhereCriteria {
     private List<UpdateSetClausePair> setClausePairList = new ArrayList<UpdateSetClausePair>();
 
