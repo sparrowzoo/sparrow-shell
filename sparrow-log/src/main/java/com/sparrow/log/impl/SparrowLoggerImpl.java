@@ -345,7 +345,6 @@ public class SparrowLoggerImpl implements Logger {
     @Override
     public void error(Marker marker, String format, Object arg1, Object arg2) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
