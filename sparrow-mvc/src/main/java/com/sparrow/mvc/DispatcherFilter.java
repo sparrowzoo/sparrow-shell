@@ -88,8 +88,6 @@ public class DispatcherFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
         FilterChain chain) {
-        logger.debug("begin do filter");
-
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String actionKey = sparrowServletUtility.getServletUtility().getActionKey(request);
