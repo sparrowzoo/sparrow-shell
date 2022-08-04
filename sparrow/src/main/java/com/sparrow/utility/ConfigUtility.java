@@ -18,6 +18,7 @@
 package com.sparrow.utility;
 
 import com.sparrow.constant.CacheKey;
+import com.sparrow.constant.Config;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.core.cache.StrongDurationCache;
 import com.sparrow.protocol.constant.Constant;
@@ -154,16 +155,30 @@ public class ConfigUtility {
         if (systemMessage == null) {
             return;
         }
-        configCache.putAll(systemMessage);
-        if (systemMessage.get(com.sparrow.constant.Config.RESOURCE_PHYSICAL_PATH) != null) {
+
+        if (systemMessage.get(Config.RESOURCE_PHYSICAL_PATH) != null) {
             Constant.REPLACE_MAP.put("$physical_resource", systemMessage.get(com.sparrow.constant.Config.RESOURCE_PHYSICAL_PATH));
         }
-        if (systemMessage.get(com.sparrow.constant.Config.RESOURCE) != null) {
+        if (systemMessage.get(Config.RESOURCE) != null) {
             Constant.REPLACE_MAP.put("$resource", systemMessage.get(com.sparrow.constant.Config.RESOURCE));
         }
-        if (systemMessage.get(com.sparrow.constant.Config.IMAGE_WEBSITE) != null) {
+        if (systemMessage.get(Config.IMAGE_WEBSITE) != null) {
             Constant.REPLACE_MAP.put("$image_website", systemMessage.get(com.sparrow.constant.Config.IMAGE_WEBSITE));
         }
+
+        if (systemMessage.get(Config.UPLOAD_PHYSICAL_PATH) != null) {
+            Constant.REPLACE_MAP.put("$physical_upload", systemMessage.get(Config.UPLOAD_PHYSICAL_PATH));
+        }
+
+        if (systemMessage.get(Config.UPLOAD) != null) {
+            Constant.REPLACE_MAP.put("$upload", systemMessage.get(Config.UPLOAD));
+        }
+        for (String key : systemMessage.keySet()) {
+            String v = systemMessage.get(key);
+            v = StringUtility.replace(v, Constant.REPLACE_MAP);
+            systemMessage.put(key, v);
+        }
+        configCache.putAll(systemMessage);
         logger.info("==========system config init============");
     }
 
@@ -188,9 +203,7 @@ public class ConfigUtility {
         if (value == null) {
             return defaultValue;
         }
-        String v = value.toString();
-        v = StringUtility.replace(v, Constant.REPLACE_MAP);
-        return v;
+        return value.toString();
     }
 
     public static boolean getBooleanValue(String config) {

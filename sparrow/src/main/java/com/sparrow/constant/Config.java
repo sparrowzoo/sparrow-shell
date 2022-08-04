@@ -31,12 +31,19 @@ public class Config {
     public static final String MVC_CONFIG = "mvc_config";
     public static final String REDIS_HOST = "redis_host";
     public static final String REDIS_PORT = "redis_port";
+    /**
+     * 资源文件所在域名
+     */
     public static final String RESOURCE = "resource";
-    public static final String UPLOAD_PATH = "upload_path";
+    /**
+     * 上传文件的域名
+     */
+    public static final String UPLOAD = "upload";
+    public static final String UPLOAD_PHYSICAL_PATH = "physical_upload";
+
     public static final String THEMES = "themes";
-    public static final String RESOURCE_PHYSICAL_PATH = "resource_physical_path";
+    public static final String RESOURCE_PHYSICAL_PATH = "physical_resource";
     public static final String TEMP = "temp";
-    public static final String TEMP_PHYSICAL_PATH = "temp_physical_path";
 
     public static final String DEFAULT_WELCOME_PAGE = "default_welcome_page";
     public static final String DEFAULT_SYSTEM_INDEX = "default_system_index";

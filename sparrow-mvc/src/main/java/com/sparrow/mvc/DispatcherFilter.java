@@ -269,11 +269,12 @@ public class DispatcherFilter implements Filter {
             }
             HttpContext.getContext().put(Constant.REQUEST_LANGUAGE, language);
         }
-        //设置资源根路径
+        //设置资源根域名
         request.setAttribute(Config.RESOURCE,
             ConfigUtility.getValue(Config.RESOURCE));
 
-        request.setAttribute(Config.UPLOAD_PATH, ConfigUtility.getValue(Config.UPLOAD_PATH));
+        //设置上传文件域名
+        request.setAttribute(Config.UPLOAD, ConfigUtility.getValue(Config.UPLOAD));
 
         //设置图片域
         request.setAttribute(Config.IMAGE_WEBSITE, ConfigUtility.getValue(Config.IMAGE_WEBSITE));
