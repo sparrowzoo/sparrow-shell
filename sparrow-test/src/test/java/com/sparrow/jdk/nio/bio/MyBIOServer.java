@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MyBIOServer {
@@ -25,9 +27,11 @@ public class MyBIOServer {
             try {
                 //通信
                 while (true){
+                    System.out.println("socket is blocking "+Thread.currentThread().getName()+"-status"+Thread.currentThread().getState());
                     //接受消息
                     //获取到套接字的输入流
                     inputStream = socket.getInputStream();
+                    System.out.println("stop?");
                     //创建存储数据空间
                     byte[] bytes = new byte[1024];
                     //读取数据 并 获取数据长度
@@ -62,6 +66,21 @@ public class MyBIOServer {
 
     public static void main(String[] args){
         ServerSocket serverSocket = null;
+        List<Thread> threads=new ArrayList<>();
+        new Thread(new Runnable() {
+            @Override public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    for (Thread thread : threads) {
+                        System.out.println(thread.getName() + "-" + thread.getState());
+                    }
+                }
+            }
+        }).start();
         try {
             //实例化ServerSocket
             serverSocket = new ServerSocket();
@@ -69,11 +88,14 @@ public class MyBIOServer {
             serverSocket.bind(new InetSocketAddress(1111));
             System.out.println("服务器已启动...");
             while (true){
+                threads.add(Thread.currentThread());
                 //监听连接   建立连接
                 Socket socket = serverSocket.accept();
                 System.out.println("与客户端"+socket.getRemoteSocketAddress()+"连接建立成功...");
                 //分配给子线程
                 SocketHandler socketHandler = new SocketHandler(socket,"socket server");
+
+                threads.add(socketHandler);
                 //子线程启动通信
                 socketHandler.start();
             }

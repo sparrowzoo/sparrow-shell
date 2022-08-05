@@ -1,7 +1,5 @@
 package com.sparrow.facade.thread;
 
-import java.util.concurrent.locks.LockSupport;
-
 public class ThreadInterruptTest {
     private static Integer lock = 0;
 
@@ -12,9 +10,11 @@ public class ThreadInterruptTest {
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！");
                 synchronized (lock) {
                     System.out.println("entry " + Thread.currentThread().getName() + "-" + Thread.currentThread().getState());
-                    Thread.sleep(Integer.MAX_VALUE);
+                    //Thread.sleep(Integer.MAX_VALUE);
                     //LockSupport.park();
-                    //lock.wait();
+                    synchronized (lock) {
+                        lock.wait();
+                    }
                     System.out.println("exist " + Thread.currentThread().getName());
                 }
             } catch (Exception e) {
@@ -25,21 +25,21 @@ public class ThreadInterruptTest {
         Thread thread = new Thread(runnable, "test");
         thread.start();
         Thread.sleep(100);
-        Thread thread2 = new Thread(runnable, "test2");
-        thread2.start();
+//        Thread thread2 = new Thread(runnable, "test2");
+//        thread2.start();
         //thread.interrupt();
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
                     System.out.println(thread.getName() + "-" + thread.getState());
-                    System.out.println(thread2.getName() + "-" + thread2.getState());
+                    //System.out.println(thread2.getName() + "-" + thread2.getState());
                     try {
                         Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     //thread.interrupt();
-                    thread2.interrupt();
+                    //thread2.interrupt();
                 }
             }
         });
