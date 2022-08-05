@@ -12,9 +12,8 @@ public class MyBIOServer {
     static class SocketHandler extends Thread{
         private Socket socket;
 
-        public SocketHandler(){};
-
-        public SocketHandler(Socket socket){
+        public SocketHandler(Socket socket,String name){
+            super(name);
             this.socket = socket;
         }
 
@@ -74,7 +73,7 @@ public class MyBIOServer {
                 Socket socket = serverSocket.accept();
                 System.out.println("与客户端"+socket.getRemoteSocketAddress()+"连接建立成功...");
                 //分配给子线程
-                SocketHandler socketHandler = new SocketHandler(socket);
+                SocketHandler socketHandler = new SocketHandler(socket,"socket server");
                 //子线程启动通信
                 socketHandler.start();
             }
