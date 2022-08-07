@@ -25,10 +25,10 @@ import com.sparrow.support.web.ServletUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.BrowserType;
 import eu.bitwalker.useragentutils.DeviceType;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
-
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,8 +90,8 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
         UserAgent userAgent = UserAgent.parseUserAgentString(clientInformation.getUserAgent());
         OperatingSystem os = userAgent.getOperatingSystem();
         Browser browser = userAgent.getBrowser();
-        logger.info("device type {}", os.getDeviceType());
-        if (os.getDeviceType().equals(DeviceType.COMPUTER)) {
+        logger.info("device type {},browser type {}", os.getDeviceType(), browser.getBrowserType());
+        if (os.getDeviceType().equals(DeviceType.COMPUTER) || BrowserType.MOBILE_BROWSER.equals(browser.getBrowserType())) {
             clientInformation.setOs(os.getGroup().getName());
             clientInformation.setPlatform(PLATFORM.PC);
             clientInformation.setDevice(browser.getName());
