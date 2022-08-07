@@ -61,7 +61,8 @@ public class ProxyConnection implements Connection {
             ConnectionContextHolder connectionContextHolder = container.getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
             connectionContextHolder.addOriginProxy(this);
         } catch (Exception e) {
-            logger.error("for driver class name error", e);
+            logger.error("connection error url:{},user_name:{},password:{}", datasourceConfig.getUrl(),
+                datasourceConfig.getUsername(),datasourceConfig.getPassword());
         }
     }
 
