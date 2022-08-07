@@ -52,8 +52,8 @@ public class HelloController {
     }
 
     @RequestParameters("key")
-    public ViewWithModel env(String key) throws BusinessException {
-        return ViewWithModel.forward("hello", new HelloVO(System.getenv(key)));
+    public HelloVO env(String key) throws BusinessException {
+        return new HelloVO(System.getenv(key));
     }
 
     public ViewWithModel exception() throws BusinessException {
