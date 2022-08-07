@@ -7,6 +7,8 @@
         <!--/template/index.jsp 兼容欢迎页-->
         <action name="/template/welcome.jsp" method="welcome"/>
         <action name="/env.json" method="env" login="NO_AUTHENTICATE"/>
+        <action name="/env2.json" method="env2" login="NO_AUTHENTICATE"/>
+
         <!---一定以 /开头-->
         <action name="/hello" method="hello" login="NO_AUTHENTICATE"/>
         <action name="/fly" method="fly"/>

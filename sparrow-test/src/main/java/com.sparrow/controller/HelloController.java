@@ -56,6 +56,11 @@ public class HelloController {
         return new HelloVO(System.getenv(key));
     }
 
+    @RequestParameters("key")
+    public HelloVO env2(String key) throws BusinessException {
+        return new HelloVO(key);
+    }
+
     public ViewWithModel exception() throws BusinessException {
         throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
     }
