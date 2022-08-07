@@ -62,7 +62,7 @@ public class ProxyConnection implements Connection {
             connectionContextHolder.addOriginProxy(this);
         } catch (Exception e) {
             logger.error("connection error url:{},user_name:{},password:{}", datasourceConfig.getUrl(),
-                datasourceConfig.getUsername(),datasourceConfig.getPassword());
+                datasourceConfig.getUsername(), datasourceConfig.getPassword(), e);
         }
     }
 
