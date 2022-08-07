@@ -32,9 +32,12 @@ import eu.bitwalker.useragentutils.UserAgent;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Named
 public class SimpleMobileClientInformationInterceptor implements HandlerInterceptor {
+    private static Logger logger= LoggerFactory.getLogger(SimpleMobileClientInformationInterceptor.class);
     private ServletUtility servletUtility = ServletUtility.getInstance();
 
     @Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -87,6 +90,7 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
         UserAgent userAgent = UserAgent.parseUserAgentString(clientInformation.getUserAgent());
         OperatingSystem os = userAgent.getOperatingSystem();
         Browser browser = userAgent.getBrowser();
+        logger.info("device type {}",os.getDeviceType());
         if (os.getDeviceType().equals(DeviceType.COMPUTER)) {
             clientInformation.setOs(os.getGroup().getName());
             clientInformation.setPlatform(PLATFORM.PC);
