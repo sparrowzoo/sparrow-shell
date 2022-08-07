@@ -1,6 +1,5 @@
 package com.sparrow.facade.thread;
 
-import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ThreadInterruptLockTest {
@@ -18,7 +17,7 @@ public class ThreadInterruptLockTest {
             }
         };
 
-        Thread thread = new Thread(runnable, "test");
+        Thread thread = new Thread(runnable, "test1");
         thread.start();
         Thread.sleep(100);
         Thread thread2 = new Thread(runnable, "test2");
@@ -27,7 +26,7 @@ public class ThreadInterruptLockTest {
 
         Thread thread3 = new Thread(runnable, "test3");
         thread3.start();
-        //thread.interrupt();
+
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {

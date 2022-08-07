@@ -45,8 +45,7 @@ public class Config {
     public static final String RESOURCE_PHYSICAL_PATH = "physical_resource";
     public static final String TEMP = "temp";
 
-    public static final String DEFAULT_WELCOME_PAGE = "default_welcome_page";
-    public static final String DEFAULT_SYSTEM_INDEX = "default_system_index";
+    public static final String DEFAULT_WELCOME_INDEX = "default_welcome_index";
     public static final String DEFAULT_MENU_PAGE = "default_menu_page";
     public static final String DEFAULT_FORUM_ICO = "default_forum_ico";
     public static final String DEFAULT_AVATAR = "default_avatar";

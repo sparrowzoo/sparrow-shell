@@ -23,6 +23,7 @@ import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.protocol.Authenticator;
 import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.Controller;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.servlet.ServletContainer;

@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Sparrow framework controller support class that used by sparrow only
  */
-@Named
+@Named("servletContainer")
 public class SparrowServletContainer extends AbstractServletContainer {
 
     private HttpContext httpContext = HttpContext.getContext();

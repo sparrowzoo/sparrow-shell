@@ -22,7 +22,6 @@ public class ThreadSupportTest {
         Thread.sleep(100);
         Thread thread2 = new Thread(runnable, "test2");
         thread2.start();
-        //thread.interrupt();
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {

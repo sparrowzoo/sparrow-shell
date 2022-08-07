@@ -20,4 +20,9 @@
     "beans.dtd">
 <beans>
     <component-scan>com.sparrow.inject</component-scan>
+    <bean name="helloTest" class="com.sparrow.inject.HelloTest"/>
+<!--    <bean name="helloTest2" class="com.sparrow.inject.HelloTest2"/>-->
+    <bean name="helloProvider" class="com.sparrow.inject.HelloProvider">
+        <property name="helloTest" ref="helloTest2"/>
+    </bean>
 </beans>

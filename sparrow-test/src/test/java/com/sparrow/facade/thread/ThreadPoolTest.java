@@ -20,19 +20,21 @@ package com.sparrow.facade.thread;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Created by harry on 2017/2/15.
- */
 public class ThreadPoolTest {
     public static void main(String[] args) {
         ExecutorService fixedService = Executors.newFixedThreadPool(1);
 
-        fixedService = Executors.newScheduledThreadPool(1);
+        fixedService = Executors.newCachedThreadPool();
 
         fixedService.submit(new Runnable() {
             @Override
             public void run() {
                 System.out.print(1);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -16,9 +16,9 @@ public class ReentrantLockTest {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
                 lock.lock();
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！" + 100 + "ms");
-                LockSupport.park();
+                //LockSupport.park();
                 System.err.println(Thread.currentThread().getName() + "-" + Thread.currentThread().getState() + "-" + Thread.currentThread().isInterrupted());
-                //Thread.sleep(Integer.MAX_VALUE);
+                Thread.sleep(Integer.MAX_VALUE);
             } catch (Exception e) {
                 System.err.println(Thread.currentThread().getName() + "-" + Thread.currentThread().getState() + "-" + Thread.currentThread().isInterrupted());
                 System.err.println(Thread.currentThread().getName() + "中断...");

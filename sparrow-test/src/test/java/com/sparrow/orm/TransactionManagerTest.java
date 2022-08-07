@@ -32,7 +32,7 @@ public class TransactionManagerTest {
                 user.setNickName("nickName");
                 user.setUpdateTime(System.currentTimeMillis());
                 user.setCreateTime(System.currentTimeMillis());
-                user.setSex((byte) Gender.FEMALE.ordinal());
+                user.setGender(Gender.FEMALE.ordinal());
                 user.setStatus((byte) StatusRecord.ENABLE.ordinal());
                 Long id = userDAO.insert(user);
                 User user1 = userDAO.getEntity(id);

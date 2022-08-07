@@ -55,6 +55,8 @@ public class Constant {
 
     public static final String CONTENT_TYPE_JSON = "application/json";
 
+    public static final String CONTENT_TYPE_JAVASCRIPT = "application/javascript";
+
     public static final String CONTENT_TYPE_JSON_ALT = "text/x-json";
 
     public static final String CONTENT_TYPE_XML = "application/xml";

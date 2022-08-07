@@ -16,7 +16,7 @@ public class User implements POJO, Cloneable {
     private String nickName;
     private String password;
     private String avatar;
-    private Byte sex;
+    private Integer gender;
     private Date birthday;
     private Long cent;
     private Long createTime;
@@ -61,13 +61,13 @@ public class User implements POJO, Cloneable {
         this.password = password;
     }
 
-    @Column(name = "sex")
-    public Byte getSex() {
-        return sex;
+    @Column(name = "gender")
+    public Integer getGender() {
+        return gender;
     }
 
-    public void setSex(Byte sex) {
-        this.sex = sex;
+    public void setGender(Integer sex) {
+        this.gender = sex;
     }
 
     @Column(name = "avatar", updatable = false)
