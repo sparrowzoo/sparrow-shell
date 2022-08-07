@@ -49,11 +49,13 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
             ConfigUtility.getValue(Config.LANGUAGE)));
         login.setAvatar(ConfigUtility.getValue(Config.DEFAULT_AVATAR));
         if (StringUtility.isNullOrEmpty(permission)) {
+            logger.info("permission is null");
             return login;
         }
 
         try {
             if (!permission.contains(".")) {
+                logger.debug("permission {} don't contains [.]", permission);
                 return login;
             }
             String[] tokens = permission.split("\\.");
@@ -66,6 +68,7 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
             String dev = userInfoArray[6].substring("deviceId=".length());
             //设备不一致
             if (!dev.equals(deviceId) && !Constant.LOCALHOST_IP.equals(deviceId)) {
+                logger.debug("device can't match sign's device [{}] request device [{}] ", dev, deviceId);
                 return login;
             }
 
@@ -75,6 +78,7 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
             if (!StringUtility.isNullOrEmpty(expireAtStr) && !"null".equalsIgnoreCase(expireAtStr)) {
                 expireAt = Long.parseLong(expireAtStr);
                 if (System.currentTimeMillis() > expireAt) {
+                    logger.warn("sign is expire at {}", expireAt);
                     return login;
                 }
             }
@@ -85,6 +89,7 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
 
             //签名不一致
             if (!signature.equals(newSignature)) {
+                logger.warn("sign is not match {} vs new:{}", signature, newSignature);
                 return login;
             }
             login.setUserId(userId);
