@@ -23,7 +23,6 @@ import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.protocol.Authenticator;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.Controller;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.servlet.ServletContainer;
@@ -50,6 +49,11 @@ public class HelloController {
 
     public ViewWithModel hello() throws BusinessException {
         return ViewWithModel.forward("hello", new HelloVO("我来自遥远的sparrow 星球,累死我了..."));
+    }
+
+    @RequestParameters("key")
+    public ViewWithModel env(String key) throws BusinessException {
+        return ViewWithModel.forward("hello", new HelloVO(System.getenv(key)));
     }
 
     public ViewWithModel exception() throws BusinessException {
