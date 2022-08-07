@@ -49,7 +49,7 @@ public class HelloController {
     }
 
     public ViewWithModel hello() throws BusinessException {
-        return ViewWithModel.forward("hello", new HelloVO("我来自遥远的sparrow 星球,累死我了..."+System.getenv("mysql_sparrow_password")));
+        return ViewWithModel.forward("hello", new HelloVO("我来自遥远的sparrow 星球,累死我了..."));
     }
 
     public ViewWithModel exception() throws BusinessException {
