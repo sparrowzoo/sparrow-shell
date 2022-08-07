@@ -249,7 +249,6 @@ public class DispatcherFilter implements Filter {
         request.setAttribute(Constant.REQUEST_ACTION_CURRENT_FORUM, forumCode);
         request.setAttribute("divNavigation.current", forumCode);
 
-
         String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
         if (!StringUtility.isNullOrEmpty(rootPath)) {
             request.setAttribute(Config.ROOT_PATH, rootPath);
@@ -396,7 +395,7 @@ public class DispatcherFilter implements Filter {
             boolean isInFrame = LoginType.LOGIN_IFRAME
                 .equals(handlerExecutionChain.getLoginType());
             if (!StringUtility.isNullOrEmpty(loginUrl)) {
-                String defaultSystemPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_SYSTEM_INDEX);
+                String defaultSystemPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_ADMIN_INDEX);
                 String defaultMenuPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_MENU_PAGE);
                 String redirectUrl = httpRequest.getRequestURL().toString();
                 if (redirectUrl.endsWith(Extension.DO) || redirectUrl.endsWith(Extension.JSON)) {

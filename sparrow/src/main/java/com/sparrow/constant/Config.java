@@ -45,7 +45,16 @@ public class Config {
     public static final String RESOURCE_PHYSICAL_PATH = "physical_resource";
     public static final String TEMP = "temp";
 
+    /**
+     * 默认前台欢迎url http://www.sparrowzoo.com
+     * 在passport.sparrowzoo.com 中配置
+     */
     public static final String DEFAULT_WELCOME_INDEX = "default_welcome_index";
+    /**
+     * 后台管理系统首页url http://admin.sparrowzoo.com
+     * 在admin.sparrowzoo.com中配置f
+     */
+    public static final String DEFAULT_ADMIN_INDEX = "default_admin_index";
     public static final String DEFAULT_MENU_PAGE = "default_menu_page";
     public static final String DEFAULT_FORUM_ICO = "default_forum_ico";
     public static final String DEFAULT_AVATAR = "default_avatar";
