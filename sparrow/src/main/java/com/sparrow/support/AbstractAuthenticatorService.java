@@ -24,6 +24,7 @@ import com.sparrow.cryptogram.Base64;
 import com.sparrow.cryptogram.Hmac;
 import com.sparrow.protocol.Authenticator;
 import com.sparrow.protocol.LoginToken;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
@@ -64,7 +65,7 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
             String[] userInfoArray = userInfo.split("&");
             String dev = userInfoArray[6].substring("deviceId=".length());
             //设备不一致
-            if (!dev.equals(deviceId)) {
+            if (!dev.equals(deviceId) && !Constant.LOCALHOST_IP.equals(deviceId)) {
                 return login;
             }
 

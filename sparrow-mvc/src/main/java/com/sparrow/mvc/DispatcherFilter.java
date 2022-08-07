@@ -107,10 +107,11 @@ public class DispatcherFilter implements Filter {
         ServletInvokableHandlerMethod invokableHandlerMethod = null;
         try {
             invokableHandlerMethod = this.getHandler(httpRequest);
+            //验证用户需要httpContext 输出脚本
+            this.initAttribute(httpRequest, httpResponse);
             if (!this.validateUser(httpRequest, httpResponse)) {
                 return;
             }
-            this.initAttribute(httpRequest, httpResponse);
             if (invokableHandlerMethod == null || invokableHandlerMethod.getMethod() == null) {
                 logger.warn("invokableHandlerMethod is null or method not exist ");
                 String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.JSP);
@@ -395,14 +396,13 @@ public class DispatcherFilter implements Filter {
             boolean isInFrame = LoginType.LOGIN_IFRAME
                 .equals(handlerExecutionChain.getLoginType());
             if (!StringUtility.isNullOrEmpty(loginUrl)) {
-                String defaultSystemPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_ADMIN_INDEX);
-                String defaultMenuPage = rootPath + ConfigUtility.getValue(Config.DEFAULT_MENU_PAGE);
+                String defaultSystemPage = ConfigUtility.getValue(Config.DEFAULT_ADMIN_INDEX);
+                if (!defaultSystemPage.endsWith("/")) {
+                    defaultSystemPage += "/";
+                }
                 String redirectUrl = httpRequest.getRequestURL().toString();
                 if (redirectUrl.endsWith(Extension.DO) || redirectUrl.endsWith(Extension.JSON)) {
                     redirectUrl = sparrowServletUtility.getServletUtility().referer(httpRequest);
-                }
-                if (redirectUrl != null && redirectUrl.equals(defaultMenuPage)) {
-                    redirectUrl = Symbol.EMPTY;
                 }
 
                 if (!StringUtility.isNullOrEmpty(redirectUrl)) {
@@ -410,14 +410,14 @@ public class DispatcherFilter implements Filter {
                         redirectUrl += Symbol.QUESTION_MARK + httpRequest.getQueryString();
                     }
                     if (isInFrame) {
-                        redirectUrl = defaultSystemPage + Symbol.QUESTION_MARK + redirectUrl;
+                        if (!defaultSystemPage.equals(redirectUrl)) {
+                            redirectUrl = defaultSystemPage + Symbol.QUESTION_MARK + redirectUrl;
+                        } else {
+                            redirectUrl = defaultSystemPage;
+                        }
                     }
                     loginUrl = loginUrl + Symbol.QUESTION_MARK + redirectUrl;
                 }
-            }
-            String passport = ConfigUtility.getValue(Config.PASSPORT_ROOT);
-            if (passport != null) {
-                loginUrl = passport + loginUrl;
             }
             if (!handlerExecutionChain.isJson()) {
                 if (isInFrame) {

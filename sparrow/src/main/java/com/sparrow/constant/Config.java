@@ -46,16 +46,13 @@ public class Config {
     public static final String TEMP = "temp";
 
     /**
-     * 默认前台欢迎url http://www.sparrowzoo.com
-     * 在passport.sparrowzoo.com 中配置
+     * 默认前台欢迎url http://www.sparrowzoo.com 在passport.sparrowzoo.com 中配置
      */
     public static final String DEFAULT_WELCOME_INDEX = "default_welcome_index";
     /**
-     * 后台管理系统首页url http://admin.sparrowzoo.com
-     * 在admin.sparrowzoo.com中配置f
+     * 后台管理系统首页url http://admin.sparrowzoo.com 在admin.sparrowzoo.com中配置
      */
     public static final String DEFAULT_ADMIN_INDEX = "default_admin_index";
-    public static final String DEFAULT_MENU_PAGE = "default_menu_page";
     public static final String DEFAULT_FORUM_ICO = "default_forum_ico";
     public static final String DEFAULT_AVATAR = "default_avatar";
     public static final String DEFAULT_BLOG_URL = "default_blog_url";
@@ -108,13 +105,12 @@ public class Config {
     public static final String LOG_LEVEL = "log_level";
     public static final String LOG_PRINT_CONSOLE = "print_console";
 
-    public static final String PASSPORT_ROOT = "passport_root";
     public static final Map<LoginType, String> LOGIN_TYPE_KEY = new HashMap<LoginType, String>() {
         private static final long serialVersionUID = 1L;
 
         {
             put(LoginType.LOGIN, "login_url");
-            put(LoginType.LOGIN_IFRAME, "frame_login_url");
+            put(LoginType.LOGIN_IFRAME, "login_url");
             put(LoginType.DIALOG_LOGIN, "dialog_login_url");
         }
     };
