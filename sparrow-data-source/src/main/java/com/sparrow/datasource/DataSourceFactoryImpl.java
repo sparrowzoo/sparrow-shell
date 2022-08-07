@@ -112,8 +112,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
                 datasourceConfig.setDriverClassName(props.getProperty(schema + ".driverClassName"));
                 datasourceConfig.setUsername(props.getProperty(schema + ".username"));
                 String envPasswordKey = "mysql_" + schema + "_password";
-                String password=System.getenv(envPasswordKey);
-                logger.info("password_key {},password {}",envPasswordKey,password);
+                String password = System.getenv(envPasswordKey);
+                logger.info("password_key {},password {}", envPasswordKey, password);
                 datasourceConfig.setPassword(password);
                 if (StringUtility.isNullOrEmpty(datasourceConfig.getPassword())) {
                     datasourceConfig.setPassword(props.getProperty(schema + ".password"));
