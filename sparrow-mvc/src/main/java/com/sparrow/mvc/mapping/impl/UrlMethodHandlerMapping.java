@@ -160,9 +160,10 @@ public class UrlMethodHandlerMapping implements HandlerMapping {
                     Pair<String, List<String>> pathParameters = RegexUtility.getActionRegex(actionName);
                     invokableHandlerMethod.setActionRegex(pathParameters.getFirst());
                     invokableHandlerMethod.setPathParameterNameList(pathParameters.getSecond());
+                    logger.info("controller dynamic mapping action:{},invokableHandlerMethod:{}", actionName, invokableHandlerMethod.getMethod());
                     dynamicMapping.put(pathParameters.getFirst(), invokableHandlerMethod);
                 } else {
-                    logger.info("controller mapping action:{},invokableHandlerMethod:{}",actionName,invokableHandlerMethod);
+                    logger.info("controller mapping action:{},invokableHandlerMethod:{}", actionName, invokableHandlerMethod.getMethod());
                     mapping.put(actionName,
                         invokableHandlerMethod);
                 }
