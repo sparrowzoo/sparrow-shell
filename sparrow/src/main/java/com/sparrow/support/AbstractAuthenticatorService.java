@@ -59,7 +59,6 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
                 return login;
             }
             String[] tokens = permission.split("\\.");
-            //id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&cent=%5$s&avatar=%6$s&deviceId=%7$s&activate=%8$s
             String userInfo = tokens[0];
             String signature = tokens[1];
 
@@ -92,10 +91,12 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
                 logger.warn("sign is not match {} vs new:{}", signature, newSignature);
                 return login;
             }
+            //id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&cent=%5$s&avatar=%6$s&deviceId=%7$s&activate=%8$s
+
             login.setUserId(userId);
-            login.setNickName(userInfoArray[1].substring("name="
+            login.setUserName(userInfoArray[1].substring("name="
                 .length()));
-            login.setUserName(userInfoArray[2].substring("login=".length()));
+            login.setNickName(userInfoArray[2].substring("login=".length()));
 
             login.setCent(Long.valueOf(userInfoArray[4].substring("cent=".length())));
             login.setAvatar(userInfoArray[5].substring("avatar="
