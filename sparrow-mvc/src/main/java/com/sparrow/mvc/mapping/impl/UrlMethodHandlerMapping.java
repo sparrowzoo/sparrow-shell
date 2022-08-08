@@ -162,6 +162,7 @@ public class UrlMethodHandlerMapping implements HandlerMapping {
                     invokableHandlerMethod.setPathParameterNameList(pathParameters.getSecond());
                     dynamicMapping.put(pathParameters.getFirst(), invokableHandlerMethod);
                 } else {
+                    logger.info("controller mapping action:{},invokableHandlerMethod:{}",actionName,invokableHandlerMethod);
                     mapping.put(actionName,
                         invokableHandlerMethod);
                 }
