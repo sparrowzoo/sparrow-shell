@@ -22,11 +22,11 @@ public class Test {
         loginToken.setActivate(true);
 
         String sign = authorizingSupport.sign(loginToken, "111111");
-        System.out.printf(sign);
+        System.out.println(sign);
 
 
-        sign="aWQ9MSZuYW1lPXpoYW5nc2FuJmxvZ2luPW5pY2stemhhbmdzYW4mZXhwaXJlQXQ9MTY1Njk1MjI2ODE0MiZjZW50PTEwMCZhdmF0YXI9aHR0cDovL2xvY2FsaG9zdCZkZXZpY2VJZD0xMjMuMTE3LjE4Mi4yMTImYWN0aXZhdGU9dHJ1ZSZkYXlzPTIw.tkbXwsprLMBI0S2S06%2BjMQBljJ4%3D";
-        loginToken = authorizingSupport.authenticate(sign, "218.247.142.217");
-        System.out.printf(loginToken.getUserName());
+        //sign="aWQ9MSZuYW1lPXpoYW5nc2FuJmxvZ2luPW5pY2stemhhbmdzYW4mZXhwaXJlQXQ9MTY1Njk1MjI2ODE0MiZjZW50PTEwMCZhdmF0YXI9aHR0cDovL2xvY2FsaG9zdCZkZXZpY2VJZD0xMjMuMTE3LjE4Mi4yMTImYWN0aXZhdGU9dHJ1ZSZkYXlzPTIw.tkbXwsprLMBI0S2S06%2BjMQBljJ4%3D";
+        loginToken = authorizingSupport.authenticate(sign, "127.0.0.2");
+        System.out.println(loginToken.getUserName());
     }
 }
