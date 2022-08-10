@@ -18,7 +18,7 @@
 package com.sparrow.protocol;
 
 /**
- * 谁证授权接口
+ * 认证授权接口
  */
 public interface Authenticator {
     /**

@@ -379,7 +379,6 @@ public class DispatcherFilter implements Filter {
         httpRequest.setAttribute(User.LOGIN_TOKEN, user);
 
         if (user.getUserId().equals(User.VISITOR_ID)) {
-            String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
             if (LoginType.MESSAGE.equals(handlerExecutionChain.getLoginType())) {
                 Result result = Result.fail(SparrowError.USER_NOT_LOGIN);
                 httpResponse.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
@@ -436,11 +435,7 @@ public class DispatcherFilter implements Filter {
             return false;
         }
 
-        if (!handlerExecutionChain.isNeedAuthorizing()) {
-            return true;
-        }
         Authorizer authorizer = this.container.getBean(SysObjectName.AUTHORIZER_SERVICE);
-
         if (!authorizer.isPermitted(
             user, actionName)) {
             httpResponse.getWriter().write(Constant.ACCESS_DENIED);
