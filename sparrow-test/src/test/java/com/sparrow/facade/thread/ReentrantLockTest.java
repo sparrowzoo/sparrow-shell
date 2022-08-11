@@ -1,6 +1,5 @@
 package com.sparrow.facade.thread;
 
-import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ReentrantLockTest {

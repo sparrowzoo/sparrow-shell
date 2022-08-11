@@ -25,20 +25,20 @@ public class ThreadInterruptTest {
         Thread thread = new Thread(runnable, "test");
         thread.start();
         Thread.sleep(100);
-//        Thread thread2 = new Thread(runnable, "test2");
-//        thread2.start();
+        Thread thread2 = new Thread(runnable, "test2");
+        thread2.start();
         //thread.interrupt();
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
                     System.out.println(thread.getName() + "-" + thread.getState());
-                    //System.out.println(thread2.getName() + "-" + thread2.getState());
+                    System.out.println(thread2.getName() + "-" + thread2.getState());
                     try {
                         Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //thread.interrupt();
+                    thread.interrupt();
                     //thread2.interrupt();
                 }
             }
