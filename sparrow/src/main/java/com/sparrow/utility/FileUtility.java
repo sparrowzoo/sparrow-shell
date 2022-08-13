@@ -468,9 +468,9 @@ public class FileUtility {
                 return String.format(path, remaining, size, remaining2, remaining1,
                         fileUuid, extension);
             }
-            //img_unc_0=D:/workspace/sparrow/img0 参数在key中定义
-            String imgUnc = ConfigUtility.getValue(File.PATH.IMG_UNC + "_" + remaining);
-            path = imgUnc
+            //img_unc_0=file://ip1:port/sparrow/img0 参数在key中定义
+            String imgShufflerDir = ConfigUtility.getValue(File.PATH.IMG_SHUFFLER_DIR + "_" + remaining);
+            path = imgShufflerDir
                     + "/%1$s/%2$s/%3$s/%4$s%5$s";
             return String.format(path, size, remaining2, remaining1,
                     fileUuid, extension);

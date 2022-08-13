@@ -57,7 +57,7 @@ public class File {
      */
     public class PATH {
         public static final String IMG_URL = "img_url";
-        public static final String IMG_UNC = "img_unc";
+        public static final String IMG_SHUFFLER_DIR = "img_shuffle_dir";
         public static final String FILE_UPLOAD = "file_upload";
     }
 }

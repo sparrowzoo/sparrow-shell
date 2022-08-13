@@ -1,12 +1,12 @@
-package com.sparrow.facade.thread;
+package com.sparrow.facade.thread.aqs.condition;
 
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.LockSupport;
 
 public class MultiThreadBlockTest {
     private static Object lock = new Object();
 
     public static void main(String[] args) {
-        //Executors.newSingleThreadExecutor();
         for (int i = 0; i < 2; i++) {
             new Thread(new Runnable() {
                 @Override

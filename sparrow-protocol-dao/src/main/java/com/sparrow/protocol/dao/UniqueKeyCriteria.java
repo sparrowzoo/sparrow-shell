@@ -26,14 +26,14 @@ public class UniqueKeyCriteria {
      */
     private Object key;
     /**
-     * unique filed name default is primary key
+     * unique property name default is primary key
      */
-    private String uniqueFieldName;
+    private String uniquePropertyName;
 
     private UniqueKeyCriteria(String resultFiled, Object key, String uniqueFieldName) {
         this.resultFiled = resultFiled;
         this.key = key;
-        this.uniqueFieldName = uniqueFieldName;
+        this.uniquePropertyName = uniqueFieldName;
     }
 
     public static UniqueKeyCriteria createUniqueCriteria(Object key, String uniqueFieldName) {
@@ -65,11 +65,7 @@ public class UniqueKeyCriteria {
         this.key = key;
     }
 
-    public String getUniqueFieldName() {
-        return uniqueFieldName;
-    }
-
-    public void setUniqueFieldName(String uniqueFieldName) {
-        this.uniqueFieldName = uniqueFieldName;
+    public String getUniquePropertyName() {
+        return uniquePropertyName;
     }
 }

@@ -13,8 +13,6 @@ public class ConditionTest {
         thread.start();
         Thread thread1 = new Thread(conditionTest::put);
         thread1.start();
-
-
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
@@ -26,7 +24,7 @@ public class ConditionTest {
                         e.printStackTrace();
                     }
                     thread.interrupt();
-                    thread1.interrupt();
+                    //thread1.interrupt();
                 }
             }
         });
@@ -36,6 +34,10 @@ public class ConditionTest {
     public Integer take() {
         try {
             lock.lockInterruptibly();
+            try {
+                Thread.sleep(5000);
+            } catch (Throwable e) {
+            }
             empty.await();
             System.out.println("ending...");
             return 0;

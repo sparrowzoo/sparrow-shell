@@ -125,8 +125,11 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             if (!field.isPrimary()) {
                 createDDLField.append(String.format(" `%s` %s  %s,\n", column.name(), column.columnDefinition(), column.nullable() ? "" : "NOT NULL"));
             } else {
-                //todo AUTO_INCREMENT
-                primaryCreateDDL = String.format(" `%s` %s NOT NULL ,\n", column.name(), column.columnDefinition());
+                if (field.getGenerationType().equals(GenerationType.IDENTITY)) {
+                    primaryCreateDDL = String.format(" `%s` %s NOT NULL AUTO_INCREMENT,\n", column.name(), column.columnDefinition());
+                } else {
+                    primaryCreateDDL = String.format(" `%s` %s NOT NULL,\n", column.name(), column.columnDefinition());
+                }
             }
 
             this.columnPropertyMap.put(column.name(), propertyName);

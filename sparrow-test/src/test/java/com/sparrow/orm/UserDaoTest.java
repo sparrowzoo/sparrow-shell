@@ -5,7 +5,9 @@ import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.Gender;
 import com.sparrow.orm.dao.UserDAO;
+import com.sparrow.orm.dao.impl.UserDaoImpl;
 import com.sparrow.orm.po.User;
+import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import com.sparrow.protocol.enums.StatusRecord;
 import com.sparrow.utility.DateTimeUtility;
 import org.junit.Test;
@@ -17,6 +19,15 @@ import java.util.List;
  * Created by harry on 2018/2/6.
  */
 public class UserDaoTest {
+    @Test
+    public void getUser() {
+        Container container = ApplicationContext.getContainer();
+        container.setContextConfigLocation("/dao.xml");
+        container.init();
+        UserDaoImpl userDAO = container.getBean("userDao");
+        userDAO.getByUserName("harry");
+    }
+
     @Test
     public void userTest() {
         Container container = ApplicationContext.getContainer();

@@ -6,17 +6,21 @@ public class InterruptThreadTest {
             @Override
             public void run() {
                while (true){
-                   try {
-                       System.out.println(Thread.currentThread().isInterrupted());
-                       Thread.sleep(100);
-                   } catch (InterruptedException e) {
-                       e.printStackTrace();
+//                   try {
+//                       System.out.println(Thread.currentThread().isInterrupted());
+//                       Thread.sleep(100);
+//                   } catch (InterruptedException e) {
+//                       e.printStackTrace();
+//                   }
+                   if(Thread.currentThread().isInterrupted()){
+                       break;
                    }
-                   System.out.println(Thread.currentThread().isInterrupted());
+                   //System.out.println(Thread.currentThread().isInterrupted());
                }
             }
         });
        thread.start();
        thread.interrupt();
+       //thread.interrupt();
     }
 }
