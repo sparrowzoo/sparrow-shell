@@ -1,4 +1,4 @@
-package com.sparrow.facade.thread;
+package com.sparrow.facade.thread.reentrant.lock;
 
 import java.util.concurrent.locks.ReentrantLock;
 

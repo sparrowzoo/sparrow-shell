@@ -36,6 +36,10 @@ public enum Gender {
     @Override
     public String toString() {
         String key = super.toString();
-        return ConfigUtility.getLanguageValue("gender_" + key.toLowerCase());
+        String gender = ConfigUtility.getLanguageValue("gender_" + key.toLowerCase());
+        if (gender == null) {
+            return this.name();
+        }
+        return gender;
     }
 }

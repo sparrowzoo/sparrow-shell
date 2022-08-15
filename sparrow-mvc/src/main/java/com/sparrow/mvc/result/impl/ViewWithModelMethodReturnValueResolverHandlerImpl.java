@@ -56,7 +56,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
 
     @Override
     public boolean support(ServletInvokableHandlerMethod executionChain) {
-        return executionChain.getReturnType().equals(ViewWithModel.class) || executionChain.getReturnType().equals(String.class);
+        return executionChain.getReturnType().equals(ViewWithModel.class);
     }
 
     private void flash(HttpServletRequest request, String flashUrl, String key, Object o) {
