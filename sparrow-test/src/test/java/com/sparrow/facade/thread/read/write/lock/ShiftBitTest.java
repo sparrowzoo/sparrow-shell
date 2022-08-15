@@ -8,7 +8,7 @@ public class ShiftBitTest {
         System.out.println(i >> 2);
         System.out.println(i >>> 2);
         for (int j = 0; j < 32; j++) {
-            int k = i >> j;
+            int k = i >>> j;
             System.out.println(Integer.toBinaryString(k) + "-" + (i / k));
         }
     }

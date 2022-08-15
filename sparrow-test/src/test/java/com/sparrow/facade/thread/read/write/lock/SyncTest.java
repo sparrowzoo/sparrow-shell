@@ -1,5 +1,7 @@
 package com.sparrow.facade.thread.read.write.lock;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
@@ -7,17 +9,34 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class SyncTest {
-    public static void main(String[] args) {
-        NonfairSync nonfairSync=new NonfairSync();
-        WriteLock writeLock=new WriteLock(nonfairSync);
-        ReadLock readLock=new ReadLock(nonfairSync);
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println(Integer.toBinaryString(Sync.EXCLUSIVE_MASK));
+        System.out.println(Integer.toBinaryString(Sync.SHARED_UNIT));
+        System.out.println(Integer.toBinaryString(Sync.MAX_COUNT));
+
+
+        NonfairSync nonfairSync = new NonfairSync();
+        WriteLock writeLock = new WriteLock(nonfairSync);
+        ReadLock readLock = new ReadLock(nonfairSync);
+        int threadSize=100;
+        List<Thread> threads=new ArrayList<>(threadSize);
+        for(int i=0;i<threadSize;i++) {
+            //readLock.lock();
+            // new Thread(readLock::lock).start();
+        }
+        int state=threadSize;
+        while (state!=threadSize) {
+            state = NonfairSync.sharedCount(nonfairSync.getCount());
+            System.out.println((nonfairSync.getCount() >>> 16) + "-" + state);
+            Thread.sleep(1000);
+        }
+
+
+        new Thread(writeLock::lock).start();
+        new Thread(writeLock::lock).start();
+        new Thread(writeLock::lock).start();
         readLock.lock();
-        readLock.lock();
-        readLock.lock();
-        //>>>是java中的移位运算符，表示无符号右移。
-        System.out.println(nonfairSync.getCount()>>16);
-        //writeLock.lock();
-        //System.out.println(nonfairSync.getCount());
+        System.out.println((nonfairSync.getCount() & 0x0000FFFF)+"-"+NonfairSync.exclusiveCount(nonfairSync.getCount()));
     }
 
     /**
@@ -34,15 +53,15 @@ public class SyncTest {
          * and the upper the shared (reader) hold count.
          */
 
-        static final int SHARED_SHIFT   = 16;
-        static final int SHARED_UNIT    = (1 << SHARED_SHIFT);
-        static final int MAX_COUNT      = (1 << SHARED_SHIFT) - 1;
-        static final int EXCLUSIVE_MASK = (1 << SHARED_SHIFT) - 1;
+        public static final int SHARED_SHIFT   = 16;
+        public static final int SHARED_UNIT    = (1 << SHARED_SHIFT);
+        public static final int MAX_COUNT      = (1 << SHARED_SHIFT) - 1;
+        public static final int EXCLUSIVE_MASK = (1 << SHARED_SHIFT) - 1;
 
         /** Returns the number of shared holds represented in count  */
-        static int sharedCount(int c)    { return c >>> SHARED_SHIFT; }
+        public static int sharedCount(int c)    { return c >>> SHARED_SHIFT; }
         /** Returns the number of exclusive holds represented in count  */
-        static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
+        public static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
 
         /**
          * A counter for per-thread read hold counts.
@@ -455,7 +474,7 @@ public class SyncTest {
              * readers that have not yet drained from the queue.
              */
             //todo
-            return false;//apparentlyFirstQueuedIsExclusive();
+            return exclusiveCount(getCount())>0;
         }
     }
 

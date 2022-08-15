@@ -8,9 +8,10 @@ public class SyncTest {
         System.out.println(sync.getCount());
         sync.releaseShared(10);
         sync.releaseShared(10);
-        sync.releaseShared(10);
         System.out.println(sync.getCount());
         sync.acquireSharedInterruptibly(1);
+        System.out.println(sync.getCount());
+
     }
     private static final class Sync extends AbstractQueuedSynchronizer {
         private static final long serialVersionUID = 4982264981922014374L;
