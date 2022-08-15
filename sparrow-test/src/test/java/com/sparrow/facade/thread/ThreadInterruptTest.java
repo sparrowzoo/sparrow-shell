@@ -7,14 +7,10 @@ public class ThreadInterruptTest {
         Runnable runnable = () -> {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
-                System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！");
                 synchronized (lock) {
                     System.out.println("entry " + Thread.currentThread().getName() + "-" + Thread.currentThread().getState());
-                    //Thread.sleep(Integer.MAX_VALUE);
+                    Thread.sleep(Integer.MAX_VALUE);
                     //LockSupport.park();
-                    synchronized (lock) {
-                        lock.wait();
-                    }
                     System.out.println("exist " + Thread.currentThread().getName());
                 }
             } catch (Exception e) {
@@ -22,24 +18,22 @@ public class ThreadInterruptTest {
             }
         };
 
-        Thread thread = new Thread(runnable, "test");
-        thread.start();
+        Thread thread1 = new Thread(runnable, "test1");
+        thread1.start();
         Thread.sleep(100);
         Thread thread2 = new Thread(runnable, "test2");
         thread2.start();
-        //thread.interrupt();
+        thread2.interrupt();
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
-                    System.out.println(thread.getName() + "-" + thread.getState());
+                    System.out.println(thread1.getName() + "-" + thread1.getState());
                     System.out.println(thread2.getName() + "-" + thread2.getState());
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    thread.interrupt();
-                    //thread2.interrupt();
                 }
             }
         });

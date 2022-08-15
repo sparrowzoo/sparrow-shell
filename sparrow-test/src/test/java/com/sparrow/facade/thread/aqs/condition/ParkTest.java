@@ -4,6 +4,7 @@ import java.util.concurrent.locks.LockSupport;
 
 public class ParkTest {
     public static void main(String[] args) {
+        System.out.println(Runtime.getRuntime().availableProcessors());
         //sparrow-shell
         Thread thread = new Thread(new Runnable() {
             @Override public void run() {

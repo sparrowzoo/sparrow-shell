@@ -7,6 +7,6 @@ public class CountDownLatchTest {
         CountDownLatch countDownLatch=new CountDownLatch(10);
         countDownLatch.countDown();
         countDownLatch.countDown();
-        //countDownLatch.await();
+        countDownLatch.await();
     }
 }
