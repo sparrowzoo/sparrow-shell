@@ -1,4 +1,4 @@
-package com.sparrow.facade.thread;
+package com.sparrow.facade.thread.interrupter;
 
 public class InterruptThreadTest {
     public static void main(String[] args) {
