@@ -1,4 +1,4 @@
-package com.sparrow.facade.thread;
+package com.sparrow.facade.thread.interrupter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,7 +42,7 @@ public class ReenterSyncBlockingTest {
         while (true) {
             Thread.sleep(1500);
             thread1.interrupt();
-            System.out.println("Thread1- "+thread1.getState());
+            System.out.println("Thread1-"+thread1.getState());
         }
     }
 }
