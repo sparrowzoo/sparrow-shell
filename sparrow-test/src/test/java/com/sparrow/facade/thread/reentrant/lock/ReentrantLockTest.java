@@ -8,8 +8,6 @@ public class ReentrantLockTest {
     public static void main(String[] args) throws InterruptedException {
 
         final ReentrantLock lock = new ReentrantLock(false);
-
-
         Runnable runnable = () -> {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
@@ -56,7 +54,7 @@ public class ReentrantLockTest {
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
-                    System.out.println("QueueCount"+ lock.getQueueLength());
+                    System.out.println("QueueCount" + lock.getQueueLength());
                     System.out.println(thread1.getName() + "-" + thread1.getState() + "-" + thread1.isInterrupted());
                     System.out.println(thread2.getName() + "-" + thread2.getState() + "-" + thread2.isInterrupted());
                     System.out.println(thread3.getName() + "-" + thread3.getState() + "-" + thread3.isInterrupted());
@@ -69,11 +67,11 @@ public class ReentrantLockTest {
                         e.printStackTrace();
                     }
                     //if (b == 1) {
-                       // thread1.interrupt();
-                        //thread2.interrupt();
-                        thread3.interrupt();
-                        thread4.interrupt();
-                        b = 0;
+                    // thread1.interrupt();
+                    //thread2.interrupt();
+                    thread3.interrupt();
+                    thread4.interrupt();
+                    b = 0;
                     //}
                 }
             }

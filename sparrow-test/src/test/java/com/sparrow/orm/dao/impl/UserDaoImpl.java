@@ -31,8 +31,10 @@ public class UserDaoImpl extends ORMStrategy<User, Long> implements UserDAO {
         searchCriteria.setWhere(BooleanCriteria.criteria(
             Criteria.field("user.userName").equal(userName)).
             and(Criteria.field("user.nickName").equal(nickName))
-            .or(BooleanCriteria.criteria(Criteria.field("user.userId").equal(2L))
-                .or(Criteria.field("user.nickName").equal(nickName))));
+            .or(
+                BooleanCriteria.criteria(Criteria.field("user.userId").equal(2L))
+                    .or(Criteria.field("user.nickName").equal(nickName)))
+        );
         return this.getList(searchCriteria);
     }
 }

@@ -18,13 +18,13 @@ public class SyncTest {
         NonfairSync nonfairSync = new NonfairSync();
         WriteLock writeLock = new WriteLock(nonfairSync);
         ReadLock readLock = new ReadLock(nonfairSync);
-        int threadSize=100;
+        int threadSize=10;
         List<Thread> threads=new ArrayList<>(threadSize);
         for(int i=0;i<threadSize;i++) {
             //readLock.lock();
-            // new Thread(readLock::lock).start();
+            new Thread(readLock::lock).start();
         }
-        int state=threadSize;
+        int state=0;
         while (state!=threadSize) {
             state = NonfairSync.sharedCount(nonfairSync.getCount());
             System.out.println((nonfairSync.getCount() >>> 16) + "-" + state);
