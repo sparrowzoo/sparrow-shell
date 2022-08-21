@@ -38,11 +38,12 @@ public class ReenterSyncBlockingTest {
         thread1.start();
         thread2.start();
         Thread.sleep(3000);
+
         // 这里故意让主线程sleep 1500毫秒从而让thread2调用了Object#notify()并且尚未退出同步代码块，确保thread1调用了Object#wait()
         while (true) {
             Thread.sleep(1500);
             thread1.interrupt();
-            System.out.println("Thread1-"+thread1.getState());
+            System.out.println("Thread1-" + thread1.getState());
         }
     }
 }

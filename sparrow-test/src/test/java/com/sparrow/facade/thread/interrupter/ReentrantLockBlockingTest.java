@@ -9,22 +9,22 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ReentrantLockBlockingTest {
 
     private static final DateTimeFormatter F = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     static Lock lock = new ReentrantLock();
     static Condition condition = lock.newCondition();
 
-    public static void conditionWait() {
+    public static void conditionSignal() {
+        lock.lock();
+        System.out.printf("[%s]-[%s] got monitor lock...%n", F.format(LocalDateTime.now()),Thread.currentThread().getName());
         try {
-            lock.lock();
-            System.out.println(String.format("[%s]-thread1 got monitor lock...", F.format(LocalDateTime.now())));
-            condition.wait();
-            System.out.println(String.format("[%s]-thread1 got monitor after wait.", F.format(LocalDateTime.now())));
+            Thread.sleep(1000);
+            condition.signal();
+            Thread.sleep(Integer.MAX_VALUE);
         } catch (InterruptedException e) {
             //ignore
         } finally {
             lock.unlock();
         }
-        System.out.println(String.format("[%s]-thread1 exit waiting...", F.format(LocalDateTime.now())));
+        System.out.printf("[%s]-thread2 releases monitor lock...%n", F.format(LocalDateTime.now()));
     }
 
     public static void conditionAwait() {
@@ -32,45 +32,28 @@ public class ReentrantLockBlockingTest {
             lock.lockInterruptibly();
             System.err.println(Thread.currentThread().getName() + " get lock");
             condition.await();
+            System.out.println(Thread.currentThread().getName() + " signed");
             System.out.println("ending...");
         } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             lock.unlock();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(String.format("[%s]-begin...", F.format(LocalDateTime.now())));
-        Thread thread1 = new Thread(ReentrantLockBlockingTest::conditionAwait, "thread1");
-        // Thread thread1 = new Thread(ReentrantLockBlockingTest::conditionWait);
-
-        Thread thread2 = new Thread(() -> {
-            lock.lock();
-            System.out.println(String.format("[%s]-thread2 got monitor lock...", F.format(LocalDateTime.now())));
-            try {
-                Thread.sleep(1000);
-                condition.signal();
-                Thread.sleep(1000);
-                //condition.notify();//is error
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                //ignore
-            } finally {
-                lock.unlock();
-            }
-            System.out.println(String.format("[%s]-thread2 releases monitor lock...", F.format(LocalDateTime.now())));
-        }, "thread2");
+        System.out.printf("[%s]-begin...%n", F.format(LocalDateTime.now()));
+        Thread thread1 = new Thread(ReentrantLockBlockingTest::conditionAwait, "waiting-thread");
+        Thread thread2 = new Thread(ReentrantLockBlockingTest::conditionSignal, "signal-thread");
         thread1.start();
         Thread.sleep(1000);
         thread2.start();
         Thread.sleep(10000);
         while (true) {
             Thread.sleep(1500);
-            System.err.println("Thread1 interrupt");
+            System.err.println(thread1.getName()+" interrupt");
             thread1.interrupt();
-            System.out.println("Thread1-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());
-            System.out.println("Thread2-" + thread2.getState() + "-interrupt- " + thread2.isInterrupted());
+            System.out.println(thread1.getName() + "-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());
+            System.out.println(thread2.getName() + "-" + thread2.getState() + "-interrupt- " + thread2.isInterrupted());
         }
     }
 }

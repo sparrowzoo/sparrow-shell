@@ -1,8 +1,5 @@
 package com.sparrow.facade.thread.aqs.condition;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.LockSupport;
-
 public class MultiThreadBlockTest {
     private static Object lock = new Object();
 
