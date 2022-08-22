@@ -47,10 +47,11 @@ public class ReentrantLockBlockingTest {
         thread1.start();
         Thread.sleep(1000);
         thread2.start();
+        thread1.interrupt();
         while (true) {
             Thread.sleep(1500);
             System.err.println(thread1.getName()+" interrupt");
-            thread1.interrupt();
+
             System.out.println(thread1.getName() + "-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());
             System.out.println(thread2.getName() + "-" + thread2.getState() + "-interrupt- " + thread2.isInterrupted());
         }
