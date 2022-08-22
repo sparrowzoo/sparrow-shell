@@ -1,0 +1,15 @@
+package com.sparrow.facade.thread.sington;
+
+public class SingletonTest {
+    private static SingletonTest singtonTest=new SingletonTest();
+    private SingletonTest(){
+        System.out.println("hello");
+    }
+    public static SingletonTest getInstance(){
+        return singtonTest;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("hello2");
+    }
+}
