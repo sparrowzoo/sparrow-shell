@@ -47,7 +47,6 @@ public class ReentrantLockBlockingTest {
         thread1.start();
         Thread.sleep(1000);
         thread2.start();
-        Thread.sleep(10000);
         while (true) {
             Thread.sleep(1500);
             System.err.println(thread1.getName()+" interrupt");
