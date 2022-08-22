@@ -8,39 +8,12 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class SyncTest {
+public class SyncDeadLockTest {
     public static void main(String[] args) throws InterruptedException {
-        System.out.println(Integer.toBinaryString(Sync.EXCLUSIVE_MASK));
-        System.out.println(Integer.toBinaryString(Sync.SHARED_UNIT));
-        System.out.println(Integer.toBinaryString(Sync.MAX_COUNT));
-
-
-        NonfairSync nonfairSync = new NonfairSync();
-        WriteLock writeLock = new WriteLock(nonfairSync);
-        ReadLock readLock = new ReadLock(nonfairSync);
-        int threadSize=100;
-        List<Thread> threads=new ArrayList<>(threadSize);
-        for(int i=0;i<threadSize;i++) {
-            //readLock.lock();
-            // new Thread(readLock::lock).start();
-        }
-        int state=threadSize;
-        while (state!=threadSize) {
-            state = NonfairSync.sharedCount(nonfairSync.getCount());
-            System.out.println((nonfairSync.getCount() >>> 16) + "-" + state);
-            Thread.sleep(1000);
-        }
-
-
-        new Thread(writeLock::lock).start();
-        new Thread(writeLock::lock).start();
-        new Thread(writeLock::lock).start();
-        readLock.lock();
-        System.out.println((nonfairSync.getCount() & 0x0000FFFF)+"-"+NonfairSync.exclusiveCount(nonfairSync.getCount()));
     }
 
     /**
-     * Synchronization implementation for 
+     * Synchronization implementation for
      * Subclassed into fair and nonfair versions.
      */
     abstract static class Sync extends AbstractQueuedSynchronizer {
@@ -78,7 +51,7 @@ public class SyncTest {
          * of deserialization mechanics.
          */
         static final class ThreadLocalHoldCounter
-            extends ThreadLocal<Sync.HoldCounter> {
+            extends ThreadLocal<HoldCounter> {
             public Sync.HoldCounter initialValue() {
                 return new Sync.HoldCounter();
             }
@@ -300,6 +273,9 @@ public class SyncTest {
                     if (getExclusiveOwnerThread() != current) {
                         return -1;
                     }
+                    else {
+                        System.out.println("deadlock");
+                    }
                     // else we hold the exclusive lock; blocking here
                     // would cause deadlock.
                 } else if (readerShouldBlock()) {
@@ -474,7 +450,6 @@ public class SyncTest {
              * block if there is a waiting writer behind other enabled
              * readers that have not yet drained from the queue.
              */
-            //apparentlyFirstQueuedIsExclusive()
             //todo
             return exclusiveCount(getCount())>0;
         }

@@ -9,7 +9,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ReentrantLockBlockingTest {
 
     private static final DateTimeFormatter F = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     static Lock lock = new ReentrantLock();
     static Condition condition = lock.newCondition();
 
@@ -34,7 +33,6 @@ public class ReentrantLockBlockingTest {
             condition.await();
             System.out.println("ending...");
         } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             lock.unlock();
         }
@@ -51,7 +49,6 @@ public class ReentrantLockBlockingTest {
             try {
                 Thread.sleep(1000);
                 condition.signal();
-                Thread.sleep(1000);
                 //condition.notify();//is error
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
@@ -66,7 +63,7 @@ public class ReentrantLockBlockingTest {
         thread2.start();
         Thread.sleep(10000);
         while (true) {
-            Thread.sleep(1500);
+            Thread.sleep(500);
             System.err.println("Thread1 interrupt");
             thread1.interrupt();
             System.out.println("Thread1-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());
