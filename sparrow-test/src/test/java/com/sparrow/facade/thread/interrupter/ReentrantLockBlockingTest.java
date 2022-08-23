@@ -18,7 +18,8 @@ public class ReentrantLockBlockingTest {
         try {
             Thread.sleep(1000);
             condition.signal();
-            Thread.sleep(Integer.MAX_VALUE);
+            //Thread.sleep(20000);
+            //Thread.sleep(Integer.MAX_VALUE);
         } catch (InterruptedException e) {
             //ignore
         } finally {
@@ -51,7 +52,6 @@ public class ReentrantLockBlockingTest {
         while (true) {
             Thread.sleep(1500);
             System.err.println(thread1.getName()+" interrupt");
-
             System.out.println(thread1.getName() + "-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());
             System.out.println(thread2.getName() + "-" + thread2.getState() + "-interrupt- " + thread2.isInterrupted());
         }

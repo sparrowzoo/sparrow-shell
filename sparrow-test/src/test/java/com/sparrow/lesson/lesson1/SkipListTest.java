@@ -9,7 +9,7 @@ import java.util.TreeMap;
  * @author zhanglz
  */
 
-public class Main {
+public class SkipListTest {
 
   public static void main(String[] args) {
     nodeDistribution(100000);
