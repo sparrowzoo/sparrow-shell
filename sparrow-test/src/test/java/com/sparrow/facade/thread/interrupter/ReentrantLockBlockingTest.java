@@ -17,7 +17,8 @@ public class ReentrantLockBlockingTest {
         try {
             Thread.sleep(1000);
             condition.signal();
-            Thread.sleep(Integer.MAX_VALUE);
+            //Thread.sleep(20000);
+            //Thread.sleep(Integer.MAX_VALUE);
         } catch (InterruptedException e) {
             //ignore
         } finally {

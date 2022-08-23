@@ -30,10 +30,10 @@ import java.util.Map;
 public class LuckyDraw {
     public static void main(String[] args) {
         Map<String, Double> rules = new HashMap<String, Double>();
-        rules.put("4", 0.3d);
+        rules.put("4", 0.5d);
         rules.put("2", 0.3d);
-        rules.put("3", 0.3d);
-        rules.put("1", 0.1d);
+        rules.put("3", 0.15d);
+        rules.put("1", 0.05d);
         Map<String, Integer> countMap = new HashMap<String, Integer>();
         for (int i = 0; i <= 1000; i++) {
             String label = RandomUtility.lottery(rules, 1000, "null");
@@ -42,7 +42,6 @@ public class LuckyDraw {
             } else {
                 countMap.put(label, 1);
             }
-
         }
         for (String label : countMap.keySet()) {
             System.out.println(label);
