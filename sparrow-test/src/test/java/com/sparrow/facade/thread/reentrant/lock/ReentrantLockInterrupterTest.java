@@ -9,6 +9,7 @@ public class ReentrantLockInterrupterTest {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
                 lock.lockInterruptibly();
+
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！");
                 while (true) {
                     if (Thread.currentThread().isInterrupted()) {
