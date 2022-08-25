@@ -8,28 +8,17 @@ public class SemaphoreTest {
         Semaphore semaphore = new Semaphore(2);
         semaphore.acquire(1);
         semaphore.acquire(1);
-
-        //semaphore.acquire(1);
+        //另起线程，不阻塞当前线程，如果直接执行，则会阻塞
+        new Thread(new Runnable() {
+            @Override public void run() {
+                try {
+                    semaphore.acquire(1);
+                    System.out.println("333");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
         semaphore.release(2);
-        //System.out.println(semaphore.tryAcquire());
-        //semaphore.tryAcquire(10);
-        System.out.println(semaphore.availablePermits());
-        //将剩下的信号量一次性消耗光，并且返回所消耗的信号量
-        //System.out.println(semaphore.drainPermits());
-//        new Thread(new Runnable() {
-//            @Override public void run() {
-//                try {
-//                    semaphore.tryAcquire(1000, TimeUnit.DAYS);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-//        Thread.sleep(500);
-//        System.out.println(semaphore.getQueueLength());
-//        System.out.println(semaphore.availablePermits());
-//        semaphore.release(2);
-//        semaphore.release(-1);
-//        System.out.println(semaphore.availablePermits());
     }
 }

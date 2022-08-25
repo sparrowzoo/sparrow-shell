@@ -1,11 +1,13 @@
 package com.sparrow.facade.thread.reentrant.lock;
 
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ReentrantLockTest {
     public static void main(String[] args) throws InterruptedException {
         final Lock lock = new ReentrantLock(false);
+        Condition condition= lock.newCondition();
         Runnable runnable = () -> {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
@@ -13,6 +15,7 @@ public class ReentrantLockTest {
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！" + 100 + "ms");
                 //LockSupport.park();
                 Thread.sleep(Integer.MAX_VALUE);
+                condition.await();
                 System.out.println(Thread.currentThread().getName() + "17" + Thread.currentThread().isInterrupted());
             } catch (Exception e) {
                 System.err.println(Thread.currentThread().getName() + " is_interrupted " + Thread.currentThread().getState() + "-" + Thread.currentThread().isInterrupted());
@@ -31,7 +34,6 @@ public class ReentrantLockTest {
         thread2.interrupt();
         Thread monitor = new Thread(new Runnable() {
             @Override public void run() {
-
                 while (true) {
                     synchronized (this) {
                         Thread thread = thread1;

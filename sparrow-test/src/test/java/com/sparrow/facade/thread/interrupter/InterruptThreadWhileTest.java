@@ -1,18 +1,16 @@
 package com.sparrow.facade.thread.interrupter;
 
-public class InterruptThreadTest {
+public class InterruptThreadWhileTest {
     public static void main(String[] args) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
-                    try {
-                        System.out.println(Thread.currentThread().isInterrupted());
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    System.out.println(Thread.currentThread().isInterrupted());
                     if (Thread.currentThread().isInterrupted()) {
+                        System.out.println("do something for business");
+                        System.out.println("close database connection");
+                        System.out.println("release io connection");
                         break;
                     }
                 }
