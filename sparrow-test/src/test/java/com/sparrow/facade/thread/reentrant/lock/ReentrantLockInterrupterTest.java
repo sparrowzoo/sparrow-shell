@@ -2,6 +2,9 @@ package com.sparrow.facade.thread.reentrant.lock;
 
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * lockInterruptibly 响应中断后F为什么会报错？
+ */
 public class ReentrantLockInterrupterTest {
     public static void main(String[] args) throws InterruptedException {
         final ReentrantLock lock = new ReentrantLock();
@@ -9,7 +12,6 @@ public class ReentrantLockInterrupterTest {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
                 lock.lockInterruptibly();
-
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！");
                 while (true) {
                     if (Thread.currentThread().isInterrupted()) {

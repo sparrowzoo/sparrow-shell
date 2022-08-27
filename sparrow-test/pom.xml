@@ -366,8 +366,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compile.version}</version>
                 <configuration>
-                    <source>${maven.compile.source}</source>
-                    <target>${maven.compile.target}</target>
+                    <source>8</source>
+                    <target>8</target>
                     <encoding>${maven.compile.encoding}</encoding>
                     <debug>true</debug>
                 </configuration>

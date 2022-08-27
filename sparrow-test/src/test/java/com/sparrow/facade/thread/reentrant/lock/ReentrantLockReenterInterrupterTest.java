@@ -6,6 +6,9 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 重入后无法中断
+ */
 public class ReentrantLockReenterInterrupterTest {
 
     private static final DateTimeFormatter F = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -17,7 +20,6 @@ public class ReentrantLockReenterInterrupterTest {
         System.out.printf("[%s]-[%s] got monitor lock...%n", F.format(LocalDateTime.now()), Thread.currentThread().getName());
         try {
             condition.signal();
-            Thread.sleep(5000);
             Thread.sleep(Integer.MAX_VALUE);
         } catch (InterruptedException e) {
             //ignore
@@ -49,6 +51,7 @@ public class ReentrantLockReenterInterrupterTest {
         thread2.start();
         Thread.sleep(2000);
         thread1.interrupt();
+
         while (true) {
             Thread.sleep(1500);
             System.out.println(thread1.getName() + "-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());

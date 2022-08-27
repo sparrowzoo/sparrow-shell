@@ -23,9 +23,7 @@ public class MonitorExceptionTest {
             return;
         }
         try {
-            // 伪代码 开始
             System.err.println(index + " run code");
-            // 伪代码 结束
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

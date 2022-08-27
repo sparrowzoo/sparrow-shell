@@ -4,12 +4,19 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Lock;
 
 public class SyncTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         NonfairSync sync = new NonfairSync();
         sync.lock();
-        System.out.println(sync.getState2());
-        sync.release(1);
-        System.out.println(sync.getState2());
+        new Thread(new Runnable() {
+            @Override public void run() {
+                sync.lock();
+                System.out.println(Thread.currentThread().getName() + "-" + sync.getState2());
+            }
+        }).start();
+        Thread.sleep(2000);
+        for (long i = 0; i < Long.MAX_VALUE; i++) {
+            sync.lock();
+        }
     }
 
     abstract static class Sync extends AbstractQueuedSynchronizer {

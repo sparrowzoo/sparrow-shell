@@ -6,13 +6,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class MonitorExceptionTest {
     private static Lock mLock = new ReentrantLock();
 
-    public static void main(String[]args) {
+    public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
-            final int finalI = i;
+            final int fi = i;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    test(finalI);
+                    test(fi);
                 }
             }).start();
         }
@@ -20,10 +20,8 @@ public class MonitorExceptionTest {
 
     public static void test(int index) {
         try {
-            if(mLock.tryLock()){
-                // 伪代码 开始
+            if (mLock.tryLock()) {
                 System.err.println(index + " run code");
-                // 伪代码 结束
             }
         } catch (Exception e) {
             e.printStackTrace();
