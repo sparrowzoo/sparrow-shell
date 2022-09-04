@@ -20,9 +20,8 @@ public class MonitorExceptionTest {
 
     public static void test(int index) {
         try {
-            if (mLock.tryLock()) {
-                System.err.println(index + " run code");
-            }
+            mLock.lock();
+            System.err.println(index + " run code" + index);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

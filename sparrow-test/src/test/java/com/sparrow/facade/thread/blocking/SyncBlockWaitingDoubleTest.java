@@ -11,10 +11,10 @@ public class SyncBlockWaitingDoubleTest {
     public static void main(String[] args) {
         Runnable runnable = () -> {
             synchronized (MONITOR) {
-                System.out.println(String.format("[%s]-thread1 got monitor lock...", F.format(LocalDateTime.now())));
+                System.out.println(String.format("[%s] [%s] got monitor lock...", F.format(LocalDateTime.now()), Thread.currentThread().getName()));
                 try {
                     MONITOR.wait();
-                    System.out.println(String.format("[%s]-thread1 got monitor after wait.", F.format(LocalDateTime.now())));
+                    System.out.println(String.format("[%s] [%s] got monitor after wait.", F.format(LocalDateTime.now()), Thread.currentThread().getName()));
                 } catch (InterruptedException e) {
                     //ignore
                 }

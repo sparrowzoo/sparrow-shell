@@ -53,6 +53,7 @@ public class ReentrantLockReenterInterrupterTest {
         thread1.interrupt();
 
         while (true) {
+            thread1.interrupt();
             Thread.sleep(1500);
             System.out.println(thread1.getName() + "-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());
             System.out.println(thread2.getName() + "-" + thread2.getState() + "-interrupt- " + thread2.isInterrupted());

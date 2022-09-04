@@ -11,14 +11,14 @@ public class SyncBlockSleepTest {
     public static void main(String[] args) {
         Runnable runnable = () -> {
             synchronized (MONITOR) {
-                System.out.println(String.format("[%s]-thread1 got monitor lock...", F.format(LocalDateTime.now())));
+                System.out.printf("[%s]-thread1 got monitor lock...%n", F.format(LocalDateTime.now()));
                 try {
                     Thread.sleep(Integer.MAX_VALUE);
-                    System.out.println(String.format("[%s]-thread1 got monitor after wait.", F.format(LocalDateTime.now())));
+                    System.out.printf("[%s]-thread1 got monitor after wait.%n", F.format(LocalDateTime.now()));
                 } catch (InterruptedException e) {
                     //ignore
                 }
-                System.out.println(String.format("[%s]-thread1 exit waiting...", F.format(LocalDateTime.now())));
+                System.out.printf("[%s]-thread1 exit waiting...%n", F.format(LocalDateTime.now()));
             }
         };
         Thread thread1 = new Thread(runnable, "synchronized-thread");

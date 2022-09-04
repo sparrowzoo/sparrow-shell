@@ -7,13 +7,10 @@ public class InterruptThreadTest {
             public void run() {
                 while (true) {
                     try {
-                        System.out.println(Thread.currentThread().isInterrupted());
+                        System.out.println(Thread.currentThread().getName() + "-" + Thread.currentThread().getState() + "-" + Thread.currentThread().isInterrupted());
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                    }
-                    if (Thread.currentThread().isInterrupted()) {
-                        break;
                     }
                 }
             }

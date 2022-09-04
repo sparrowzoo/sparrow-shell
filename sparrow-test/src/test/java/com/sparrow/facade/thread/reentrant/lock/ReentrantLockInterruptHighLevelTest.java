@@ -5,14 +5,16 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * lockInterruptibly 响应中断后F为什么会报错？
  */
-public class ReentrantLockInterrupterTest {
+public class ReentrantLockInterruptHighLevelTest {
     public static void main(String[] args) throws InterruptedException {
         final ReentrantLock lock = new ReentrantLock();
         Runnable runnable = () -> {
             try {
                 System.out.println(Thread.currentThread().getName() + " 准备拿锁");
+                //第二个线程进来会阻塞在这里
                 lock.lockInterruptibly();
                 System.out.println(Thread.currentThread().getName() + " 获取锁，执行业务逻辑！");
+                //第一个线程进来会在这里自旋
                 while (true) {
                     if (Thread.currentThread().isInterrupted()) {
                         System.out.println(Thread.currentThread().getName() + " end....");
@@ -20,8 +22,11 @@ public class ReentrantLockInterrupterTest {
                     }
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             } finally {
-                lock.unlock();
+                if(lock.isHeldByCurrentThread()) {
+                    lock.unlock();
+                }
             }
         };
         // 创建两个线程
@@ -29,6 +34,7 @@ public class ReentrantLockInterrupterTest {
         Thread thread2 = new Thread(runnable, "thread-2");
 
         thread1.start();
+
         Thread.sleep(500);//为什么停500ms
         //因为cpu调度存在gap，所以可能导致两个线程调度的时间不确定，影响我们程序的调试
         //join 也是可以的

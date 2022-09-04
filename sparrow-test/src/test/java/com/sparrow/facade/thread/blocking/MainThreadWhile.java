@@ -16,7 +16,7 @@ public class MainThreadWhile {
                     }
                 }
             }
-        }, "monitor-thread");
+        }, "interrupter-thread");
         interrupterThread.start();
         interrupterThread.interrupt();
         System.out.println(interrupterThread.getState());

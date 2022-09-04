@@ -1,4 +1,4 @@
-package com.sparrow.facade.thread.interrupter;
+package com.sparrow.facade.thread.blocking;
 
 public class ThreadSynchronizedInterruptTest {
     private static Integer lock = 0;

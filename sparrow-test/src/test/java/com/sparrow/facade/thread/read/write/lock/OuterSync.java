@@ -1,47 +1,14 @@
 package com.sparrow.facade.thread.read.write.lock;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class SyncTest {
-    public static void main(String[] args) throws InterruptedException {
-        System.out.println(Integer.toBinaryString(Sync.EXCLUSIVE_MASK));
-        System.out.println(Integer.toBinaryString(Sync.SHARED_UNIT));
-        System.out.println(Integer.toBinaryString(Sync.MAX_COUNT));
-
-
-        NonfairSync nonfairSync = new NonfairSync();
-        WriteLock writeLock = new WriteLock(nonfairSync);
-        ReadLock readLock = new ReadLock(nonfairSync);
-        int threadSize=10;
-        List<Thread> threads=new ArrayList<>(threadSize);
-        for(int i=0;i<threadSize;i++) {
-            //readLock.lock();
-            new Thread(readLock::lock).start();
-        }
-        int state=0;
-        while (state!=threadSize) {
-            state = NonfairSync.sharedCount(nonfairSync.getCount());
-            System.out.println((nonfairSync.getCount() >>> 16) + "-" + state);
-            Thread.sleep(1000);
-        }
-
-
-        new Thread(writeLock::lock).start();
-        new Thread(writeLock::lock).start();
-        new Thread(writeLock::lock).start();
-        readLock.lock();
-        System.out.println((nonfairSync.getCount() & 0x0000FFFF)+"-"+NonfairSync.exclusiveCount(nonfairSync.getCount()));
-    }
-
+public class OuterSync {
     /**
-     * Synchronization implementation for 
-     * Subclassed into fair and nonfair versions.
+     * Synchronization implementation for Subclassed into fair and nonfair versions.
      */
     abstract static class Sync extends AbstractQueuedSynchronizer {
         private static final long serialVersionUID = 6317671515068378041L;
@@ -53,19 +20,27 @@ public class SyncTest {
          * and the upper the shared (reader) hold count.
          */
 
-        public static final int SHARED_SHIFT   = 16;
-        public static final int SHARED_UNIT    = (1 << SHARED_SHIFT);
-        public static final int MAX_COUNT      = (1 << SHARED_SHIFT) - 1;
+        public static final int SHARED_SHIFT = 16;
+        public static final int SHARED_UNIT = (1 << SHARED_SHIFT);
+        public static final int MAX_COUNT = (1 << SHARED_SHIFT) - 1;
         public static final int EXCLUSIVE_MASK = (1 << SHARED_SHIFT) - 1;
 
-        /** Returns the number of shared holds represented in count  */
-        public static int sharedCount(int c)    { return c >>> SHARED_SHIFT; }
-        /** Returns the number of exclusive holds represented in count  */
-        public static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
+        /**
+         * Returns the number of shared holds represented in count
+         */
+        public static int sharedCount(int c) {
+            return c >>> SHARED_SHIFT;
+        }
 
         /**
-         * A counter for per-thread read hold counts.
-         * Maintained as a ThreadLocal; cached in cachedHoldCounter
+         * Returns the number of exclusive holds represented in count
+         */
+        public static int exclusiveCount(int c) {
+            return c & EXCLUSIVE_MASK;
+        }
+
+        /**
+         * A counter for per-thread read hold counts. Maintained as a ThreadLocal; cached in cachedHoldCounter
          */
         static final class HoldCounter {
             int count = 0;
@@ -74,8 +49,7 @@ public class SyncTest {
         }
 
         /**
-         * ThreadLocal subclass. Easiest to explicitly define for sake
-         * of deserialization mechanics.
+         * ThreadLocal subclass. Easiest to explicitly define for sake of deserialization mechanics.
          */
         static final class ThreadLocalHoldCounter
             extends ThreadLocal<Sync.HoldCounter> {
@@ -85,22 +59,18 @@ public class SyncTest {
         }
 
         /**
-         * The number of reentrant read locks held by current thread.
-         * Initialized only in constructor and readObject.
+         * The number of reentrant read locks held by current thread. Initialized only in constructor and readObject.
          * Removed whenever a thread's read hold count drops to 0.
          */
         private transient Sync.ThreadLocalHoldCounter readHolds;
 
         /**
-         * The hold count of the last thread to successfully acquire
-         * readLock. This saves ThreadLocal lookup in the common case
-         * where the next thread to release is the last one to
-         * acquire. This is non-volatile since it is just used
-         * as a heuristic, and would be great for threads to cache.
+         * The hold count of the last thread to successfully acquire readLock. This saves ThreadLocal lookup in the
+         * common case where the next thread to release is the last one to acquire. This is non-volatile since it is
+         * just used as a heuristic, and would be great for threads to cache.
          *
          * <p>Can outlive the Thread for which it is caching the read
-         * hold count, but avoids garbage retention by not retaining a
-         * reference to the Thread.
+         * hold count, but avoids garbage retention by not retaining a reference to the Thread.
          *
          * <p>Accessed via a benign data race; relies on the memory
          * model's final field and out-of-thin-air guarantees.
@@ -108,16 +78,15 @@ public class SyncTest {
         private transient Sync.HoldCounter cachedHoldCounter;
 
         /**
-         * firstReader is the first thread to have acquired the read lock.
-         * firstReaderHoldCount is firstReader's hold count.
+         * firstReader is the first thread to have acquired the read lock. firstReaderHoldCount is firstReader's hold
+         * count.
          *
          * <p>More precisely, firstReader is the unique thread that last
-         * changed the shared count from 0 to 1, and has not released the
-         * read lock since then; null if there is no such thread.
+         * changed the shared count from 0 to 1, and has not released the read lock since then; null if there is no such
+         * thread.
          *
          * <p>Cannot cause garbage retention unless the thread terminated
-         * without relinquishing its read locks, since tryReleaseShared
-         * sets it to null.
+         * without relinquishing its read locks, since tryReleaseShared sets it to null.
          *
          * <p>Accessed via a benign data race; relies on the memory
          * model's out-of-thin-air guarantees for references.
@@ -140,16 +109,14 @@ public class SyncTest {
          */
 
         /**
-         * Returns true if the current thread, when trying to acquire
-         * the read lock, and otherwise eligible to do so, should block
-         * because of policy for overtaking other waiting threads.
+         * Returns true if the current thread, when trying to acquire the read lock, and otherwise eligible to do so,
+         * should block because of policy for overtaking other waiting threads.
          */
         abstract boolean readerShouldBlock();
 
         /**
-         * Returns true if the current thread, when trying to acquire
-         * the write lock, and otherwise eligible to do so, should block
-         * because of policy for overtaking other waiting threads.
+         * Returns true if the current thread, when trying to acquire the write lock, and otherwise eligible to do so,
+         * should block because of policy for overtaking other waiting threads.
          */
         abstract boolean writerShouldBlock();
 
@@ -223,7 +190,7 @@ public class SyncTest {
                 }
                 --rh.count;
             }
-            for (;;) {
+            for (; ; ) {
                 int c = getState();
                 int nextc = c - SHARED_UNIT;
                 if (compareAndSetState(c, nextc))
@@ -283,8 +250,8 @@ public class SyncTest {
         }
 
         /**
-         * Full version of acquire for reads, that handles CAS misses
-         * and reentrant reads not dealt with in tryAcquireShared.
+         * Full version of acquire for reads, that handles CAS misses and reentrant reads not dealt with in
+         * tryAcquireShared.
          */
         final int fullTryAcquireShared(Thread current) {
             /*
@@ -294,7 +261,7 @@ public class SyncTest {
              * retries and lazily reading hold counts.
              */
             Sync.HoldCounter rh = null;
-            for (;;) {
+            for (; ; ) {
                 int c = getState();
                 if (exclusiveCount(c) != 0) {
                     if (getExclusiveOwnerThread() != current) {
@@ -343,9 +310,8 @@ public class SyncTest {
         }
 
         /**
-         * Performs tryLock for write, enabling barging in both modes.
-         * This is identical in effect to tryAcquire except for lack
-         * of calls to writerShouldBlock.
+         * Performs tryLock for write, enabling barging in both modes. This is identical in effect to tryAcquire except
+         * for lack of calls to writerShouldBlock.
          */
         final boolean tryWriteLock() {
             Thread current = Thread.currentThread();
@@ -364,13 +330,12 @@ public class SyncTest {
         }
 
         /**
-         * Performs tryLock for read, enabling barging in both modes.
-         * This is identical in effect to tryAcquireShared except for
-         * lack of calls to readerShouldBlock.
+         * Performs tryLock for read, enabling barging in both modes. This is identical in effect to tryAcquireShared
+         * except for lack of calls to readerShouldBlock.
          */
         final boolean tryReadLock() {
             Thread current = Thread.currentThread();
-            for (;;) {
+            for (; ; ) {
                 int c = getState();
                 if (exclusiveCount(c) != 0 &&
                     getExclusiveOwnerThread() != current)
@@ -441,7 +406,8 @@ public class SyncTest {
                 return rh.count;
 
             int count = readHolds.get().count;
-            if (count == 0) readHolds.remove();
+            if (count == 0)
+                readHolds.remove();
             return count;
         }
 
@@ -455,17 +421,21 @@ public class SyncTest {
             setState(0); // reset to unlocked state
         }
 
-        final int getCount() { return getState(); }
+        public final int getCount() {
+            return getState();
+        }
     }
 
     /**
      * Nonfair version of Sync
      */
-    static final class NonfairSync extends Sync {
+    public static final class NonfairSync extends Sync {
         private static final long serialVersionUID = -8159625535654395037L;
+
         final boolean writerShouldBlock() {
             return false; // writers can always barge
         }
+
         final boolean readerShouldBlock() {
             /* As a heuristic to avoid indefinite writer starvation,
              * block if the thread that momentarily appears to be head
@@ -476,18 +446,20 @@ public class SyncTest {
              */
             //apparentlyFirstQueuedIsExclusive()
             //todo
-            return exclusiveCount(getCount())>0;
+            return exclusiveCount(getCount()) > 0;
         }
     }
 
     /**
      * Fair version of Sync
      */
-    static final class FairSync extends Sync {
+    public static final class FairSync extends Sync {
         private static final long serialVersionUID = -2274990926593161451L;
+
         final boolean writerShouldBlock() {
             return hasQueuedPredecessors();
         }
+
         final boolean readerShouldBlock() {
             return hasQueuedPredecessors();
         }
@@ -506,7 +478,7 @@ public class SyncTest {
          * @param lock the outer lock object
          * @throws NullPointerException if the lock is null
          */
-        protected ReadLock(Sync lock) {
+        public ReadLock(Sync lock) {
             sync = lock;
         }
 
@@ -517,23 +489,22 @@ public class SyncTest {
          * another thread and returns immediately.
          *
          * <p>If the write lock is held by another thread then
-         * the current thread becomes disabled for thread scheduling
-         * purposes and lies dormant until the read lock has been acquired.
+         * the current thread becomes disabled for thread scheduling purposes and lies dormant until the read lock has
+         * been acquired.
          */
         public void lock() {
             sync.acquireShared(1);
         }
 
         /**
-         * Acquires the read lock unless the current thread is
-         * {@linkplain Thread#interrupt interrupted}.
+         * Acquires the read lock unless the current thread is {@linkplain Thread#interrupt interrupted}.
          *
          * <p>Acquires the read lock if the write lock is not held
          * by another thread and returns immediately.
          *
          * <p>If the write lock is held by another thread then the
-         * current thread becomes disabled for thread scheduling
-         * purposes and lies dormant until one of two things happens:
+         * current thread becomes disabled for thread scheduling purposes and lies dormant until one of two things
+         * happens:
          *
          * <ul>
          *
@@ -554,7 +525,7 @@ public class SyncTest {
          * acquiring the read lock,
          *
          * </ul>
-         *
+         * <p>
          * then {@link InterruptedException} is thrown and the current
          * thread's interrupted status is cleared.
          *
@@ -570,25 +541,19 @@ public class SyncTest {
         }
 
         /**
-         * Acquires the read lock only if the write lock is not held by
-         * another thread at the time of invocation.
+         * Acquires the read lock only if the write lock is not held by another thread at the time of invocation.
          *
          * <p>Acquires the read lock if the write lock is not held by
-         * another thread and returns immediately with the value
-         * {@code true}. Even when this lock has been set to use a
+         * another thread and returns immediately with the value {@code true}. Even when this lock has been set to use a
          * fair ordering policy, a call to {@code tryLock()}
          * <em>will</em> immediately acquire the read lock if it is
-         * available, whether or not other threads are currently
-         * waiting for the read lock.  This &quot;barging&quot; behavior
-         * can be useful in certain circumstances, even though it
-         * breaks fairness. If you want to honor the fairness setting
-         * for this lock, then use {@link #tryLock(long, TimeUnit)
-         * tryLock(0, TimeUnit.SECONDS) } which is almost equivalent
-         * (it also detects interruption).
+         * available, whether or not other threads are currently waiting for the read lock.  This &quot;barging&quot;
+         * behavior can be useful in certain circumstances, even though it breaks fairness. If you want to honor the
+         * fairness setting for this lock, then use {@link #tryLock(long, TimeUnit) tryLock(0, TimeUnit.SECONDS) } which
+         * is almost equivalent (it also detects interruption).
          *
          * <p>If the write lock is held by another thread then
-         * this method will return immediately with the value
-         * {@code false}.
+         * this method will return immediately with the value {@code false}.
          *
          * @return {@code true} if the read lock was acquired
          */
@@ -597,30 +562,24 @@ public class SyncTest {
         }
 
         /**
-         * Acquires the read lock if the write lock is not held by
-         * another thread within the given waiting time and the
-         * current thread has not been {@linkplain Thread#interrupt
-         * interrupted}.
+         * Acquires the read lock if the write lock is not held by another thread within the given waiting time and the
+         * current thread has not been {@linkplain Thread#interrupt interrupted}.
          *
          * <p>Acquires the read lock if the write lock is not held by
-         * another thread and returns immediately with the value
-         * {@code true}. If this lock has been set to use a fair
-         * ordering policy then an available lock <em>will not</em> be
-         * acquired if any other threads are waiting for the
-         * lock. This is in contrast to the {@link #tryLock()}
-         * method. If you want a timed {@code tryLock} that does
-         * permit barging on a fair lock then combine the timed and
-         * un-timed forms together:
+         * another thread and returns immediately with the value {@code true}. If this lock has been set to use a fair
+         * ordering policy then an available lock <em>will not</em> be acquired if any other threads are waiting for the
+         * lock. This is in contrast to the {@link #tryLock()} method. If you want a timed {@code tryLock} that does
+         * permit barging on a fair lock then combine the timed and un-timed forms together:
          *
-         *  <pre> {@code
+         * <pre> {@code
          * if (lock.tryLock() ||
          *     lock.tryLock(timeout, unit)) {
          *   ...
          * }}</pre>
          *
          * <p>If the write lock is held by another thread then the
-         * current thread becomes disabled for thread scheduling
-         * purposes and lies dormant until one of three things happens:
+         * current thread becomes disabled for thread scheduling purposes and lies dormant until one of three things
+         * happens:
          *
          * <ul>
          *
@@ -658,7 +617,7 @@ public class SyncTest {
          * lock, and over reporting the elapse of the waiting time.
          *
          * @param timeout the time to wait for the read lock
-         * @param unit the time unit of the timeout argument
+         * @param unit    the time unit of the timeout argument
          * @return {@code true} if the read lock was acquired
          * @throws InterruptedException if the current thread is interrupted
          * @throws NullPointerException if the time unit is null
@@ -679,8 +638,7 @@ public class SyncTest {
         }
 
         /**
-         * Throws {@code UnsupportedOperationException} because
-         * {@code ReadLocks} do not support conditions.
+         * Throws {@code UnsupportedOperationException} because {@code ReadLocks} do not support conditions.
          *
          * @throws UnsupportedOperationException always
          */
@@ -689,9 +647,8 @@ public class SyncTest {
         }
 
         /**
-         * Returns a string identifying this lock, as well as its lock state.
-         * The state, in brackets, includes the String {@code "Read locks ="}
-         * followed by the number of held read locks.
+         * Returns a string identifying this lock, as well as its lock state. The state, in brackets, includes the
+         * String {@code "Read locks ="} followed by the number of held read locks.
          *
          * @return a string identifying this lock, as well as its lock state
          */
@@ -715,7 +672,7 @@ public class SyncTest {
          * @param lock the outer lock object
          * @throws NullPointerException if the lock is null
          */
-        protected WriteLock(Sync lock) {
+        public WriteLock(Sync lock) {
             sync = lock;
         }
 
@@ -723,39 +680,30 @@ public class SyncTest {
          * Acquires the write lock.
          *
          * <p>Acquires the write lock if neither the read nor write lock
-         * are held by another thread
-         * and returns immediately, setting the write lock hold count to
-         * one.
+         * are held by another thread and returns immediately, setting the write lock hold count to one.
          *
          * <p>If the current thread already holds the write lock then the
-         * hold count is incremented by one and the method returns
-         * immediately.
+         * hold count is incremented by one and the method returns immediately.
          *
          * <p>If the lock is held by another thread then the current
-         * thread becomes disabled for thread scheduling purposes and
-         * lies dormant until the write lock has been acquired, at which
-         * time the write lock hold count is set to one.
+         * thread becomes disabled for thread scheduling purposes and lies dormant until the write lock has been
+         * acquired, at which time the write lock hold count is set to one.
          */
         public void lock() {
             sync.acquire(1);
         }
 
         /**
-         * Acquires the write lock unless the current thread is
-         * {@linkplain Thread#interrupt interrupted}.
+         * Acquires the write lock unless the current thread is {@linkplain Thread#interrupt interrupted}.
          *
          * <p>Acquires the write lock if neither the read nor write lock
-         * are held by another thread
-         * and returns immediately, setting the write lock hold count to
-         * one.
+         * are held by another thread and returns immediately, setting the write lock hold count to one.
          *
          * <p>If the current thread already holds this lock then the
-         * hold count is incremented by one and the method returns
-         * immediately.
+         * hold count is incremented by one and the method returns immediately.
          *
          * <p>If the lock is held by another thread then the current
-         * thread becomes disabled for thread scheduling purposes and
-         * lies dormant until one of two things happens:
+         * thread becomes disabled for thread scheduling purposes and lies dormant until one of two things happens:
          *
          * <ul>
          *
@@ -780,7 +728,7 @@ public class SyncTest {
          * acquiring the write lock,
          *
          * </ul>
-         *
+         * <p>
          * then {@link InterruptedException} is thrown and the current
          * thread's interrupted status is cleared.
          *
@@ -796,67 +744,52 @@ public class SyncTest {
         }
 
         /**
-         * Acquires the write lock only if it is not held by another thread
-         * at the time of invocation.
+         * Acquires the write lock only if it is not held by another thread at the time of invocation.
          *
          * <p>Acquires the write lock if neither the read nor write lock
-         * are held by another thread
-         * and returns immediately with the value {@code true},
-         * setting the write lock hold count to one. Even when this lock has
-         * been set to use a fair ordering policy, a call to
-         * {@code tryLock()} <em>will</em> immediately acquire the
-         * lock if it is available, whether or not other threads are
-         * currently waiting for the write lock.  This &quot;barging&quot;
-         * behavior can be useful in certain circumstances, even
-         * though it breaks fairness. If you want to honor the
-         * fairness setting for this lock, then use {@link
-         * #tryLock(long, TimeUnit) tryLock(0, TimeUnit.SECONDS) }
-         * which is almost equivalent (it also detects interruption).
+         * are held by another thread and returns immediately with the value {@code true}, setting the write lock hold
+         * count to one. Even when this lock has been set to use a fair ordering policy, a call to {@code tryLock()}
+         * <em>will</em> immediately acquire the lock if it is available, whether or not other threads are currently
+         * waiting for the write lock.  This &quot;barging&quot; behavior can be useful in certain circumstances, even
+         * though it breaks fairness. If you want to honor the fairness setting for this lock, then use {@link
+         * #tryLock(long, TimeUnit) tryLock(0, TimeUnit.SECONDS) } which is almost equivalent (it also detects
+         * interruption).
          *
          * <p>If the current thread already holds this lock then the
-         * hold count is incremented by one and the method returns
-         * {@code true}.
+         * hold count is incremented by one and the method returns {@code true}.
          *
          * <p>If the lock is held by another thread then this method
          * will return immediately with the value {@code false}.
          *
-         * @return {@code true} if the lock was free and was acquired
-         * by the current thread, or the write lock was already held
-         * by the current thread; and {@code false} otherwise.
+         * @return {@code true} if the lock was free and was acquired by the current thread, or the write lock was
+         * already held by the current thread; and {@code false} otherwise.
          */
-        public boolean tryLock( ) {
+        public boolean tryLock() {
             return sync.tryWriteLock();
         }
 
         /**
-         * Acquires the write lock if it is not held by another thread
-         * within the given waiting time and the current thread has
-         * not been {@linkplain Thread#interrupt interrupted}.
+         * Acquires the write lock if it is not held by another thread within the given waiting time and the current
+         * thread has not been {@linkplain Thread#interrupt interrupted}.
          *
          * <p>Acquires the write lock if neither the read nor write lock
-         * are held by another thread
-         * and returns immediately with the value {@code true},
-         * setting the write lock hold count to one. If this lock has been
-         * set to use a fair ordering policy then an available lock
+         * are held by another thread and returns immediately with the value {@code true}, setting the write lock hold
+         * count to one. If this lock has been set to use a fair ordering policy then an available lock
          * <em>will not</em> be acquired if any other threads are
-         * waiting for the write lock. This is in contrast to the {@link
-         * #tryLock()} method. If you want a timed {@code tryLock}
-         * that does permit barging on a fair lock then combine the
-         * timed and un-timed forms together:
+         * waiting for the write lock. This is in contrast to the {@link #tryLock()} method. If you want a timed {@code
+         * tryLock} that does permit barging on a fair lock then combine the timed and un-timed forms together:
          *
-         *  <pre> {@code
+         * <pre> {@code
          * if (lock.tryLock() ||
          *     lock.tryLock(timeout, unit)) {
          *   ...
          * }}</pre>
          *
          * <p>If the current thread already holds this lock then the
-         * hold count is incremented by one and the method returns
-         * {@code true}.
+         * hold count is incremented by one and the method returns {@code true}.
          *
          * <p>If the lock is held by another thread then the current
-         * thread becomes disabled for thread scheduling purposes and
-         * lies dormant until one of three things happens:
+         * thread becomes disabled for thread scheduling purposes and lies dormant until one of three things happens:
          *
          * <ul>
          *
@@ -883,7 +816,7 @@ public class SyncTest {
          * acquiring the write lock,
          *
          * </ul>
-         *
+         * <p>
          * then {@link InterruptedException} is thrown and the current
          * thread's interrupted status is cleared.
          *
@@ -897,13 +830,10 @@ public class SyncTest {
          * lock, and over reporting the elapse of the waiting time.
          *
          * @param timeout the time to wait for the write lock
-         * @param unit the time unit of the timeout argument
-         *
-         * @return {@code true} if the lock was free and was acquired
-         * by the current thread, or the write lock was already held by the
-         * current thread; and {@code false} if the waiting time
-         * elapsed before the lock could be acquired.
-         *
+         * @param unit    the time unit of the timeout argument
+         * @return {@code true} if the lock was free and was acquired by the current thread, or the write lock was
+         * already held by the current thread; and {@code false} if the waiting time elapsed before the lock could be
+         * acquired.
          * @throws InterruptedException if the current thread is interrupted
          * @throws NullPointerException if the time unit is null
          */
@@ -916,26 +846,20 @@ public class SyncTest {
          * Attempts to release this lock.
          *
          * <p>If the current thread is the holder of this lock then
-         * the hold count is decremented. If the hold count is now
-         * zero then the lock is released.  If the current thread is
-         * not the holder of this lock then {@link
-         * IllegalMonitorStateException} is thrown.
+         * the hold count is decremented. If the hold count is now zero then the lock is released.  If the current
+         * thread is not the holder of this lock then {@link IllegalMonitorStateException} is thrown.
          *
-         * @throws IllegalMonitorStateException if the current thread does not
-         * hold this lock
+         * @throws IllegalMonitorStateException if the current thread does not hold this lock
          */
         public void unlock() {
             sync.release(1);
         }
 
         /**
-         * Returns a {@link Condition} instance for use with this
-         * {@link Lock} instance.
+         * Returns a {@link Condition} instance for use with this {@link Lock} instance.
          * <p>The returned {@link Condition} instance supports the same
-         * usages as do the {@link Object} monitor methods ({@link
-         * Object#wait() wait}, {@link Object#notify notify}, and {@link
-         * Object#notifyAll notifyAll}) when used with the built-in
-         * monitor lock.
+         * usages as do the {@link Object} monitor methods ({@link Object#wait() wait}, {@link Object#notify notify},
+         * and {@link Object#notifyAll notifyAll}) when used with the built-in monitor lock.
          *
          * <ul>
          *
@@ -976,10 +900,9 @@ public class SyncTest {
         }
 
         /**
-         * Returns a string identifying this lock, as well as its lock
-         * state.  The state, in brackets includes either the String
-         * {@code "Unlocked"} or the String {@code "Locked by"}
-         * followed by the {@linkplain Thread#getName name} of the owning thread.
+         * Returns a string identifying this lock, as well as its lock state.  The state, in brackets includes either
+         * the String {@code "Unlocked"} or the String {@code "Locked by"} followed by the {@linkplain Thread#getName
+         * name} of the owning thread.
          *
          * @return a string identifying this lock, as well as its lock state
          */
@@ -991,12 +914,10 @@ public class SyncTest {
         }
 
         /**
-         * Queries if this write lock is held by the current thread.
-         * Identical in effect to {@link
+         * Queries if this write lock is held by the current thread. Identical in effect to {@link
          * ReentrantReadWriteLock#isWriteLockedByCurrentThread}.
          *
-         * @return {@code true} if the current thread holds this lock and
-         *         {@code false} otherwise
+         * @return {@code true} if the current thread holds this lock and {@code false} otherwise
          * @since 1.6
          */
         public boolean isHeldByCurrentThread() {
@@ -1004,13 +925,12 @@ public class SyncTest {
         }
 
         /**
-         * Queries the number of holds on this write lock by the current
-         * thread.  A thread has a hold on a lock for each lock action
-         * that is not matched by an unlock action.  Identical in effect
-         * to {@link ReentrantReadWriteLock#getWriteHoldCount}.
+         * Queries the number of holds on this write lock by the current thread.  A thread has a hold on a lock for each
+         * lock action that is not matched by an unlock action.  Identical in effect to {@link
+         * ReentrantReadWriteLock#getWriteHoldCount}.
          *
-         * @return the number of holds on this lock by the current thread,
-         *         or zero if this lock is not held by the current thread
+         * @return the number of holds on this lock by the current thread, or zero if this lock is not held by the
+         * current thread
          * @since 1.6
          */
         public int getHoldCount() {

@@ -14,6 +14,15 @@ public class SyncTest {
             }
         }).start();
         Thread.sleep(2000);
+        System.out.println(sync.getState2());//1
+        sync.lock();
+        System.out.println(sync.getState2());//2
+        sync.lock();
+        System.out.println(sync.getState2());//3
+        sync.release(1);
+        System.out.println(sync.getState2());//2
+
+
         for (long i = 0; i < Long.MAX_VALUE; i++) {
             sync.lock();
         }
