@@ -16,7 +16,6 @@ public class MemorySync {
                 e.printStackTrace();
             }
             flag = true;
-            //System.out.println("set flag:" + flag);
         }
         public boolean getFlag() {
             return flag;
