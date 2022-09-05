@@ -1,7 +1,8 @@
 package com.sparrow.facade.thread.visible;
 
-import org.apache.poi.ss.formula.functions.T;
-
+/**
+ *  java -Xcomp -XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly -XX:CompileCommand=compileonly *MemorySync.main com.sparrow.facade.thread.visible.MemorySync
+ */
 public class MemorySync {
     static class ThreadDemo implements Runnable {
 
@@ -10,17 +11,12 @@ public class MemorySync {
         @Override
         public void run() {
             try {
-                Thread.sleep(5);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             flag = true;
-            System.out.println("set flag:" + flag);
-            try {
-                Thread.sleep(Integer.MAX_VALUE);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            //System.out.println("set flag:" + flag);
         }
         public boolean getFlag() {
             return flag;
@@ -28,6 +24,8 @@ public class MemorySync {
     }
     public static void main(String[] args) throws InterruptedException {
         ThreadDemo threadDemo = new ThreadDemo();
+        Thread t= new Thread(threadDemo, "t1");
+        t.start();
         new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
@@ -38,8 +36,6 @@ public class MemorySync {
                 }
             }
         }).start();
-
-        new Thread(threadDemo, "t1").start();
     }
 }
 
