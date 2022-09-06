@@ -1,21 +1,26 @@
 package com.sparrow.facade.thread.visible;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class SleepVisibleTest {
     static class ThreadDemo implements Runnable {
         public boolean flag = false;
 
         @Override
         public void run() {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+//            try {
+//                Thread.sleep(10);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            long t = System.currentTimeMillis();
+//            while (true) {
+//                long duration = System.currentTimeMillis() - t;
+//                if (duration > 10) {
+//                    break;
+//                }
+//            }
+            while (true) {
+                flag = true;
             }
-            flag = true;
-            System.out.println("set flag =" + flag);
         }
 
         public boolean getFlag() {
@@ -26,6 +31,7 @@ public class SleepVisibleTest {
     public static void main(String[] args) throws InterruptedException {
         ThreadDemo threadDemo = new ThreadDemo();
         new Thread(threadDemo, "t1").start();
+        boolean b=threadDemo.getFlag();
         while (true) {
             //Thread.sleep(1000);
             if (threadDemo.getFlag()) {
