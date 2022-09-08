@@ -2,7 +2,7 @@ package com.sparrow.facade.thread.visible;
 
 public class NotSleepVisibleTest {
     static class Inner implements Runnable {
-        public Boolean flag = false;
+        public boolean flag = false;
         @Override
         public void run() {
             //1. 先执行
