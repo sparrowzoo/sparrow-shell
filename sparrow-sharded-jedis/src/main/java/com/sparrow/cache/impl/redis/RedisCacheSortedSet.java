@@ -142,7 +142,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
                     Set<Tuple> tuples = jedis.zrevrangeWithScores(key.key(), 0, -1);
                     if (tuples == null || tuples.size() == 0) {
                         if (redisPool.getCacheMonitor() != null) {
-                            redisPool.getCacheMonitor().penetrate(key);
+                            redisPool.getCacheMonitor().breakdown(key);
                         }
                         scoreMap = hook.read(key);
                         try {
@@ -161,7 +161,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
             }, key);
         } catch (CacheConnectionException e) {
             if (redisPool.getCacheMonitor() != null) {
-                redisPool.getCacheMonitor().penetrate(key);
+                redisPool.getCacheMonitor().breakdown(key);
             }
             return hook.read(key);
         }

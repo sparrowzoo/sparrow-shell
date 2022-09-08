@@ -50,8 +50,8 @@ public class DefaultIdempotent implements MQIdempotent {
             try {
                 KEY consumeKey = new KEY.Builder().business(KeyMQIdempotent.IDEMPOTENT).businessId(keys).build();
                 //redlock setExpire(key,timestamp)
-                Long value = cacheClient.string().setIfNotExist(consumeKey, DIGIT.ONE);
-                if (value > 0) {
+                boolean value = cacheClient.string().setIfNotExist(consumeKey, DIGIT.ONE);
+                if (value) {
                     cacheClient.key().expire(consumeKey, 60 * 60 * 72);
                     return true;
                 }

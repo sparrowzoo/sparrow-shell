@@ -22,6 +22,7 @@ import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.ModuleSupport;
 
@@ -35,7 +36,7 @@ import java.util.Set;
  */
 public class RedisSetTest {
     public static void main(String[] args) throws CacheConnectionException {
-        Container container = new SparrowContainer();
+        Container container = ApplicationContext.getContainer();
         //定义模块，一个业务会存在多个模块
         ModuleSupport OD = new ModuleSupport() {
             @Override
@@ -49,18 +50,15 @@ public class RedisSetTest {
             }
         };
 
-
         //相同模块下会存在多个业务
         KEY.Business od = new KEY.Business(OD, "POOL");
         KEY key = new KEY.Builder().business(od).businessId("BJS", "CHI", "HU").build();
-
-        container.setConfigLocation("/redis_config.xml");
+        container.setContextConfigLocation("/sparrow_application_context.xml");
         container.init();
         CacheClient client = container.getBean("cacheClient");
         client.key().delete(key);
         client.set().add(key, 1);
         client.set().add(key, "1", "2", "3", "4", "end");
-
         System.out.println(client.set().getSize(key));
 
         List<Object> list = new ArrayList<Object>();
@@ -85,12 +83,12 @@ public class RedisSetTest {
         }
 
         client.key().delete(key);
-        Set<RedisEntity> set=new HashSet<RedisEntity>();
-        set.add(new RedisEntity(1,"1"));
-        client.set().add(key,set);
-        set=client.set().list(key,RedisEntity.class);
-        for(RedisEntity re:set){
-            System.out.println(re.getId()+"-"+re.getName());
+        Set<RedisEntity> set = new HashSet<RedisEntity>();
+        set.add(new RedisEntity(1, "1"));
+        client.set().add(key, set);
+        set = client.set().list(key, RedisEntity.class);
+        for (RedisEntity re : set) {
+            System.out.println(re.getId() + "-" + re.getName());
         }
     }
 }

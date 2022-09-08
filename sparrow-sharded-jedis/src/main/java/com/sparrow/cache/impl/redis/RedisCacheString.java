@@ -99,11 +99,11 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
                     String json = jedis.get(key.key());
                     if (StringUtility.isNullOrEmpty(json)) {
                         if (redisPool.getCacheMonitor() != null) {
-                            redisPool.getCacheMonitor().penetrate(key);
+                            redisPool.getCacheMonitor().breakdown(key);
                         }
                         T value = hook.read(key);
                         RedisCacheString.this.set(key, value);
-                        return hook.read(key);
+                        return value;
                     }
                     TypeConverter typeConverter = new TypeConverter(clazz);
                     return (T) typeConverter.convert(json);
@@ -111,7 +111,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
             }, key);
         } catch (CacheConnectionException e) {
             if (redisPool.getCacheMonitor() != null) {
-                redisPool.getCacheMonitor().penetrate(key);
+                redisPool.getCacheMonitor().breakdown(key);
             }
             return hook.read(key);
         }
@@ -205,13 +205,12 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
         }, key);
     }
 
-
     @Override
-    public Long setIfNotExist(final KEY key, final Object value) throws CacheConnectionException {
-        return redisPool.execute(new Executor<Long>() {
+    public Boolean setIfNotExist(final KEY key, final Object value) throws CacheConnectionException {
+        return redisPool.execute(new Executor<Boolean>() {
             @Override
-            public Long execute(ShardedJedis jedis) {
-                return jedis.setnx(key.key(), value.toString());
+            public Boolean execute(ShardedJedis jedis) {
+                return jedis.setnx(key.key(), value.toString()) > 0;
             }
         }, key);
     }

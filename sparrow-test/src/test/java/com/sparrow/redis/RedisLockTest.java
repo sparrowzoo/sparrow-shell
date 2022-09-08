@@ -17,12 +17,52 @@
 
 package com.sparrow.redis;
 
-/**
- * Created by harry on 2018/1/26.
- */
+import com.sparrow.cache.RedisLock;
+import com.sparrow.constant.cache.KEY;
+import com.sparrow.container.Container;
+import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.protocol.ModuleSupport;
+import java.util.Random;
+
 public class RedisLockTest {
-    public static void main(String[] args) {
-        RedisLock redisLock=new RedisLock();
-        redisLock.retryAcquireLock("s");
+    public static void main(String[] args) throws InterruptedException {
+        Container container = ApplicationContext.getContainer();
+        container.setContextConfigLocation("/sparrow_application_context.xml");
+        container.init();
+        //定义模块，一个业务会存在多个模块
+        ModuleSupport lock = new ModuleSupport() {
+            @Override
+            public String code() {
+                return "01";
+            }
+
+            @Override
+            public String name() {
+                return "goods";
+            }
+        };
+        //相同模块下会存在多个业务
+        KEY.Business od = new KEY.Business(lock, "lock");
+        KEY key = new KEY.Builder().business(od).businessId(new Random().nextInt(2000)).build();
+        RedisLock redisLock = ApplicationContext.getContainer().getBean("redisLock");
+
+        boolean mainLock = redisLock.retryAcquireLock(key, 1, 1000);
+        Thread.sleep(2000);
+        new Thread(new Runnable() {
+            @Override public void run() {
+                boolean childLock = redisLock.retryAcquireLock(key, 1, 1000);
+                childLock = redisLock.retryAcquireLock(key, 1, 1000);
+                childLock = redisLock.retryAcquireLock(key, 1, 1000);
+
+                if (!childLock) {
+                    return;
+                }
+                System.out.println(childLock);
+
+            }
+        }).start();
+
+        redisLock.release(key);
+        System.out.println(mainLock);
     }
 }
