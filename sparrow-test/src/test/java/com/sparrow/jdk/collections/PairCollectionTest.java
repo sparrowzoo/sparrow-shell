@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PairCollectionTest {
-    static class Expected extends KeyPOJO {
+    public static class Expected extends KeyPOJO {
         public Expected(String key,Integer id) {
             this.id = id;
             this.key=key;
@@ -24,7 +24,7 @@ public class PairCollectionTest {
         }
     }
 
-    static class Actual extends Expected{
+    public static class Actual extends Expected{
         public Actual(String key, Integer id, String name) {
             super(key, id);
             this.name = name;

@@ -57,7 +57,7 @@ public class DistributionLock {
         while (true) {
             //+1保证每次请求的expire 不同
             long expires = System.currentTimeMillis() + expireMillis + 1;
-            if (cacheClient.string().setIfNotExist(key, expires + "") > 0) { //同步的
+            if (cacheClient.string().setIfNotExist(key, expires + "")) { //同步的
                 // lock acquired
                 locked = true;
                 return expires;

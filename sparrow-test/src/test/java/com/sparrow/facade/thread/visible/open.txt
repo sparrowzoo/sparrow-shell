@@ -1,0 +1,64 @@
+// class version 52.0 (52)
+// access flags 0x21
+public class com/sparrow/facade/thread/visible/MemorySync {
+
+  // compiled from: MemorySync.java
+  // access flags 0x8
+  static INNERCLASS com/sparrow/facade/thread/visible/MemorySync$ThreadDemo com/sparrow/facade/thread/visible/MemorySync ThreadDemo
+  // access flags 0x8
+  static INNERCLASS com/sparrow/facade/thread/visible/MemorySync$1 null null
+
+  // access flags 0x1
+  public <init>()V
+   L0
+    LINENUMBER 6 L0
+    ALOAD 0
+    INVOKESPECIAL java/lang/Object.<init> ()V
+    RETURN
+   L1
+    LOCALVARIABLE this Lcom/sparrow/facade/thread/visible/MemorySync; L0 L1 0
+    MAXSTACK = 1
+    MAXLOCALS = 1
+
+  // access flags 0x9
+  public static main([Ljava/lang/String;)V throws java/lang/InterruptedException 
+   L0
+    LINENUMBER 26 L0
+    NEW com/sparrow/facade/thread/visible/MemorySync$ThreadDemo
+    DUP
+    INVOKESPECIAL com/sparrow/facade/thread/visible/MemorySync$ThreadDemo.<init> ()V
+    ASTORE 1
+   L1
+    LINENUMBER 27 L1
+    NEW java/lang/Thread
+    DUP
+    ALOAD 1
+    LDC "t1"
+    INVOKESPECIAL java/lang/Thread.<init> (Ljava/lang/Runnable;Ljava/lang/String;)V
+    ASTORE 2
+   L2
+    LINENUMBER 28 L2
+    ALOAD 2
+    INVOKEVIRTUAL java/lang/Thread.start ()V
+   L3
+    LINENUMBER 29 L3
+    NEW java/lang/Thread
+    DUP
+    NEW com/sparrow/facade/thread/visible/MemorySync$1
+    DUP
+    ALOAD 1
+    INVOKESPECIAL com/sparrow/facade/thread/visible/MemorySync$1.<init> (Lcom/sparrow/facade/thread/visible/MemorySync$ThreadDemo;)V
+    INVOKESPECIAL java/lang/Thread.<init> (Ljava/lang/Runnable;)V
+   L4
+    LINENUMBER 38 L4
+    INVOKEVIRTUAL java/lang/Thread.start ()V
+   L5
+    LINENUMBER 39 L5
+    RETURN
+   L6
+    LOCALVARIABLE args [Ljava/lang/String; L0 L6 0
+    LOCALVARIABLE threadDemo Lcom/sparrow/facade/thread/visible/MemorySync$ThreadDemo; L1 L6 1
+    LOCALVARIABLE t Ljava/lang/Thread; L2 L6 2
+    MAXSTACK = 5
+    MAXLOCALS = 3
+}

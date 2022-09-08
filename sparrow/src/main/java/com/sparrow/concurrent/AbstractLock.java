@@ -17,24 +17,39 @@
 
 package com.sparrow.concurrent;
 
+import com.sparrow.constant.cache.KEY;
+import com.sparrow.support.IpSupport;
 import com.sparrow.utility.DateTimeUtility;
+import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractLock {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected abstract Boolean readLock(String key);
+    @Inject
+    private IpSupport ipSupport;
 
-    public boolean retryAcquireLock(String key) {
-        Boolean lock = this.readLock(key);
+    public String getUniqueKey() {
+        return ipSupport.toLong(ipSupport.getLocalIp()) + "-" + Thread.currentThread().getId();
+    }
+
+    protected abstract Boolean tryLock(KEY key, int expireSeconds, String uniqueKey);
+    public abstract Boolean release(KEY key);
+    public boolean retryAcquireLock(KEY key, int expireSeconds, int retryMillis) {
+        String uniqueKey = this.getUniqueKey();
+        Boolean lock = this.tryLock(key, expireSeconds, uniqueKey);
+        long t = System.currentTimeMillis();
         int times = 1;
         int timeout = 0;
         while (lock == null || !lock) {
-            lock = this.readLock(key);
+            lock = this.tryLock(key, expireSeconds, uniqueKey);
             try {
                 if (timeout < 1024) {
-                    timeout = 1 << times++;
+                    timeout += 1 << times++;
+                }
+                if (System.currentTimeMillis() - t > retryMillis) {
+                    return false;
                 }
                 Thread.sleep(timeout);
                 logger.debug("lock {} timeout {} at [{}] {}", key, timeout, DateTimeUtility.getFormatCurrentTime(), System.currentTimeMillis());

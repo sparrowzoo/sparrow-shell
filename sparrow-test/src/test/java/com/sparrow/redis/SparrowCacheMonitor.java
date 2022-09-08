@@ -18,32 +18,29 @@
 package com.sparrow.redis;
 
 import com.sparrow.cache.CacheMonitor;
-import com.sparrow.concurrent.AbstractLock;
 import com.sparrow.constant.cache.KEY;
 import javax.inject.Named;
 
 @Named("cacheMonitor")
-public class SparrowCacheMonitor implements CacheMonitor{
+public class SparrowCacheMonitor implements CacheMonitor {
     @Override
     public boolean before(Long startTime, KEY key) {
+        key.getBusiness();
+        key.getModule();
+
+        //判断某模块或某业务是否达到阀值等逻辑
         //System.out.println("start time"+startTime+" key"+key.key());
         return true;
     }
 
     @Override
     public void monitor(Long startTime, Long endTime, KEY key) {
+        //对某业务和模块进行监控埋点
         //System.out.println("module-"+key.getModule()+" business.type-"+key.getBusiness()+" key-"+key.key()+" start.time-"+startTime+" end.time-"+endTime);
     }
 
     @Override
-    public void penetrate(KEY key) {
-        new AbstractLock(){
-            @Override
-            protected Boolean readLock(String key) {
-                //这里读性能指标，如果OK则true，如果不OK则返回false
-                System.out.println("check 指标true");
-                return true;
-            }
-        }.retryAcquireLock(key.key());
+    public void breakdown(KEY key) {
+        //某业务和模块的单位时间内的击穿次数
     }
 }

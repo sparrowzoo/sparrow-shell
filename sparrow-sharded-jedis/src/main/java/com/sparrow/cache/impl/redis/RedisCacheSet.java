@@ -146,7 +146,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
                     Set<T> typeSet = null;
                     if (list == null || list.size() == 0) {
                         if (redisPool.getCacheMonitor() != null) {
-                            redisPool.getCacheMonitor().penetrate(key);
+                            redisPool.getCacheMonitor().breakdown(key);
                         }
                         typeSet = hook.read(key);
                         RedisCacheSet.this.add(key, typeSet);
@@ -163,7 +163,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
             }, key);
         } catch (CacheConnectionException e) {
             if (redisPool.getCacheMonitor() != null) {
-                redisPool.getCacheMonitor().penetrate(key);
+                redisPool.getCacheMonitor().breakdown(key);
             }
             return hook.read(key);
         }

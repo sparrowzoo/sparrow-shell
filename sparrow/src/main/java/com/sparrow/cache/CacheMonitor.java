@@ -24,5 +24,5 @@ public interface CacheMonitor {
 
     void monitor(Long startTime, Long endTime, KEY key);
 
-    void penetrate(KEY key);
+    void breakdown(KEY key);
 }

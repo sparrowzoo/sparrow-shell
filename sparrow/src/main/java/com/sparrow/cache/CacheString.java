@@ -47,5 +47,5 @@ public interface CacheString {
 
     String setExpire(KEY key, Integer seconds, Object value) throws CacheConnectionException;
 
-    Long setIfNotExist(KEY key, Object value) throws CacheConnectionException;
+    Boolean setIfNotExist(KEY key, Object value) throws CacheConnectionException;
 }

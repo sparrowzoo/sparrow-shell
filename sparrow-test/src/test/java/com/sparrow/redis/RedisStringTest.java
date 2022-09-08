@@ -30,7 +30,6 @@ import com.sparrow.protocol.ModuleSupport;
  */
 public class RedisStringTest {
     private static CacheClient client;
-
     public static void main(String[] args) throws CacheConnectionException {
         Container container = new SparrowContainer();
         //定义模块，一个业务会存在多个模块
@@ -85,8 +84,8 @@ public class RedisStringTest {
         System.out.println(client.string().get(key));
 
         client.key().delete(key);
-       Long count=  client.string().setIfNotExist(key, "not exist");
-         count=  client.string().setIfNotExist(key, "not exist");
+        boolean count = client.string().setIfNotExist(key, "not exist");
+        count = client.string().setIfNotExist(key, "not exist");
         System.out.println(count);
         System.out.println(client.string().get(key));
         client.key().delete(key);

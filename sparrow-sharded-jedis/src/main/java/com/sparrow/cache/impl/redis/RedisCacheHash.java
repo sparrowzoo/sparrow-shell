@@ -51,7 +51,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
                     Map<String, String> map = jedis.hgetAll(key.key());
                     if (map == null || map.size() == 0) {
                         if (redisPool.getCacheMonitor() != null) {
-                            redisPool.getCacheMonitor().penetrate(key);
+                            redisPool.getCacheMonitor().breakdown(key);
                         }
                         if (jedis.exists(key.key())) {
                             return new HashMap<>();
@@ -67,7 +67,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
             }, key);
         } catch (CacheConnectionException e) {
             if (redisPool.getCacheMonitor() != null) {
-                redisPool.getCacheMonitor().penetrate(key);
+                redisPool.getCacheMonitor().breakdown(key);
             }
             return hook.read(key);
         }
