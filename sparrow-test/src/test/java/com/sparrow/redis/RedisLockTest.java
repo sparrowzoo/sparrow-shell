@@ -17,6 +17,7 @@
 
 package com.sparrow.redis;
 
+import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.RedisLock;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.container.Container;
@@ -47,21 +48,26 @@ public class RedisLockTest {
         RedisLock redisLock = ApplicationContext.getContainer().getBean("redisLock");
 
         boolean mainLock = redisLock.retryAcquireLock(key, 1, 1000);
+
+        System.out.println("主线程拿锁"+mainLock);
         Thread.sleep(2000);
+
         new Thread(new Runnable() {
             @Override public void run() {
+                //todo 这里不对
                 boolean childLock = redisLock.retryAcquireLock(key, 1, 1000);
+                System.out.println("子线程拿锁"+childLock);
                 childLock = redisLock.retryAcquireLock(key, 1, 1000);
+                System.out.println("子线程重入锁"+childLock);
                 childLock = redisLock.retryAcquireLock(key, 1, 1000);
+                System.out.println("子线程重入锁"+childLock);
 
                 if (!childLock) {
                     return;
                 }
                 System.out.println(childLock);
-
             }
         }).start();
-
         redisLock.release(key);
         System.out.println(mainLock);
     }

@@ -42,6 +42,7 @@ public abstract class AbstractLock {
         long t = System.currentTimeMillis();
         int times = 1;
         int timeout = 0;
+        //todo 为什么要重试？直接跳出返回行不行？
         while (lock == null || !lock) {
             lock = this.tryLock(key, expireSeconds, uniqueKey);
             try {
@@ -54,6 +55,7 @@ public abstract class AbstractLock {
                 Thread.sleep(timeout);
                 logger.debug("lock {} timeout {} at [{}] {}", key, timeout, DateTimeUtility.getFormatCurrentTime(), System.currentTimeMillis());
             } catch (InterruptedException ignore) {
+                //todo 线程被中断怎么处理比较好
             }
         }
         return true;
