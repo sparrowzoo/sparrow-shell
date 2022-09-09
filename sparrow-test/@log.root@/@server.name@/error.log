@@ -1,0 +1,396 @@
+2022-09-08 20:44:22.751 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 20:44:27.459 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 20:44:27.479 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:27.481 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:41)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:27.486 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:27.486 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:27.493 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:27.493 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:27.504 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:27.505 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:27.524 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:27.524 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:27.560 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:27.560 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:27.630 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:27.630 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:27.759 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:27.759 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:28.019 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:28.020 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:28.533 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:28.535 TRACE_ID ERROR main RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest.main(RedisLockTest.java:49)
+2022-09-08 20:44:30.548 TRACE_ID ERROR main RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.549 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.550 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:41)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:30.554 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.554 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:30.558 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.559 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:30.569 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.569 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:30.587 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.588 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:30.621 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.625 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:30.698 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.698 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:30.829 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:30.830 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.096 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.096 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.613 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.614 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:53)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.615 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.615 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:41)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.618 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.620 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.624 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.624 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.633 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.634 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.654 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.654 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.691 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.691 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.758 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.759 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:31.891 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:31.891 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.155 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.156 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.672 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.673 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:54)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.674 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.674 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:41)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.675 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.675 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.678 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.678 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.686 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.686 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.705 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.706 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.744 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.745 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.817 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.818 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:32.947 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:32.948 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:33.211 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:33.212 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:33.727 TRACE_ID ERROR Thread-2 RedisPool redis.clients.jedis.JedisPoolConfig@3df4cd96:java.net.ConnectException: Connection refused (Connection refused)
+2022-09-08 20:44:33.727 TRACE_ID ERROR Thread-2 RedisLock goods:lock:1064 get connection fail
+com.sparrow.exception.CacheConnectionException: java.net.ConnectException: Connection refused (Connection refused)
+	at com.sparrow.cache.impl.redis.RedisPool.execute(RedisPool.java:93)
+	at com.sparrow.cache.impl.redis.RedisCacheString.setIfNotExist(RedisCacheString.java:210)
+	at com.sparrow.cache.RedisLock.tryLock(RedisLock.java:37)
+	at com.sparrow.concurrent.AbstractLock.retryAcquireLock(AbstractLock.java:46)
+	at com.sparrow.redis.RedisLockTest$2.run(RedisLockTest.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-08 20:44:45.302 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 20:44:49.741 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 22:13:55.281 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:14:01.371 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 22:17:49.625 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:18:26.202 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:18:32.316 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 22:21:17.403 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:21:23.481 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 22:31:54.990 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:32:00.676 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 22:34:42.649 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:34:48.381 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 22:37:23.295 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:37:28.969 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 22:37:51.627 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:37:57.308 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 22:41:46.553 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 22:41:52.020 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:32:59.205 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:33:05.092 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:33:51.558 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:33:57.417 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:37:59.661 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:38:05.170 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:39:37.347 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:39:43.406 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:43:31.239 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:43:36.721 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:44:09.763 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:44:15.657 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:45:39.522 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:45:45.296 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:47:50.617 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:47:56.902 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:51:26.101 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:51:36.112 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:52:35.980 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:52:42.435 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:53:25.837 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:53:31.549 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null
+2022-09-08 23:54:09.391 TRACE_ID ERROR main FileUtility [monitor_section_config.properties] file not found
+2022-09-08 23:54:15.306 TRACE_ID ERROR main SparrowContainer beanName helloController ,refName sparrowServletContainer is null

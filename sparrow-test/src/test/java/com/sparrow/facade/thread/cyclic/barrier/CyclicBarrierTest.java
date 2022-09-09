@@ -23,6 +23,12 @@ import java.util.concurrent.CyclicBarrier;
  */
 public class CyclicBarrierTest {
     public  static void main(String[] args) throws InterruptedException {
+        //parties =3
+        //count =3
+        /**
+         *  this.parties = parties;
+         *  this.count = parties;
+         */
         CyclicBarrier cyclicBarrier = new CyclicBarrier(3, new Runnable() {
             @Override public void run() {
                 System.out.println(Thread.currentThread().getName() + "ending....");
@@ -40,11 +46,16 @@ public class CyclicBarrierTest {
                 }
             }
         };
+        //count =3-1=2
         new Thread(runnable, "t1").start();
+
         Thread.sleep(1000);
+        //parties-count=3-2=1
         System.out.println(cyclicBarrier.getNumberWaiting());
         cyclicBarrier.reset();
-        System.out.println("is broken" + cyclicBarrier.isBroken());
+
+        System.out.println("is broken " + cyclicBarrier.isBroken());
+        //parties-count=3-3=0
         System.out.println(cyclicBarrier.getNumberWaiting());
 
         new Thread(runnable, "t2").start();

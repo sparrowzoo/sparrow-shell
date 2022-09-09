@@ -6,6 +6,11 @@ public class SynchronizedTest {
 
         @Override
         public void run() {
+            try {
+                Thread.sleep(6);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             flag = true;
             System.out.println("set flag:" + flag);
         }

@@ -12,8 +12,9 @@ package com.sparrow.facade.thread.visible;
  */
 public class NotVisibleTest {
     static class ThreadDemo implements Runnable {
-        public boolean flag = false;
-        //private boolean flag2 = false;
+        public volatile boolean flag = false;
+        private long[] longs=new long[640];
+        private boolean flag2 = false;
 
         @Override
         public void run() {
@@ -24,13 +25,12 @@ public class NotVisibleTest {
             }
             //2. 设置新true,但其他线程暂不可见
             flag = true;
-            //flag2 = true;
+            flag2 = true;
             System.out.println("set flag =" + flag);
-            while (true){}
         }
 
         public boolean getFlag() {
-            return flag;
+            return flag2;
         }
     }
 
@@ -41,7 +41,7 @@ public class NotVisibleTest {
         //CPU 调度的 GAP
         while (true) {
             //System.out.println(threadDemo.flag);
-            //boolean b = threadDemo.flag;
+            boolean b = threadDemo.flag;
             //1.先取老的flag=false;
             if (threadDemo.getFlag()) {
                 System.out.println("end task");
