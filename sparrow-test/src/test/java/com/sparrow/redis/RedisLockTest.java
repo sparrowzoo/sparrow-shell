@@ -46,23 +46,26 @@ public class RedisLockTest {
         KEY key = new KEY.Builder().business(od).businessId(new Random().nextInt(2000)).build();
         RedisLock redisLock = ApplicationContext.getContainer().getBean("redisLock");
 
-        boolean mainLock = redisLock.retryAcquireLock(key, 1, 1000);
-        Thread.sleep(2000);
-        new Thread(new Runnable() {
+        Runnable task = new Runnable() {
             @Override public void run() {
-                boolean childLock = redisLock.retryAcquireLock(key, 1, 1000);
-                childLock = redisLock.retryAcquireLock(key, 1, 1000);
-                childLock = redisLock.retryAcquireLock(key, 1, 1000);
+                boolean childLock = redisLock.retryAcquireLock(key, 5, 1000);
 
-                if (!childLock) {
-                    return;
+                try {
+                    if (childLock) {
+                        System.out.println(Thread.currentThread().getName() + "-GET LOCK");
+                    } else {
+                        System.out.println(Thread.currentThread().getName() + "-NOT GET LOCK");
+                    }
+                } finally {
+                    redisLock.release(key);
                 }
                 System.out.println(childLock);
-
             }
-        }).start();
+        };
 
+        task.run();
+        new Thread(task, "thread-1").start();
+        new Thread(task, "thread-2").start();
         redisLock.release(key);
-        System.out.println(mainLock);
     }
 }
