@@ -20,42 +20,58 @@ package com.sparrow.concurrent;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.support.IpSupport;
 import com.sparrow.utility.DateTimeUtility;
+import java.time.Duration;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractLock {
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected static Logger logger = LoggerFactory.getLogger(AbstractLock.class);
 
-    @Inject
-    private IpSupport ipSupport;
+    private ThreadLocal<Long> uniques = new ThreadLocal<>();
 
-    public String getUniqueKey() {
-        return ipSupport.toLong(ipSupport.getLocalIp()) + "-" + Thread.currentThread().getId();
+    protected Long getUnique() {
+        Long t = this.uniques.get();
+        if (t != null) {
+            logger.info("old unique {}", t);
+            return t;
+        }
+        t = System.nanoTime();
+        this.uniques.set(t);
+        logger.info("new unique {}", t);
+        return t;
     }
 
-    protected abstract Boolean tryLock(KEY key, int expireSeconds, String uniqueKey);
+    protected abstract Boolean tryLock(KEY key, int expireSeconds);
+
     public abstract Boolean release(KEY key);
+
     public boolean retryAcquireLock(KEY key, int expireSeconds, int retryMillis) {
-        String uniqueKey = this.getUniqueKey();
-        Boolean lock = this.tryLock(key, expireSeconds, uniqueKey);
-        long t = System.currentTimeMillis();
+        long unique = this.getUnique();
+        Boolean lock = this.tryLock(key, expireSeconds);
+        //纳秒级，并作为唯一标识，因为用ip+线程ID作为唯一标识在锁释放时可能会导致无法正常删除
+        //同时防止毫秒级拿到多个锁
+
         int times = 1;
         int timeout = 0;
         //todo 为什么要重试？直接跳出返回行不行？
         while (lock == null || !lock) {
-            lock = this.tryLock(key, expireSeconds, uniqueKey);
+            lock = this.tryLock(key, expireSeconds);
+            if(lock){
+                return true;
+            }
             try {
                 if (timeout < 1024) {
                     timeout += 1 << times++;
                 }
-                if (System.currentTimeMillis() - t > retryMillis) {
+                if (System.nanoTime() - unique > retryMillis*1000000) {
                     return false;
                 }
                 Thread.sleep(timeout);
                 logger.debug("lock {} timeout {} at [{}] {}", key, timeout, DateTimeUtility.getFormatCurrentTime(), System.currentTimeMillis());
             } catch (InterruptedException ignore) {
                 //todo 线程被中断怎么处理比较好
+                this.release(key);
             }
         }
         return true;

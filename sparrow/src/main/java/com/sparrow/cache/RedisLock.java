@@ -21,6 +21,8 @@ import com.sparrow.concurrent.AbstractLock;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
+import java.time.Duration;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -29,50 +31,64 @@ public class RedisLock extends AbstractLock {
     @Inject
     private CacheClient cacheClient;
 
+    private ReentrantLock lock = new ReentrantLock();
+
     /**
      * 1. 不能死锁
+     * <p>
      * 2. 不能把老锁删掉
+     * <p>
      * 3. 并发问题
+     *
      * @param key
      * @param expireSeconds
-     * @param uniqueKey
      * @return
      */
     @Override
-    protected Boolean tryLock(KEY key, int expireSeconds, String uniqueKey) {
+    protected Boolean tryLock(KEY key, int expireSeconds) {
         //系统时间+设置的过期时间
-        String expiresValue = System.currentTimeMillis() + expireSeconds * 1000 + "|" + uniqueKey;
+        String expiresValue = this.getUnique() + "";
         try {
             if (cacheClient.string().setIfNotExist(key, expiresValue)) {
-                cacheClient.key().expire(key,expireSeconds);
+                //cacheClient.key().expire(key, expireSeconds);
                 // 如果当前锁不存在，返回加锁成功
+                logger.info("first got lock successful");
                 return true;
+            }
+            if (!lock.tryLock()) {
+                return false;
             }
             // 如果锁已经存在，获取锁的过期时间
             String currentLockValue = cacheClient.string().get(key);
             // 如果获取到的过期时间，小于系统当前时间，表示已经过期
             if (currentLockValue != null) {
-                logger.info("{}-{}",uniqueKey,currentLockValue);
-                //todo 直接操作数组不优雅？ 有索引越界的风险
-                String[] lockValueArray = currentLockValue.split("\\|");
-                String currentUnique = this.getUniqueKey();
-
-                long currentLockExpires = Long.parseLong(lockValueArray[0]);
-                if (currentLockExpires < System.currentTimeMillis()) {
+                long currentLockExpires = Long.parseLong(currentLockValue);
+                long diffSeconds = Duration.ofNanos(System.nanoTime() - currentLockExpires).getSeconds();
+                if (diffSeconds > expireSeconds) {
                     // 锁已过期，获取上一个锁的过期时间，并设置现在锁的过期时间
                     //todo getSet 不是原子的？ 没拿到锁，但是内容已经改变，线程ID已经变了
                     //todo watch cas
                     String oldLockValue = cacheClient.string().getSet(key, expiresValue);
-                    // 考虑多线程并发的情况，只有一个线程的设置值和当前值相同，它才可以加锁
-                    if(oldLockValue != null && oldLockValue.equals(currentLockValue)){
-                        cacheClient.key().expire(key,expireSeconds);
+                    // 考虑多进程(当前进程不可能)并发的情况，只有一个线程的设置值和当前值相同，它才可以加锁
+                    if (oldLockValue != null && oldLockValue.equals(currentLockValue)) {
+                        cacheClient.key().expire(key, expireSeconds);
+                        logger.info("not expire current:{}-redis:{},duration {}",
+                            expiresValue,
+                            currentLockValue,
+                            diffSeconds);
                         return true;
                     }
                     return false;
+                } else {
+                    logger.info("current:{}-redis:{},duration {}",
+                        expiresValue,
+                        currentLockValue,
+                        diffSeconds);
                 }
                 //todo 这段代码是不是有并发问题
-                if (currentUnique.equals(lockValueArray[1])) {
+                if (getUnique().equals(currentLockExpires)) {
                     //reentrant lock
+                    logger.info("current:{}-redis:{} reentrant-lock", expiresValue, currentLockValue);
                     return true;
                 }
             }
@@ -82,6 +98,10 @@ public class RedisLock extends AbstractLock {
             //链接失败 加锁失败
             logger.error("{} get connection fail", key.key(), e);
             return false;
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
     }
 
@@ -91,9 +111,9 @@ public class RedisLock extends AbstractLock {
             if (StringUtility.isNullOrEmpty(value)) {
                 return false;
             }
-            String[] valueArray = value.split("\\|");
+
             //todo 有数组越界的问题
-            if (valueArray[1].equals(this.getUniqueKey())) {
+            if (Long.valueOf(value).equals(this.getUnique())) {
                 return cacheClient.key().delete(key);
             }
             return false;

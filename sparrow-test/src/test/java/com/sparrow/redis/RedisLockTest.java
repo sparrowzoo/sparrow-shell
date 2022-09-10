@@ -24,6 +24,7 @@ import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.ModuleSupport;
 import java.util.Random;
+import javax.inject.Inject;
 
 public class RedisLockTest {
     public static void main(String[] args) throws InterruptedException {
@@ -47,28 +48,31 @@ public class RedisLockTest {
         KEY key = new KEY.Builder().business(od).businessId(new Random().nextInt(2000)).build();
         RedisLock redisLock = ApplicationContext.getContainer().getBean("redisLock");
 
-        boolean mainLock = redisLock.retryAcquireLock(key, 1, 1000);
+        boolean mainLock = redisLock.retryAcquireLock(key, 2, 1000);
+        System.out.println("主线程拿锁" + mainLock);
+        Thread.sleep(3000);
 
-        System.out.println("主线程拿锁"+mainLock);
-        Thread.sleep(2000);
-
-        new Thread(new Runnable() {
+        Runnable task = new Runnable() {
             @Override public void run() {
-                //todo 这里不对
-                boolean childLock = redisLock.retryAcquireLock(key, 1, 1000);
-                System.out.println("子线程拿锁"+childLock);
-                childLock = redisLock.retryAcquireLock(key, 1, 1000);
-                System.out.println("子线程重入锁"+childLock);
-                childLock = redisLock.retryAcquireLock(key, 1, 1000);
-                System.out.println("子线程重入锁"+childLock);
-
-                if (!childLock) {
-                    return;
+                try {
+                    System.out.println(Thread.currentThread().getName() + " getting lock");
+                    boolean isLock = redisLock.retryAcquireLock(key, 2, 128);
+                    if (isLock) {
+                        System.out.println(Thread.currentThread().getName() + " got lock");
+                        Thread.sleep(2000);
+                    } else {
+                        System.out.println(Thread.currentThread().getName() + " not got lock");
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    redisLock.release(key);
                 }
-                System.out.println(childLock);
             }
-        }).start();
-        redisLock.release(key);
+        };
+
+        new Thread(task, "thread-1").start();
+        //new Thread(task, "thread-2").start();
         System.out.println(mainLock);
     }
 }
