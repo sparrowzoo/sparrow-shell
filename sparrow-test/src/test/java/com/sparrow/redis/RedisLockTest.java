@@ -17,14 +17,14 @@
 
 package com.sparrow.redis;
 
-import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.RedisLock;
+import com.sparrow.constant.DateTime;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.ModuleSupport;
+import com.sparrow.utility.DateTimeUtility;
 import java.util.Random;
-import javax.inject.Inject;
 
 public class RedisLockTest {
     public static void main(String[] args) throws InterruptedException {
@@ -48,31 +48,34 @@ public class RedisLockTest {
         KEY key = new KEY.Builder().business(od).businessId(new Random().nextInt(2000)).build();
         RedisLock redisLock = ApplicationContext.getContainer().getBean("redisLock");
 
-        boolean mainLock = redisLock.retryAcquireLock(key, 2, 1000);
+        boolean mainLock = redisLock.acquire(key, 10, 64);
         System.out.println("主线程拿锁" + mainLock);
-        Thread.sleep(3000);
+        Thread.sleep(100);
 
         Runnable task = new Runnable() {
             @Override public void run() {
-                try {
-                    System.out.println(Thread.currentThread().getName() + " getting lock");
-                    boolean isLock = redisLock.retryAcquireLock(key, 2, 128);
-                    if (isLock) {
-                        System.out.println(Thread.currentThread().getName() + " got lock");
-                        Thread.sleep(2000);
-                    } else {
-                        System.out.println(Thread.currentThread().getName() + " not got lock");
+                while (true) {
+                    try {
+                        //System.out.println(Thread.currentThread().getName() + " getting lock");
+                        boolean isLock = redisLock.acquire(key, 1000, 32);
+                        if (isLock) {
+                            Thread.sleep(0);
+                            System.err.println(Thread.currentThread().getName() + "-" + DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYY_MM_DD_HH_MM_SS_MS));
+                        } else {
+                            //System.out.println(Thread.currentThread().getName() + " not got lock");
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        redisLock.release(key);
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    redisLock.release(key);
                 }
             }
         };
-
-        new Thread(task, "thread-1").start();
-        //new Thread(task, "thread-2").start();
+        for (int i = 0; i < 100; i++) {
+            new Thread(task, "thread-" + i).start();
+           // Thread.sleep(10);
+        }
         System.out.println(mainLock);
     }
 }

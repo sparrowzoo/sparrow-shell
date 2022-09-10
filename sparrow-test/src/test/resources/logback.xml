@@ -93,7 +93,7 @@
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="com.sparrow" level="INFO" additivity="false">
+    <logger name="com.sparrow" level="ERROR" additivity="false">
         <appender-ref ref="DEBUG"/>
         <appender-ref ref="INFO"/>
         <appender-ref ref="WARN"/>

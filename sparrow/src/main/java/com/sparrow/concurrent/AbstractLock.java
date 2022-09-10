@@ -18,10 +18,9 @@
 package com.sparrow.concurrent;
 
 import com.sparrow.constant.cache.KEY;
-import com.sparrow.support.IpSupport;
 import com.sparrow.utility.DateTimeUtility;
 import java.time.Duration;
-import javax.inject.Inject;
+import java.time.temporal.TemporalUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,41 +29,62 @@ public abstract class AbstractLock {
 
     private ThreadLocal<Long> uniques = new ThreadLocal<>();
 
-    protected Long getUnique() {
-        Long t = this.uniques.get();
-        if (t != null) {
-            logger.info("old unique {}", t);
-            return t;
-        }
-        t = System.nanoTime();
-        this.uniques.set(t);
-        logger.info("new unique {}", t);
-        return t;
+    public static final String SUCCESS = "SUCCESS";
+    public static final String RETRY_TIMEOUT = "RETRY_TIMEOUT";
+    public static final String FAIL = "FAIL";
+
+    protected long getUnique() {
+        return this.uniques.get();
     }
 
-    protected abstract Boolean tryLock(KEY key, int expireSeconds);
+    protected void setUnique() {
+        this.uniques.set(System.nanoTime());
+    }
+
+    protected void monitor(KEY key, String status) {
+        logger.info("LOCK-MONITOR KEY={},STATUS={}", key.key(), status);
+    }
+
+    protected boolean isExpire(long lockTime, long expireMillis) {
+        long diffMills = (System.nanoTime() - lockTime) / 1000000;
+        return diffMills > expireMillis;
+    }
+
+    protected void removeUnique() {
+        this.uniques.remove();
+    }
+
+    protected abstract Boolean tryAcquire(KEY key, int expireMillis);
 
     public abstract Boolean release(KEY key);
 
-    public boolean retryAcquireLock(KEY key, int expireSeconds, int retryMillis) {
-        long unique = this.getUnique();
-        Boolean lock = this.tryLock(key, expireSeconds);
+    public boolean acquire(KEY key, int expireMillis, int retryMillis) {
+        this.setUnique();
+        Boolean lock = this.tryAcquire(key, expireMillis);
+        if (retryMillis <= 0) {
+            this.monitor(key, lock ? SUCCESS : FAIL);
+            return lock;
+        }
         //纳秒级，并作为唯一标识，因为用ip+线程ID作为唯一标识在锁释放时可能会导致无法正常删除
         //同时防止毫秒级拿到多个锁
 
         int times = 1;
         int timeout = 0;
-        //todo 为什么要重试？直接跳出返回行不行？
+        long t = this.getUnique();
         while (lock == null || !lock) {
-            lock = this.tryLock(key, expireSeconds);
-            if(lock){
+            this.setUnique();
+            lock = this.tryAcquire(key, expireMillis);
+            if (lock) {
+                logger.error("retry times {} got lock duration {}", times, (System.nanoTime() - t) / 1000000);
+                this.monitor(key, SUCCESS);
                 return true;
             }
             try {
                 if (timeout < 1024) {
                     timeout += 1 << times++;
                 }
-                if (System.nanoTime() - unique > retryMillis*1000000) {
+                if (System.nanoTime() - t > retryMillis * 1000000) {
+                    this.monitor(key, RETRY_TIMEOUT);
                     return false;
                 }
                 Thread.sleep(timeout);
