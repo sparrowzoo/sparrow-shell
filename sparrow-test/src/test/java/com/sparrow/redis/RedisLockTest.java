@@ -45,7 +45,7 @@ public class RedisLockTest {
         };
         //相同模块下会存在多个业务
         KEY.Business od = new KEY.Business(lock, "lock");
-        KEY key = new KEY.Builder().business(od).businessId(new Random().nextInt(2000)).build();
+        KEY key = new KEY.Builder().business(od).businessId(1000000).build();
         RedisLock redisLock = ApplicationContext.getContainer().getBean("redisLock");
 
         boolean mainLock = redisLock.acquire(key, 10, 64);
@@ -59,8 +59,8 @@ public class RedisLockTest {
                         //System.out.println(Thread.currentThread().getName() + " getting lock");
                         boolean isLock = redisLock.acquire(key, 1000, 32);
                         if (isLock) {
-                            Thread.sleep(0);
-                            System.err.println(Thread.currentThread().getName() + "-" + DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYY_MM_DD_HH_MM_SS_MS));
+                            Thread.sleep(10);
+                            //System.err.println(Thread.currentThread().getName() + "-" + DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYY_MM_DD_HH_MM_SS_MS));
                         } else {
                             //System.out.println(Thread.currentThread().getName() + " not got lock");
                         }

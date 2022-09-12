@@ -75,7 +75,7 @@ public abstract class AbstractLock {
             this.setUnique();
             lock = this.tryAcquire(key, expireMillis);
             if (lock) {
-                logger.error("retry times {} got lock duration {}", times, (System.nanoTime() - t) / 1000000);
+                logger.info("retry times {} got lock duration {}", times, (System.nanoTime() - t) / 1000000);
                 this.monitor(key, SUCCESS);
                 return true;
             }

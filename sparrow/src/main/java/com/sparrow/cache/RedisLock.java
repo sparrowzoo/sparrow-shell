@@ -54,7 +54,7 @@ public class RedisLock extends AbstractLock {
                 return false;
             }
             if (cacheClient.string().setIfNotExist(key, expiresValue)) {
-                //cacheClient.key().expire(key, expireSeconds);
+                cacheClient.key().expire(key, expireMillis/1000);
                 // 如果当前锁不存在，返回加锁成功
                 logger.info("first got lock successful");
                 return true;
@@ -65,7 +65,7 @@ public class RedisLock extends AbstractLock {
             // 特别的，当已存在的锁currentLockValue为空时，应该重新SETNX
             if (currentLockValue==null) {
                 if (cacheClient.string().setIfNotExist(key, expiresValue)) {
-                    //cacheClient.key().expire(key, expireSeconds);
+                    cacheClient.key().expire(key, expireMillis/1000);
                     // 如果当前锁不存在，返回加锁成功
                     logger.info("first got lock successful");
                     return true;
@@ -77,15 +77,14 @@ public class RedisLock extends AbstractLock {
                 if (this.isExpire(currentLockExpires,expireMillis)) {
                     // 锁已过期，获取上一个锁的过期时间，并设置现在锁的过期时间
                     //todo getSet 不是原子的？ 没拿到锁，但是内容已经改变，线程ID已经变了
-                    //todo watch cas
                     String oldLockValue = cacheClient.string().getSet(key, expiresValue);
                     if (oldLockValue == null) {
-                        //cacheClient.key().expire(key, expireSeconds);
+                        cacheClient.key().expire(key, expireMillis/1000);
                         return true;
                     }
                     // 考虑多进程(当前进程不可能)并发的情况，只有一个线程的设置值和当前值相同，它才可以加锁
                     if (oldLockValue.equals(currentLockValue)) {
-                        //cacheClient.key().expire(key, expireSeconds);
+                        cacheClient.key().expire(key, expireMillis/1000);
                         logger.error("getset got lock not expire current:{}-redis:{}",
                             expiresValue,
                             currentLockValue);
@@ -127,7 +126,7 @@ public class RedisLock extends AbstractLock {
                 return false;
             }
             if (Long.valueOf(value).equals(this.getUnique())) {
-                //return cacheClient.key().delete(key);
+                return cacheClient.key().delete(key);
             }
             return false;
         } catch (CacheConnectionException e) {
