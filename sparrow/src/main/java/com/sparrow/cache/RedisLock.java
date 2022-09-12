@@ -32,8 +32,6 @@ public class RedisLock extends AbstractLock {
 
     private ReentrantLock localLock = new ReentrantLock();
 
-
-
     /**
      * 1. 不能死锁
      * <p>
@@ -54,7 +52,8 @@ public class RedisLock extends AbstractLock {
                 return false;
             }
             if (cacheClient.string().setIfNotExist(key, expiresValue)) {
-                cacheClient.key().expire(key, expireMillis/1000);
+                //过期时间
+                cacheClient.key().expire(key, expireMillis / 1000);
                 // 如果当前锁不存在，返回加锁成功
                 logger.info("first got lock successful");
                 return true;
@@ -63,9 +62,9 @@ public class RedisLock extends AbstractLock {
             // 如果锁已经存在，获取锁的过期时间
             String currentLockValue = cacheClient.string().get(key);
             // 特别的，当已存在的锁currentLockValue为空时，应该重新SETNX
-            if (currentLockValue==null) {
+            if (currentLockValue == null) {
                 if (cacheClient.string().setIfNotExist(key, expiresValue)) {
-                    cacheClient.key().expire(key, expireMillis/1000);
+                    cacheClient.key().expire(key, expireMillis / 1000);
                     // 如果当前锁不存在，返回加锁成功
                     logger.info("first got lock successful");
                     return true;
@@ -74,23 +73,22 @@ public class RedisLock extends AbstractLock {
             // 如果获取到的过期时间，小于系统当前时间，表示已经过期
             if (currentLockValue != null) {
                 long currentLockExpires = Long.parseLong(currentLockValue);
-                if (this.isExpire(currentLockExpires,expireMillis)) {
+                if (this.isExpire(currentLockExpires, expireMillis)) {
                     // 锁已过期，获取上一个锁的过期时间，并设置现在锁的过期时间
                     //todo getSet 不是原子的？ 没拿到锁，但是内容已经改变，线程ID已经变了
                     String oldLockValue = cacheClient.string().getSet(key, expiresValue);
                     if (oldLockValue == null) {
-                        cacheClient.key().expire(key, expireMillis/1000);
+                        cacheClient.key().expire(key, expireMillis / 1000);
                         return true;
                     }
                     // 考虑多进程(当前进程不可能)并发的情况，只有一个线程的设置值和当前值相同，它才可以加锁
                     if (oldLockValue.equals(currentLockValue)) {
-                        cacheClient.key().expire(key, expireMillis/1000);
-                        logger.error("getset got lock not expire current:{}-redis:{}",
+                        cacheClient.key().expire(key, expireMillis / 1000);
+                        logger.info("getset got lock not expire current:{}-redis:{}",
                             expiresValue,
                             currentLockValue);
                         return true;
-                    }
-                    else {
+                    } else {
                         logger.error("lock fail but set expire current:{}-redis:{}",
                             expiresValue,
                             currentLockValue);
@@ -98,13 +96,12 @@ public class RedisLock extends AbstractLock {
                     return false;
                 } else {
                     //未过期
-                    if (this.getUnique()==currentLockExpires) {
+                    if (this.getUnique() == currentLockExpires) {
                         //reentrant lock
                         logger.info("current:{}-redis:{} reentrant-lock", expiresValue, currentLockValue);
                         return true;
                     }
                 }
-
             }
             //其他情况，均返回加锁失败
             return false;
@@ -131,8 +128,7 @@ public class RedisLock extends AbstractLock {
             return false;
         } catch (CacheConnectionException e) {
             return false;
-        }
-        finally {
+        } finally {
             this.removeUnique();
         }
     }

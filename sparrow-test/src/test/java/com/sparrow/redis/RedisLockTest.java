@@ -59,8 +59,8 @@ public class RedisLockTest {
                         //System.out.println(Thread.currentThread().getName() + " getting lock");
                         boolean isLock = redisLock.acquire(key, 1000, 32);
                         if (isLock) {
-                            Thread.sleep(10);
-                            //System.err.println(Thread.currentThread().getName() + "-" + DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYY_MM_DD_HH_MM_SS_MS));
+                            Thread.sleep(1000);
+                            System.err.println(Thread.currentThread().getName() + "-" + DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYY_MM_DD_HH_MM_SS_MS));
                         } else {
                             //System.out.println(Thread.currentThread().getName() + " not got lock");
                         }
