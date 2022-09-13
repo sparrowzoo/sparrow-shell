@@ -24,13 +24,13 @@ import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.constant.magic.Symbol;
-import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
-@Named
 public class RedisPool implements ContainerAware {
     private Logger logger = LoggerFactory.getLogger(RedisPool.class);
     private CacheMonitor cacheMonitor;
@@ -44,7 +44,9 @@ public class RedisPool implements ContainerAware {
         this.urls = urls;
     }
 
-    private Jedis jedis;
+    private JedisPoolConfig config;
+
+    private JedisPool jedisPool;
 
     public CacheMonitor getCacheMonitor() {
         return cacheMonitor;
@@ -54,6 +56,7 @@ public class RedisPool implements ContainerAware {
     }
 
     <T> T execute(Executor<T> executor, KEY key) throws CacheConnectionException {
+        Jedis jedis=null;
         try {
             Long startTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
@@ -62,7 +65,8 @@ public class RedisPool implements ContainerAware {
                 }
             }
 
-            T result = executor.execute(this.jedis);
+            jedis=this.jedisPool.getResource();
+            T result = executor.execute(jedis);
             Long endTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
                 this.cacheMonitor.monitor(startTime, endTime, key);
@@ -72,6 +76,11 @@ public class RedisPool implements ContainerAware {
             logger.error(this.urls + Symbol.COLON + e.getMessage());
             throw new CacheConnectionException(e.getMessage());
         }
+        finally {
+            if(jedis!=null) {
+                jedis.close();
+            }
+        }
     }
 
     @Override
@@ -79,6 +88,6 @@ public class RedisPool implements ContainerAware {
         String[] urlArray = this.urls.split(Symbol.COMMA);
         //分割集群节点
         Pair<String, String> urlPortPair = Pair.split(urlArray[0], Symbol.COLON);
-        this.jedis = new Jedis(urlPortPair.getFirst(), Integer.parseInt(urlPortPair.getSecond()));
+        this.jedisPool = new JedisPool(config, urlPortPair.getFirst(), Integer.parseInt(urlPortPair.getSecond()), 2000);
     }
 }

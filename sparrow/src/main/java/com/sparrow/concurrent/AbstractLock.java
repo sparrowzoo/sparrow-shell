@@ -54,7 +54,7 @@ public abstract class AbstractLock {
         this.uniques.remove();
     }
 
-    protected abstract Boolean tryAcquire(KEY key, int expireMillis);
+    protected abstract Boolean tryAcquire(KEY key, long expireMillis);
 
     public abstract Boolean release(KEY key);
 

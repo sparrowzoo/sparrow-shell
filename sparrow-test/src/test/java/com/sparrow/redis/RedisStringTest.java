@@ -48,7 +48,6 @@ public class RedisStringTest {
         //相同模块下会存在多个业务
         KEY.Business od = new KEY.Business(OD, "POOL");
         //container.setContextConfigLocation("/redis_config.xml");
-        container.setContextConfigLocation("/redis_cluster_config.xml");
 
         container.init();
         client = container.getBean("cacheClient");

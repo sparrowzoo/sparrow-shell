@@ -25,6 +25,7 @@ import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.POJO;
 import com.sparrow.utility.StringUtility;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.params.SetParams;
 
 /**
  * Created by harry on 2018/1/26.
@@ -32,6 +33,20 @@ import redis.clients.jedis.Jedis;
 public class RedisCacheString extends AbstractCommand implements CacheString {
     RedisCacheString(RedisPool pool) {
         this.redisPool = pool;
+    }
+
+    @Override
+    public Boolean setIfNotExistWithMills(KEY key, Object value, long expireMills) throws CacheConnectionException {
+        return redisPool.execute(new Executor<Boolean>() {
+            @Override
+            public Boolean execute(Jedis jedis) {
+                TypeConverter typeConverter = new TypeConverter(String.class);
+                String v = typeConverter.convert(value).toString();
+                SetParams setParams=new SetParams();
+                setParams.nx().px(expireMills);
+                return "OK".equalsIgnoreCase(jedis.set(key.key(), v,setParams));
+            }
+        }, key);
     }
 
     @Override

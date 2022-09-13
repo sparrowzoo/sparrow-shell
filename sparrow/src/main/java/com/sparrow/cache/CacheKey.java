@@ -21,12 +21,15 @@ import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
 
 public interface CacheKey {
-
     Long ttl(final KEY key) throws CacheConnectionException;
 
-    Long expire(KEY key, Long expireSeconds) throws CacheConnectionException;
+    Long expireSeconds(KEY key, Long expireSeconds) throws CacheConnectionException;
+
+    Long expireMillis(KEY key, Long expireMills) throws CacheConnectionException;
+
+    Long expireMillisAt(KEY key, Long unixTimeMillis) throws CacheConnectionException;
 
     Long delete(KEY key) throws CacheConnectionException;
 
-    Long expireAt(KEY key, Long unixTimeSeconds) throws CacheConnectionException;
+    Long expireSecondsAt(KEY key, Long unixTimeSeconds) throws CacheConnectionException;
 }

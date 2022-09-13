@@ -40,6 +40,6 @@ public class RedisKeyTest {
         container.init();
         CacheClient client = container.getBean("cacheClient");
         //client.string().set(key,"test");
-        System.out.println(client.key().expire(key,1L));
+        System.out.println(client.key().expireSeconds(key,1L));
     }
 }

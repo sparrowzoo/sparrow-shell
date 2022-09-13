@@ -44,20 +44,20 @@ public class RedisLock extends AbstractLock {
      * @return
      */
     @Override
-    protected Boolean tryAcquire(KEY key, int expireMillis) {
+    protected Boolean tryAcquire(KEY key, long expireMillis) {
         //系统时间+设置的过期时间
         long unique = this.setGetUnique();
         String expiresValue = unique + "";
         //https://www.cnblogs.com/somefuture/p/13690961.html
         //毫秒和纳秒使用场景不同
-        long expireAt = System.currentTimeMillis() + 1;
+        //long expireAt = System.currentTimeMillis() + expireMillis;
         try {
             if (!localLock.tryLock()) {
                 return false;
             }
             if (cacheClient.string().setIfNotExist(key, expiresValue)) {
                 //过期时间
-                cacheClient.key().expireAt(key, expireAt);
+                cacheClient.key().expireMillis(key,expireMillis);
                 // 如果当前锁不存在，返回加锁成功
                 logger.error("first got lock successful");
                 return true;
@@ -68,7 +68,7 @@ public class RedisLock extends AbstractLock {
             // 特别的，当已存在的锁currentLockValue为空时，应该重新SETNX
             if (currentLockValue == null) {
                 if (cacheClient.string().setIfNotExist(key, expiresValue)) {
-                    cacheClient.key().expireAt(key, expireAt);
+                    cacheClient.key().expireMillis(key, expireMillis);
                     // 如果当前锁不存在，返回加锁成功
                     logger.info("first got lock successful");
                     return true;
@@ -85,13 +85,12 @@ public class RedisLock extends AbstractLock {
                     //todo getSet 不是原子的？ 没拿到锁，但是内容已经改变，线程ID已经变了
                     String oldLockValue = cacheClient.string().getSet(key, expiresValue);
                     if (oldLockValue == null) {
-                        cacheClient.key().expireAt(key, expireAt);
+                        cacheClient.key().expireMillis(key, expireMillis);
                         return true;
                     }
                     // 考虑多进程(当前进程不可能)并发的情况，只有一个线程的设置值和当前值相同，它才可以加锁
                     if (oldLockValue.equals(currentLockValue)) {
-
-                        cacheClient.key().expireAt(key, expireAt);
+                        cacheClient.key().expireMillis(key, expireMillis);
                         logger.error("getset got lock not expire current:{}-redis:{}",
                             expiresValue,
                             currentLockValue);

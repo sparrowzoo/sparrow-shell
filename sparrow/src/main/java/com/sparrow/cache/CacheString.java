@@ -21,6 +21,9 @@ import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
 
 public interface CacheString {
+
+    Boolean setIfNotExistWithMills(KEY key, Object value,long expireMills) throws CacheConnectionException;
+
     String set(KEY key, Object value) throws CacheConnectionException;
 
     String getSet(KEY key, Object value) throws CacheConnectionException;
