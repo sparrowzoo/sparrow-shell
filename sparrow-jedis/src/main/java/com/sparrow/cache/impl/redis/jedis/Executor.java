@@ -15,18 +15,11 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache;
+package com.sparrow.cache.impl.redis.jedis;
 
-import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
+import redis.clients.jedis.Jedis;
 
-public interface CacheKey {
-
-    Long ttl(final KEY key) throws CacheConnectionException;
-
-    Long expire(KEY key, Long expireSeconds) throws CacheConnectionException;
-
-    Long delete(KEY key) throws CacheConnectionException;
-
-    Long expireAt(KEY key, Long unixTimeSeconds) throws CacheConnectionException;
+public interface Executor<T> {
+    T execute(Jedis jedis) throws CacheConnectionException;
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache.impl.redis;
+package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheMonitor;
 import com.sparrow.constant.cache.KEY;
@@ -24,24 +24,20 @@ import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.constant.magic.Symbol;
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.pool.impl.GenericObjectPool;
+import java.util.HashSet;
+import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.exceptions.JedisConnectionException;
-import redis.clients.util.Hashing;
-import redis.clients.util.Sharded;
 
+@Named
 public class RedisPool implements ContainerAware {
     private Logger logger = LoggerFactory.getLogger(RedisPool.class);
     private CacheMonitor cacheMonitor;
     private String urls;
-
     public void setCacheMonitor(CacheMonitor cacheMonitor) {
         this.cacheMonitor = cacheMonitor;
     }
@@ -56,7 +52,7 @@ public class RedisPool implements ContainerAware {
 
     private JedisPoolConfig config;
 
-    private ShardedJedisPool pool = null;
+    private JedisCluster jedisCluster;
 
     public CacheMonitor getCacheMonitor() {
         return cacheMonitor;
@@ -70,9 +66,7 @@ public class RedisPool implements ContainerAware {
     }
 
     <T> T execute(Executor<T> executor, KEY key) throws CacheConnectionException {
-        ShardedJedis jedis = null;
         try {
-            jedis = pool.getResource();
             Long startTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
                 if (!this.cacheMonitor.before(startTime, key)) {
@@ -80,15 +74,13 @@ public class RedisPool implements ContainerAware {
                 }
             }
 
-            T result = executor.execute(jedis);
+            T result = executor.execute(jedisCluster);
             Long endTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
                 this.cacheMonitor.monitor(startTime, endTime, key);
             }
-            this.pool.returnResource(jedis);
             return result;
         } catch (JedisConnectionException e) {
-            this.pool.returnBrokenResource(jedis);
             logger.error(this.getInfo() + Symbol.COLON + e.getMessage());
             throw new CacheConnectionException(e.getMessage());
         }
@@ -96,16 +88,17 @@ public class RedisPool implements ContainerAware {
 
     @Override
     public void aware(Container container, String beanName) {
-        // 超过时则报错 阻塞 或增加链接数
-        config.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_FAIL);
+        HashSet<HostAndPort> nodes = new HashSet<>();
+
         String[] urlArray = this.urls.split(Symbol.COMMA);
-        List<JedisShardInfo> jdsInfoList = new ArrayList<JedisShardInfo>(urlArray.length);
+
+        //分割集群节点
         for (String url : urlArray) {
             Pair<String, String> urlPortPair = Pair.split(url, Symbol.COLON);
-            JedisShardInfo infoA = new JedisShardInfo(urlPortPair.getFirst(), urlPortPair.getSecond());
-            jdsInfoList.add(infoA);
+            nodes.add(new HostAndPort(urlPortPair.getFirst(), Integer.parseInt(urlPortPair.getSecond())));
         }
-        pool = new ShardedJedisPool(config, jdsInfoList, Hashing.MURMUR_HASH,
-            Sharded.DEFAULT_KEY_TAG_PATTERN);
+
+        //创建集群对象
+        this.jedisCluster = new JedisCluster(nodes, 2000, config);
     }
 }

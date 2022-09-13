@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache.impl.redis;
+package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheHash;
@@ -23,13 +23,11 @@ import com.sparrow.constant.cache.KEY;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.JedisCluster;
 
 public class RedisCacheHash extends AbstractCommand implements CacheHash {
     RedisCacheHash(RedisPool redisPool) {
@@ -46,7 +44,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
         try {
             return redisPool.execute(new Executor<Map<K, T>>() {
                 @Override
-                public Map<K, T> execute(ShardedJedis jedis) throws CacheConnectionException {
+                public Map<K, T> execute(JedisCluster jedis) throws CacheConnectionException {
 
                     Map<String, String> map = jedis.hgetAll(key.key());
                     if (map == null || map.size() == 0) {
@@ -92,7 +90,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     public <K, T> Map<K, T> getAll(final KEY key, final Class keyClazz, final Class clazz) throws CacheConnectionException {
         return redisPool.execute(new Executor<Map<K, T>>() {
             @Override
-            public Map<K, T> execute(ShardedJedis jedis) throws CacheConnectionException {
+            public Map<K, T> execute(JedisCluster jedis) throws CacheConnectionException {
                 Map<String, String> map = jedis.hgetAll(key.key());
                 if (map.size() == 0) {
                     return null;
@@ -106,7 +104,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     public Long getSize(final KEY key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
-            public Long execute(ShardedJedis jedis) throws CacheConnectionException {
+            public Long execute(JedisCluster jedis) throws CacheConnectionException {
                 return jedis.hlen(key.key());
             }
         }, key);
@@ -116,7 +114,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     public String get(final KEY key, final String field) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
-            public String execute(ShardedJedis jedis) throws CacheConnectionException {
+            public String execute(JedisCluster jedis) throws CacheConnectionException {
                 return jedis.hget(key.key(), field);
             }
         }, key);
@@ -126,7 +124,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     public Map<String, String> get(final KEY key, final Collection<String> fieldList) throws CacheConnectionException {
         return redisPool.execute(new Executor<Map<String, String>>() {
             @Override
-            public Map<String, String> execute(ShardedJedis jedis) throws CacheConnectionException {
+            public Map<String, String> execute(JedisCluster jedis) throws CacheConnectionException {
                 Map<String, String> values = new LinkedHashMap<String, String>(fieldList.size());
                 for (String field : fieldList) {
                     values.put(field, jedis.hget(key.key(), field));
@@ -140,7 +138,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     public <T> Map<String, T> get(final KEY key, final Collection<String> fieldList, final Class valueType) throws CacheConnectionException {
         return redisPool.execute(new Executor<Map<String, T>>() {
             @Override
-            public Map<String, T> execute(ShardedJedis jedis) throws CacheConnectionException {
+            public Map<String, T> execute(JedisCluster jedis) throws CacheConnectionException {
                 Map<String, T> values = new LinkedHashMap<String, T>(fieldList.size());
                 for (String field : fieldList) {
                     String value = jedis.hget(key.key(), field);
@@ -155,7 +153,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     public <T> T get(final KEY key, final String field, final Class valueType) throws CacheConnectionException {
         return redisPool.execute(new Executor<T>() {
             @Override
-            public T execute(ShardedJedis jedis) throws CacheConnectionException {
+            public T execute(JedisCluster jedis) throws CacheConnectionException {
                 String value = jedis.hget(key.key(), field);
                 if (StringUtility.isNullOrEmpty(value)) {
                     return null;
@@ -184,7 +182,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     public Long put(final KEY key, final String field, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
-            public Long execute(ShardedJedis jedis) {
+            public Long execute(JedisCluster jedis) {
                 TypeConverter typeConverter = new TypeConverter(String.class);
                 return jedis.hset(key.key(), field, typeConverter.convert(value).toString());
             }
@@ -195,7 +193,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     public <K, T> Integer put(final KEY key, final Map<K, T> map) throws CacheConnectionException {
         return redisPool.execute(new Executor<Integer>() {
             @Override
-            public Integer execute(ShardedJedis jedis) {
+            public Integer execute(JedisCluster jedis) {
                 TypeConverter typeConverter = new TypeConverter(String.class);
                 Map<String, String> newMap = new HashMap<>();
                 for (K k : map.keySet()) {

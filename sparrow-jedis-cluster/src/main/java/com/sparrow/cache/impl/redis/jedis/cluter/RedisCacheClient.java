@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache.impl.redis;
+package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.CacheHash;
@@ -26,16 +26,20 @@ import com.sparrow.cache.CacheSortedSet;
 import com.sparrow.cache.CacheString;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("cacheClient")
-public class RedisCacheClient extends AbstractCommand implements CacheClient, ContainerAware {
+public class RedisCacheClient implements CacheClient, ContainerAware {
     private CacheString cacheString;
     private CacheSet cacheSet;
     private CacheSortedSet cacheSortedSet;
     private CacheHash cacheHash;
     private CacheKey cacheKey;
     private CacheList cacheList;
+
+    @Inject
+    private RedisPool redisPool;
 
     @Override
     public CacheString string() {

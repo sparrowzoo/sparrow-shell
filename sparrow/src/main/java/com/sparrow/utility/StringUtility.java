@@ -19,6 +19,7 @@ package com.sparrow.utility;
 
 import com.sparrow.constant.Config;
 import com.sparrow.constant.ConfigKeyLanguage;
+import com.sparrow.core.TypeConverter;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.constant.Constant;
@@ -27,12 +28,27 @@ import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class StringUtility {
+    public static <T> String[] getStringArray(Iterable<T> values) {
+        List<String> valueList = new ArrayList<>();
+        TypeConverter typeConverter = new TypeConverter(String.class);
+        for (T value : values) {
+            if (value == null) {
+                valueList.add(Symbol.EMPTY);
+                continue;
+            }
+            valueList.add(typeConverter.convert(value).toString());
+        }
+        String[] valueArray = new String[valueList.size()];
+        valueList.toArray(valueArray);
+        return valueArray;
+    }
 
     public static String newUuid() {
         return UUID.randomUUID().toString().replace(Symbol.HORIZON_LINE, Symbol.EMPTY);

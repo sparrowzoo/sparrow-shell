@@ -35,8 +35,10 @@ public abstract class AbstractLock {
         return this.uniques.get();
     }
 
-    protected void setUnique() {
-        this.uniques.set(System.nanoTime());
+    protected long setGetUnique() {
+        long nanoTime = System.nanoTime();
+        this.uniques.set(nanoTime);
+        return nanoTime;
     }
 
     protected void monitor(KEY key, String status) {
@@ -57,7 +59,6 @@ public abstract class AbstractLock {
     public abstract Boolean release(KEY key);
 
     public boolean acquire(KEY key, int expireMillis, int retryMillis) {
-        this.setUnique();
         Boolean lock = this.tryAcquire(key, expireMillis);
         if (retryMillis <= 0) {
             this.monitor(key, lock ? SUCCESS : FAIL);
@@ -70,7 +71,6 @@ public abstract class AbstractLock {
         int timeout = 0;
         long t = this.getUnique();
         while (lock == null || !lock) {
-            this.setUnique();
             lock = this.tryAcquire(key, expireMillis);
             if (lock) {
                 logger.info("retry times {} got lock duration {}", times, (System.nanoTime() - t) / 1000000);
@@ -81,7 +81,7 @@ public abstract class AbstractLock {
                 if (timeout < 1024) {
                     timeout += 1 << times++;
                 }
-                if (System.nanoTime() - t > retryMillis * 1000000) {
+                if (System.nanoTime() - t > retryMillis * 1000000L) {
                     this.monitor(key, RETRY_TIMEOUT);
                     return false;
                 }

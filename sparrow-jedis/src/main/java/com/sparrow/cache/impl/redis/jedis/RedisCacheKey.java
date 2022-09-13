@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache.impl.redis;
+package com.sparrow.cache.impl.redis.jedis;
 
 import com.sparrow.cache.CacheKey;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.Jedis;
 
 public class RedisCacheKey extends AbstractCommand implements CacheKey {
     RedisCacheKey(RedisPool redisPool) {
@@ -28,32 +28,40 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey {
     }
 
     @Override
-    public Boolean expire(final KEY key, final Integer expire) throws CacheConnectionException {
+    public Long expire(final KEY key, final Long expire) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
-            @Override
-            public Long execute(ShardedJedis jedis) {
+            @Override public Long execute(Jedis jedis) throws CacheConnectionException {
                 return jedis.expire(key.key(), expire);
             }
-        }, key) > 0;
+        }, key);
     }
 
     @Override
-    public Boolean delete(final KEY key) throws CacheConnectionException {
+    public Long delete(final KEY key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
-            @Override
-            public Long execute(ShardedJedis jedis) {
-                return jedis.expireAt(key.key(), -1L);
+            @Override public Long execute(Jedis jedis) throws CacheConnectionException {
+                return jedis.del(key.key());
             }
-        }, key) > 0;
+        },key);
     }
 
     @Override
-    public Boolean expireAt(final KEY key, final Long expire) throws CacheConnectionException {
+    public Long ttl(final KEY key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
-            public Long execute(ShardedJedis jedis) {
+            public Long execute(Jedis jedis) {
+                return jedis.ttl(key.key());
+            }
+        }, key);
+    }
+
+    @Override
+    public Long expireAt(final KEY key, final Long expire) throws CacheConnectionException {
+        return redisPool.execute(new Executor<Long>() {
+            @Override
+            public Long execute(Jedis jedis) {
                 return jedis.expireAt(key.key(), expire);
             }
-        }, key) > 0;
+        }, key);
     }
 }

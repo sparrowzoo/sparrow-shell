@@ -48,16 +48,16 @@ public class RedisLockTest {
         KEY key = new KEY.Builder().business(od).businessId(1000000).build();
         RedisLock redisLock = ApplicationContext.getContainer().getBean("redisLock");
 
-        boolean mainLock = redisLock.acquire(key, 10, 64);
-        System.out.println("主线程拿锁" + mainLock);
-        Thread.sleep(100);
+//        boolean mainLock = redisLock.acquire(key, 10, 64);
+//        System.out.println("主线程拿锁" + mainLock);
+//        Thread.sleep(100);
 
         Runnable task = new Runnable() {
             @Override public void run() {
                 while (true) {
                     try {
                         //System.out.println(Thread.currentThread().getName() + " getting lock");
-                        boolean isLock = redisLock.acquire(key, 1000, 32);
+                        boolean isLock = redisLock.acquire(key, 990, 32);
                         if (isLock) {
                             Thread.sleep(1000);
                             System.err.println(Thread.currentThread().getName() + "-" + DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYY_MM_DD_HH_MM_SS_MS));
@@ -72,10 +72,10 @@ public class RedisLockTest {
                 }
             }
         };
+
         for (int i = 0; i < 100; i++) {
             new Thread(task, "thread-" + i).start();
            // Thread.sleep(10);
         }
-        System.out.println(mainLock);
     }
 }

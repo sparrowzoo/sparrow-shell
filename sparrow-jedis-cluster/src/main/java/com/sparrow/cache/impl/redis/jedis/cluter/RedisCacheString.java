@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache.impl.redis;
+package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheString;
@@ -24,7 +24,7 @@ import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.POJO;
 import com.sparrow.utility.StringUtility;
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.JedisCluster;
 
 /**
  * Created by harry on 2018/1/26.
@@ -38,7 +38,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public String set(final KEY key, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
-            public String execute(ShardedJedis jedis) {
+            public String execute(JedisCluster jedis) {
                 TypeConverter typeConverter = new TypeConverter(String.class);
                 String v = typeConverter.convert(value).toString();
                 return jedis.set(key.key(), v);
@@ -50,7 +50,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public String getSet(KEY key, Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
-            public String execute(ShardedJedis jedis) throws CacheConnectionException {
+            public String execute(JedisCluster jedis) throws CacheConnectionException {
                 TypeConverter typeConverter = new TypeConverter(String.class);
                 String v = typeConverter.convert(value).toString();
                 return jedis.getSet(key.key(), v);
@@ -62,7 +62,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public String get(final KEY key) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
-            public String execute(ShardedJedis jedis) throws CacheConnectionException {
+            public String execute(JedisCluster jedis) throws CacheConnectionException {
                 return jedis.get(key.key());
             }
         }, key);
@@ -73,7 +73,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
         try {
             return redisPool.execute(new Executor<String>() {
                 @Override
-                public String execute(ShardedJedis jedis) {
+                public String execute(JedisCluster jedis) {
                     String value = jedis.get(key.key());
                     if (StringUtility.isNullOrEmpty(value)) {
                         value = hook.read(key);
@@ -95,7 +95,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
         try {
             return redisPool.execute(new Executor<T>() {
                 @Override
-                public T execute(ShardedJedis jedis) throws CacheConnectionException {
+                public T execute(JedisCluster jedis) throws CacheConnectionException {
                     String json = jedis.get(key.key());
                     if (StringUtility.isNullOrEmpty(json)) {
                         if (redisPool.getCacheMonitor() != null) {
@@ -121,7 +121,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public <T> T get(final KEY key, final Class clazz) throws CacheConnectionException {
         return redisPool.execute(new Executor<T>() {
             @Override
-            public T execute(ShardedJedis jedis) throws CacheConnectionException {
+            public T execute(JedisCluster jedis) throws CacheConnectionException {
                 String json = jedis.get(key.key());
                 if (StringUtility.isNullOrEmpty(json)) {
                     return null;
@@ -139,7 +139,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public Long append(final KEY key, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
-            public Long execute(ShardedJedis jedis) {
+            public Long execute(JedisCluster jedis) {
                 return jedis.append(key.key(), value.toString());
             }
         }, key);
@@ -149,7 +149,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public Long decrease(final KEY key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
-            public Long execute(ShardedJedis jedis) {
+            public Long execute(JedisCluster jedis) {
                 return jedis.decr(key.key());
             }
         }, key);
@@ -159,7 +159,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public Long decrease(final KEY key, final Long count) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
-            public Long execute(ShardedJedis jedis) {
+            public Long execute(JedisCluster jedis) {
                 return jedis.decrBy(key.key(), count);
             }
         }, key);
@@ -169,7 +169,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public Long increase(final KEY key, final Long count) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
-            public Long execute(ShardedJedis jedis) {
+            public Long execute(JedisCluster jedis) {
                 return jedis.incrBy(key.key(), count);
             }
         }, key);
@@ -179,7 +179,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public Long increase(final KEY key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
-            public Long execute(ShardedJedis jedis) {
+            public Long execute(JedisCluster jedis) {
                 return jedis.incr(key.key());
             }
         }, key);
@@ -189,7 +189,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public boolean bit(final KEY key, final Integer offset) throws CacheConnectionException {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
-            public Boolean execute(ShardedJedis jedis) {
+            public Boolean execute(JedisCluster jedis) {
                 return jedis.getbit(key.key(), offset);
             }
         }, key);
@@ -199,7 +199,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public String setExpire(final KEY key, final Integer seconds, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
-            public String execute(ShardedJedis jedis) {
+            public String execute(JedisCluster jedis) {
                 return jedis.setex(key.key(), seconds, value.toString());
             }
         }, key);
@@ -209,7 +209,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     public Boolean setIfNotExist(final KEY key, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
-            public Boolean execute(ShardedJedis jedis) {
+            public Boolean execute(JedisCluster jedis) {
                 return jedis.setnx(key.key(), value.toString()) > 0;
             }
         }, key);

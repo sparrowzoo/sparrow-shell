@@ -15,18 +15,11 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache.impl.redis;
+package com.sparrow.cache.impl.redis.jedis.cluter;
 
-import com.sparrow.core.spi.JsonFactory;
-import com.sparrow.json.Json;
-import javax.inject.Inject;
+import com.sparrow.exception.CacheConnectionException;
+import redis.clients.jedis.JedisCluster;
 
-/**
- * Created by harry on 2018/1/26.
- */
-public class AbstractCommand {
-    @Inject
-    protected RedisPool redisPool;
-
-    protected Json jsonProvider = JsonFactory.getProvider();
+interface Executor<T> {
+    T execute(JedisCluster jedis) throws CacheConnectionException;
 }

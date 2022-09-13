@@ -35,7 +35,7 @@
         <sparrow_mvc_version>1.0.0-SNAPSHOT</sparrow_mvc_version>
         <sparrow_data_source_version>1.0.0-SNAPSHOT</sparrow_data_source_version>
         <sparrow_container_version>1.0.0-SNAPSHOT</sparrow_container_version>
-        <sparrow_sharded_jedis_version>1.0.0-SNAPSHOT</sparrow_sharded_jedis_version>
+        <sparrow_jedis_version>1.0.0-SNAPSHOT</sparrow_jedis_version>
         <sparrow_log_version>1.0.0-SNAPSHOT</sparrow_log_version>
         <sparrow_rocketmq_client_version>1.0.0-SNAPSHOT</sparrow_rocketmq_client_version>
         <sparrow_kafka_client_version>1.0.0-SNAPSHOT</sparrow_kafka_client_version>
@@ -218,8 +218,13 @@
             </dependency>
             <dependency>
                 <groupId>com.sparrow</groupId>
-                <artifactId>sparrow-sharded-jedis</artifactId>
-                <version>${sparrow_sharded_jedis_version}</version>
+                <artifactId>sparrow-jedis</artifactId>
+                <version>${sparrow_jedis_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sparrow</groupId>
+                <artifactId>sparrow-jedis-cluster</artifactId>
+                <version>${sparrow_jedis_version}</version>
             </dependency>
 
             <dependency>

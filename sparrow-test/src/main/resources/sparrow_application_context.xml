@@ -17,7 +17,7 @@
         <property name="minEvictableIdleTimeMillis" value="${redis.pool.minEvictableIdleTimeMillis}"/>
     </bean>
 
-    <bean name="redisPool" class="com.sparrow.cache.impl.redis.RedisPool">
+    <bean name="redisPool" class="com.sparrow.cache.impl.redis.">
         <property name="urls" value="${redis_url}"/>
         <property name="config" ref="poolConfig"/>
     </bean>

@@ -52,7 +52,7 @@ public class DefaultIdempotent implements MQIdempotent {
                 //redlock setExpire(key,timestamp)
                 boolean value = cacheClient.string().setIfNotExist(consumeKey, DIGIT.ONE);
                 if (value) {
-                    cacheClient.key().expire(consumeKey, 60 * 60 * 72);
+                    cacheClient.key().expire(consumeKey, 60 * 60 * 72L);
                     return true;
                 }
                 return false;
