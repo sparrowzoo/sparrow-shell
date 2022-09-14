@@ -56,7 +56,7 @@ public class RedisPool implements ContainerAware {
     }
 
     <T> T execute(Executor<T> executor, KEY key) throws CacheConnectionException {
-        Jedis jedis=null;
+        Jedis jedis = null;
         try {
             Long startTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
@@ -65,7 +65,7 @@ public class RedisPool implements ContainerAware {
                 }
             }
 
-            jedis=this.jedisPool.getResource();
+            jedis = this.jedisPool.getResource();
             T result = executor.execute(jedis);
             Long endTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {
@@ -75,9 +75,8 @@ public class RedisPool implements ContainerAware {
         } catch (JedisConnectionException e) {
             logger.error(this.urls + Symbol.COLON + e.getMessage());
             throw new CacheConnectionException(e.getMessage());
-        }
-        finally {
-            if(jedis!=null) {
+        } finally {
+            if (jedis != null) {
                 jedis.close();
             }
         }

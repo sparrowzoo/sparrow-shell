@@ -35,6 +35,11 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
+    public Boolean setIfNotExistWithMills(KEY key, Object value, long expireMills) throws CacheConnectionException {
+        return null;
+    }
+
+    @Override
     public String set(final KEY key, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override

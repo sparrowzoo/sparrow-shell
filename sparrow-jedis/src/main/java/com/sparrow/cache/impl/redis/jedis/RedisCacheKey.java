@@ -21,7 +21,6 @@ import com.sparrow.cache.CacheKey;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.exception.CacheConnectionException;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.params.SetParams;
 
 public class RedisCacheKey extends AbstractCommand implements CacheKey {
     RedisCacheKey(RedisPool redisPool) {

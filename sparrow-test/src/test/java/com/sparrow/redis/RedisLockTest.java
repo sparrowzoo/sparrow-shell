@@ -57,6 +57,7 @@ public class RedisLockTest {
                 while (true) {
                     try {
                         //System.out.println(Thread.currentThread().getName() + " getting lock");
+
                         boolean isLock = redisLock.acquire(key, 1000, 32);
                         if (isLock) {
                             Thread.sleep(1000);
