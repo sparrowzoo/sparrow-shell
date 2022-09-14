@@ -20,7 +20,7 @@ package com.sparrow.orm.query.sql;
 import com.sparrow.orm.query.BooleanCriteria;
 import com.sparrow.orm.query.OrderCriteria;
 import com.sparrow.orm.query.UpdateSetClausePair;
-import com.sparrow.protocol.enums.Aggregate;
+import com.sparrow.protocol.dao.enums.Aggregate;
 
 import java.util.List;
 

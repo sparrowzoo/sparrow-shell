@@ -30,7 +30,7 @@ import com.sparrow.orm.query.sql.CriteriaProcessor;
 import com.sparrow.orm.query.sql.OperationEntity;
 import com.sparrow.orm.query.sql.RelationOperationEntity;
 import com.sparrow.orm.query.sql.impl.operation.*;
-import com.sparrow.protocol.enums.Aggregate;
+import com.sparrow.protocol.dao.enums.Aggregate;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

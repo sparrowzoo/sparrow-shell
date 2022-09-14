@@ -15,23 +15,28 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.enums;
+package com.sparrow.support;
 
-public enum ImageCondition {
+import com.sparrow.protocol.LoginToken;
+
+/**
+ * 认证授权接口
+ */
+public interface Authenticator {
     /**
-     * 所有帖，包括图文
+     * 签名
+     *
+     * @param login  login token
+     * @param secret password
+     * @return
      */
-    ALL,
+    String sign(LoginToken login, String secret);
+
     /**
-     * 显示封面图
+     * 认证
+     *
+     * @param token
+     * @return
      */
-    COVER,
-    /**
-     * 显示图片
-     */
-    IMAGE,
-    /**
-     * 不显示图片
-     */
-    NONE
+    LoginToken authenticate(String token, String deviceId);
 }

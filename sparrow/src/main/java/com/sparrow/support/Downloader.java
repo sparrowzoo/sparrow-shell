@@ -14,16 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.support;
 
-package com.sparrow.protocol.enums;
+import com.sparrow.protocol.BusinessException;
 
-public enum Aggregate {
-    /**
-     * 总数
-     */
-    COUNT,
-    SUM,
-    AVG,
-    MIN,
-    MAX
+public interface Downloader {
+    String downloadImage(String imageUrl, Long authorId) throws BusinessException;
 }

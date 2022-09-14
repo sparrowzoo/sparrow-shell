@@ -16,7 +16,7 @@
  */
 package com.sparrow.authorizing;
 
-import com.sparrow.protocol.Authorizer;
+import com.sparrow.support.Authorizer;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginToken;
 

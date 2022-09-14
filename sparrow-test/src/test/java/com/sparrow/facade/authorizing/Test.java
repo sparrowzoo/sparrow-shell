@@ -2,7 +2,7 @@ package com.sparrow.facade.authorizing;
 
 import com.sparrow.authorizing.AuthenticatorDemo;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.protocol.Authenticator;
+import com.sparrow.support.Authenticator;
 import com.sparrow.protocol.LoginToken;
 
 public class Test {

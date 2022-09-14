@@ -16,7 +16,7 @@
  */
 package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.enums.Aggregate;
+import com.sparrow.protocol.dao.enums.Aggregate;
 
 public class AggregateCriteria {
     private Aggregate aggregate;

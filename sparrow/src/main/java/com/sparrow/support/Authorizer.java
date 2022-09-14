@@ -14,27 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.support;
 
-package com.sparrow.protocol;
+import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.LoginToken;
 
-/**
- * 认证授权接口
- */
-public interface Authenticator {
+public interface Authorizer {
     /**
-     * 签名
+     * 授权某资源
      *
-     * @param login  login token
-     * @param secret password
+     * @param user     当前用户
+     * @param resource 请求的资源(标识)
      * @return
+     * @throws BusinessException
      */
-    String sign(LoginToken login, String secret);
-
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    LoginToken authenticate(String token, String deviceId);
+    boolean isPermitted(LoginToken user,
+        String resource) throws BusinessException;
 }

@@ -18,7 +18,7 @@
 package com.sparrow.orm.query;
 
 import com.sparrow.protocol.Exclude;
-import com.sparrow.protocol.enums.Aggregate;
+import com.sparrow.protocol.dao.enums.Aggregate;
 import com.sparrow.protocol.pager.PagerQuery;
 
 import java.util.List;

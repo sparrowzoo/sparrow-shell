@@ -14,8 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol;
 
-public interface Downloader {
-    String downloadImage(String imageUrl, Long authorId) throws BusinessException;
+package com.sparrow.protocol.dao.enums;
+
+public enum Aggregate {
+    /**
+     * 总数
+     */
+    COUNT,
+    SUM,
+    AVG,
+    MIN,
+    MAX
 }

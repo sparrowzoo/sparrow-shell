@@ -22,7 +22,6 @@ import com.sparrow.constant.ConfigKeyLanguage;
 import com.sparrow.constant.User;
 import com.sparrow.cryptogram.Base64;
 import com.sparrow.cryptogram.Hmac;
-import com.sparrow.protocol.Authenticator;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.ConfigUtility;
