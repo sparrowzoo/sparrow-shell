@@ -42,9 +42,9 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
             public Boolean execute(Jedis jedis) {
                 TypeConverter typeConverter = new TypeConverter(String.class);
                 String v = typeConverter.convert(value).toString();
-                SetParams setParams=new SetParams();
+                SetParams setParams = new SetParams();
                 setParams.nx().px(expireMills);
-                return "OK".equalsIgnoreCase(jedis.set(key.key(), v,setParams));
+                return "OK".equalsIgnoreCase(jedis.set(key.key(), v, setParams));
             }
         }, key);
     }

@@ -48,7 +48,6 @@ public class RedisPool implements ContainerAware {
     private ShardedJedisPool pool = null;
     private CacheMonitor cacheMonitor;
 
-
     private String urls;
     private Integer maxActive = 100;
     private Integer maxIdle = 50;
@@ -146,6 +145,6 @@ public class RedisPool implements ContainerAware {
             jdsInfoList.add(infoA);
         }
         pool = new ShardedJedisPool(config, jdsInfoList, Hashing.MURMUR_HASH,
-                Sharded.DEFAULT_KEY_TAG_PATTERN);
+            Sharded.DEFAULT_KEY_TAG_PATTERN);
     }
 }
