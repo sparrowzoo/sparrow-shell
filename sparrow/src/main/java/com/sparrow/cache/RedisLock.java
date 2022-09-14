@@ -129,6 +129,7 @@ public class RedisLock extends AbstractLock {
             if (StringUtility.isNullOrEmpty(value)) {
                 return false;
             }
+            //TODO LUR 原子性问题
             if (Long.valueOf(value).equals(this.getUnique())) {
                 return cacheClient.key().delete(key) > 0;
             }

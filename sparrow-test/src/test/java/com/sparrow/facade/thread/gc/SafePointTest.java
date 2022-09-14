@@ -11,9 +11,9 @@ public class SafePointTest {
             @Override public void run() {
                 for (long i = 0; i < 1000000000; i++) {
                     num.addAndGet(1);
-                    //safepoint
+                    //safepoint long
                 }
-                //safepoint
+                //safepoint int
             }
         };
         new Thread(runnable).start();

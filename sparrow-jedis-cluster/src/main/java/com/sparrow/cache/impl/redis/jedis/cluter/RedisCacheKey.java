@@ -36,6 +36,14 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey {
         }, key);
     }
 
+    @Override public Long expireMillis(KEY key, Long expireMills) throws CacheConnectionException {
+        return null;
+    }
+
+    @Override public Long expireMillisAt(KEY key, Long unixTimeMillis) throws CacheConnectionException {
+        return null;
+    }
+
     @Override
     public Long delete(final KEY key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
