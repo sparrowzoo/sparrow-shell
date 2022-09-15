@@ -18,7 +18,7 @@
 package com.sparrow.facade.kv;
 
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 
 /**
  * Created by harry on 2018/1/8.
@@ -26,15 +26,15 @@ import com.sparrow.constant.cache.KEY;
 public class KeyTest {
     public static void main(String[] args) {
         //module:business.b1.b2.b3:key1:key2.3:key3
-        KEY.Business od=new KEY.Business(SparrowModule.CODE,"OD");
-        KEY.Business codeIdNamePair = new KEY.Business(SparrowModule.CODE, "OD", "NAME", "PAIR");
-        KEY.Business userRegister = new KEY.Business(SparrowModule.USER, "REGISTER","T1");
-        KEY.Business user = new KEY.Business(SparrowModule.USER);
+        Key.Business od=new Key.Business(SparrowModule.CODE,"OD");
+        Key.Business codeIdNamePair = new Key.Business(SparrowModule.CODE, "OD", "NAME", "PAIR");
+        Key.Business userRegister = new Key.Business(SparrowModule.USER, "REGISTER","T1");
+        Key.Business user = new Key.Business(SparrowModule.USER);
 
-        KEY codeIdNamePairKey= new KEY.Builder().business(codeIdNamePair).build();
-        KEY userRegisterKey=new KEY.Builder().business(userRegister).businessId(1, 2).build();
-        KEY userKey=new KEY.Builder().business(userRegister.append("times","validate")).businessId(1, 2).build();
-        KEY odAirline=new KEY.Builder().business(od.append("BJS","CHI","HU")).build();
+        Key codeIdNamePairKey= new Key.Builder().business(codeIdNamePair).build();
+        Key userRegisterKey=new Key.Builder().business(userRegister).businessId(1, 2).build();
+        Key userKey=new Key.Builder().business(userRegister.append("times","validate")).businessId(1, 2).build();
+        Key odAirline=new Key.Builder().business(od.append("BJS","CHI","HU")).build();
         System.out.println("key---");
         System.out.println(codeIdNamePairKey.key());
         System.out.println(userRegisterKey.key());
@@ -51,18 +51,18 @@ public class KeyTest {
         System.out.println(userKey.getModule());
 
         System.out.println("key business---");
-        System.out.println(KEY.parse(codeIdNamePairKey.key()).getBusiness());
-        System.out.println(KEY.parse(userRegisterKey.key()).getBusiness());
-        System.out.println(KEY.parse(userKey.key()).getBusiness());
+        System.out.println(Key.parse(codeIdNamePairKey.key()).getBusiness());
+        System.out.println(Key.parse(userRegisterKey.key()).getBusiness());
+        System.out.println(Key.parse(userKey.key()).getBusiness());
 
         System.out.println("key key---");
-        System.out.println(KEY.parse(codeIdNamePairKey.key()).key());
-        System.out.println(KEY.parse(userRegisterKey.key()).key());
-        System.out.println(KEY.parse(userKey.key()).key());
+        System.out.println(Key.parse(codeIdNamePairKey.key()).key());
+        System.out.println(Key.parse(userRegisterKey.key()).key());
+        System.out.println(Key.parse(userKey.key()).key());
 
         System.out.println("key module---");
-        System.out.println(KEY.parse(codeIdNamePairKey.key()).getModule());
-        System.out.println(KEY.parse(userRegisterKey.key()).getModule());
-        System.out.println(KEY.parse(userKey.key()).getModule());
+        System.out.println(Key.parse(codeIdNamePairKey.key()).getModule());
+        System.out.println(Key.parse(userRegisterKey.key()).getModule());
+        System.out.println(Key.parse(userKey.key()).getModule());
     }
 }

@@ -16,7 +16,7 @@
  */
 package com.sparrow.protocol.enums;
 
-public enum PLATFORM {
+public enum Platform {
 
     Unkonwn(-1, "Unkonwn"),
     IOS(1, "IOS"),
@@ -29,7 +29,7 @@ public enum PLATFORM {
 
     private String desc;
 
-    PLATFORM(int platform, String desc) {
+    Platform(int platform, String desc) {
         this.platform = platform;
         this.desc = desc;
     }
@@ -50,7 +50,7 @@ public enum PLATFORM {
             '}';
     }
 
-    public static PLATFORM getByPlatform(int platform) {
+    public static Platform getByPlatform(int platform) {
         if (platform == IOS.platform) {
             return IOS;
         }

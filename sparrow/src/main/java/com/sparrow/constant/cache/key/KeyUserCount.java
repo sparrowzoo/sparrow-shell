@@ -18,14 +18,14 @@
 package com.sparrow.constant.cache.key;
 
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 
 public class KeyUserCount {
 
     /**
      * 用户count
      */
-    public static final KEY.Business COUNT = new KEY.Business(SparrowModule.COUNT, "User");
+    public static final Key.Business COUNT = new Key.Business(SparrowModule.COUNT, "User");
 
     
     public static final String USER_COUNT_FIELD_PUBLISHED = "PUBLISHED";

@@ -17,11 +17,11 @@
 
 package com.sparrow.rocketmq.spring;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.constant.cache.key.KeyCMS;
 import com.sparrow.mq.MQPublisher;
 import com.sparrow.rocketmq.protocol.event.HelloEvent;
-import com.sparrow.support.latch.DistributedCountDownLatch;
+import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class PublisherTest {
     @Test
     public void publish() {
         HelloEvent helloEvent = new HelloEvent();
-        KEY productKey=new KEY.Builder().business(KeyCMS.CMS_ALL_CRAWL).businessId(1).build();
+        Key productKey=new Key.Builder().business(KeyCMS.CMS_ALL_CRAWL).businessId(1).build();
         helloEvent.setMessage("msg");
         try {
             while (true){

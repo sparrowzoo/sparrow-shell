@@ -17,30 +17,30 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.exception.CacheConnectionException;
 
 import java.util.Set;
 
 public interface CacheSet {
 
-    Long getSize(KEY key) throws CacheConnectionException;
+    Long getSize(Key key) throws CacheConnectionException;
 
-    <T> Long add(KEY key, T value) throws CacheConnectionException;
+    <T> Long add(Key key, T value) throws CacheConnectionException;
 
-    Long add(KEY key, String... value) throws CacheConnectionException;
+    Long add(Key key, String... value) throws CacheConnectionException;
 
-    <T> Integer add(KEY key, Iterable<T> values) throws CacheConnectionException;
+    <T> Integer add(Key key, Iterable<T> values) throws CacheConnectionException;
 
-    <T> Boolean remove(KEY key, T value) throws CacheConnectionException;
+    <T> Boolean remove(Key key, T value) throws CacheConnectionException;
 
-    <T> Boolean exist(KEY key, T value) throws CacheConnectionException;
+    <T> Boolean exist(Key key, T value) throws CacheConnectionException;
 
-    Set<String> list(KEY key) throws CacheConnectionException;
+    Set<String> list(Key key) throws CacheConnectionException;
 
-    <T> Set<T> list(KEY key, Class clazz) throws CacheConnectionException;
+    <T> Set<T> list(Key key, Class clazz) throws CacheConnectionException;
 
-    Set<String> list(KEY key, CacheDataNotFound<Set<String>> hook);
+    Set<String> list(Key key, CacheDataNotFound<Set<String>> hook);
 
-    <T> Set<T> list(KEY key, Class clazz, CacheDataNotFound<Set<T>> hook);
+    <T> Set<T> list(Key key, Class clazz, CacheDataNotFound<Set<T>> hook);
 }

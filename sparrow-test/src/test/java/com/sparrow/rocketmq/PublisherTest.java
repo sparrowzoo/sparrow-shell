@@ -17,20 +17,20 @@
 
 package com.sparrow.rocketmq;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.constant.cache.key.KeyResource;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.mq.MQPublisher;
 import com.sparrow.rocketmq.protocol.event.HelloEvent;
-import com.sparrow.support.latch.DistributedCountDownLatch;
+import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 
 /**
  * Created by harry on 2017/6/14.
  */
 public class PublisherTest {
     public static void main(String[] args) {
-        KEY productKey = new KEY.Builder().business(KeyResource.ID_CODE_PAIR).businessId(2).build();
+        Key productKey = new Key.Builder().business(KeyResource.ID_CODE_PAIR).businessId(2).build();
         Container container = new SparrowContainer();
         container.setContextConfigLocation("/sparrow_rocketmq_producer.xml");
         container.init();

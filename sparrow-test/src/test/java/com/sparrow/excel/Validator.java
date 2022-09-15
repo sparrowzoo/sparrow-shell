@@ -18,7 +18,7 @@
 package com.sparrow.excel;
 
 import com.sparrow.constant.Regex;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.enums.DataType;
 import com.sparrow.excel.exception.TemplateCellValidateException;
@@ -160,31 +160,31 @@ public class Validator {
     public Validator(String line) {
 
         String[] metadataArray = line.split(Symbol.COMMA);
-        if (metadataArray.length < DIGIT.SIX) {
+        if (metadataArray.length < Digit.SIX) {
             throw new RuntimeException("length of fields must be great equal 6");
         }
 
-        if (metadataArray[DIGIT.ONE].contains(Symbol.DOLLAR)) {
-            String[] array = metadataArray[DIGIT.ONE].split("\\$");
-            this.table = array[DIGIT.ZERO];
-            this.dbField = array[DIGIT.ONE];
-            if (array.length > DIGIT.TOW) {
+        if (metadataArray[Digit.ONE].contains(Symbol.DOLLAR)) {
+            String[] array = metadataArray[Digit.ONE].split("\\$");
+            this.table = array[Digit.ZERO];
+            this.dbField = array[Digit.ONE];
+            if (array.length > Digit.TOW) {
                 //contacter$name$2
-                this.recordIndex = Integer.valueOf(array[DIGIT.TOW]);
+                this.recordIndex = Integer.valueOf(array[Digit.TOW]);
             }
         } else {
-            this.dbField = metadataArray[DIGIT.ONE].trim();
+            this.dbField = metadataArray[Digit.ONE].trim();
         }
 
-        this.excelTitle = metadataArray[DIGIT.TOW].trim();
-        this.validate = Boolean.valueOf(metadataArray[DIGIT.THREE]);
-        this.type = metadataArray[DIGIT.FOUR].trim();
-        this.nullable = Boolean.valueOf(metadataArray[DIGIT.FIVE].trim());
+        this.excelTitle = metadataArray[Digit.TOW].trim();
+        this.validate = Boolean.valueOf(metadataArray[Digit.THREE]);
+        this.type = metadataArray[Digit.FOUR].trim();
+        this.nullable = Boolean.valueOf(metadataArray[Digit.FIVE].trim());
 
-        if (metadataArray.length >= DIGIT.SEVEN) {
+        if (metadataArray.length >= Digit.SEVEN) {
             int index = line.indexOf("^");
             if ("OPTION".equalsIgnoreCase(this.type)) {
-                index += DIGIT.ONE;
+                index += Digit.ONE;
             }
             this.regex = line.substring(index);
         }
@@ -236,7 +236,7 @@ public class Validator {
             Map<String, String> map = new HashMap<String, String>();
             for (String option : options) {
                 String[] optionArray = option.split(Symbol.COLON);
-                map.put(optionArray[DIGIT.ZERO].trim(), optionArray[DIGIT.ONE]);
+                map.put(optionArray[Digit.ZERO].trim(), optionArray[Digit.ONE]);
             }
             this.optionMap = map;
         }
@@ -255,9 +255,9 @@ public class Validator {
         Map<String, Validator> validatorMap = new HashMap<String, Validator>();
         List<String> lines = FileUtility.getInstance().readLines(inputStream);
         for (String line : lines) {
-            if (line.trim().length() > DIGIT.ZERO) {
+            if (line.trim().length() > Digit.ZERO) {
                 String[] metadataArray = line.split(Symbol.COMMA);
-                Integer configSheetIndex = Integer.valueOf(metadataArray[DIGIT.ZERO]);
+                Integer configSheetIndex = Integer.valueOf(metadataArray[Digit.ZERO]);
                 if (!sheetIndex.equals(configSheetIndex)) {
                     continue;
                 }

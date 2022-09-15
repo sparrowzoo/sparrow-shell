@@ -19,7 +19,7 @@ package com.sparrow.orm.template.impl;
 
 import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.orm.query.Criteria;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.core.Pair;
 import com.sparrow.orm.*;
 import com.sparrow.orm.query.SearchCriteria;
@@ -142,7 +142,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
         }
 
         if (!StringUtility.isNullOrEmpty(searchCriteria.getPageSize())
-            && searchCriteria.getPageSize() != DIGIT.ALL) {
+            && searchCriteria.getPageSize() != Digit.ALL) {
             selectSql.append(searchCriteria.getLimitClause());
         }
         logger.info(selectSql.toString());

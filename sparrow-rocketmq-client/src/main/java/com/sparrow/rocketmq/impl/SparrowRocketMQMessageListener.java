@@ -17,7 +17,7 @@
 
 package com.sparrow.rocketmq.impl;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.mq.EventHandlerMappingContainer;
 import com.sparrow.mq.MQClient;
 import com.sparrow.mq.MQContainerProvider;
@@ -25,7 +25,7 @@ import com.sparrow.mq.MQEvent;
 import com.sparrow.mq.MQHandler;
 import com.sparrow.mq.MQIdempotent;
 import com.sparrow.rocketmq.MessageConverter;
-import com.sparrow.support.latch.DistributedCountDownLatch;
+import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 
 import java.util.List;
 
@@ -65,11 +65,11 @@ public class SparrowRocketMQMessageListener implements MessageListenerConcurrent
         this.messageConverter = messageConverter;
     }
 
-    protected boolean duplicate(MQEvent event, KEY consumerKey, String keys) {
+    protected boolean duplicate(MQEvent event, Key consumerKey, String keys) {
         return mqIdempotent != null && mqIdempotent.duplicate(keys);
     }
 
-    protected void consumed(MQEvent event, KEY consumerKey, String keys) {
+    protected void consumed(MQEvent event, Key consumerKey, String keys) {
         //must be idempotent
         if (mqIdempotent == null) {
             return;
@@ -103,7 +103,7 @@ public class SparrowRocketMQMessageListener implements MessageListenerConcurrent
                 }
 
                 MQEvent event = messageConverter.fromMessage(message);
-                KEY consumerKey = KEY.parse(message.getProperties().get(MQClient.CONSUMER_KEY));
+                Key consumerKey = Key.parse(message.getProperties().get(MQClient.CONSUMER_KEY));
                 if (this.duplicate(event, consumerKey, message.getKeys())) {
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 }

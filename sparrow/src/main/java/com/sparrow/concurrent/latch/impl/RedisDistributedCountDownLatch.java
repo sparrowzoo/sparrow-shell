@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.redis.impl;
+package com.sparrow.concurrent.latch.impl;
 
 import com.sparrow.cache.CacheClient;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.exception.CacheConnectionException;
-import com.sparrow.support.latch.DistributedCountDownLatch;
+import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class RedisDistributedCountDownLatch implements DistributedCountDownLatch
     }
 
     @Override
-    public void consume(KEY monitoryKey, final String key) {
+    public void consume(Key monitoryKey, final String key) {
         if (monitoryKey == null) {
             throw new UnsupportedOperationException("monitor key is null");
         }
@@ -57,7 +57,7 @@ public class RedisDistributedCountDownLatch implements DistributedCountDownLatch
     }
 
     @Override
-    public void product(KEY productKey, final String key) {
+    public void product(Key productKey, final String key) {
         if (productKey == null) {
             throw new UnsupportedOperationException("product key is null");
         }
@@ -72,7 +72,7 @@ public class RedisDistributedCountDownLatch implements DistributedCountDownLatch
     }
 
     @Override
-    public boolean isFinish(KEY monitorKey) {
+    public boolean isFinish(Key monitorKey) {
         if (StringUtility.isNullOrEmpty(monitorKey)) {
             throw new UnsupportedOperationException("product key is null");
         }
@@ -100,7 +100,7 @@ public class RedisDistributedCountDownLatch implements DistributedCountDownLatch
     }
 
     @Override
-    public boolean monitor(KEY monitorKey, int secondInterval) {
+    public boolean monitor(Key monitorKey, int secondInterval) {
         while (true) {
             if (isFinish(monitorKey)) {
                 return true;
@@ -113,7 +113,7 @@ public class RedisDistributedCountDownLatch implements DistributedCountDownLatch
     }
 
     @Override
-    public boolean monitor(KEY monitorKey) {
+    public boolean monitor(Key monitorKey) {
         return this.monitor(monitorKey, 2);
     }
 }

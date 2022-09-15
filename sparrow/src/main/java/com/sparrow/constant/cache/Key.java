@@ -25,15 +25,15 @@ import java.util.Arrays;
 /**
  * Created by harry on 2018/1/8.
  */
-public class KEY {
+public class Key {
     private String business;
     private Object businessId;
     private String module;
 
-    private KEY() {
+    private Key() {
     }
 
-    private KEY(Builder builder) {
+    private Key(Builder builder) {
         this.business = builder.business.getKey();
         this.module = builder.business.getModule();
         if (builder.businessId != null) {
@@ -47,11 +47,11 @@ public class KEY {
      * @param key
      * @return
      */
-    public static KEY parse(String key) {
+    public static Key parse(String key) {
         if (StringUtility.isNullOrEmpty(key)) {
             return null;
         }
-        KEY k = new KEY();
+        Key k = new Key();
         String[] keyArray = key.split(Symbol.COLON);
         k.module = keyArray[0];
         k.business = keyArray[1];
@@ -144,8 +144,8 @@ public class KEY {
             return this;
         }
 
-        public KEY build() {
-            return new KEY(this);
+        public Key build() {
+            return new Key(this);
         }
     }
 }

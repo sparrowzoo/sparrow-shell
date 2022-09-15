@@ -25,7 +25,7 @@ import com.sparrow.mq.MQEvent;
 import com.sparrow.mq.MQMessageSendException;
 import com.sparrow.mq.MQPublisher;
 import com.sparrow.mq.MQ_CLIENT;
-import com.sparrow.support.latch.DistributedCountDownLatch;
+import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 
 import java.util.Collections;
 import java.util.Properties;

@@ -23,7 +23,7 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.ui.grid.CellAttribute;
 import com.sparrow.mvc.ui.grid.Head;
 import com.sparrow.protocol.POJO;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.support.pager.SparrowPagerResult;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.ConfigUtility;
@@ -45,7 +45,7 @@ public class GridView extends WebControl {
     /**
      * tab缩进数
      */
-    private int indent = DIGIT.THREE;
+    private int indent = Digit.THREE;
     /**
      * title1,2(colSpan)|title2|...
      */
@@ -106,17 +106,17 @@ public class GridView extends WebControl {
         try {
             if (datasource != null) {
                 String indent1 = StringUtility.getIndent(this
-                    .indent() + DIGIT.ONE);
+                    .indent() + Digit.ONE);
                 String indent2 = StringUtility.getIndent(this
-                    .indent() + DIGIT.TOW);
+                    .indent() + Digit.TOW);
                 List<CellAttribute> cellList = CellAttribute.parse(this.getFields());
 
-                if (datasource.size() > DIGIT.ZERO) {
-                    MethodAccessor methodAccessor = ApplicationContext.getContainer().getProxyBean(datasource.get(DIGIT.ZERO).getClass());
-                    for (int recordIndex = DIGIT.ZERO; recordIndex < datasource.size(); recordIndex++) {
+                if (datasource.size() > Digit.ZERO) {
+                    MethodAccessor methodAccessor = ApplicationContext.getContainer().getProxyBean(datasource.get(Digit.ZERO).getClass());
+                    for (int recordIndex = Digit.ZERO; recordIndex < datasource.size(); recordIndex++) {
                         POJO entity = datasource.get(recordIndex);
                         String alternating = this
-                            .isUseAlternatingRowStyle() && (recordIndex % DIGIT.TOW == DIGIT.ZERO) ? " class='pure-table-odd'"
+                            .isUseAlternatingRowStyle() && (recordIndex % Digit.TOW == Digit.ZERO) ? " class='pure-table-odd'"
                             : "";
                         writeHTML.append(indent1);
                         writeHTML.append(String.format("<tr%s>", alternating));
@@ -127,7 +127,7 @@ public class GridView extends WebControl {
                         writeHTML.append("</tr>");
                     }
                 }
-                if (datasource.size() == DIGIT.ZERO && this.isShowEmptyRow()) {
+                if (datasource.size() == Digit.ZERO && this.isShowEmptyRow()) {
                     writeHTML.append("<tr><td>");
                     writeHTML.append(this.getEmptyString());
                     writeHTML.append("<td></tr>");
@@ -192,7 +192,7 @@ public class GridView extends WebControl {
      * @return
      */
     public int getCurrentPageIndex() {
-        int pageIndex = DIGIT.ONE;
+        int pageIndex = Digit.ONE;
         Object currentPageIndex = this.pageContext.getRequest().getParameter(
             "currentPageIndex");
         if (!StringUtility.isNullOrEmpty(currentPageIndex)) {

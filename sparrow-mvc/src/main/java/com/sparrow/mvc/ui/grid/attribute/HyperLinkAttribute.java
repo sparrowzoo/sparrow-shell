@@ -18,7 +18,7 @@
 package com.sparrow.mvc.ui.grid.attribute;
 
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.mvc.ui.grid.BaseAttribute;
 import com.sparrow.utility.ConfigUtility;
 
@@ -33,24 +33,24 @@ public class HyperLinkAttribute extends BaseAttribute {
 
     public HyperLinkAttribute(String[] config) {
         super(config);
-        if (config.length > DIGIT.THREE) {
-            this.url = config[DIGIT.THREE];
+        if (config.length > Digit.THREE) {
+            this.url = config[Digit.THREE];
             if (this.url.contains("frontend_root_path")) {
                 this.url = this.url.replace("frontend_root_path", ConfigUtility.getValue(Config.FRONTEND_ROOT_PATH));
             }
         }
-        if (config.length > DIGIT.FOUR) {
-            this.target = config[DIGIT.FOUR];
+        if (config.length > Digit.FOUR) {
+            this.target = config[Digit.FOUR];
         }
 
-        if (config.length > DIGIT.FIVE) {
-            this.css = config[DIGIT.FIVE];
+        if (config.length > Digit.FIVE) {
+            this.css = config[Digit.FIVE];
         }
-        if (config.length > DIGIT.SIX) {
-            this.textLength = Integer.valueOf(config[DIGIT.SIX]);
+        if (config.length > Digit.SIX) {
+            this.textLength = Integer.valueOf(config[Digit.SIX]);
         }
-        if (config.length > DIGIT.SEVEN) {
-            this.defaultValue = config[DIGIT.SEVEN];
+        if (config.length > Digit.SEVEN) {
+            this.defaultValue = config[Digit.SEVEN];
         }
     }
 

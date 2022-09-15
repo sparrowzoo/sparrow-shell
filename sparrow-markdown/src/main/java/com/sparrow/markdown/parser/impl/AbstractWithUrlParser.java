@@ -16,7 +16,7 @@
  */
 package com.sparrow.markdown.parser.impl;
 
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.mark.MarkEntity;
 import com.sparrow.markdown.parser.MarkParser;
@@ -26,7 +26,7 @@ public abstract class AbstractWithUrlParser extends AbstractWithEndTagParser imp
     public MarkEntity validate(MarkContext markContext) {
         int startIndex = markContext.getCurrentPointer() + this.mark().getStart().length();
         int endMarkIndex = markContext.getContent().indexOf(this.mark().getEnd(), startIndex);
-        if (endMarkIndex == DIGIT.NEGATIVE_ONE) {
+        if (endMarkIndex == Digit.NEGATIVE_ONE) {
             return null;
         }
 

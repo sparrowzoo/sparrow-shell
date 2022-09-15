@@ -18,7 +18,7 @@
 package com.sparrow.mvc.ui.grid;
 
 import com.sparrow.cg.MethodAccessor;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.core.StrategyFactory;
 import com.sparrow.protocol.POJO;
@@ -41,12 +41,12 @@ public class CellAttribute {
      */
     public CellAttribute(String config) {
         String[] array = config.split("\\$");
-        this.fieldAttributeArray = array[DIGIT.ZERO].split("\\+");
-        if (array.length > DIGIT.ONE) {
-            this.width = array[DIGIT.ONE];
+        this.fieldAttributeArray = array[Digit.ZERO].split("\\+");
+        if (array.length > Digit.ONE) {
+            this.width = array[Digit.ONE];
         }
-        if (array.length > DIGIT.TOW) {
-            this.align = array[DIGIT.TOW];
+        if (array.length > Digit.TOW) {
+            this.align = array[Digit.TOW];
         }
     }
 
@@ -65,7 +65,7 @@ public class CellAttribute {
             String[] array = fieldAttribute.split("#");
             try {
                 FieldParser parser = StrategyFactory.getInstance().get(FieldParser.class, array[0].trim().toLowerCase());
-                String[] fieldArray = array[DIGIT.ONE].split(Symbol.AND);
+                String[] fieldArray = array[Digit.ONE].split(Symbol.AND);
                 for (String field : fieldArray) {
                     Object value = methodAccessor.get(entity, field);
                     if (value != null) {

@@ -19,7 +19,7 @@ package com.sparrow.cache.impl.redis.jedis;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheHash;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
@@ -35,12 +35,12 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public Map<String, String> getAll(final KEY key) throws CacheConnectionException {
+    public Map<String, String> getAll(final Key key) throws CacheConnectionException {
         return this.getAll(key, String.class, String.class);
     }
 
     @Override
-    public <K, T> Map<K, T> getAll(final KEY key, final Class keyClazz, final Class clazz, final CacheDataNotFound<Map<K, T>> hook) {
+    public <K, T> Map<K, T> getAll(final Key key, final Class keyClazz, final Class clazz, final CacheDataNotFound<Map<K, T>> hook) {
         try {
             return redisPool.execute(new Executor<Map<K, T>>() {
                 @Override
@@ -87,7 +87,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public <K, T> Map<K, T> getAll(final KEY key, final Class keyClazz, final Class clazz) throws CacheConnectionException {
+    public <K, T> Map<K, T> getAll(final Key key, final Class keyClazz, final Class clazz) throws CacheConnectionException {
         return redisPool.execute(new Executor<Map<K, T>>() {
             @Override
             public Map<K, T> execute(Jedis jedis) throws CacheConnectionException {
@@ -101,7 +101,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public Long getSize(final KEY key) throws CacheConnectionException {
+    public Long getSize(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) throws CacheConnectionException {
@@ -111,7 +111,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public String get(final KEY key, final String field) throws CacheConnectionException {
+    public String get(final Key key, final String field) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
             public String execute(Jedis jedis) throws CacheConnectionException {
@@ -121,7 +121,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public Map<String, String> get(final KEY key, final Collection<String> fieldList) throws CacheConnectionException {
+    public Map<String, String> get(final Key key, final Collection<String> fieldList) throws CacheConnectionException {
         return redisPool.execute(new Executor<Map<String, String>>() {
             @Override
             public Map<String, String> execute(Jedis jedis) throws CacheConnectionException {
@@ -135,7 +135,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public <T> Map<String, T> get(final KEY key, final Collection<String> fieldList, final Class valueType) throws CacheConnectionException {
+    public <T> Map<String, T> get(final Key key, final Collection<String> fieldList, final Class valueType) throws CacheConnectionException {
         return redisPool.execute(new Executor<Map<String, T>>() {
             @Override
             public Map<String, T> execute(Jedis jedis) throws CacheConnectionException {
@@ -150,7 +150,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public <T> T get(final KEY key, final String field, final Class valueType) throws CacheConnectionException {
+    public <T> T get(final Key key, final String field, final Class valueType) throws CacheConnectionException {
         return redisPool.execute(new Executor<T>() {
             @Override
             public T execute(Jedis jedis) throws CacheConnectionException {
@@ -164,7 +164,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public <T> T get(KEY key, String field, Class valueClass, CacheDataNotFound<T> hook) {
+    public <T> T get(Key key, String field, Class valueClass, CacheDataNotFound<T> hook) {
         try {
             return redisPool.execute(jedis -> {
                 String value = jedis.hget(key.key(), field);
@@ -179,7 +179,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public Long put(final KEY key, final String field, final Object value) throws CacheConnectionException {
+    public Long put(final Key key, final String field, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -190,7 +190,7 @@ public class RedisCacheHash extends AbstractCommand implements CacheHash {
     }
 
     @Override
-    public <K, T> Integer put(final KEY key, final Map<K, T> map) throws CacheConnectionException {
+    public <K, T> Integer put(final Key key, final Map<K, T> map) throws CacheConnectionException {
         return redisPool.execute(new Executor<Integer>() {
             @Override
             public Integer execute(Jedis jedis) {

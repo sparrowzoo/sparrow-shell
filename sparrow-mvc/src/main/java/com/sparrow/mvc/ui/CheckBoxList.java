@@ -17,7 +17,7 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.EnumUtility;
 import com.sparrow.utility.StringUtility;
@@ -43,7 +43,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class CheckBoxList extends WebControl {
     private static final long serialVersionUID = -2203780367514791117L;
     private boolean isShowTable = true;
-    private int col = DIGIT.THREE;
+    private int col = Digit.THREE;
     private Object[] selectedValue;
     /**
      * com.sparrow.enums.Status:10:true enums:maxCount:isShowName
@@ -54,7 +54,7 @@ public class CheckBoxList extends WebControl {
         this.valueText = valueText;
     }
 
-    private int indent = DIGIT.ZERO;
+    private int indent = Digit.ZERO;
 
     private String valueText;
 
@@ -85,17 +85,17 @@ public class CheckBoxList extends WebControl {
                 options = this.valueText.split(Symbol.DOT);
                 for (String keyValue : options) {
                     option = keyValue.split(Symbol.COLON);
-                    valueTextList.put(option[DIGIT.ZERO], option[DIGIT.ONE]);
+                    valueTextList.put(option[Digit.ZERO], option[Digit.ONE]);
                 }
             }
 
-            if (valueTextList.size() == DIGIT.ZERO
+            if (valueTextList.size() == Digit.ZERO
                 && !StringUtility.isNullOrEmpty(this.getEnums())) {
                 valueTextList = EnumUtility.getMap(this.getEnums());
             }
         }
         if (!Boolean.FALSE.toString().equalsIgnoreCase(this.getVisible()) && valueTextList != null
-            && valueTextList.size() != DIGIT.ZERO) {
+            && valueTextList.size() != Digit.ZERO) {
             if (this.isShowTable) {
                 drawTable(writeHTML);
             }
@@ -143,10 +143,10 @@ public class CheckBoxList extends WebControl {
             strChecked = checked(key);
 
             if (this.isShowTable) {
-                writeHTML.append(StringUtility.getIndent(this.getIndent() + DIGIT.TOW) + "<td>");
+                writeHTML.append(StringUtility.getIndent(this.getIndent() + Digit.TOW) + "<td>");
             }
             writeHTML
-                .append(StringUtility.getIndent(this.getIndent() + DIGIT.THREE)
+                .append(StringUtility.getIndent(this.getIndent() + Digit.THREE)
                     + String.format(
                     "<input id=\"%7$s%1$s%2$s\"  type=\"checkbox\" %3$s value=\"%4$s\"  %6$s /><label for=\"%7$s%1$s%2$s\" >%5$s</label>",
                     i,
@@ -171,7 +171,7 @@ public class CheckBoxList extends WebControl {
         }
 
         //已选值为all
-        if (String.valueOf(DIGIT.ALL).equals(this.selectedValue[0].toString().trim())) {
+        if (String.valueOf(Digit.ALL).equals(this.selectedValue[0].toString().trim())) {
             return "checked=true";
         }
         //当前选项在已选列表中
@@ -216,9 +216,9 @@ public class CheckBoxList extends WebControl {
             return;
         }
         if (selectedValue.getClass() == Number.class
-            && Integer.valueOf(selectedValue.toString()) == DIGIT.ALL) {
+            && Integer.valueOf(selectedValue.toString()) == Digit.ALL) {
             this.selectedValue = new String[1];
-            this.selectedValue[0] = String.valueOf(DIGIT.ALL);
+            this.selectedValue[0] = String.valueOf(Digit.ALL);
             return;
         }
         this.selectedValue = (Object[]) selectedValue;

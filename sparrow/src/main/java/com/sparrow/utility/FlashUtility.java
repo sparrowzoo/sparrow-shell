@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.sparrow.constant.*;
 import com.sparrow.constant.File.SIZE;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +78,7 @@ public class FlashUtility {
                 result = HttpClient.get(flashAPI);
                 Matcher sohuPicMatch = this.sohuPic.matcher(result);
                 if (sohuPicMatch.find()) {
-                    flashThumbnailUrl = sohuPicMatch.group(DIGIT.ONE);
+                    flashThumbnailUrl = sohuPicMatch.group(Digit.ONE);
                 }
             }
 

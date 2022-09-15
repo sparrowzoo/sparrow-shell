@@ -17,7 +17,7 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.protocol.constant.magic.LETTER;
+import com.sparrow.protocol.constant.magic.Letter;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.StringUtility;
 
@@ -28,7 +28,7 @@ public class HyperLink extends AbstractJWebBodyControl {
 
     @Override
     public String setTagNameAndGetTagAttributes() {
-        super.setTagName(String.valueOf(LETTER.A_LOWER));
+        super.setTagName(String.valueOf(Letter.A_LOWER));
         return this.getHref() +
             this.getTarget();
     }

@@ -40,7 +40,7 @@
 
     <bean name="helloEvent" class="com.sparrow.rocketmq.protocol.event.HelloEvent" scope="prototype"/>
 
-    <bean name="distributedCountDownLatch" class="com.sparrow.support.redis.impl.RedisDistributedCountDownLatch">
+    <bean name="distributedCountDownLatch" class="com.sparrow.concurrent.latch.impl.RedisDistributedCountDownLatch">
         <property name="cacheClient" ref="cacheClient"/>
     </bean>
 

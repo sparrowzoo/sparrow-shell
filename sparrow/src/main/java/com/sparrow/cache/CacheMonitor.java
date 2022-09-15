@@ -17,12 +17,12 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 
 public interface CacheMonitor {
-    boolean before(Long startTime, KEY key);
+    boolean before(Long startTime, Key key);
 
-    void monitor(Long startTime, Long endTime, KEY key);
+    void monitor(Long startTime, Long endTime, Key key);
 
-    void breakdown(KEY key);
+    void breakdown(Key key);
 }

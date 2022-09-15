@@ -18,7 +18,7 @@
 package com.sparrow.redis;
 
 import com.sparrow.cache.CacheClient;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.exception.CacheConnectionException;
@@ -45,8 +45,8 @@ public class RedisHashSetTest {
 
 
         //相同模块下会存在多个业务
-        KEY.Business od = new KEY.Business(OD, "POOL");
-        KEY key = new KEY.Builder().business(od).businessId("BJS", "CHI", "HU","HASH").build();
+        Key.Business od = new Key.Business(OD, "POOL");
+        Key key = new Key.Builder().business(od).businessId("BJS", "CHI", "HU","HASH").build();
 
         container.setConfigLocation("/redis_config.xml");
         container.init();

@@ -17,7 +17,7 @@
 
 package com.sparrow.protocol.constant.magic;
 
-public class DIGIT {
+public class Digit {
     public static final int ALL = -1;
     public static final int NEGATIVE_ONE = -1;
     public static final int ZERO = 0;

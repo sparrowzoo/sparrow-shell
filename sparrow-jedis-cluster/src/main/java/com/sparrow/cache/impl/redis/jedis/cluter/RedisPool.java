@@ -18,7 +18,7 @@
 package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheMonitor;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
@@ -65,7 +65,7 @@ public class RedisPool implements ContainerAware {
     public RedisPool() {
     }
 
-    <T> T execute(Executor<T> executor, KEY key) throws CacheConnectionException {
+    <T> T execute(Executor<T> executor, Key key) throws CacheConnectionException {
         try {
             Long startTime = System.currentTimeMillis();
             if (this.cacheMonitor != null) {

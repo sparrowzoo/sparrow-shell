@@ -19,7 +19,7 @@ package com.sparrow.redis;
 
 import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.CacheDataNotFound;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.exception.CacheConnectionException;
@@ -49,8 +49,8 @@ public class RedisOrderSetTest {
 
 
         //相同模块下会存在多个业务
-        KEY.Business od = new KEY.Business(OD, "POOL");
-        KEY key = new KEY.Builder().business(od).businessId("BJS", "CHI", "HU","ORDER_SET").build();
+        Key.Business od = new Key.Business(OD, "POOL");
+        Key key = new Key.Builder().business(od).businessId("BJS", "CHI", "HU","ORDER_SET").build();
 
         container.setConfigLocation("/redis_config.xml");
         container.init();
@@ -78,7 +78,7 @@ public class RedisOrderSetTest {
         client.key().delete(key);
         Map<String,Double> fromdb = client.sortedSet().getAllWithScore(key,String.class, new CacheDataNotFound<Map<String,Double>>() {
             @Override
-            public Map<String,Double> read(KEY key) {
+            public Map<String,Double> read(Key key) {
                 Map<String,Double> set = new TreeMap<String, Double>();
                 set.put("field",11111d);
                 set.put("field2",2222d);

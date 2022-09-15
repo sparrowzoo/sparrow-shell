@@ -17,7 +17,7 @@
 
 package com.sparrow.protocol.constant.magic;
 
-public class LETTER {
+public class Letter {
     public static final char A = 'A';
     public static final char B = 'B';
     public static final char C = 'C';

@@ -18,7 +18,7 @@ package com.sparrow.redis;
 
 import com.sparrow.cache.CacheClient;
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.exception.CacheConnectionException;
@@ -31,9 +31,9 @@ public class RedisKeyTest {
 
     @Test
     public void readLoc() throws CacheConnectionException {
-        KEY.Business business=new KEY.Business(SparrowModule.CODE,"KEY");
+        Key.Business business=new Key.Business(SparrowModule.CODE,"KEY");
 
-        KEY key=new KEY.Builder().business(business).build();
+        Key key=new Key.Builder().business(business).build();
 
         Container container = new SparrowContainer();
         container.setConfigLocation("/redis_config.xml");

@@ -17,7 +17,7 @@
 
 package com.sparrow.concurrent;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.utility.DateTimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public abstract class AbstractLock {
         return nanoTime;
     }
 
-    protected void monitor(KEY key, String status) {
+    protected void monitor(Key key, String status) {
         logger.info("LOCK-MONITOR KEY={},STATUS={}", key.key(), status);
     }
 
@@ -54,11 +54,11 @@ public abstract class AbstractLock {
         this.uniques.remove();
     }
 
-    protected abstract Boolean tryAcquire(KEY key, long expireMillis);
+    protected abstract Boolean tryAcquire(Key key, long expireMillis);
 
-    public abstract Boolean release(KEY key);
+    public abstract Boolean release(Key key);
 
-    public boolean acquire(KEY key, int expireMillis, int retryMillis) {
+    public boolean acquire(Key key, int expireMillis, int retryMillis) {
         Boolean lock = this.tryAcquire(key, expireMillis);
         if (retryMillis <= 0) {
             this.monitor(key, lock ? SUCCESS : FAIL);

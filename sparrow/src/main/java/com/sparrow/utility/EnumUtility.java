@@ -17,7 +17,7 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.util.LinkedHashMap;
@@ -65,10 +65,10 @@ public class EnumUtility {
                 className = "com.sparrow.protocol.enums." + className;
             }
             e = Class.forName(className);
-            if (classArray.length >= DIGIT.TOW) {
+            if (classArray.length >= Digit.TOW) {
                 maxCount = Integer.valueOf(classArray[1]);
             }
-            if (classArray.length == DIGIT.THREE) {
+            if (classArray.length == Digit.THREE) {
                 nameAsKey = true;
             }
         } catch (ClassNotFoundException ignore) {

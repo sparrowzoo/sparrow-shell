@@ -19,7 +19,7 @@ package com.sparrow.redis;
 
 import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.CacheDataNotFound;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.exception.CacheConnectionException;
@@ -49,8 +49,8 @@ public class RedisListTest {
 
 
         //相同模块下会存在多个业务
-        KEY.Business od = new KEY.Business(OD, "POOL");
-        KEY key = new KEY.Builder().business(od).businessId("BJS", "CHI", "HU","LIST").build();
+        Key.Business od = new Key.Business(OD, "POOL");
+        Key key = new Key.Builder().business(od).businessId("BJS", "CHI", "HU","LIST").build();
 
         container.setConfigLocation("/redis_config.xml");
         container.init();
@@ -71,7 +71,7 @@ public class RedisListTest {
         client.key().delete(key);
         List<String> fromdb = client.list().list(key, new CacheDataNotFound<List<String>>() {
             @Override
-            public List<String> read(KEY key) {
+            public List<String> read(Key key) {
                 List<String> set = new ArrayList<String>();
                 set.add("from db");
                 return set;

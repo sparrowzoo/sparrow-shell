@@ -18,7 +18,7 @@
 package com.sparrow.mvc.ui;
 
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
@@ -31,7 +31,7 @@ public class Frame extends TagSupport {
     private String id;
     private String name;
     private String src;
-    private int frameborder = DIGIT.ZERO;
+    private int frameborder = Digit.ZERO;
     private String scrolling = "no";
     private String cssText = Symbol.EMPTY;
     private String cssClass = Symbol.EMPTY;

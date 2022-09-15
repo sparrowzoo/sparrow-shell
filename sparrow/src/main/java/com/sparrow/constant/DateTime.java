@@ -18,7 +18,7 @@
 package com.sparrow.constant;
 
 import com.sparrow.enums.DateTimeUnit;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -112,12 +112,12 @@ public class DateTime {
         BEFORE_FORMAT.put("y", 0);
 
         //0表示1月
-        DEFAULT_FIRST_VALUE.put(DateTimeUnit.MONTH, DIGIT.ZERO);
-        DEFAULT_FIRST_VALUE.put(DateTimeUnit.DAY, DIGIT.ONE);
-        DEFAULT_FIRST_VALUE.put(DateTimeUnit.HOUR, DIGIT.ZERO);
-        DEFAULT_FIRST_VALUE.put(DateTimeUnit.MINUTE, DIGIT.ZERO);
-        DEFAULT_FIRST_VALUE.put(DateTimeUnit.SECOND, DIGIT.ZERO);
-        DEFAULT_FIRST_VALUE.put(DateTimeUnit.MILLISECOND, DIGIT.ZERO);
+        DEFAULT_FIRST_VALUE.put(DateTimeUnit.MONTH, Digit.ZERO);
+        DEFAULT_FIRST_VALUE.put(DateTimeUnit.DAY, Digit.ONE);
+        DEFAULT_FIRST_VALUE.put(DateTimeUnit.HOUR, Digit.ZERO);
+        DEFAULT_FIRST_VALUE.put(DateTimeUnit.MINUTE, Digit.ZERO);
+        DEFAULT_FIRST_VALUE.put(DateTimeUnit.SECOND, Digit.ZERO);
+        DEFAULT_FIRST_VALUE.put(DateTimeUnit.MILLISECOND, Digit.ZERO);
 
         DATE_TIME_UNIT_CALENDER_CONVERTER.put(DateTimeUnit.YEAR, Calendar.YEAR);
         DATE_TIME_UNIT_CALENDER_CONVERTER.put(DateTimeUnit.MONTH, Calendar.MONTH);

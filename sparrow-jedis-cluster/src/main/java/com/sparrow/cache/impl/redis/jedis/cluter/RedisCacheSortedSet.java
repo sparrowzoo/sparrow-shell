@@ -19,7 +19,7 @@ package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheSortedSet;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.CacheConnectionException;
 import java.util.LinkedHashMap;
@@ -34,7 +34,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public Long getSize(final KEY key) throws CacheConnectionException {
+    public Long getSize(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -44,7 +44,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public <T> Long add(final KEY key, final T value, final double score) throws CacheConnectionException {
+    public <T> Long add(final Key key, final T value, final double score) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -55,7 +55,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public <T> Long remove(final KEY key, final T value) throws CacheConnectionException {
+    public <T> Long remove(final Key key, final T value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -66,7 +66,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public Long remove(final KEY key, final Long from, final Long to) throws CacheConnectionException {
+    public Long remove(final Key key, final Long from, final Long to) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -76,7 +76,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public <T> Double getScore(final KEY key, final T value) throws CacheConnectionException {
+    public <T> Double getScore(final Key key, final T value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Double>() {
             @Override
             public Double execute(JedisCluster jedis) {
@@ -87,7 +87,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public <T> Long getRank(final KEY key, final T value) throws CacheConnectionException {
+    public <T> Long getRank(final Key key, final T value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -97,7 +97,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public Map<String, Double> getAllWithScore(final KEY key) throws CacheConnectionException {
+    public Map<String, Double> getAllWithScore(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Map<String, Double>>() {
             @Override
             public Map<String, Double> execute(JedisCluster jedis) {
@@ -112,7 +112,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public <T> Integer putAllWithScore(final KEY key,
+    public <T> Integer putAllWithScore(final Key key,
         final Map<T, Double> keyScoreMap) throws CacheConnectionException {
         return redisPool.execute(new Executor<Integer>() {
             @Override
@@ -129,7 +129,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
     }
 
     @Override
-    public <T> Map<T, Double> getAllWithScore(final KEY key, final Class keyClazz,
+    public <T> Map<T, Double> getAllWithScore(final Key key, final Class keyClazz,
         final CacheDataNotFound<Map<T, Double>> hook) {
         try {
             return redisPool.execute(new Executor<Map<T, Double>>() {
