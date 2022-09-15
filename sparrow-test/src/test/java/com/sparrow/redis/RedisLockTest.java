@@ -17,14 +17,13 @@
 
 package com.sparrow.redis;
 
-import com.sparrow.cache.RedisLock;
+import com.sparrow.concurrent.RedisLock;
 import com.sparrow.constant.DateTime;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.ModuleSupport;
 import com.sparrow.utility.DateTimeUtility;
-import java.util.Random;
 
 public class RedisLockTest {
     public static void main(String[] args) throws InterruptedException {
@@ -44,8 +43,8 @@ public class RedisLockTest {
             }
         };
         //相同模块下会存在多个业务
-        KEY.Business od = new KEY.Business(lock, "lock");
-        KEY key = new KEY.Builder().business(od).businessId(1000000).build();
+        Key.Business od = new Key.Business(lock, "lock");
+        Key key = new Key.Builder().business(od).businessId(1000000).build();
         RedisLock redisLock = ApplicationContext.getContainer().getBean("redisLock");
 
 //        boolean mainLock = redisLock.acquire(key, 10, 64);

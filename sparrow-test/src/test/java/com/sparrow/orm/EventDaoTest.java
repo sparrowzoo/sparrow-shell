@@ -6,7 +6,7 @@ import com.sparrow.orm.dao.impl.EventDAOImpl;
 import com.sparrow.orm.po.Event;
 import com.sparrow.orm.query.Criteria;
 import com.sparrow.orm.query.SearchCriteria;
-import com.sparrow.protocol.enums.PLATFORM;
+import com.sparrow.protocol.enums.Platform;
 import org.junit.Test;
 
 /**
@@ -34,7 +34,7 @@ public class EventDaoTest {
         event.setDevice("device id");
         event.setDeviceModel("device-model");
         event.setResumeTime(System.currentTimeMillis());
-        event.setPlatform(PLATFORM.PC);
+        event.setPlatform(Platform.PC);
         event.setTimes(1);
         event.setIdfa("idfa");
         event.setImei("imei");

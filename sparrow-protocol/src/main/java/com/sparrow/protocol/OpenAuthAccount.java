@@ -16,7 +16,7 @@
  */
 package com.sparrow.protocol;
 
-import com.sparrow.protocol.enums.PLATFORM;
+import com.sparrow.protocol.enums.Platform;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ public class OpenAuthAccount implements Serializable {
     /**
      * 接入类型 pc app
      */
-    private PLATFORM platform;
+    private Platform platform;
     /**
      * 应用名称 网站名称
      */
@@ -92,7 +92,7 @@ public class OpenAuthAccount implements Serializable {
 
     public OpenAuthAccount(String name,
         String openPlatform,
-        PLATFORM platform,
+        Platform platform,
         String appKey,
         String appSecret,
         String callBackUrl,
@@ -112,7 +112,7 @@ public class OpenAuthAccount implements Serializable {
         this.bindStatus = bindStatus;
     }
 
-    public void setPlatform(PLATFORM platform) {
+    public void setPlatform(Platform platform) {
         this.platform = platform;
     }
 
@@ -124,7 +124,7 @@ public class OpenAuthAccount implements Serializable {
         this.name = name;
     }
 
-    public PLATFORM getPlatform() {
+    public Platform getPlatform() {
         return platform;
     }
 

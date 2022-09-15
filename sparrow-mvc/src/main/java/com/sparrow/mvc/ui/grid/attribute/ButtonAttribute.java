@@ -18,7 +18,7 @@
 package com.sparrow.mvc.ui.grid.attribute;
 
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.mvc.ui.grid.BaseAttribute;
 import com.sparrow.utility.ConfigUtility;
 
@@ -32,17 +32,17 @@ public class ButtonAttribute extends BaseAttribute {
         super(config);
         this.defaultValue = "";
         this.css = "button";
-        if (config.length > DIGIT.THREE) {
-            this.click = config[DIGIT.THREE];
+        if (config.length > Digit.THREE) {
+            this.click = config[Digit.THREE];
             if (this.click.contains("frontend_root_path")) {
                 this.click = this.click.replace("frontend_root_path", ConfigUtility.getValue(Config.FRONTEND_ROOT_PATH));
             }
         }
-        if (config.length > DIGIT.FOUR) {
-            this.css = config[DIGIT.FOUR];
+        if (config.length > Digit.FOUR) {
+            this.css = config[Digit.FOUR];
         }
-        if (config.length > DIGIT.FIVE) {
-            this.defaultValue = config[DIGIT.FIVE];
+        if (config.length > Digit.FIVE) {
+            this.defaultValue = config[Digit.FIVE];
         }
     }
 

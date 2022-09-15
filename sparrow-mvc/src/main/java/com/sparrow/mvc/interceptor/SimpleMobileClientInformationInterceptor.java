@@ -19,7 +19,7 @@ package com.sparrow.mvc.interceptor;
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.constant.ClientInformation;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.protocol.enums.PLATFORM;
+import com.sparrow.protocol.enums.Platform;
 import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.utility.ConfigUtility;
@@ -93,7 +93,7 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
         logger.info("device type {},browser type {}", os.getDeviceType(), browser.getBrowserType());
         if (os.getDeviceType().equals(DeviceType.COMPUTER) || BrowserType.MOBILE_BROWSER.equals(browser.getBrowserType())) {
             clientInformation.setOs(os.getGroup().getName());
-            clientInformation.setPlatform(PLATFORM.PC);
+            clientInformation.setPlatform(Platform.PC);
             clientInformation.setDevice(browser.getName());
             clientInformation.setDeviceId(clientInformation.getIp());
         }

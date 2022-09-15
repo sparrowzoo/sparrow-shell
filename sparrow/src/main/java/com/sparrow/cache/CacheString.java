@@ -17,38 +17,38 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.exception.CacheConnectionException;
 
 public interface CacheString {
 
-    Boolean setIfNotExistWithMills(KEY key, Object value,long expireMills) throws CacheConnectionException;
+    Boolean setIfNotExistWithMills(Key key, Object value,long expireMills) throws CacheConnectionException;
 
-    String set(KEY key, Object value) throws CacheConnectionException;
+    String set(Key key, Object value) throws CacheConnectionException;
 
-    String getSet(KEY key, Object value) throws CacheConnectionException;
+    String getSet(Key key, Object value) throws CacheConnectionException;
 
-    String get(KEY key) throws CacheConnectionException;
+    String get(Key key) throws CacheConnectionException;
 
-    String get(KEY key, CacheDataNotFound<String> hook);
+    String get(Key key, CacheDataNotFound<String> hook);
 
-    <T> T get(KEY key, Class clazz, CacheDataNotFound<T> hook);
+    <T> T get(Key key, Class clazz, CacheDataNotFound<T> hook);
 
-    <T> T get(KEY key, Class clazz) throws CacheConnectionException;
+    <T> T get(Key key, Class clazz) throws CacheConnectionException;
 
-    Long append(KEY key, Object value) throws CacheConnectionException;
+    Long append(Key key, Object value) throws CacheConnectionException;
 
-    Long decrease(KEY key) throws CacheConnectionException;
+    Long decrease(Key key) throws CacheConnectionException;
 
-    Long decrease(KEY key, Long count) throws CacheConnectionException;
+    Long decrease(Key key, Long count) throws CacheConnectionException;
 
-    Long increase(KEY key, Long count) throws CacheConnectionException;
+    Long increase(Key key, Long count) throws CacheConnectionException;
 
-    Long increase(KEY key) throws CacheConnectionException;
+    Long increase(Key key) throws CacheConnectionException;
 
-    boolean bit(KEY key, Integer offset) throws CacheConnectionException;
+    boolean bit(Key key, Integer offset) throws CacheConnectionException;
 
-    String setExpire(KEY key, Integer seconds, Object value) throws CacheConnectionException;
+    String setExpire(Key key, Integer seconds, Object value) throws CacheConnectionException;
 
-    Boolean setIfNotExist(KEY key, Object value) throws CacheConnectionException;
+    Boolean setIfNotExist(Key key, Object value) throws CacheConnectionException;
 }

@@ -19,7 +19,7 @@ package com.sparrow.redis;
 
 import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.CacheDataNotFound;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.exception.CacheConnectionException;
@@ -46,20 +46,20 @@ public class RedisStringTest {
         };
 
         //相同模块下会存在多个业务
-        KEY.Business od = new KEY.Business(OD, "POOL");
+        Key.Business od = new Key.Business(OD, "POOL");
         //container.setContextConfigLocation("/redis_config.xml");
 
         container.init();
         client = container.getBean("cacheClient");
         //相同业务下存在多个KEY
-        KEY key = new KEY.Builder().business(od).businessId("BJS", "CHI", "HU").build();
+        Key key = new Key.Builder().business(od).businessId("BJS", "CHI", "HU").build();
 
         client.string().set(key, "test");
         System.out.println(client.string().get(key));
         client.key().delete(key);
         String value = client.string().get(key, new CacheDataNotFound<String>() {
             @Override
-            public String read(KEY key) {
+            public String read(Key key) {
                 return "from db";
             }
         });
@@ -94,7 +94,7 @@ public class RedisStringTest {
         client.string().set(key, new RedisEntity(1, "ZHANGSAN"));
         System.out.println(client.string().get(key));
 
-        KEY k2 = KEY.parse("OD.POOL:BJS.CHI.HU");
+        Key k2 = Key.parse("OD.POOL:BJS.CHI.HU");
         System.out.println("key:" + k2.key() + ",module:" + k2.getModule() + " business:" + k2.getBusiness());
     }
 }

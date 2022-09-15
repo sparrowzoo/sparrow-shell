@@ -36,7 +36,7 @@ import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.LoginDialog;
@@ -288,7 +288,7 @@ public class DispatcherFilter implements Filter {
                 ConfigKeyLanguage.WEBSITE_NAME);
             if (!configWebsiteName.equals(currentWebsiteName)) {
                 cookieUtility.set(response, ConfigKeyLanguage.WEBSITE_NAME,
-                    configWebsiteName, DIGIT.ALL);
+                    configWebsiteName, Digit.ALL);
             }
         }
         if (request.getQueryString() != null) {

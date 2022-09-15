@@ -18,13 +18,13 @@
 package com.sparrow.redis;
 
 import com.sparrow.cache.CacheMonitor;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import javax.inject.Named;
 
 @Named("cacheMonitor")
 public class SparrowCacheMonitor implements CacheMonitor {
     @Override
-    public boolean before(Long startTime, KEY key) {
+    public boolean before(Long startTime, Key key) {
         key.getBusiness();
         key.getModule();
 
@@ -34,13 +34,13 @@ public class SparrowCacheMonitor implements CacheMonitor {
     }
 
     @Override
-    public void monitor(Long startTime, Long endTime, KEY key) {
+    public void monitor(Long startTime, Long endTime, Key key) {
         //对某业务和模块进行监控埋点
         //System.out.println("module-"+key.getModule()+" business.type-"+key.getBusiness()+" key-"+key.key()+" start.time-"+startTime+" end.time-"+endTime);
     }
 
     @Override
-    public void breakdown(KEY key) {
+    public void breakdown(Key key) {
         //某业务和模块的单位时间内的击穿次数
     }
 }

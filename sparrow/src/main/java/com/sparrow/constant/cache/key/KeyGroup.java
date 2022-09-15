@@ -18,11 +18,11 @@
 package com.sparrow.constant.cache.key;
 
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 
 public class KeyGroup {
     /**
      * 组的级别
      */
-    public static final KEY.Business LEVEL = new KEY.Business(SparrowModule.GROUP, "LEVEL");
+    public static final Key.Business LEVEL = new Key.Business(SparrowModule.GROUP, "LEVEL");
 }

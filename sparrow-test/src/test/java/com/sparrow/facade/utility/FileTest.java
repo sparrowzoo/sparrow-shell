@@ -16,7 +16,7 @@
  */
 package com.sparrow.facade.utility;
 
-import com.sparrow.support.file.FileNameProperty;
+import com.sparrow.io.file.FileNameProperty;
 import com.sparrow.utility.FileUtility;
 import org.junit.Test;
 

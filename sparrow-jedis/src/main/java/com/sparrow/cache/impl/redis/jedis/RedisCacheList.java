@@ -19,7 +19,7 @@ package com.sparrow.cache.impl.redis.jedis;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheList;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
@@ -36,7 +36,7 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
     }
 
     @Override
-    public Long getSize(final KEY key) throws CacheConnectionException {
+    public Long getSize(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -46,7 +46,7 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
     }
 
     @Override
-    public <T> Long add(final KEY key, final T value) throws CacheConnectionException {
+    public <T> Long add(final Key key, final T value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -57,7 +57,7 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
     }
 
     @Override
-    public Long add(final KEY key, final String... values) throws CacheConnectionException {
+    public Long add(final Key key, final String... values) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -67,7 +67,7 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
     }
 
     @Override
-    public <T> Integer add(final KEY key, final Iterable<T> values) throws CacheConnectionException {
+    public <T> Integer add(final Key key, final Iterable<T> values) throws CacheConnectionException {
         return redisPool.execute(new Executor<Integer>() {
             @Override
             public Integer execute(Jedis jedis) {
@@ -79,7 +79,7 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
     }
 
     @Override
-    public <T> Long remove(final KEY key, final T value) throws CacheConnectionException {
+    public <T> Long remove(final Key key, final T value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -90,12 +90,12 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
     }
 
     @Override
-    public List<String> list(final KEY key) throws CacheConnectionException {
+    public List<String> list(final Key key) throws CacheConnectionException {
         return this.list(key, String.class);
     }
 
     @Override
-    public <T> List<T> list(final KEY key, final Class clazz) throws CacheConnectionException {
+    public <T> List<T> list(final Key key, final Class clazz) throws CacheConnectionException {
         return redisPool.execute(new Executor<List<T>>() {
             @Override
             public List<T> execute(Jedis jedis) throws CacheConnectionException {
@@ -111,12 +111,12 @@ public class RedisCacheList extends AbstractCommand implements CacheList {
     }
 
     @Override
-    public List<String> list(final KEY key, CacheDataNotFound<List<String>> hook) {
+    public List<String> list(final Key key, CacheDataNotFound<List<String>> hook) {
         return this.list(key, String.class, hook);
     }
 
     @Override
-    public <T> List<T> list(final KEY key, final Class clazz, final CacheDataNotFound<List<T>> hook) {
+    public <T> List<T> list(final Key key, final Class clazz, final CacheDataNotFound<List<T>> hook) {
         try {
             return redisPool.execute(new Executor<List<T>>() {
                 @Override

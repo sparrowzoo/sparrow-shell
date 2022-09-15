@@ -18,8 +18,8 @@
 package com.sparrow.constant.cache.key;
 
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 
 public class KeyLocation {
-    public static final KEY.Business LOCATION_ID_CODE_PAIR = new KEY.Business(SparrowModule.LOCATION, "ID", "CODE", "PAIR");
+    public static final Key.Business LOCATION_ID_CODE_PAIR = new Key.Business(SparrowModule.LOCATION, "ID", "CODE", "PAIR");
 }

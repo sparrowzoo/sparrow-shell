@@ -17,7 +17,7 @@
 
 package com.sparrow.protocol;
 
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 public class Size implements POJO {
@@ -51,7 +51,7 @@ public class Size implements POJO {
     }
 
     public int getHeight() {
-        return Symbol.STAR.equals(height) ? DIGIT.ALL : Integer.valueOf(this.height);
+        return Symbol.STAR.equals(height) ? Digit.ALL : Integer.valueOf(this.height);
     }
 
     @Override

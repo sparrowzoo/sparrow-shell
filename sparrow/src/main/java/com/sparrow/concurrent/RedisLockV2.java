@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache;
+package com.sparrow.concurrent;
 
-import com.sparrow.concurrent.AbstractLock;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.cache.CacheClient;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
 import java.util.concurrent.locks.ReentrantLock;
@@ -44,7 +44,7 @@ public class RedisLockV2 extends AbstractLock {
      * @return
      */
     @Override
-    protected Boolean tryAcquire(KEY key, long expireMillis) {
+    protected Boolean tryAcquire(Key key, long expireMillis) {
         //系统时间+设置的过期时间
         long unique = this.setGetUnique();
         String expiresValue = unique + "";
@@ -72,7 +72,7 @@ public class RedisLockV2 extends AbstractLock {
         }
     }
 
-    public Boolean release(KEY key) {
+    public Boolean release(Key key) {
         try {
             String value = cacheClient.string().get(key);
             if (StringUtility.isNullOrEmpty(value)) {

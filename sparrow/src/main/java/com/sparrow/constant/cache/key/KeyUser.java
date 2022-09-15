@@ -18,7 +18,7 @@
 package com.sparrow.constant.cache.key;
 
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.enums.DateTimeUnit;
 import com.sparrow.utility.LockConfig;
 import java.util.HashMap;
@@ -28,64 +28,64 @@ public class KeyUser {
     /**
      * user profile
      */
-    public static final KEY.Business USER_SIMPLE_INFO = new KEY.Business(SparrowModule.USER, "ENTITY", "User");
+    public static final Key.Business USER_SIMPLE_INFO = new Key.Business(SparrowModule.USER, "ENTITY", "User");
     /**
      * 用户权限码
      */
-    public static final KEY.Business PERMISSION = new KEY.Business(SparrowModule.USER, "PERMISSION");
+    public static final Key.Business PERMISSION = new Key.Business(SparrowModule.USER, "PERMISSION");
 
     /**
      * 用户权限码
      */
-    public static final KEY.Business BACKEND_PERMISSION = new KEY.Business(SparrowModule.USER, "BACKEND_PERMISSION");
+    public static final Key.Business BACKEND_PERMISSION = new Key.Business(SparrowModule.USER, "BACKEND_PERMISSION");
 
     /**
      * attention list
      */
-    public static final KEY.Business LIST_ATTENTION = new KEY.Business(SparrowModule.USER, "LIST", "ATTENTION");
+    public static final Key.Business LIST_ATTENTION = new Key.Business(SparrowModule.USER, "LIST", "ATTENTION");
     /**
      * fans list
      */
-    public static final KEY.Business LIST_FANS = new KEY.Business(SparrowModule.USER, "LIST", "FANS");
+    public static final Key.Business LIST_FANS = new Key.Business(SparrowModule.USER, "LIST", "FANS");
     /**
      * user thread count or comment count limit lock
      */
-    public static final KEY.Business LOCK_PUBLISH = new KEY.Business(SparrowModule.USER, "LOCK", "PUBLISH");
+    public static final Key.Business LOCK_PUBLISH = new Key.Business(SparrowModule.USER, "LOCK", "PUBLISH");
     /**
      * user find password lock
      */
-    public static final KEY.Business LOCK_FIND_PASSWORD = new KEY.Business(SparrowModule.USER, "LOCK", "FIND", "PASSWORD");
+    public static final Key.Business LOCK_FIND_PASSWORD = new Key.Business(SparrowModule.USER, "LOCK", "FIND", "PASSWORD");
     /**
      * user login times lock
      */
-    public static final KEY.Business LOCK_LOGIN = new KEY.Business(SparrowModule.USER, "LOCK", "LOGIN");
+    public static final Key.Business LOCK_LOGIN = new Key.Business(SparrowModule.USER, "LOCK", "LOGIN");
     /**
      * user cent lock
      */
-    public static final KEY.Business LOCK_LOGIN_CENT = new KEY.Business(SparrowModule.USER, "LOCK", "LOGIN", "CENT");
+    public static final Key.Business LOCK_LOGIN_CENT = new Key.Business(SparrowModule.USER, "LOCK", "LOGIN", "CENT");
     /**
      * user register lock
      */
-    public static final KEY.Business LOCK_REGISTER = new KEY.Business(SparrowModule.USER, "LOCK", "REGISTER");
+    public static final Key.Business LOCK_REGISTER = new Key.Business(SparrowModule.USER, "LOCK", "REGISTER");
     /**
      * user dig lock
      */
-    public static final KEY.Business LOCK_DIG = new KEY.Business(SparrowModule.USER, "LOCK", "DIG");
+    public static final Key.Business LOCK_DIG = new Key.Business(SparrowModule.USER, "LOCK", "DIG");
     /**
      * user like lock
      */
-    public static final KEY.Business LOCK_LIKE = new KEY.Business(SparrowModule.USER, "LOCK", "LIKE");
+    public static final Key.Business LOCK_LIKE = new Key.Business(SparrowModule.USER, "LOCK", "LIKE");
 
     /**
      * user cent sort
      */
-    public static final KEY.Business SORT_CENT = new KEY.Business(SparrowModule.USER, "SORT", "CENT");
+    public static final Key.Business SORT_CENT = new Key.Business(SparrowModule.USER, "SORT", "CENT");
     /**
      * lastest login and high cent
      */
-    public static final KEY.Business SORT_POPULARITY = new KEY.Business(SparrowModule.USER, "SORT", "POPULARITY");
+    public static final Key.Business SORT_POPULARITY = new Key.Business(SparrowModule.USER, "SORT", "POPULARITY");
 
-    public static final Map<KEY.Business, LockConfig> LOCK_CONFIG = new HashMap<KEY.Business, LockConfig>();
+    public static final Map<Key.Business, LockConfig> LOCK_CONFIG = new HashMap<Key.Business, LockConfig>();
 
     static {
         // 5分钟不能超10次 不顺延

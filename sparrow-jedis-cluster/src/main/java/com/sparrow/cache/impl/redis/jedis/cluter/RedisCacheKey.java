@@ -18,7 +18,7 @@
 package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheKey;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.exception.CacheConnectionException;
 import redis.clients.jedis.JedisCluster;
 
@@ -28,7 +28,7 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey {
     }
 
     @Override
-    public Long expireSeconds(final KEY key, final Long expire) throws CacheConnectionException {
+    public Long expireSeconds(final Key key, final Long expire) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override public Long execute(JedisCluster jedis) throws CacheConnectionException {
                 return jedis.expire(key.key(), expire);
@@ -36,16 +36,16 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey {
         }, key);
     }
 
-    @Override public Long expireMillis(KEY key, Long expireMills) throws CacheConnectionException {
+    @Override public Long expireMillis(Key key, Long expireMills) throws CacheConnectionException {
         return null;
     }
 
-    @Override public Long expireMillisAt(KEY key, Long unixTimeMillis) throws CacheConnectionException {
+    @Override public Long expireMillisAt(Key key, Long unixTimeMillis) throws CacheConnectionException {
         return null;
     }
 
     @Override
-    public Long delete(final KEY key) throws CacheConnectionException {
+    public Long delete(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override public Long execute(JedisCluster jedis) throws CacheConnectionException {
                 return jedis.del(key.key());
@@ -54,7 +54,7 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey {
     }
 
     @Override
-    public Long ttl(final KEY key) throws CacheConnectionException {
+    public Long ttl(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -64,7 +64,7 @@ public class RedisCacheKey extends AbstractCommand implements CacheKey {
     }
 
     @Override
-    public Long expireSecondsAt(final KEY key, final Long expire) throws CacheConnectionException {
+    public Long expireSecondsAt(final Key key, final Long expire) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {

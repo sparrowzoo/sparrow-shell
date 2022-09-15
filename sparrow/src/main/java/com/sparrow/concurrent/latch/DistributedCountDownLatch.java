@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.latch;
+package com.sparrow.concurrent.latch;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 
 /**
  * Created by harry on 2018/1/11.
@@ -29,7 +29,7 @@ public interface DistributedCountDownLatch {
      * @param monitorKey monitor ey
      * @param key         consume msg key
      */
-    void consume(KEY monitorKey, String key);
+    void consume(Key monitorKey, String key);
 
     /**
      * KEY生产
@@ -37,7 +37,7 @@ public interface DistributedCountDownLatch {
      * @param monitorKey monitorKey
      * @param key        product msg key
      */
-    void product(KEY monitorKey, String key);
+    void product(Key monitorKey, String key);
 
     /**
      * 是否结束
@@ -45,7 +45,7 @@ public interface DistributedCountDownLatch {
      * @param monitorKey  monitorKey
      * @return
      */
-    boolean isFinish(KEY monitorKey);
+    boolean isFinish(Key monitorKey);
 
     /**
      * monitor
@@ -54,7 +54,7 @@ public interface DistributedCountDownLatch {
      * @param secondInterval 探测时间间隔
      * @return
      */
-    boolean monitor(KEY monitorKey, int secondInterval);
+    boolean monitor(Key monitorKey, int secondInterval);
 
     /**
      * 默认2秒控测一次
@@ -62,6 +62,6 @@ public interface DistributedCountDownLatch {
      * @param monitorKey  monitorKey
      * @return
      */
-    boolean monitor(KEY monitorKey);
+    boolean monitor(Key monitorKey);
 
 }

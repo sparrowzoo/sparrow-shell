@@ -17,7 +17,7 @@
 
 package com.sparrow.mvc.ui.grid.impl;
 
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.mvc.ui.grid.FieldParser;
 import com.sparrow.mvc.ui.grid.attribute.TextAttribute;
 import com.sparrow.utility.StringUtility;
@@ -32,7 +32,7 @@ public class TextFieldParserImpl implements FieldParser {
             return textAttribute.getDefaultValue();
         }
         String result = textAttribute.getTitle(valueList);
-        if (textAttribute.getTextLength() > DIGIT.ALL) {
+        if (textAttribute.getTextLength() > Digit.ALL) {
             if (result.length() > textAttribute.getTextLength()) {
                 result = String.format("<span title='%1$s'>%2$s</span>", result, StringUtility.subStringByByte(result, textAttribute.getTextLength(), "..."));
             }

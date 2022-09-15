@@ -18,7 +18,7 @@
 package com.sparrow.classloader;
 
 import com.sparrow.cg.impl.JavaClassFileObject;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,11 +29,11 @@ public class DynamicClassLoader extends URLClassLoader {
     private static Logger logger = LoggerFactory.getLogger(DynamicClassLoader.class);
 
     public DynamicClassLoader(ClassLoader classLoader) {
-        super(new URL[DIGIT.ZERO], classLoader);
+        super(new URL[Digit.ZERO], classLoader);
     }
 
     public Class<?> loadClass(String fullName, JavaClassFileObject jco) {
         byte[] classData = jco.getBytes();
-        return this.defineClass(fullName, classData, DIGIT.ZERO, classData.length);
+        return this.defineClass(fullName, classData, Digit.ZERO, classData.length);
     }
 }

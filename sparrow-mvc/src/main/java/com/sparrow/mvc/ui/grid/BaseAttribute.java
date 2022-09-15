@@ -17,7 +17,7 @@
 
 package com.sparrow.mvc.ui.grid;
 
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.DateTimeUtility;
 import com.sparrow.utility.EnumUtility;
@@ -31,14 +31,14 @@ import java.util.List;
 public class BaseAttribute {
     protected String[] fieldName;
     protected String css;
-    protected int textLength = DIGIT.ALL;
+    protected int textLength = Digit.ALL;
     protected String defaultValue = Symbol.HORIZON_LINE;
     protected String format;
 
     public BaseAttribute(String[] config) {
-        this.fieldName = config[DIGIT.ONE].split(Symbol.AND);
-        if (config.length > DIGIT.TOW) {
-            this.format = config[DIGIT.TOW];
+        this.fieldName = config[Digit.ONE].split(Symbol.AND);
+        if (config.length > Digit.TOW) {
+            this.format = config[Digit.TOW];
         }
     }
 
@@ -62,18 +62,18 @@ public class BaseAttribute {
         String text = this.format;
         if (!StringUtility.isNullOrEmpty(text)) {
             if (text.startsWith("date:")) {
-                text = text.substring(DIGIT.FIVE);
-                text = DateTimeUtility.getFormatTime(Timestamp.valueOf(valueList.get(DIGIT.ZERO)), text);
+                text = text.substring(Digit.FIVE);
+                text = DateTimeUtility.getFormatTime(Timestamp.valueOf(valueList.get(Digit.ZERO)), text);
             } else if (text.startsWith("enum:")) {
-                text = text.substring(DIGIT.FIVE);
-                text = EnumUtility.getMap(text).get(valueList.get(DIGIT.ZERO));
-            } else if (valueList.size() > DIGIT.ZERO) {
-                for (int i = DIGIT.ZERO; i < valueList.size(); i++) {
+                text = text.substring(Digit.FIVE);
+                text = EnumUtility.getMap(text).get(valueList.get(Digit.ZERO));
+            } else if (valueList.size() > Digit.ZERO) {
+                for (int i = Digit.ZERO; i < valueList.size(); i++) {
                     text = text.replace("{" + i + "}", valueList.get(i));
                 }
             }
         } else {
-            text = valueList.get(DIGIT.ZERO);
+            text = valueList.get(Digit.ZERO);
         }
         if (StringUtility.isNullOrEmpty(text)) {
             text = this.defaultValue;
@@ -82,7 +82,7 @@ public class BaseAttribute {
     }
 
     public String subString(String text) {
-        if (this.getTextLength() > DIGIT.ALL) {
+        if (this.getTextLength() > Digit.ALL) {
             if (text.length() > this.getTextLength()) {
                 text = StringUtility.subStringByByte(text, this.getTextLength(), "...");
             }

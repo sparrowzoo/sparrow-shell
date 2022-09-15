@@ -20,7 +20,7 @@ package com.sparrow.utility;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.File;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
 
@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.zip.CRC32;
 import java.util.zip.ZipOutputStream;
 
-import com.sparrow.support.file.FileNameProperty;
+import com.sparrow.io.file.FileNameProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -195,7 +195,7 @@ public class FileUtility {
             OutputStream outputStream = new FileOutputStream(fileFullPath);
             osw = new OutputStreamWriter(outputStream,
                     charset);
-            osw.write(s, DIGIT.ZERO, s.length());
+            osw.write(s, Digit.ZERO, s.length());
             osw.flush();
             return true;
         } catch (Exception e) {
@@ -229,13 +229,13 @@ public class FileUtility {
             }
             is = new FileInputStream(srcFilePath);
             fos = new FileOutputStream(descFile);
-            byte[] buffer = new byte[DIGIT.K];
+            byte[] buffer = new byte[Digit.K];
             while (true) {
                 int readSize = is.read(buffer);
                 if (readSize == -1) {
                     break;
                 }
-                fos.write(buffer, DIGIT.ZERO, readSize);
+                fos.write(buffer, Digit.ZERO, readSize);
             }
 
         } catch (Exception e) {
@@ -269,13 +269,13 @@ public class FileUtility {
             return;
         }
         try {
-            byte[] buffer = new byte[DIGIT.K];
+            byte[] buffer = new byte[Digit.K];
             while (true) {
                 int readSize = inputStream.read(buffer);
                 if (readSize == -1) {
                     break;
                 }
-                outputStream.write(buffer, DIGIT.ZERO, readSize);
+                outputStream.write(buffer, Digit.ZERO, readSize);
             }
             if (outputStream instanceof ZipOutputStream) {
                 ((ZipOutputStream) outputStream).finish();
@@ -326,16 +326,16 @@ public class FileUtility {
                     continue;
                 }
                 // 往外跳
-                if (compare.compare(tempString, keyword) < DIGIT.ZERO) {
+                if (compare.compare(tempString, keyword) < Digit.ZERO) {
                     // 先做标记
                     reader.mark(skip);
                     // 如果不足标准skip ，跳跃浮度减半
-                    if (skip < skip / DIGIT.TOW) {
-                        skip /= DIGIT.TOW;
+                    if (skip < skip / Digit.TOW) {
+                        skip /= Digit.TOW;
                     } else {
                         // 跳出文本范围 则减半
                         while (reader.skip(skip) < skip) {
-                            skip /= DIGIT.TOW;
+                            skip /= Digit.TOW;
                             reader.reset();
                         }
                     }
@@ -343,7 +343,7 @@ public class FileUtility {
                     // 向里跳
                 } else {
                     reader.reset();
-                    skip /= DIGIT.TOW;
+                    skip /= Digit.TOW;
                     if (skip <= minSkip) {
                         isSkip = false;
                         lastWord = tempString;
@@ -379,20 +379,20 @@ public class FileUtility {
             return Symbol.EMPTY;
         }
 
-        if (length < DIGIT.K) {
+        if (length < Digit.K) {
             return length + "B";
         }
         double kb = length / 1024D;//for double result
 
-        if (kb >= DIGIT.ONE && kb < DIGIT.K) {
+        if (kb >= Digit.ONE && kb < Digit.K) {
             return Math.ceil(kb) + "KB";
         }
         // 四舍五入保留两位小数
-        if (kb >= DIGIT.K && kb < Math.pow(DIGIT.K, DIGIT.TOW)) {
-            return Math.ceil(kb / DIGIT.K * DIGIT.K) / DIGIT.K + "MB";
+        if (kb >= Digit.K && kb < Math.pow(Digit.K, Digit.TOW)) {
+            return Math.ceil(kb / Digit.K * Digit.K) / Digit.K + "MB";
         }
         // 四舍五入保留两位小数
-        return Math.ceil(kb / DIGIT.K / DIGIT.K * DIGIT.HUNDRED) / DIGIT.HUNDRED + "GB";
+        return Math.ceil(kb / Digit.K / Digit.K * Digit.HUNDRED) / Digit.HUNDRED + "GB";
     }
 
     /**
@@ -407,12 +407,12 @@ public class FileUtility {
         if (lastFileSeparatorIndex == -1) {
             lastFileSeparatorIndex = fullFilePath.lastIndexOf("/");
         }
-        String directory = fullFilePath.substring(DIGIT.ZERO, lastFileSeparatorIndex + DIGIT.ONE);
+        String directory = fullFilePath.substring(Digit.ZERO, lastFileSeparatorIndex + Digit.ONE);
         int fileNameEndIndex = fullFilePath.lastIndexOf('.');
         if (fileNameEndIndex < lastFileSeparatorIndex) {
             return fileNameProperty;
         }
-        String fileName = fullFilePath.substring(lastFileSeparatorIndex + DIGIT.ONE,
+        String fileName = fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE,
                 fileNameEndIndex);
         String extension = fullFilePath.substring(fileNameEndIndex)
                 .toLowerCase();
@@ -453,10 +453,10 @@ public class FileUtility {
         crc.update(fileUuid.getBytes());
         Long id = crc.getValue();
         boolean isImage = this.isImage(extension);
-        long remaining = id % DIGIT.TWELVE;
-        long remaining1 = id % DIGIT.THOUSAND;
-        long div = id / DIGIT.THOUSAND;
-        long remaining2 = div % DIGIT.THOUSAND;
+        long remaining = id % Digit.TWELVE;
+        long remaining1 = id % Digit.THOUSAND;
+        long div = id / Digit.THOUSAND;
+        long remaining2 = div % Digit.THOUSAND;
         String path;
         if (isImage) {
             if (isWebPath) {
@@ -511,7 +511,7 @@ public class FileUtility {
             return;
         }
         // 如果没有文件
-        if (files.length == DIGIT.ZERO) {
+        if (files.length == Digit.ZERO) {
             file.delete();
             return;
         }

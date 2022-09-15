@@ -18,7 +18,7 @@
 package com.sparrow.utility;
 
 import com.sparrow.constant.DateTime;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.core.Pair;
 import com.sparrow.enums.DateTimeUnit;
 
@@ -44,33 +44,33 @@ public class DateTimeUtility {
         Long end = 0L;
         switch (condition) {
             case YEAR:
-                calendar.set(Calendar.MILLISECOND, DIGIT.ZERO);
-                calendar.set(Calendar.SECOND, DIGIT.ZERO);
-                calendar.set(Calendar.MINUTE, DIGIT.ZERO);
-                calendar.set(Calendar.HOUR_OF_DAY, DIGIT.ZERO);
-                calendar.set(Calendar.DAY_OF_MONTH, DIGIT.ONE);
+                calendar.set(Calendar.MILLISECOND, Digit.ZERO);
+                calendar.set(Calendar.SECOND, Digit.ZERO);
+                calendar.set(Calendar.MINUTE, Digit.ZERO);
+                calendar.set(Calendar.HOUR_OF_DAY, Digit.ZERO);
+                calendar.set(Calendar.DAY_OF_MONTH, Digit.ONE);
                 calendar.set(Calendar.MONTH, Calendar.JANUARY);
                 start = calendar.getTimeInMillis();
-                calendar.add(Calendar.YEAR, DIGIT.ONE);
+                calendar.add(Calendar.YEAR, Digit.ONE);
                 end = calendar.getTimeInMillis();
                 pair = Pair.create(start, end);
                 break;
             case MONTH:
-                calendar.set(Calendar.MILLISECOND, DIGIT.ZERO);
-                calendar.set(Calendar.SECOND, DIGIT.ZERO);
-                calendar.set(Calendar.MINUTE, DIGIT.ZERO);
-                calendar.set(Calendar.HOUR_OF_DAY, DIGIT.ZERO);
-                calendar.set(Calendar.DAY_OF_MONTH, DIGIT.ONE);
+                calendar.set(Calendar.MILLISECOND, Digit.ZERO);
+                calendar.set(Calendar.SECOND, Digit.ZERO);
+                calendar.set(Calendar.MINUTE, Digit.ZERO);
+                calendar.set(Calendar.HOUR_OF_DAY, Digit.ZERO);
+                calendar.set(Calendar.DAY_OF_MONTH, Digit.ONE);
                 start = calendar.getTimeInMillis();
-                calendar.add(Calendar.MONTH, DIGIT.ONE);
+                calendar.add(Calendar.MONTH, Digit.ONE);
                 end = calendar.getTimeInMillis();
                 pair = Pair.create(start, end);
                 break;
             case WEEK:
-                calendar.set(Calendar.MILLISECOND, DIGIT.ZERO);
-                calendar.set(Calendar.SECOND, DIGIT.ZERO);
-                calendar.set(Calendar.MINUTE, DIGIT.ZERO);
-                calendar.set(Calendar.HOUR_OF_DAY, DIGIT.ZERO);
+                calendar.set(Calendar.MILLISECOND, Digit.ZERO);
+                calendar.set(Calendar.SECOND, Digit.ZERO);
+                calendar.set(Calendar.MINUTE, Digit.ZERO);
+                calendar.set(Calendar.HOUR_OF_DAY, Digit.ZERO);
                 calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
                 start = calendar.getTimeInMillis();
                 calendar.add(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
@@ -78,36 +78,36 @@ public class DateTimeUtility {
                 pair = Pair.create(start, end);
                 break;
             case DAY:
-                calendar.set(Calendar.MILLISECOND, DIGIT.ZERO);
-                calendar.set(Calendar.SECOND, DIGIT.ZERO);
-                calendar.set(Calendar.MINUTE, DIGIT.ZERO);
-                calendar.set(Calendar.HOUR_OF_DAY, DIGIT.ZERO);
+                calendar.set(Calendar.MILLISECOND, Digit.ZERO);
+                calendar.set(Calendar.SECOND, Digit.ZERO);
+                calendar.set(Calendar.MINUTE, Digit.ZERO);
+                calendar.set(Calendar.HOUR_OF_DAY, Digit.ZERO);
                 start = calendar.getTimeInMillis();
-                calendar.add(Calendar.DAY_OF_MONTH, DIGIT.ONE);
+                calendar.add(Calendar.DAY_OF_MONTH, Digit.ONE);
                 end = calendar.getTimeInMillis();
                 pair = Pair.create(start, end);
                 break;
             case HOUR:
-                calendar.set(Calendar.MILLISECOND, DIGIT.ZERO);
-                calendar.set(Calendar.SECOND, DIGIT.ZERO);
-                calendar.set(Calendar.MINUTE, DIGIT.ZERO);
+                calendar.set(Calendar.MILLISECOND, Digit.ZERO);
+                calendar.set(Calendar.SECOND, Digit.ZERO);
+                calendar.set(Calendar.MINUTE, Digit.ZERO);
                 start = calendar.getTimeInMillis();
-                calendar.add(Calendar.HOUR_OF_DAY, DIGIT.ONE);
+                calendar.add(Calendar.HOUR_OF_DAY, Digit.ONE);
                 end = calendar.getTimeInMillis();
                 pair = Pair.create(start, end);
                 break;
             case MINUTE:
-                calendar.set(Calendar.MILLISECOND, DIGIT.ZERO);
-                calendar.set(Calendar.SECOND, DIGIT.ZERO);
+                calendar.set(Calendar.MILLISECOND, Digit.ZERO);
+                calendar.set(Calendar.SECOND, Digit.ZERO);
                 start = calendar.getTimeInMillis();
-                calendar.add(Calendar.MINUTE, DIGIT.ONE);
+                calendar.add(Calendar.MINUTE, Digit.ONE);
                 end = calendar.getTimeInMillis();
                 pair = Pair.create(start, end);
                 break;
             case SECOND:
-                calendar.set(Calendar.MILLISECOND, DIGIT.ZERO);
+                calendar.set(Calendar.MILLISECOND, Digit.ZERO);
                 start = calendar.getTimeInMillis();
-                calendar.add(Calendar.SECOND, DIGIT.ONE);
+                calendar.add(Calendar.SECOND, Digit.ONE);
                 end = calendar.getTimeInMillis();
                 pair = Pair.create(start, end);
                 break;
@@ -142,15 +142,15 @@ public class DateTimeUtility {
     public static String getHHmmss(int seconds) {
         int mm = seconds / 60;
         int ss = seconds % 60;
-        int hh = DIGIT.ZERO;
-        if (mm / 60 >= DIGIT.ONE) {
+        int hh = Digit.ZERO;
+        if (mm / 60 >= Digit.ONE) {
             hh = mm / 60;
             mm %= 60;
         }
         return String.format("%1$s:%2$s:%3$s",
-            StringUtility.leftPad(String.valueOf(hh), '0', DIGIT.TOW),
-            StringUtility.leftPad(String.valueOf(mm), '0', DIGIT.TOW),
-            StringUtility.leftPad(String.valueOf(ss), '0', DIGIT.TOW));
+            StringUtility.leftPad(String.valueOf(hh), '0', Digit.TOW),
+            StringUtility.leftPad(String.valueOf(mm), '0', Digit.TOW),
+            StringUtility.leftPad(String.valueOf(ss), '0', Digit.TOW));
     }
 
     /**

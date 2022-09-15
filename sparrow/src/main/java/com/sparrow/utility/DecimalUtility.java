@@ -19,7 +19,7 @@ package com.sparrow.utility;
 
 import com.sparrow.constant.DecimalFormatConstant;
 import com.sparrow.protocol.constant.magic.CapitalRmb;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -81,12 +81,12 @@ public class DecimalUtility {
             strBit = strNumbers.substring(i, i + 1); //取出需转换的某一位的值
             temp = Integer.parseInt(strBit); //转换为数字
             if (i != (j - 3) && i != (j - 7) && i != (j - 11) && i != (j - 15)) {
-                if (String.valueOf(DIGIT.ZERO).equals(strBit)) {
+                if (String.valueOf(Digit.ZERO).equals(strBit)) {
                     ch1 = "";
                     ch2 = "";
                     nzero = nzero + 1;
                 } else {
-                    if (!String.valueOf(DIGIT.ZERO).equals(strBit) && nzero != 0) {
+                    if (!String.valueOf(Digit.ZERO).equals(strBit) && nzero != 0) {
                         ch1 = CapitalRmb.ZERO + strNumberChinese.substring(temp, temp + 1);
                         ch2 = strWeightChinese.substring(i, i + 1);
                         nzero = 0;

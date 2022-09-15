@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.file;
+package com.sparrow.io.file;
 
 public class FileNameProperty {
     private String name;

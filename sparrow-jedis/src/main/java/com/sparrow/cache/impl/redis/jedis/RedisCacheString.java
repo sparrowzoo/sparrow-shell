@@ -19,7 +19,7 @@ package com.sparrow.cache.impl.redis.jedis;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheString;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.POJO;
@@ -36,7 +36,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public Boolean setIfNotExistWithMills(KEY key, Object value, long expireMills) throws CacheConnectionException {
+    public Boolean setIfNotExistWithMills(Key key, Object value, long expireMills) throws CacheConnectionException {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
             public Boolean execute(Jedis jedis) {
@@ -50,7 +50,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public String set(final KEY key, final Object value) throws CacheConnectionException {
+    public String set(final Key key, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
             public String execute(Jedis jedis) {
@@ -62,7 +62,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public String getSet(KEY key, Object value) throws CacheConnectionException {
+    public String getSet(Key key, Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
             public String execute(Jedis jedis) throws CacheConnectionException {
@@ -74,7 +74,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public String get(final KEY key) throws CacheConnectionException {
+    public String get(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
             public String execute(Jedis jedis) throws CacheConnectionException {
@@ -84,7 +84,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public String get(final KEY key, final CacheDataNotFound<String> hook) {
+    public String get(final Key key, final CacheDataNotFound<String> hook) {
         try {
             return redisPool.execute(new Executor<String>() {
                 @Override
@@ -106,7 +106,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public <T> T get(final KEY key, final Class clazz, final CacheDataNotFound<T> hook) {
+    public <T> T get(final Key key, final Class clazz, final CacheDataNotFound<T> hook) {
         try {
             return redisPool.execute(new Executor<T>() {
                 @Override
@@ -133,7 +133,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public <T> T get(final KEY key, final Class clazz) throws CacheConnectionException {
+    public <T> T get(final Key key, final Class clazz) throws CacheConnectionException {
         return redisPool.execute(new Executor<T>() {
             @Override
             public T execute(Jedis jedis) throws CacheConnectionException {
@@ -151,7 +151,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public Long append(final KEY key, final Object value) throws CacheConnectionException {
+    public Long append(final Key key, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -161,7 +161,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public Long decrease(final KEY key) throws CacheConnectionException {
+    public Long decrease(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -171,7 +171,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public Long decrease(final KEY key, final Long count) throws CacheConnectionException {
+    public Long decrease(final Key key, final Long count) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -181,7 +181,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public Long increase(final KEY key, final Long count) throws CacheConnectionException {
+    public Long increase(final Key key, final Long count) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -191,7 +191,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public Long increase(final KEY key) throws CacheConnectionException {
+    public Long increase(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(Jedis jedis) {
@@ -201,7 +201,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public boolean bit(final KEY key, final Integer offset) throws CacheConnectionException {
+    public boolean bit(final Key key, final Integer offset) throws CacheConnectionException {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
             public Boolean execute(Jedis jedis) {
@@ -211,7 +211,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public String setExpire(final KEY key, final Integer seconds, final Object value) throws CacheConnectionException {
+    public String setExpire(final Key key, final Integer seconds, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<String>() {
             @Override
             public String execute(Jedis jedis) {
@@ -221,7 +221,7 @@ public class RedisCacheString extends AbstractCommand implements CacheString {
     }
 
     @Override
-    public Boolean setIfNotExist(final KEY key, final Object value) throws CacheConnectionException {
+    public Boolean setIfNotExist(final Key key, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
             public Boolean execute(Jedis jedis) {

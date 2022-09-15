@@ -6,7 +6,7 @@ import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.Split;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
-import com.sparrow.protocol.enums.PLATFORM;
+import com.sparrow.protocol.enums.Platform;
 
 import javax.persistence.*;
 
@@ -64,7 +64,7 @@ public class Event implements POJO {
         this.network = client.getNetwork();
         this.device = client.getDevice();
         this.ssid = client.getSsid();
-        if (PLATFORM.PC.equals(this.platform)) {
+        if (Platform.PC.equals(this.platform)) {
             this.simulate = true;
             this.appId = 0;
             this.appVersion = 0.0F;
@@ -72,7 +72,7 @@ public class Event implements POJO {
             this.imei = "";
             this.idfa = "";
             this.clientVersion = "";
-            this.platform = PLATFORM.PC;
+            this.platform = Platform.PC;
             this.deviceModel = "";
             this.ssid = "";
             this.network = "";
@@ -159,7 +159,7 @@ public class Event implements POJO {
     /**
      * os platform
      */
-    private PLATFORM platform;
+    private Platform platform;
 
     /**
      * 操作系统
@@ -394,11 +394,11 @@ public class Event implements POJO {
 
     @MethodOrder(order = 15)
     @Column(name = "platform", columnDefinition = "tinyint(2) DEFAULT -1 COMMENT 'platform'", nullable = false)
-    public PLATFORM getPlatform() {
+    public Platform getPlatform() {
         return platform;
     }
 
-    public void setPlatform(PLATFORM platform) {
+    public void setPlatform(Platform platform) {
         this.platform = platform;
     }
 

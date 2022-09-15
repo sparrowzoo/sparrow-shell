@@ -17,11 +17,11 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.exception.CacheConnectionException;
 
 public interface CacheDataNotFound<T> {
-    T read(KEY key);
+    T read(Key key);
 
     default boolean backWrite(T data) throws CacheConnectionException {
         return true;

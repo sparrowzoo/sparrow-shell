@@ -19,7 +19,7 @@ package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheSet;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
@@ -36,7 +36,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
     }
 
     @Override
-    public Long getSize(final KEY key) throws CacheConnectionException {
+    public Long getSize(final Key key) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -46,7 +46,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
     }
 
     @Override
-    public Long add(final KEY key, final Object value) throws CacheConnectionException {
+    public Long add(final Key key, final Object value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -57,7 +57,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
     }
 
     @Override
-    public Long add(final KEY key, final String... value) throws CacheConnectionException {
+    public Long add(final Key key, final String... value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Long>() {
             @Override
             public Long execute(JedisCluster jedis) {
@@ -67,7 +67,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
     }
 
     @Override
-    public <T> Integer add(final KEY key, final Iterable<T> values) throws CacheConnectionException {
+    public <T> Integer add(final Key key, final Iterable<T> values) throws CacheConnectionException {
         return redisPool.execute(new Executor<Integer>() {
             @Override
             public Integer execute(JedisCluster jedis) {
@@ -79,7 +79,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
     }
 
     @Override
-    public <T> Boolean remove(final KEY key, final T value) throws CacheConnectionException {
+    public <T> Boolean remove(final Key key, final T value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
             public Boolean execute(JedisCluster jedis) {
@@ -90,7 +90,7 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
     }
 
     @Override
-    public <T> Boolean exist(final KEY key, final T value) throws CacheConnectionException {
+    public <T> Boolean exist(final Key key, final T value) throws CacheConnectionException {
         return redisPool.execute(new Executor<Boolean>() {
             @Override
             public Boolean execute(JedisCluster jedis) {
@@ -101,12 +101,12 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
     }
 
     @Override
-    public Set<String> list(final KEY key) throws CacheConnectionException {
+    public Set<String> list(final Key key) throws CacheConnectionException {
         return this.list(key, String.class);
     }
 
     @Override
-    public <T> Set<T> list(final KEY key, final Class clazz) throws CacheConnectionException {
+    public <T> Set<T> list(final Key key, final Class clazz) throws CacheConnectionException {
         return redisPool.execute(new Executor<Set<T>>() {
             @Override
             public Set<T> execute(JedisCluster jedis) throws CacheConnectionException {
@@ -122,12 +122,12 @@ public class RedisCacheSet extends AbstractCommand implements CacheSet {
     }
 
     @Override
-    public Set<String> list(final KEY key, CacheDataNotFound<Set<String>> hook) {
+    public Set<String> list(final Key key, CacheDataNotFound<Set<String>> hook) {
         return this.list(key, String.class, hook);
     }
 
     @Override
-    public <T> Set<T> list(final KEY key, final Class clazz, final CacheDataNotFound<Set<T>> hook) {
+    public <T> Set<T> list(final Key key, final Class clazz, final CacheDataNotFound<Set<T>> hook) {
         try {
             return redisPool.execute(new Executor<Set<T>>() {
                 @Override

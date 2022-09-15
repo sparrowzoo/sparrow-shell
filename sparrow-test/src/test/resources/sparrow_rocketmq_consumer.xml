@@ -35,7 +35,7 @@
         <property name="charset" value="UTF-8"/>
     </bean>
 
-    <bean name="distributedCountDownLatch" class="com.sparrow.support.redis.impl.RedisDistributedCountDownLatch">
+    <bean name="distributedCountDownLatch" class="com.sparrow.concurrent.latch.impl.RedisDistributedCountDownLatch">
         <property name="cacheClient" ref="cacheClient"/>
     </bean>
 

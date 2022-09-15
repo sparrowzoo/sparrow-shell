@@ -19,7 +19,7 @@ package com.sparrow.mvc.ui.grid.attribute;
 
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.mvc.ui.grid.BaseAttribute;
 import com.sparrow.utility.ConfigUtility;
 
@@ -40,14 +40,14 @@ public class ImageAttribute extends BaseAttribute {
 
     public ImageAttribute(String[] config) {
         super(config);
-        if (config.length > DIGIT.THREE) {
-            this.width = config[DIGIT.THREE];
+        if (config.length > Digit.THREE) {
+            this.width = config[Digit.THREE];
         }
-        if (config.length > DIGIT.FOUR) {
-            this.height = config[DIGIT.FOUR];
+        if (config.length > Digit.FOUR) {
+            this.height = config[Digit.FOUR];
         }
-        if (config.length > DIGIT.FIVE) {
-            this.defaultValue = config[DIGIT.FIVE];
+        if (config.length > Digit.FIVE) {
+            this.defaultValue = config[Digit.FIVE];
             if (!this.defaultValue.startsWith(Constant.HTTP_PROTOCOL)) {
                 this.defaultValue = ConfigUtility.getValue(Config.RESOURCE) + this.defaultValue;
             }

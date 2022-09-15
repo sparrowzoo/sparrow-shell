@@ -17,7 +17,7 @@
 
 package com.sparrow.rocketmq.impl;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.mq.MQClient;
@@ -25,7 +25,7 @@ import com.sparrow.mq.MQEvent;
 import com.sparrow.mq.MQMessageSendException;
 import com.sparrow.mq.MQPublisher;
 import com.sparrow.rocketmq.MessageConverter;
-import com.sparrow.support.latch.DistributedCountDownLatch;
+import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.MQProducer;
@@ -106,7 +106,7 @@ public class SparrowRocketMQPublisher implements MQPublisher {
         this.debug = debug;
     }
     
-    public void after(MQEvent event, KEY productKey, String msgKey) {
+    public void after(MQEvent event, Key productKey, String msgKey) {
         if (distributedCountDownLatch == null || productKey == null) {
             return;
         }
@@ -119,7 +119,7 @@ public class SparrowRocketMQPublisher implements MQPublisher {
     }
 
     @Override
-    public void publish(MQEvent event, KEY productKey) {
+    public void publish(MQEvent event, Key productKey) {
         Message msg = this.messageConverter.createMessage(topic, tag, event);
         String key = UUID.randomUUID().toString();
         msg.setKeys(Collections.singletonList(key));

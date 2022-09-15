@@ -17,7 +17,7 @@
 
 package com.sparrow.cryptogram;
 
-import com.sparrow.protocol.constant.magic.DIGIT;
+import com.sparrow.protocol.constant.magic.Digit;
 
 public class Base64 {
 
@@ -369,30 +369,30 @@ public class Base64 {
         // We have to shift left 24 in order to flush out the 1's that appear
         // when Java treats a value as negative that is cast from a byte to an
         // int.
-        int inBuff = (numSigBytes > DIGIT.ZERO ? ((source[srcOffset] << 24) >>> 8) : DIGIT.ZERO)
-            | (numSigBytes > DIGIT.ONE ? ((source[srcOffset + DIGIT.ONE] << 24) >>> 16) : DIGIT.ZERO)
-            | (numSigBytes > DIGIT.TOW ? ((source[srcOffset + DIGIT.TOW] << 24) >>> 24) : DIGIT.ZERO);
+        int inBuff = (numSigBytes > Digit.ZERO ? ((source[srcOffset] << 24) >>> 8) : Digit.ZERO)
+            | (numSigBytes > Digit.ONE ? ((source[srcOffset + Digit.ONE] << 24) >>> 16) : Digit.ZERO)
+            | (numSigBytes > Digit.TOW ? ((source[srcOffset + Digit.TOW] << 24) >>> 24) : Digit.ZERO);
 
         switch (numSigBytes) {
-            case DIGIT.THREE:
+            case Digit.THREE:
                 destination[destOffset] = alphabet[inBuff >>> 18];
-                destination[destOffset + DIGIT.ONE] = alphabet[inBuff >>> 12 & 0x3f];
-                destination[destOffset + DIGIT.TOW] = alphabet[inBuff >>> 6 & 0x3f];
-                destination[destOffset + DIGIT.THREE] = alphabet[inBuff & 0x3f];
+                destination[destOffset + Digit.ONE] = alphabet[inBuff >>> 12 & 0x3f];
+                destination[destOffset + Digit.TOW] = alphabet[inBuff >>> 6 & 0x3f];
+                destination[destOffset + Digit.THREE] = alphabet[inBuff & 0x3f];
                 return destination;
 
-            case DIGIT.TOW:
+            case Digit.TOW:
                 destination[destOffset] = alphabet[inBuff >>> 18];
-                destination[destOffset + DIGIT.ONE] = alphabet[inBuff >>> 12 & 0x3f];
-                destination[destOffset + DIGIT.TOW] = alphabet[inBuff >>> 6 & 0x3f];
-                destination[destOffset + DIGIT.THREE] = EQUALS_SIGN;
+                destination[destOffset + Digit.ONE] = alphabet[inBuff >>> 12 & 0x3f];
+                destination[destOffset + Digit.TOW] = alphabet[inBuff >>> 6 & 0x3f];
+                destination[destOffset + Digit.THREE] = EQUALS_SIGN;
                 return destination;
 
-            case DIGIT.ONE:
+            case Digit.ONE:
                 destination[destOffset] = alphabet[inBuff >>> 18];
-                destination[destOffset + DIGIT.ONE] = alphabet[inBuff >>> 12 & 0x3f];
-                destination[destOffset + DIGIT.TOW] = EQUALS_SIGN;
-                destination[destOffset + DIGIT.THREE] = EQUALS_SIGN;
+                destination[destOffset + Digit.ONE] = alphabet[inBuff >>> 12 & 0x3f];
+                destination[destOffset + Digit.TOW] = EQUALS_SIGN;
+                destination[destOffset + Digit.THREE] = EQUALS_SIGN;
                 return destination;
 
             default:
@@ -411,12 +411,12 @@ public class Base64 {
      */
     public static void encode(java.nio.ByteBuffer raw,
         java.nio.ByteBuffer encoded) {
-        byte[] raw3 = new byte[DIGIT.THREE];
-        byte[] enc4 = new byte[DIGIT.FOUR];
+        byte[] raw3 = new byte[Digit.THREE];
+        byte[] enc4 = new byte[Digit.FOUR];
 
         while (raw.hasRemaining()) {
-            int rem = Math.min(DIGIT.THREE, raw.remaining());
-            raw.get(raw3, DIGIT.ZERO, rem);
+            int rem = Math.min(Digit.THREE, raw.remaining());
+            raw.get(raw3, Digit.ZERO, rem);
             Base64.encode3to4(enc4, raw3, rem, Base64.NO_OPTIONS);
             encoded.put(enc4);
         } // end input remaining
@@ -433,14 +433,14 @@ public class Base64 {
      */
     public static void encode(java.nio.ByteBuffer raw,
         java.nio.CharBuffer encoded) {
-        byte[] raw3 = new byte[DIGIT.THREE];
-        byte[] enc4 = new byte[DIGIT.FOUR];
+        byte[] raw3 = new byte[Digit.THREE];
+        byte[] enc4 = new byte[Digit.FOUR];
 
         while (raw.hasRemaining()) {
-            int rem = Math.min(DIGIT.THREE, raw.remaining());
-            raw.get(raw3, DIGIT.ZERO, rem);
+            int rem = Math.min(Digit.THREE, raw.remaining());
+            raw.get(raw3, Digit.ZERO, rem);
             Base64.encode3to4(enc4, raw3, rem, Base64.NO_OPTIONS);
-            for (int i = DIGIT.ZERO; i < DIGIT.FOUR; i++) {
+            for (int i = Digit.ZERO; i < Digit.FOUR; i++) {
                 encoded.put((char) (enc4[i] & 0xFF));
             }
         }

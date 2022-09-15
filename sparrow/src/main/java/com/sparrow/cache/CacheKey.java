@@ -17,19 +17,19 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.exception.CacheConnectionException;
 
 public interface CacheKey {
-    Long ttl(final KEY key) throws CacheConnectionException;
+    Long ttl(final Key key) throws CacheConnectionException;
 
-    Long expireSeconds(KEY key, Long expireSeconds) throws CacheConnectionException;
+    Long expireSeconds(Key key, Long expireSeconds) throws CacheConnectionException;
 
-    Long expireMillis(KEY key, Long expireMills) throws CacheConnectionException;
+    Long expireMillis(Key key, Long expireMills) throws CacheConnectionException;
 
-    Long expireMillisAt(KEY key, Long unixTimeMillis) throws CacheConnectionException;
+    Long expireMillisAt(Key key, Long unixTimeMillis) throws CacheConnectionException;
 
-    Long delete(KEY key) throws CacheConnectionException;
+    Long delete(Key key) throws CacheConnectionException;
 
-    Long expireSecondsAt(KEY key, Long unixTimeSeconds) throws CacheConnectionException;
+    Long expireSecondsAt(Key key, Long unixTimeSeconds) throws CacheConnectionException;
 }

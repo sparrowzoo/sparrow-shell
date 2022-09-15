@@ -17,27 +17,27 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 import com.sparrow.exception.CacheConnectionException;
 
 import java.util.List;
 
 public interface CacheList {
-    Long getSize(KEY key) throws CacheConnectionException;
+    Long getSize(Key key) throws CacheConnectionException;
 
-    <T> Long add(KEY key, T value) throws CacheConnectionException;
+    <T> Long add(Key key, T value) throws CacheConnectionException;
 
-    Long add(KEY key, String... value) throws CacheConnectionException;
+    Long add(Key key, String... value) throws CacheConnectionException;
 
-    <T> Integer add(KEY key, Iterable<T> values) throws CacheConnectionException;
+    <T> Integer add(Key key, Iterable<T> values) throws CacheConnectionException;
 
-    <T> Long remove(KEY key, T value) throws CacheConnectionException;
+    <T> Long remove(Key key, T value) throws CacheConnectionException;
 
-    List<String> list(KEY key) throws CacheConnectionException;
+    List<String> list(Key key) throws CacheConnectionException;
 
-    <T> List<T> list(KEY key, Class clazz) throws CacheConnectionException;
+    <T> List<T> list(Key key, Class clazz) throws CacheConnectionException;
 
-    List<String> list(KEY key, CacheDataNotFound<List<String>> hook);
+    List<String> list(Key key, CacheDataNotFound<List<String>> hook);
 
-    <T> List<T> list(KEY key, Class clazz, CacheDataNotFound<List<T>> hook);
+    <T> List<T> list(Key key, Class clazz, CacheDataNotFound<List<T>> hook);
 }

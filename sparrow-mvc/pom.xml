@@ -30,6 +30,7 @@
             <groupId>com.sparrow</groupId>
             <artifactId>sparrow</artifactId>
         </dependency>
+        <!-- 二维码-->
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
@@ -43,6 +44,7 @@
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
         </dependency>
+        <!--user agent-->
         <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>

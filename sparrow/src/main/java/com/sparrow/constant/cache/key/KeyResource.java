@@ -18,20 +18,20 @@
 package com.sparrow.constant.cache.key;
 
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.KEY;
+import com.sparrow.constant.cache.Key;
 
 public class KeyResource {
 
     /**
      * 所有版块
      */
-    public static final KEY.Business ALL = new KEY.Business(SparrowModule.FORUM, "ALL");
+    public static final Key.Business ALL = new Key.Business(SparrowModule.FORUM, "ALL");
     /**
      * url与编码对应关系
      */
-    public static final KEY.Business ACCESS_URL_CODE_PAIR = new KEY.Business(SparrowModule.FORUM, "ACCESS", "URL", "CODE", "PAIR");
+    public static final Key.Business ACCESS_URL_CODE_PAIR = new Key.Business(SparrowModule.FORUM, "ACCESS", "URL", "CODE", "PAIR");
     /**
      * id与编码对应关系
      */
-    public static final KEY.Business ID_CODE_PAIR = new KEY.Business(SparrowModule.FORUM, "ID", "CODE", "PAIR");
+    public static final Key.Business ID_CODE_PAIR = new Key.Business(SparrowModule.FORUM, "ID", "CODE", "PAIR");
 }
