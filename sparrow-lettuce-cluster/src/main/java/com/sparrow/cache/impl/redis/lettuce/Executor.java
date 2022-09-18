@@ -26,5 +26,5 @@ import io.lettuce.core.cluster.api.sync.RedisAdvancedClusterCommands;
  * @author harry
  */
 interface Executor<T> {
-    T execute( RedisAdvancedClusterCommands<byte[],byte[]> sync) throws CacheConnectionException;
+    T execute(RedisAdvancedClusterCommands<byte[],byte[]> sync) throws CacheConnectionException;
 }

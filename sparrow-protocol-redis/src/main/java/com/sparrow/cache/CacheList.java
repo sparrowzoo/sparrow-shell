@@ -17,28 +17,25 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.Key;
-import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.cache.exception.CacheConnectionException;
+import java.util.List;
 
-import java.util.Map;
-
-public interface CacheSortedSet {
-
+public interface CacheList {
     Long getSize(Key key) throws CacheConnectionException;
 
-    <T> Long add(Key key, T value, double score) throws CacheConnectionException;
+    <T> Long add(Key key, T value) throws CacheConnectionException;
+
+    Long add(Key key, String... value) throws CacheConnectionException;
+
+    <T> Integer add(Key key, Iterable<T> values) throws CacheConnectionException;
 
     <T> Long remove(Key key, T value) throws CacheConnectionException;
 
-    Long remove(Key key, Long from, Long to) throws CacheConnectionException;
+    List<String> list(Key key) throws CacheConnectionException;
 
-    <T> Double getScore(Key key, T value) throws CacheConnectionException;
+    <T> List<T> list(Key key, Class clazz) throws CacheConnectionException;
 
-    <T> Long getRank(Key key, T value) throws CacheConnectionException;
+    List<String> list(Key key, CacheDataNotFound<List<String>> hook);
 
-    <T> Map<T, Double> getAllWithScore(Key key) throws CacheConnectionException;
-
-    <T> Integer putAllWithScore(Key key, Map<T, Double> keyScoreMap) throws CacheConnectionException;
-
-    <T> Map<T, Double> getAllWithScore(Key key, Class keyClazz, CacheDataNotFound<Map<T, Double>> hook);
+    <T> List<T> list(Key key, Class clazz, CacheDataNotFound<List<T>> hook);
 }

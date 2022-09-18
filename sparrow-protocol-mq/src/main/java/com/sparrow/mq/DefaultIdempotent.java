@@ -17,16 +17,17 @@
 package com.sparrow.mq;
 
 import com.sparrow.cache.CacheClient;
-import com.sparrow.constant.cache.Key;
-import com.sparrow.constant.cache.key.KeyMQIdempotent;
+import com.sparrow.cache.Key;
+import com.sparrow.cache.exception.CacheConnectionException;
+import com.sparrow.protocol.constant.GlobalModule;
 import com.sparrow.protocol.constant.magic.Digit;
-import com.sparrow.exception.CacheConnectionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DefaultIdempotent implements MQIdempotent {
     private static Logger logger = LoggerFactory.getLogger(DefaultIdempotent.class);
     private CacheClient cacheClient;
+    public static final Key.Business IDEMPOTENT = new Key.Business(GlobalModule.GLOBAL, "IDEMPOTENT");
 
     public void setCacheClient(CacheClient cacheClient) {
         this.cacheClient = cacheClient;
@@ -36,7 +37,7 @@ public class DefaultIdempotent implements MQIdempotent {
     public boolean duplicate(String keys) {
         while (true) {
             try {
-                Key key = new Key.Builder().business(KeyMQIdempotent.IDEMPOTENT).businessId(keys).build();
+                Key key = new Key.Builder().business(IDEMPOTENT).businessId(keys).build();
                 Integer value = cacheClient.string().get(key, Integer.class);
                 return value != null && value.equals(Digit.ONE);
             } catch (CacheConnectionException e) {
@@ -48,7 +49,7 @@ public class DefaultIdempotent implements MQIdempotent {
     @Override public boolean consumed(String keys) {
         while (true) {
             try {
-                Key consumeKey = new Key.Builder().business(KeyMQIdempotent.IDEMPOTENT).businessId(keys).build();
+                Key consumeKey = new Key.Builder().business(IDEMPOTENT).businessId(keys).build();
                 //redlock setExpire(key,timestamp)
                 boolean value = cacheClient.string().setIfNotExist(consumeKey, Digit.ONE);
                 if (value) {

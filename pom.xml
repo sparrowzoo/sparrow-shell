@@ -30,6 +30,10 @@
             <artifactId>sparrow</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+        </dependency>
     </dependencies>
     <description>
         mvn repository
@@ -60,8 +64,10 @@
         <module>sparrow-distribution-job</module>
         <module>sparrow-distribution-config</module>
         <module>sparrow-protocol</module>
-        <module>sparrow-test</module>
+<!--        <module>sparrow-test</module>-->
         <module>sparrow-protocol-dao</module>
+        <module>sparrow-protocol-mq</module>
+        <module>sparrow-protocol-redis</module>
         <!--<module>sparrow-lettuce-cluster</module>-->
     </modules>
 

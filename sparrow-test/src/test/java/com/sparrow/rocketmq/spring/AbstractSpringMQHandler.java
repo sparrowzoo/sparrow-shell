@@ -17,14 +17,16 @@
 
 package com.sparrow.rocketmq.spring;
 
+import com.sparrow.container.Container;
+import com.sparrow.container.ContainerAware;
 import com.sparrow.mq.AbstractMQHandler;
 import com.sparrow.mq.MQEvent;
 
 /**
  * @author by harry
  */
-public abstract class AbstractSpringMQHandler<T extends MQEvent> extends AbstractMQHandler<T> {
-    public void setBeanName(String s) {
-        this.aware(null, s);
+public abstract class AbstractSpringMQHandler<T extends MQEvent> extends AbstractMQHandler<T> implements ContainerAware {
+    @Override public void aware(Container container, String beanName) {
+        this.aware(beanName);
     }
 }

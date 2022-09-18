@@ -101,6 +101,14 @@
             <groupId>com.sparrow</groupId>
             <artifactId>sparrow-protocol-dao</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sparrow</groupId>
+            <artifactId>sparrow-protocol-mq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sparrow</groupId>
+            <artifactId>sparrow-protocol-redis</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.sparrow</groupId>

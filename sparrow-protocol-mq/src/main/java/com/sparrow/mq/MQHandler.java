@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-package com.sparrow.exception;
+package com.sparrow.mq;
 
-public class CacheNotFoundException extends Exception {
-    public CacheNotFoundException(String message) {
-        super(message);
-    }
+public interface MQHandler<T extends MQEvent> {
+    void handle(T t) throws Throwable;
 }

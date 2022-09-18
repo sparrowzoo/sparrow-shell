@@ -17,9 +17,8 @@
 
 package com.sparrow.constant.cache.key;
 
+import com.sparrow.cache.Key;
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.Key;
-
 public class KeyCode {
     public static final Key.Business CODE_ALL = new Key.Business(SparrowModule.CODE, "ALL");
 }

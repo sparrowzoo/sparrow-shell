@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant.cache;
+package com.sparrow.cache;
 
 import com.sparrow.protocol.ModuleSupport;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.utility.StringUtility;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by harry on 2018/1/8.
@@ -37,7 +37,7 @@ public class Key {
         this.business = builder.business.getKey();
         this.module = builder.business.getModule();
         if (builder.businessId != null) {
-            this.businessId = StringUtility.join(Arrays.asList(builder.businessId), Symbol.COLON);
+            this.businessId = this.join(Arrays.asList(builder.businessId), Symbol.COLON);
         }
     }
 
@@ -48,7 +48,7 @@ public class Key {
      * @return
      */
     public static Key parse(String key) {
-        if (StringUtility.isNullOrEmpty(key)) {
+        if (key==null||key.isEmpty()) {
             return null;
         }
         Key k = new Key();
@@ -62,10 +62,24 @@ public class Key {
     }
 
     public String key() {
-        if (StringUtility.isNullOrEmpty(this.businessId)) {
+        if (this.businessId==null) {
             return (this.module + Symbol.COLON + this.business).toLowerCase();
         }
         return (this.module + Symbol.COLON + this.business + Symbol.COLON + this.businessId).toLowerCase();
+    }
+
+    private static String join(Iterable<?> collection, String joinChar) {
+        StringBuilder sb = new StringBuilder();
+        for (Object object : collection) {
+            if (object == null) {
+                continue;
+            }
+            if (sb.length() > 0) {
+                sb.append(joinChar);
+            }
+            sb.append(object.toString().trim());
+        }
+        return sb.toString();
     }
 
     public String getBusiness() {
@@ -86,7 +100,7 @@ public class Key {
                 if (this.key.length() > 0) {
                     this.key.append(Symbol.COLON);
                 }
-                this.key.append(StringUtility.join(Arrays.asList(business), Symbol.DOT));
+                this.key.append(join(Collections.singletonList(business), Symbol.DOT));
             }
         }
 
@@ -95,7 +109,7 @@ public class Key {
                 return this;
             }
             this.key.append(Symbol.DOT);
-            this.key.append(StringUtility.join(Arrays.asList(business), Symbol.DOT));
+            this.key.append(join(Arrays.asList(business), Symbol.DOT));
             return this;
         }
 

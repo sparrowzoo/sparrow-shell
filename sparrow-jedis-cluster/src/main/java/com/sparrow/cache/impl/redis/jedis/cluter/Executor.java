@@ -17,7 +17,7 @@
 
 package com.sparrow.cache.impl.redis.jedis.cluter;
 
-import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.cache.exception.CacheConnectionException;
 import redis.clients.jedis.JedisCluster;
 
 interface Executor<T> {

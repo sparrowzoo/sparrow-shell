@@ -18,8 +18,8 @@
 package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheKey;
-import com.sparrow.constant.cache.Key;
-import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.cache.Key;
+import com.sparrow.cache.exception.CacheConnectionException;
 import redis.clients.jedis.JedisCluster;
 
 public class RedisCacheKey extends AbstractCommand implements CacheKey {

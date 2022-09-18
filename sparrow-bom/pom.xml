@@ -47,6 +47,9 @@
         <sparrow_registry_version>1.0.0-SNAPSHOT</sparrow_registry_version>
         <sparrow_protocol_version>1.0.0-SNAPSHOT</sparrow_protocol_version>
         <sparrow_protocol_dao_version>1.0.0-SNAPSHOT</sparrow_protocol_dao_version>
+        <sparrow_protocol_mq_version>1.0.0-SNAPSHOT</sparrow_protocol_mq_version>
+        <sparrow_protocol_redis_version>1.0.0-SNAPSHOT</sparrow_protocol_redis_version>
+
         <sparrow_lettuce_cluster_version>1.0.0-SNAPSHOT-SNAPSHOT</sparrow_lettuce_cluster_version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Build Environment -->
@@ -236,7 +239,18 @@
                 <groupId>com.sparrow</groupId>
                 <artifactId>sparrow-protocol-dao</artifactId>
                 <version>${sparrow_protocol_dao_version}</version>
+            </dependency>
 
+            <dependency>
+                <groupId>com.sparrow</groupId>
+                <artifactId>sparrow-protocol-mq</artifactId>
+                <version>${sparrow_protocol_mq_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sparrow</groupId>
+                <artifactId>sparrow-protocol-redis</artifactId>
+                <version>${sparrow_protocol_redis_version}</version>
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch</groupId>

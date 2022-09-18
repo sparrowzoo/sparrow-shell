@@ -20,17 +20,6 @@ package com.sparrow.constant;
 import com.sparrow.protocol.ModuleSupport;
 
 public class SparrowModule {
-    public static final ModuleSupport GLOBAL = new ModuleSupport() {
-        @Override
-        public String code() {
-            return "00";
-        }
-
-        @Override
-        public String name() {
-            return "GLOBAL";
-        }
-    };
 
     public static final ModuleSupport USER = new ModuleSupport() {
         @Override
@@ -65,18 +54,6 @@ public class SparrowModule {
         @Override
         public String name() {
             return "GROUP";
-        }
-    };
-
-    public static final ModuleSupport PRIVILEGE = new ModuleSupport() {
-        @Override
-        public String code() {
-            return "04";
-        }
-
-        @Override
-        public String name() {
-            return "PRIVILEGE";
         }
     };
 

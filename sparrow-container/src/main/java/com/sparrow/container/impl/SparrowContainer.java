@@ -16,6 +16,7 @@
  */
 package com.sparrow.container.impl;
 
+import com.sparrow.cache.exception.CacheNotFoundException;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.AbstractContainer;
@@ -27,7 +28,6 @@ import com.sparrow.container.BeanDefinitionReader;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.container.SimpleBeanDefinitionRegistry;
 import com.sparrow.container.XmlBeanDefinitionReader;
-import com.sparrow.exception.CacheNotFoundException;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.servlet.HandlerInterceptor;

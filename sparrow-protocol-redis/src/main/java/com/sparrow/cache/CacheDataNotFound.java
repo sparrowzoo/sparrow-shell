@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.mq;
+package com.sparrow.cache;
 
-import com.sparrow.constant.cache.Key;
-import com.sparrow.container.ContainerAware;
+import com.sparrow.cache.exception.CacheConnectionException;
 
-public interface MQPublisher extends ContainerAware {
-    void publish(MQEvent event, Key productKey) throws Throwable;
+public interface CacheDataNotFound<T> {
+    T read(Key key);
 
-    void publish(MQEvent event) throws Throwable;
+    default boolean backWrite(T data) throws CacheConnectionException {
+        return true;
+    }
 }

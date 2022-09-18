@@ -19,17 +19,14 @@ package com.sparrow.cache.impl.redis.jedis;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheSet;
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
+import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.core.TypeConverter;
-import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
 import java.util.HashSet;
 import java.util.Set;
 import redis.clients.jedis.Jedis;
 
-/**
- * Created by harry on 2018/1/26.
- */
 public class RedisCacheSet extends AbstractCommand implements CacheSet {
     RedisCacheSet(RedisPool redisPool) {
         this.redisPool = redisPool;

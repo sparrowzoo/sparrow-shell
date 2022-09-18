@@ -18,8 +18,8 @@
 package com.sparrow.concurrent;
 
 import com.sparrow.cache.CacheClient;
-import com.sparrow.constant.cache.Key;
-import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.cache.Key;
+import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.inject.Inject;

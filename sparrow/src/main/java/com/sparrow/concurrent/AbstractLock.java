@@ -17,7 +17,7 @@
 
 package com.sparrow.concurrent;
 
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
 import com.sparrow.utility.DateTimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -17,7 +17,7 @@
 
 package com.sparrow.concurrent.latch;
 
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
 
 /**
  * Created by harry on 2018/1/11.

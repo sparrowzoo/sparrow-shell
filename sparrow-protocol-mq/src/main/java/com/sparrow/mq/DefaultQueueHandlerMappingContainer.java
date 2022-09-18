@@ -17,15 +17,14 @@
 
 package com.sparrow.mq;
 
-import com.sparrow.utility.ClassUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultQueueHandlerMappingContainer implements EventHandlerMappingContainer {
-    private Logger logger = LoggerFactory.getLogger(DefaultQueueHandlerMappingContainer.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultQueueHandlerMappingContainer.class);
 
     public DefaultQueueHandlerMappingContainer() {
     }

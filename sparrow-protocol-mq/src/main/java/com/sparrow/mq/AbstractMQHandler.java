@@ -17,17 +17,13 @@
 
 package com.sparrow.mq;
 
-import com.sparrow.container.Container;
-
 public abstract class AbstractMQHandler<T extends MQEvent> implements MQHandler<T> {
     private EventHandlerMappingContainer queueHandlerMappingContainer;
 
     public void setQueueHandlerMappingContainer(EventHandlerMappingContainer queueHandlerMappingContainer) {
         this.queueHandlerMappingContainer = queueHandlerMappingContainer;
     }
-
-    @Override
-    public void aware(Container container, String beanName) {
+    public void aware(String beanName) {
         if (MQHandler.class.isAssignableFrom(this.getClass())) {
             queueHandlerMappingContainer.put(this);
         }

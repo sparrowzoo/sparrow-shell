@@ -18,11 +18,11 @@
 package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheMonitor;
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
+import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
-import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.protocol.constant.magic.Symbol;
 import java.util.HashSet;
 import javax.inject.Named;

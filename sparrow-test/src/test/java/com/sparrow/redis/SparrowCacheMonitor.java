@@ -18,7 +18,7 @@
 package com.sparrow.redis;
 
 import com.sparrow.cache.CacheMonitor;
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
 import javax.inject.Named;
 
 @Named("cacheMonitor")

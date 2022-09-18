@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache;
+package com.sparrow.cache.exception;
 
-import com.sparrow.constant.cache.Key;
-import com.sparrow.exception.CacheConnectionException;
-
-public interface CacheKey {
-    Long ttl(final Key key) throws CacheConnectionException;
-
-    Long expireSeconds(Key key, Long expireSeconds) throws CacheConnectionException;
-
-    Long expireMillis(Key key, Long expireMills) throws CacheConnectionException;
-
-    Long expireMillisAt(Key key, Long unixTimeMillis) throws CacheConnectionException;
-
-    Long delete(Key key) throws CacheConnectionException;
-
-    Long expireSecondsAt(Key key, Long unixTimeSeconds) throws CacheConnectionException;
+public class CacheNotFoundException extends Exception {
+    public CacheNotFoundException(String message) {
+        super(message);
+    }
 }

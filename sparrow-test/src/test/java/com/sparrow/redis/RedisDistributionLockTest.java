@@ -1,9 +1,9 @@
 package com.sparrow.redis;
 
+import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.concurrent.DistributionLock;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;
-import com.sparrow.exception.CacheConnectionException;
 
 public class RedisDistributionLockTest {
     public static void main(String[] args) {

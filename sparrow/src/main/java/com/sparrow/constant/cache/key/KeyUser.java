@@ -17,8 +17,8 @@
 
 package com.sparrow.constant.cache.key;
 
+import com.sparrow.cache.Key;
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.Key;
 import com.sparrow.enums.DateTimeUnit;
 import com.sparrow.utility.LockConfig;
 import java.util.HashMap;

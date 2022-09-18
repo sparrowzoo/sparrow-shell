@@ -17,6 +17,7 @@
 
 package com.sparrow.rocketmq.protocol.handler;
 
+import com.sparrow.container.Container;
 import com.sparrow.rocketmq.protocol.event.HelloEvent;
 import com.sparrow.rocketmq.spring.AbstractSpringMQHandler;
 
@@ -30,10 +31,5 @@ public class HelloWorldHandler extends AbstractSpringMQHandler<HelloEvent>{
 
     public void handle(HelloEvent event) throws Throwable {
         System.out.println(Thread.currentThread().getName()+"---"+event.getMessage());
-    }
-
-    @Override
-    public void setBeanName(String s) {
-        this.aware(null, s);
     }
 }

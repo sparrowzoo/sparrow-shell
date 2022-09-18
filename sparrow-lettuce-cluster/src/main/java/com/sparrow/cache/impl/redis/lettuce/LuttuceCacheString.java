@@ -1,7 +1,5 @@
 package com.sparrow.cache.impl.redis.lettuce;
 
-import com.sparrow.cache.CacheDataNotFound;
-import com.sparrow.cache.CacheString;
 import com.sparrow.constant.cache.KEY;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.CacheConnectionException;

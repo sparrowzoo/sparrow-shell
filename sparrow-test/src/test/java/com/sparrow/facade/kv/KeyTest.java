@@ -17,8 +17,8 @@
 
 package com.sparrow.facade.kv;
 
+import com.sparrow.cache.Key;
 import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.Key;
 
 /**
  * Created by harry on 2018/1/8.

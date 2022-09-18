@@ -19,9 +19,9 @@ package com.sparrow.cache.impl.redis.jedis.cluter;
 
 import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.CacheList;
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
+import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.core.TypeConverter;
-import com.sparrow.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
 import java.util.ArrayList;
 import java.util.List;

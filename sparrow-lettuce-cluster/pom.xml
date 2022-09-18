@@ -17,6 +17,10 @@
             <artifactId>sparrow</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.sparrow</groupId>
+            <artifactId>sparrow-protocol-redis</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.lettuce</groupId>
             <artifactId>lettuce-core</artifactId>
         </dependency>

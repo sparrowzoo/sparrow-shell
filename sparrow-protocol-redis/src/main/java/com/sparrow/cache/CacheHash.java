@@ -17,8 +17,7 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.Key;
-import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.cache.exception.CacheConnectionException;
 import java.util.Collection;
 import java.util.Map;
 

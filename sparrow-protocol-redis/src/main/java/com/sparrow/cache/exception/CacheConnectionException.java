@@ -14,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.constant.cache.key;
 
-import com.sparrow.constant.SparrowModule;
-import com.sparrow.constant.cache.Key;
+package com.sparrow.cache.exception;
 
-public class KeyMQIdempotent {
-    public static final Key.Business IDEMPOTENT = new Key.Business(SparrowModule.GLOBAL, "IDEMPOTENT");
-
+public class CacheConnectionException extends Exception {
+    public CacheConnectionException(String message) {
+        super(message);
+    }
 }

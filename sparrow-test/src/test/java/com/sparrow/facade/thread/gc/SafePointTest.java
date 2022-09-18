@@ -9,7 +9,7 @@ public class SafePointTest {
         long t = System.currentTimeMillis();
         Runnable runnable = new Runnable() {
             @Override public void run() {
-                for (long i = 0; i < 1000000000; i++) {
+                for (int i = 0; i < 1000000000; i++) {
                     num.addAndGet(1);
                     //safepoint
                 }

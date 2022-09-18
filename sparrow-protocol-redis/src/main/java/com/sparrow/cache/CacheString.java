@@ -17,8 +17,7 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.Key;
-import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.cache.exception.CacheConnectionException;
 
 public interface CacheString {
 

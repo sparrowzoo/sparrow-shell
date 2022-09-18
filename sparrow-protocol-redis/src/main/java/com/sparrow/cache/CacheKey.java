@@ -17,12 +17,18 @@
 
 package com.sparrow.cache;
 
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.exception.CacheConnectionException;
 
-public interface CacheMonitor {
-    boolean before(Long startTime, Key key);
+public interface CacheKey {
+    Long ttl(final Key key) throws CacheConnectionException;
 
-    void monitor(Long startTime, Long endTime, Key key);
+    Long expireSeconds(Key key, Long expireSeconds) throws CacheConnectionException;
 
-    void breakdown(Key key);
+    Long expireMillis(Key key, Long expireMills) throws CacheConnectionException;
+
+    Long expireMillisAt(Key key, Long unixTimeMillis) throws CacheConnectionException;
+
+    Long delete(Key key) throws CacheConnectionException;
+
+    Long expireSecondsAt(Key key, Long unixTimeSeconds) throws CacheConnectionException;
 }

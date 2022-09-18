@@ -17,7 +17,8 @@
 
 package com.sparrow.rocketmq.impl;
 
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
+import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import com.sparrow.mq.EventHandlerMappingContainer;
 import com.sparrow.mq.MQClient;
 import com.sparrow.mq.MQContainerProvider;
@@ -25,7 +26,6 @@ import com.sparrow.mq.MQEvent;
 import com.sparrow.mq.MQHandler;
 import com.sparrow.mq.MQIdempotent;
 import com.sparrow.rocketmq.MessageConverter;
-import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 
 import java.util.List;
 

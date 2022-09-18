@@ -17,8 +17,9 @@
 
 package com.sparrow.rocketmq.impl;
 
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerAware;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.mq.MQClient;
 import com.sparrow.mq.MQEvent;
@@ -38,7 +39,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.UUID;
 
-public class SparrowRocketMQPublisher implements MQPublisher {
+public class SparrowRocketMQPublisher implements MQPublisher, ContainerAware {
     protected static Logger logger = LoggerFactory.getLogger(SparrowRocketMQPublisher.class);
     private String nameServerAddress;
     private String group;

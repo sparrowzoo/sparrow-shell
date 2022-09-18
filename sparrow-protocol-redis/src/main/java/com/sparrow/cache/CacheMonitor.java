@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-package com.sparrow.mq;
+package com.sparrow.cache;
 
-import com.sparrow.container.ContainerAware;
+public interface CacheMonitor {
+    boolean before(Long startTime, Key key);
 
-public interface MQHandler<T extends MQEvent> extends ContainerAware {
-    void handle(T t) throws Throwable;
+    void monitor(Long startTime, Long endTime, Key key);
+
+    void breakdown(Key key);
 }

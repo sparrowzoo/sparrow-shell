@@ -17,7 +17,7 @@
 
 package com.sparrow.cache.impl.redis.jedis;
 
-import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.cache.exception.CacheConnectionException;
 import redis.clients.jedis.Jedis;
 
 public interface Executor<T> {

@@ -14,11 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.protocol.constant;
 
-package com.sparrow.exception;
+import com.sparrow.protocol.ModuleSupport;
 
-public class CacheConnectionException extends Exception {
-    public CacheConnectionException(String message) {
-        super(message);
-    }
+public class GlobalModule {
+    public static final ModuleSupport GLOBAL = new ModuleSupport() {
+        @Override
+        public String code() {
+            return "00";
+        }
+
+        @Override
+        public String name() {
+            return "GLOBAL";
+        }
+    };
 }

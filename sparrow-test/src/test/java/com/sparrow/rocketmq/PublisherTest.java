@@ -17,7 +17,7 @@
 
 package com.sparrow.rocketmq;
 
-import com.sparrow.constant.cache.Key;
+import com.sparrow.cache.Key;
 import com.sparrow.constant.cache.key.KeyResource;
 import com.sparrow.container.Container;
 import com.sparrow.container.impl.SparrowContainer;

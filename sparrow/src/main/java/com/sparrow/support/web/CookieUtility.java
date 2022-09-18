@@ -17,8 +17,8 @@
 
 package com.sparrow.support.web;
 
+import com.sparrow.cache.Key;
 import com.sparrow.constant.Config;
-import com.sparrow.constant.cache.Key;
 import com.sparrow.constant.cache.key.KeyUser;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.JSUtility;

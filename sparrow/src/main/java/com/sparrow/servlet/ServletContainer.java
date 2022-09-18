@@ -17,8 +17,7 @@
 
 package com.sparrow.servlet;
 
-import com.sparrow.exception.CacheNotFoundException;
-
+import com.sparrow.cache.exception.CacheNotFoundException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

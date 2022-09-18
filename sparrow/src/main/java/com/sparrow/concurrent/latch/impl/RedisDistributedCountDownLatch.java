@@ -18,8 +18,8 @@
 package com.sparrow.concurrent.latch.impl;
 
 import com.sparrow.cache.CacheClient;
-import com.sparrow.constant.cache.Key;
-import com.sparrow.exception.CacheConnectionException;
+import com.sparrow.cache.Key;
+import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
