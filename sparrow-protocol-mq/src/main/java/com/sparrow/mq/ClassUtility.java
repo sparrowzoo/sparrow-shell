@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 
 public class ClassUtility {
     private static Logger logger = LoggerFactory.getLogger(ClassUtility.class);
+
     public static List<Class> getClasses(
         String packageName) throws ClassNotFoundException, IOException, URISyntaxException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -81,7 +82,7 @@ public class ClassUtility {
             return null;
         }
         File[] fileList = directory.listFiles();
-        if (fileList==null||fileList.length==0) {
+        if (fileList == null || fileList.length == 0) {
             return null;
         }
         for (File file : fileList) {

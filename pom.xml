@@ -53,7 +53,6 @@
         <module>sparrow-data-source</module>
         <module>sparrow-orm</module>
         <module>sparrow-json</module>
-        <module>sparrow-bom</module>
         <module>sparrow-log</module>
         <module>sparrow-rocketmq-client</module>
         <module>sparrow-jedis</module>

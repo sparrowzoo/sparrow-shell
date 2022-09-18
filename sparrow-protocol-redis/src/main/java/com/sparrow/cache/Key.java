@@ -48,7 +48,7 @@ public class Key {
      * @return
      */
     public static Key parse(String key) {
-        if (key==null||key.isEmpty()) {
+        if (key == null || key.isEmpty()) {
             return null;
         }
         Key k = new Key();
@@ -62,7 +62,7 @@ public class Key {
     }
 
     public String key() {
-        if (this.businessId==null) {
+        if (this.businessId == null) {
             return (this.module + Symbol.COLON + this.business).toLowerCase();
         }
         return (this.module + Symbol.COLON + this.business + Symbol.COLON + this.businessId).toLowerCase();
