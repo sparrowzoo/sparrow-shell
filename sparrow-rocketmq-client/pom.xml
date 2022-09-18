@@ -27,7 +27,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow-rocketmq-client</artifactId>
     <name>${project.artifactId}</name>
-    <version>${sparrow_rocketmq_client_version}</version>
+    <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>com.sparrow</groupId>

@@ -27,7 +27,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sparrow-orm</artifactId>
-    <version>${sparrow_orm_version}</version>
+    <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>com.sparrow</groupId>
