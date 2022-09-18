@@ -25,7 +25,6 @@ import com.sparrow.core.TypeConverter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.resps.Tuple;
 

@@ -32,7 +32,18 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>4.2.3</version>
+            <version>4.2.2</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-pool2</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <artifactId>commons-pool2</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <version>2.11.1</version>
         </dependency>
         <dependency>
             <groupId>com.sparrow</groupId>
@@ -60,6 +71,14 @@
                 <configuration>
                     <configLocation>../style/sparrow_checkstyle.xml</configLocation>
                     <suppressionsLocation>../style/check_style_suppressions.xml</suppressionsLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>

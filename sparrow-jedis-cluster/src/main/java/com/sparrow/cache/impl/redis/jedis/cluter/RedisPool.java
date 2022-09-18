@@ -27,6 +27,7 @@ import com.sparrow.protocol.constant.magic.Symbol;
 import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Named;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.HostAndPort;
@@ -39,6 +40,7 @@ public class RedisPool implements ContainerAware {
     private Logger logger = LoggerFactory.getLogger(RedisPool.class);
     private CacheMonitor cacheMonitor;
     private String urls;
+
     public void setCacheMonitor(CacheMonitor cacheMonitor) {
         this.cacheMonitor = cacheMonitor;
     }
@@ -51,7 +53,7 @@ public class RedisPool implements ContainerAware {
         this.config = config;
     }
 
-    private JedisPoolConfig config;
+    private GenericObjectPoolConfig config;
 
     private JedisCluster jedisCluster;
 
@@ -87,9 +89,8 @@ public class RedisPool implements ContainerAware {
         }
     }
 
-    @Override
     public void aware(Container container, String beanName) {
-        Set<HostAndPort> nodes = new HashSet<>();
+        Set<HostAndPort> nodes = new HashSet<HostAndPort>();
 
         String[] urlArray = this.urls.split(Symbol.COMMA);
 
