@@ -25,6 +25,7 @@ import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
 import com.sparrow.protocol.constant.magic.Symbol;
 import java.util.HashSet;
+import java.util.Set;
 import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +89,7 @@ public class RedisPool implements ContainerAware {
 
     @Override
     public void aware(Container container, String beanName) {
-        HashSet<HostAndPort> nodes = new HashSet<>();
+        Set<HostAndPort> nodes = new HashSet<>();
 
         String[] urlArray = this.urls.split(Symbol.COMMA);
 

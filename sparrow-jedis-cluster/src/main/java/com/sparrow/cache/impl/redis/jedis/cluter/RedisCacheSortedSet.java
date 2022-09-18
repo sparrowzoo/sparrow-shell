@@ -23,10 +23,11 @@ import com.sparrow.cache.Key;
 import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.core.TypeConverter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.Tuple;
+import redis.clients.jedis.resps.Tuple;
 
 public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedSet {
     RedisCacheSortedSet(RedisPool redisPool) {
@@ -101,7 +102,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
         return redisPool.execute(new Executor<Map<String, Double>>() {
             @Override
             public Map<String, Double> execute(JedisCluster jedis) {
-                Set<Tuple> tuples = jedis.zrevrangeWithScores(key.key(), 0, -1);
+                List<Tuple> tuples = jedis.zrevrangeWithScores(key.key(), 0, -1);
                 Map<String, Double> scoreMap = new LinkedHashMap<String, Double>(tuples.size());
                 for (Tuple tuple : tuples) {
                     scoreMap.put(tuple.getElement(), tuple.getScore());
@@ -136,7 +137,7 @@ public class RedisCacheSortedSet extends AbstractCommand implements CacheSortedS
                 @Override
                 public Map<T, Double> execute(JedisCluster jedis) {
                     Map<T, Double> scoreMap = null;
-                    Set<Tuple> tuples = jedis.zrevrangeWithScores(key.key(), 0, -1);
+                    List<Tuple> tuples = jedis.zrevrangeWithScores(key.key(), 0, -1);
                     if (tuples == null || tuples.size() == 0) {
                         if (redisPool.getCacheMonitor() != null) {
                             redisPool.getCacheMonitor().breakdown(key);
