@@ -18,7 +18,7 @@
 package com.sparrow.support.web;
 
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.ClientInformation;
+import com.sparrow.protocol.constant.ClientInfoConstant;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Symbol;
@@ -133,7 +133,7 @@ public class ServletUtility {
     }
 
     public String getDeviceId(HttpServletRequest request) {
-        String deviceId = request.getHeader(ClientInformation.DEVICE_ID);
+        String deviceId = request.getHeader(ClientInfoConstant.DEVICE_ID);
         if (StringUtility.isNullOrEmpty(deviceId)) {
             deviceId = ServletUtility.getInstance().getClientIp(request);
         }

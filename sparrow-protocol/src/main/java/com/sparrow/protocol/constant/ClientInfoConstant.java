@@ -16,7 +16,7 @@
  */
 package com.sparrow.protocol.constant;
 
-public class ClientInformation {
+public class ClientInfoConstant {
     /**
      * 子站域名
      */
