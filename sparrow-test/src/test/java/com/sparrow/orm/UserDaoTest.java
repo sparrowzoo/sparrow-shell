@@ -2,6 +2,7 @@ package com.sparrow.orm;
 
 import com.sparrow.constant.DateTime;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.Gender;
 import com.sparrow.orm.dao.UserDAO;
@@ -22,8 +23,8 @@ public class UserDaoTest {
     @Test
     public void getUser() {
         Container container = ApplicationContext.getContainer();
-        container.setContextConfigLocation("/dao.xml");
-        container.init();
+        //container.setContextConfigLocation("/dao.xml");
+        container.init(new ContainerBuilder());
         UserDaoImpl userDAO = container.getBean("userDao");
         userDAO.getByUserName("harry");
     }
@@ -31,8 +32,8 @@ public class UserDaoTest {
     @Test
     public void userTest() {
         Container container = ApplicationContext.getContainer();
-        container.setContextConfigLocation("/dao.xml");
-        container.init();
+        //container.setContextConfigLocation("/dao.xml");
+        container.init(new ContainerBuilder());
         UserDAO userDAO = container.getBean("userDao");
 
         User user = new User();

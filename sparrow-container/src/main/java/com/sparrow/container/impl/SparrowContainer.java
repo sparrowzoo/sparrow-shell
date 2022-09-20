@@ -26,8 +26,10 @@ import com.sparrow.container.BeanDefinition;
 import com.sparrow.container.BeanDefinitionParserDelegate;
 import com.sparrow.container.BeanDefinitionReader;
 import com.sparrow.container.ContainerAware;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.SimpleBeanDefinitionRegistry;
 import com.sparrow.container.XmlBeanDefinitionReader;
+import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.servlet.HandlerInterceptor;
@@ -42,6 +44,9 @@ public class SparrowContainer extends AbstractContainer {
     private static Logger logger = LoggerFactory.getLogger(SparrowContainer.class);
 
     private void initProxyBeans() {
+        if (!this.builder.isInitProxyBean()) {
+            return;
+        }
         Iterator<String> iterator = this.beanDefinitionRegistry.keyIterator();
         while (iterator.hasNext()) {
             String beanName = iterator.next();
@@ -50,7 +55,9 @@ public class SparrowContainer extends AbstractContainer {
                 if (!bd.isSingleton()) {
                     //this.initMethod(bd);
                     Class clazz = Class.forName(bd.getBeanClassName());
-                    this.initProxyBean(clazz);
+                    if (POJO.class.isAssignableFrom(clazz)) {
+                        this.initProxyBean(clazz);
+                    }
                 }
             } catch (Exception e) {
             }
@@ -58,12 +65,15 @@ public class SparrowContainer extends AbstractContainer {
     }
 
     private void initEarlySingleton() {
+        if (!builder.isInitSingletonBean()) {
+            return;
+        }
         Iterator<String> iterator = this.beanDefinitionRegistry.keyIterator();
+
         while (iterator.hasNext()) {
             String beanName = iterator.next();
             try {
                 BeanDefinition bd = beanDefinitionRegistry.getObject(beanName);
-                this.initMethod(bd);
                 if (bd.isSingleton() && !bd.isController()) {
                     Object o = this.earlyInstance(bd);
                     this.earlySingletonRegistry.pubObject(beanName, o);
@@ -77,12 +87,14 @@ public class SparrowContainer extends AbstractContainer {
     }
 
     @Override
-    public void init() {
+    public void init(ContainerBuilder builder) {
+        this.builder = builder;
         logger.info("----------------- container init ....-------------------");
         try {
             logger.info("-------------system config file init ...-------------------");
             initSystemConfig();
             logger.info("-------------init bean ...---------------------------");
+
             SimpleBeanDefinitionRegistry registry = new SimpleBeanDefinitionRegistry();
             BeanDefinitionParserDelegate delegate = new BeanDefinitionParserDelegate();
 
@@ -90,7 +102,12 @@ public class SparrowContainer extends AbstractContainer {
             AnnotationBeanDefinitionReader annotationBeanDefinitionReader = new AnnotationBeanDefinitionReader(registry, annotationDelegate);
             BeanDefinitionReader definitionReader = new XmlBeanDefinitionReader(registry, annotationBeanDefinitionReader, delegate);
 
-            definitionReader.loadBeanDefinitions(this.contextConfigLocation);
+            if (this.builder.isInitSingletonBean()) {
+                definitionReader.loadBeanDefinitions(this.builder.getContextConfigLocation());
+            }
+            if (!StringUtility.isNullOrEmpty(builder.getScanBasePackage())) {
+                annotationBeanDefinitionReader.loadBeanDefinitions(builder.getScanBasePackage());
+            }
             this.beanDefinitionRegistry = registry;
             this.initProxyBeans();
             this.initEarlySingleton();
@@ -112,6 +129,9 @@ public class SparrowContainer extends AbstractContainer {
     }
 
     private void initSingletonBeans(SimpleBeanDefinitionRegistry registry) {
+        if (!builder.isInitSingletonBean()) {
+            return;
+        }
         Iterator<String> iterator = registry.keyIterator();
         while (iterator.hasNext()) {
             String beanName = iterator.next();
@@ -143,10 +163,10 @@ public class SparrowContainer extends AbstractContainer {
     }
 
     private void initSystemConfig() throws CacheNotFoundException {
-        if (StringUtility.isNullOrEmpty(this.configLocation)) {
+        if (StringUtility.isNullOrEmpty(this.builder.getConfigLocation())) {
             return;
         }
-        ConfigUtility.initSystem(this.configLocation);
+        ConfigUtility.initSystem(this.builder.getConfigLocation());
         String internationalization = ConfigUtility
             .getValue(Config.INTERNATIONALIZATION);
 

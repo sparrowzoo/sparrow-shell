@@ -18,6 +18,7 @@
 package com.sparrow.mvc;
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -34,8 +35,9 @@ public class ContextLoaderListener implements ServletContextListener {
         Container container = ApplicationContext.getContainer();
         String contextConfigLocation = servletContextEvent.getServletContext().getInitParameter("contextConfigLocation");
         String configLocation = servletContextEvent.getServletContext().getInitParameter("configLocation");
-        container.setContextConfigLocation(contextConfigLocation);
-        container.setConfigLocation(configLocation);
-        container.init();
+        ContainerBuilder builder = new ContainerBuilder()
+            .contextConfigLocation(contextConfigLocation)
+            .configLocation(configLocation);
+        container.init(builder);
     }
 }

@@ -15,6 +15,7 @@ import java.util.Map;
  * 这里是示例demo具体代码业务端可以实现
  */
 public class SpringContainerImpl implements Container {
+
     private ApplicationContext applicationContext;
 
     @Override public FactoryBean getSingletonRegister() {

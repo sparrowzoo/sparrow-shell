@@ -39,11 +39,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractContainer implements Container {
-
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected String contextConfigLocation = "/beans.xml";
-    protected String configLocation = "/system_config.properties";
+    protected ContainerBuilder builder;
 
     protected SimpleSingletonRegistry singletonRegistry = new SimpleSingletonRegistry();
 
@@ -68,16 +66,6 @@ public abstract class AbstractContainer implements Container {
      * class-name-->type converter list
      */
     final Map<String, List<TypeConverter>> fieldCache = new ConcurrentHashMap<String, List<TypeConverter>>();
-
-    /**
-     * class-name -->set method list
-     */
-    final Map<String, List<Method>> setMethods = new ConcurrentHashMap<String, List<Method>>();
-
-    /**
-     * class-name -->get method list
-     */
-    final Map<String, List<Method>> getMethods = new ConcurrentHashMap<String, List<Method>>();
 
     @Override
     public FactoryBean getSingletonRegister() {
@@ -112,28 +100,6 @@ public abstract class AbstractContainer implements Container {
     @Override
     public Map<String, Method> getControllerMethod(String clazzName) {
         return controllerMethodCache.get(clazzName);
-    }
-
-    public void initMethod(BeanDefinition bd) {
-        Class beanClass;
-        try {
-            beanClass = Class.forName(bd.getBeanClassName());
-        } catch (ClassNotFoundException e) {
-            logger.error("{} class not found", bd.getBeanClassName());
-            return;
-        }
-        Method[] methods = beanClass.getMethods();
-        List<Method> setMethods = new ArrayList<Method>(methods.length / 2);
-        List<Method> getMethods = new ArrayList<Method>(methods.length / 2);
-        for (Method method : methods) {
-            if (PropertyNamer.isSetter(method.getName())) {
-                setMethods.add(method);
-                continue;
-            }
-            getMethods.add(method);
-        }
-        this.setMethods.put(beanClass.getSimpleName(), setMethods);
-        this.getMethods.put(beanClass.getSimpleName(), getMethods);
     }
 
     @Override
@@ -279,7 +245,7 @@ public abstract class AbstractContainer implements Container {
         beanName = ConfigUtility.getValue(beanName, defaultBeanName);
         T obj = this.getBean(beanName);
         if (obj == null) {
-            logger.warn(beanName + " not exist,please config [" + defaultBeanName + "] in " + this.contextConfigLocation);
+            logger.warn(beanName + " not exist,please config [" + defaultBeanName + "] in " + builder.getContextConfigLocation());
         }
         return obj;
     }
@@ -333,21 +299,5 @@ public abstract class AbstractContainer implements Container {
         }
         this.controllerMethodCache.put(beanName, methodMap);
         this.controllerRegister.pubObject(beanName, o);
-    }
-
-    @Override
-    public void setConfigLocation(String configLocation) {
-        if (StringUtility.isNullOrEmpty(configLocation)) {
-            return;
-        }
-        this.configLocation = configLocation;
-    }
-
-    @Override
-    public void setContextConfigLocation(String contextConfigLocation) {
-        if (StringUtility.isNullOrEmpty(contextConfigLocation)) {
-            return;
-        }
-        this.contextConfigLocation = contextConfigLocation;
     }
 }
