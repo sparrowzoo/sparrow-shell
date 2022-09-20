@@ -22,11 +22,13 @@ import com.sparrow.cache.Key;
 import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
 import java.util.concurrent.locks.ReentrantLock;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 public class RedisLock extends AbstractLock {
     private CacheClient cacheClient;
+
+    public void setCacheClient(CacheClient cacheClient) {
+        this.cacheClient = cacheClient;
+    }
 
     private ReentrantLock localLock = new ReentrantLock();
 

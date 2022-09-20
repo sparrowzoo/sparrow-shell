@@ -93,7 +93,9 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         DocumentLoader documentLoader = new DefaultDocumentLoader();
         Document doc = documentLoader.loadDocument(xmlFileName, false);
         this.beforeParse(xmlFileName);
-        this.parse(doc.getDocumentElement());
+        if (doc != null) {
+            this.parse(doc.getDocumentElement());
+        }
         this.afterParse(xmlFileName);
     }
 }

@@ -60,9 +60,5 @@ public interface Container {
     /**
      * 初始化container
      */
-    void init();
-
-    void setConfigLocation(String configLocation);
-
-    void setContextConfigLocation(String contextConfigLocation);
+    void init(ContainerBuilder builder);
 }

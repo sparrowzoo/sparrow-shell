@@ -21,11 +21,10 @@ import com.sparrow.servlet.impl.AbstractServletContainer;
 import com.sparrow.support.pager.SparrowPagerResult;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.CollectionsUtility;
-
+import java.util.List;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Sparrow framework controller support class that used by sparrow only
@@ -58,32 +57,10 @@ public class SparrowServletContainer extends AbstractServletContainer {
             pagerSearch.getRecordCount());
     }
 
-    @Override
-    public void flash(String key, Object value) {
-        this.getRequest().getSession()
-            .setAttribute(key, value);
-    }
-
-    @Override
-    public <T> T flash(String key) {
-        return (T) this.getRequest().getSession()
-            .getAttribute(key);
-    }
-
-    @Override
-    public <T> T removeFlash(String key) {
-        T t = (T) this.getRequest().getSession()
-            .getAttribute(key);
-        this.getRequest().getSession().removeAttribute(key);
-        return t;
-    }
-
-    @Override
     public void clear() {
         httpContext.remove();
     }
 
-    @Override
     public <T> T get(String key) {
         return (T) httpContext.get(key);
     }

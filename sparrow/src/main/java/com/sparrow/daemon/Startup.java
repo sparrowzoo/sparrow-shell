@@ -18,6 +18,7 @@
 package com.sparrow.daemon;
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.FactoryBean;
 import com.sparrow.core.spi.ApplicationContext;
 import java.util.Iterator;
@@ -26,7 +27,8 @@ public class Startup {
     public static void main(String[] args) {
         Container container =
             ApplicationContext.getContainer();
-        container.init();
+        ContainerBuilder builder = new ContainerBuilder();
+        container.init(builder);
         FactoryBean factory = container.getSingletonRegister();
         Iterator iterator = factory.keyIterator();
         while (iterator.hasNext()) {

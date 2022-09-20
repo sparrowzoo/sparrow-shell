@@ -128,6 +128,27 @@ public abstract class AbstractServletContainer implements ServletContainer {
         return parameters;
     }
 
+
+    @Override
+    public void flash(String key, Object value) {
+        this.getRequest().getSession()
+            .setAttribute(key, value);
+    }
+
+    @Override
+    public <T> T flash(String key) {
+        return (T) this.getRequest().getSession()
+            .getAttribute(key);
+    }
+
+    @Override
+    public <T> T removeFlash(String key) {
+        T t = (T) this.getRequest().getSession()
+            .getAttribute(key);
+        this.getRequest().getSession().removeAttribute(key);
+        return t;
+    }
+
     @Override
     public String getRequestBody() {
         StringBuilder sb = new StringBuilder();

@@ -46,12 +46,6 @@ public interface ServletContainer {
 
     <T> T removeFlash(String key);
 
-    void clear();
-
-    <T> T get(String key);
-
-//    <T> void put(String key,T value);
-
     String referer();
 
     String queryString();
