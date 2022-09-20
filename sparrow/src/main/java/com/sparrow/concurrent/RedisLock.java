@@ -25,9 +25,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named
 public class RedisLock extends AbstractLock {
-    @Inject
     private CacheClient cacheClient;
 
     private ReentrantLock localLock = new ReentrantLock();
