@@ -17,6 +17,7 @@
 package com.sparrow.mvc.interceptor;
 
 import com.sparrow.constant.Config;
+import com.sparrow.protocol.ClientInformation;
 import com.sparrow.protocol.constant.ClientInfoConstant;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.enums.Platform;
@@ -42,16 +43,16 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
 
     @Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-        com.sparrow.protocol.ClientInformation clientInformation = new com.sparrow.protocol.ClientInformation();
+        ClientInformation clientInformation = new com.sparrow.protocol.ClientInformation();
         clientInformation.setIp(servletUtility.getClientIp(request));
         String appId = request.getHeader(ClientInfoConstant.APP_ID);
         if (!StringUtility.isNullOrEmpty(appId)) {
-            clientInformation.setAppId(Integer.valueOf(appId));
+            clientInformation.setAppId(Integer.parseInt(appId));
         }
 
         String appVersion = request.getHeader(ClientInfoConstant.APP_VERSION);
         if (!StringUtility.isNullOrEmpty(appVersion)) {
-            clientInformation.setAppVersion(Float.valueOf(appVersion));
+            clientInformation.setAppVersion(Float.parseFloat(appVersion));
         }
 
         clientInformation.setBssid(request.getHeader(ClientInfoConstant.BSSID));
@@ -66,24 +67,24 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
         clientInformation.setImei(request.getHeader(ClientInfoConstant.IMEI));
         String latitude = request.getHeader(ClientInfoConstant.LATITUDE);
         if (!StringUtility.isNullOrEmpty(latitude)) {
-            clientInformation.setLatitude(Double.valueOf(request.getHeader(ClientInfoConstant.LATITUDE)));
+            clientInformation.setLatitude(Double.parseDouble(request.getHeader(ClientInfoConstant.LATITUDE)));
         }
 
         String longitude = request.getHeader(ClientInfoConstant.LONGITUDE);
         if (!StringUtility.isNullOrEmpty(longitude)) {
-            clientInformation.setLongitude(Double.valueOf(request.getHeader(ClientInfoConstant.LONGITUDE)));
+            clientInformation.setLongitude(Double.parseDouble(request.getHeader(ClientInfoConstant.LONGITUDE)));
         }
 
         clientInformation.setOs(request.getHeader(ClientInfoConstant.OS));
         clientInformation.setNetwork(request.getHeader(ClientInfoConstant.NETWORK));
         String startTime = request.getHeader(ClientInfoConstant.START_TIME);
         if (!StringUtility.isNullOrEmpty(startTime)) {
-            clientInformation.setStartTime(Long.valueOf(startTime));
+            clientInformation.setStartTime(Long.parseLong(startTime));
         }
         String resumeTime = request.getHeader(ClientInfoConstant.RESUME_TIME);
 
         if (!StringUtility.isNullOrEmpty(resumeTime)) {
-            clientInformation.setResumeTime(Long.valueOf(resumeTime));
+            clientInformation.setResumeTime(Long.parseLong(resumeTime));
         }
         clientInformation.setWebsite(rootPath);
         clientInformation.setUserAgent(request.getHeader(ClientInfoConstant.USER_AGENT));
@@ -106,11 +107,11 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
         return true;
     }
 
-    @Override public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override public void postHandle(HttpServletRequest request, HttpServletResponse response) {
 
     }
 
-    @Override public void afterCompletion(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override public void afterCompletion(HttpServletRequest request, HttpServletResponse response)  {
 
     }
 }
