@@ -90,7 +90,6 @@ public class Constant {
     public static final String REQUEST_ACTION_CURRENT_FORUM = "request_action_current_forum";
     public static final String REQUEST_CLIENT_INFORMATION = "client";
 
-    public static final String STRING_ALL = "all";
     /**
      * 空链接
      */
