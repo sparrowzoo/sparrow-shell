@@ -22,22 +22,22 @@ import com.sparrow.cg.MethodAccessor;
 import com.sparrow.cg.PropertyNamer;
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
+import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
-
-public class Generator4MethodAccessorImpl implements Generator4MethodAccessor {
+public class Generator4MethodHashAccessor implements Generator4MethodAccessor {
     private static Logger logger = LoggerFactory.getLogger(Generator4MethodAccessor.class);
     private static final String PACKAGE_NAME = "com.sparrow.accessMethod";
 
     @Override
     public MethodAccessor newMethodAccessor(Class<?> clazz) {
         StringBuilder setJavaSource = new StringBuilder();
+        StringBuilder setHashJavaSource = new StringBuilder();
         StringBuilder getJavaSource = new StringBuilder();
+        StringBuilder getHashJavaSource = new StringBuilder();
 
         String operatorClassName = clazz.getName();
         String operatorObjectName = StringUtility.setFirstByteLowerCase(clazz
@@ -48,11 +48,18 @@ public class Generator4MethodAccessorImpl implements Generator4MethodAccessor {
         getJavaSource.append(Constant.ENTER_TEXT);
         getJavaSource.append(String.format("%1$s %2$s=(%1$s)o;",
             operatorClassName, operatorObjectName));
+        getJavaSource.append("return getMap.get(methodName).apply(");
+        getJavaSource.append(operatorClassName);
+        getJavaSource.append(",methodName}");
+
         setJavaSource
             .append("public void set(Object o, String methodName,Object arg){");
         setJavaSource.append(Constant.ENTER_TEXT);
         setJavaSource.append(String.format("%1$s %2$s=(%1$s)o;",
             operatorClassName, operatorObjectName));
+        setJavaSource.append(" setMap.get(methodName).accept(");
+        getJavaSource.append(operatorClassName);
+        setJavaSource.append(",methodName);");
 
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
@@ -61,26 +68,16 @@ public class Generator4MethodAccessorImpl implements Generator4MethodAccessor {
             }
             Class<?>[] parameterType = method.getParameterTypes();
             if (PropertyNamer.isSetter(method.getName()) && parameterType.length == 1) {
-                setJavaSource.append(Constant.ENTER_TEXT);
-                setJavaSource.append(String.format(
-                    "if(methodName.equalsIgnoreCase(\"%1$s\")||methodName.equalsIgnoreCase(\"%2$s\")){",
-                    method.getName(),
-                    PropertyNamer.methodToProperty(method.getName())));
-
-                setJavaSource.append(String.format("%1$s.%2$s((%3$s)arg);return;}",
-                    operatorObjectName, method.getName(),
-                    ClassUtility.getWrapClass(parameterType[0])));
-                setJavaSource.append(Constant.ENTER_TEXT);
-
+                setHashJavaSource.append(Constant.ENTER_TEXT);
+                setHashJavaSource.append(String.format("getMap.put(\"%1$s\", (o, r) -> o.%1$s());", method.getName()));
+                setHashJavaSource.append(Constant.ENTER_TEXT);
             } else if (PropertyNamer.isGetter(method.getName())
                 && parameterType.length == 0
                 && !method.getReturnType().equals(void.class)) {
-                getJavaSource.append(Constant.ENTER_TEXT);
-                getJavaSource.append(String.format(
-                    "if(methodName.equalsIgnoreCase(\"%1$s\")||methodName.equalsIgnoreCase(\"%2$s\")){", method.getName().toLowerCase(), PropertyNamer.methodToProperty(method.getName()).toLowerCase()));
-                getJavaSource.append(String.format("return %1$s.%2$s();}",
-                    operatorObjectName, method.getName()));
-                getJavaSource.append(Constant.ENTER_TEXT);
+                getHashJavaSource.append(Constant.ENTER_TEXT);
+                getHashJavaSource.append(
+                    String.format("setMap.put(\"%1$s\", (o, arg) -> o.%1$s((String) arg));", method.getName()));
+                getHashJavaSource.append(Constant.ENTER_TEXT);
             }
         }
         setJavaSource.append("}");
@@ -92,9 +89,15 @@ public class Generator4MethodAccessorImpl implements Generator4MethodAccessor {
             + "import com.sparrow.cg.MethodAccessor;"
             + Constant.ENTER_TEXT + " public class "
             + methodAccessorClassName + "  implements MethodAccessor{"
+            + Constant.ENTER_TEXT + "static{"
+            + Constant.ENTER_TEXT + getHashJavaSource.toString()
+            + Constant.ENTER_TEXT + setHashJavaSource.toString()
+            + Constant.ENTER_TEXT + "}"
+
             + Constant.ENTER_TEXT + getJavaSource.toString()
             + setJavaSource.toString() + "}";
-        if (ConfigUtility.getBooleanValue(Config.METHOD_ACCESS_CLASS, false)) {
+
+        if (ConfigUtility.getBooleanValue(Config.METHOD_ACCESS_DEBUG, false)) {
             logger.debug(sourceCode);
         }
         try {

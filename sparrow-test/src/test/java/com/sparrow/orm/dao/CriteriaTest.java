@@ -1,6 +1,7 @@
 package com.sparrow.orm.dao;
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.orm.Parameter;
 import com.sparrow.orm.query.BooleanCriteria;
@@ -19,8 +20,7 @@ import java.util.List;
 public class CriteriaTest {
     public static void main(String[] args) {
         Container container = ApplicationContext.getContainer();
-        container.setContextConfigLocation("/dao.xml");
-        container.init();
+        container.init(new ContainerBuilder());
 
         CriteriaProcessor criteriaProcessor=SqlCriteriaProcessorImpl.getInstance();
         BooleanCriteria b = BooleanCriteria.criteria

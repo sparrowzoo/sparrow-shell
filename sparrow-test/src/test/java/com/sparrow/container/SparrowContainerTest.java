@@ -10,7 +10,8 @@ public class SparrowContainerTest {
 
   public static void main(String[] args) throws Exception {
     Container container = new SparrowContainer();
-    container.init();
+    ContainerBuilder builder=new ContainerBuilder().contextConfigLocation("/sparrow_application_context.xml");
+    container.init(builder);
 
     User3 user = new User3("zhangsan");
     ((SparrowContainer) container).initProxyBean(User3.class);

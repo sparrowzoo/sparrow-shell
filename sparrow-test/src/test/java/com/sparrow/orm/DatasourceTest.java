@@ -17,6 +17,7 @@
 package com.sparrow.orm;
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.datasource.DataSourceFactory;
 import com.sparrow.datasource.DataSourceValidChecker;
@@ -34,9 +35,8 @@ public class DatasourceTest {
   @Test
   public void datasourceTest() throws SQLException {
     Container container = ApplicationContext.getContainer();
-    container.setContextConfigLocation("/dao.xml");
     //container.setConfigLocation("/syste2.properties");
-    container.init();
+    container.init(new ContainerBuilder());
     DataSourceFactory dataSourceFactory = container.getBean("dataSourceFactory");
     DataSource dataSource = dataSourceFactory.getDataSource("user_default");
 

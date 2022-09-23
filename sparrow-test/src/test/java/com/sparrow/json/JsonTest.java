@@ -18,6 +18,7 @@
 package com.sparrow.json;
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.core.spi.JsonFactory;
 
@@ -33,7 +34,7 @@ public class JsonTest {
         System.out.println(new User().hashCode());
 
         Container container = ApplicationContext.getContainer();
-        container.init();
+        container.init(new ContainerBuilder());
         User parent = new User("1", "zhangsan", null, null);
         User lisi = new User("2", "lisi", parent,
             new HashMap<String, String>() {{

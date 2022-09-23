@@ -59,18 +59,8 @@ public class SpringContainerImpl implements Container {
         return null;
     }
 
-    @Override
-    public void init() {
-        applicationContext = new XmlWebApplicationContext();
-    }
-
-    @Override
-    public void setConfigLocation(String configLocation) {
+    @Override public void init(ContainerBuilder builder) {
 
     }
 
-    @Override
-    public void setContextConfigLocation(String contextConfigLocation) {
-
-    }
 }

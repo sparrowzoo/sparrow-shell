@@ -17,6 +17,7 @@
 
 package com.sparrow.facade.beans;
 
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.utility.BeanUtility;
 
@@ -30,7 +31,7 @@ public class Main {
     public static void main(String[] args) {
         String[] array = "12:00".split("\\:");
         Integer seconds = Integer.valueOf(array[1]);
-        ApplicationContext.getContainer().init();
+        ApplicationContext.getContainer().init(new ContainerBuilder());
         Source source = new Source();
         source.setAge(100);
         source.setBirthday(new Date());

@@ -20,6 +20,7 @@ package com.sparrow.rocketmq;
 import com.sparrow.cache.Key;
 import com.sparrow.constant.cache.key.KeyResource;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.mq.MQPublisher;
 import com.sparrow.rocketmq.protocol.event.HelloEvent;
@@ -32,8 +33,9 @@ public class PublisherTest {
     public static void main(String[] args) {
         Key productKey = new Key.Builder().business(KeyResource.ID_CODE_PAIR).businessId(2).build();
         Container container = new SparrowContainer();
-        container.setContextConfigLocation("/sparrow_rocketmq_producer.xml");
-        container.init();
+        ContainerBuilder builder=new ContainerBuilder();
+        builder.contextConfigLocation("/sparrow_rocketmq_producer.xml");
+        container.init(builder);
         MQPublisher mqPublisher = container.getBean("mqPublisher");
         DistributedCountDownLatch distributedCountDownLatch=container.getBean("distributedCountDownLatch");
         HelloEvent helloEvent = new HelloEvent();

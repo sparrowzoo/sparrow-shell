@@ -22,6 +22,7 @@ import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.Key;
 import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.protocol.ModuleSupport;
 
@@ -51,9 +52,8 @@ public class RedisOrderSetTest {
         //相同模块下会存在多个业务
         Key.Business od = new Key.Business(OD, "POOL");
         Key key = new Key.Builder().business(od).businessId("BJS", "CHI", "HU","ORDER_SET").build();
-
-        container.setConfigLocation("/redis_config.xml");
-        container.init();
+        ContainerBuilder builder= new ContainerBuilder().contextConfigLocation("/redis_config.xml");
+        container.init(builder);
         CacheClient client = container.getBean("cacheClient");
         client.key().delete(key);
         client.sortedSet().add(key, "field",1L);

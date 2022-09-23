@@ -17,6 +17,7 @@
 package com.sparrow.facade.monitor;
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.monitor.ElapsedTimeMonitor;
 import com.sparrow.core.spi.ApplicationContext;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class Monitor {
     private static Logger logger= LoggerFactory.getLogger(Monitor.class);
     public static void main(String[] args) {
         Container container = ApplicationContext.getContainer();
-        container.init();
+        container.init(new ContainerBuilder());
         final ElapsedTimeMonitor elapsedTimeMonitor = container.getBean("elapsedTimeMonitor");
         for (int i = 0; i < 3; i++) {
             Thread thread = new Thread(new Runnable() {

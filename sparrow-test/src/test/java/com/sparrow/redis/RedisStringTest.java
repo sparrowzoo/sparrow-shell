@@ -22,6 +22,7 @@ import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.Key;
 import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.protocol.ModuleSupport;
 
@@ -49,7 +50,7 @@ public class RedisStringTest {
         Key.Business od = new Key.Business(OD, "POOL");
         //container.setContextConfigLocation("/redis_config.xml");
 
-        container.init();
+        container.init(new ContainerBuilder());
         client = container.getBean("cacheClient");
         //相同业务下存在多个KEY
         Key key = new Key.Builder().business(od).businessId("BJS", "CHI", "HU").build();

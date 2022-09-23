@@ -328,7 +328,7 @@
     <build>
         <finalName>${project.artifactId}</finalName>
         <filters>
-            <filter>src/main/resources/sparrow_system_config.properties</filter>
+            <filter>src/main/resources/system_config.properties</filter>
             <filter>src/main/resources/sparrow_default.properties</filter>
             <filter>src/main/resources/user_default.properties</filter>
         </filters>

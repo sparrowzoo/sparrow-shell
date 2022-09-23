@@ -21,6 +21,7 @@ import com.sparrow.cache.Key;
 import com.sparrow.concurrent.RedisLock;
 import com.sparrow.constant.DateTime;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.ModuleSupport;
 import com.sparrow.utility.DateTimeUtility;
@@ -28,8 +29,8 @@ import com.sparrow.utility.DateTimeUtility;
 public class RedisLockTest {
     public static void main(String[] args) throws InterruptedException {
         Container container = ApplicationContext.getContainer();
-        container.setContextConfigLocation("/sparrow_application_context.xml");
-        container.init();
+        ContainerBuilder builder=new ContainerBuilder();
+        container.init(builder);
         //定义模块，一个业务会存在多个模块
         ModuleSupport lock = new ModuleSupport() {
             @Override

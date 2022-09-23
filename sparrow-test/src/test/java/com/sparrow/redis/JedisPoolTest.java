@@ -33,6 +33,7 @@ package com.sparrow.redis;/*
  */
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 
 /**
@@ -43,7 +44,9 @@ public class JedisPoolTest {
         while (true) {
             try {
                 Container container = ApplicationContext.getContainer();
-                container.init();
+                ContainerBuilder builder=new ContainerBuilder().contextConfigLocation("/dao.xml");
+
+                container.init(builder);
 //                RedisPool.getInstance().write(new RedisWriter() {
 //                    @Override
 //                    public void write(ShardedJedis jedis) {

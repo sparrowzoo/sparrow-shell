@@ -3,14 +3,15 @@ package com.sparrow.redis;
 import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.concurrent.DistributionLock;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
 
 public class RedisDistributionLockTest {
     public static void main(String[] args) {
         Container container = new SparrowContainer();
-        container.setContextConfigLocation("/redis_config.xml");
+        ContainerBuilder builder=new ContainerBuilder().contextConfigLocation("/dao.xml");
 
-        container.init();
+        container.init(builder);
         DistributionLock distributionLock = container.getBean("distributionLock");
         for (int i = 0; i < 100; i++) {
             new Thread(new Runnable() {

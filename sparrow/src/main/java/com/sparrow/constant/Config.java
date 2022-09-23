@@ -99,7 +99,8 @@ public class Config {
      */
     public static final String VALIDATE_TOKEN_AVAILABLE_DAY = "validate_token_available_day";
     public static final String DEBUG = "debug";
-    public static final String DEBUG_METHOD_ACCESS = "debug_method_access";
+    public static final String METHOD_ACCESS_DEBUG = "method_access_debug";
+    public static final String METHOD_ACCESS_CLASS = "method_access_class";
     public static final String DB_POOL_NAME_ENUM = "db_pool_name_enum";
     public static final String LOG_CLASS = "log_class";
     public static final String LOG_LEVEL = "log_level";
