@@ -18,7 +18,6 @@ public class SparrowContainerTest2 {
         User3 user = new User3("zhangsan");
         ((SparrowContainer) container).initProxyBean(User3.class);
         MethodAccessor methodAccessor = container.getProxyBean(User3.class);
-        MethodAccessor methodAccessor2 = container.getProxyBean(SimpleItemDTO.class);
 
         long t = System.currentTimeMillis();
         for (int i = 0; i < 10000000; i++) {
