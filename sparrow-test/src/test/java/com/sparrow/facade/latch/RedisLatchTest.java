@@ -21,6 +21,7 @@ import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.Key;
 import com.sparrow.constant.SparrowModule;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import com.sparrow.concurrent.latch.impl.RedisDistributedCountDownLatch;
@@ -31,7 +32,7 @@ import com.sparrow.concurrent.latch.impl.RedisDistributedCountDownLatch;
 public class RedisLatchTest {
     public static void main(String[] args) {
         Container container = ApplicationContext.getContainer();
-        container.init();
+        container.init(new ContainerBuilder());
         CacheClient cacheClient = container.getBean("cacheClient");
 
         Key.Business code = new Key.Business(SparrowModule.CMS, "ID", "NAME", "PAIR");

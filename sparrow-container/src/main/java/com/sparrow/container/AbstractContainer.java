@@ -19,6 +19,7 @@ package com.sparrow.container;
 import com.sparrow.cg.Generator4MethodAccessor;
 import com.sparrow.cg.MethodAccessor;
 import com.sparrow.cg.PropertyNamer;
+import com.sparrow.constant.Config;
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.core.Pair;
 import com.sparrow.core.TypeConverter;
@@ -269,7 +270,12 @@ public abstract class AbstractContainer implements Container {
         if (this.generator4MethodAccessor != null) {
             return this.generator4MethodAccessor;
         }
-        this.generator4MethodAccessor = (Generator4MethodAccessor) this.singletonRegistry.getObject("generator4MethodAccessor");
+        String methodAccessClass = ConfigUtility.getValue(Config.METHOD_ACCESS_CLASS);
+        try {
+            this.generator4MethodAccessor = (Generator4MethodAccessor) Class.forName(methodAccessClass).newInstance();
+        } catch (Exception e) {
+            logger.error("can't find class {}",methodAccessClass, e);
+        }
         if (this.generator4MethodAccessor != null) {
             return this.generator4MethodAccessor;
         }

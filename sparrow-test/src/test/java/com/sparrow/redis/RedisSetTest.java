@@ -22,6 +22,7 @@ import com.sparrow.cache.CacheDataNotFound;
 import com.sparrow.cache.Key;
 import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.ModuleSupport;
 import java.util.ArrayList;
@@ -51,8 +52,7 @@ public class RedisSetTest {
         //相同模块下会存在多个业务
         Key.Business od = new Key.Business(OD, "POOL");
         Key key = new Key.Builder().business(od).businessId("BJS", "CHI", "HU").build();
-        container.setContextConfigLocation("/sparrow_application_context.xml");
-        container.init();
+        container.init(new ContainerBuilder());
         CacheClient client = container.getBean("cacheClient");
         client.key().delete(key);
         client.set().add(key, 1);

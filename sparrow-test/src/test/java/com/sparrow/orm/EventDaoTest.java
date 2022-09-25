@@ -1,6 +1,7 @@
 package com.sparrow.orm;
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.orm.dao.impl.EventDAOImpl;
 import com.sparrow.orm.po.Event;
@@ -16,8 +17,7 @@ public class EventDaoTest {
     @Test
     public void eventTest() {
         Container container = ApplicationContext.getContainer();
-        container.setContextConfigLocation("/dao.xml");
-        container.init();
+        container.init(new ContainerBuilder());
         EventDAOImpl eventDAO = container.getBean("eventDao");
         Event event = new Event();
         event.setEvent("event");

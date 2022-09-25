@@ -2,6 +2,7 @@ package com.sparrow.orm;
 
 import com.sparrow.constant.DateTime;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.Gender;
 import com.sparrow.orm.dao.UserDAO;
@@ -16,8 +17,8 @@ import java.sql.Date;
 public class TransactionManagerTest {
     public static void main(String[] args) {
         Container container = ApplicationContext.getContainer();
-        container.setContextConfigLocation("/dao.xml");
-        container.init();
+        ContainerBuilder builder=new ContainerBuilder().contextConfigLocation("/dao.xml");
+        container.init(builder);
         UserDAO userDAO = container.getBean("userDao");
         TransactionManager transactionManager = container.getBean("transactionManager");
         transactionManager.start(new Transaction<String>() {

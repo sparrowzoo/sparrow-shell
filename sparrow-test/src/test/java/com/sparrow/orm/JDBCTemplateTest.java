@@ -1,6 +1,7 @@
 package com.sparrow.orm;
 
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import org.junit.Test;
 
@@ -11,8 +12,7 @@ public class JDBCTemplateTest {
     @Test
     public void initStructure() {
         Container container = ApplicationContext.getContainer();
-        container.setContextConfigLocation("/dao.xml");
-        container.init();
+        container.init(new ContainerBuilder());
         JDBCSupport jdbcSupport = JDBCTemplate.getInstance("user",null);
         int affectCount= jdbcSupport.executeUpdate("DROP TABLE IF EXISTS `user`;");
         affectCount=jdbcSupport.executeUpdate("CREATE TABLE `user` (\n" +

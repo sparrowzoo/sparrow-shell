@@ -12,7 +12,7 @@
     <!--默认的全局配置文件 可以缺少，默认为 /system_config.properties 不要加classpath:-->
     <context-param>
         <param-name>configLocation</param-name>
-        <param-value>/sparrow_system_config.properties</param-value>
+        <param-value>/system_config.properties</param-value>
     </context-param>
 
 
@@ -32,7 +32,7 @@
     <listener>
         <listener-class>com.sparrow.mvc.ContextLoaderListener</listener-class>
     </listener>
-    
+
     <!-- 生成验证码 -->
     <servlet>
         <servlet-name>ValidateCode</servlet-name>

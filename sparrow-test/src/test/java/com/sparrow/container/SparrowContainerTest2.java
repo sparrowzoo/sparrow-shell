@@ -13,7 +13,7 @@ public class SparrowContainerTest2 {
 
     public static void main(String[] args) throws Exception {
         Container container = new SparrowContainer();
-        container.init();
+        container.init(new ContainerBuilder());
 
         User3 user = new User3("zhangsan");
         ((SparrowContainer) container).initProxyBean(User3.class);

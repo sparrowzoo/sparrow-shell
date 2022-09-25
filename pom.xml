@@ -63,7 +63,7 @@
         <module>sparrow-distribution-job</module>
         <module>sparrow-distribution-config</module>
         <module>sparrow-protocol</module>
-<!--        <module>sparrow-test</module>-->
+        <module>sparrow-test</module>
         <module>sparrow-protocol-dao</module>
         <module>sparrow-protocol-mq</module>
         <module>sparrow-protocol-redis</module>

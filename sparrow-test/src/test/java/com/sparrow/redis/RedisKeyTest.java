@@ -21,6 +21,7 @@ import com.sparrow.cache.Key;
 import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.constant.SparrowModule;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
 import org.junit.Test;
 
@@ -36,8 +37,8 @@ public class RedisKeyTest {
         Key key=new Key.Builder().business(business).build();
 
         Container container = new SparrowContainer();
-        container.setConfigLocation("/redis_config.xml");
-        container.init();
+        ContainerBuilder builder=new ContainerBuilder().contextConfigLocation("/dao.xml");
+        container.init(builder);
         CacheClient client = container.getBean("cacheClient");
         //client.string().set(key,"test");
         System.out.println(client.key().expireSeconds(key,1L));

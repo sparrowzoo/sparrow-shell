@@ -21,6 +21,7 @@ import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.Key;
 import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.container.Container;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.protocol.ModuleSupport;
 
@@ -48,8 +49,8 @@ public class RedisHashSetTest {
         Key.Business od = new Key.Business(OD, "POOL");
         Key key = new Key.Builder().business(od).businessId("BJS", "CHI", "HU","HASH").build();
 
-        container.setConfigLocation("/redis_config.xml");
-        container.init();
+        ContainerBuilder builder=new ContainerBuilder().contextConfigLocation("/dao.xml");
+        container.init(builder);
 
         CacheClient client = container.getBean("cacheClient");
 

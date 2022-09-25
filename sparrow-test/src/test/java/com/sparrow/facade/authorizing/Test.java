@@ -1,6 +1,7 @@
 package com.sparrow.facade.authorizing;
 
 import com.sparrow.authorizing.AuthenticatorDemo;
+import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.support.Authenticator;
 import com.sparrow.protocol.LoginToken;
@@ -8,7 +9,7 @@ import com.sparrow.protocol.LoginToken;
 public class Test {
 
     public static void main(String[] args) {
-        ApplicationContext.getContainer().init();
+        ApplicationContext.getContainer().init(new ContainerBuilder());
         Authenticator authorizingSupport = new AuthenticatorDemo();
         LoginToken loginToken = new LoginToken();
         loginToken.setNickName("nick-zhangsan");

@@ -114,11 +114,13 @@ public class SparrowContainer extends AbstractContainer {
             this.initSingletonBeans(registry);
 
             logger.info("-------------init initializer ...--------------------------");
-            Initializer initializer = this.getBean(
-                SysObjectName.INITIALIZER);
+            if (builder.isInitSingletonBean()) {
+                Initializer initializer = this.getBean(
+                    SysObjectName.INITIALIZER);
 
-            if (initializer != null) {
-                initializer.init(this);
+                if (initializer != null) {
+                    initializer.init(this);
+                }
             }
             logger.info("-----------------Ioc container init success...-------------------");
         } catch (Exception e) {
