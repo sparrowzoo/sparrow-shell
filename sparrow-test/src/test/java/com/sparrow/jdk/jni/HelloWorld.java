@@ -10,6 +10,6 @@ public class HelloWorld {
     }
 
     static {
-        System.loadLibrary("HelloWorld");   // 2.加载实现了native函数的动态库，只需要写动态库的名字
+        System.loadLibrary("SparrowJni");   // 2.加载实现了native函数的动态库，只需要写动态库的名字
     }
 }
