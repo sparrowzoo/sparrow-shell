@@ -40,7 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractContainer implements Container {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static Logger logger = LoggerFactory.getLogger(AbstractContainer.class);
 
     protected ContainerBuilder builder;
 
@@ -148,16 +148,16 @@ public abstract class AbstractContainer implements Container {
         return Pair.create(types, args);
     }
 
-    private <T> void set(T currentObject, String beanName, Object val) {
+    private <T> void set(T currentObject, String propertyName, Object val) {
         Class<?> currentClass = currentObject.getClass();
         Field field = null;
         try {
-            field = currentClass.getDeclaredField(beanName);
+            field = currentClass.getDeclaredField(propertyName);
         } catch (NoSuchFieldException e) {
             try {
-                field = currentClass.getSuperclass().getDeclaredField(beanName);
+                field = currentClass.getSuperclass().getDeclaredField(propertyName);
             } catch (NoSuchFieldException exception) {
-                logger.error("filed not found {}", beanName);
+                logger.error("field not found {} of class  {}", propertyName,currentClass);
                 return;
             }
         }
@@ -167,7 +167,7 @@ public abstract class AbstractContainer implements Container {
             if (!parameterType.isAssignableFrom(val.getClass())) {
                 Object v = new TypeConverter("", val, parameterType).convert();
                 if (v == null) {
-                    logger.error("field value is null className {},refName {}, value {}", currentClass.getName(), beanName, val);
+                    logger.error("field value is null className {},refName {}, value {}", currentClass.getName(), propertyName, val);
                     return;
                 } else {
                     val = v;
@@ -177,7 +177,7 @@ public abstract class AbstractContainer implements Container {
             field.setAccessible(true);
             field.set(currentObject, val);
         } catch (Throwable e) {
-            logger.error("set ref error {}, bean name:{}", e, beanName);
+            logger.error("set ref error {}, bean name:{}", e, propertyName);
         }
     }
 
@@ -271,16 +271,18 @@ public abstract class AbstractContainer implements Container {
             return this.generator4MethodAccessor;
         }
         String methodAccessClass = ConfigUtility.getValue(Config.METHOD_ACCESS_CLASS);
-        try {
-            this.generator4MethodAccessor = (Generator4MethodAccessor) Class.forName(methodAccessClass).newInstance();
-        } catch (Exception e) {
-            logger.error("can't find class {}",methodAccessClass, e);
+        if (!StringUtility.isNullOrEmpty(methodAccessClass)) {
+            try {
+                this.generator4MethodAccessor = (Generator4MethodAccessor) Class.forName(methodAccessClass).newInstance();
+            } catch (Exception e) {
+                logger.error("can't find class {}", methodAccessClass, e);
+            }
         }
         if (this.generator4MethodAccessor != null) {
             return this.generator4MethodAccessor;
         }
         try {
-            generator4MethodAccessor = (Generator4MethodAccessor) Class.forName("com.sparrow.cg.impl.Generator4MethodAccessorImpl").newInstance();
+            generator4MethodAccessor = (Generator4MethodAccessor) Class.forName("com.sparrow.cg.impl.Generator4MethodHashAccessor").newInstance();
         } catch (Exception e) {
             logger.error("can't find class com.sparrow.cg.impl.Generator4MethodAccessorImpl", e);
         }

@@ -22,6 +22,7 @@ import com.sparrow.cg.MethodAccessor;
 import com.sparrow.cg.PropertyNamer;
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.constant.Constant;
+import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import java.lang.reflect.Method;
@@ -43,22 +44,26 @@ public class Generator4MethodHashAccessor implements Generator4MethodAccessor {
         String operatorObjectName = StringUtility.setFirstByteLowerCase(clazz
             .getSimpleName());
 
+        String map = String.format("private static Map<String, BiFunction<%1$s, String, Object>> getMap = new HashMap<>();\n" +
+            "        private static Map<String, BiConsumer<%1$s, Object>> setMap = new HashMap<>();\n", operatorClassName);
         String methodAccessorClassName = clazz.getSimpleName() + "MethodAccess";
         getJavaSource.append("public Object get(Object o, String methodName){");
         getJavaSource.append(Constant.ENTER_TEXT);
         getJavaSource.append(String.format("%1$s %2$s=(%1$s)o;",
             operatorClassName, operatorObjectName));
         getJavaSource.append("return getMap.get(methodName).apply(");
-        getJavaSource.append(operatorClassName);
-        getJavaSource.append(",methodName}");
+        getJavaSource.append(operatorObjectName);
+        getJavaSource.append(",methodName);");
 
         setJavaSource
             .append("public void set(Object o, String methodName,Object arg){");
         setJavaSource.append(Constant.ENTER_TEXT);
         setJavaSource.append(String.format("%1$s %2$s=(%1$s)o;",
             operatorClassName, operatorObjectName));
+        setJavaSource.append(Constant.ENTER_TEXT);
+
         setJavaSource.append(" setMap.get(methodName).accept(");
-        getJavaSource.append(operatorClassName);
+        setJavaSource.append(operatorObjectName);
         setJavaSource.append(",methodName);");
 
         Method[] methods = clazz.getMethods();
@@ -69,27 +74,34 @@ public class Generator4MethodHashAccessor implements Generator4MethodAccessor {
             Class<?>[] parameterType = method.getParameterTypes();
             if (PropertyNamer.isSetter(method.getName()) && parameterType.length == 1) {
                 setHashJavaSource.append(Constant.ENTER_TEXT);
-                setHashJavaSource.append(String.format("getMap.put(\"%1$s\", (o, r) -> o.%1$s());", method.getName()));
+                setHashJavaSource.append(String.format("setMap.put(\"%1$s\", (o, arg) -> o.%2$s((%3$s) arg));",
+                    PropertyNamer.methodToProperty(method.getName()),
+                    method.getName(),
+                    ClassUtility.getWrapClass(parameterType[0])));
+
                 setHashJavaSource.append(Constant.ENTER_TEXT);
             } else if (PropertyNamer.isGetter(method.getName())
                 && parameterType.length == 0
                 && !method.getReturnType().equals(void.class)) {
                 getHashJavaSource.append(Constant.ENTER_TEXT);
-                getHashJavaSource.append(
-                    String.format("setMap.put(\"%1$s\", (o, arg) -> o.%1$s((String) arg));", method.getName()));
+                getHashJavaSource.append(String.format("getMap.put(\"%1$s\", (o, r) -> o.%2$s());", PropertyNamer.methodToProperty(method.getName()), method.getName()));
                 getHashJavaSource.append(Constant.ENTER_TEXT);
             }
         }
         setJavaSource.append("}");
         setJavaSource.append(Constant.ENTER_TEXT);
-        getJavaSource.append("return null;");
         getJavaSource.append("}");
         getJavaSource.append(Constant.ENTER_TEXT);
         String sourceCode = "package " + PACKAGE_NAME + ";" + Constant.ENTER_TEXT
-            + "import com.sparrow.cg.MethodAccessor;"
+            + "import com.sparrow.cg.MethodAccessor;\n"
+            + "import java.util.HashMap;\n"
+            + "import java.util.Map;\n"
+            + "import java.util.function.BiConsumer;\n"
+            + "import java.util.function.BiFunction;\n"
             + Constant.ENTER_TEXT + " public class "
             + methodAccessorClassName + "  implements MethodAccessor{"
-            + Constant.ENTER_TEXT + "static{"
+            + Constant.ENTER_TEXT + map
+            + Constant.ENTER_TEXT + "static {"
             + Constant.ENTER_TEXT + getHashJavaSource.toString()
             + Constant.ENTER_TEXT + setHashJavaSource.toString()
             + Constant.ENTER_TEXT + "}"

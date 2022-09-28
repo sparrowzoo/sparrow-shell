@@ -89,11 +89,11 @@
     </appender>
 
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="com.sparrow" level="ERROR" additivity="false">
+    <logger name="com.sparrow" level="DEBUG" additivity="false">
         <appender-ref ref="DEBUG"/>
         <appender-ref ref="INFO"/>
         <appender-ref ref="WARN"/>
