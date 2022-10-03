@@ -26,29 +26,36 @@ public enum StatusRecord {
     /**
      * 被屏蔽(0)
      */
-    DISABLE,
+    DISABLE(0),
     /**
      * 可用(1)
      */
-    ENABLE,
+    ENABLE(1),
     /**
      * 草搞(2)
      */
-    DRAFT,
+    DRAFT(2),
     /**
      * 已发布(3)
      */
-    PUBLISHED,
+    PUBLISHED(3),
     /**
      * 排队中(4)...
      */
-    QUEUE,
+    QUEUE(4),
     /**
      * 队列发布出错(5)
      */
-    ERROR,
+    ERROR(5),
     /**
      * 销毁(6)
      */
-    DESTROYED
+    DESTROYED(6)
+    ;
+
+    StatusRecord(int status) {
+        this.status = status;
+    }
+
+    public final int status;
 }
