@@ -52,8 +52,7 @@ public enum StatusRecord {
     /**
      * 销毁(6)
      */
-    DESTROYED(6)
-    ;
+    DESTROYED(6);
 
     StatusRecord(int status) {
         this.status = status;
@@ -63,25 +62,27 @@ public enum StatusRecord {
 
     /**
      * 比较状态值是否一致
+     *
      * @param status
      * @return
      */
-    public boolean equalsStatus(Integer status){
-        return Objects.equals(this.status,status);
+    public boolean equalsStatus(Integer status) {
+        return Objects.equals(this.status, status);
     }
 
     /**
      * 通过status匹配枚举
+     *
      * @param status
      * @return
      */
-    public static StatusRecord valueOfStatus(Integer status){
-        if (status == null){
+    public static StatusRecord valueOfStatus(Integer status) {
+        if (status == null) {
             return null;
         }
         final StatusRecord[] values = StatusRecord.values();
         for (StatusRecord value : values) {
-            if (value.equalsStatus(status)){
+            if (value.equalsStatus(status)) {
                 return value;
             }
         }
@@ -90,10 +91,11 @@ public enum StatusRecord {
 
     /**
      * 判断状态是否合法
+     *
      * @param status
      * @return
      */
-    public static boolean isLegal(Integer status){
+    public static boolean isLegal(Integer status) {
         final StatusRecord statusRecord = valueOfStatus(status);
         return statusRecord != null;
     }
