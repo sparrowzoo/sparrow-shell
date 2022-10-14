@@ -1,23 +1,16 @@
 package com.sparrow.jdk.threadlocal;
 
-import com.sparrow.tracer.Tracer;
-import com.sparrow.tracer.TracerBuilder;
-
 /**
  * @author by harry
  */
 public class ThreadLocalGc {
+    //注意这里是threadlocal 非WeakReference
+    private static ThreadLocal<String> s=new ThreadLocal<>();
 
-    /**
-     * -Xmx40m -Xms40m -Xmn20m -XX:+PrintTenuringDistribution -XX:+PrintGCDetails -XX:+PrintGCDateStamps  -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly
-     *jstat -gcutil pid 1000 1000
-     * @param args
-     */
-    public static void main(String[] args) throws InterruptedException {
-
-        for (;;) {
-            Tracer tracer=TracerBuilder.startTracer();
-//            ((TracerImpl)tracer).cursor().put(Thread.currentThread().getId(),new SpanImpl(null,System.currentTimeMillis(),"sss"));
-        }
+    public static void main(String[] args) {
+        s.set("hello");
+        System.out.println(s.get());
+        System.gc();
+        System.out.println(s.get());
     }
 }

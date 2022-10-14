@@ -1,10 +1,10 @@
-package com.sparrow.jdk.threadlocal;
+package com.sparrow.jdk.threadlocal.local;
 
 /**
  * @author by harry
  */
-public class ThreadShareObjectTest extends Thread{
-    private static MultiThreadShareBusiness o=new MultiThreadShareBusiness();
+public class ThreadLocalTest extends Thread{
+    private static MultiThreadLocalBusiness o=new MultiThreadLocalBusiness();
 
     public void run(){
         while (true) {
@@ -14,10 +14,10 @@ public class ThreadShareObjectTest extends Thread{
     }
 
     public static void main(String[] args) {
-        Thread thread=new ThreadShareObjectTest();
+        Thread thread=new ThreadLocalTest();
         thread.start();
 
-        Thread thread2=new ThreadShareObjectTest();
+        Thread thread2=new ThreadLocalTest();
         thread2.start();
     }
 }
