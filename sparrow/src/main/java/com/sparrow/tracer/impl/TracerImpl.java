@@ -43,6 +43,8 @@ public class TracerImpl implements Tracer {
         return timeoutThreshold;
     }
 
+    public ThreadLocal<Object> cursorLocal = new ThreadLocal<>();
+
     /**
      * cursor 当前span指针 thread local 需要remove 防止内存泄露，这里直接用map
      */
