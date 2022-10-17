@@ -30,7 +30,7 @@ public interface ServletContainer {
 
     HttpServletResponse getResponse();
 
-    String getActionKey() throws CacheNotFoundException;
+    String getActionKey();
 
     String getClientIp();
 
