@@ -75,5 +75,5 @@ http://www.sparrowzoo.com
 志哥微信
 ---
 
-![img_2.png](img.png)
+![wechar](img.png)
 
