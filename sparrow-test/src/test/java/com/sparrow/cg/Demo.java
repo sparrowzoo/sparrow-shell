@@ -9,8 +9,5 @@ import org.slf4j.Logger;
 public class Demo implements Printer {
     public String print() {
         return "hello world";
-
-
-
     }
 }

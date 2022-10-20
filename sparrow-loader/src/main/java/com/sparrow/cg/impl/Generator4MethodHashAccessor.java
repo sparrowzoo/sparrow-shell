@@ -64,7 +64,7 @@ public class Generator4MethodHashAccessor implements Generator4MethodAccessor {
 
         setJavaSource.append(" setMap.get(methodName).accept(");
         setJavaSource.append(operatorObjectName);
-        setJavaSource.append(",methodName);");
+        setJavaSource.append(",arg);");
 
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {

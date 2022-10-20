@@ -1,6 +1,7 @@
 package com.sparrow.container;
 
 import com.sparrow.cg.MethodAccessor;
+import com.sparrow.cg.User3;
 import com.sparrow.container.impl.SparrowContainer;
 
 /**
