@@ -50,7 +50,7 @@ public class ThreeDES {
     public static final String CIPHER_ALGORITHM_ECB = "DESede/ECB/PKCS5Padding";
     public static final String CIPHER_ALGORITHM_CBC = "DESede/CBC/PKCS5Padding";
 
-    private static final int KEY_SIZE = 24; //
+    private static final int KEY_SIZE = 128; //
 
     public String encryptHex(String key, String text, String cipherAlgorithm) {
         byte[] encryptBytes = this.encryptByAlgorithm(key, text, cipherAlgorithm);
@@ -123,6 +123,7 @@ public class ThreeDES {
                 Constant.CHARSET_UTF_8);
         } catch (Exception e) {
             logger.error("encrypt error", e);
+            throw new RuntimeException(e);
         }
         return decrypted;
     }

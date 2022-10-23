@@ -67,6 +67,12 @@ public class ConfigKeyLanguage {
 
     public static final String PASSWORD_EMAIL_SUBJECT = "password_email_subject";
     public static final String PASSWORD_EMAIL_CONTENT = "password_email_content";
+    public static final String EMAIL_ACTIVATE_CONTENT = "email_activate_content";
+    public static final String EMAIL_ACTIVATE_SUBJECT = "email_activate_subject";
+
+
+
+
     public static final String PASSWORD_VALIDATE_TIME_OUT = "password_validate_time_out";
     public static final String PASSWORD_FIND_EMAIL_SEND_SUCCESSFUL = "password_email_send_successful";
 

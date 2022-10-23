@@ -104,6 +104,8 @@ public enum SparrowError implements ErrorSupport {
     USER_AVATAR_NULL(false, SparrowModule.USER, "20", "user avatar can't be null"),
     USER_AVATAR_CUT_COORDINATE_NULL(false, SparrowModule.USER, "21", "user avatar cut coordinate can't be null"),
     USER_NOT_LOGIN(false, SparrowModule.USER, "22", "user not login"),
+    USER_TOKEN_TYPE_ERROR(false, SparrowModule.USER, "23", "user token type error"),
+    USER_TOKEN_ERROR(false, SparrowModule.USER, "24", "user token error"),
 
     //blog
     BLOG_NOT_THREAD_EDIT_PRIVILEGE(false, SparrowModule.BLOG, "01", "No edit privilege"),

@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.Properties;
 
 public class EMailUtility {
-    private Logger logger = LoggerFactory.getLogger(EMailUtility.class);
+    private static Logger logger = LoggerFactory.getLogger(EMailUtility.class);
     private String localAddress;
     private String host;
     private String from;
@@ -67,7 +67,12 @@ public class EMailUtility {
         this.setHost(ConfigUtility.getValue(Config.EMAIL_HOST));
         this.setFrom(ConfigUtility.getValue(Config.EMAIL_FROM));
         this.setUsername(ConfigUtility.getValue(Config.EMAIL_USERNAME));
-        this.setPassword(ConfigUtility.getValue(Config.EMAIL_PASSWORD));
+
+        String emailPassword = System.getenv(Config.EMAIL_PASSWORD);
+        if (StringUtility.isNullOrEmpty(emailPassword)) {
+            emailPassword = ConfigUtility.getValue(Config.EMAIL_PASSWORD);
+        }
+        this.setPassword(emailPassword);
         this.setLocalAddress(ConfigUtility.getValue(Config.EMAIL_LOCAL_ADDRESS));
         this.setAuthentication(true);
         if (content.contains("$website_name")) {
