@@ -24,6 +24,7 @@
         <groupId>com.sparrow</groupId>
         <artifactId>sparrow-bom</artifactId>
         <version>1.0</version>
+        <relativePath/>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>

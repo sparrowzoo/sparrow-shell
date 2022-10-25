@@ -11,7 +11,7 @@
     <version>${sparrow_distribution_job_version}</version>
     <artifactId>sparrow-distribution-job-service</artifactId>
     <build>
-        <finalName>${artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
