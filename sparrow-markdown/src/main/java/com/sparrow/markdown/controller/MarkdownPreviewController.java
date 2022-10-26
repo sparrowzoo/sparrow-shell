@@ -23,7 +23,7 @@ import com.sparrow.markdown.parser.MarkParser;
 import com.sparrow.markdown.parser.impl.MarkdownParserComposite;
 import com.sparrow.markdown.vo.MarkdownVO;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.support.Downloader;
+import com.sparrow.protocol.Downloader;
 import com.sparrow.protocol.dto.ImageDTO;
 import com.sparrow.protocol.enums.EditorType;
 import com.sparrow.utility.StringUtility;
