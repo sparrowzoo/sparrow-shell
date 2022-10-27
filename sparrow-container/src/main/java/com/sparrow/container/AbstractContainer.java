@@ -284,7 +284,7 @@ public abstract class AbstractContainer implements Container {
         try {
             generator4MethodAccessor = (Generator4MethodAccessor) Class.forName("com.sparrow.cg.impl.Generator4SetFieldMethodAccessor").newInstance();
         } catch (Exception e) {
-            logger.error("can't find class com.sparrow.cg.impl.Generator4MethodAccessorImpl", e);
+            logger.error("can't find class com.sparrow.cg.impl.Generator4SetFieldMethodAccessor", e);
         }
         return generator4MethodAccessor;
     }
