@@ -16,7 +16,7 @@
  */
 package com.sparrow.container;
 
-import com.sparrow.protocol.Controller;
+import com.sparrow.servlet.Controller;
 import com.sparrow.servlet.HandlerInterceptor;
 import java.lang.reflect.Field;
 import javax.inject.Inject;

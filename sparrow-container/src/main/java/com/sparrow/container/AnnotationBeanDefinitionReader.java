@@ -16,9 +16,9 @@
  */
 package com.sparrow.container;
 
-import com.sparrow.protocol.Controller;
 import com.sparrow.protocol.Exclude;
 import com.sparrow.protocol.POJO;
+import com.sparrow.servlet.Controller;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
 import java.util.List;

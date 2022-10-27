@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol;
+package com.sparrow.servlet;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
