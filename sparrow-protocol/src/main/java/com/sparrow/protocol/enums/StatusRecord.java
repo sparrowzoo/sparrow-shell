@@ -40,14 +40,6 @@ public enum StatusRecord {
      */
     PUBLISHED,
     /**
-     * 排队中(4)...
-     */
-    QUEUE,
-    /**
-     * 队列发布出错(5)
-     */
-    ERROR,
-    /**
      * 销毁(6)
      */
     DESTROYED
