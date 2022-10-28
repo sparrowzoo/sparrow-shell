@@ -40,7 +40,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ValidateCode</servlet-name>
-        <url-pattern>/ValidateCode</url-pattern>
+        <url-pattern>/validate-code</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>qrcode</servlet-name>
@@ -51,9 +51,23 @@
         <url-pattern>/qrcode</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>ServletLifeCycle</servlet-name>
+        <servlet-class>com.sparrow.web.ServletLifeCycle</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletLifeCycle</servlet-name>
+        <url-pattern>/servlet-life-cycle</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>DispatcherFilter</filter-name>
         <filter-class>com.sparrow.mvc.DispatcherFilter</filter-class>
+        <init-param>
+            <param-name>except_url</param-name>
+            <param-value>/qrcode,/validate-code,/servlet-life-cycle</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>DispatcherFilter</filter-name>
