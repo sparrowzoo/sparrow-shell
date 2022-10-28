@@ -18,8 +18,10 @@
 
 package com.sparrow.protocol.dao;
 
+import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.enums.StatusRecord;
+import javax.persistence.Column;
 
 public class PO implements POJO {
     private Long createUserId;
@@ -29,51 +31,74 @@ public class PO implements POJO {
     private String remark;
     private StatusRecord status;
 
-    public Long getCreateUserId() {
-        return createUserId;
-    }
 
     public void setCreateUserId(Long createUserId) {
         this.createUserId = createUserId;
     }
 
-    public Long getUpdateUserId() {
-        return updateUserId;
-    }
 
     public void setUpdateUserId(Long updateUserId) {
         this.updateUserId = updateUserId;
     }
 
-    public Long getCreateTime() {
-        return createTime;
-    }
 
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
-    public Long getUpdateTime() {
-        return updateTime;
-    }
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
 
-    public String getRemark() {
-        return remark;
-    }
 
     public void setRemark(String remark) {
         this.remark = remark;
     }
+    public void setStatus(StatusRecord status) {
+        this.status = status;
+    }
 
+    @MethodOrder(order = 100)
+    @Column(name = "status",columnDefinition = "tinyint(1) DEFAULT 0 COMMENT 'STATUS'",nullable = false)
     public StatusRecord getStatus() {
         return status;
     }
 
-    public void setStatus(StatusRecord status) {
-        this.status = status;
+
+
+    @MethodOrder(order = 101)
+    @Column(name = "create_user_id", columnDefinition = "int(11) unsigned  DEFAULT 0 COMMENT 'create user id'", nullable = false, updatable = false)
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+
+    @MethodOrder(order = 102)
+    @Column(name = "create_time", columnDefinition = "bigint(11)  DEFAULT 0 COMMENT 'create time'", nullable = false, updatable = false)
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    @MethodOrder(order = 103)
+    @Column(name = "update_user_id", columnDefinition = "int(11) unsigned  DEFAULT 0 COMMENT 'update user id'", nullable = false)
+    public Long getUpdateUserId() {
+        return updateUserId;
+    }
+
+
+    @MethodOrder(order = 104)
+    @Column(name = "update_time", columnDefinition = "bigint(11)  DEFAULT 0 COMMENT 'update time'", nullable = false)
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    @MethodOrder(order = 105)
+    @Column(name = "remark", columnDefinition = "varchar(512)  DEFAULT '' COMMENT 'remark'", nullable = false)
+    public String getRemark() {
+        if (remark == null) {
+            remark = "";
+        }
+        return remark;
     }
 }
