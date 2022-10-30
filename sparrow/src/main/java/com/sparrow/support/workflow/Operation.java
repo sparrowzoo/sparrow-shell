@@ -17,9 +17,9 @@
 
 package com.sparrow.support.workflow;
 
-import com.sparrow.constant.SparrowError;
 import com.sparrow.exception.Asserts;
 import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.utility.StringUtility;
 
 public class Operation {

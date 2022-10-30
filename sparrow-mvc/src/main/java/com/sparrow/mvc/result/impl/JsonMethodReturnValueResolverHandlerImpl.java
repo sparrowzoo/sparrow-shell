@@ -17,7 +17,6 @@
 
 package com.sparrow.mvc.result.impl;
 
-import com.sparrow.constant.SparrowError;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
@@ -26,6 +25,7 @@ import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.HttpContext;
 
