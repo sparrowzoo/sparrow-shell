@@ -32,8 +32,8 @@ public class UserDaoTest {
     @Test
     public void userTest() {
         Container container = ApplicationContext.getContainer();
-        //container.setContextConfigLocation("/dao.xml");
-        container.init(new ContainerBuilder());
+        ContainerBuilder builder= new ContainerBuilder().contextConfigLocation("/dao.xml");
+        container.init(builder);
         UserDAO userDAO = container.getBean("userDao");
 
         User user = new User();
