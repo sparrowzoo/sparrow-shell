@@ -117,41 +117,7 @@ public class SparrowModule {
         }
     };
 
-    public static final ModuleSupport LOCATION = new ModuleSupport() {
-        @Override
-        public String code() {
-            return "10";
-        }
 
-        @Override
-        public String name() {
-            return "LOCATION";
-        }
-    };
-
-    public static final ModuleSupport TAG = new ModuleSupport() {
-        @Override
-        public String code() {
-            return "11";
-        }
-
-        @Override
-        public String name() {
-            return "TAG";
-        }
-    };
-
-    public static final ModuleSupport COUNT = new ModuleSupport() {
-        @Override
-        public String code() {
-            return "12";
-        }
-
-        @Override
-        public String name() {
-            return "COUNT";
-        }
-    };
 
     public static final ModuleSupport SHOP = new ModuleSupport() {
         @Override

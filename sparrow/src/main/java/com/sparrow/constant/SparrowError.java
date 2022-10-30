@@ -51,7 +51,7 @@ import com.sparrow.protocol.constant.GlobalModule;
  * <p>
  * 对于开发者和接口的调用者都隐藏着一个信息（当前操作的接口名称）
  */
-public enum SparrowError implements ErrorSupport {
+public enum SparrowError  implements ErrorSupport {
     SYSTEM_SERVER_ERROR(true, GlobalModule.GLOBAL, "01", "System error"),
     SYSTEM_SERVICE_UNAVAILABLE(true, GlobalModule.GLOBAL, "02", "Service unavailable"),
     SYSTEM_REMOTE_SERVICE_UNAVAILABLE(true, GlobalModule.GLOBAL, "03", "Remote Service unavailable"),
