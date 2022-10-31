@@ -67,7 +67,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     public AbstractEntityManagerAdapter(Class clazz) {
         this.className = clazz.getName();
         this.simpleClassName = clazz.getSimpleName();
-        Method[] orderedMethods = ClassUtility.getOrderedMethod(clazz.getDeclaredMethods());
+        Method[] orderedMethods = ClassUtility.getOrderedColumnMethod(clazz.getMethods());
         int fieldCount = orderedMethods.length;
 
         List<Field> fields = new ArrayList<Field>(fieldCount);
