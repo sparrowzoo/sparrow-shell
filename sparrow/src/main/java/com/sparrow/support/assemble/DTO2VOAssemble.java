@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant.cache.key;
+package com.sparrow.support.assemble;
 
-import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
-public class KeyCode {
-    public static final Key.Business CODE_ALL = new Key.Business(SparrowModule.CODE, "ALL");
+import com.sparrow.protocol.DTO;
+import com.sparrow.protocol.VO;
+import java.util.List;
+
+public interface DTO2VOAssemble<V extends VO, D extends DTO> {
+    V dtoAssembleVO(D d);
+
+    List<V> dtoListAssembleVOList(List<D> list);
 }

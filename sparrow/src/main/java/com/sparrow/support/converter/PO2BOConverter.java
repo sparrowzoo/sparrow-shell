@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant.cache.key;
+package com.sparrow.support.converter;
 
-import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
+import com.sparrow.protocol.BO;
+import com.sparrow.protocol.dao.PO;
+import java.util.List;
 
-public class KeyCMS {
-    public static final Key.Business CMS_ALL_HYPERLINK = new Key.Business(SparrowModule.CMS, "ALL", "HYPERLINK");
-    public static final Key.Business CMS_ALL_CRAWL = new Key.Business(SparrowModule.CMS, "ALL", "CRAWL");
+public interface PO2BOConverter<B extends BO, P extends PO> {
+    B po2bo(P po);
+
+    List<B> poList2BoList(List<P> poList);
 }

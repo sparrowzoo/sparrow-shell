@@ -11,9 +11,6 @@ import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import java.util.List;
 import javax.inject.Named;
 
-/**
- * Created by harry on 2018/2/6.
- */
 @Named
 public class UserDaoImpl extends ORMStrategy<User, Long> implements UserDAO {
 

@@ -15,27 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.protocol;
 
-public enum Business {
-    /**
-     * CMS
-     */
-    CMS,
-    /**
-     * 主帖
-     */
-    THREAD,
-    /**
-     * 评论
-     */
-    COMMENT,
-    /**
-     * 用户
-     */
-    USER,
-    /**
-     * 管理员
-     */
-    ADMINISTRATOR
+public interface Param extends POJO {
 }

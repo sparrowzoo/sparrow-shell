@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant.cache.key;
+package com.sparrow.protocol;
 
-import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
-
-public class KeyTag {
-    public static final Key.Business TAG_ALL = new Key.Business(SparrowModule.TAG, "ALL");
-    public static final Key.Business TAG_RECOMMEND = new Key.Business(SparrowModule.TAG, "RECOMMEND");
+public interface BO extends POJO {
 }

@@ -15,23 +15,11 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.support.converter;
 
-public enum StatusOrder {
-    /**
-     * 供应商取消
-     */
-    SELLER_CANCEL,
-    /**
-     * 部分取消
-     */
-    PART_CANCEL,
-    /**
-     * 取消订单
-     */
-    CANCEL,
-    /**
-     * 订单入库的初始状态
-     */
-    ORDER;
+import com.sparrow.protocol.BO;
+import com.sparrow.protocol.Param;
+
+public interface Param2BOConverter<PM extends Param, B extends BO> {
+    B param2po(PM po);
 }

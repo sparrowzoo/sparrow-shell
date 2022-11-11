@@ -15,24 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.support.converter;
 
-public enum ResourceType {
-    /**
-     * 空类别
-     */
-    NULL,
+import com.sparrow.protocol.DTO;
+import com.sparrow.protocol.dao.PO;
+import java.util.List;
 
-    /**
-     * 系统菜单(后台管理的版块)
-     */
-    MENU,
-    /**
-     * 系统菜单(后台管理的页面)
-     */
-    PAGE,
-    /**
-     * 事件(后台操作的url)
-     */
-    EVENT
+public interface PO2DTOConverter<D extends DTO, P extends PO> {
+    D po2bo(P po);
+
+    List<D> poList2DtoList(List<P> poList);
 }

@@ -17,10 +17,9 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.protocol.MethodOrder;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -34,6 +33,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import javax.persistence.Column;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,6 +164,7 @@ public class ClassUtility {
                 classes.addAll(findClass(file, packageName + Symbol.DOT + file.getName()));
             } else if (file.getName().endsWith(".class")) {
                 String clazzName = packageName + Symbol.DOT + file.getName().substring(0, file.getName().length() - 6);
+                logger.info("class {} init .....",clazzName);
                 try {
                     classes.add(Class.forName(clazzName));
                 } catch (Throwable e) {
@@ -243,19 +244,20 @@ public class ClassUtility {
         }
     }
 
-    public static Method[] getOrderedMethod(Method[] methods) {
+    public static Method[] getOrderedColumnMethod(Method[] methods) {
         List<MethodWithRank> methodList = new ArrayList<>();
-        Method[] orderMethodArray = new Method[methods.length];
         for (Method m : methods) {
             if (m.getAnnotation(MethodOrder.class) != null) {
                 Float order = m.getAnnotation(MethodOrder.class).order();
                 methodList.add(new MethodWithRank(m, order));
-            } else {
+            } else if (m.isAnnotationPresent(Column.class)) {
                 methodList.add(new MethodWithRank(m, Float.MAX_VALUE));
             }
         }
         Collections.sort(methodList);
-        for (int i = 0; i < methods.length; i++) {
+        Method[] orderMethodArray = new Method[methodList.size()];
+
+        for (int i = 0; i < methodList.size(); i++) {
             orderMethodArray[i] = methodList.get(i).method;
         }
         return orderMethodArray;

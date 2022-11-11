@@ -15,23 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant.cache.key;
+package com.sparrow.protocol;
 
-import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
-
-public class KeyResource {
-
-    /**
-     * 所有版块
-     */
-    public static final Key.Business ALL = new Key.Business(SparrowModule.FORUM, "ALL");
-    /**
-     * url与编码对应关系
-     */
-    public static final Key.Business ACCESS_URL_CODE_PAIR = new Key.Business(SparrowModule.FORUM, "ACCESS", "URL", "CODE", "PAIR");
-    /**
-     * id与编码对应关系
-     */
-    public static final Key.Business ID_CODE_PAIR = new Key.Business(SparrowModule.FORUM, "ID", "CODE", "PAIR");
+public interface DTO extends POJO {
 }

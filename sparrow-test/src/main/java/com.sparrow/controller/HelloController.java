@@ -17,10 +17,10 @@
 package com.sparrow.controller;
 
 import com.sparrow.cache.exception.CacheNotFoundException;
-import com.sparrow.constant.SparrowError;
 import com.sparrow.constant.User;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.support.Authenticator;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginToken;

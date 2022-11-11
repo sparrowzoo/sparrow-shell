@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant.cache.key;
+package com.sparrow.support.converter;
 
-import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
+import com.sparrow.protocol.Param;
+import com.sparrow.protocol.dao.PO;
 
-public class KeyGroup {
-    /**
-     * 组的级别
-     */
-    public static final Key.Business LEVEL = new Key.Business(SparrowModule.GROUP, "LEVEL");
+public interface Param2POConverter<PM extends Param, P extends PO> {
+    P param2po(PM po);
 }

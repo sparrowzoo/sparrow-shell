@@ -36,6 +36,15 @@ public class Generator4SetFieldMethodAccessor implements Generator4MethodAccesso
                 field.setAccessible(true);
                 fieldMap.put(field.getName(), field);
             }
+            if (clazz.getSuperclass() != null) {
+                Field[] fields = clazz.getSuperclass().getDeclaredFields();
+                if (fields.length > 0) {
+                    for (Field field : fields) {
+                        field.setAccessible(true);
+                        fieldMap.put(field.getName(), field);
+                    }
+                }
+            }
         }
 
         @Override public Object get(Object o, String methodName) {

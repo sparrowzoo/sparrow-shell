@@ -22,9 +22,6 @@ import com.sparrow.protocol.constant.magic.Symbol;
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * Created by harry on 2018/1/8.
- */
 public class Key {
     private String business;
     private Object businessId;

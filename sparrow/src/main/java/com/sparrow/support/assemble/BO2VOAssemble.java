@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant.cache.key;
+package com.sparrow.support.assemble;
 
-import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
+import com.sparrow.protocol.BO;
+import com.sparrow.protocol.VO;
+import java.util.List;
 
-public class KeyLocation {
-    public static final Key.Business LOCATION_ID_CODE_PAIR = new Key.Business(SparrowModule.LOCATION, "ID", "CODE", "PAIR");
+public interface BO2VOAssemble<V extends VO, B extends BO> {
+    V boAssembleVO(B b);
+
+    List<V> boListAssembleVOList(List<B> list);
 }

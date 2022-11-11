@@ -17,7 +17,10 @@
 
 package com.sparrow.mvc;
 
-import com.sparrow.constant.*;
+import com.sparrow.constant.Config;
+import com.sparrow.constant.ConfigKeyLanguage;
+import com.sparrow.constant.SysObjectName;
+import com.sparrow.constant.User;
 import com.sparrow.container.Container;
 import com.sparrow.container.FactoryBean;
 import com.sparrow.core.Pair;
@@ -29,33 +32,39 @@ import com.sparrow.mvc.adapter.HandlerAdapter;
 import com.sparrow.mvc.adapter.impl.MethodControllerHandlerAdapter;
 import com.sparrow.mvc.mapping.HandlerMapping;
 import com.sparrow.mvc.mapping.impl.UrlMethodHandlerMapping;
-import com.sparrow.support.Authenticator;
-import com.sparrow.support.Authorizer;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginToken;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.servlet.HandlerInterceptor;
+import com.sparrow.support.Authenticator;
+import com.sparrow.support.Authorizer;
 import com.sparrow.support.LoginDialog;
 import com.sparrow.support.web.CookieUtility;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import com.sparrow.utility.web.SparrowServletUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DispatcherFilter implements Filter {
 

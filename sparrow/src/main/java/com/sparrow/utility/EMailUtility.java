@@ -19,8 +19,8 @@ package com.sparrow.utility;
 
 import com.sparrow.constant.Config;
 import com.sparrow.constant.ConfigKeyLanguage;
-import com.sparrow.constant.SparrowError;
 import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.constant.SparrowError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

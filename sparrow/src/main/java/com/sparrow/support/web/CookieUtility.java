@@ -17,9 +17,7 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.cache.Key;
 import com.sparrow.constant.Config;
-import com.sparrow.constant.cache.key.KeyUser;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.JSUtility;
 import com.sparrow.utility.StringUtility;
@@ -33,8 +31,6 @@ import org.slf4j.LoggerFactory;
 @Named
 public class CookieUtility {
     private static Logger logger = LoggerFactory.getLogger(CookieUtility.class);
-
-    private Key.Business permissionBusiness = KeyUser.PERMISSION;
 
     public void set(HttpServletResponse response, String key,
         String value, int days) {
@@ -81,6 +77,6 @@ public class CookieUtility {
     }
 
     public String getPermission(HttpServletRequest request) {
-        return this.get(request.getCookies(), permissionBusiness.getKey());
+        return this.get(request.getCookies(), "permission");
     }
 }

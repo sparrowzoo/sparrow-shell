@@ -15,20 +15,25 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant.cache.key;
+package com.sparrow.protocol;
 
-import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
+public class ThreadContext {
+    private static InheritableThreadLocal<LoginToken> loginTokenThreadLocal = new InheritableThreadLocal<LoginToken>();
+    private static InheritableThreadLocal<ClientInformation> clientThreadLocal = new InheritableThreadLocal<ClientInformation>();
 
-public class KeyUserCount {
+    public static void bindLoginToken(LoginToken loginToken) {
+        loginTokenThreadLocal.set(loginToken);
+    }
 
-    /**
-     * 用户count
-     */
-    public static final Key.Business COUNT = new Key.Business(SparrowModule.COUNT, "User");
+    public static LoginToken getLoginToken() {
+        return loginTokenThreadLocal.get();
+    }
 
-    
-    public static final String USER_COUNT_FIELD_PUBLISHED = "PUBLISHED";
-    public static final String USER_COUNT_FIELD_ATTENTION = "ATTENTION";
-    public static final String USER_COUNT_FIELD_FANS = "FANS";
+    public static ClientInformation getClientInfo() {
+        return clientThreadLocal.get();
+    }
+
+    public static void bindClientInfo(ClientInformation client) {
+        clientThreadLocal.set(client);
+    }
 }

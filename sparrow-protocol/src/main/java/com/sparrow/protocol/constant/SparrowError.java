@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant;
+package com.sparrow.protocol.constant;
 
 import com.sparrow.protocol.ErrorSupport;
 import com.sparrow.protocol.ModuleSupport;
-import com.sparrow.protocol.constant.GlobalModule;
 
 /**
  * first byte:
@@ -82,67 +81,8 @@ public enum SparrowError implements ErrorSupport {
     GLOBAL_OPERATION_VALIDATE_ROLE_INVALID(true, GlobalModule.GLOBAL, "27", "operation validate role is invalid"),
     GLOBAL_PARAMETER_IS_ILLEGAL(true, GlobalModule.GLOBAL, "28", "parameter is illegal"),
     GLOBAL_SMS_SEND_ERROR(true, GlobalModule.GLOBAL, "29", "short message service error"),
-    USER_NAME_EXIST(false, SparrowModule.USER, "01", "User name exist"),
-    USER_EMAIL_EXIST(false, SparrowModule.USER, "02", "User email exist"),
-    USER_MOBILE_EXIST(false, SparrowModule.USER, "03", "User mobile exist"),
-    USER_OLD_PASSWORD_ERROR(false, SparrowModule.USER, "04", "User old password error"),
-    USER_NAME_NOT_EXIST(false, SparrowModule.USER, "05", "Username not exist"),
-    USER_MOBILE_NOT_EXIST(false, SparrowModule.USER, "06", "Mobile not exist"),
-    USER_EMAIL_NOT_EXIST(false, SparrowModule.USER, "07", "User email not exist"),
-    USER_PASSWORD_ERROR(false, SparrowModule.USER, "08", "User password error"),
-    USER_PASSWORD_FORMAT_ERROR(false, SparrowModule.USER, "09", "User password format error"),
-    USER_DISABLED(false, SparrowModule.USER, "10", "User disabled"),
-    USER_NOT_ACTIVATE(false, SparrowModule.USER, "11", "User not activate"),
-    USER_PASSWORD_VALIDATE_TOKEN_ERROR(false, SparrowModule.USER, "12", "user password validate_token error"),
-    USER_VALIDATE_TIME_OUT(false, SparrowModule.USER, "13", "user validate_code time out"),
-    USER_VALIDATE_NOT_EXIST(false, SparrowModule.USER, "14", "user validate_code not exist"),
-    USER_VALIDATE_VALID(false, SparrowModule.USER, "15", "user validate code valid"),
-    USER_VALIDATE_TOKEN_TIME_OUT(false, SparrowModule.USER, "16", "user validate token time out"),
-    USER_REGISTER_NAME_NULL(false, SparrowModule.USER, "17", "user name can't be null"),
-    USER_REGISTER_MOBILE_NULL(false, SparrowModule.USER, "18", "user mobile can't be null"),
-    USER_REGISTER_EMAIL_NULL(false, SparrowModule.USER, "19", "user email can't be null"),
-    USER_AVATAR_NULL(false, SparrowModule.USER, "20", "user avatar can't be null"),
-    USER_AVATAR_CUT_COORDINATE_NULL(false, SparrowModule.USER, "21", "user avatar cut coordinate can't be null"),
-    USER_NOT_LOGIN(false, SparrowModule.USER, "22", "user not login"),
-    USER_TOKEN_TYPE_ERROR(false, SparrowModule.USER, "23", "user token type error"),
-    USER_TOKEN_ERROR(false, SparrowModule.USER, "24", "user token error"),
-
-    //blog
-    BLOG_NOT_THREAD_EDIT_PRIVILEGE(false, SparrowModule.BLOG, "01", "No edit privilege"),
-    BLOG_THREAD_ID_NOT_EXIST(false, SparrowModule.BLOG, "02", "thread id not exist"),
-    BLOG_FORUM_CODE_NULL(false, SparrowModule.BLOG, "03", "thread forum code is null"),
-    BLOG_THREAD_SIMHASH_EXIST(false, SparrowModule.BLOG, "04", "thread simhash code has exist"),
-    BLOG_THREAD_CRAWLED(false, SparrowModule.BLOG, "05", "thread has crawled"),
-    BLOG_LOCK(false, SparrowModule.BLOG, "06", "thread can't operation"),
-
-    //shop
-    SHOP_PRODUCT_NOT_EXIST(false, SparrowModule.SHOP, "01", "shop product not exist"),
-    SHOP_DATE_NOT_ALLOW(false, SparrowModule.SHOP, "02", "shop date not allow"),
-    SHOP_DATE_NOT_EXIST(false, SparrowModule.SHOP, "03", "shop date not exist"),
-    SHOP_ALLOW_NUM_OUT(false, SparrowModule.SHOP, "04", "shop allow num out"),
-    SHOP_PAY_NOTIFY_ID_ERROR(false, SparrowModule.SHOP, "05", "pay notify id error"),
-    SHOP_PAY_SIGNATURE_ERROR(false, SparrowModule.SHOP, "06", "pay signature error"),
-    SHOP_ORDER_NOT_EXIST(false, SparrowModule.SHOP, "07", "order not exist"),
-    SHOP_ORDER_STATUS_ERROR(false, SparrowModule.SHOP, "08", "order status error"),
-    SHOP_PAY_STATUS_ERROR(false, SparrowModule.SHOP, "09", "pay status error"),
-
-    //upload
-    UPLOAD_SERVICE_ERROR(false, SparrowModule.UPLOAD, "01", "upload service error"),
-    UPLOAD_OUT_OF_SIZE(false, SparrowModule.UPLOAD, "02", "upload out of size"),
-    UPLOAD_FILE_NAME_NULL(false, SparrowModule.UPLOAD, "03", "upload file name null"),
-    UPLOAD_FILE_TYPE_ERROR(false, SparrowModule.UPLOAD, "04", "upload file type error"),
-    UPLOAD_SRC_DESC_PATH_REPEAT(false, SparrowModule.UPLOAD, "05", "upload src desc  path repeat"),
-
-    FILE_NOT_FOUND(false, SparrowModule.ATTACH, "01", "file not found"),
-    FILE_CAN_NOT_READ(false, SparrowModule.ATTACH, "02", "io error file can't read"),
-    IMAGE_EXTENSION_NOT_FOUND(true, SparrowModule.ATTACH, "03", "[%s] image extension  not found "),
-
-    //活动
-    ACTIVITY_SCAN_TOKEN_TIME_OUT(false, SparrowModule.ACTIVITY, "01", "activity scan token time out"),
-
-    ACTIVITY_TIMES_OUT(false, SparrowModule.ACTIVITY, "02", "activity time out"),
-
-    ACTIVITY_RULE_GIFT_TIMES_OUT(false, SparrowModule.ACTIVITY, "03", "activity gift time out");
+    USER_NOT_LOGIN(true, GlobalModule.GLOBAL, "34", "user not login"),
+    IMAGE_EXTENSION_NOT_FOUND(true, GlobalModule.GLOBAL, "35", "image extension not found");
 
     private boolean system;
     private ModuleSupport module;

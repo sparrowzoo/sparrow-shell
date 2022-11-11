@@ -89,6 +89,7 @@ public class Constant {
     public static final String REQUEST_ACTION_INCLUDE = "javax.servlet.include.servlet_path";
     public static final String REQUEST_ACTION_CURRENT_FORUM = "request_action_current_forum";
     public static final String REQUEST_CLIENT_INFORMATION = "client";
+    public static final String REQUEST_HEADER_KEY_LOGIN_TOKEN = "login_token";
 
     /**
      * 空链接

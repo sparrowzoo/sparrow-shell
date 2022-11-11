@@ -18,29 +18,27 @@
 package com.sparrow.mvc.result.impl;
 
 import com.sparrow.constant.Config;
-import com.sparrow.constant.SparrowError;
 import com.sparrow.core.Pair;
+import com.sparrow.mvc.PageSwitchMode;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
+import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
 import com.sparrow.mvc.result.ResultAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.VO;
 import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.mvc.PageSwitchMode;
-import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
-
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
-
 import javax.servlet.FilterChain;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
