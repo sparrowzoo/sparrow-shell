@@ -19,7 +19,6 @@ package com.sparrow.support.converter;
 
 import com.sparrow.protocol.BO;
 import com.sparrow.protocol.Param;
-import com.sparrow.protocol.dao.PO;
 
 public interface Param2BOConverter<PM extends Param, B extends BO> {
     B param2po(PM po);
