@@ -19,10 +19,10 @@ package com.sparrow.redis;
 import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.Key;
 import com.sparrow.cache.exception.CacheConnectionException;
-import com.sparrow.constant.SparrowModule;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
+import com.sparrow.protocol.constant.GlobalModule;
 import org.junit.Test;
 
 /**
@@ -32,15 +32,15 @@ public class RedisKeyTest {
 
     @Test
     public void readLoc() throws CacheConnectionException {
-        Key.Business business=new Key.Business(SparrowModule.CODE,"KEY");
+        Key.Business business = new Key.Business(GlobalModule.GLOBAL, "KEY");
 
-        Key key=new Key.Builder().business(business).build();
+        Key key = new Key.Builder().business(business).build();
 
         Container container = new SparrowContainer();
-        ContainerBuilder builder=new ContainerBuilder().contextConfigLocation("/dao.xml");
+        ContainerBuilder builder = new ContainerBuilder().contextConfigLocation("/dao.xml");
         container.init(builder);
         CacheClient client = container.getBean("cacheClient");
         //client.string().set(key,"test");
-        System.out.println(client.key().expireSeconds(key,1L));
+        System.out.println(client.key().expireSeconds(key, 1L));
     }
 }

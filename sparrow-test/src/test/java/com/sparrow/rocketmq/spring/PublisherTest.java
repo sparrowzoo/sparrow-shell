@@ -18,10 +18,10 @@
 package com.sparrow.rocketmq.spring;
 
 import com.sparrow.cache.Key;
-import com.sparrow.constant.cache.key.KeyCMS;
-import com.sparrow.mq.MQPublisher;
-import com.sparrow.rocketmq.protocol.event.HelloEvent;
 import com.sparrow.concurrent.latch.DistributedCountDownLatch;
+import com.sparrow.mq.MQPublisher;
+import com.sparrow.protocol.constant.GlobalModule;
+import com.sparrow.rocketmq.protocol.event.HelloEvent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +41,13 @@ public class PublisherTest {
     @Autowired
     private DistributedCountDownLatch distributedCountDownLatch;
 
+    public static final Key.Business CMS_KEY = new Key.Business(GlobalModule.GLOBAL, "CMS");
+
+
     @Test
     public void publish() {
         HelloEvent helloEvent = new HelloEvent();
-        Key productKey=new Key.Builder().business(KeyCMS.CMS_ALL_CRAWL).businessId(1).build();
+        Key productKey=new Key.Builder().business(CMS_KEY).businessId(1).build();
         helloEvent.setMessage("msg");
         try {
             while (true){

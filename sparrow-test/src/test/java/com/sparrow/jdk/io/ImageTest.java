@@ -17,8 +17,6 @@
 
 package com.sparrow.jdk.io;
 
-import com.sparrow.utility.ImageUtility;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -47,14 +45,14 @@ public class ImageTest {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        try {
-            ImageUtility.makeThumbnail("/Users/harry/Documents/test.jpg",
-                new FileOutputStream("/Users/harry/Documents/test_back.jpg"), 1280, 768, "", false);
-            ImageUtility.makeThumbnail("/D:/image.png",
-                new FileOutputStream("d:\\999999.png"), 1280, 768, "", false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            ImageUtility.makeThumbnail("/Users/harry/Documents/test.jpg",
+//                new FileOutputStream("/Users/harry/Documents/test_back.jpg"), 1280, 768, "", false);
+//            ImageUtility.makeThumbnail("/D:/image.png",
+//                new FileOutputStream("d:\\999999.png"), 1280, 768, "", false);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public static void makeThumbnail(String srcImagePath, OutputStream descImage,

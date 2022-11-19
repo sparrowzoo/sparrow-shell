@@ -18,18 +18,16 @@
 package com.sparrow.facade.kv;
 
 import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
+import com.sparrow.protocol.constant.GlobalModule;
 
-/**
- * Created by harry on 2018/1/8.
- */
 public class KeyTest {
     public static void main(String[] args) {
+
         //module:business.b1.b2.b3:key1:key2.3:key3
-        Key.Business od=new Key.Business(SparrowModule.CODE,"OD");
-        Key.Business codeIdNamePair = new Key.Business(SparrowModule.CODE, "OD", "NAME", "PAIR");
-        Key.Business userRegister = new Key.Business(SparrowModule.USER, "REGISTER","T1");
-        Key.Business user = new Key.Business(SparrowModule.USER);
+        Key.Business od=new Key.Business(GlobalModule.GLOBAL,"OD");
+        Key.Business codeIdNamePair = new Key.Business(GlobalModule.GLOBAL, "OD", "NAME", "PAIR");
+        Key.Business userRegister = new Key.Business(GlobalModule.GLOBAL, "REGISTER","T1");
+        Key.Business user = new Key.Business(GlobalModule.GLOBAL);
 
         Key codeIdNamePairKey= new Key.Builder().business(codeIdNamePair).build();
         Key userRegisterKey=new Key.Builder().business(userRegister).businessId(1, 2).build();
