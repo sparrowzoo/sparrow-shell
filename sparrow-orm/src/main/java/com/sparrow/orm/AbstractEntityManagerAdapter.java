@@ -192,20 +192,25 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     }
 
     @Override
-    public boolean initTable(Class clazz) {
+    public void initTable(Class clazz) {
         // 初始化表名
-        if (!clazz.isAnnotationPresent(Table.class)) {
-            return false;
+        if (clazz.isAnnotationPresent(Table.class)) {
+            Table table = (Table) clazz.getAnnotation(Table.class);
+            this.schema = table.schema();
+            this.tableName = table.name();
+        } else {
+            this.tableName = StringUtility.setFirstByteLowerCase(clazz.getSimpleName());
         }
-        Table table = (Table) clazz.getAnnotation(Table.class);
-        Split split = (Split) clazz.getAnnotation(Split.class);
-        this.tableName = table.name();
-        this.schema = table.schema();
         this.dialectReader = DialectReader.getInstance(schema);
+        Split split = null;
+        if (clazz.isAnnotationPresent(Split.class)) {
+            split = (Split) clazz.getAnnotation(Split.class);
+        }
+
         if (split == null) {
             //`table-name`
             this.dialectTableName = String.format("%s%s%s", dialectReader.getOpenQuote(), tableName, dialectReader.getCloseQuote());
-            return false;
+            return;
         }
         this.dialectTableName = String.format("%s%s%s%s", dialectReader.getOpenQuote(), tableName, Constant.TABLE_SUFFIX, dialectReader.getCloseQuote());
         // 分表的桶数
@@ -220,7 +225,6 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             this.tableBucketCount = bucketCount;
             this.databaseSplitStrategy = split.strategy();
         }
-        return true;
     }
 
     @Override
