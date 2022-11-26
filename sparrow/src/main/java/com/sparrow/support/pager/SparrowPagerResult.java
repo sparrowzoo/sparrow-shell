@@ -170,7 +170,7 @@ public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
                 String.valueOf(pageCount)) + "\">末页</a>\n");
         } else {
             pageString.append("<a " + disablePageNumStyle + ">下一页</a>\n<a "
-                + disablePageNumStyle + "\">末页</a>\n");
+                + disablePageNumStyle + ">末页</a>\n");
         }
         if (!this.simple) {
             pageString.append("<input id=\"defPageIndex\" onmouseover=\"this.select();\" onkeyup=\"this.value=this.value.replace(/\\D/g,'');\"  onafterpaste=\"this.value=this.value.replace(/\\D/g,'');\""
@@ -185,7 +185,7 @@ public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
             pageString.append("<span style='color:#5f5f60'>\n");
             pageString.append("<a style='display:none;' id='spanCurrentPageIndex'>\n");
             pageString.append(this.currentPageIndex);
-            pageString.append("</span>共<span>\n");
+            pageString.append("</a></span>共<span>\n");
             pageString.append(pageCount);
             pageString.append("</span>页");
             pageString.append(Escaped.EM_SPACE);

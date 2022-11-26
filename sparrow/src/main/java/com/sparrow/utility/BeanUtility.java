@@ -23,8 +23,12 @@ import com.sparrow.core.TypeConverter;
 import com.sparrow.core.spi.ApplicationContext;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BeanUtility {
+    private static Logger logger = LoggerFactory.getLogger(BeanUtility.class);
+
     public static void copyProperties(Object source, Object target, String... ignoreProperties) {
         Container container = ApplicationContext.getContainer();
         MethodAccessor sourceMethodAccessor = container.getProxyBean(source.getClass());
@@ -34,7 +38,11 @@ public class BeanUtility {
             if (StringUtility.existInArray(ignoreProperties, targetField.getName())) {
                 continue;
             }
-            targetMethodAccessor.set(target, targetField.getName(), sourceMethodAccessor.get(source, targetField.getName()));
+            try {
+                targetMethodAccessor.set(target, targetField.getName(), sourceMethodAccessor.get(source, targetField.getName()));
+            } catch (Exception e) {
+                logger.error("properties copy error field-name {}", targetField.getName(), e);
+            }
         }
     }
 
