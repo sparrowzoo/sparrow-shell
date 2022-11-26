@@ -20,7 +20,7 @@ public class MonitorExceptionTest {
 
     public static void test(int index) {
         try {
-            mLock.lock();
+            mLock.lock();//tryLock() 报错
             System.err.println(index + " run code" + index);
         } catch (Exception e) {
             e.printStackTrace();

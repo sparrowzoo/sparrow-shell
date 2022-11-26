@@ -42,5 +42,5 @@ public enum StatusRecord {
     /**
      * 销毁(6)
      */
-    DESTROYED
+    DESTROYED;
 }

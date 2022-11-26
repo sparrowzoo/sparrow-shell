@@ -19,9 +19,11 @@ public class MonitorExceptionReentrantLockTest {
 
     public static void test(int index) {
         try {
-            // 伪代码 开始
-            System.err.println(index + " run code");
-            // 伪代码 结束
+            if(mLock.tryLock()) {
+                // 伪代码 开始
+                System.err.println(index + " run code");
+                // 伪代码 结束
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
