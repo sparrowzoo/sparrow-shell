@@ -22,30 +22,27 @@ import com.sparrow.protocol.constant.magic.Escaped;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.utility.StringUtility;
 
-public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
-
+public class HtmlPagerResult<T> extends PagerResult<T> {
     private String indexPageFormat = Pager.ACTION_PAGE_FORMAT;
     private String pageFormat = Pager.ACTION_PAGE_FORMAT;
     private Integer pageNumberCount = 5;
     private boolean simple;
     private Integer pageCount;
-
     private String html;
 
-    public SparrowPagerResult(PagerResult<T, A> pagerResult) {
+    public HtmlPagerResult(PagerResult<T> pagerResult) {
         this(pagerResult.getPageSize(), pagerResult.getCurrentPageIndex(), pagerResult.getRecordCount());
         this.list = pagerResult.getList();
-        this.addition = pagerResult.getAddition();
     }
 
-    private SparrowPagerResult(Integer pageSize, Integer currentPageIndex, Long recordCount) {
+    private HtmlPagerResult(Integer pageSize, Integer currentPageIndex, Long recordCount) {
         super(pageSize, currentPageIndex);
         super.setRecordCount(recordCount);
         this.pageCount = (int) Math.ceil(this.recordCount / (double) this.pageSize);
     }
 
-    public static SparrowPagerResult page(Integer pageSize, Integer currentPageIndex, Long recordCount) {
-        return new SparrowPagerResult(pageSize, currentPageIndex, recordCount);
+    public static HtmlPagerResult page(Integer pageSize, Integer currentPageIndex, Long recordCount) {
+        return new HtmlPagerResult(pageSize, currentPageIndex, recordCount);
     }
 
     public String getIndexPageFormat() {
@@ -130,8 +127,7 @@ public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
             pageString.append("<a ").append(pageFirstDisableStyle).append(">首页</a>\n<a ").append(disablePageNumStyle).append(">上一页</a>\n");
         }
 
-        int remainderOfPage = this.currentPageIndex % pageNumberCount;
-        int beginPageIndex = this.currentPageIndex - remainderOfPage + 1;
+        int beginPageIndex = (this.currentPageIndex - 1) / pageNumberCount * pageNumberCount + 1;
         //当前只显示5个页码
         int endPageIndex = beginPageIndex + pageNumberCount - 1;
         for (Integer i = beginPageIndex; i <= endPageIndex; i++) {
@@ -163,20 +159,13 @@ public class SparrowPagerResult<T, A> extends PagerResult<T, A> {
                 String.valueOf(this.currentPageIndex + 1)));
             pageString.append("\">下一页");
             pageString.append("</a>\n");
-            pageString.append("<a "
-                + pageNumberStyle
-                + " href=\""
-                + this.pageFormat.replace(Pager.PAGE_INDEX,
-                String.valueOf(pageCount)) + "\">末页</a>\n");
+            pageString.append("<a ").append(pageNumberStyle).append(" href=\"").append(this.pageFormat.replace(Pager.PAGE_INDEX,
+                String.valueOf(pageCount))).append("\">末页</a>\n");
         } else {
-            pageString.append("<a " + disablePageNumStyle + ">下一页</a>\n<a "
-                + disablePageNumStyle + ">末页</a>\n");
+            pageString.append("<a ").append(disablePageNumStyle).append(">下一页</a>\n<a ").append(disablePageNumStyle).append(">末页</a>\n");
         }
         if (!this.simple) {
-            pageString.append("<input id=\"defPageIndex\" onmouseover=\"this.select();\" onkeyup=\"this.value=this.value.replace(/\\D/g,'');\"  onafterpaste=\"this.value=this.value.replace(/\\D/g,'');\""
-                + "onblur=\"if(this.value.trim()==''){this.value=parseInt($('currentPageIndex').value)+1;}\" value=\""
-                + (this.currentPageIndex + 1)
-                + "\" type=\"text\" />\n");
+            pageString.append("<input id=\"defPageIndex\" onmouseover=\"this.select();\" onkeyup=\"this.value=this.value.replace(/\\D/g,'');\"  onafterpaste=\"this.value=this.value.replace(/\\D/g,'');\"" + "onblur=\"if(this.value.trim()==''){this.value=parseInt($('currentPageIndex').value)+1;}\" value=\"").append(this.currentPageIndex + 1).append("\" type=\"text\" />\n");
             pageString.append("<a id=\"go\" onclick=\"$.page.toTargetPage(");
             pageString.append(pageCount);
             pageString.append(",'");

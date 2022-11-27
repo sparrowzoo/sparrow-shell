@@ -70,7 +70,7 @@ public class Generator4SetFieldMethodAccessor implements Generator4MethodAccesso
             try {
                 field.set(o, arg);
             } catch (IllegalAccessException e) {
-                logger.error("set field error field-name={}", field.getName(), e);
+                logger.error("set field error field-name={}", field.getName());
             }
         }
     }

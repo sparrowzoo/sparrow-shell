@@ -19,19 +19,20 @@ package com.sparrow.orm.query;
 
 import com.sparrow.protocol.Exclude;
 import com.sparrow.protocol.dao.RowMapper;
-import com.sparrow.protocol.pager.PagerQuery;
+import com.sparrow.protocol.dao.PagerQuery;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 @Exclude
 public class WhereCriteria extends PagerQuery {
     public WhereCriteria() {
-        super(0, 0);
+        super(0, 1);
     }
 
-    public WhereCriteria(Integer currentPageIndex, Integer pageSize) {
-        super(currentPageIndex, pageSize);
+    public WhereCriteria(Integer pageSize, Integer currentPageIndex) {
+        super(pageSize, currentPageIndex);
     }
 
     private List<Object> tableSuffix = new ArrayList<Object>();

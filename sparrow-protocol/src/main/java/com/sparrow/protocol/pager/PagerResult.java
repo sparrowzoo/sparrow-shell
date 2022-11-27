@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * pager result without html T data type A addition type
  */
-public class PagerResult<T, A> extends SimplePager implements VO {
+public class PagerResult<T> extends SimplePager implements VO {
 
     public PagerResult() {
     }
@@ -35,7 +35,6 @@ public class PagerResult<T, A> extends SimplePager implements VO {
         }
         this.currentPageIndex = simplePager.getCurrentPageIndex();
         this.pageSize = simplePager.getPageSize();
-
     }
 
     public PagerResult(Integer pageSize, Integer currentPageIndex) {
@@ -46,15 +45,6 @@ public class PagerResult<T, A> extends SimplePager implements VO {
 
     protected List<T> list;
 
-    protected A addition;
-
-    public A getAddition() {
-        return addition;
-    }
-
-    public void setAddition(A addition) {
-        this.addition = addition;
-    }
 
     public Long getRecordCount() {
         return recordCount;

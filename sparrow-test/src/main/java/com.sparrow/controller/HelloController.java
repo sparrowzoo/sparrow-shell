@@ -20,15 +20,14 @@ import com.sparrow.cache.exception.CacheNotFoundException;
 import com.sparrow.constant.User;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
-import com.sparrow.protocol.constant.SparrowError;
-import com.sparrow.support.Authenticator;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginToken;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.servlet.ServletContainer;
+import com.sparrow.support.Authenticator;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.vo.HelloVO;
-import com.sparrow.vo.JsonVO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -82,9 +81,9 @@ public class HelloController {
         return new HelloVO("够意思吧，json不用页面");
     }
 
-    public PagerResult<HelloVO, JsonVO> pager() {
-        PagerResult<HelloVO, JsonVO> pagerResult = new PagerResult<>();
-        pagerResult.setAddition(new JsonVO("json"));
+    public PagerResult<HelloVO> pager() {
+        PagerResult<HelloVO> pagerResult = new PagerResult<>();
+//        pagerResult.setAddition(new JsonVO("json"));
         pagerResult.setRecordCount(1000L);
         pagerResult.setPageSize(100);
         pagerResult.setCurrentPageIndex(1);

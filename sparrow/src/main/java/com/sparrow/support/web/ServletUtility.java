@@ -45,7 +45,6 @@ public class ServletUtility {
     }
 
     public String assembleActualUrl(String url) {
-        //rootPath is null when contain init ...
         String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
         if (rootPath != null && url.startsWith(rootPath)) {
             url = url.substring(rootPath.length());

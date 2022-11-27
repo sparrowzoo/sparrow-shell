@@ -24,7 +24,7 @@ import com.sparrow.mvc.ui.grid.CellAttribute;
 import com.sparrow.mvc.ui.grid.Head;
 import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.constant.magic.Digit;
-import com.sparrow.support.pager.SparrowPagerResult;
+import com.sparrow.support.pager.HtmlPagerResult;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
@@ -89,7 +89,7 @@ public class GridView extends WebControl {
         if (Boolean.FALSE.toString().equalsIgnoreCase(this.getVisible())) {
             return TagSupport.SKIP_BODY;
         }
-        SparrowPagerResult pagerResult = (SparrowPagerResult) super.pageContext.getRequest().getAttribute(this.getId());
+        HtmlPagerResult pagerResult = (HtmlPagerResult) super.pageContext.getRequest().getAttribute(this.getId());
         List<POJO> datasource = pagerResult.getList();
         if (datasource == null) {
             datasource = (List<POJO>) HttpContext.getContext().get(this.getId());
@@ -136,7 +136,7 @@ public class GridView extends WebControl {
             writeHTML.append(StringUtility.getIndent(this.indent()));
             writeHTML.append("</tbody></table>");
             if (this.isShowPage()) {
-                SparrowPagerResult result = SparrowPagerResult.page(pagerResult.getPageSize(), this.getCurrentPageIndex(), pagerResult.getRecordCount());
+                HtmlPagerResult result = HtmlPagerResult.page(pagerResult.getPageSize(), this.getCurrentPageIndex(), pagerResult.getRecordCount());
                 result.setPageFormat(this.pageFormat);
                 result.setIndexPageFormat(this.pageFormat);
                 result.setSimple(false);

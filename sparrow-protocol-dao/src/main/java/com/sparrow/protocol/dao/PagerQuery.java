@@ -14,25 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.pager;
 
-import java.util.Map;
+package com.sparrow.protocol.dao;
 
-public class PagerResultWithDictionary<T, DK, DV, A> extends PagerResult<T, A> {
-    public PagerResultWithDictionary() {
+import com.sparrow.protocol.pager.SimplePager;
+
+/**
+ * simple pager search parameter
+ */
+public class PagerQuery extends SimplePager {
+    public PagerQuery() {
     }
 
-    private Map<DK, DV> dictionaries;
-
-    public PagerResultWithDictionary(SimplePager simplePager) {
-        super(simplePager);
+    /**
+     * avoid deep pager
+     */
+    public PagerQuery(Integer pageSize) {
+        super(pageSize, 0);
     }
 
-    public Map<DK, DV> getDictionaries() {
-        return dictionaries;
+    public PagerQuery(Integer pageSize, Integer currentPageIndex) {
+        super(pageSize, currentPageIndex);
     }
 
-    public void setDictionaries(Map<DK, DV> dictionaries) {
-        this.dictionaries = dictionaries;
+    public String getLimit() {
+        //no page
+        if (pageSize <= 0) {
+            return "";
+        }
+        if (this.currentPageIndex == null) {
+            this.currentPageIndex = 1;
+        }
+        int offset = pageSize * (this.currentPageIndex <= 1 ? 0 : this.currentPageIndex - 1);
+        return " limit " + offset + "," + this.getPageSize();
     }
 }

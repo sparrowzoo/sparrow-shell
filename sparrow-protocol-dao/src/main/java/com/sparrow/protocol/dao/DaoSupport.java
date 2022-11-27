@@ -17,8 +17,6 @@
 
 package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.pager.PagerQuery;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

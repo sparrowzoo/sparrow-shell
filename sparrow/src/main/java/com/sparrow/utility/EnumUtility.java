@@ -66,7 +66,7 @@ public class EnumUtility {
             }
             e = Class.forName(className);
             if (classArray.length >= Digit.TOW) {
-                maxCount = Integer.valueOf(classArray[1]);
+                maxCount = Integer.parseInt(classArray[1]);
             }
             if (classArray.length == Digit.THREE) {
                 nameAsKey = true;
@@ -74,10 +74,7 @@ public class EnumUtility {
         } catch (ClassNotFoundException ignore) {
             throw new RuntimeException(ignore);
         }
-        if (e != null) {
-            return getMap(e, maxCount, nameAsKey);
-        }
-        return null;
+        return getMap(e, maxCount, nameAsKey);
     }
 
     /**

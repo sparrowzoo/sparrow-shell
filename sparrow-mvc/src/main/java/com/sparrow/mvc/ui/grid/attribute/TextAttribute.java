@@ -26,7 +26,7 @@ public class TextAttribute extends BaseAttribute {
     public TextAttribute(String[] config) {
         super(config);
         if (config.length > 3) {
-            this.textLength = Integer.valueOf(config[2]);
+            this.textLength = Integer.parseInt(config[2]);
         }
         if (config.length > 4) {
             this.defaultValue = config[3];

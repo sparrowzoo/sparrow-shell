@@ -59,9 +59,13 @@ public class ConfigUtility {
     public static String getLanguageValue(String key, String language, String defaultValue) {
         if (StringUtility.isNullOrEmpty(language)) {
             language = getValue(com.sparrow.constant.Config.LANGUAGE);
+            if(StringUtility.isNullOrEmpty(language)){
+                language=Constant.DEFAULT_LANGUAGE;
+            }
         } else {
             language = language.toLowerCase();
         }
+
 
         if (internationalization == null) {
             return defaultValue;

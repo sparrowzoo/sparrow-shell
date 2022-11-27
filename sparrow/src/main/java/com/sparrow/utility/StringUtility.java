@@ -160,15 +160,33 @@ public class StringUtility {
         return descBuilder.toString() + elide.trim();
     }
 
+    public static boolean isChineseChar(char c) {
+        return String.valueOf(c).matches("[\u4e00-\u9fa5]");
+    }
+
+    public static int getMaxAllowLength(int maxAllowLength, String input) {
+        int remarkLength = StringUtility.length(input);
+        if (remarkLength > 0) {
+            maxAllowLength = maxAllowLength - remarkLength;
+        }
+        return maxAllowLength;
+    }
+
     public static int length(String str) {
+
         if (isNullOrEmpty(str)) {
             return 0;
         }
-        try {
-            return str.getBytes(Constant.CHARSET_UTF_8).length;
-        } catch (UnsupportedEncodingException ignore) {
-            return 0;
+        int len = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char a = str.charAt(i);
+            if (isChineseChar(a)) {
+                len += 2;
+            } else {
+                len += 1;
+            }
         }
+        return len;
     }
 
     /**

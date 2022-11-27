@@ -14,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.mvc.result;
+package com.sparrow.support.web;
 
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
-import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;

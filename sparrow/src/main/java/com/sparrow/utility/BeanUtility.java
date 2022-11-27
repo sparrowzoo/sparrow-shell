@@ -41,7 +41,7 @@ public class BeanUtility {
             try {
                 targetMethodAccessor.set(target, targetField.getName(), sourceMethodAccessor.get(source, targetField.getName()));
             } catch (Exception e) {
-                logger.error("properties copy error field-name {}", targetField.getName(), e);
+                logger.error("properties copy error field-name {}", targetField.getName());
             }
         }
     }
