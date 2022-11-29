@@ -28,6 +28,7 @@ import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -148,10 +149,7 @@ public class StringUtility {
         int length = 0;
         StringBuilder descBuilder = new StringBuilder();
         for (char c : charArray) {
-            try {
-                length += String.valueOf(c).getBytes(Constant.CHARSET_UTF_8).length;
-            } catch (UnsupportedEncodingException ignore) {
-            }
+            length += String.valueOf(c).getBytes(StandardCharsets.UTF_8).length;
             if (length > len) {
                 break;
             }

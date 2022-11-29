@@ -21,7 +21,9 @@ import com.sparrow.protocol.VO;
 import java.util.List;
 
 /**
- * pager result without html T data type A addition type
+ * pager result without html
+ * <p>
+ * T data type
  */
 public class PagerResult<T> extends SimplePager implements VO {
 
@@ -45,7 +47,6 @@ public class PagerResult<T> extends SimplePager implements VO {
 
     protected List<T> list;
 
-
     public Long getRecordCount() {
         return recordCount;
     }
@@ -67,9 +68,5 @@ public class PagerResult<T> extends SimplePager implements VO {
      */
     public Integer getLastPageIndex() {
         return (int) Math.ceil((double) this.recordCount / this.pageSize);
-    }
-
-    public boolean more() {
-        return getCurrentPageIndex() < getLastPageIndex();
     }
 }
