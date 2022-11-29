@@ -21,7 +21,7 @@ import com.sparrow.constant.User;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginToken;
+import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.servlet.ServletContainer;
@@ -102,11 +102,10 @@ public class HelloController {
     public ViewWithModel login(HttpServletRequest request) throws BusinessException, CacheNotFoundException {
         ServletUtility servletUtility = ServletUtility.getInstance();
 
-        LoginToken loginToken = new LoginToken();
+        LoginUser loginToken = new LoginUser();
         loginToken.setNickName("nick-zhangsan");
         loginToken.setAvatar("http://localhost");
         loginToken.setDeviceId(servletUtility.getDeviceId(request));
-        loginToken.setCent(100L);
         loginToken.setExpireAt(System.currentTimeMillis() + 1000 * 60 * 60);
         loginToken.setDays(20);
         loginToken.setUserId(1L);

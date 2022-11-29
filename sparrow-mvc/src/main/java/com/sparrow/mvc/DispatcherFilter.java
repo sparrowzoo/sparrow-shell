@@ -33,7 +33,7 @@ import com.sparrow.mvc.adapter.impl.MethodControllerHandlerAdapter;
 import com.sparrow.mvc.mapping.HandlerMapping;
 import com.sparrow.mvc.mapping.impl.UrlMethodHandlerMapping;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginToken;
+import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
@@ -383,7 +383,7 @@ public class DispatcherFilter implements Filter {
         Authenticator authenticator = this.container.getBean(SysObjectName.AUTHENTICATOR_SERVICE);
         String permission = this.cookieUtility.getPermission(httpRequest);
         String deviceId = this.sparrowServletUtility.getServletUtility().getDeviceId(httpRequest);
-        LoginToken user = authenticator.authenticate(permission, deviceId);
+        LoginUser user = authenticator.authenticate(permission, deviceId);
         httpRequest.setAttribute(User.ID, user.getUserId());
         httpRequest.setAttribute(User.LOGIN_TOKEN, user);
 

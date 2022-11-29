@@ -16,32 +16,28 @@
  */
 package com.sparrow.protocol;
 
-public class LoginToken implements VO {
+public class LoginUser implements VO {
     private Long userId;
     private String nickName;
     private String userName;
     private String avatar;
-    private Long cent;
     private String deviceId;
     private Boolean activate;
     private Integer days;
     private Long expireAt;
-    private String permission;
 
-    public static LoginToken create(Long userId,
+    public static LoginUser create(Long userId,
         String userName,
         String nickName,
         String avatar,
-        Long cent,
         String deviceId,
         Boolean activate,
         Integer expireDays) {
-        LoginToken login = new LoginToken();
+        LoginUser login = new LoginUser();
         login.userId = userId;
         login.userName = userName;
         login.nickName = nickName;
         login.avatar = avatar;
-        login.cent = cent;
         login.deviceId = deviceId;
         login.activate = activate;
         login.days = expireDays;
@@ -88,14 +84,6 @@ public class LoginToken implements VO {
         this.avatar = avatar;
     }
 
-    public Long getCent() {
-        return cent;
-    }
-
-    public void setCent(Long cent) {
-        this.cent = cent;
-    }
-
     public String getDeviceId() {
         return deviceId;
     }
@@ -126,13 +114,5 @@ public class LoginToken implements VO {
 
     public void setExpireAt(Long expireAt) {
         this.expireAt = expireAt;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
     }
 }

@@ -18,14 +18,14 @@
 package com.sparrow.protocol;
 
 public class ThreadContext {
-    private static InheritableThreadLocal<LoginToken> loginTokenThreadLocal = new InheritableThreadLocal<LoginToken>();
+    private static InheritableThreadLocal<LoginUser> loginTokenThreadLocal = new InheritableThreadLocal<LoginUser>();
     private static InheritableThreadLocal<ClientInformation> clientThreadLocal = new InheritableThreadLocal<ClientInformation>();
 
-    public static void bindLoginToken(LoginToken loginToken) {
+    public static void bindLoginToken(LoginUser loginToken) {
         loginTokenThreadLocal.set(loginToken);
     }
 
-    public static LoginToken getLoginToken() {
+    public static LoginUser getLoginToken() {
         return loginTokenThreadLocal.get();
     }
 
