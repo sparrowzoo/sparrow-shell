@@ -77,10 +77,8 @@ public class Result<T> implements VO {
 
     private List<Object> parameters;
 
-    private static Result ok = new Result();
-
     public static Result success() {
-        return ok;
+        return new Result();
     }
 
     public static Result fail(ErrorSupport errorSupport) {
