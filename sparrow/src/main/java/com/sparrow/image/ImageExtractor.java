@@ -19,7 +19,6 @@ package com.sparrow.image;
 
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Downloader;
-import com.sparrow.protocol.dto.ImageDTO;
 import java.util.List;
 
 public interface ImageExtractor {

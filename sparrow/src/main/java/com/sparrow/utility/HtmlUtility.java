@@ -18,11 +18,8 @@
 package com.sparrow.utility;
 
 import com.sparrow.constant.Regex;
-
 import com.sparrow.protocol.constant.magic.Escaped;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.protocol.dto.SimpleItemDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -204,16 +201,5 @@ public class HtmlUtility {
         html = html.replace(Escaped.DOUBLE_QUOTES, Symbol.DOUBLE_QUOTES);
         html = html.replace(Escaped.NO_BREAK_SPACE, Symbol.BLANK);
         return html;
-    }
-
-    public static String assembleHyperLink(SimpleItemDTO simpleItem, String openType) {
-        String title = simpleItem.getTitle();
-        if (!StringUtility.isNullOrEmpty(simpleItem.getCoverImage())) {
-            title = "<img title='" + title + "' src='" + simpleItem.getCoverImage()
-                + "'/>";
-        }
-        return String.format("<a href=\"%1$s\" target=\"%2$s\">%3$s</a>",
-            simpleItem.getUrl() == null ? "" : simpleItem.getUrl().trim(), openType,
-            title);
     }
 }

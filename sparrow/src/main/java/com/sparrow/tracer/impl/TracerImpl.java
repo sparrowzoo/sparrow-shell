@@ -42,10 +42,10 @@ public class TracerImpl implements Tracer {
     public long getTimeoutThreshold() {
         return timeoutThreshold;
     }
-
     public ThreadLocal<Object> cursorLocal = new ThreadLocal<>();
 
     /**
+     *
      * cursor 当前span指针 thread local 需要remove 防止内存泄露，这里直接用map
      */
     private Map<Long, Span> cursor = new HashMap<>();
@@ -99,7 +99,8 @@ public class TracerImpl implements Tracer {
     }
 
     public void setCursor(Span current) {
-        this.cursor.put(Thread.currentThread().getId(), current);
+        this.cursorLocal.set(current);
+//        this.cursor.put(Thread.currentThread().getId(), current);
     }
 
     @Override

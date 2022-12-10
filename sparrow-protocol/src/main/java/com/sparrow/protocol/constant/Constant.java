@@ -24,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 常用常量
  */
 public class Constant {
+    public static final int MAX_REMARK_LENGTH = 500;
     public static final String SPARROW = "sparrow";
     public static final String DEFAULT = "default";
     public static final String ERROR = "error";

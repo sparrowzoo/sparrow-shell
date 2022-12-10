@@ -12,7 +12,7 @@ public class TestWeakReference {
     public static void main(String[] args) {
         int i = 0;
         while (true) {
-            User u=user.get();
+            //User u=user.get();
             if (user.get() != null) {
                 i++;
                 System.out.println("Object is alive for " + i + " loops - ");

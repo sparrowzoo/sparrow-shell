@@ -25,7 +25,6 @@ import com.sparrow.container.ContainerAware;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Downloader;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.protocol.dto.ImageDTO;
 import com.sparrow.io.file.FileNameProperty;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.ConfigUtility;

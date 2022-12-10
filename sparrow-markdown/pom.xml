@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>sparrow-bom</artifactId>
-        <groupId>com.sparrow</groupId>
-        <version>1.0</version>
+        <groupId>com.sparrowzoo</groupId>
+        <version>0.0.2-SNAPSHOT</version>
         <relativePath/>
 
     </parent>
@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow</artifactId>
         </dependency>
     </dependencies>
