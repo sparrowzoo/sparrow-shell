@@ -17,6 +17,7 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.cryptogram.Base64;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.File;
 import com.sparrow.protocol.constant.Extension;
@@ -81,7 +82,7 @@ public class FileUtility {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(
-                    inputStream, charset));
+                inputStream, charset));
             String tempString;
             while ((tempString = reader.readLine()) != null) {
                 fileLines.add(tempString);
@@ -194,7 +195,7 @@ public class FileUtility {
             }
             OutputStream outputStream = new FileOutputStream(fileFullPath);
             osw = new OutputStreamWriter(outputStream,
-                    charset);
+                charset);
             osw.write(s, Digit.ZERO, s.length());
             osw.flush();
             return true;
@@ -298,7 +299,7 @@ public class FileUtility {
     }
 
     public String search(String path, String keyword, int skip,
-                         Comparator<String> compare, int minSkip) {
+        Comparator<String> compare, int minSkip) {
         java.io.File file = new java.io.File(path);
 
         BufferedReader reader = null;
@@ -307,7 +308,7 @@ public class FileUtility {
                 throw new FileNotFoundException(file.getPath());
             }
             reader = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(file), StandardCharsets.UTF_8), skip);
+                new FileInputStream(file), StandardCharsets.UTF_8), skip);
             String tempString;
             reader.mark(skip);
             skip /= 2;
@@ -413,22 +414,21 @@ public class FileUtility {
             return fileNameProperty;
         }
         String fileName = fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE,
-                fileNameEndIndex);
+            fileNameEndIndex);
         String extension = fullFilePath.substring(fileNameEndIndex)
-                .toLowerCase();
+            .toLowerCase();
         String fullFileName = fileName + extension;
 
         fileNameProperty.setDirectory(directory);
         fileNameProperty.setFullFileName(fullFileName);
         fileNameProperty.setName(fileName);
 
-
         String imageExtensionConfig = ConfigUtility.getValue(File.IMAGE_EXTENSION);
         if (imageExtensionConfig == null) {
             imageExtensionConfig = Constant.IMAGE_EXTENSION;
         }
         String[] imageExtension = imageExtensionConfig
-                .split("\\|");
+            .split("\\|");
         // jpeg 或者是其他格式都转换成jpg
         if (Extension.JPEG.equalsIgnoreCase(extension)) {
             extension = Extension.JPG;
@@ -448,7 +448,7 @@ public class FileUtility {
      * @return
      */
     public String getShufflePath(String fileUuid, String extension, boolean isWebPath,
-                                 String size) {
+        String size) {
         CRC32 crc = new CRC32();
         crc.update(fileUuid.getBytes());
         Long id = crc.getValue();
@@ -464,25 +464,25 @@ public class FileUtility {
                 //img_url=http://img%1$s/sparrowzoo.net/%2$s/%3$s/%4$s/%5$s%6$s
                 //http://img1/sparrowzoo.net/1/big/10/1000/uuid.jpg
                 path = ConfigUtility.getValue(File.PATH.IMG_URL)
-                        + "/%2$s/%3$s/%4$s/%5$s%6$s";
+                    + "/%2$s/%3$s/%4$s/%5$s%6$s";
                 return String.format(path, remaining, size, remaining2, remaining1,
-                        fileUuid, extension);
+                    fileUuid, extension);
             }
             //img_unc_0=file://ip1:port/sparrow/img0 参数在key中定义
             String imgShufflerDir = ConfigUtility.getValue(File.PATH.IMG_SHUFFLER_DIR + "_" + remaining);
             path = imgShufflerDir
-                    + "/%1$s/%2$s/%3$s/%4$s%5$s";
+                + "/%1$s/%2$s/%3$s/%4$s%5$s";
             return String.format(path, size, remaining2, remaining1,
-                    fileUuid, extension);
+                fileUuid, extension);
         }
         path = ConfigUtility.getValue(File.PATH.FILE_UPLOAD)
-                + "/%1$s/%2$s/%3$s%4$s";
+            + "/%1$s/%2$s/%3$s%4$s";
         return String.format(path, remaining2, remaining1, fileUuid, extension);
     }
 
     public boolean isImage(String extension) {
         String imageExtension = ConfigUtility
-                .getValue(File.IMAGE_EXTENSION);
+            .getValue(File.IMAGE_EXTENSION);
         if (StringUtility.isNullOrEmpty(imageExtension)) {
             imageExtension = Constant.IMAGE_EXTENSION;
         }
@@ -501,7 +501,7 @@ public class FileUtility {
         String fileId = fileNameProperty.getName();
         String extension = fileNameProperty.getExtension();
         return this.getShufflePath(fileId, extension, false,
-                size);
+            size);
     }
 
     public void delete(String path, long beforeMillis) {
@@ -559,37 +559,69 @@ public class FileUtility {
         Boolean isImage = fileNameProperty.isImage();
         if (isImage) {
             String imageFullPath = FileUtility.getInstance().getShufflePath(
-                    fileUuid,
-                    extension, false, File.SIZE.ORIGIN);
+                fileUuid,
+                extension, false, File.SIZE.ORIGIN);
             java.io.File origin = new java.io.File(imageFullPath);
             if (origin.exists()) {
                 origin.delete();
             }
 
             java.io.File big = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                    File.SIZE.BIG));
+                File.SIZE.BIG));
             if (big.exists()) {
                 big.delete();
             }
 
             java.io.File middle = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                    File.SIZE.MIDDLE));
+                File.SIZE.MIDDLE));
             if (middle.exists()) {
                 middle.delete();
             }
 
             java.io.File small = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                    File.SIZE.SMALL));
+                File.SIZE.SMALL));
             if (small.exists()) {
                 small.delete();
             }
             return;
         }
         String attachFileFullName = FileUtility.getInstance().getShufflePath(
-                fileUuid, extension, false, File.SIZE.ATTACH);
+            fileUuid, extension, false, File.SIZE.ATTACH);
         java.io.File origin = new java.io.File(attachFileFullName);
         if (origin.exists()) {
             origin.delete();
         }
     }
+
+    public boolean generateImage(String base64str,
+        String savePath) {
+        if (base64str == null) {
+            return false;
+        }
+        FileNameProperty fileNameProperty = this.getFileNameProperty(savePath);
+        java.io.File directory = new java.io.File(fileNameProperty.getDirectory());
+        if (!directory.exists()) {
+            if (!directory.mkdirs()) {
+                logger.error("create directory error {}", directory);
+                return false;
+            }
+        }
+        try {
+            byte[] b = Base64.decode(base64str);
+            for (int i = 0; i < b.length; ++i) {
+                if (b[i] < 0) {
+                    b[i] += 256;
+                }
+            }
+            OutputStream out = new FileOutputStream(savePath);
+            out.write(b);
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            logger.error("image generate fail {}", base64str);
+            return false;
+        }
+    }
+
 }
