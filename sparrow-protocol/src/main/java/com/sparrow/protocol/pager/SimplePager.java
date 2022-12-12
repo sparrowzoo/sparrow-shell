@@ -16,12 +16,12 @@
  */
 package com.sparrow.protocol.pager;
 
-import com.sparrow.protocol.POJO;
+import com.sparrow.protocol.Query;
 
 /**
  * simpler pager without html
  */
-public class SimplePager implements POJO {
+public class SimplePager implements Query {
 
     public SimplePager() {
     }
