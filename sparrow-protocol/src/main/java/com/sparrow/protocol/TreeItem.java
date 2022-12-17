@@ -17,23 +17,50 @@
 
 package com.sparrow.protocol;
 
-public class BatchOperationQuery<Q extends Query> {
-    private Q query;
-    private String ids;
+public class TreeItem implements POJO {
+    private Integer id;
+    private Integer parentId;
+    private String name;
+    private String code;
+    private String icon;
 
-    public Q getQuery() {
-        return query;
+    public Integer getId() {
+        return id;
     }
 
-    public void setQuery(Q query) {
-        this.query = query;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getIds() {
-        return ids;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setIds(String ids) {
-        this.ids = ids;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }
