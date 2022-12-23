@@ -46,7 +46,7 @@ public class CyclicBarrierTest {
                 }
             }
         };
-        //count =3-1=2
+        // count =3-1=2
         new Thread(runnable, "t1").start();
 
         Thread.sleep(1000);

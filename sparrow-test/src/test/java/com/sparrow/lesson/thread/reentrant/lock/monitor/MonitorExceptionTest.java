@@ -20,13 +20,13 @@ public class MonitorExceptionTest {
 
     public static void test(int index) {
         try {
-           //mLock.lock();
-            mLock.tryLock();// 报错
+           mLock.lock();//阻塞
+            //mLock.tryLock();// 报错
             System.err.println(index + " run code" + index);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            mLock.unlock();
+            mLock.unlock();//为什么不允许释放s
             System.err.println(index + " unlock:" + Thread.currentThread().getName());
         }
     }

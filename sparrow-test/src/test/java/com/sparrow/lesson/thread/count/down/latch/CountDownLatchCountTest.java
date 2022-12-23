@@ -9,6 +9,7 @@ public class CountDownLatchCountTest {
         long t = System.currentTimeMillis();
         for (int i = 0; i < 10; i++) {
             countDownLatch.countDown();
+            Thread.sleep(1000);
             System.out.println(countDownLatch.getCount());
         }
         countDownLatch.await();

@@ -6,7 +6,8 @@ public class SleepStatusTest {
         new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
-                    System.out.println(mainThread.getName() + "-state-" + mainThread.getState());
+                    System.out.println(mainThread.getName() + "-state-" +
+                        mainThread.getState());
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -15,5 +16,6 @@ public class SleepStatusTest {
             }
         }, "monitor-thread").start();
         Thread.sleep(Integer.MAX_VALUE);
+        System.out.println("hello");
     }
 }

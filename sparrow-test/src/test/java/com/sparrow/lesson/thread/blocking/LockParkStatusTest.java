@@ -8,14 +8,18 @@ public class LockParkStatusTest {
         new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
-                    System.out.println(mainThread.getName() + "-state-" + mainThread.getState());
+                    System.out.println(mainThread.getName() +
+                        "-state-" + mainThread.getState());
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1000);//
+                        //System.out.println(Thread.currentThread().getName() +
+                        //    "-state-" + Thread.currentThread().getState());
                     } catch (InterruptedException e) {
+
                     }
                 }
             }
         }, "monitor-thread").start();
-        LockSupport.park();
+        LockSupport.park();//
     }
 }

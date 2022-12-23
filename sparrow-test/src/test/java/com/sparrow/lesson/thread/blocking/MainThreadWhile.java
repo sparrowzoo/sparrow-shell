@@ -5,10 +5,11 @@ public class MainThreadWhile {
         Thread interrupterThread = new Thread(new Runnable() {
             @Override public void run() {
                 while (true) {
-                    if (Thread.currentThread().isInterrupted()) {
-                        System.out.println("do something for business");
-                        break;
-                    }
+//                    if (Thread.currentThread().isInterrupted()) {
+//                        System.out.println("do something for business");
+//                        break;
+//                    }
+                    //CAS COMPARE AND SET
                     System.out.println(Thread.currentThread().getName() + "-state" + Thread.currentThread().getState() + " isInterrupted:" + Thread.currentThread().isInterrupted());
                     try {
                         Thread.sleep(1000);
@@ -18,6 +19,8 @@ public class MainThreadWhile {
             }
         }, "interrupter-thread");
         interrupterThread.start();
+//        interrupterThread.stop();
+//        interrupterThread.destroy();
         interrupterThread.interrupt();
         System.out.println(interrupterThread.getState());
     }

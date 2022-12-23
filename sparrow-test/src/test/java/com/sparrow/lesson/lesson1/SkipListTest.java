@@ -12,7 +12,7 @@ import java.util.TreeMap;
 public class SkipListTest {
 
   public static void main(String[] args) {
-    nodeDistribution(100000);
+    nodeDistribution(1000);
   }
 
   private static void nodeDistribution(int nodeCount) {

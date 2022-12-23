@@ -10,7 +10,7 @@ public class CountDownLatchTest {
             @Override public void run() {
                 System.out.println("do business");
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

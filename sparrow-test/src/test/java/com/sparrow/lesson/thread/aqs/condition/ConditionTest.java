@@ -16,6 +16,7 @@ public class ConditionTest {
     static Condition empty = lock.newCondition();
     static AtomicInteger count = new AtomicInteger(10);
 
+
     public static void main(String[] args) throws InterruptedException {
         ConditionTest conditionTest = new ConditionTest();
         int threadCount = 10;
