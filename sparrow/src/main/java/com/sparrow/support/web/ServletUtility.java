@@ -45,6 +45,9 @@ public class ServletUtility {
     }
 
     public String assembleActualUrl(String url) {
+        if (url.contains("?")) {
+            url = url.substring(0, url.indexOf("?"));
+        }
         String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
         if (rootPath != null && url.startsWith(rootPath)) {
             url = url.substring(rootPath.length());

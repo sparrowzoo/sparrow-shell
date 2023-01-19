@@ -111,7 +111,7 @@ public class HelloController {
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
         loginToken.setActivate(true);
-        String sign = authenticatorService.sign(loginToken, "111111");
+        String sign = authenticatorService.sign(loginToken);
         servletContainer.rootCookie(User.PERMISSION, sign, 6);
         return ViewWithModel.redirect("welcome", loginToken);
     }

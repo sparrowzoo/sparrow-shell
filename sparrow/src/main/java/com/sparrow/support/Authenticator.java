@@ -30,7 +30,7 @@ public interface Authenticator {
      * @param secret password
      * @return
      */
-    String sign(LoginUser login, String secret);
+    String sign(LoginUser login);
 
     /**
      * 认证

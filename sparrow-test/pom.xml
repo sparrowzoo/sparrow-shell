@@ -44,6 +44,11 @@
             <version>3.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.tarena.mall.order</groupId>
+            <artifactId>order-server-protocol</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.poi</groupId>

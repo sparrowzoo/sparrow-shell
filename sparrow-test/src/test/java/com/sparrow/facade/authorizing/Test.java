@@ -21,7 +21,7 @@ public class Test {
         loginToken.setUserName("zhangsan");
         loginToken.setActivate(true);
 
-        String sign = authorizingSupport.sign(loginToken, "111111");
+        String sign = authorizingSupport.sign(loginToken);
         System.out.println(sign);
 
 

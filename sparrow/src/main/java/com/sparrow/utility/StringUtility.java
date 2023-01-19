@@ -566,10 +566,10 @@ public class StringUtility {
         }
 
         if (source.startsWith(Symbol.SLASH)) {
-            source = source.replace(Symbol.SLASH, Symbol.EMPTY);
+            source = source.replaceFirst(Symbol.SLASH, Symbol.EMPTY);
         }
         if (target.startsWith(Symbol.SLASH)) {
-            target = target.replace(Symbol.SLASH, Symbol.EMPTY);
+            target = target.replaceFirst(Symbol.SLASH, Symbol.EMPTY);
         }
         return source.equals(target);
     }

@@ -17,20 +17,25 @@
 
 package com.sparrow.lesson.thread.future;
 
+import com.tarena.mall.order.server.protocol.param.OrderParam;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 public class FutureTest {
+
+    private OrderParam orderParam;
+
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        Future<String> future= Executors.newCachedThreadPool().submit(new Callable<String>() {
+        Future<String> future = Executors.newCachedThreadPool().submit(new Callable<String>() {
             @Override public String call() throws Exception {
-                Thread.sleep(Integer.MAX_VALUE);
+                System.out.println(Thread.currentThread().getName());
+                Thread.sleep(5000);
                 return "future";
             }
         });
-        future.get();
+        String s = future.get();
+        System.out.println(Thread.currentThread().getName() + "-" + s);
     }
 }
