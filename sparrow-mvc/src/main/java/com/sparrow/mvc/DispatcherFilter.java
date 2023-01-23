@@ -38,6 +38,7 @@ import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import com.sparrow.utility.web.SparrowServletUtility;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -111,10 +112,7 @@ public class DispatcherFilter implements Filter {
                 if (actionKey.endsWith(extension) || actionKey.endsWith(Extension.JSON)) {
                     chain.doFilter(request, response);
                 } else {
-                    String dispatcherUrl = sparrowServletUtility.getServletUtility().assembleActualUrl(actionKey);
-                    logger.debug("dispatcher url is {}", dispatcherUrl);
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherUrl);
-                    dispatcher.forward(request, response);
+                    forward(request, response, actionKey);
                 }
             } else {
                 HandlerAdapter adapter = this.getHandlerAdapter(invokableHandlerMethod);
@@ -127,6 +125,14 @@ public class DispatcherFilter implements Filter {
             //页面渲染完成之后执行
             afterCompletion(httpRequest, httpResponse);
         }
+    }
+
+    protected void forward(ServletRequest request, ServletResponse response,
+        String actionKey) throws ServletException, IOException {
+        String dispatcherUrl = sparrowServletUtility.getServletUtility().assembleActualUrl(actionKey);
+        logger.debug("dispatcher url is {}", dispatcherUrl);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherUrl);
+        dispatcher.forward(request, response);
     }
 
     private void errorHandler(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
