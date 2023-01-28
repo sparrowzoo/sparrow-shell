@@ -17,15 +17,12 @@
 
 package com.sparrow.lesson.thread.future;
 
-import com.tarena.mall.order.server.protocol.param.OrderParam;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class FutureTest {
-
-    private OrderParam orderParam;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         Future<String> future = Executors.newCachedThreadPool().submit(new Callable<String>() {
