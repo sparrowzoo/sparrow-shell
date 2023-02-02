@@ -59,25 +59,25 @@ public class DispatcherFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(DispatcherFilter.class);
 
-    private SparrowServletUtility sparrowServletUtility = SparrowServletUtility.getInstance();
+    protected SparrowServletUtility sparrowServletUtility = SparrowServletUtility.getInstance();
 
-    private FilterConfig config;
+    protected FilterConfig config;
 
-    private List<HandlerAdapter> handlerAdapters;
+    protected List<HandlerAdapter> handlerAdapters;
 
-    private List<HandlerMapping> handlerMappings;
+    protected List<HandlerMapping> handlerMappings;
 
-    private volatile List<HandlerInterceptor> handlerInterceptorList;
+    protected volatile List<HandlerInterceptor> handlerInterceptorList;
 
-    private String[] exceptUrl;
+    protected String[] exceptUrl;
 
     //private List<HandlerExceptionResolver> handlerExceptionResolvers;
 
-    private Container container;
+    protected Container container;
 
-    private CookieUtility cookieUtility;
+    protected CookieUtility cookieUtility;
 
-    private ConnectionContextHolder connectionContextHolder;
+    protected ConnectionContextHolder connectionContextHolder;
 
     @Override
     public void destroy() {
@@ -351,7 +351,7 @@ public class DispatcherFilter implements Filter {
     /**
      * 初始化所有策略
      */
-    private void initStrategies() {
+    protected void initStrategies() {
         this.initHandlerMapping();
         this.initAdapter();
     }
@@ -367,7 +367,7 @@ public class DispatcherFilter implements Filter {
     /**
      * 初始化适配器
      */
-    private void initAdapter() {
+    protected void initAdapter() {
         this.handlerAdapters = new ArrayList<HandlerAdapter>();
         MethodControllerHandlerAdapter adapter = new MethodControllerHandlerAdapter();
         this.handlerAdapters.add(adapter);

@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MethodControllerHandlerAdapter implements HandlerAdapter {
 
-    private HandlerMethodArgumentResolverComposite argumentResolverComposite;
+    protected HandlerMethodArgumentResolverComposite argumentResolverComposite;
 
-    private MethodReturnValueResolverHandlerComposite returnValueResolverHandlerComposite;
+    protected MethodReturnValueResolverHandlerComposite returnValueResolverHandlerComposite;
 
     public MethodControllerHandlerAdapter() {
         this.initArgumentResolvers();
@@ -88,7 +88,7 @@ public class MethodControllerHandlerAdapter implements HandlerAdapter {
     /**
      * 初始化返回值解析器
      */
-    private void initReturnValueResolvers() {
+    protected void initReturnValueResolvers() {
         this.returnValueResolverHandlerComposite = new MethodReturnValueResolverHandlerComposite();
         List<MethodReturnValueResolverHandler> methodReturnValueResolverHandlers = new ArrayList<MethodReturnValueResolverHandler>();
         MethodReturnValueResolverHandler viewWithModelMethodReturnValueResolverHandler = new ViewWithModelMethodReturnValueResolverHandlerImpl();

@@ -73,7 +73,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         HttpContext.getContext().remove();
     }
 
-    private String assembleUrl(String referer, String defaultSuccessUrl, String url, PageSwitchMode pageSwitchMode,
+    protected String assembleUrl(String referer, String defaultSuccessUrl, String url, PageSwitchMode pageSwitchMode,
         String[] urlArgs) {
         if (Constant.SUCCESS.equals(url) || StringUtility.isNullOrEmpty(url)) {
             url = defaultSuccessUrl;
@@ -171,11 +171,16 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
                 if (data != null) {
                     request.setAttribute(ClassUtility.getEntityNameByClass(data.getClass()), data);
                 }
-                RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-                dispatcher.forward(request, response);
-                break;
+                this.forward(request, response, url);
             default:
         }
+    }
+
+    protected void forward(HttpServletRequest request, HttpServletResponse response,
+        String url) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        dispatcher.forward(request, response);
+        return;
     }
 
     @Override
