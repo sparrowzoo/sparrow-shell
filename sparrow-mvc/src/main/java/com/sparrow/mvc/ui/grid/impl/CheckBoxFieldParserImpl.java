@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui.grid.impl;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+import com.sparrow.mvc.ui.grid.FieldParser;
+import com.sparrow.mvc.ui.grid.attribute.CheckBoxAttribute;
+import java.util.List;
+
+public class CheckBoxFieldParserImpl implements FieldParser {
+    @Override
+    public String parse(String[] config, List<String> valueList) {
+        CheckBoxAttribute checkBoxAttribute = new CheckBoxAttribute(config);
+        return String.format("<input id=\"%1$s\" onclick=\"$.gridView.recordCheckClick(this,'%2$sCheckAll');\" type=\"checkbox\" name=\"%2$s\"/>", valueList.get(0), checkBoxAttribute.getGridViewId());
+    }
 }

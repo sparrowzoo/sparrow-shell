@@ -14,9 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.mvc.ui.grid;
 
-package com.sparrow.support;
-
-public interface PropertyAccessor {
-    Object getProperty(String property);
+public enum FieldType {
+    /**
+     * 文本
+     */
+    TEXT,
+    /**
+     * 超链接
+     */
+    HYPER_LINK,
+    /**
+     * 按钮
+     */
+    BUTTON,
+    /**
+     * 图片
+     */
+    IMAGE,
+    /**
+     * 复选框
+     */
+    CHECK_BOX
 }

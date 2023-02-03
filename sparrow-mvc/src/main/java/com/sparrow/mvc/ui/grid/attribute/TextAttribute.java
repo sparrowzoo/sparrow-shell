@@ -15,8 +15,21 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui.grid.attribute;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+import com.sparrow.mvc.ui.grid.BaseAttribute;
+
+/**
+ * 格式text#filedName#format#textLength#defaultValue 例子text#name&sex#姓名+姓别#100#200 {0}+{2}
+ */
+public class TextAttribute extends BaseAttribute {
+    public TextAttribute(String[] config) {
+        super(config);
+        if (config.length > 3) {
+            this.textLength = Integer.valueOf(config[2]);
+        }
+        if (config.length > 4) {
+            this.defaultValue = config[3];
+        }
+    }
 }

@@ -15,8 +15,14 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+public class Button extends AbstractJWebInputControl {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public String setTagNameAndGetTagAttributes() {
+        super.setType("button");
+        return "";
+    }
 }

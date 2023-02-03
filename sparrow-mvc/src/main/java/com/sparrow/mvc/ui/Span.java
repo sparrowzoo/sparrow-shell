@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+import com.sparrow.protocol.constant.magic.Symbol;
+
+@SuppressWarnings("serial")
+public class Span extends AbstractJWebBodyControl {
+
+    @Override
+    public String setTagNameAndGetTagAttributes() {
+        super.setTagName("span");
+        return Symbol.EMPTY;
+    }
 }

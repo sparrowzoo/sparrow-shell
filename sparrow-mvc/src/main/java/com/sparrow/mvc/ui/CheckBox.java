@@ -15,8 +15,34 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+@SuppressWarnings("serial")
+public class CheckBox extends AbstractJWebInputControl {
+    private String checked;
+
+    @Override
+    public String setTagNameAndGetTagAttributes() {
+        super.setType("checkbox");
+        Object isChecked = this.pageContext.getRequest().getAttribute(
+            this.getId() + ".checked");
+
+        if (isChecked == null) {
+            isChecked = super.getRequestValue();
+        }
+
+        if (isChecked == null) {
+            isChecked = this.getChecked();
+        }
+
+        return isChecked == null || isChecked.equals(Boolean.FALSE.toString()) ? "" : " checked=\"checked\" ";
+    }
+
+    public String getChecked() {
+        return checked;
+    }
+
+    public void setChecked(String checked) {
+        this.checked = checked;
+    }
 }

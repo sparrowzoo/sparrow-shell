@@ -15,8 +15,22 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui.grid.attribute;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+import com.sparrow.mvc.ui.grid.BaseAttribute;
+
+/**
+ * 格式checkBox#userId 例子checkBox#userId#gridViewId
+ */
+public class CheckBoxAttribute extends BaseAttribute {
+    private String gridViewId;
+
+    public CheckBoxAttribute(String[] config) {
+        super(config);
+        this.gridViewId = config[2];
+    }
+
+    public String getGridViewId() {
+        return gridViewId;
+    }
 }

@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui.grid;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+import java.util.List;
+
+public interface FieldParser {
+    public String parse(String[] config, List<String> valueList);
 }

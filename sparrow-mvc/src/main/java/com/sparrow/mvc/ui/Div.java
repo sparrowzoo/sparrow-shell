@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+@SuppressWarnings("serial")
+public class Div extends AbstractJWebBodyControl {
+
+    @Override
+    public String setTagNameAndGetTagAttributes() {
+        super.setTagName("div");
+        return "";
+    }
+
 }

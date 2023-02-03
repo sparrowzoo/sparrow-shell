@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc.ui;
 
-public interface PropertyAccessor {
-    Object getProperty(String property);
+import com.sparrow.protocol.constant.magic.Symbol;
+
+@SuppressWarnings("serial")
+public class TextBox extends AbstractJWebInputControl {
+    @Override
+    public String setTagNameAndGetTagAttributes() {
+        super.setType("text");
+        return Symbol.EMPTY;
+    }
 }
