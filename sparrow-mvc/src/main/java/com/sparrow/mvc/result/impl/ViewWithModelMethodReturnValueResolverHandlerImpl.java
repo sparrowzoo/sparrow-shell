@@ -23,7 +23,7 @@ import com.sparrow.mvc.PageSwitchMode;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
-import com.sparrow.mvc.result.ResultAssembler;
+import com.sparrow.support.web.ResultAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.VO;

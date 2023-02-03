@@ -32,7 +32,7 @@ import com.sparrow.protocol.dao.AggregateCriteria;
 import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
-import com.sparrow.protocol.pager.PagerQuery;
+import com.sparrow.protocol.dao.PagerQuery;
 import com.sparrow.orm.JDBCSupport;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
@@ -132,18 +132,18 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
             String columns = this.criteriaProcessor.aggregate(searchCriteria.getAggregate(), searchCriteria.getFields());
             selectSql.append(columns);
         }
-        selectSql.append(" from " + this.ormMetadataAccessor.getTableName(searchCriteria.getTableSuffix()));
+        selectSql.append(" from ").append(this.ormMetadataAccessor.getTableName(searchCriteria.getTableSuffix()));
         if (!StringUtility.isNullOrEmpty(whereClause)) {
-            selectSql.append(" where " + whereClause);
+            selectSql.append(" where ").append(whereClause);
         }
 
         if (!StringUtility.isNullOrEmpty(orderClause)) {
-            selectSql.append(" order by " + orderClause);
+            selectSql.append(" order by ").append(orderClause);
         }
 
         if (!StringUtility.isNullOrEmpty(searchCriteria.getPageSize())
             && searchCriteria.getPageSize() != Digit.ALL) {
-            selectSql.append(searchCriteria.getLimitClause());
+            selectSql.append(searchCriteria.getLimit());
         }
         logger.info(selectSql.toString());
         return new JDBCParameter(selectSql.toString(), boolOperationEntity.getParameterList());

@@ -19,12 +19,12 @@ package com.sparrow.facade.latch;
 
 import com.sparrow.cache.CacheClient;
 import com.sparrow.cache.Key;
-import com.sparrow.constant.SparrowModule;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import com.sparrow.concurrent.latch.impl.RedisDistributedCountDownLatch;
+import com.sparrow.protocol.constant.GlobalModule;
 
 /**
  * Created by harry on 2018/1/11.
@@ -35,7 +35,7 @@ public class RedisLatchTest {
         container.init(new ContainerBuilder());
         CacheClient cacheClient = container.getBean("cacheClient");
 
-        Key.Business code = new Key.Business(SparrowModule.CMS, "ID", "NAME", "PAIR");
+        Key.Business code = new Key.Business(GlobalModule.GLOBAL, "ID", "NAME", "PAIR");
         final Key product = new Key.Builder().business(code).businessId("1").build();
         final DistributedCountDownLatch distributedCountDownLatch = new RedisDistributedCountDownLatch(cacheClient);
         distributedCountDownLatch.product(product, "1");

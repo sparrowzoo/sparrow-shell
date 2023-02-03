@@ -17,7 +17,7 @@
 package com.sparrow.support;
 
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginToken;
+import com.sparrow.protocol.LoginUser;
 
 public interface Authorizer {
     /**
@@ -28,6 +28,6 @@ public interface Authorizer {
      * @return
      * @throws BusinessException
      */
-    boolean isPermitted(LoginToken user,
+    boolean isPermitted(LoginUser user,
         String resource) throws BusinessException;
 }

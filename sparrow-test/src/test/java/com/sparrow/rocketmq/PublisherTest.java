@@ -18,31 +18,30 @@
 package com.sparrow.rocketmq;
 
 import com.sparrow.cache.Key;
-import com.sparrow.constant.cache.key.KeyResource;
+import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
 import com.sparrow.mq.MQPublisher;
+import com.sparrow.protocol.constant.GlobalModule;
 import com.sparrow.rocketmq.protocol.event.HelloEvent;
-import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 
-/**
- * Created by harry on 2017/6/14.
- */
 public class PublisherTest {
+    public static final Key.Business CMS_KEY = new Key.Business(GlobalModule.GLOBAL, "CMS");
+
     public static void main(String[] args) {
-        Key productKey = new Key.Builder().business(KeyResource.ID_CODE_PAIR).businessId(2).build();
+        Key productKey = new Key.Builder().business(CMS_KEY).businessId(2).build();
         Container container = new SparrowContainer();
-        ContainerBuilder builder=new ContainerBuilder();
+        ContainerBuilder builder = new ContainerBuilder();
         builder.contextConfigLocation("/sparrow_rocketmq_producer.xml");
         container.init(builder);
         MQPublisher mqPublisher = container.getBean("mqPublisher");
-        DistributedCountDownLatch distributedCountDownLatch=container.getBean("distributedCountDownLatch");
+        DistributedCountDownLatch distributedCountDownLatch = container.getBean("distributedCountDownLatch");
         HelloEvent helloEvent = new HelloEvent();
         helloEvent.setMessage("msg");
         try {
-            for (int i=0;i<1000000;i++) {
-                helloEvent.setMessage(i+"");
+            for (int i = 0; i < 1000000; i++) {
+                helloEvent.setMessage(i + "");
                 mqPublisher.publish(helloEvent, productKey);
                 //Thread.sleep(100L);
             }

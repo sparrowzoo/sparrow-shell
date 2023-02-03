@@ -21,9 +21,11 @@ import com.sparrow.protocol.VO;
 import java.util.List;
 
 /**
- * pager result without html T data type A addition type
+ * pager result without html
+ * <p>
+ * T data type
  */
-public class PagerResult<T, A> extends SimplePager implements VO {
+public class PagerResult<T> extends SimplePager implements VO {
 
     public PagerResult() {
     }
@@ -35,7 +37,6 @@ public class PagerResult<T, A> extends SimplePager implements VO {
         }
         this.currentPageIndex = simplePager.getCurrentPageIndex();
         this.pageSize = simplePager.getPageSize();
-
     }
 
     public PagerResult(Integer pageSize, Integer currentPageIndex) {
@@ -45,16 +46,6 @@ public class PagerResult<T, A> extends SimplePager implements VO {
     protected Long recordCount;
 
     protected List<T> list;
-
-    protected A addition;
-
-    public A getAddition() {
-        return addition;
-    }
-
-    public void setAddition(A addition) {
-        this.addition = addition;
-    }
 
     public Long getRecordCount() {
         return recordCount;
@@ -77,9 +68,5 @@ public class PagerResult<T, A> extends SimplePager implements VO {
      */
     public Integer getLastPageIndex() {
         return (int) Math.ceil((double) this.recordCount / this.pageSize);
-    }
-
-    public boolean more() {
-        return getCurrentPageIndex() < getLastPageIndex();
     }
 }

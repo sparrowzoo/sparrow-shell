@@ -103,15 +103,20 @@ public class SparrowContainer extends AbstractContainer {
             BeanDefinitionReader definitionReader = new XmlBeanDefinitionReader(registry, annotationBeanDefinitionReader, delegate);
 
             if (this.builder.isInitSingletonBean()) {
+                //1. 解析xml 的bean
+                //2. 解析 import 配置
+                //3. 扫描xml中的scan base package 并解析beanDefinition
                 definitionReader.loadBeanDefinitions(this.builder.getContextConfigLocation());
             }
             if (!StringUtility.isNullOrEmpty(builder.getScanBasePackage())) {
+                //解析scan base package 下的bean definition
                 annotationBeanDefinitionReader.loadBeanDefinitions(builder.getScanBasePackage());
             }
             this.beanDefinitionRegistry = registry;
             this.initProxyBeans();
             this.initEarlySingleton();
             this.initSingletonBeans(registry);
+
 
             logger.info("-------------init initializer ...--------------------------");
             if (builder.isInitSingletonBean()) {

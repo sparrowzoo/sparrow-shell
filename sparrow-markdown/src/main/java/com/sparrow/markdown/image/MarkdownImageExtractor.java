@@ -20,7 +20,7 @@ import com.sparrow.constant.File;
 import com.sparrow.constant.Regex;
 import com.sparrow.image.AbstractImageExtractor;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.protocol.dto.ImageDTO;
+import com.sparrow.image.ImageDTO;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.FileUtility;
 

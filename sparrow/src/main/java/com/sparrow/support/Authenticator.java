@@ -17,7 +17,7 @@
 
 package com.sparrow.support;
 
-import com.sparrow.protocol.LoginToken;
+import com.sparrow.protocol.LoginUser;
 
 /**
  * 认证授权接口
@@ -30,7 +30,7 @@ public interface Authenticator {
      * @param secret password
      * @return
      */
-    String sign(LoginToken login, String secret);
+    String sign(LoginUser login);
 
     /**
      * 认证
@@ -38,5 +38,5 @@ public interface Authenticator {
      * @param token
      * @return
      */
-    LoginToken authenticate(String token, String deviceId);
+    LoginUser authenticate(String token, String deviceId);
 }

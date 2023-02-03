@@ -22,10 +22,11 @@ import com.sparrow.constant.ConfigKeyLanguage;
 import com.sparrow.constant.User;
 import com.sparrow.cryptogram.Base64;
 import com.sparrow.cryptogram.Hmac;
-import com.sparrow.protocol.LoginToken;
+import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,9 +40,9 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
     protected abstract String getSecret(Long userId);
 
     @Override
-    public LoginToken authenticate(String permission, String deviceId) {
+    public LoginUser authenticate(String permission, String deviceId) {
         logger.debug("permission {},deviceId {}", permission, deviceId);
-        LoginToken login = new LoginToken();
+        LoginUser login = new LoginUser();
         login.setUserId(User.VISITOR_ID);
         login.setUserName(ConfigUtility.getLanguageValue(
             ConfigKeyLanguage.USER_VISITOR,
@@ -52,87 +53,86 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
             return login;
         }
 
-        try {
-            if (!permission.contains(".")) {
-                logger.debug("permission {} don't contains [.]", permission);
-                return login;
-            }
-            String[] tokens = permission.split("\\.");
-            String userInfo = tokens[0];
-            String signature = tokens[1];
-
-            userInfo = new String(Base64.decode(userInfo), PREFERRED_ENCODING);
-            String[] userInfoArray = userInfo.split("&");
-            String dev = userInfoArray[6].substring("deviceId=".length());
-            //设备不一致
-            if (!dev.equals(deviceId) && !Constant.LOCALHOST_IP.equals(deviceId)) {
-                logger.debug("device can't match sign's device [{}] request device [{}] ", dev, deviceId);
-                return login;
-            }
-
-            String expireAtStr = userInfoArray[3].substring("expireAt=".length());
-            long expireAt = 0L;
-            //过期
-            if (!StringUtility.isNullOrEmpty(expireAtStr) && !"null".equalsIgnoreCase(expireAtStr)) {
-                expireAt = Long.parseLong(expireAtStr);
-                if (System.currentTimeMillis() > expireAt) {
-                    logger.warn("sign is expire at {}", expireAt);
-                    return login;
-                }
-            }
-
-            Long userId = Long.parseLong(userInfoArray[0].substring("id=".length()));
-            String newSignature = Hmac.getInstance().getSHA1Base64(userInfo,
-                this.getSecret(userId));
-
-            //签名不一致
-            if (!signature.equals(newSignature)) {
-                logger.warn("sign is not match {} vs new:{}", signature, newSignature);
-                return login;
-            }
-            //id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&cent=%5$s&avatar=%6$s&deviceId=%7$s&activate=%8$s
-
-            login.setUserId(userId);
-            login.setUserName(userInfoArray[1].substring("name="
-                .length()));
-            login.setNickName(userInfoArray[2].substring("login=".length()));
-
-            login.setCent(Long.valueOf(userInfoArray[4].substring("cent=".length())));
-            login.setAvatar(userInfoArray[5].substring("avatar="
-                .length()));
-            login.setDeviceId(dev);
-            login.setExpireAt(expireAt);
-            String activate = userInfoArray[7].substring("activate="
-                .length());
-            if (!StringUtility.isNullOrEmpty(activate)) {
-                login.setActivate(Boolean.valueOf(activate));
-            }
-            String days = userInfoArray[8].substring("days="
-                .length());
-            if (!StringUtility.isNullOrEmpty(days)) {
-                login.setDays(Integer.valueOf(days));
-            }
-            return login;
-        } catch (Exception ignore) {
-            logger.error("parser error ", ignore);
+        if (!permission.contains(".")) {
+            logger.debug("permission {} don't contains [.]", permission);
             return login;
         }
+        String[] tokens = permission.split("\\.");
+        String userInfo = tokens[0];
+        String signature = tokens[1];
+
+        try {
+            userInfo = new String(Base64.decode(userInfo), PREFERRED_ENCODING);
+        } catch (IOException e) {
+            logger.error("parser error ", e);
+            return login;
+        }
+        String[] userInfoArray = userInfo.split("&");
+        String dev = userInfoArray[5].substring("deviceId=".length());
+        //设备不一致
+        if (!dev.equals(deviceId) && !Constant.LOCALHOST_IP.equals(deviceId)) {
+            logger.debug("device can't match sign's device [{}] request device [{}] ", dev, deviceId);
+            return login;
+        }
+
+        String expireAtStr = userInfoArray[3].substring("expireAt=".length());
+        long expireAt = 0L;
+        //过期
+        if (!StringUtility.isNullOrEmpty(expireAtStr) && !"null".equalsIgnoreCase(expireAtStr)) {
+            expireAt = Long.parseLong(expireAtStr);
+            if (System.currentTimeMillis() > expireAt) {
+                logger.warn("sign is expire at {}", expireAt);
+                return login;
+            }
+        }
+
+        Long userId = Long.parseLong(userInfoArray[0].substring("id=".length()));
+        String newSignature = Hmac.getInstance().getSHA1Base64(userInfo,
+            this.getSecret(userId));
+
+        //签名不一致
+        if (!signature.equals(newSignature)) {
+            logger.warn("sign is not match {} vs new:{}", signature, newSignature);
+            return login;
+        }
+        //id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&avatar=%6$s&deviceId=%7$s&activate=%8$s
+
+        login.setUserId(userId);
+        login.setUserName(userInfoArray[1].substring("name="
+            .length()));
+        login.setNickName(userInfoArray[2].substring("login=".length()));
+
+        login.setAvatar(userInfoArray[4].substring("avatar="
+            .length()));
+        login.setDeviceId(dev);
+        login.setExpireAt(expireAt);
+        String activate = userInfoArray[6].substring("activate="
+            .length());
+        if (!StringUtility.isNullOrEmpty(activate)) {
+            login.setActivate(Boolean.valueOf(activate));
+        }
+        String days = userInfoArray[7].substring("days="
+            .length());
+        if (!StringUtility.isNullOrEmpty(days)) {
+            login.setDays(Integer.valueOf(days));
+        }
+        return login;
+
     }
 
-    public String sign(LoginToken login, String secret) {
+    public String sign(LoginUser login) {
         String userInfo = String.format(
-            "id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&cent=%5$s&avatar=%6$s&deviceId=%7$s&activate=%8$s&days=%9$s",
+            "id=%1$s&name=%2$s&login=%3$s&expireAt=%4$s&avatar=%5$s&deviceId=%6$s&activate=%7$s&days=%8$s",
             login.getUserId(),
             login.getUserName(),
             login.getNickName(),
             login.getExpireAt(),
-            login.getCent(),
             login.getAvatar(),
             login.getDeviceId(),
             login.getActivate(),
             login.getDays());
         String signature = Hmac.getInstance().getSHA1Base64(userInfo,
-            secret);
+            this.getSecret(login.getUserId()));
         try {
             return Base64.encodeBytes(userInfo.getBytes(PREFERRED_ENCODING)) + "." + signature;
         } catch (UnsupportedEncodingException ignore) {

@@ -25,7 +25,7 @@ import com.sparrow.orm.template.SparrowDaoSupport;
 import com.sparrow.protocol.dao.AggregateCriteria;
 import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
-import com.sparrow.protocol.pager.PagerQuery;
+import com.sparrow.protocol.dao.PagerQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

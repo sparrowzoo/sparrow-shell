@@ -16,13 +16,13 @@
  */
 package com.sparrow.authorizing;
 
+import com.sparrow.protocol.LoginUser;
 import com.sparrow.support.Authorizer;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginToken;
 
 public class AuthorizerDemo implements Authorizer {
 
-    @Override public boolean isPermitted(LoginToken user, String resource) throws BusinessException {
+    @Override public boolean isPermitted(LoginUser user, String resource) throws BusinessException {
         return true;
     }
 }

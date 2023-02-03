@@ -21,7 +21,6 @@ import com.sparrow.constant.File;
 import com.sparrow.constant.Regex;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.protocol.dto.ImageDTO;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.HtmlUtility;

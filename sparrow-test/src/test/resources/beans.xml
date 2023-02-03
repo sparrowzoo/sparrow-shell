@@ -27,8 +27,6 @@
     <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
-
-
     <bean name="sparrowServletContainer" class="com.sparrow.web.support.SparrowServletContainer"/>
     <bean name="cookieUtility" class="com.sparrow.support.web.CookieUtility">
         <property name="cacheClient" ref="cacheClient"/>
@@ -38,7 +36,6 @@
     </bean>
     <import resource="sparrow_rocketmq_producer.xml"/>
     <import resource="sparrow_rocketmq_consumer.xml"/>
-
     <bean name="initializer" class="com.sparrow.facade.initializer.SparrowContextInitializer"/>
     <bean name="source" class="com.sparrow.facade.beans.Source" scope="prototype"/>
     <bean name="target" class="com.sparrow.facade.beans.Target" scope="prototype"/>

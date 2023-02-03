@@ -28,6 +28,7 @@ import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -148,10 +149,7 @@ public class StringUtility {
         int length = 0;
         StringBuilder descBuilder = new StringBuilder();
         for (char c : charArray) {
-            try {
-                length += String.valueOf(c).getBytes(Constant.CHARSET_UTF_8).length;
-            } catch (UnsupportedEncodingException ignore) {
-            }
+            length += String.valueOf(c).getBytes(StandardCharsets.UTF_8).length;
             if (length > len) {
                 break;
             }
@@ -160,15 +158,33 @@ public class StringUtility {
         return descBuilder.toString() + elide.trim();
     }
 
+    public static boolean isChineseChar(char c) {
+        return String.valueOf(c).matches("[\u4e00-\u9fa5]");
+    }
+
+    public static int getMaxAllowLength(int maxAllowLength, String input) {
+        int remarkLength = StringUtility.length(input);
+        if (remarkLength > 0) {
+            maxAllowLength = maxAllowLength - remarkLength;
+        }
+        return maxAllowLength;
+    }
+
     public static int length(String str) {
+
         if (isNullOrEmpty(str)) {
             return 0;
         }
-        try {
-            return str.getBytes(Constant.CHARSET_UTF_8).length;
-        } catch (UnsupportedEncodingException ignore) {
-            return 0;
+        int len = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char a = str.charAt(i);
+            if (isChineseChar(a)) {
+                len += 2;
+            } else {
+                len += 1;
+            }
         }
+        return len;
     }
 
     /**
@@ -550,10 +566,10 @@ public class StringUtility {
         }
 
         if (source.startsWith(Symbol.SLASH)) {
-            source = source.replace(Symbol.SLASH, Symbol.EMPTY);
+            source = source.replaceFirst(Symbol.SLASH, Symbol.EMPTY);
         }
         if (target.startsWith(Symbol.SLASH)) {
-            target = target.replace(Symbol.SLASH, Symbol.EMPTY);
+            target = target.replaceFirst(Symbol.SLASH, Symbol.EMPTY);
         }
         return source.equals(target);
     }

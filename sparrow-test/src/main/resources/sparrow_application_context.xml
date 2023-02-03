@@ -27,6 +27,7 @@
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
 
+    <bean name="sparrowServletUtility" class="com.sparrow.utility.web.SparrowServletUtility"/>
     <bean name="authenticatorService" class="com.sparrow.authorizing.AuthenticatorDemo"/>
     <bean name="authorizerService" class="com.sparrow.authorizing.AuthorizerDemo"/>
 

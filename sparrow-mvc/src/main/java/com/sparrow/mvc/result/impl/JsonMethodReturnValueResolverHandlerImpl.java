@@ -20,7 +20,6 @@ package com.sparrow.mvc.result.impl;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
-import com.sparrow.mvc.result.ResultAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
@@ -28,11 +27,11 @@ import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.HttpContext;
-
+import com.sparrow.support.web.ResultAssembler;
+import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnValueResolverHandler {
 

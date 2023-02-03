@@ -1,7 +1,5 @@
 package com.sparrow.jdk.hash;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-
 public class HashTest {
     /**
      * <pre>
@@ -58,12 +56,10 @@ public class HashTest {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(Long.toBinaryString(Long.MIN_VALUE));
-
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(new Object().hashCode());
-//            System.out.println(new Integer(100).hashCode());
-//
-//        }
+//        System.out.println(Long.toBinaryString(Long.MIN_VALUE));
+        for (int i = 0; i < 1; i++) {
+            System.out.println(new Object().hashCode());
+            //System.out.println(new Integer(100).hashCode());
+        }
     }
 }

@@ -58,7 +58,7 @@ public interface EntityManager {
 
     void init(Class clazz);
 
-    boolean initTable(Class clazz);
+    void initTable(Class clazz);
 
     String parsePropertyParameter(String column, String property);
 }

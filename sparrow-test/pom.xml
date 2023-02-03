@@ -20,8 +20,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>sparrow-bom</artifactId>
-        <groupId>com.sparrow</groupId>
-        <version>1.0</version>
+        <groupId>com.sparrowzoo</groupId>
+        <version>0.0.2-SNAPSHOT</version>
         <relativePath/>
 
     </parent>
@@ -91,49 +91,49 @@
         </dependency>
         <!--sparrow-->
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-loader</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol-dao</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol-mq</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol-redis</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-container</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-data-source</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-json</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-orm</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-mvc</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-rocketmq-client</artifactId>
             <exclusions>
                 <!--与lettuce netty 版本冲突，导致链接超时-->
@@ -148,7 +148,7 @@
         <!--<artifactId>sparrow-log</artifactId>-->
         <!--</dependency>-->
         <dependency>
-            <groupId>com.sparrow</groupId>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-jedis</artifactId>
         </dependency>
         <!--sparrow end-->

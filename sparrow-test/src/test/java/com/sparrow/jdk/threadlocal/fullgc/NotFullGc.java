@@ -1,6 +1,9 @@
 package com.sparrow.jdk.threadlocal.fullgc;
 
 public class NotFullGc {
+    /**
+     * -Xmx100m -Xms100m
+     */
     public static class O2 {
         private byte[] bytes = new byte[1024 * 1024 * 10];
         public O1 o1;

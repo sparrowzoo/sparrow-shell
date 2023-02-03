@@ -22,6 +22,11 @@ public class ContainerBuilder {
     private boolean initProxyBean = true;
     private boolean initController = true;
     private boolean initInterceptor = true;
+    /**
+     * xml 配置文件中的scanBasePackage 功能一致，
+     * <p>
+     * 对xml 的扩展 用于非配置文件时的包扫描，与xml 不冲突
+     */
     private String scanBasePackage;
     private String contextConfigLocation = "/beans.xml";
     private String configLocation = "/system_config.properties";

@@ -24,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 常用常量
  */
 public class Constant {
+    public static final int MAX_REMARK_LENGTH = 500;
     public static final String SPARROW = "sparrow";
     public static final String DEFAULT = "default";
     public static final String ERROR = "error";
@@ -90,6 +91,8 @@ public class Constant {
     public static final String REQUEST_ACTION_CURRENT_FORUM = "request_action_current_forum";
     public static final String REQUEST_CLIENT_INFORMATION = "client";
     public static final String REQUEST_HEADER_KEY_LOGIN_TOKEN = "login_token";
+    public static final String REQUEST_INVOKABLE_HANDLER_METHOD = "request_invokable_handler_method";
+    public static final String IS_AJAX = "ajax";
 
     /**
      * 空链接
