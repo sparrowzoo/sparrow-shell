@@ -50,7 +50,7 @@ public class ReflectPerformanceTest {
         t = System.currentTimeMillis();
         Method method = User3.class.getMethod("getUser");
         for (int i = 0; i < 10000000; i++) {
-            method.invoke(user);
+            String userName=(String) method.invoke(user);
         }
         System.out.println(System.currentTimeMillis() - t);
     }
