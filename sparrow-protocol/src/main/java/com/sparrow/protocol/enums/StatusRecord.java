@@ -31,16 +31,4 @@ public enum StatusRecord {
      * 可用(1)
      */
     ENABLE,
-    /**
-     * 草搞(2)
-     */
-    DRAFT,
-    /**
-     * 已发布(3)
-     */
-    PUBLISHED,
-    /**
-     * 销毁(6)
-     */
-    DESTROYED;
 }

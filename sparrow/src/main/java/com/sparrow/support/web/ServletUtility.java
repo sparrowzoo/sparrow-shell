@@ -119,7 +119,10 @@ public class ServletUtility {
         }
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String ip = httpRequest.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip.contains(",")) {
+            ip = ip.substring(0, ip.indexOf(","));
+        }
+        if (ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = httpRequest.getHeader("Proxy-Client-IP");
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
