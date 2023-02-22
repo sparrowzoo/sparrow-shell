@@ -17,24 +17,31 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.constant.*;
 import com.sparrow.constant.File;
+import com.sparrow.constant.Regex;
 import com.sparrow.enums.HttpMethod;
-
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
+import java.nio.channels.FileLock;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.channels.FileLock;
-import java.util.Map;
-import java.util.UUID;
 
 public class HttpClient {
 
@@ -118,83 +125,94 @@ public class HttpClient {
 
     public static String post(HttpMethod method, String pageUrl, String data,
         String contentType) {
-        return post(method, pageUrl, data, contentType, null, false);
+        return request(method, pageUrl, data, contentType, null, false);
     }
 
-    /**
-     * @return 2013-8-26下午9:48:02 harry put与post类似，将method改成put即可
-     */
-    public static String post(HttpMethod method, String pageUrl, String data,
+    public static String request(HttpMethod method, String pageUrl, String data,
         String contentType, Map<String, String> header, Boolean gzip) {
         StringBuilder buffer = new StringBuilder();
-        HttpURLConnection httpUrlConnction = null;
+        HttpURLConnection httpUrlConnection = null;
         DataOutputStream dataOutputStream = null;
         BufferedWriter bufferedWriter = null;
         BufferedReader bufferedReader = null;
         InputStream inputStream = null;
         try {
             URL url = new URL(pageUrl);
-            httpUrlConnction = (HttpURLConnection) url.openConnection();
-            httpUrlConnction.setRequestMethod(method.toString());
-            httpUrlConnction.setRequestProperty("Accept-Charset", Constant.CHARSET_UTF_8);
-
+            httpUrlConnection = (HttpURLConnection) url.openConnection();
+            httpUrlConnection.setRequestMethod(method.toString());
+            httpUrlConnection.setRequestProperty("Accept-Charset", Constant.CHARSET_UTF_8);
             //对post表单提交有影响
             if (StringUtility.isNullOrEmpty(contentType)) {
-                httpUrlConnction.setRequestProperty("Content-Type",
+                httpUrlConnection.setRequestProperty("Content-Type",
                     Constant.CONTENT_TYPE_FORM);
             } else {
-                httpUrlConnction.setRequestProperty("Content-Type",
+                httpUrlConnection.setRequestProperty("Content-Type",
                     contentType);
             }
 
             if (header != null) {
                 for (String key : header.keySet()) {
-                    httpUrlConnction.addRequestProperty(key, header.get(key));
+                    httpUrlConnection.addRequestProperty(key, header.get(key));
                 }
             }
 
-            httpUrlConnction.setDoOutput(true);
-            httpUrlConnction.setDoInput(true);
-            httpUrlConnction.setConnectTimeout(30000);
-            httpUrlConnction.setReadTimeout(30000);
-            httpUrlConnction.connect();
+            httpUrlConnection.setDoOutput(true);
+            httpUrlConnection.setDoInput(true);
+            httpUrlConnection.setConnectTimeout(30000);
+            httpUrlConnection.setReadTimeout(30000);
+            httpUrlConnection.connect();
 
             if (gzip) {
-                httpUrlConnction.setRequestProperty("Content-Encoding", "gzip");
-                ByteArrayOutputStream originalContent = new ByteArrayOutputStream();
-                originalContent
-                    .write(data.getBytes(Charset.forName(Constant.CHARSET_UTF_8)));
+                if (!HttpMethod.GET.equals(method)) {
+                    httpUrlConnection.setRequestProperty("Content-Encoding", "gzip");
+                    ByteArrayOutputStream originalContent = new ByteArrayOutputStream();
+                    originalContent
+                        .write(data.getBytes(StandardCharsets.UTF_8));
 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                GZIPOutputStream gzipOut = new GZIPOutputStream(baos);
-                originalContent.writeTo(gzipOut);
-                gzipOut.finish();
-                httpUrlConnction.getOutputStream().write(baos.toByteArray());
-            } else {
-                dataOutputStream = new DataOutputStream(
-                    httpUrlConnction.getOutputStream());
-                bufferedWriter = new BufferedWriter(new OutputStreamWriter(
-                    dataOutputStream, Constant.CHARSET_UTF_8));
-                if (data != null) {
-                    bufferedWriter.write(data);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    GZIPOutputStream gzipOut = new GZIPOutputStream(baos);
+                    originalContent.writeTo(gzipOut);
+                    gzipOut.finish();
+                    httpUrlConnection.getOutputStream().write(baos.toByteArray());
                 }
-                bufferedWriter.flush();
-                dataOutputStream.flush();
+            } else {
+                if (!HttpMethod.GET.equals(method)) {
+                    /**
+                     * private synchronized OutputStream getOutputStream0() throws IOException {
+                     *         try {
+                     *             if (!this.doOutput) {
+                     *                 throw new ProtocolException("cannot write to a URLConnection if doOutput=false - call setDoOutput(true)");
+                     *             } else {
+                     *                 if (this.method.equals("GET")) {
+                     *                     this.method = "POST";
+                     *                 }
+                     *                 不判断的话会自动变成POST
+                     */
+                    dataOutputStream = new DataOutputStream(
+                        httpUrlConnection.getOutputStream());
+                    bufferedWriter = new BufferedWriter(new OutputStreamWriter(
+                        dataOutputStream, StandardCharsets.UTF_8));
+                    if (data != null) {
+                        bufferedWriter.write(data);
+                    }
+                    bufferedWriter.flush();
+                    dataOutputStream.flush();
+                }
             }
 
             int responseCode = 0;
-            responseCode = httpUrlConnction.getResponseCode();
+            responseCode = httpUrlConnection.getResponseCode();
             if (responseCode == 200) {
-                inputStream = httpUrlConnction.getInputStream();
+                inputStream = httpUrlConnection.getInputStream();
                 bufferedReader = new BufferedReader(new InputStreamReader(
-                    inputStream, Constant.CHARSET_UTF_8));
+                    inputStream, StandardCharsets.UTF_8));
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     buffer.append(line);
                 }
             } else {
-                buffer.append("POST ERROR|" + responseCode);
-                buffer.append(httpUrlConnction.getResponseMessage());
+                buffer.append("POST ERROR|").append(responseCode);
+                buffer.append(httpUrlConnection.getResponseMessage());
             }
         } catch (Exception e) {
             logger.error("post method error", e);
@@ -224,8 +242,8 @@ public class HttpClient {
                 } catch (IOException ignore) {
                 }
             }
-            if (httpUrlConnction != null) {
-                httpUrlConnction.disconnect();
+            if (httpUrlConnection != null) {
+                httpUrlConnection.disconnect();
             }
         }
         return buffer.toString();
