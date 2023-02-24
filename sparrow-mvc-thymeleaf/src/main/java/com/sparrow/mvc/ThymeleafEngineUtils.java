@@ -21,6 +21,7 @@ import com.sparrow.constant.Config;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.utility.ConfigUtility;
 import java.io.IOException;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring5.dialect.SpringStandardDialect;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -36,7 +38,12 @@ public class ThymeleafEngineUtils {
 
     private static ServletContext innerServletContext;
 
-    public static void initEngine(ServletContext servletContext) {
+    /**
+     * https://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html
+     *
+     * @param filterConfig
+     */
+    public static void initEngine(FilterConfig filterConfig) {
         if (templateEngine != null) {
             return;
         }
@@ -44,6 +51,32 @@ public class ThymeleafEngineUtils {
             if (templateEngine != null) {
                 return;
             }
+
+            ServletContext servletContext = filterConfig.getServletContext();
+            String exp = filterConfig.getInitParameter("template_expression");
+//            if ("spring".equals(exp)) {
+//                SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+//                templateResolver.setPrefix("/WEB-INF/templates/");
+//                templateResolver.setSuffix(".html");
+//                // HTML is the default value, added here for the sake of clarity.
+//                templateResolver.setTemplateMode(TemplateMode.HTML);
+//                // Template cache is true by default. Set to false if you want
+//                // templates to be automatically updated when modified.
+//                templateResolver.setCacheable(true);
+//                // SpringTemplateEngine automatically applies SpringStandardDialect and
+//                // enables Spring's own MessageSource message resolution mechanisms.
+//                SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
+//                springTemplateEngine.setTemplateResolver(templateResolver);
+//                // Enabling the SpringEL compiler with Spring 4.2.4 or newer can
+//                // speed up execution in most scenarios, but might be incompatible
+//                // with specific cases when expressions in one template are reused
+//                // across different data types, so this flag is "false" by default
+//                // for safer backwards compatibility.
+//                springTemplateEngine.setEnableSpringELCompiler(true);
+//                templateEngine = springTemplateEngine;
+//                return;
+//            }
+
             innerServletContext = servletContext;
             ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
             String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.HTML);
@@ -53,6 +86,9 @@ public class ThymeleafEngineUtils {
             resolver.setTemplateMode(TemplateMode.HTML);
             resolver.setCacheable(false);
             templateEngine = new TemplateEngine();
+            if ("spring".equals(exp)) {
+                templateEngine.setDialect(new SpringStandardDialect());
+            }
             templateEngine.setTemplateResolver(resolver);
         }
     }

@@ -31,8 +31,7 @@ public class ThymeleafDispatcherFilter extends DispatcherFilter {
     private ServletContext servletContext;
 
     @Override public void init(FilterConfig config) {
-        servletContext = config.getServletContext();
-        ThymeleafEngineUtils.initEngine(servletContext);
+        ThymeleafEngineUtils.initEngine(config);
         super.init(config);
     }
 
