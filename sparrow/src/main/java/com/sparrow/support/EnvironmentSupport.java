@@ -143,6 +143,11 @@ public class EnvironmentSupport {
      */
     public InputStream getFileInputStream(String relativeFileName) throws FileNotFoundException {
         InputStream fileInputStream = null;
+        File file = new File(relativeFileName);
+        if (file.exists()) {
+            return new FileInputStream(file);
+        }
+
         URL url = EnvironmentSupport.class.getResource(relativeFileName);
         if (url != null) {
             //xxx.getClass().getResourceAsStream("xx.properties") 有缓存
@@ -152,9 +157,6 @@ public class EnvironmentSupport {
                 logger.error("input stream error", e);
                 throw new FileNotFoundException(e.getMessage());
             }
-        }
-        if (fileInputStream == null) {
-            fileInputStream = new FileInputStream(new File(relativeFileName));
         }
         return fileInputStream;
     }

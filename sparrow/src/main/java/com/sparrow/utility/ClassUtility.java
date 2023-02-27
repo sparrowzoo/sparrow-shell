@@ -17,11 +17,13 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.protocol.FieldOrder;
 import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URISyntaxException;
@@ -151,7 +153,7 @@ public class ClassUtility {
     }
 
     private static List<Class> findClass(File directory, String packageName) {
-        List<Class> classes = new ArrayList<Class>();
+        List<Class> classes = new ArrayList<>();
         if (directory == null || !directory.exists()) {
             return null;
         }
@@ -164,7 +166,7 @@ public class ClassUtility {
                 classes.addAll(findClass(file, packageName + Symbol.DOT + file.getName()));
             } else if (file.getName().endsWith(".class")) {
                 String clazzName = packageName + Symbol.DOT + file.getName().substring(0, file.getName().length() - 6);
-                logger.info("class {} init .....",clazzName);
+                logger.info("class {} init .....", clazzName);
                 try {
                     classes.add(Class.forName(clazzName));
                 } catch (Throwable e) {
@@ -242,6 +244,40 @@ public class ClassUtility {
         public int compareTo(MethodWithRank o) {
             return this.order.compareTo(o.order);
         }
+    }
+
+    static class FieldWithRank implements Comparable<FieldWithRank> {
+
+        private Field field;
+        private Float order;
+
+        FieldWithRank(Field field, Float order) {
+            this.field = field;
+            this.order = order;
+        }
+
+        @Override
+        public int compareTo(FieldWithRank o) {
+            return this.order.compareTo(o.order);
+        }
+    }
+
+    public static Field[] getOrderedFields(Field[] fields) {
+        List<FieldWithRank> fieldWithRanks = new ArrayList<>();
+        for (Field field : fields) {
+            if (field.getAnnotation(FieldOrder.class) != null) {
+                Float order = field.getAnnotation(FieldOrder.class).order();
+                fieldWithRanks.add(new FieldWithRank(field, order));
+            } else if (field.isAnnotationPresent(Column.class)) {
+                fieldWithRanks.add(new FieldWithRank(field, Float.MAX_VALUE));
+            }
+        }
+        Collections.sort(fieldWithRanks);
+        Field[] orderFields = new Field[fieldWithRanks.size()];
+        for (int i = 0; i < fieldWithRanks.size(); i++) {
+            orderFields[i] = fieldWithRanks.get(i).field;
+        }
+        return orderFields;
     }
 
     public static Method[] getOrderedColumnMethod(Method[] methods) {

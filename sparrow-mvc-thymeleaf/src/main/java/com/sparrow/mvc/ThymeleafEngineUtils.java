@@ -29,7 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.dialect.SpringStandardDialect;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -75,7 +77,7 @@ public class ThymeleafEngineUtils {
 //                springTemplateEngine.setEnableSpringELCompiler(true);
 //                templateEngine = springTemplateEngine;
 //                return;
-//            }
+////            }
 
             innerServletContext = servletContext;
             ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);

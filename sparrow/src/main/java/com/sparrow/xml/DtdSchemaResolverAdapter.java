@@ -67,7 +67,7 @@ public class DtdSchemaResolverAdapter implements EntityResolver {
 
     @Override
     public String toString() {
-        return "EntityResolver adpater " + XSD_SUFFIX + " to " + this.schemaResolver +
+        return "EntityResolver adapter " + XSD_SUFFIX + " to " + this.schemaResolver +
             " and " + DTD_SUFFIX + " to " + this.dtdResolver;
     }
 }
