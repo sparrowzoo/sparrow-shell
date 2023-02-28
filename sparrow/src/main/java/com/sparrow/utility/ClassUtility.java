@@ -113,7 +113,7 @@ public class ClassUtility {
      * </pre>
      */
     public static List<Class> getClasses(
-        String packageName) throws ClassNotFoundException, IOException, URISyntaxException {
+        String packageName) throws IOException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String path = packageName.replace(Symbol.DOT, Symbol.SLASH);
         Enumeration<URL> resources = classLoader.getResources(path);
@@ -138,10 +138,15 @@ public class ClassUtility {
             while (entries.hasMoreElements()) {
                 JarEntry jarEntry = entries.nextElement();
                 if (jarEntry.getName().startsWith(packagePath) && jarEntry.getName().endsWith(".class")) {
-                    Class implClass = Class.forName(jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
-                        .substring(0, jarEntry.getName().indexOf(Symbol.DOT)));
-                    if (!implClass.isInterface()) {
-                        classes.add(implClass);
+                    String classFullName = jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
+                        .substring(0, jarEntry.getName().indexOf(Symbol.DOT));
+                    try {
+                        Class implClass = Class.forName(classFullName);
+                        if (!implClass.isInterface()) {
+                            classes.add(implClass);
+                        }
+                    } catch (Throwable e) {
+                        logger.error("class {} init error", classFullName, e);
                     }
                 }
             }
