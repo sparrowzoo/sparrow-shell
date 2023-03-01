@@ -55,6 +55,14 @@ public class ClassUtility {
         if (entityName.endsWith("BO")) {
             return entityName.substring(0, entityName.lastIndexOf("BO"));
         }
+
+        if (entityName.endsWith("Param")) {
+            return entityName.substring(0, entityName.lastIndexOf("Param"));
+        }
+
+        if (entityName.endsWith("Query")) {
+            return entityName.substring(0, entityName.lastIndexOf("Query"));
+        }
         return entityName;
     }
 
