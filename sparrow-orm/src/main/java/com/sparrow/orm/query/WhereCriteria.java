@@ -92,7 +92,7 @@ public class WhereCriteria extends PagerQuery {
     }
 
     /**
-     * 自定义条件，需要手动设置表后缀f
+     * 自定义条件，需要手动设置表后缀
      *
      * @param tableSuffix
      */

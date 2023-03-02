@@ -222,7 +222,7 @@ public class JDBCTemplate implements JDBCSupport {
                 try {
                     autoCommit = connection.getAutoCommit();
                 } catch (SQLException e1) {
-                    e1.printStackTrace();
+                    logger.error("get auto commit error ",e1);
                 }
                 if (!autoCommit) {
                     connectionContextHolder.unbindConnection(connection);
