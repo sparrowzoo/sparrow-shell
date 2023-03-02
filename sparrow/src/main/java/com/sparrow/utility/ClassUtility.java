@@ -30,6 +30,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -41,6 +42,15 @@ import org.slf4j.LoggerFactory;
 
 public class ClassUtility {
     private static Logger logger = LoggerFactory.getLogger(ClassUtility.class);
+    public static List<Field> extractFields(Class<?> clazz) {
+        List<Field> fieldList = new ArrayList<>();
+        while (clazz != Object.class) {
+            Field[] fields = clazz.getDeclaredFields();
+            fieldList.addAll(Arrays.asList(fields));
+            clazz = clazz.getSuperclass();
+        }
+        return fieldList;
+    }
 
     public static String getEntityNameByClass(Class entity) {
         String entityName = entity.getSimpleName();

@@ -20,6 +20,12 @@ package com.sparrow.support.assemble;
 import com.sparrow.protocol.Param;
 import com.sparrow.protocol.VO;
 
+/**
+ * 保存后返回
+ *
+ * @param <V>
+ * @param <P>
+ */
 public interface Param2VOAssemble<V extends VO, P extends Param> {
     V paramAssembleVO(P p);
 }
