@@ -21,19 +21,26 @@ import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.enums.OrmEntityMetadata;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.Split;
+import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.*;
-import java.lang.reflect.Method;
-import java.util.*;
 
 public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected static Logger logger = LoggerFactory.getLogger(AbstractEntityManagerAdapter.class);
@@ -54,6 +61,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected String tableName;
     protected String dialectTableName;
     protected String className;
+    protected Class<?> clazz;
     protected String simpleClassName;
     protected DialectReader dialectReader;
     protected int tableBucketCount;
@@ -64,13 +72,49 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected String fields;
     protected String createDDL;
 
-    public AbstractEntityManagerAdapter(Class clazz) {
+    private List<Field> extractFields(Class<?> clazz) {
+        Method[] orderedMethods = ClassUtility.getOrderedMethod(clazz.getMethods());
+        List<java.lang.reflect.Field> fieldList = ClassUtility.extractFields(clazz);
+        java.lang.reflect.Field[] fields = ClassUtility.getOrderedFields(fieldList);
+        Map<String, Field> fieldMap = new LinkedHashMap<>();
+
+        for (java.lang.reflect.Field field : fields) {
+            if (!field.isAnnotationPresent(Column.class) && !field.isAnnotationPresent(SplitTable.class)) {
+                continue;
+            }
+            Column column = field.getAnnotation(Column.class);
+            SplitTable splitTable = field.getAnnotation(SplitTable.class);
+            GeneratedValue generatedValue = field.getAnnotation(GeneratedValue.class);
+            Id id = field.getAnnotation(Id.class);
+
+            Field ormField = new Field(field.getName(), field.getType(), column, splitTable, generatedValue, id);
+            fieldMap.put(field.getName(), ormField);
+        }
+
+        for (Method method : orderedMethods) {
+            if (!method.isAnnotationPresent(Column.class) && !method.isAnnotationPresent(SplitTable.class)) {
+                continue;
+            }
+            String propertyName = StringUtility.setFirstByteLowerCase(PropertyNamer.methodToProperty(method.getName()));
+            if (fieldMap.containsKey(propertyName)) {
+                continue;
+            }
+            Column column = method.getAnnotation(Column.class);
+            SplitTable splitTable = method.getAnnotation(SplitTable.class);
+            GeneratedValue generatedValue = method.getAnnotation(GeneratedValue.class);
+            Id id = method.getAnnotation(Id.class);
+            Field field = new Field(propertyName, method.getReturnType(), column, splitTable, generatedValue, id);
+            fieldMap.put(propertyName, field);
+        }
+        return new ArrayList<>(fieldMap.values());
+    }
+
+    public AbstractEntityManagerAdapter(Class<?> clazz) {
+        this.clazz = clazz;
         this.className = clazz.getName();
         this.simpleClassName = clazz.getSimpleName();
-        Method[] orderedMethods = ClassUtility.getOrderedColumnMethod(clazz.getMethods());
-        int fieldCount = orderedMethods.length;
-
-        List<Field> fields = new ArrayList<Field>(fieldCount);
+        List<Field> fields = this.extractFields(clazz);
+        int fieldCount = fields.size();
         uniqueFieldMap = new LinkedHashMap<>();
         columnPropertyMap = new LinkedHashMap<String, String>(fieldCount);
         hashFieldMap = new TreeMap<>();
@@ -79,7 +123,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         StringBuilder insertParameter = new StringBuilder();
         StringBuilder updateSQL = new StringBuilder("update ");
         StringBuilder createDDLField = new StringBuilder();
-        initTable(clazz);
+        initTable();
 
         updateSQL.append(this.dialectTableName);
         insertSQL.append(this.dialectTableName);
@@ -88,23 +132,9 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         String primaryCreateDDL = "";
         insertSQL.append("(");
         updateSQL.append(" set ");
-        for (Method method : orderedMethods) {
-            if (method.getName().startsWith("set")) {
-                continue;
-            }
-            if (!method.isAnnotationPresent(Column.class) && !method.isAnnotationPresent(SplitTable.class)) {
-                continue;
-            }
-
-            Column column = method.getAnnotation(Column.class);
-            SplitTable splitTable = method.getAnnotation(SplitTable.class);
-            GeneratedValue generatedValue = method.getAnnotation(GeneratedValue.class);
-            Id id = method.getAnnotation(Id.class);
-
-            String propertyName = StringUtility.setFirstByteLowerCase(PropertyNamer.methodToProperty(method.getName()));
-            Field field = new Field(propertyName, method.getReturnType(), column, splitTable, generatedValue, id);
-            fields.add(field);
-
+        for (Field field : fields) {
+            String propertyName = field.getName();
+            SplitTable splitTable = field.getSplitTable();
             if (splitTable != null) {
                 this.hashFieldMap.put(splitTable.index(), field);
                 if (!field.isPersistence()) {
@@ -112,6 +142,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
                 }
             }
 
+            Column column = field.getColumn();
             if (column == null) {
                 continue;
             }
@@ -137,8 +168,11 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
                 + dialectReader.getCloseQuote();
             // insertSQL
             if (!TableSplitStrategy.ORIGIN_NOT_PERSISTENCE.equals(field.getHashStrategy()) && !GenerationType.IDENTITY.equals(field.getGenerationType())) {
+                insertSQL.append("\n");
                 insertSQL.append(fieldName);
                 insertSQL.append(Symbol.COMMA);
+
+                insertParameter.append("\n");
                 insertParameter.append(this.parsePropertyParameter(column.name(), propertyName));
                 insertParameter.append(",");
             }
@@ -150,7 +184,8 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             }
 
             if (column.updatable()) {
-                updateSQL.append(fieldName + Symbol.EQUAL);
+                updateSQL.append("\n");
+                updateSQL.append(fieldName).append(Symbol.EQUAL);
                 updateSQL.append(this.parsePropertyParameter(column.name(), propertyName));
                 updateSQL.append(",");
             }
@@ -161,13 +196,15 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         insertSQL.append(insertParameter);
         insertSQL.append(Symbol.RIGHT_PARENTHESIS);
 
-        updateSQL.deleteCharAt(updateSQL.length() - 1).append(
-            " where " + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName()));
+        updateSQL.deleteCharAt(updateSQL.length() - 1)
+            .append(" where ")
+            .append(this.primary.getColumnName())
+            .append("=").append(this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName()));
         String deleteSQL = "delete from " + this.dialectTableName + " where "
             + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName());
 
         createDDLField.append(String.format("PRIMARY KEY (`%s`)\n", this.primary.getColumnName()));
-        createDDLField.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='" + tableName + "';\n");
+        createDDLField.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='").append(tableName).append("';\n");
 
         this.createDDL = createDDLHeader + primaryCreateDDL + createDDLField.toString();
         this.insert = insertSQL.toString();
@@ -180,19 +217,18 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         StringBuilder fieldBuilder = new StringBuilder();
         for (Field field : fields) {
             if (fieldBuilder.length() > 0) {
-                fieldBuilder.append(",");
+                fieldBuilder.append(",\n");
             }
             if (field.isPersistence()) {
-                fieldBuilder.append(dialectReader.getOpenQuote() + field.getColumnName() + dialectReader.getCloseQuote());
+                fieldBuilder.append(dialectReader.getOpenQuote()).append(field.getColumnName()).append(dialectReader.getCloseQuote());
             }
             this.fieldMap.put(field.getName(), field);
         }
         this.fields = fieldBuilder.toString();
-        this.init(clazz);
     }
 
     @Override
-    public void initTable(Class clazz) {
+    public void initTable() {
         // 初始化表名
         if (clazz.isAnnotationPresent(Table.class)) {
             Table table = (Table) clazz.getAnnotation(Table.class);
@@ -204,7 +240,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         this.dialectReader = DialectReader.getInstance(schema);
         Split split = null;
         if (clazz.isAnnotationPresent(Split.class)) {
-            split = (Split) clazz.getAnnotation(Split.class);
+            split = clazz.getAnnotation(Split.class);
         }
 
         if (split == null) {

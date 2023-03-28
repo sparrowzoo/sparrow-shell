@@ -182,7 +182,7 @@ public class ServletInvokableHandlerMethod {
     private MethodParameter[] initMethodParameters() {
         Class<?>[] parameterClass = this.method
             .getParameterTypes();
-        if (parameterClass == null || parameterClass.length == 0) {
+        if (parameterClass.length == 0) {
             return null;
         }
         int count = parameterClass.length;

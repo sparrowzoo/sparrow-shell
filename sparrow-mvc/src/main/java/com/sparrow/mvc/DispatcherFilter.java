@@ -29,6 +29,7 @@ import com.sparrow.mvc.adapter.HandlerAdapter;
 import com.sparrow.mvc.adapter.impl.MethodControllerHandlerAdapter;
 import com.sparrow.mvc.mapping.HandlerMapping;
 import com.sparrow.mvc.mapping.impl.UrlMethodHandlerMapping;
+import com.sparrow.protocol.NotTryException;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Digit;
@@ -85,7 +86,7 @@ public class DispatcherFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-        FilterChain chain) {
+        FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String actionKey = sparrowServletUtility.getServletUtility().getActionKey(request);
@@ -120,7 +121,11 @@ public class DispatcherFilter implements Filter {
             }
             this.postHandler(httpRequest, httpResponse);
         } catch (Exception e) {
-            errorHandler(httpRequest, httpResponse, invokableHandlerMethod, e);
+            try {
+                errorHandler(httpRequest, httpResponse, invokableHandlerMethod, e);
+            } catch (Throwable throwable) {
+                throw new ServletException(e);
+            }
         } finally {
             //页面渲染完成之后执行
             afterCompletion(httpRequest, httpResponse);
@@ -136,7 +141,7 @@ public class DispatcherFilter implements Filter {
     }
 
     private void errorHandler(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-        ServletInvokableHandlerMethod invocableHandlerMethod, Exception e) {
+        ServletInvokableHandlerMethod invocableHandlerMethod, Exception e) throws IOException, NotTryException {
         Throwable target = e;
         if (e.getCause() == null) {
             logger.error("e.getCause==null", e);
@@ -145,11 +150,7 @@ public class DispatcherFilter implements Filter {
             logger.error("e.getCause!=null", e.getCause());
         }
         if (invocableHandlerMethod != null) {
-            try {
-                invocableHandlerMethod.getMethodReturnValueResolverHandler().errorResolve(target, httpRequest, httpResponse);
-            } catch (Exception ignore) {
-                logger.error("exception resolve error", ignore);
-            }
+            invocableHandlerMethod.getMethodReturnValueResolverHandler().errorResolve(target, httpRequest, httpResponse);
         }
         if (this.connectionContextHolder != null) {
             this.connectionContextHolder.removeAll();

@@ -379,8 +379,8 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public Long getCount(I key) {
-        return this.getCountByUnique(UniqueKeyCriteria.createUniqueCriteria(key, ConfigKeyDB.ORM_PRIMARY_KEY_UNIQUE));
+    public Boolean exist(I key) {
+        return this.getCountByUnique(UniqueKeyCriteria.createUniqueCriteria(key, ConfigKeyDB.ORM_PRIMARY_KEY_UNIQUE)) > 0;
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.sparrow.mvc.PageSwitchMode;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
+import com.sparrow.protocol.NotTryException;
 import com.sparrow.support.web.ResultAssembler;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Result;
@@ -180,14 +181,16 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         String url) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
-        return;
     }
 
     @Override
     public void errorResolve(Throwable exception,
         HttpServletRequest request,
-        HttpServletResponse response) throws IOException {
+        HttpServletResponse response) throws NotTryException, IOException {
 
+        if (exception instanceof NotTryException) {
+            throw (NotTryException) exception;
+        }
         PageSwitchMode errorPageSwitch = PageSwitchMode.REDIRECT;
         String exceptionSwitchMode = ConfigUtility.getValue(Config.EXCEPTION_SWITCH_MODE);
         if (!StringUtility.isNullOrEmpty(exceptionSwitchMode)) {

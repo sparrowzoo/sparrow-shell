@@ -19,7 +19,7 @@ package com.sparrow.core.algorithm.gouping;
 
 import java.util.*;
 
-public class Coordinate<E extends Segment<D>, D extends Comparable> {
+public class Coordinate<E extends Segment<D>, D extends Comparable<D>> {
     public Coordinate(List<E> dataList) {
         this.dataList = dataList;
     }
@@ -35,7 +35,7 @@ public class Coordinate<E extends Segment<D>, D extends Comparable> {
     }
 
     public void draw() {
-        Map<Comparable, Point<D>> coordinate = new TreeMap<Comparable, Point<D>>();
+        Map<Comparable<D>, Point<D>> coordinate = new TreeMap<Comparable<D>, Point<D>>();
         for (E segment : this.dataList) {
             Point<D> point = coordinate.get(segment.getStart().getPoint());
             if (point == null) {

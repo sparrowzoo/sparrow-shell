@@ -50,7 +50,7 @@ public class MethodReturnValueResolverHandlerComposite implements MethodReturnVa
 
     @Override
     public void errorResolve(Throwable exception, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException {
+        HttpServletResponse response) {
         return;
     }
 

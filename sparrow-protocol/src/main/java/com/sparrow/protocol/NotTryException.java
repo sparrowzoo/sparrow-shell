@@ -14,36 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.enums.StatusRecord;
+package com.sparrow.protocol;
 
-public class StatusCriteria {
-    public StatusCriteria(String ids, StatusRecord status) {
-        this.ids = ids;
-        this.status = status;
-    }
-
-    private String ids;
-    private StatusRecord status;
-
-    public String[] getIdArray() {
-        return this.ids.split(",");
-    }
-
-    public String getIds() {
-        return ids;
-    }
-
-    public void setIds(String ids) {
-        this.ids = ids;
-    }
-
-    public StatusRecord getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusRecord status) {
-        this.status = status;
+public class NotTryException extends Exception {
+    public NotTryException(String message) {
+        super(message);
     }
 }

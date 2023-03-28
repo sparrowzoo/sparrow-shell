@@ -17,7 +17,7 @@
 
 package com.sparrow.core.algorithm.gouping;
 
-public class Segment<T extends Comparable> {
+public class Segment<T extends Comparable<T>> {
     private Point<T> start;
     private Point<T> end;
 

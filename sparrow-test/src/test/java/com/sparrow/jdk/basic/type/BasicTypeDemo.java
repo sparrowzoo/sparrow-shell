@@ -14,36 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.enums.StatusRecord;
+package com.sparrow.jdk.basic.type;
 
-public class StatusCriteria {
-    public StatusCriteria(String ids, StatusRecord status) {
-        this.ids = ids;
-        this.status = status;
-    }
+public class BasicTypeDemo {
+    public static void main(String[] args) {
+        byte b=1;
+        short s=2;
 
-    private String ids;
-    private StatusRecord status;
+        System.out.println(1F);
+        System.out.println(1D);
 
-    public String[] getIdArray() {
-        return this.ids.split(",");
-    }
-
-    public String getIds() {
-        return ids;
-    }
-
-    public void setIds(String ids) {
-        this.ids = ids;
-    }
-
-    public StatusRecord getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusRecord status) {
-        this.status = status;
     }
 }

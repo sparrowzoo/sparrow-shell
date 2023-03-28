@@ -25,14 +25,13 @@ import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
 import java.io.IOException;
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class VoidReturnValueResolverHandlerImpl implements MethodReturnValueResolverHandler {
     @Override
     public void resolve(ServletInvokableHandlerMethod handlerExecutionChain, Object returnValue, FilterChain chain,
-        HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        HttpServletRequest request, HttpServletResponse response) {
 
     }
 
@@ -43,7 +42,7 @@ public class VoidReturnValueResolverHandlerImpl implements MethodReturnValueReso
 
     @Override
     public void errorResolve(Throwable exception, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException {
+        HttpServletResponse response) throws IOException {
         response.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
         if (exception.getCause() != null && exception.getCause() instanceof BusinessException) {
             Result result = Result.fail((BusinessException) exception.getCause());

@@ -18,6 +18,7 @@
 package com.sparrow.mvc.result;
 
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
+import com.sparrow.protocol.NotTryException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,5 +33,5 @@ public interface MethodReturnValueResolverHandler {
     boolean support(ServletInvokableHandlerMethod handlerExecutionChain);
 
     void errorResolve(Throwable exception, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException;
+        HttpServletResponse response) throws NotTryException, IOException;
 }

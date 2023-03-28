@@ -31,6 +31,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -285,7 +286,9 @@ public class ClassUtility {
         }
     }
 
-    public static Field[] getOrderedFields(Field[] fields) {
+
+
+    public static Field[] getOrderedFields(Collection<Field> fields) {
         List<FieldWithRank> fieldWithRanks = new ArrayList<>();
         for (Field field : fields) {
             if (field.getAnnotation(FieldOrder.class) != null) {
@@ -303,7 +306,7 @@ public class ClassUtility {
         return orderFields;
     }
 
-    public static Method[] getOrderedColumnMethod(Method[] methods) {
+    public static Method[] getOrderedMethod(Method[] methods) {
         List<MethodWithRank> methodList = new ArrayList<>();
         for (Method m : methods) {
             if (m.getAnnotation(MethodOrder.class) != null) {

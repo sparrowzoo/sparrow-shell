@@ -31,12 +31,12 @@ import java.util.TreeMap;
 public class SparrowEntityManager extends AbstractEntityManagerAdapter {
     private static Logger logger = LoggerFactory.getLogger(SparrowEntityManager.class);
 
-    public SparrowEntityManager(Class clazz) {
+    public SparrowEntityManager(Class<?> clazz) {
         super(clazz);
     }
 
     @Override
-    public void init(Class clazz) {
+    public void init() {
 
     }
 

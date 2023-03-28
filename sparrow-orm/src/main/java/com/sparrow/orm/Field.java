@@ -28,6 +28,11 @@ import javax.persistence.Id;
 public class Field extends TypeConverter {
     private TableSplitStrategy hashStrategy;
     private GenerationType generationType;
+    private Id id;
+    private Column column;
+    private SplitTable splitTable;
+    private GeneratedValue generatedValue;
+
     private String columnName;
     private Integer hashIndex = -1;
 
@@ -39,10 +44,15 @@ public class Field extends TypeConverter {
     private boolean persistence = true;
     private String columnDefinition;
 
-    public Field(String property, Class type, Column column, SplitTable splitTable, GeneratedValue generatedValue,
+    public Field(String property, Class<?> type, Column column, SplitTable splitTable, GeneratedValue generatedValue,
         Id id) {
+        this.id = id;
+        this.column = column;
+        this.splitTable = splitTable;
         this.name = property;
         this.type = type;
+        this.generatedValue = generatedValue;
+
         if (column != null) {
             this.columnName = column.name();
             this.unique = column.unique();
@@ -110,5 +120,21 @@ public class Field extends TypeConverter {
 
     public String getColumnDefinition() {
         return columnDefinition;
+    }
+
+    public Id getId() {
+        return id;
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
+    public SplitTable getSplitTable() {
+        return splitTable;
+    }
+
+    public GeneratedValue getGeneratedValue() {
+        return generatedValue;
     }
 }

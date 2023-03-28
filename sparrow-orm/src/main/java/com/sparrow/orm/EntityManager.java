@@ -56,9 +56,9 @@ public interface EntityManager {
 
     String getSchema();
 
-    void init(Class clazz);
+    void init();
 
-    void initTable(Class clazz);
+    void initTable();
 
     String parsePropertyParameter(String column, String property);
 }

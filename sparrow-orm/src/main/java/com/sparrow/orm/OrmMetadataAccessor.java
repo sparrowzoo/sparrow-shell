@@ -99,6 +99,7 @@ public class OrmMetadataAccessor<T> {
             throw new NullPointerException(modelClazz.getName() + "'s method accessor not found please config proxy bean");
         }
         this.entityManager = new SparrowEntityManager(this.modelClazz);
+        this.entityManager.init();
         EntityManagerFactoryBean.getInstance().pubObject(this.modelClazz, this.entityManager);
         this.modelName = ClassUtility.getEntityNameByClass(this.modelClazz);
         this.criteriaProcessor = criteriaProcessor;
