@@ -222,7 +222,7 @@ public class JDBCTemplate implements JDBCSupport {
                 try {
                     autoCommit = connection.getAutoCommit();
                 } catch (SQLException e1) {
-                    logger.error("get auto commit error ",e1);
+                    logger.error("get auto commit error ", e1);
                 }
                 if (!autoCommit) {
                     connectionContextHolder.unbindConnection(connection);
@@ -315,11 +315,10 @@ public class JDBCTemplate implements JDBCSupport {
             return 0;
         }
         try {
-            try {
-                return preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("execute update error", e);
+            throw new RuntimeException(e);
         } finally {
             this.release(preparedStatement);
         }

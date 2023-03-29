@@ -59,12 +59,12 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     private OrmMetadataAccessor<T> ormMetadataAccessor;
 
-    public DBORMTemplate(Class clazz) {
+    public DBORMTemplate(Class<?> clazz) {
         this.modelClazz = clazz;
         if (this.modelClazz != null) {
             this.modelName = ClassUtility.getEntityNameByClass(this.modelClazz);
         }
-        this.ormMetadataAccessor = new OrmMetadataAccessor<T>(this.modelClazz, this.criteriaProcessor);
+        this.ormMetadataAccessor = new OrmMetadataAccessor<>(this.modelClazz, this.criteriaProcessor);
         DatabaseSplitStrategy databaseSplitKey = this.ormMetadataAccessor.getEntityManager().getDatabaseSplitStrategy();
         this.jdbcSupport = JDBCTemplate.getInstance(this.ormMetadataAccessor.getEntityManager().getSchema(), databaseSplitKey);
     }
@@ -77,11 +77,11 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
                 Long id = this.jdbcSupport.executeAutoIncrementInsert(jdbcParameter);
                 this.ormMetadataAccessor.getMethodAccessor().set(model, this.ormMetadataAccessor.getEntityManager().getPrimary().getName(), id);
                 return id;
-            } else {
-                this.jdbcSupport.executeUpdate(jdbcParameter);
-                return 0L;
             }
+            //非自增  返回影响记录条件
+            return (long) this.jdbcSupport.executeUpdate(jdbcParameter);
         } catch (Throwable e) {
+            logger.error("insert error", e);
             throw new RuntimeException(e);
         }
     }
@@ -166,10 +166,9 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     public T getEntityByUnique(UniqueKeyCriteria uniqueKeyCriteria) {
         StringBuilder select = new StringBuilder("select ");
         select.append(this.ormMetadataAccessor.getEntityManager().getFields());
-        select.append(" from "
-            + this.ormMetadataAccessor.getEntityManager().getDialectTableName());
+        select.append(" from ").append(this.ormMetadataAccessor.getEntityManager().getDialectTableName());
         Field uniqueField = this.ormMetadataAccessor.getEntityManager().getUniqueField(uniqueKeyCriteria.getUniquePropertyName());
-        select.append(" where " + uniqueField.getColumnName() + "=?");
+        select.append(" where ").append(uniqueField.getColumnName()).append("=?");
         JDBCParameter jdbcParameter = new JDBCParameter(select.toString(), Collections.singletonList(new Parameter(uniqueField, uniqueField.convert(uniqueKeyCriteria.getKey().toString()))));
         ResultSet rs = this.jdbcSupport.executeQuery(jdbcParameter);
 
@@ -219,9 +218,9 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
         //返回null会报错
         List<T> list;
         if (criteria != null && criteria.getPageSize() != null && criteria.getPageSize() > 0) {
-            list = new ArrayList<T>(criteria.getPageSize());
+            list = new ArrayList<>(criteria.getPageSize());
         } else {
-            list = new ArrayList<T>();
+            list = new ArrayList<>();
         }
 
         ResultSet rs = this.select(criteria);
@@ -280,7 +279,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public <Z> Set<Z> firstList(SearchCriteria criteria) {
-        Set<Z> list = new LinkedHashSet<Z>();
+        Set<Z> list = new LinkedHashSet<>();
         ResultSet rs = this.select(criteria);
         if (rs == null) {
             return list;

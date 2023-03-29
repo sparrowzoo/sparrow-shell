@@ -44,7 +44,7 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
 
     public ORMStrategy(String schema) {
         Dialect dialect = DialectReader.getInstance(schema).getDialect();
-        Class clazz = null;
+        Class<?> clazz = null;
         Type type = getClass()
             .getGenericSuperclass();
         if (type instanceof ParameterizedType) {
@@ -57,7 +57,7 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
             case MYSQL:
             case SQL_SERVER:
             default:
-                ormDaoSupport = new DBORMTemplate<T, I>(clazz);
+                ormDaoSupport = new DBORMTemplate<>(clazz);
         }
     }
 
