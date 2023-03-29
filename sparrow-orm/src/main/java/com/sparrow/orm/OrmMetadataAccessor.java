@@ -30,13 +30,9 @@ import com.sparrow.orm.type.TypeHandler;
 import com.sparrow.orm.type.TypeHandlerRegistry;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.protocol.enums.StatusRecord;
+import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -45,6 +41,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OrmMetadataAccessor<T> {
     private static Logger logger = LoggerFactory.getLogger(OrmMetadataAccessor.class);
@@ -311,29 +309,50 @@ public class OrmMetadataAccessor<T> {
         return new JDBCParameter(select, Collections.singletonList(new Parameter(uniqueField, key)));
     }
 
-    public JDBCParameter changeStatus(String primaryKey, StatusRecord status) {
+    /**
+     * 1. in 条件下存在 sql注入问题
+     * <p>
+     * 2. modified user name 相关写死在代码里
+     * <p>
+     * 3. sql 的拼接不够优雅
+     *
+     * @param statusCriteria
+     * @return
+     */
+    public JDBCParameter changeStatus(StatusCriteria statusCriteria) {
+        List<Parameter> parameterList = new ArrayList<>();
+        parameterList.add(new Parameter(this.entityManager.getStatus(), statusCriteria.getStatus()));
+        parameterList.add(new Parameter("modifiedUserName", String.class, 0, statusCriteria.getModifiedUserName()));
+        parameterList.add(new Parameter("modifiedUserId", Long.class, 0, statusCriteria.getModifiedUserId()));
+        parameterList.add(new Parameter("gmtModified", Long.class, 0, statusCriteria.getGmtModified()));
+
         String whereClause = null;
-        if (primaryKey.contains(Symbol.COMMA)) {
-            whereClause = " in(" + primaryKey + Symbol.RIGHT_PARENTHESIS;
+        if (statusCriteria.getIds().contains(Symbol.COMMA)) {
+            String[] idArray = statusCriteria.getIds().split(Symbol.COMMA);
+            String idArguments = StringUtility.generateCharacter(idArray.length, '?', ',');
+            /**
+             * select * from t where id in (ids)
+             * select * from t where id in (?,?,?)
+             */
+            whereClause = String.format(" in(%s)", idArguments);
+            for (String id : idArray) {
+                parameterList.add(new Parameter("id", this.entityManager.getPrimary().getType(), 0, this.entityManager.getPrimary().convert(id)));
+            }
         } else {
             whereClause = " =?";
+            parameterList.add(new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(statusCriteria.getIds())));
         }
-        String updateSql = String.format("update %1$s set %2$s=? where %3$s %4$s",
+
+        String updateSql = String.format("update %1$s set " +
+                " %2$s=?," +
+                "`modified_user_name`=?," +
+                "`modified_user_id`=?," +
+                "`gmt_modified`=? where %3$s %4$s",
             this.entityManager.getDialectTableName(),
             this.entityManager.getStatus().getColumnName(),
             this.entityManager.getPrimary().getColumnName(),
             whereClause);
-
-        Parameter[] sqlParameters;
-        if (primaryKey.contains(Symbol.COMMA)) {
-            sqlParameters = new Parameter[] {
-                new Parameter(this.entityManager.getStatus(), status)};
-        } else {
-            sqlParameters = new Parameter[] {
-                new Parameter(this.entityManager.getStatus(), status),
-                new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(primaryKey))};
-        }
-        return new JDBCParameter(updateSql, Arrays.asList(sqlParameters));
+        return new JDBCParameter(updateSql, parameterList);
     }
 
     public JDBCParameter batchDelete(String ids) {

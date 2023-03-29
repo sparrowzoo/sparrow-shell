@@ -26,6 +26,10 @@ public class StatusCriteria {
 
     private String ids;
     private StatusRecord status;
+    private Long modifiedUserId;
+    private String modifiedUserName;
+    private Long gmtModified;
+
 
     public String[] getIdArray() {
         return this.ids.split(",");
@@ -45,5 +49,29 @@ public class StatusCriteria {
 
     public void setStatus(StatusRecord status) {
         this.status = status;
+    }
+
+    public Long getModifiedUserId() {
+        return modifiedUserId;
+    }
+
+    public void setModifiedUserId(Long modifiedUserId) {
+        this.modifiedUserId = modifiedUserId;
+    }
+
+    public String getModifiedUserName() {
+        return modifiedUserName;
+    }
+
+    public void setModifiedUserName(String modifiedUserName) {
+        this.modifiedUserName = modifiedUserName;
+    }
+
+    public Long getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Long gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

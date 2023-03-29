@@ -31,7 +31,7 @@ package com.sparrow.orm;
 public class Parameter {
     private String name;
     private Object value;
-    private Class type;
+    private Class<?> type;
     private int scale;
 
     public Object getParameterValue() {
@@ -48,6 +48,16 @@ public class Parameter {
 
     public Parameter(Object parameterValue) {
         this.value = parameterValue;
+    }
+
+    public Parameter(String propertyName,
+        Class<?> parameterType,
+        Integer scale,
+        Object parameterValue) {
+        this.name = propertyName;
+        this.type = parameterType;
+        this.value = parameterValue;
+        this.scale = scale;
     }
 
     public Parameter(Field field,

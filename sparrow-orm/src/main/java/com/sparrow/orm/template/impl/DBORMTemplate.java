@@ -29,10 +29,10 @@ import com.sparrow.orm.query.sql.OperationEntity;
 import com.sparrow.orm.query.sql.impl.criteria.processor.SqlCriteriaProcessorImpl;
 import com.sparrow.orm.template.SparrowDaoSupport;
 import com.sparrow.protocol.dao.AggregateCriteria;
+import com.sparrow.protocol.dao.DatabasePagerQuery;
 import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
-import com.sparrow.protocol.dao.PagerQuery;
 import com.sparrow.orm.JDBCSupport;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
@@ -333,7 +333,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public List<T> getList(PagerQuery query) {
+    public List<T> getList(DatabasePagerQuery query) {
         SearchCriteria criteria = new SearchCriteria(query);
         return this.getList(criteria);
     }
@@ -433,7 +433,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public int changeStatus(StatusCriteria statusCriteria) {
-        JDBCParameter jdbcParameter = this.ormMetadataAccessor.changeStatus(statusCriteria.getIds(), statusCriteria.getStatus());
+        JDBCParameter jdbcParameter = this.ormMetadataAccessor.changeStatus(statusCriteria);
         return this.jdbcSupport.executeUpdate(jdbcParameter);
     }
 }

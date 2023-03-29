@@ -18,15 +18,15 @@
 package com.sparrow.orm.query;
 
 import com.sparrow.protocol.Exclude;
+import com.sparrow.protocol.dao.DatabasePagerQuery;
 import com.sparrow.protocol.dao.RowMapper;
-import com.sparrow.protocol.dao.PagerQuery;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Exclude
-public class WhereCriteria extends PagerQuery {
+public class WhereCriteria extends DatabasePagerQuery {
     public WhereCriteria() {
         super(0, 1);
     }

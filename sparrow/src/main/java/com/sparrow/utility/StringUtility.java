@@ -241,6 +241,20 @@ public class StringUtility {
     }
 
     /**
+     * 生成指定个字符，并以splitter 分隔
+     */
+    public static String generateCharacter(int characterCount, char c, char splitter) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < characterCount; i++) {
+            if (sb.length() > 0) {
+                sb.append(splitter);
+            }
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+
+    /**
      * 获取缩进字符不足用c代替
      */
     public static String generateSomeCharacter(int characterCount, String c) {

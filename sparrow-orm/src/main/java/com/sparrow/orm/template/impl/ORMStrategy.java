@@ -23,18 +23,17 @@ import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.query.UpdateCriteria;
 import com.sparrow.orm.template.SparrowDaoSupport;
 import com.sparrow.protocol.dao.AggregateCriteria;
+import com.sparrow.protocol.dao.DatabasePagerQuery;
 import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
-import com.sparrow.protocol.dao.PagerQuery;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -165,7 +164,7 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public List<T> getList(PagerQuery query) {
+    public List<T> getList(DatabasePagerQuery query) {
         return this.ormDaoSupport.getList(query);
     }
 

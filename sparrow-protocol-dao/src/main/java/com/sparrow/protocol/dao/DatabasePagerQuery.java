@@ -19,21 +19,23 @@ package com.sparrow.protocol.dao;
 
 import com.sparrow.protocol.pager.SimplePager;
 
-/**
- * simple pager search parameter
- */
-public class PagerQuery extends SimplePager {
-    public PagerQuery() {
+public class DatabasePagerQuery extends SimplePager {
+    public DatabasePagerQuery() {
+    }
+
+    public DatabasePagerQuery(SimplePager simplePager) {
+        this.pageNo = simplePager.getPageNo();
+        this.pageSize = simplePager.getPageSize();
     }
 
     /**
      * avoid deep pager
      */
-    public PagerQuery(Integer pageSize) {
+    public DatabasePagerQuery(Integer pageSize) {
         super(pageSize, 0);
     }
 
-    public PagerQuery(Integer pageSize, Integer currentPageIndex) {
+    public DatabasePagerQuery(Integer pageSize, Integer currentPageIndex) {
         super(pageSize, currentPageIndex);
     }
 
@@ -42,10 +44,10 @@ public class PagerQuery extends SimplePager {
         if (pageSize <= 0) {
             return "";
         }
-        if (this.currentPageIndex == null) {
-            this.currentPageIndex = 1;
+        if (this.pageNo == null) {
+            this.pageNo = 1;
         }
-        int offset = pageSize * (this.currentPageIndex <= 1 ? 0 : this.currentPageIndex - 1);
+        int offset = pageSize * (this.pageNo <= 1 ? 0 : this.pageNo - 1);
         return " limit " + offset + "," + this.getPageSize();
     }
 }

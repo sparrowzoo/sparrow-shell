@@ -32,10 +32,10 @@ public class PagerResult<T> extends SimplePager implements VO {
 
     public PagerResult(SimplePager simplePager) {
         if (simplePager == null) {
-            currentPageIndex = 1;
+            pageNo = 1;
             return;
         }
-        this.currentPageIndex = simplePager.getCurrentPageIndex();
+        this.pageNo = simplePager.getPageNo();
         this.pageSize = simplePager.getPageSize();
     }
 
@@ -43,16 +43,16 @@ public class PagerResult<T> extends SimplePager implements VO {
         super(pageSize, currentPageIndex);
     }
 
-    protected Long recordCount;
+    protected Long recordTotal;
 
     protected List<T> list;
 
-    public Long getRecordCount() {
-        return recordCount;
+    public Long getRecordTotal() {
+        return recordTotal;
     }
 
-    public void setRecordCount(Long recordCount) {
-        this.recordCount = recordCount;
+    public void setRecordTotal(Long recordTotal) {
+        this.recordTotal = recordTotal;
     }
 
     public List<T> getList() {
@@ -67,6 +67,6 @@ public class PagerResult<T> extends SimplePager implements VO {
      * 根据总记录数和每页记录数获取最后页码
      */
     public Integer getLastPageIndex() {
-        return (int) Math.ceil((double) this.recordCount / this.pageSize);
+        return (int) Math.ceil((double) this.recordTotal / this.pageSize);
     }
 }

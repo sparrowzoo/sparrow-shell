@@ -19,9 +19,8 @@ package com.sparrow.orm.query;
 
 import com.sparrow.protocol.Exclude;
 import com.sparrow.protocol.dao.AggregateCriteria;
+import com.sparrow.protocol.dao.DatabasePagerQuery;
 import com.sparrow.protocol.dao.enums.Aggregate;
-import com.sparrow.protocol.dao.PagerQuery;
-
 import java.util.List;
 
 @Exclude
@@ -29,8 +28,8 @@ public class SearchCriteria extends WhereCriteria {
     public SearchCriteria() {
     }
 
-    public SearchCriteria(PagerQuery query) {
-        super(query.getPageSize(), query.getCurrentPageIndex());
+    public SearchCriteria(DatabasePagerQuery query) {
+        super(query.getPageSize(), query.getPageNo());
     }
 
     public SearchCriteria(Integer pageSize, Integer currentPageIndex) {

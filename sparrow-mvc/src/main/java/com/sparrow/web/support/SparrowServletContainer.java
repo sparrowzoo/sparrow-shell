@@ -53,8 +53,8 @@ public class SparrowServletContainer extends AbstractServletContainer {
 
     public <T> void grid(String gridView, HtmlPagerResult pagerSearch) {
         httpContext.put(gridView, pagerSearch);
-        httpContext.put("spanRecordCount.innerHTML",
-            pagerSearch.getRecordCount());
+        httpContext.put("spanRecordTotal.innerHTML",
+            pagerSearch.getRecordTotal());
     }
 
     public void clear() {

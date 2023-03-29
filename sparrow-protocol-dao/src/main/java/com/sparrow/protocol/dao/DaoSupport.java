@@ -81,7 +81,7 @@ public interface DaoSupport<T, I> {
 
     Map<I, T> getEntityMap(Collection<I> ids);
 
-    List<T> getList(PagerQuery query);
+    List<T> getList(DatabasePagerQuery query);
 
     Long getCountByUnique(UniqueKeyCriteria uniqueKeyCriteria);
 

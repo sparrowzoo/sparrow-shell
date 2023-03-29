@@ -84,9 +84,9 @@ public class HelloController {
     public PagerResult<HelloVO> pager() {
         PagerResult<HelloVO> pagerResult = new PagerResult<>();
 //        pagerResult.setAddition(new JsonVO("json"));
-        pagerResult.setRecordCount(1000L);
+        pagerResult.setRecordTotal(1000L);
         pagerResult.setPageSize(100);
-        pagerResult.setCurrentPageIndex(1);
+        pagerResult.setPageNo(1);
         List<HelloVO> hellos = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             hellos.add(new HelloVO(i + ""));

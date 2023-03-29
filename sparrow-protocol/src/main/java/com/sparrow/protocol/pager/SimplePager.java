@@ -33,7 +33,7 @@ public class SimplePager implements Query {
     /**
      * current page index
      */
-    protected Integer currentPageIndex;
+    protected Integer pageNo;
 
     public SimplePager(Integer pageSize, Integer currentPageIndex) {
         if (pageSize != null) {
@@ -42,22 +42,22 @@ public class SimplePager implements Query {
         if (currentPageIndex == null) {
             currentPageIndex = 1;
         }
-        this.currentPageIndex = currentPageIndex;
+        this.pageNo = currentPageIndex;
     }
 
     public Integer getPageSize() {
         return pageSize;
     }
 
-    public Integer getCurrentPageIndex() {
-        return currentPageIndex;
+    public Integer getPageNo() {
+        return pageNo;
     }
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 
-    public void setCurrentPageIndex(Integer currentPageIndex) {
-        this.currentPageIndex = currentPageIndex;
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
     }
 }
