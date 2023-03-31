@@ -56,7 +56,7 @@ public interface SparrowDaoSupport<T, I> extends DaoSupport<T, I> {
      *
      * @param criteria
      */
-    int delete(SearchCriteria criteria);
+    Integer delete(SearchCriteria criteria);
 
     /**
      * 更新 指定字段
@@ -65,7 +65,7 @@ public interface SparrowDaoSupport<T, I> extends DaoSupport<T, I> {
      *
      * @param criteria
      */
-    int update(UpdateCriteria criteria);
+    Integer update(UpdateCriteria criteria);
 
     <X> X getAggregateByCriteria(SearchCriteria searchCriteria);
 }

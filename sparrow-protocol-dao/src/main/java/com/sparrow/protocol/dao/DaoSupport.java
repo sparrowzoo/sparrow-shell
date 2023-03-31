@@ -47,7 +47,7 @@ public interface DaoSupport<T, I> {
      *
      * @param model
      */
-    int update(T model);
+    Integer update(T model);
 
     /**
      * 修改记录状态
@@ -55,21 +55,21 @@ public interface DaoSupport<T, I> {
      * @param statusCriteria
      * @return
      */
-    int changeStatus(StatusCriteria statusCriteria);
+    Integer changeStatus(StatusCriteria statusCriteria);
 
     /**
      * 删除指定记录
      *
      * @param id
      */
-    int delete(I id);
+    Integer delete(I id);
 
     /**
      * 根据id批量删除
      *
      * @param ids
      */
-    int batchDelete(String ids);
+    Integer batchDelete(String ids);
 
     T getEntity(I id);
 

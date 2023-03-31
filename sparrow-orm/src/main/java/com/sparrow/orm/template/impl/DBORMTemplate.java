@@ -87,27 +87,27 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public int update(T model) {
+    public Integer update(T model) {
         return this.jdbcSupport.executeUpdate(this.ormMetadataAccessor.update(model));
     }
 
     @Override
-    public int update(UpdateCriteria criteria) {
+    public Integer update(UpdateCriteria criteria) {
         return this.jdbcSupport.executeUpdate(this.ormMetadataAccessor.update(criteria));
     }
 
     @Override
-    public int delete(I id) {
+    public Integer delete(I id) {
         return this.jdbcSupport.executeUpdate(this.ormMetadataAccessor.delete(id));
     }
 
     @Override
-    public int delete(SearchCriteria criteria) {
+    public Integer delete(SearchCriteria criteria) {
         return this.jdbcSupport.executeUpdate(this.ormMetadataAccessor.delete(criteria));
     }
 
     @Override
-    public int batchDelete(String ids) {
+    public Integer batchDelete(String ids) {
         JDBCParameter parameter = this.ormMetadataAccessor.batchDelete(ids);
         return this.jdbcSupport.executeUpdate(parameter);
     }
@@ -431,7 +431,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public int changeStatus(StatusCriteria statusCriteria) {
+    public Integer changeStatus(StatusCriteria statusCriteria) {
         JDBCParameter jdbcParameter = this.ormMetadataAccessor.changeStatus(statusCriteria);
         return this.jdbcSupport.executeUpdate(jdbcParameter);
     }

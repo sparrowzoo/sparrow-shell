@@ -104,12 +104,12 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public int delete(SearchCriteria criteria) {
+    public Integer delete(SearchCriteria criteria) {
         return this.ormDaoSupport.delete(criteria);
     }
 
     @Override
-    public int update(UpdateCriteria criteria) {
+    public Integer update(UpdateCriteria criteria) {
         return this.ormDaoSupport.update(criteria);
     }
 
@@ -119,22 +119,22 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public int update(T model) {
+    public Integer update(T model) {
         return this.ormDaoSupport.update(model);
     }
 
     @Override
-    public int changeStatus(StatusCriteria statusCriteria) {
+    public Integer changeStatus(StatusCriteria statusCriteria) {
         return this.ormDaoSupport.changeStatus(statusCriteria);
     }
 
     @Override
-    public int delete(I id) {
+    public Integer delete(I id) {
         return this.ormDaoSupport.delete(id);
     }
 
     @Override
-    public int batchDelete(String ids) {
+    public Integer batchDelete(String ids) {
         return this.ormDaoSupport.batchDelete(ids);
     }
 
