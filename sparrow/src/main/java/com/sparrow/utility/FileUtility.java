@@ -17,17 +17,16 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.cryptogram.Base64;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.File;
+import com.sparrow.cryptogram.Base64;
+import com.sparrow.io.file.FileNameProperty;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,30 +35,73 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.zip.CRC32;
 import java.util.zip.ZipOutputStream;
-
-import com.sparrow.io.file.FileNameProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FileUtility {
-
     private static Logger logger = LoggerFactory.getLogger(FileUtility.class);
-    private static FileUtility fileUtil = new FileUtility();
+    private static final FileUtility FILE_UTILITY = new FileUtility();
 
     private FileUtility() {
     }
 
     public static FileUtility getInstance() {
-        return fileUtil;
+        return FILE_UTILITY;
     }
 
     public String readFileContent(String fileName) {
         return readFileContent(fileName, null);
+    }
+
+    /**
+     * 以行为单位读取文件，常用于读面向行的格式化文件
+     */
+    public String readFileContent(String fileName, String charset) {
+        if (StringUtility.isNullOrEmpty(charset)) {
+            charset = StandardCharsets.UTF_8.name();
+        }
+        InputStream inputStream = null;
+        try {
+            inputStream = EnvironmentSupport.getInstance().getFileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            logger.error("[{}] not found", fileName);
+            return null;
+        }
+        return this.readFileContent(inputStream, charset);
+    }
+
+    /**
+     * 以行为单位读取文件，常用于读面向行的格式化文件
+     */
+    public String readFileContent(InputStream inputStream, String charset) {
+        if (StringUtility.isNullOrEmpty(charset)) {
+            charset = Constant.CHARSET_UTF_8;
+        }
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length = -1;
+        try {
+            while ((length = inputStream.read(buffer)) != -1) {
+                bos.write(buffer, 0, length);
+            }
+            return bos.toString(charset);
+        } catch (IOException e) {
+            logger.error("write error", e);
+            return Symbol.EMPTY;
+        } finally {
+            try {
+                bos.close();
+                inputStream.close();
+            } catch (IOException ignore) {
+            }
+        }
     }
 
     public List<String> readLines(String fileName) {
@@ -115,60 +157,12 @@ public class FileUtility {
         return this.readLines(inputStream, charset);
     }
 
-    /**
-     * 以行为单位读取文件，常用于读面向行的格式化文件
-     */
-    public String readFileContent(InputStream inputStream, String charset) {
-        if (StringUtility.isNullOrEmpty(charset)) {
-            charset = Constant.CHARSET_UTF_8;
-        }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int length = -1;
-        try {
-            while ((length = inputStream.read(buffer)) != -1) {
-                bos.write(buffer, 0, length);
-            }
-            return bos.toString(charset);
-        } catch (IOException e) {
-            logger.error("write error", e);
-            return Symbol.EMPTY;
-        } finally {
-            try {
-                bos.close();
-                inputStream.close();
-            } catch (IOException ignore) {
-            }
-        }
-    }
-
-    /**
-     * 以行为单位读取文件，常用于读面向行的格式化文件
-     */
-    public String readFileContent(String fileName, String charset) {
-        if (StringUtility.isNullOrEmpty(charset)) {
-            charset = Constant.CHARSET_UTF_8;
-        }
-        InputStream inputStream = null;
-        try {
-            inputStream = EnvironmentSupport.getInstance().getFileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            logger.error("[{}] not found", fileName);
-            return null;
-        }
-        return this.readFileContent(inputStream, charset);
-    }
-
-    public boolean writeFile(String filePath, String s) {
-        String charset = Constant.CHARSET_UTF_8;
-        return writeFile(filePath, s, charset);
-    }
-
     private String makeDirectory(String fullFilePath) {
         java.io.File destFile = new java.io.File(fullFilePath);
         if (destFile.isDirectory()) {
             return fullFilePath;
         }
+        //如果不存在目录，则放至家目录
         String descDirectoryPath = this.getFileNameProperty(fullFilePath).getDirectory();
         if (StringUtility.isNullOrEmpty(descDirectoryPath)) {
             descDirectoryPath = System.getProperty("user.dir");
@@ -184,24 +178,25 @@ public class FileUtility {
         return fullFilePath;
     }
 
-    public boolean writeFile(String filePath, String s, String charset) {
+    public void writeFile(String filePath, String s) throws IOException {
+        this.writeFile(filePath, s, StandardCharsets.UTF_8.name());
+    }
+
+    public void writeFile(String filePath, String s, String charset) throws IOException {
         OutputStreamWriter osw = null;
         try {
-            //先判断class下是否存在
-            String fileFullPath = EnvironmentSupport.getInstance().getClassesPhysicPath() + filePath;
-            if (!new java.io.File(this.getFileNameProperty(fileFullPath).getDirectory()).exists()) {
+            if (!new java.io.File(this.getFileNameProperty(filePath).getDirectory()).exists()) {
                 //不存在则新建class以外的目录
-                fileFullPath = this.makeDirectory(filePath);
+                filePath = this.makeDirectory(filePath);
             }
-            OutputStream outputStream = new FileOutputStream(fileFullPath);
+            OutputStream outputStream = Files.newOutputStream(Paths.get(filePath));
             osw = new OutputStreamWriter(outputStream,
                 charset);
             osw.write(s, Digit.ZERO, s.length());
             osw.flush();
-            return true;
         } catch (Exception e) {
             logger.error("flush error", e);
-            return false;
+            throw e;
         } finally {
             if (osw != null) {
                 try {
@@ -228,7 +223,7 @@ public class FileUtility {
             if (descFile.isDirectory()) {
                 descFile = new java.io.File(fileFullPath + java.io.File.separator + this.getFileNameProperty(srcFilePath).getFullFileName());
             }
-            is = new FileInputStream(srcFilePath);
+            is = Files.newInputStream(Paths.get(srcFilePath));
             fos = new FileOutputStream(descFile);
             byte[] buffer = new byte[Digit.K];
             while (true) {
@@ -308,7 +303,7 @@ public class FileUtility {
                 throw new FileNotFoundException(file.getPath());
             }
             reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(file), StandardCharsets.UTF_8), skip);
+                Files.newInputStream(file.toPath()), StandardCharsets.UTF_8), skip);
             String tempString;
             reader.mark(skip);
             skip /= 2;
@@ -397,10 +392,10 @@ public class FileUtility {
     }
 
     /**
-     * 兼容 http://www.sparrozoo.com/bmiddle/003aGgFyzy6IXdCe80y52
+     * 兼容 <a href="http://www.sparrozoo.com/bmiddle/003aGgFyzy6IXdCe80y52">...</a>
      *
-     * @param fullFilePath
-     * @return
+     * @param fullFilePath 文件的全路径
+     * @return FileNameProperty
      */
     public FileNameProperty getFileNameProperty(String fullFilePath) {
         FileNameProperty fileNameProperty = new FileNameProperty();
@@ -411,6 +406,7 @@ public class FileUtility {
         String directory = fullFilePath.substring(Digit.ZERO, lastFileSeparatorIndex + Digit.ONE);
         int fileNameEndIndex = fullFilePath.lastIndexOf('.');
         if (fileNameEndIndex < lastFileSeparatorIndex) {
+            logger.error("{} is not file path", fullFilePath);
             return fileNameProperty;
         }
         String fileName = fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE,
@@ -418,11 +414,9 @@ public class FileUtility {
         String extension = fullFilePath.substring(fileNameEndIndex)
             .toLowerCase();
         String fullFileName = fileName + extension;
-
         fileNameProperty.setDirectory(directory);
         fileNameProperty.setFullFileName(fullFileName);
         fileNameProperty.setName(fileName);
-
         String imageExtensionConfig = ConfigUtility.getValue(File.IMAGE_EXTENSION);
         if (imageExtensionConfig == null) {
             imageExtensionConfig = Constant.IMAGE_EXTENSION;
@@ -451,7 +445,7 @@ public class FileUtility {
         String size) {
         CRC32 crc = new CRC32();
         crc.update(fileUuid.getBytes());
-        Long id = crc.getValue();
+        long id = crc.getValue();
         boolean isImage = this.isImage(extension);
         long remaining = id % Digit.TWELVE;
         long remaining1 = id % Digit.THOUSAND;
@@ -506,13 +500,18 @@ public class FileUtility {
 
     public void delete(String path, long beforeMillis) {
         java.io.File file = new java.io.File(path);
+        if (!file.isDirectory()) {
+            logger.error("{} is not directory", path);
+            return;
+        }
         java.io.File[] files = file.listFiles();
         if (files == null) {
             return;
         }
         // 如果没有文件
         if (files.length == Digit.ZERO) {
-            file.delete();
+            boolean result = file.delete();
+            logger.info("deleted file {},result:{}", path, result);
             return;
         }
         for (java.io.File f : files) {
@@ -521,7 +520,9 @@ public class FileUtility {
                 continue;
             }
             if (f.lastModified() < beforeMillis) {
-                f.delete();
+                boolean result = f.delete();
+                logger.info("deleted file {},result:{}", path, result);
+
             }
         }
     }
@@ -557,31 +558,36 @@ public class FileUtility {
         FileNameProperty fileNameProperty = this.getFileNameProperty(clientFileName);
         String extension = fileNameProperty.getExtension();
         Boolean isImage = fileNameProperty.isImage();
+        boolean result;
         if (isImage) {
             String imageFullPath = FileUtility.getInstance().getShufflePath(
                 fileUuid,
                 extension, false, File.SIZE.ORIGIN);
             java.io.File origin = new java.io.File(imageFullPath);
             if (origin.exists()) {
-                origin.delete();
+                result = origin.delete();
+                logger.info("deleted file {},result:{}", imageFullPath, result);
             }
 
             java.io.File big = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
                 File.SIZE.BIG));
             if (big.exists()) {
-                big.delete();
+                result = big.delete();
+                logger.info("deleted file {},result:{}", big.getAbsolutePath(), result);
             }
 
             java.io.File middle = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
                 File.SIZE.MIDDLE));
             if (middle.exists()) {
-                middle.delete();
+                result = middle.delete();
+                logger.info("deleted file {},result:{}", middle.getAbsolutePath(), result);
             }
 
             java.io.File small = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
                 File.SIZE.SMALL));
             if (small.exists()) {
-                small.delete();
+                result = small.delete();
+                logger.info("deleted file {},result:{}", imageFullPath, result);
             }
             return;
         }
@@ -589,7 +595,8 @@ public class FileUtility {
             fileUuid, extension, false, File.SIZE.ATTACH);
         java.io.File origin = new java.io.File(attachFileFullName);
         if (origin.exists()) {
-            origin.delete();
+            result = origin.delete();
+            logger.info("deleted file {},result:{}", attachFileFullName, result);
         }
     }
 
@@ -613,7 +620,7 @@ public class FileUtility {
                     b[i] += 256;
                 }
             }
-            OutputStream out = new FileOutputStream(savePath);
+            OutputStream out = Files.newOutputStream(Paths.get(savePath));
             out.write(b);
             out.flush();
             out.close();
@@ -624,4 +631,59 @@ public class FileUtility {
         }
     }
 
+    public interface FileCopier {
+        void copy(String sourceFile, String targetFile);
+    }
+
+    public void recurseCopy(String source, String target) {
+        recurseCopy(source, target, null);
+    }
+
+    public void recurseCopy(String source, String target, FileCopier fileCopier) {
+        java.io.File sourceFile = new java.io.File(source);
+        if (!sourceFile.exists()) {
+            logger.error("{} source is not exist", source);
+            return;
+        }
+        if (sourceFile.isFile()) {
+            //也可以转换为字符串，进行字符串的替换操作
+            if (fileCopier != null) {
+                fileCopier.copy(source, target);
+            } else {
+                FileUtility.getInstance().copy(source, target);
+            }
+            return;
+        }
+        //获取目录下的所有文件
+        java.io.File[] files = sourceFile.listFiles();
+
+        if (files == null || files.length == 0) {
+            logger.error("{} source is empty", source);
+            return;
+        }
+
+        String parent = target;
+        for (java.io.File f : files) {
+            if (f.getName().startsWith(".")) {
+                continue;
+            }
+
+            source = f.toString();
+            target = parent + java.io.File.separator + f.getName();
+            if (f.isFile()) {
+                recurseCopy(source, target, fileCopier);
+                continue;
+            }
+
+            //准备进行目录的创建
+            java.io.File mkFile = new java.io.File(target);
+            if (!mkFile.exists()) {
+                //先将目录创建出来
+                boolean result = mkFile.mkdirs();
+                logger.info("created {},result:{}", target, result);
+            }
+            //递归调用
+            recurseCopy(source, target, fileCopier);
+        }
+    }
 }

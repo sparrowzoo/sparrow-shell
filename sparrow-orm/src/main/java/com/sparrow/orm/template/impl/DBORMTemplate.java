@@ -427,12 +427,16 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
         if (fieldValue == null) {
             return null;
         }
+
         return (X) fieldValue;
     }
 
     @Override
     public Integer changeStatus(StatusCriteria statusCriteria) {
+
         JDBCParameter jdbcParameter = this.ormMetadataAccessor.changeStatus(statusCriteria);
         return this.jdbcSupport.executeUpdate(jdbcParameter);
     }
+
+
 }

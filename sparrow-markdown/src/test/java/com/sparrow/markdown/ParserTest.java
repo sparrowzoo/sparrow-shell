@@ -4,13 +4,14 @@ import com.sparrow.markdown.mark.MarkContext;
 import com.sparrow.markdown.parser.MarkParser;
 import com.sparrow.markdown.parser.impl.MarkdownParserComposite;
 import com.sparrow.utility.FileUtility;
+import java.io.IOException;
 
 /**
  * Created by harry on 2018/2/8.
  */
 public class ParserTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         MarkContext markContext = new MarkContext("\n" +
             "- 1\n" +
             "   - 1.1\n" +
