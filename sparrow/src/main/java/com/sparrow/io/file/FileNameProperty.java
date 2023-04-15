@@ -18,11 +18,30 @@
 package com.sparrow.io.file;
 
 public class FileNameProperty {
+    private Boolean isDirectory;
+    /**
+     * 文件名
+     */
     private String name;
+    /**
+     * 文件扩展名
+     */
     private String extension;
+    /**
+     * 文件扩展名不带点
+     */
     private String extensionWithoutDot;
+    /**
+     * 文件所在目录
+     */
     private String directory;
+    /**
+     * 文件全名
+     */
     private String fullFileName;
+    /**
+     * 是否是图片
+     */
     private Boolean image;
 
     public String getName() {
@@ -72,15 +91,24 @@ public class FileNameProperty {
         return extensionWithoutDot;
     }
 
+    public void setDirectory(Boolean directory) {
+        isDirectory = directory;
+    }
+
+    public Boolean isDirectory() {
+        return isDirectory;
+    }
+
     @Override
     public String toString() {
         return "FileNameProperty{" +
-            "name='" + name + '\'' +
-            ", extension='" + extension + '\'' +
-            ", extensionWithoutDot='" + extensionWithoutDot + '\'' +
-            ", directory='" + directory + '\'' +
-            ", fullFileName='" + fullFileName + '\'' +
-            ", image=" + image +
-            '}';
+                "isDirectory=" + isDirectory +
+                ", name='" + name + '\'' +
+                ", extension='" + extension + '\'' +
+                ", extensionWithoutDot='" + extensionWithoutDot + '\'' +
+                ", directory='" + directory + '\'' +
+                ", fullFileName='" + fullFileName + '\'' +
+                ", image=" + image +
+                '}';
     }
 }

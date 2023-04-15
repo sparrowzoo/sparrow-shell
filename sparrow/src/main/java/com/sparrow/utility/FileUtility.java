@@ -25,6 +25,7 @@ import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -42,6 +43,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.zip.CRC32;
 import java.util.zip.ZipOutputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,7 +126,7 @@ public class FileUtility {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(
-                inputStream, charset));
+                    inputStream, charset));
             String tempString;
             while ((tempString = reader.readLine()) != null) {
                 fileLines.add(tempString);
@@ -185,13 +187,14 @@ public class FileUtility {
     public void writeFile(String filePath, String s, String charset) throws IOException {
         OutputStreamWriter osw = null;
         try {
-            if (!new java.io.File(this.getFileNameProperty(filePath).getDirectory()).exists()) {
+            FileNameProperty fileNameProperty = this.getFileNameProperty(filePath);
+            if (!new java.io.File(fileNameProperty.getDirectory()).exists()) {
                 //不存在则新建class以外的目录
                 filePath = this.makeDirectory(filePath);
             }
             OutputStream outputStream = Files.newOutputStream(Paths.get(filePath));
             osw = new OutputStreamWriter(outputStream,
-                charset);
+                    charset);
             osw.write(s, Digit.ZERO, s.length());
             osw.flush();
         } catch (Exception e) {
@@ -294,7 +297,7 @@ public class FileUtility {
     }
 
     public String search(String path, String keyword, int skip,
-        Comparator<String> compare, int minSkip) {
+                         Comparator<String> compare, int minSkip) {
         java.io.File file = new java.io.File(path);
 
         BufferedReader reader = null;
@@ -303,7 +306,7 @@ public class FileUtility {
                 throw new FileNotFoundException(file.getPath());
             }
             reader = new BufferedReader(new InputStreamReader(
-                Files.newInputStream(file.toPath()), StandardCharsets.UTF_8), skip);
+                    Files.newInputStream(file.toPath()), StandardCharsets.UTF_8), skip);
             String tempString;
             reader.mark(skip);
             skip /= 2;
@@ -399,20 +402,38 @@ public class FileUtility {
      */
     public FileNameProperty getFileNameProperty(String fullFilePath) {
         FileNameProperty fileNameProperty = new FileNameProperty();
+        /**
+         * /target/apidocs/package-list  is not file path
+         */
+        java.io.File file = new java.io.File(fullFilePath);
+        if (file.isDirectory()) {
+            fileNameProperty.setDirectory(true);
+            fileNameProperty.setDirectory(fullFilePath);
+            return fileNameProperty;
+        }
+        fileNameProperty.setDirectory(false);
         int lastFileSeparatorIndex = fullFilePath.lastIndexOf(java.io.File.separator);
         if (lastFileSeparatorIndex == -1) {
             lastFileSeparatorIndex = fullFilePath.lastIndexOf("/");
         }
         String directory = fullFilePath.substring(Digit.ZERO, lastFileSeparatorIndex + Digit.ONE);
+        fileNameProperty.setDirectory(directory);
+        fileNameProperty.setFullFileName(fullFilePath);
+
+
         int fileNameEndIndex = fullFilePath.lastIndexOf('.');
         if (fileNameEndIndex < lastFileSeparatorIndex) {
-            logger.error("{} is not file path", fullFilePath);
+            /**
+             * /target/apidocs/package-list
+             */
+            fileNameProperty.setName(fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE));
+            logger.error("extension of file '{}' not exist  ", fullFilePath);
             return fileNameProperty;
         }
         String fileName = fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE,
-            fileNameEndIndex);
+                fileNameEndIndex);
         String extension = fullFilePath.substring(fileNameEndIndex)
-            .toLowerCase();
+                .toLowerCase();
         String fullFileName = fileName + extension;
         fileNameProperty.setDirectory(directory);
         fileNameProperty.setFullFileName(fullFileName);
@@ -422,7 +443,7 @@ public class FileUtility {
             imageExtensionConfig = Constant.IMAGE_EXTENSION;
         }
         String[] imageExtension = imageExtensionConfig
-            .split("\\|");
+                .split("\\|");
         // jpeg 或者是其他格式都转换成jpg
         if (Extension.JPEG.equalsIgnoreCase(extension)) {
             extension = Extension.JPG;
@@ -442,7 +463,7 @@ public class FileUtility {
      * @return
      */
     public String getShufflePath(String fileUuid, String extension, boolean isWebPath,
-        String size) {
+                                 String size) {
         CRC32 crc = new CRC32();
         crc.update(fileUuid.getBytes());
         long id = crc.getValue();
@@ -458,25 +479,25 @@ public class FileUtility {
                 //img_url=http://img%1$s/sparrowzoo.net/%2$s/%3$s/%4$s/%5$s%6$s
                 //http://img1/sparrowzoo.net/1/big/10/1000/uuid.jpg
                 path = ConfigUtility.getValue(File.PATH.IMG_URL)
-                    + "/%2$s/%3$s/%4$s/%5$s%6$s";
+                        + "/%2$s/%3$s/%4$s/%5$s%6$s";
                 return String.format(path, remaining, size, remaining2, remaining1,
-                    fileUuid, extension);
+                        fileUuid, extension);
             }
             //img_unc_0=file://ip1:port/sparrow/img0 参数在key中定义
             String imgShufflerDir = ConfigUtility.getValue(File.PATH.IMG_SHUFFLER_DIR + "_" + remaining);
             path = imgShufflerDir
-                + "/%1$s/%2$s/%3$s/%4$s%5$s";
+                    + "/%1$s/%2$s/%3$s/%4$s%5$s";
             return String.format(path, size, remaining2, remaining1,
-                fileUuid, extension);
+                    fileUuid, extension);
         }
         path = ConfigUtility.getValue(File.PATH.FILE_UPLOAD)
-            + "/%1$s/%2$s/%3$s%4$s";
+                + "/%1$s/%2$s/%3$s%4$s";
         return String.format(path, remaining2, remaining1, fileUuid, extension);
     }
 
     public boolean isImage(String extension) {
         String imageExtension = ConfigUtility
-            .getValue(File.IMAGE_EXTENSION);
+                .getValue(File.IMAGE_EXTENSION);
         if (StringUtility.isNullOrEmpty(imageExtension)) {
             imageExtension = Constant.IMAGE_EXTENSION;
         }
@@ -495,7 +516,7 @@ public class FileUtility {
         String fileId = fileNameProperty.getName();
         String extension = fileNameProperty.getExtension();
         return this.getShufflePath(fileId, extension, false,
-            size);
+                size);
     }
 
     public void delete(String path, long beforeMillis) {
@@ -561,8 +582,8 @@ public class FileUtility {
         boolean result;
         if (isImage) {
             String imageFullPath = FileUtility.getInstance().getShufflePath(
-                fileUuid,
-                extension, false, File.SIZE.ORIGIN);
+                    fileUuid,
+                    extension, false, File.SIZE.ORIGIN);
             java.io.File origin = new java.io.File(imageFullPath);
             if (origin.exists()) {
                 result = origin.delete();
@@ -570,21 +591,21 @@ public class FileUtility {
             }
 
             java.io.File big = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                File.SIZE.BIG));
+                    File.SIZE.BIG));
             if (big.exists()) {
                 result = big.delete();
                 logger.info("deleted file {},result:{}", big.getAbsolutePath(), result);
             }
 
             java.io.File middle = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                File.SIZE.MIDDLE));
+                    File.SIZE.MIDDLE));
             if (middle.exists()) {
                 result = middle.delete();
                 logger.info("deleted file {},result:{}", middle.getAbsolutePath(), result);
             }
 
             java.io.File small = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                File.SIZE.SMALL));
+                    File.SIZE.SMALL));
             if (small.exists()) {
                 result = small.delete();
                 logger.info("deleted file {},result:{}", imageFullPath, result);
@@ -592,7 +613,7 @@ public class FileUtility {
             return;
         }
         String attachFileFullName = FileUtility.getInstance().getShufflePath(
-            fileUuid, extension, false, File.SIZE.ATTACH);
+                fileUuid, extension, false, File.SIZE.ATTACH);
         java.io.File origin = new java.io.File(attachFileFullName);
         if (origin.exists()) {
             result = origin.delete();
@@ -601,7 +622,7 @@ public class FileUtility {
     }
 
     public boolean generateImage(String base64str,
-        String savePath) {
+                                 String savePath) {
         if (base64str == null) {
             return false;
         }
@@ -635,11 +656,15 @@ public class FileUtility {
         void copy(String sourceFile, String targetFile);
     }
 
-    public void recurseCopy(String source, String target) {
-        recurseCopy(source, target, null);
+    public interface FolderFilter {
+        Boolean filter(String sourceFile, String targetFile);
     }
 
-    public void recurseCopy(String source, String target, FileCopier fileCopier) {
+    public void recurseCopy(String source, String target) {
+        recurseCopy(source, target, null, null);
+    }
+
+    public void recurseCopy(String source, String target, FileCopier fileCopier, FolderFilter folderFilter) {
         java.io.File sourceFile = new java.io.File(source);
         if (!sourceFile.exists()) {
             logger.error("{} source is not exist", source);
@@ -664,14 +689,14 @@ public class FileUtility {
 
         String parent = target;
         for (java.io.File f : files) {
-            if (f.getName().startsWith(".")) {
-                continue;
-            }
-
             source = f.toString();
             target = parent + java.io.File.separator + f.getName();
+            if (f.isDirectory() && fileCopier != null && folderFilter.filter(source, target)) {
+                logger.error("directory {} is not copy", f.getAbsolutePath());
+                continue;
+            }
             if (f.isFile()) {
-                recurseCopy(source, target, fileCopier);
+                recurseCopy(source, target, fileCopier, folderFilter);
                 continue;
             }
 
@@ -683,7 +708,7 @@ public class FileUtility {
                 logger.info("created {},result:{}", target, result);
             }
             //递归调用
-            recurseCopy(source, target, fileCopier);
+            recurseCopy(source, target, fileCopier, folderFilter);
         }
     }
 }
