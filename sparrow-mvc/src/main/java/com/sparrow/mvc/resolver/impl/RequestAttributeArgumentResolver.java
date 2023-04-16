@@ -23,6 +23,7 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
 import com.sparrow.web.support.MethodParameter;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class RequestAttributeArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
@@ -36,7 +37,11 @@ public class RequestAttributeArgumentResolver implements HandlerMethodArgumentRe
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ServletInvokableHandlerMethod executionChain,
-        HttpServletRequest request) throws Exception {
+                                  HttpServletRequest request) throws Exception {
+
+        if (methodParameter.getParameterName() == null) {
+            return null;
+        }
 
         Object arg = request.getAttribute(methodParameter.getParameterName());
         if (arg == null) {
