@@ -5,9 +5,8 @@
     <parent>
         <artifactId>sparrow-bom</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>1.0.1-RELEASE</version>
         <relativePath/>
-
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
