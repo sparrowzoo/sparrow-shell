@@ -90,7 +90,10 @@ public class Constant {
     public static final String REQUEST_ACTION_INCLUDE = "javax.servlet.include.servlet_path";
     public static final String REQUEST_ACTION_CURRENT_FORUM = "request_action_current_forum";
     public static final String REQUEST_CLIENT_INFORMATION = "client";
-    public static final String REQUEST_HEADER_KEY_LOGIN_TOKEN = "login_token";
+    /**
+     * request header 不允许存在下划线
+     */
+    public static final String REQUEST_HEADER_KEY_LOGIN_TOKEN = "login-token";
     public static final String REQUEST_INVOKABLE_HANDLER_METHOD = "request_invokable_handler_method";
     public static final String IS_AJAX = "ajax";
 
