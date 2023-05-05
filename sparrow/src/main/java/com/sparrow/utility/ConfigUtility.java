@@ -24,15 +24,17 @@ import com.sparrow.core.cache.StrongDurationCache;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ConfigUtility {
     private static Logger logger = LoggerFactory.getLogger(ConfigUtility.class);
@@ -104,10 +106,10 @@ public class ConfigUtility {
             String strKey = key.toString();
             String value = props.getProperty(strKey);
             if (StringUtility.isNullOrEmpty(charset)) {
-                charset = Constant.CHARSET_UTF_8;
+                charset = StandardCharsets.UTF_8.name();
             }
             try {
-                value = new String(value.getBytes(Constant.CHARSET_ISO_8859_1), charset);
+                value = new String(value.getBytes(StandardCharsets.ISO_8859_1), charset);
             } catch (UnsupportedEncodingException ignore) {
             }
             if (value.startsWith("${") && value.endsWith("}")) {
@@ -191,7 +193,7 @@ public class ConfigUtility {
         }
         Map<String, String> properties = loadFromClassesPath("/messages_"
             + language
-            + ".properties", Constant.CHARSET_UTF_8);
+            + ".properties", StandardCharsets.UTF_8.name());
         if (properties != null) {
             internationalization.put(language, properties);
         }

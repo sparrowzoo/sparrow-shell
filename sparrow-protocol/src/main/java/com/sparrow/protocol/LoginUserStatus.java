@@ -15,29 +15,44 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.protocol;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
+public class LoginUserStatus {
+    public static final Integer STATUS_NORMAL = 1;
+    public static final Integer STATUS_FREEZE = 2;
+    public static final Integer STATUS_DISABLE = 0;
 
-/**
- * 认证授权接口
- */
-public interface Authenticator {
+
+    public LoginUserStatus(Integer status, Long expireAt) {
+        this.status = status;
+        this.expireAt = expireAt;
+    }
+
     /**
-     * 签名
-     *
-     * @param loginUser  login user
-     * @param loginUserStatus user status
-     * @return
+     * 用户状态 1:正常 2:冻结 0：禁用
      */
-    String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
+    private Integer status;
+
     /**
-     * 认证
-     *
-     * @param token
-     * @return
+     * 过期时间
      */
-    LoginUser authenticate(String token, String deviceId) throws BusinessException;
+    private Long expireAt;
+
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Long getExpireAt() {
+        return expireAt;
+    }
+
+    public void setExpireAt(Long expireAt) {
+        this.expireAt = expireAt;
+    }
+
 }

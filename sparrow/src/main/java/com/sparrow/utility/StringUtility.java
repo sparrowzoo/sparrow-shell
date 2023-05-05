@@ -56,19 +56,20 @@ public class StringUtility {
     }
 
     /**
-     * @param array
-     * @param key
-     * @return
+     * @param array 数组
+     * @param key   key
+     * @return exist in array
      */
     public static boolean existInArray(Object[] array, Object key) {
         if (array == null || array.length == 0 || StringUtility.isNullOrEmpty(key)) {
             return false;
         }
+        String trimKey = key.toString().trim();
         for (Object s : array) {
             if (s == null) {
                 continue;
             }
-            if (s.toString().trim().equalsIgnoreCase(key.toString().trim())) {
+            if (s.toString().trim().equalsIgnoreCase(trimKey)) {
                 return true;
             }
         }
@@ -76,7 +77,7 @@ public class StringUtility {
     }
 
     public static boolean existInArray(String array, String key) {
-        return existInArray(array.split(","), key);
+        return existInArray(array.split(Symbol.COMMA), key);
     }
 
     /**
@@ -155,7 +156,7 @@ public class StringUtility {
             }
             descBuilder.append(c);
         }
-        return descBuilder.toString() + elide.trim();
+        return descBuilder + elide.trim();
     }
 
     public static boolean isChineseChar(char c) {
@@ -277,10 +278,10 @@ public class StringUtility {
      */
     public static String getOnlineQQ(String qq) {
         return "<a target=blank href=\"http://wpa.qq.com/msgrd?V=1&Uin={0}&Exe=QQ&Site="
-            + ConfigUtility.getLanguageValue(ConfigKeyLanguage.WEBSITE_NAME,
-            "zh_cn")
-            + "&Menu=No\"><img border=\"0\" src=\"http://wpa.qq.com/pa?p=1:"
-            + qq + ":1\" alt=\"给我发消息\"></a>";
+                + ConfigUtility.getLanguageValue(ConfigKeyLanguage.WEBSITE_NAME,
+                "zh_cn")
+                + "&Menu=No\"><img border=\"0\" src=\"http://wpa.qq.com/pa?p=1:"
+                + qq + ":1\" alt=\"给我发消息\"></a>";
     }
 
     /**
@@ -333,9 +334,9 @@ public class StringUtility {
         for (int i = 0; i < tmp.length / 2; i++) {
             byte src0 = tmp[i * 2];
             byte src1 = tmp[i * 2 + 1];
-            byte b0 = Byte.decode("0x" + new String(new byte[] {src0}));
+            byte b0 = Byte.decode("0x" + new String(new byte[]{src0}));
             b0 = (byte) (b0 << 4);
-            byte b1 = Byte.decode("0x" + new String(new byte[] {src1}));
+            byte b1 = Byte.decode("0x" + new String(new byte[]{src1}));
             ret[i] = (byte) (b0 ^ b1);
         }
         return ret;
@@ -345,7 +346,7 @@ public class StringUtility {
      * 从数组array中排除exceptArray并拼接成数组 用于标签删除时的帖子标签更新
      */
     public static String join(Object[] array, char separator,
-        Object[] exceptArray) {
+                              Object[] exceptArray) {
         StringBuilder sb = new StringBuilder();
         for (Object object : array) {
             if (existInArray(exceptArray, object)) {
@@ -421,11 +422,7 @@ public class StringUtility {
     }
 
     public static String decodeForGet(String text) {
-        try {
-            return new String(text.getBytes(Constant.CHARSET_ISO_8859_1), Constant.CHARSET_UTF_8);
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
+        return new String(text.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
     }
 
     /**
@@ -464,8 +461,8 @@ public class StringUtility {
         return sb.toString();
     }
 
-    public static InputStream inputStream(String s) throws UnsupportedEncodingException {
-        return new ByteArrayInputStream(s.getBytes(Constant.CHARSET_UTF_8));
+    public static InputStream inputStream(String s) {
+        return new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
     }
 
     public static String replace(String source, Map<String, String> rep) {

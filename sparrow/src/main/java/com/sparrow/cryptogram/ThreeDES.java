@@ -17,20 +17,21 @@
 
 package com.sparrow.cryptogram;
 
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.StringUtility;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class ThreeDES {
 
@@ -105,7 +106,7 @@ public class ThreeDES {
         byte[] encrypted = null;
         try {
             Cipher encrypter = createCipher(key, Cipher.ENCRYPT_MODE, cipherAlgorithm);
-            encrypted = encrypter.doFinal(text.getBytes(Constant.CHARSET_UTF_8));
+            encrypted = encrypter.doFinal(text.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             logger.error("encrypt error", e);
         }
@@ -120,7 +121,7 @@ public class ThreeDES {
         try {
             Cipher encrypter = createCipher(key, Cipher.DECRYPT_MODE, cipherAlgorithm);
             decrypted = new String(encrypter.doFinal(encrypted),
-                Constant.CHARSET_UTF_8);
+                    StandardCharsets.UTF_8);
         } catch (Exception e) {
             logger.error("encrypt error", e);
             throw new RuntimeException(e);

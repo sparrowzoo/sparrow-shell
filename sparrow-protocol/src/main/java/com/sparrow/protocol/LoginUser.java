@@ -17,38 +17,45 @@
 package com.sparrow.protocol;
 
 public class LoginUser implements VO {
+    /**
+     * 用户ID
+     */
     private Long userId;
+    /**
+     * 用户昵称
+     */
     private String nickName;
+    /**
+     * 用户名
+     */
     private String userName;
+    /**
+     * 头象
+     */
     private String avatar;
+    /**
+     * 设备id
+     */
     private String deviceId;
-    private Boolean activate;
+
     private Integer days;
+
     private Long expireAt;
 
     public static LoginUser create(Long userId,
-        String userName,
-        String nickName,
-        String avatar,
-        String deviceId,
-        Boolean activate,
-        Integer expireDays) {
+                                   String userName,
+                                   String nickName,
+                                   String avatar,
+                                   String deviceId,
+                                   Integer days) {
         LoginUser login = new LoginUser();
         login.userId = userId;
         login.userName = userName;
         login.nickName = nickName;
         login.avatar = avatar;
+        login.days = days;
+        login.expireAt = System.currentTimeMillis() + days * 24 * 60 * 60 * 1000;
         login.deviceId = deviceId;
-        login.activate = activate;
-        login.days = expireDays;
-        if (login.days == null) {
-            login.days = 1;
-        }
-        if (expireDays > 0) {
-            login.expireAt = System.currentTimeMillis() + 1000 * 60 * 60 * 24L * expireDays;
-        } else {
-            login.expireAt = 0L;
-        }
         return login;
     }
 
@@ -56,60 +63,52 @@ public class LoginUser implements VO {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public String getNickName() {
         return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getAvatar() {
         return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public Boolean getActivate() {
-        return activate;
-    }
-
-    public void setActivate(Boolean activate) {
-        this.activate = activate;
-    }
-
     public Integer getDays() {
         return days;
     }
 
-    public void setDays(Integer days) {
-        this.days = days;
-    }
-
     public Long getExpireAt() {
         return expireAt;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
     }
 
     public void setExpireAt(Long expireAt) {

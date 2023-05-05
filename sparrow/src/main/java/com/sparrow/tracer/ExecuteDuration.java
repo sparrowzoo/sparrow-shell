@@ -24,9 +24,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface ExecuteDuration {
     /**
-     * span name
-     *
-     * @return
+     * @return span name
      */
     String spanName() default "";
 }

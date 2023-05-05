@@ -33,7 +33,7 @@ public interface DataSourceFactory {
     /**
      * get datasource by sparrow_default key
      *
-     * @return
+     * @return DataSource
      */
     DataSource getDataSource();
 
@@ -49,7 +49,7 @@ public interface DataSourceFactory {
      *
      * @param dataSourceKey the identify of the datasource to confirm one datasource it's same to the file name of
      *                      datasource properties config file
-     * @return
+     * @return DatasourceConfig
      */
     DatasourceConfig getDatasourceConfig(String dataSourceKey);
 
@@ -57,7 +57,7 @@ public interface DataSourceFactory {
      * get datasource key by connection
      *
      * @param connection java connection object
-     * @return
+     * @return DatasourceKey
      */
     DatasourceKey getDatasourceKey(Connection connection);
 }

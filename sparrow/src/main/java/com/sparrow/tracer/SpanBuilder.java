@@ -22,7 +22,7 @@ public interface SpanBuilder {
      * <p>
      * 而且该方法有存在必要，否则name 构建时容易产生递归死循环
      *
-     * @return
+     * @return SpanBuilder
      */
     SpanBuilder asChild();
 
@@ -30,7 +30,7 @@ public interface SpanBuilder {
      * 构建span name
      *
      * @param operationName
-     * @return
+     * @return SpanBuilder
      */
     SpanBuilder name(String operationName);
 
@@ -38,7 +38,7 @@ public interface SpanBuilder {
      * 分类
      *
      * @param category
-     * @return
+     * @return SpanBuilder
      */
     SpanBuilder category(String category);
 
@@ -49,7 +49,7 @@ public interface SpanBuilder {
      * static final String CHILD_OF = "child_of"; * See http://opentracing.io/spec/#causal-span-references for more
      * information about FOLLOWS_FROM references public static final String FOLLOWS_FROM = "follows_from";
      *
-     * @return
+     * @return Span
      */
     Span start();
 }

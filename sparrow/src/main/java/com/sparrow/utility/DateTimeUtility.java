@@ -123,7 +123,7 @@ public class DateTimeUtility {
      * @param startTime    开始时间
      * @param endTime      结束时间
      * @param dateTimeUnit 以毫秒为时间单位
-     * @return
+     * @return 时间间隔
      */
     public static int getInterval(Long startTime, Long endTime,
         DateTimeUnit dateTimeUnit) {
@@ -158,7 +158,7 @@ public class DateTimeUtility {
      *
      * @param calendar Calendar.Date
      * @param amount   时间长度
-     * @return
+     * @return 时间戳
      */
     public static long addTime(int calendar, int amount) {
         return addTime(System.currentTimeMillis(), calendar, amount);

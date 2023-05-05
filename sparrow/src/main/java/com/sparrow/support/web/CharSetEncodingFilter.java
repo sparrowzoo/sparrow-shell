@@ -17,11 +17,11 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.protocol.constant.Constant;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class CharSetEncodingFilter implements Filter {
 
@@ -34,8 +34,8 @@ public class CharSetEncodingFilter implements Filter {
         FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        res.setCharacterEncoding(Constant.CHARSET_UTF_8);
-        req.setCharacterEncoding(Constant.CHARSET_UTF_8);
+        res.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        req.setCharacterEncoding(StandardCharsets.UTF_8.name());
         res.setHeader("content-type", "text/html; charset=UTF-8");
         chain.doFilter(req, res);
     }

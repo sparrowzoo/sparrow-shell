@@ -23,16 +23,17 @@ import com.sparrow.core.Pair;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.POJO;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class QueryStringParser {
 
@@ -69,7 +70,7 @@ public class QueryStringParser {
     }
 
     public static String serial(Map<String, String> parameters,
-        boolean isEncode) {
+                                boolean isEncode) {
         return serial(parameters, isEncode, null);
     }
 
@@ -82,7 +83,7 @@ public class QueryStringParser {
      * @return string
      */
     public static String serial(Map<String, String> parameters,
-        boolean isEncode, List<String> exceptKeyList) {
+                                boolean isEncode, List<String> exceptKeyList) {
         StringBuilder serialParameters = new StringBuilder();
         for (String key : parameters.keySet()) {
             String v = parameters.get(key);
@@ -100,7 +101,7 @@ public class QueryStringParser {
             if (isEncode) {
                 try {
                     serialParameters.append(key + Symbol.EQUAL
-                        + URLEncoder.encode(v, Constant.CHARSET_UTF_8));
+                            + URLEncoder.encode(v, StandardCharsets.UTF_8.name()));
                 } catch (UnsupportedEncodingException ignore) {
                     logger.error("serial error", ignore);
                 }
@@ -168,8 +169,8 @@ public class QueryStringParser {
             }
             try {
                 sb.append(StringUtility.setFirstByteLowerCase(field.getName())
-                    + Symbol.EQUAL
-                    + URLEncoder.encode(String.valueOf(o), Constant.CHARSET_UTF_8));
+                        + Symbol.EQUAL
+                        + URLEncoder.encode(String.valueOf(o), StandardCharsets.UTF_8.name()));
             } catch (UnsupportedEncodingException ignore) {
                 logger.error("get parameter error", ignore);
             }

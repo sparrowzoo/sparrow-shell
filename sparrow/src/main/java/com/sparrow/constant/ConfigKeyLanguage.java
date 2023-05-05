@@ -51,13 +51,15 @@ public class ConfigKeyLanguage {
     public static final String EFFECTIVE = "effective";
     public static final String INEFFECTIVE = "ineffective";
     public static final String MODIFY_PASSWORD_SUCCESS = "user_password_modify_success";
-    public static final String USER_DEFAULT_NICKNAME = "default_user_name";
     public static final String USER_MODIFY_SUCCESS = "user_modify_success";
     public static final String USER_EMAIL_SUBJECT = "user_email_subject";
     public static final String USER_EMAIL_CONTENT = "user_email_content";
     public static final String USER_DISABLE = "user_disable";
     public static final String USER_NOT_ACTIVE = "user_not_active";
-    public static final String USER_VISITOR = "user_visitor";
+    public static final String USER_VISITOR_NAME = "visitor_user_name";
+
+    public static final String USER_VISITOR_NICKNAME = "visitor_nick_name";
+
     public static final String SYSTEM_SERVER_ERROR = "system_server_error";
     public static final String SUCCESS = "success";
     public static final String USER_STATUS_PREFIX = "user_status_";

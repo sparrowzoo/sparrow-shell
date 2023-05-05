@@ -30,7 +30,7 @@ public interface HandlerInterceptor {
      *
      * @param request
      * @param response
-     * @return
+     * @return boolean
      * @throws Exception
      */
     boolean preHandle(HttpServletRequest request, HttpServletResponse response)

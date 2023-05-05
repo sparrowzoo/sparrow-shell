@@ -41,10 +41,6 @@ public class Constant {
     public static final String VALIDATE_CODE = "validate_code";
     public static final String IMAGE_EXTENSION = ".jpg|.jpeg|.gif|.png";
 
-    public static final String CHARSET_UTF_8 = "UTF-8";
-    public static final String CHARSET_GBK = "GBK";
-    public static final String CHARSET_ISO_8859_1 = "ISO-8859-1";
-
     public static final String CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
     public static final String CONTENT_TYPE_MS_DOWNLOAD = "application/x-msdownload";
 

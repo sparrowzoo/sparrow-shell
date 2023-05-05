@@ -29,5 +29,5 @@ public interface Authorizer {
      * @throws BusinessException
      */
     boolean isPermitted(LoginUser user,
-        String resource) throws BusinessException;
+                        String resource) throws BusinessException;
 }

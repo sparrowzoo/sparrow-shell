@@ -22,6 +22,7 @@ import com.sparrow.constant.Regex;
 import com.sparrow.enums.HttpMethod;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -40,6 +41,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +53,7 @@ public class HttpClient {
         try {
             URL url = new URL(pageUrl);
             HttpURLConnection connection = (HttpURLConnection) url
-                .openConnection();
+                    .openConnection();
             connection.connect();
             connection.disconnect();
             return connection.getURL().toString();
@@ -65,7 +67,7 @@ public class HttpClient {
         try {
             URL url = new URL(pageUrl);
             HttpURLConnection connection = (HttpURLConnection) url
-                .openConnection();
+                    .openConnection();
             connection.connect();
             connection.disconnect();
             return connection.getResponseCode();
@@ -81,7 +83,7 @@ public class HttpClient {
 
     public static String get(String pageUrl, String charset) {
         if (StringUtility.isNullOrEmpty(charset)) {
-            charset = Constant.CHARSET_UTF_8;
+            charset = StandardCharsets.UTF_8.name();
         }
         HttpURLConnection connection = null;
         try {
@@ -91,7 +93,7 @@ public class HttpClient {
             connection.setReadTimeout(60 * 1000);
             connection.connect();
             BufferedReader br = new BufferedReader(new InputStreamReader(
-                connection.getInputStream(), charset));
+                    connection.getInputStream(), charset));
 
             StringBuilder content = new StringBuilder();
             String line = null;
@@ -124,12 +126,12 @@ public class HttpClient {
     }
 
     public static String post(HttpMethod method, String pageUrl, String data,
-        String contentType) {
+                              String contentType) {
         return request(method, pageUrl, data, contentType, null, false);
     }
 
     public static String request(HttpMethod method, String pageUrl, String data,
-        String contentType, Map<String, String> header, Boolean gzip) {
+                                 String contentType, Map<String, String> header, Boolean gzip) {
         StringBuilder buffer = new StringBuilder();
         HttpURLConnection httpUrlConnection = null;
         DataOutputStream dataOutputStream = null;
@@ -140,14 +142,14 @@ public class HttpClient {
             URL url = new URL(pageUrl);
             httpUrlConnection = (HttpURLConnection) url.openConnection();
             httpUrlConnection.setRequestMethod(method.toString());
-            httpUrlConnection.setRequestProperty("Accept-Charset", Constant.CHARSET_UTF_8);
+            httpUrlConnection.setRequestProperty("Accept-Charset", StandardCharsets.UTF_8.name());
             //对post表单提交有影响
             if (StringUtility.isNullOrEmpty(contentType)) {
                 httpUrlConnection.setRequestProperty("Content-Type",
-                    Constant.CONTENT_TYPE_FORM);
+                        Constant.CONTENT_TYPE_FORM);
             } else {
                 httpUrlConnection.setRequestProperty("Content-Type",
-                    contentType);
+                        contentType);
             }
 
             if (header != null) {
@@ -167,7 +169,7 @@ public class HttpClient {
                     httpUrlConnection.setRequestProperty("Content-Encoding", "gzip");
                     ByteArrayOutputStream originalContent = new ByteArrayOutputStream();
                     originalContent
-                        .write(data.getBytes(StandardCharsets.UTF_8));
+                            .write(data.getBytes(StandardCharsets.UTF_8));
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     GZIPOutputStream gzipOut = new GZIPOutputStream(baos);
@@ -189,9 +191,9 @@ public class HttpClient {
                      *                 不判断的话会自动变成POST
                      */
                     dataOutputStream = new DataOutputStream(
-                        httpUrlConnection.getOutputStream());
+                            httpUrlConnection.getOutputStream());
                     bufferedWriter = new BufferedWriter(new OutputStreamWriter(
-                        dataOutputStream, StandardCharsets.UTF_8));
+                            dataOutputStream, StandardCharsets.UTF_8));
                     if (data != null) {
                         bufferedWriter.write(data);
                     }
@@ -205,7 +207,7 @@ public class HttpClient {
             if (responseCode == 200) {
                 inputStream = httpUrlConnection.getInputStream();
                 bufferedReader = new BufferedReader(new InputStreamReader(
-                    inputStream, StandardCharsets.UTF_8));
+                        inputStream, StandardCharsets.UTF_8));
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     buffer.append(line);
@@ -270,7 +272,7 @@ public class HttpClient {
             bis = new BufferedInputStream(httpURLConnection.getInputStream());
 
             String descDirectoryPath = fileFullPath.substring(0,
-                fileFullPath.lastIndexOf('/') + 1);
+                    fileFullPath.lastIndexOf('/') + 1);
             java.io.File descDirectory = new java.io.File(descDirectoryPath);
             if (!descDirectory.exists()) {
                 descDirectory.mkdirs();
@@ -358,34 +360,38 @@ public class HttpClient {
         int remaining2 = div % 1000;
         String extension = FileUtility.getInstance().getFileNameProperty(url).getExtension();
         if (!Extension.JPG.equalsIgnoreCase(extension) && !Extension.PNG.equalsIgnoreCase(extension)
-            && !Extension.GIF.equalsIgnoreCase(extension)) {
+                && !Extension.GIF.equalsIgnoreCase(extension)) {
             extension = ".jpg";
         }
         String imageUrl = String.valueOf(remaining1) + "/"
-            + String.valueOf(remaining2) + "/" + fileUUID + extension;
+                + String.valueOf(remaining2) + "/" + fileUUID + extension;
         String descFilePath = tempPhysicalPath + "/" + imageUrl;
         HttpClient.downloadFile(url, descFilePath);
         String webUrl = temp + "/" + imageUrl;
         return String.format(Regex.TAG_TEMP_IMAGE_FORMAT.pattern(), webUrl,
-            url.hashCode());
+                url.hashCode());
     }
 
     /**
      * 下载文本文件
      */
     public static boolean downloadPage(String url, String htmlFileName,
-        String charset) {
+                                       String charset) {
         try {
             if (StringUtility.isNullOrEmpty(charset)) {
-                charset = Constant.CHARSET_UTF_8;
+                charset = StandardCharsets.UTF_8.name();
             }
             String html = get(url, charset);
+            if (StringUtility.isNullOrEmpty(html)) {
+                logger.error("html is null {}", url);
+                return false;
+            }
             if (html.trim().startsWith(File.ERROR_STATIC_HTML)) {
                 logger.warn(File.ERROR_STATIC_HTML + url);
                 return false;
             }
             String descDirectoryPath = htmlFileName.substring(0,
-                htmlFileName.lastIndexOf('/') + 1);
+                    htmlFileName.lastIndexOf('/') + 1);
             java.io.File descDirectory = new java.io.File(descDirectoryPath);
             if (!descDirectory.exists()) {
                 descDirectory.mkdirs();

@@ -84,7 +84,7 @@ public class FileUtility {
      */
     public String readFileContent(InputStream inputStream, String charset) {
         if (StringUtility.isNullOrEmpty(charset)) {
-            charset = Constant.CHARSET_UTF_8;
+            charset = StandardCharsets.UTF_8.name();
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
@@ -107,11 +107,11 @@ public class FileUtility {
     }
 
     public List<String> readLines(String fileName) {
-        return this.readLines(fileName, Constant.CHARSET_UTF_8);
+        return this.readLines(fileName, StandardCharsets.UTF_8.name());
     }
 
     public List<String> readLines(InputStream inputStream) {
-        return this.readLines(inputStream, Constant.CHARSET_UTF_8);
+        return this.readLines(inputStream, StandardCharsets.UTF_8.name());
     }
 
     public List<String> readLines(InputStream inputStream, String charset) {
@@ -121,7 +121,7 @@ public class FileUtility {
 
         List<String> fileLines = new ArrayList<String>();
         if (StringUtility.isNullOrEmpty(charset)) {
-            charset = Constant.CHARSET_UTF_8;
+            charset = StandardCharsets.UTF_8.name();
         }
         BufferedReader reader = null;
         try {
@@ -147,7 +147,7 @@ public class FileUtility {
 
     public List<String> readLines(String fileName, String charset) {
         if (StringUtility.isNullOrEmpty(charset)) {
-            charset = Constant.CHARSET_UTF_8;
+            charset = StandardCharsets.UTF_8.name();
         }
         InputStream inputStream = null;
         try {
@@ -509,7 +509,7 @@ public class FileUtility {
      *
      * @param filePath
      * @param size
-     * @return
+     * @return 物理路径
      */
     public String getPhysicalPath(String filePath, String size) {
         FileNameProperty fileNameProperty = this.getFileNameProperty(filePath);

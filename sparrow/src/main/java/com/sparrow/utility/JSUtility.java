@@ -17,12 +17,12 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class JSUtility {
     /**
@@ -36,7 +36,7 @@ public class JSUtility {
             return null;
         }
         return str.replace("'", "&apos;").replace("\"", "&quot;")
-            .replace("\r\n", "<br/>").replace("\n", "<br/>");
+                .replace("\r\n", "<br/>").replace("\n", "<br/>");
     }
 
     /**
@@ -50,7 +50,7 @@ public class JSUtility {
             if (StringUtility.isNullOrEmpty(content)) {
                 return Symbol.EMPTY;
             }
-            return URLEncoder.encode(content, Constant.CHARSET_UTF_8).replace(Symbol.ADD, "%20");
+            return URLEncoder.encode(content, StandardCharsets.UTF_8.name()).replace(Symbol.ADD, "%20");
         } catch (Exception e) {
             return Symbol.EMPTY;
         }
@@ -64,7 +64,7 @@ public class JSUtility {
      */
     public static String decodeURIComponent(String content) {
         try {
-            return URLDecoder.decode(content, Constant.CHARSET_UTF_8);
+            return URLDecoder.decode(content, StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
             return Symbol.EMPTY;
         }

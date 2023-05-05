@@ -19,27 +19,22 @@ package com.sparrow.utility;
 
 import com.sparrow.protocol.FieldOrder;
 import com.sparrow.protocol.MethodOrder;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.persistence.Column;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.JarURLConnection;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import javax.persistence.Column;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ClassUtility {
     private static Logger logger = LoggerFactory.getLogger(ClassUtility.class);
@@ -140,7 +135,7 @@ public class ClassUtility {
         while (resources.hasMoreElements()) {
             URL resource = resources.nextElement();
             if ("file".equalsIgnoreCase(resource.getProtocol())) {
-                File directory = new File(URLDecoder.decode(resource.getFile(), Constant.CHARSET_UTF_8));
+                File directory = new File(URLDecoder.decode(resource.getFile(), StandardCharsets.UTF_8.name()));
                 classes.addAll(findClass(directory, packageName));
             } else if ("jar".equalsIgnoreCase(resource.getProtocol())) {
                 classes.addAll(findClass(((JarURLConnection) resource.openConnection())

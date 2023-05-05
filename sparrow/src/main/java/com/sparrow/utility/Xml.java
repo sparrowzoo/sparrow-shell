@@ -17,23 +17,24 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Escaped;
 import com.sparrow.protocol.constant.magic.Symbol;
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Xml {
 
@@ -52,7 +53,7 @@ public class Xml {
         try {
             if (xml != null) {
                 document = builder.parse(new ByteArrayInputStream(xml
-                    .getBytes(Constant.CHARSET_UTF_8)));
+                    .getBytes(StandardCharsets.UTF_8)));
             }
         } catch (Exception e) {
             logger.error("get xml document error", e);

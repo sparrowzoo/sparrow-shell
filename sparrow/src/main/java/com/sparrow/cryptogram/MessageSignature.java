@@ -17,12 +17,12 @@
 
 package com.sparrow.cryptogram;
 
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.StringUtility;
-
-import java.security.MessageDigest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 public class MessageSignature {
     private Logger logger = LoggerFactory.getLogger(MessageSignature.class);
@@ -62,7 +62,7 @@ public class MessageSignature {
      * @return
      */
     public String md5(String source) {
-        return this.cryptogram(source, MD5, Constant.CHARSET_UTF_8);
+        return this.cryptogram(source, MD5, StandardCharsets.UTF_8.name());
     }
 
     /**
@@ -72,7 +72,7 @@ public class MessageSignature {
      * @return
      */
     public String sha1(String source) {
-        return this.cryptogram(source, SHA1, Constant.CHARSET_UTF_8);
+        return this.cryptogram(source, SHA1, StandardCharsets.UTF_8.name());
     }
 
     public String md5(String source, String charset) {
