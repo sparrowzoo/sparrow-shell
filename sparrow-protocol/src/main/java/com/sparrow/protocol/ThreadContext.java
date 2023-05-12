@@ -36,4 +36,12 @@ public class ThreadContext {
     public static void bindClientInfo(ClientInformation client) {
         clientThreadLocal.set(client);
     }
+
+    public static void clearToken() {
+        loginTokenThreadLocal.remove();
+    }
+
+    public static void clearClient() {
+        clientThreadLocal.remove();
+    }
 }

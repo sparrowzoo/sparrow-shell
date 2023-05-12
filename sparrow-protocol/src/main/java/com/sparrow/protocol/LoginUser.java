@@ -16,6 +16,9 @@
  */
 package com.sparrow.protocol;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class LoginUser implements VO {
     /**
      * 用户ID
@@ -42,12 +45,14 @@ public class LoginUser implements VO {
 
     private Long expireAt;
 
+    private Map<String, Object> extensions = new LinkedHashMap<>();
+
     public static LoginUser create(Long userId,
-                                   String userName,
-                                   String nickName,
-                                   String avatar,
-                                   String deviceId,
-                                   Integer days) {
+        String userName,
+        String nickName,
+        String avatar,
+        String deviceId,
+        Integer days) {
         LoginUser login = new LoginUser();
         login.userId = userId;
         login.userName = userName;
@@ -114,4 +119,13 @@ public class LoginUser implements VO {
     public void setExpireAt(Long expireAt) {
         this.expireAt = expireAt;
     }
+
+    public Map<String, Object> getExtensions() {
+        return extensions;
+    }
+
+    public void setExtensions(Map<String, Object> extensions) {
+        this.extensions = extensions;
+    }
+
 }
