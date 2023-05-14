@@ -22,6 +22,7 @@ import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginUser;
+import com.sparrow.protocol.LoginUserStatus;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.servlet.ServletContainer;
@@ -99,7 +100,7 @@ public class HelloController {
         return ViewWithModel.forward(new HelloVO("jsp page content from server ..."));
     }
 
-    public ViewWithModel login(HttpServletRequest request) throws BusinessException, CacheNotFoundException {
+    public ViewWithModel login(HttpServletRequest request) throws BusinessException, CacheNotFoundException, CacheNotFoundException {
         ServletUtility servletUtility = ServletUtility.getInstance();
 
         LoginUser loginToken = new LoginUser();
@@ -110,8 +111,7 @@ public class HelloController {
         loginToken.setDays(20);
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
-        loginToken.setActivate(true);
-        String sign = authenticatorService.sign(loginToken);
+        String sign = authenticatorService.sign(loginToken,new LoginUserStatus(LoginUserStatus.STATUS_NORMAL,1L));
         servletContainer.rootCookie(User.PERMISSION, sign, 6);
         return ViewWithModel.redirect("welcome", loginToken);
     }

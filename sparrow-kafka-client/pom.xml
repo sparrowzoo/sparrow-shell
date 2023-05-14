@@ -28,7 +28,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow-kafka-client</artifactId>
     <name>${project.artifactId}</name>
-    <version>${sparrow_kafka_client_version}</version>
+    <version>1.0.3-RELEASE</version>
     <dependencies>
         <dependency>
             <groupId>com.sparrow</groupId>
