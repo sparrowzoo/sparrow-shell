@@ -16,13 +16,11 @@
  */
 package com.sparrow.registry.zookeeper;
 
-import com.sparrow.protocol.constant.Constant;
+import java.nio.charset.StandardCharsets;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.apache.curator.framework.recipes.cache.TreeCacheListener;
-
-import java.nio.charset.Charset;
 
 public abstract class AbstractDataChangeListener implements TreeCacheListener {
 
@@ -36,7 +34,7 @@ public abstract class AbstractDataChangeListener implements TreeCacheListener {
         if (path.isEmpty()) {
             return;
         }
-        dataChanged(path, event.getType(), null == childData.getData() ? "" : new String(childData.getData(), Charset.forName(Constant.CHARSET_UTF_8)));
+        dataChanged(path, event.getType(), null == childData.getData() ? "" : new String(childData.getData(), StandardCharsets.UTF_8));
     }
 
     protected abstract void dataChanged(final String path, final TreeCacheEvent.Type eventType, final String data);

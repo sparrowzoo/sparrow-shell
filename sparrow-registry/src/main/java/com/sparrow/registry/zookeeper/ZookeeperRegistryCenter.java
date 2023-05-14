@@ -17,9 +17,15 @@
 package com.sparrow.registry.zookeeper;
 
 import com.google.common.base.Preconditions;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.registry.RegistryCenter;
 import com.sparrow.utility.StringUtility;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.ACLProvider;
@@ -34,10 +40,6 @@ import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.nio.charset.Charset;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class ZookeeperRegistryCenter implements RegistryCenter {
 
@@ -66,7 +68,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             builder.connectionTimeoutMs(zkConfig.getConnectionTimeout());
         }
         if (!StringUtility.isNullOrEmpty(zkConfig.getDigest())) {
-            builder.authorization("digest", zkConfig.getDigest().getBytes(Charset.forName(Constant.CHARSET_UTF_8)))
+            builder.authorization("digest", zkConfig.getDigest().getBytes(StandardCharsets.UTF_8))
                 .aclProvider(new ACLProvider() {
 
                     @Override
@@ -116,7 +118,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         }
         ChildData resultInCache = cache.getCurrentData(key);
         if (null != resultInCache) {
-            return null == resultInCache.getData() ? null : new String(resultInCache.getData(), Charset.forName(Constant.CHARSET_UTF_8));
+            return null == resultInCache.getData() ? null : new String(resultInCache.getData(), StandardCharsets.UTF_8);
         }
         return getFromRemote(key);
     }
@@ -133,7 +135,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     @Override
     public String getFromRemote(final String key) {
         try {
-            return new String(client.getData().forPath(key), Charset.forName(Constant.CHARSET_UTF_8));
+            return new String(client.getData().forPath(key),StandardCharsets.UTF_8);
         } catch (Exception e) {
             log.error("get from remote", e);
             return null;
@@ -185,7 +187,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     public void persist(final String key, final String value) {
         try {
             if (!exist(key)) {
-                client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(key, value.getBytes(Charset.forName(Constant.CHARSET_UTF_8)));
+                client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(key, value.getBytes(StandardCharsets.UTF_8));
             } else {
                 modify(key, value);
             }
@@ -197,7 +199,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     @Override
     public void modify(final String key, final String value) {
         try {
-            client.inTransaction().check().forPath(key).and().setData().forPath(key, value.getBytes(Charset.forName(Constant.CHARSET_UTF_8))).and().commit();
+            client.inTransaction().check().forPath(key).and().setData().forPath(key, value.getBytes(StandardCharsets.UTF_8)).and().commit();
         } catch (final Exception ex) {
             log.error("modify", ex);
         }
@@ -209,7 +211,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             if (exist(key)) {
                 client.delete().deletingChildrenIfNeeded().forPath(key);
             }
-            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(key, value.getBytes(Charset.forName(Constant.CHARSET_UTF_8)));
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(key, value.getBytes(StandardCharsets.UTF_8));
         } catch (final Exception ex) {
             log.error("persist ephemeral", ex);
         }
@@ -218,7 +220,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
     @Override
     public String persistSequential(final String key, final String value) {
         try {
-            return client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(key, value.getBytes(Charset.forName(Constant.CHARSET_UTF_8)));
+            return client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(key, value.getBytes(StandardCharsets.UTF_8));
         } catch (final Exception ex) {
             log.error("persist sequential", ex);
         }
