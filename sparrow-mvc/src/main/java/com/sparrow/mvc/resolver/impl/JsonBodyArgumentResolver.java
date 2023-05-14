@@ -26,7 +26,7 @@ import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.web.support.MethodParameter;
-
+import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 
 public class JsonBodyArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
@@ -43,7 +43,7 @@ public class JsonBodyArgumentResolver implements HandlerMethodArgumentResolver, 
         HttpServletRequest request) throws Exception {
         if (request.getInputStream() != null &&
             Constant.CONTENT_TYPE_JSON.equalsIgnoreCase(request.getHeader("Content-Type"))) {
-            String body = FileUtility.getInstance().readFileContent(request.getInputStream(), Constant.CHARSET_UTF_8);
+            String body = FileUtility.getInstance().readFileContent(request.getInputStream(), StandardCharsets.UTF_8.name());
             return JsonFactory.getProvider().parse(body, methodParameter.getParameterType());
         }
         return null;

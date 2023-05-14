@@ -22,12 +22,12 @@
     <parent>
         <groupId>com.sparrowzoo</groupId>
         <artifactId>sparrow-bom</artifactId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.0.3-RELEASE</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow-mvc-thymeleaf</artifactId>
-    <version>1.0.1-RELEASE</version>
+    <version>1.0.3-RELEASE</version>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

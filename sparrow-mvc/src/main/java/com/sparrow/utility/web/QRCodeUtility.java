@@ -17,23 +17,31 @@
 
 package com.sparrow.utility.web;
 
-import com.google.zxing.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.sparrow.protocol.Size;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.utility.StringUtility;
 import com.sparrow.web.support.BufferedImageLuminanceSource;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Hashtable;
+import javax.imageio.ImageIO;
 
 public class QRCodeUtility {
 
@@ -41,7 +49,7 @@ public class QRCodeUtility {
         boolean needCompress, Size size, Size logoSize) throws Exception {
         Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-        hints.put(EncodeHintType.CHARACTER_SET, Constant.CHARSET_UTF_8);
+        hints.put(EncodeHintType.CHARACTER_SET, StandardCharsets.UTF_8.name());
         hints.put(EncodeHintType.MARGIN, 1);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(content,
             BarcodeFormat.QR_CODE, size.getWidth(), size.getHeight(), hints);
@@ -154,7 +162,7 @@ public class QRCodeUtility {
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
         com.google.zxing.Result result;
         Hashtable<DecodeHintType, Object> hints = new Hashtable<DecodeHintType, Object>();
-        hints.put(DecodeHintType.CHARACTER_SET, Constant.CHARSET_UTF_8);
+        hints.put(DecodeHintType.CHARACTER_SET, StandardCharsets.UTF_8.name());
         result = new MultiFormatReader().decode(bitmap, hints);
         return result.getText();
     }

@@ -20,7 +20,6 @@ package com.sparrow.cg.impl;
 import com.sparrow.cg.Unloadable;
 import com.sparrow.classloader.DynamicClassLoader;
 import com.sparrow.constant.Config;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
@@ -29,7 +28,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -60,7 +59,7 @@ public class DynamicCompiler {
         this.classLoader = (URLClassLoader) this.getClass().getClassLoader();
         this.encoding = ConfigUtility.getValue(Config.COMPILER_OPTION_ENCODING);
         if (StringUtility.isNullOrEmpty(this.encoding)) {
-            this.encoding = Constant.CHARSET_UTF_8;
+            this.encoding = StandardCharsets.UTF_8.name();
         }
         URLClassLoader urlClassLoader = this.classLoader;
         this.buildClassPath(urlClassLoader);
@@ -98,7 +97,7 @@ public class DynamicCompiler {
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
         ClassFileManager fileManager = new ClassFileManager(
             compiler.getStandardFileManager(diagnostics, Locale.CHINA,
-                Charset.forName(Constant.CHARSET_UTF_8)));
+                StandardCharsets.UTF_8));
 
         List<JavaFileObject> javaFileObjectList = new ArrayList<JavaFileObject>();
         javaFileObjectList.add(new JavaSourceFileObject(fullClassName, javaCode));

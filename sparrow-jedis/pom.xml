@@ -22,12 +22,12 @@
     <parent>
         <artifactId>sparrow-bom</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.0.3-RELEASE</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow-jedis</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.3-RELEASE</version>
     <dependencies>
         <dependency>
             <groupId>redis.clients</groupId>

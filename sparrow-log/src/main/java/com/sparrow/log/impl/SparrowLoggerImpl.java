@@ -25,6 +25,7 @@ import com.sparrow.core.cache.Cache;
 import com.sparrow.enums.LogLevel;
 import com.sparrow.utility.DateTimeUtility;
 import com.sparrow.utility.StringUtility;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 
@@ -405,7 +406,7 @@ public class SparrowLoggerImpl implements Logger {
                     } catch (OverlappingFileLockException ignore) {
                     }
                 }
-                fileOutputStream.write(log.getBytes(Constant.CHARSET_UTF_8));
+                fileOutputStream.write(log.getBytes(StandardCharsets.UTF_8));
                 if (Boolean.TRUE.toString().equalsIgnoreCase(logPrintConsole)) {
                     System.out.println(log);
                 }

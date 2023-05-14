@@ -17,7 +17,6 @@
 
 package com.sparrow.mq;
 
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +24,7 @@ import java.net.JarURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -45,7 +45,7 @@ public class ClassUtility {
         while (resources.hasMoreElements()) {
             URL resource = resources.nextElement();
             if ("file".equalsIgnoreCase(resource.getProtocol())) {
-                File directory = new File(URLDecoder.decode(resource.getFile(), Constant.CHARSET_UTF_8));
+                File directory = new File(URLDecoder.decode(resource.getFile(), StandardCharsets.UTF_8.name()));
                 classes.addAll(findClass(directory, packageName));
             } else if ("jar".equalsIgnoreCase(resource.getProtocol())) {
                 classes.addAll(findClass(((JarURLConnection) resource.openConnection())
