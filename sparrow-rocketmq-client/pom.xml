@@ -22,14 +22,14 @@
     <parent>
         <artifactId>sparrow-bom</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>1.0.3-RELEASE</version>
+        <version>1.0.3.1-RELEASE</version>
         <relativePath/>
 
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow-rocketmq-client</artifactId>
     <name>${project.artifactId}</name>
-    <version>1.0.3-RELEASE</version>
+    <version>1.0.3.1-RELEASE</version>
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>

@@ -5,11 +5,11 @@
     <parent>
         <artifactId>sparrow-bom</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>1.0.3-RELEASE</version>
+        <version>1.0.3.1-RELEASE</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0.3-RELEASE</version>
+    <version>1.0.3.1-RELEASE</version>
     <artifactId>sparrow-aop</artifactId>
     <properties>
         <curator.version>2.10.0</curator.version>
