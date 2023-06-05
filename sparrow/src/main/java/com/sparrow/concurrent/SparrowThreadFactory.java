@@ -107,19 +107,17 @@ public class SparrowThreadFactory implements ThreadFactory {
         public Builder wrappedFactory(ThreadFactory factory) {
             if (factory == null) {
                 throw new NullPointerException("Wrapped ThreadFactory must not be null!");
-            } else {
-                this.wrappedFactory = factory;
-                return this;
             }
+            this.wrappedFactory = factory;
+            return this;
         }
 
         public Builder namingPattern(String pattern) {
             if (pattern == null) {
                 throw new NullPointerException("Naming pattern must not be null!");
-            } else {
-                this.namingPattern = pattern;
-                return this;
             }
+            this.namingPattern = pattern;
+            return this;
         }
 
         public Builder daemon(boolean f) {
@@ -135,10 +133,9 @@ public class SparrowThreadFactory implements ThreadFactory {
         public Builder uncaughtExceptionHandler(Thread.UncaughtExceptionHandler handler) {
             if (handler == null) {
                 throw new NullPointerException("Uncaught exception handler must not be null!");
-            } else {
-                this.exceptionHandler = handler;
-                return this;
             }
+            this.exceptionHandler = handler;
+            return this;
         }
 
         public void reset() {

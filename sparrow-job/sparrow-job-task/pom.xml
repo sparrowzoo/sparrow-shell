@@ -10,20 +10,11 @@
 
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>sparrow-distribution-job-provider</artifactId>
     <version>${sparrow_distribution_job_version}</version>
+    <artifactId>sparrow-distribution-job-client</artifactId>
+
+
     <dependencies>
-        <dependency>
-            <groupId>com.sparrow</groupId>
-            <artifactId>sparrow-distribution-job-core</artifactId>
-            <version>${sparrow_distribution_job_version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sparrow</groupId>
-            <artifactId>sparrow-distribution-job-api</artifactId>
-            <version>${sparrow_distribution_job_version}</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>

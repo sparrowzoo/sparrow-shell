@@ -20,6 +20,8 @@ public class Task {
     private Integer taskId;
     private Integer jobId;
     private Integer triggerId;
+
+    private Integer stageId;
     /**
      * 任务名称 英文，可做任务标识
      */

@@ -3,12 +3,14 @@ package com.sparrow.facade.authorizing;
 import com.sparrow.authorizing.AuthenticatorDemo;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.LoginUserStatus;
 import com.sparrow.support.Authenticator;
 import com.sparrow.protocol.LoginUser;
 
 public class Test {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BusinessException {
         ApplicationContext.getContainer().init(new ContainerBuilder());
         Authenticator authorizingSupport = new AuthenticatorDemo();
         LoginUser loginToken = new LoginUser();
@@ -19,9 +21,8 @@ public class Test {
         loginToken.setDays(20);
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
-        loginToken.setActivate(true);
 
-        String sign = authorizingSupport.sign(loginToken);
+        String sign = authorizingSupport.sign(loginToken,new LoginUserStatus(LoginUserStatus.STATUS_NORMAL,System.currentTimeMillis()));
         System.out.println(sign);
 
 

@@ -17,84 +17,71 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class EnumUtility {
+    public static Map<String, String> getNameValueMap(Class<?> e) {
+        return getMap(e, true, null);
+    }
+
+    public static Map<String, String> getOrdinalValueMap(Class<?> e) {
+        return getMap(e, false, null);
+    }
+
+    public static Map<String, String> getNameValueMap(Class<?> e, String business) {
+        return getMap(e, true, business);
+    }
+
+    public static Map<String, String> getOrdinalValueMap(Class<?> e, String business) {
+        return getMap(e, false, business);
+    }
 
     /**
      * 将枚举转成map
      */
-    public static Map<String, String> getMap(Class<?> e, int maxCount, boolean nameAsKey) {
-        if (maxCount <= 0) {
-            maxCount = Integer.MAX_VALUE;
-        }
+    private static Map<String, String> getMap(Class<?> e, boolean nameAsKey, String business) {
         Map<String, String> map = new LinkedHashMap<String, String>();
         Class<Enum<?>> c = (Class<Enum<?>>) e;
         Enum<?>[] enums = c.getEnumConstants();
         for (Enum<?> en : enums) {
-            if (map.size() < maxCount) {
-                String key = nameAsKey ? en.name() : String.valueOf(en.ordinal());
-                String value = getValue(en);
-                if (StringUtility.isNullOrEmpty(value)) {
-                    map.put(key, en.toString());
-                } else {
-                    map.put(key, value);
-                }
+            String key = nameAsKey ? en.name() : String.valueOf(en.ordinal());
+            String value = getValue(en, business);
+            if (StringUtility.isNullOrEmpty(value)) {
+                map.put(key, en.toString());
+            } else {
+                map.put(key, value);
             }
         }
         return map;
     }
 
     /**
-     * 前端控件使用 枚举转成map
-     *
-     * @param className com.sparrow.enums.Status:10:true
-     */
-    public static Map<String, String> getMap(String className) {
-        int maxCount = Integer.MAX_VALUE;
-        String[] classArray = className.split("\\:");
-        Class<?> e;
-        boolean nameAsKey = false;
-        try {
-            className = classArray[0];
-            if (!className.contains(".")) {
-                className = "com.sparrow.protocol.enums." + className;
-            }
-            e = Class.forName(className);
-            if (classArray.length >= Digit.TOW) {
-                maxCount = Integer.parseInt(classArray[1]);
-            }
-            if (classArray.length == Digit.THREE) {
-                nameAsKey = true;
-            }
-        } catch (ClassNotFoundException ignore) {
-            throw new RuntimeException(ignore);
-        }
-        return getMap(e, maxCount, nameAsKey);
-    }
-
-    /**
      * 获取enum对应的 key
      */
-    public static String getValue(String enumClassName, int index) {
-        try {
-            Class clazz = Class.forName(enumClassName);
-            String key = "enum" + Symbol.UNDERLINE + clazz.getSimpleName() + Symbol.UNDERLINE + clazz
-                .getEnumConstants()[index].toString().toLowerCase();
-            return ConfigUtility.getLanguageValue(key);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+    public static String getValue(Class<?> clazz, int index, String business) {
+        String classKey = StringUtility.humpToLower(clazz.getSimpleName());
+        Enum<?> enumInstance = (Enum<?>) clazz
+                .getEnumConstants()[index];
+        String enumKey = enumInstance.toString().toLowerCase();
+        String key = "enum" + Symbol.UNDERLINE + classKey + Symbol.UNDERLINE + enumKey;
+        if (!StringUtility.isNullOrEmpty(business)) {
+            key += Symbol.UNDERLINE + business;
         }
+        String languageValue = ConfigUtility.getLanguageValue(key);
+        return StringUtility.isNullOrEmpty(languageValue) ? enumInstance.name() : languageValue;
     }
 
-    public static String getValue(Enum enumInstance) {
+    public static String getValue(Enum<?> enumInstance, String business) {
         String simpleName = enumInstance.getDeclaringClass().getSimpleName();
         String classKey = StringUtility.humpToLower(simpleName);
         String key = "enum" + Symbol.UNDERLINE + classKey + Symbol.UNDERLINE + enumInstance.name().toLowerCase();
-        return ConfigUtility.getLanguageValue(key);
+        if (!StringUtility.isNullOrEmpty(business)) {
+            key += Symbol.UNDERLINE + business;
+        }
+        String languageValue = ConfigUtility.getLanguageValue(key);
+        return StringUtility.isNullOrEmpty(languageValue) ? enumInstance.name() : languageValue;
     }
 }

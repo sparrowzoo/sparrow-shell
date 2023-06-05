@@ -19,8 +19,10 @@ package com.sparrow.cg.impl;
 
 import com.sparrow.cg.Generator4MethodAccessor;
 import com.sparrow.cg.MethodAccessor;
+import com.sparrow.utility.ClassUtility;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,18 +34,10 @@ public class Generator4SetFieldMethodAccessor implements Generator4MethodAccesso
         private Map<String, Field> fieldMap = new HashMap<>();
 
         public FieldSetMethodAccessor(Class clazz) {
-            for (Field field : clazz.getDeclaredFields()) {
+            List<Field> fields = ClassUtility.extractFields(clazz);
+            for (Field field : fields) {
                 field.setAccessible(true);
                 fieldMap.put(field.getName(), field);
-            }
-            if (clazz.getSuperclass() != null) {
-                Field[] fields = clazz.getSuperclass().getDeclaredFields();
-                if (fields.length > 0) {
-                    for (Field field : fields) {
-                        field.setAccessible(true);
-                        fieldMap.put(field.getName(), field);
-                    }
-                }
             }
         }
 

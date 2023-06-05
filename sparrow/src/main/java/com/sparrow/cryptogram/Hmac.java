@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 
 public class Hmac {
     private static Logger logger = LoggerFactory.getLogger(Hmac.class);
@@ -59,7 +60,7 @@ public class Hmac {
             byte[] oauthSignature = null;
             Mac mac = Mac.getInstance(algorithm);
             SecretKeySpec spec = new SecretKeySpec(secretKey
-                .getBytes("UTF-8"), algorithm);
+                .getBytes(StandardCharsets.UTF_8), algorithm);
             mac.init(spec);
             oauthSignature = mac.doFinal(srcString.getBytes("US-ASCII"));
             return oauthSignature;

@@ -38,6 +38,7 @@ import java.util.jar.JarFile;
 
 public class ClassUtility {
     private static Logger logger = LoggerFactory.getLogger(ClassUtility.class);
+
     public static List<Field> extractFields(Class<?> clazz) {
         List<Field> fieldList = new ArrayList<>();
         while (clazz != Object.class) {
@@ -280,8 +281,6 @@ public class ClassUtility {
             return this.order.compareTo(o.order);
         }
     }
-
-
 
     public static Field[] getOrderedFields(Collection<Field> fields) {
         List<FieldWithRank> fieldWithRanks = new ArrayList<>();

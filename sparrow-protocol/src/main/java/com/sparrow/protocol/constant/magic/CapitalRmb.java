@@ -22,6 +22,7 @@ package com.sparrow.protocol.constant.magic;
  */
 public class CapitalRmb {
     public static final String ZERO = "零";
+    
     public static final String ONE = "壹";
     public static final String TOW = "贰";
     public static final String THREE = "叁";

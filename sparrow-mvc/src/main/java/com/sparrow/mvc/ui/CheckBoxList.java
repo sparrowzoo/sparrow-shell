@@ -19,14 +19,14 @@ package com.sparrow.mvc.ui;
 
 import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.utility.EnumUtility;
 import com.sparrow.utility.StringUtility;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * 调用说明
@@ -87,11 +87,6 @@ public class CheckBoxList extends WebControl {
                     option = keyValue.split(Symbol.COLON);
                     valueTextList.put(option[Digit.ZERO], option[Digit.ONE]);
                 }
-            }
-
-            if (valueTextList.size() == Digit.ZERO
-                && !StringUtility.isNullOrEmpty(this.getEnums())) {
-                valueTextList = EnumUtility.getMap(this.getEnums());
             }
         }
         if (!Boolean.FALSE.toString().equalsIgnoreCase(this.getVisible()) && valueTextList != null

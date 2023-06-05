@@ -23,7 +23,6 @@ public class Helloworld extends ClassLoader implements Opcodes {
      */
     public static void main(final String args[]) throws Exception {
 
-
         //定义一个叫做Example的类
         ClassWriter cw = new ClassWriter(0);
         //50 即为JDK 1.6

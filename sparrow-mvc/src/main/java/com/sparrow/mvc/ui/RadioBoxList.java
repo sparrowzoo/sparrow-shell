@@ -17,7 +17,6 @@
 
 package com.sparrow.mvc.ui;
 
-import com.sparrow.utility.EnumUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,11 +75,6 @@ public class RadioBoxList extends WebControl {
                     option = keyValue.split(":");
                     valueTextList.put(option[0], option[1]);
                 }
-            }
-
-            if (valueTextList.size() == 0
-                && !StringUtility.isNullOrEmpty(this.getEnums())) {
-                valueTextList = EnumUtility.getMap(this.getEnums());
             }
         }
         if (!Boolean.FALSE.toString().equalsIgnoreCase(this.getVisible()) && valueTextList != null

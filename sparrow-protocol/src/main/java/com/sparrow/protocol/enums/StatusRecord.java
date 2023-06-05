@@ -31,4 +31,9 @@ public enum StatusRecord {
      * 可用(1)
      */
     ENABLE,
+
+    /**
+     * 初始化
+     */
+    INIT
 }

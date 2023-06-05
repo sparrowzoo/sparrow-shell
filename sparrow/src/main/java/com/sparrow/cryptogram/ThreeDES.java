@@ -51,7 +51,7 @@ public class ThreeDES {
     public static final String CIPHER_ALGORITHM_ECB = "DESede/ECB/PKCS5Padding";
     public static final String CIPHER_ALGORITHM_CBC = "DESede/CBC/PKCS5Padding";
 
-    private static final int KEY_SIZE = 128; //
+    private static final int KEY_SIZE = 32; //
 
     public String encryptHex(String key, String text, String cipherAlgorithm) {
         byte[] encryptBytes = this.encryptByAlgorithm(key, text, cipherAlgorithm);
@@ -130,13 +130,13 @@ public class ThreeDES {
     }
 
     private Cipher createCipher(String key, int mode, String cipherAlgorithm)
-        throws InvalidKeyException, InvalidKeySpecException,
-        NoSuchAlgorithmException, NoSuchPaddingException,
-        InvalidAlgorithmParameterException {
+            throws InvalidKeyException, InvalidKeySpecException,
+            NoSuchAlgorithmException, NoSuchPaddingException,
+            InvalidAlgorithmParameterException {
 
         if (key.length() > KEY_SIZE) {
             throw new IllegalArgumentException(
-                "Key size must be under 24 characters.");
+                    "Key size must be under " + KEY_SIZE + " characters.");
         } else {
             StringBuilder stringBuilder = new StringBuilder(key);
             while (stringBuilder.length() < KEY_SIZE) {
@@ -148,7 +148,7 @@ public class ThreeDES {
         byte[] keyValue = key.getBytes();
         DESedeKeySpec keySpec = new DESedeKeySpec(keyValue);
         SecretKey secretKey = SecretKeyFactory.getInstance(ALGORITHM)
-            .generateSecret(keySpec);
+                .generateSecret(keySpec);
         Cipher encrypter = Cipher.getInstance(cipherAlgorithm);
         if (!cipherAlgorithm.equals(CIPHER_ALGORITHM_ECB)) {
             IvParameterSpec iv = new IvParameterSpec(new byte[8]);

@@ -1,0 +1,17 @@
+2023-05-21 23:54:58.590 TRACE_ID INFO  main SparrowContainer ----------------- container init ....-------------------
+2023-05-21 23:54:58.597 TRACE_ID INFO  main SparrowContainer -------------system config file init ...-------------------
+2023-05-21 23:54:58.627 TRACE_ID INFO  main ConfigUtility ==========system config init============
+2023-05-21 23:54:58.631 TRACE_ID INFO  main SparrowContainer -------------init bean ...---------------------------
+2023-05-21 23:54:58.683 TRACE_ID INFO  main XmlBeanDefinitionReader -------------init bean /sparrow_rocketmq_producer.xml ...---------------------------
+2023-05-21 23:54:58.701 TRACE_ID INFO  main XmlBeanDefinitionReader -------------init bean /sparrow_rocketmq_consumer.xml ...---------------------------
+2023-05-21 23:54:59.941 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.HelloEventMethodAccess use:1215ms
+2023-05-21 23:55:00.509 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.SourceMethodAccess use:555ms
+2023-05-21 23:55:00.889 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.TargetMethodAccess use:367ms
+2023-05-21 23:55:01.164 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.UserMethodAccess use:270ms
+2023-05-21 23:55:01.177 TRACE_ID INFO  main DataSourceFactoryImpl password_key mysql_sparrow_password,password 11111111
+2023-05-21 23:55:01.747 TRACE_ID INFO  main SparrowRocketMQMessageListener init spring rocket mq message listener
+2023-05-21 23:55:02.482 TRACE_ID INFO  main RocketMQConsumer finished rocket mq client start!
+2023-05-21 23:55:02.483 TRACE_ID INFO  main RocketMQConsumer begin start ROCKET MQ client, group=sparrow-consumer-group, nameServerAddr 127.0.0.1:9876, topic=sparrow-test-topic:sparrow,config=ClientConfig [namesrvAddr=127.0.0.1:9876, clientIP=10.37.129.2, instanceName=SPARROW_MQ_INSTANCE_sparrow-consumer-group, clientCallbackExecutorThreads=8, pollNameServerInterval=30000, heartbeatBrokerInterval=30000, persistConsumerOffsetInterval=5000, unitMode=false, unitName=null, vipChannelEnabled=true, useTLS=false]
+2023-05-21 23:55:02.985 TRACE_ID INFO  main SparrowContainer -------------init initializer ...--------------------------
+2023-05-21 23:55:02.987 TRACE_ID INFO  main SparrowContainer -----------------Ioc container init success...-------------------
+2023-05-21 23:55:03.442 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.User3MethodAccess use:442ms

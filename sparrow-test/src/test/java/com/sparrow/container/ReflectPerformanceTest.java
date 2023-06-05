@@ -33,8 +33,6 @@ public class ReflectPerformanceTest {
     public static void main(String[] args) throws Exception {
         Container container = new SparrowContainer();
         container.init(new ContainerBuilder());
-
-
         User3 user = new User3("zhangsan");
         ((SparrowContainer) container).initProxyBean(User3.class);
         MethodAccessor methodAccessor = container.getProxyBean(User3.class);
@@ -45,13 +43,13 @@ public class ReflectPerformanceTest {
             Object userName = methodAccessor.get(user, "user");
             //System.out.printf(userName.toString());
         }
-        System.out.println(System.currentTimeMillis() - t);
+        System.out.println("优化后结果:" + (System.currentTimeMillis() - t));
 
         t = System.currentTimeMillis();
-        Method method = User3.class.getMethod("getUser");
         for (int i = 0; i < 10000000; i++) {
-            String userName=(String) method.invoke(user);
+            Method method = User3.class.getMethod("getUser");
+            String userName = (String) method.invoke(user);
         }
-        System.out.println(System.currentTimeMillis() - t);
+        System.out.println("JDK:" + (System.currentTimeMillis() - t));
     }
 }

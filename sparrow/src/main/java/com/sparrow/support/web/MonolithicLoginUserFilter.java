@@ -35,6 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 单体应用解析，需要签名认证
+ */
 public class MonolithicLoginUserFilter implements Filter {
     private static Logger logger = LoggerFactory.getLogger(MonolithicLoginUserFilter.class);
 

@@ -18,19 +18,16 @@
 package com.sparrow.mvc.ui;
 
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.utility.EnumUtility;
 import com.sparrow.utility.StringUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.servlet.jsp.JspException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.jsp.JspException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * value:name,value2:name2
@@ -88,11 +85,6 @@ public class DropDownList extends WebControl {
                     option = o.split(":");
                     listItem.put(option[0], option[1]);
                 }
-            }
-
-            if (listItem.size() == 0
-                && !StringUtility.isNullOrEmpty(this.getEnums())) {
-                listItem = EnumUtility.getMap(this.getEnums());
             }
         }
         Set<String> keySet = listItem.keySet();
