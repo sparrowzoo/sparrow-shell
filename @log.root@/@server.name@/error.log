@@ -105,3 +105,111 @@ java.lang.NullPointerException: null
 2023-05-21 23:55:02.449 TRACE_ID ERROR main AbstractContainer beanName mqConsumer ,refName cacheClient is null
 2023-05-21 23:55:02.982 TRACE_ID ERROR main AbstractContainer field not found queueHandlerMappingContainer of class  class com.sparrow.rocketmq.protocol.handler.HelloWorldHandler
 2023-05-21 23:55:02.984 TRACE_ID ERROR main SparrowContainer init bean error,bean-name helloHandler
+2023-06-17 22:42:47.004 TRACE_ID ERROR main AbstractContainer class not found java.lang.ClassNotFoundException: com.sparrow.cache.impl.redis.RedisPool,class name com.sparrow.cache.impl.redis.RedisPool
+2023-06-17 22:42:47.005 TRACE_ID ERROR main AbstractContainer instance error java.lang.NullPointerException,class name com.sparrow.cache.impl.redis.RedisPool
+2023-06-17 22:42:47.006 TRACE_ID ERROR main AbstractContainer class not found java.lang.ClassNotFoundException: com.sparrow.cache.impl.redis.RedisCacheClient,class name com.sparrow.cache.impl.redis.RedisCacheClient
+2023-06-17 22:42:47.006 TRACE_ID ERROR main AbstractContainer instance error java.lang.NullPointerException,class name com.sparrow.cache.impl.redis.RedisCacheClient
+2023-06-17 22:42:47.028 TRACE_ID ERROR main AbstractContainer beanName cookieUtility ,refName cacheClient is null
+2023-06-17 22:42:47.054 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.076 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.084 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.090 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.097 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.104 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.122 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.131 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.145 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.156 TRACE_ID ERROR main ProxyConnection connection error url:jdbc:mysql://127.0.0.1/sparrow?useSSL=false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC,user_name:root,password:11111111
+java.lang.NullPointerException: null
+	at com.sparrow.container.AbstractContainer.getBean(AbstractContainer.java:249)
+	at com.sparrow.datasource.ProxyConnection.<init>(ProxyConnection.java:60)
+	at com.sparrow.datasource.ConnectionPool.newConnection(ConnectionPool.java:170)
+	at com.sparrow.datasource.ConnectionPool.aware(ConnectionPool.java:76)
+	at com.sparrow.container.impl.SparrowContainer.initSingletonBeans(SparrowContainer.java:163)
+	at com.sparrow.container.impl.SparrowContainer.init(SparrowContainer.java:118)
+	at com.sparrow.container.ReflectPerformanceTest.main(ReflectPerformanceTest.java:35)
+2023-06-17 22:42:47.165 TRACE_ID ERROR main AbstractContainer class not found java.lang.ClassNotFoundException: com.sparrow.cache.impl.redis.RedisPool,class name com.sparrow.cache.impl.redis.RedisPool
+2023-06-17 22:42:47.166 TRACE_ID ERROR main AbstractContainer instance error java.lang.NullPointerException,class name com.sparrow.cache.impl.redis.RedisPool
+2023-06-17 22:42:47.167 TRACE_ID ERROR main SparrowContainer init bean error,bean-name redisPool
+2023-06-17 22:42:47.168 TRACE_ID ERROR main AbstractContainer class not found java.lang.ClassNotFoundException: com.sparrow.cache.impl.redis.RedisCacheClient,class name com.sparrow.cache.impl.redis.RedisCacheClient
+2023-06-17 22:42:47.169 TRACE_ID ERROR main AbstractContainer instance error java.lang.NullPointerException,class name com.sparrow.cache.impl.redis.RedisCacheClient
+2023-06-17 22:42:47.169 TRACE_ID ERROR main AbstractContainer beanName cacheClient ,refName redisPool is null
+2023-06-17 22:42:47.169 TRACE_ID ERROR main AbstractContainer beanName distributedCountDownLatch ,refName cacheClient is null
+2023-06-17 22:42:47.169 TRACE_ID ERROR main AbstractContainer beanName mqPublisher ,refName cacheClient is null
+2023-06-17 22:42:47.675 TRACE_ID ERROR main AbstractContainer beanName mqIdempotent ,refName cacheClient is null
+2023-06-17 22:42:47.680 TRACE_ID ERROR main AbstractContainer field not found distributedCountDownLatch of class  class com.sparrow.rocketmq.impl.SparrowRocketMQMessageListener
+2023-06-17 22:42:47.681 TRACE_ID ERROR main AbstractContainer beanName mqConsumer ,refName cacheClient is null
+2023-06-17 22:42:48.316 TRACE_ID ERROR main AbstractContainer field not found queueHandlerMappingContainer of class  class com.sparrow.rocketmq.protocol.handler.HelloWorldHandler
+2023-06-17 22:42:48.332 TRACE_ID ERROR main SparrowContainer init bean error,bean-name helloHandler

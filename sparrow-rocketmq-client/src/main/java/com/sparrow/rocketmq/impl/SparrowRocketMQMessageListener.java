@@ -18,23 +18,16 @@
 package com.sparrow.rocketmq.impl;
 
 import com.sparrow.cache.Key;
-import com.sparrow.concurrent.latch.DistributedCountDownLatch;
-import com.sparrow.mq.EventHandlerMappingContainer;
-import com.sparrow.mq.MQClient;
-import com.sparrow.mq.MQContainerProvider;
-import com.sparrow.mq.MQEvent;
-import com.sparrow.mq.MQHandler;
-import com.sparrow.mq.MQIdempotent;
+import com.sparrow.mq.*;
 import com.sparrow.rocketmq.MessageConverter;
-
-import java.util.List;
-
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class SparrowRocketMQMessageListener implements MessageListenerConcurrently {
     private static Logger logger = LoggerFactory.getLogger(SparrowRocketMQMessageListener.class);

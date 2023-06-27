@@ -15,3 +15,20 @@
 2023-05-21 23:55:02.985 TRACE_ID INFO  main SparrowContainer -------------init initializer ...--------------------------
 2023-05-21 23:55:02.987 TRACE_ID INFO  main SparrowContainer -----------------Ioc container init success...-------------------
 2023-05-21 23:55:03.442 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.User3MethodAccess use:442ms
+2023-06-17 22:42:43.424 TRACE_ID INFO  main SparrowContainer ----------------- container init ....-------------------
+2023-06-17 22:42:43.427 TRACE_ID INFO  main SparrowContainer -------------system config file init ...-------------------
+2023-06-17 22:42:43.463 TRACE_ID INFO  main ConfigUtility ==========system config init============
+2023-06-17 22:42:43.466 TRACE_ID INFO  main SparrowContainer -------------init bean ...---------------------------
+2023-06-17 22:42:43.551 TRACE_ID INFO  main XmlBeanDefinitionReader -------------init bean /sparrow_rocketmq_producer.xml ...---------------------------
+2023-06-17 22:42:43.597 TRACE_ID INFO  main XmlBeanDefinitionReader -------------init bean /sparrow_rocketmq_consumer.xml ...---------------------------
+2023-06-17 22:42:45.139 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.HelloEventMethodAccess use:1491ms
+2023-06-17 22:42:45.860 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.SourceMethodAccess use:704ms
+2023-06-17 22:42:46.216 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.TargetMethodAccess use:348ms
+2023-06-17 22:42:46.477 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.UserMethodAccess use:256ms
+2023-06-17 22:42:46.488 TRACE_ID INFO  main DataSourceFactoryImpl password_key mysql_sparrow_password,password 11111111
+2023-06-17 22:42:47.021 TRACE_ID INFO  main SparrowRocketMQMessageListener init spring rocket mq message listener
+2023-06-17 22:42:47.727 TRACE_ID INFO  main RocketMQConsumer finished rocket mq client start!
+2023-06-17 22:42:47.729 TRACE_ID INFO  main RocketMQConsumer begin start ROCKET MQ client, group=sparrow-consumer-group, nameServerAddr 127.0.0.1:9876, topic=sparrow-test-topic:sparrow,config=ClientConfig [namesrvAddr=127.0.0.1:9876, clientIP=10.37.129.2, instanceName=SPARROW_MQ_INSTANCE_sparrow-consumer-group, clientCallbackExecutorThreads=8, pollNameServerInterval=30000, heartbeatBrokerInterval=30000, persistConsumerOffsetInterval=5000, unitMode=false, unitName=null, vipChannelEnabled=true, useTLS=false]
+2023-06-17 22:42:48.342 TRACE_ID INFO  main SparrowContainer -------------init initializer ...--------------------------
+2023-06-17 22:42:48.343 TRACE_ID INFO  main SparrowContainer -----------------Ioc container init success...-------------------
+2023-06-17 22:42:48.943 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.User3MethodAccess use:592ms
