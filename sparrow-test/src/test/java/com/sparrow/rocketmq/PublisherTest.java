@@ -30,6 +30,7 @@ public class PublisherTest {
     public static final Key.Business CMS_KEY = new Key.Business(GlobalModule.GLOBAL, "CMS");
 
     public static void main(String[] args) {
+        //业务的key去重
         Key productKey = new Key.Builder().business(CMS_KEY).businessId(2).build();
         Container container = new SparrowContainer();
         ContainerBuilder builder = new ContainerBuilder();

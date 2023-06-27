@@ -45,16 +45,10 @@ public class SparrowRocketMQMessageListener implements MessageListenerConcurrent
 
     private EventHandlerMappingContainer queueHandlerMappingContainer = MQContainerProvider.getContainer();
     private MessageConverter messageConverter;
-    private DistributedCountDownLatch distributedCountDownLatch;
-
     private MQIdempotent mqIdempotent;
 
     public void setQueueHandlerMappingContainer(EventHandlerMappingContainer queueHandlerMappingContainer) {
         this.queueHandlerMappingContainer = queueHandlerMappingContainer;
-    }
-
-    public void setDistributedCountDownLatch(DistributedCountDownLatch distributedCountDownLatch) {
-        this.distributedCountDownLatch = distributedCountDownLatch;
     }
 
     public void setMqIdempotent(MQIdempotent mqIdempotent) {
@@ -69,46 +63,39 @@ public class SparrowRocketMQMessageListener implements MessageListenerConcurrent
         return mqIdempotent != null && mqIdempotent.duplicate(keys);
     }
 
-    protected void consumed(MQEvent event, Key consumerKey, String keys) {
-        //must be idempotent
-        if (mqIdempotent == null) {
-            return;
-        }
-        //must be consume successful
-        if (!mqIdempotent.consumed(keys)) {
-            //如果未消费成功，说明断网，或者已经被消费过
-            return;
-        }
-        //如果在这里断电，则count 数会少减,使用事务或脚本保证原子
-        //count down
-        if (distributedCountDownLatch != null && consumerKey != null) {
-            distributedCountDownLatch.consume(consumerKey, keys);
-        }
+
+    protected long getLockMills() {
+        return 1000 * 60;
+    }
+
+    protected int getIdempotentSeconds() {
+        return 60 * 60 * 72;
     }
 
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext context) {
-        System.err.println(String.format("thread-name:%s,message-size:%s", Thread.currentThread().getName(), list.size()));
         logger.info("thread-name:{},message-size:{}", Thread.currentThread().getName(), list.size());
         for (MessageExt message : list) {
             String type = message.getProperties().get(MQClient.CLASS_NAME);
             try {
                 if (logger.isInfoEnabled()) {
-                    logger.info("receive msg:" + message.toString());
+                    logger.info("receive msg:" + message);
                 }
                 MQHandler handler = queueHandlerMappingContainer.get(type);
                 if (handler == null) {
-                    logger.warn("handler of this type [{}] not found", type);
-                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                    logger.error("handler of this type [{}] not found", type);
+                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                 }
-
                 MQEvent event = messageConverter.fromMessage(message);
-                Key consumerKey = Key.parse(message.getProperties().get(MQClient.CONSUMER_KEY));
-                if (this.duplicate(event, consumerKey, message.getKeys())) {
-                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                if (!this.mqIdempotent.tryLock(message.getKeys(), this.getLockMills())) {
+                    if (this.mqIdempotent.duplicate(message.getKeys())) {
+                        return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                    } else {
+                        return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                    }
                 }
                 handler.handle(event);
-                this.consumed(event, consumerKey, message.getKeys());
+                this.mqIdempotent.consumed(message.getKeys(), this.getIdempotentSeconds());
             } catch (Throwable e) {
                 logger.error("process failed, msg : " + message, e);
                 return ConsumeConcurrentlyStatus.RECONSUME_LATER;

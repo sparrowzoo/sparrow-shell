@@ -23,5 +23,4 @@ package com.sparrow.mq;
 public class MQClient {
     public static final String CLASS_NAME = "CLASS_NAME";
     public static final String INSTANCE_NAME = "SPARROW_MQ_INSTANCE";
-    public static final String CONSUMER_KEY = "CONSUMER_KEY";
 }

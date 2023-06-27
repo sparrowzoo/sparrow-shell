@@ -21,6 +21,7 @@ package com.sparrow.protocol.dao;
 import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.enums.StatusRecord;
+
 import javax.persistence.Column;
 
 public class PO implements POJO {
@@ -83,7 +84,7 @@ public class PO implements POJO {
     }
 
     @MethodOrder(order = 105)
-    @Column(name = "create_user_name", columnDefinition = "varchar(64)  DEFAULT '' COMMENT '创建人'", nullable = false)
+    @Column(name = "create_user_name", columnDefinition = "varchar(64)  DEFAULT '' COMMENT '创建人'", nullable = false, updatable = false)
     public String getCreateUserName() {
         return createUserName;
     }

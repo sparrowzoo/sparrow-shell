@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-package com.sparrow.cache.impl.redis;
+package com.sparrow;
 
-import com.sparrow.core.spi.JsonFactory;
-import com.sparrow.json.Json;
-
-public class AbstractCommand {
-    protected RedisPool redisPool;
-
-    protected Json jsonProvider = JsonFactory.getProvider();
+public class Main {
+    public static void main(String[] args) {
+        for (String arg : args) {
+            System.out.println(arg);
+        }
+    }
 }

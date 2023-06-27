@@ -106,7 +106,7 @@ public class SparrowRocketMQPublisher implements MQPublisher, ContainerAware {
     public void setDebug(Boolean debug) {
         this.debug = debug;
     }
-    
+
     public void after(MQEvent event, Key productKey, String msgKey) {
         if (distributedCountDownLatch == null || productKey == null) {
             return;
@@ -124,9 +124,6 @@ public class SparrowRocketMQPublisher implements MQPublisher, ContainerAware {
         Message msg = this.messageConverter.createMessage(topic, tag, event);
         String key = UUID.randomUUID().toString();
         msg.setKeys(Collections.singletonList(key));
-        if (productKey != null) {
-            msg.getProperties().put(MQClient.CONSUMER_KEY, productKey.key());
-        }
         logger.info("event {} ,monitor key {},msgKey {}", JsonFactory.getProvider().toString(event), productKey == null ? "" : productKey.key(), key);
         SendResult sendResult = null;
         int retryTimes = 0;

@@ -18,6 +18,7 @@
 package com.sparrow.junit3;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * junit4 1. @Test : 测试方法，测试程序会运行的方法，后边可以跟参数代表不同的测试，如(expected=XXException.class) 异常测试，(timeout=xxx)超时测试 2. @Ignore :
@@ -33,8 +34,9 @@ public class JunitTestDemo extends TestCase {
         System.out.println("test");
     }
 
+    @Test
     public void test2() {
-        System.out.println("test2");
+        assertEquals(1, 3);
     }
 
     @Override
