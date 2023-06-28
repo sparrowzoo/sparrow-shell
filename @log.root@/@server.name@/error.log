@@ -213,3 +213,9 @@ java.lang.NullPointerException: null
 2023-06-17 22:42:47.681 TRACE_ID ERROR main AbstractContainer beanName mqConsumer ,refName cacheClient is null
 2023-06-17 22:42:48.316 TRACE_ID ERROR main AbstractContainer field not found queueHandlerMappingContainer of class  class com.sparrow.rocketmq.protocol.handler.HelloWorldHandler
 2023-06-17 22:42:48.332 TRACE_ID ERROR main SparrowContainer init bean error,bean-name helloHandler
+2023-06-28 16:14:41.911 TRACE_ID ERROR main EMailUtility send email error
+java.lang.NullPointerException: null
+	at java.util.Hashtable.put(Hashtable.java:460)
+	at com.sparrow.utility.EMailUtility.sendMail(EMailUtility.java:106)
+	at com.sparrow.utility.EMailUtility.sendMail(EMailUtility.java:97)
+	at com.sparrow.EmailTest.main(EmailTest.java:26)

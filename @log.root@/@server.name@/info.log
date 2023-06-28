@@ -32,3 +32,4 @@
 2023-06-17 22:42:48.342 TRACE_ID INFO  main SparrowContainer -------------init initializer ...--------------------------
 2023-06-17 22:42:48.343 TRACE_ID INFO  main SparrowContainer -----------------Ioc container init success...-------------------
 2023-06-17 22:42:48.943 TRACE_ID INFO  main DynamicCompiler init com.sparrow.accessMethod.User3MethodAccess use:592ms
+2023-06-28 16:14:41.898 TRACE_ID INFO  main EMailUtility to 49200163@qq.com from null,host null,local:null,user-name:null,email password is 9Ud9hpWGhP8XoFvp
