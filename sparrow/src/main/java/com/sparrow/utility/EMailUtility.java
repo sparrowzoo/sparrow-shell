@@ -60,9 +60,9 @@ public class EMailUtility {
     }
 
     public Boolean sendMail(String toAddress, String subject, String content,
-        String language) throws BusinessException {
+                            String language) throws BusinessException {
         String websiteName = ConfigUtility.getLanguageValue(
-            ConfigKeyLanguage.WEBSITE_NAME, language);
+                ConfigKeyLanguage.WEBSITE_NAME, language);
 
         this.setHost(ConfigUtility.getValue(Config.EMAIL_HOST));
         this.setFrom(ConfigUtility.getValue(Config.EMAIL_FROM));
@@ -109,7 +109,7 @@ public class EMailUtility {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(finalEmailUserName,
-                        finalEmailPassword);
+                            finalEmailPassword);
                 }
             });
             session.setDebug(true);
@@ -119,7 +119,7 @@ public class EMailUtility {
             fromAddress.setPersonal(this.getWebSitName());
             message.setFrom(fromAddress);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-                this.getTo()));
+                    this.getTo()));
             message.setSubject(this.getSubject());
             message.setContent(this.getContent(), "text/html;charset=gb2312");
             message.saveChanges();
@@ -128,7 +128,7 @@ public class EMailUtility {
                 try {
                     transport = session.getTransport("smtp");
                     transport.connect(this.getHost(), this.getUsername(),
-                        this.getPassword());
+                            this.getPassword());
                     transport.sendMessage(message, message.getAllRecipients());
                 } catch (Exception e) {
                     logger.error("send email error", e);
