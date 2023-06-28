@@ -86,11 +86,12 @@ public class EMailUtility {
         this.setSubject(subject);
         this.setContent(content);
         this.setWebSitName(websiteName);
-        logger.info("to {} from {},host {},local:{},email password is {}",
+        logger.info("to {} from {},host {},local:{},user-name:{},email password is {}",
                 this.getTo(),
                 this.getFrom(),
                 this.getHost(),
                 this.getLocalAddress(),
+                this.getUsername(),
                 emailPassword);
 
         return this.sendMail();
@@ -135,6 +136,8 @@ public class EMailUtility {
                     transport = session.getTransport("smtp");
                     transport.connect(this.getHost(), this.getUsername(),
                             this.getPassword());
+                    logger.info("host:{},username:{},password:{}", this.getHost()
+                            , this.getUsername(), this.getPassword());
                     transport.sendMessage(message, message.getAllRecipients());
                 } catch (Exception e) {
                     logger.error("send email error", e);
