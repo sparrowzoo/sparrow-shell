@@ -72,6 +72,7 @@ public class EMailUtility {
         if (StringUtility.isNullOrEmpty(emailPassword)) {
             emailPassword = ConfigUtility.getValue(Config.EMAIL_PASSWORD);
         }
+        logger.info("email password is {}", emailPassword);
         this.setPassword(emailPassword);
         this.setLocalAddress(ConfigUtility.getValue(Config.EMAIL_LOCAL_ADDRESS));
         this.setAuthentication(true);
