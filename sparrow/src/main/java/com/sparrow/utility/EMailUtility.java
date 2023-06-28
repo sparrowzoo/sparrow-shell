@@ -138,7 +138,7 @@ public class EMailUtility {
                     transport.sendMessage(message, message.getAllRecipients());
                 } catch (Exception e) {
                     logger.error("send email error", e);
-                    throw new BusinessException(SparrowError.GLOBAL_EMAIL_SEND_FAIL, Collections.singletonList((Object) this.getTo()));
+                    throw e;
                 } finally {
                     if (transport != null) {
                         transport.close();
