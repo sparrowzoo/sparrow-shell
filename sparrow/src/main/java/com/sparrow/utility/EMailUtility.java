@@ -104,10 +104,7 @@ public class EMailUtility {
         try {
             Properties props = System.getProperties();
             props.put("mail.smtp.localhost", this.getLocalAddress());
-            props.put("mail.smtp.host",this.getHost());
-            props.put("mail.smtp.port",465);
-            props.put("mail.smtp.protocol","smtp");
-            props.put("mail.smtp.ssl.enable","true");
+            props.put("mail.smtp.host", this.getHost());
             if (!authentication) {
                 props.put("mail.smtp.auth", "false");
             } else {
