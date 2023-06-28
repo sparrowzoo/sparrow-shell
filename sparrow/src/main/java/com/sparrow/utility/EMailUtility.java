@@ -72,7 +72,6 @@ public class EMailUtility {
         if (StringUtility.isNullOrEmpty(emailPassword)) {
             emailPassword = ConfigUtility.getValue(Config.EMAIL_PASSWORD);
         }
-        logger.info("email password is {}", emailPassword);
         this.setPassword(emailPassword);
         this.setLocalAddress(ConfigUtility.getValue(Config.EMAIL_LOCAL_ADDRESS));
         this.setAuthentication(true);
@@ -87,6 +86,12 @@ public class EMailUtility {
         this.setSubject(subject);
         this.setContent(content);
         this.setWebSitName(websiteName);
+        logger.info("to {} from {},host {},local:{},email password is {}",
+                this.getTo(),
+                this.getFrom(),
+                this.getHost(),
+                this.getLocalAddress(),
+                emailPassword);
 
         return this.sendMail();
     }
