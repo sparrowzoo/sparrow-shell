@@ -32,9 +32,9 @@ public class ReentrantLockReenterInterrupterTest {
     public static void conditionAwait() {
         try {
             lock.lockInterruptibly();
-            System.err.println(Thread.currentThread().getName() + " get lock");
+            System.out.printf("[%s]-[%s] got monitor lock...%n", F.format(LocalDateTime.now()), Thread.currentThread().getName());
             condition.await();
-            System.out.println(Thread.currentThread().getName() + " signed");
+            System.out.printf("[%s]-[%s] signed...%n", F.format(LocalDateTime.now()), Thread.currentThread().getName());
             System.out.println("ending...");
         } catch (Exception e) {
         } finally {
@@ -51,12 +51,12 @@ public class ReentrantLockReenterInterrupterTest {
         thread2.start();
         Thread.sleep(2000);
         thread1.interrupt();
-
-        while (true) {
-            //thread1.interrupt();
-            Thread.sleep(1500);
-            System.out.println(thread1.getName() + "-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());
-            System.out.println(thread2.getName() + "-" + thread2.getState() + "-interrupt- " + thread2.isInterrupted());
-        }
+//
+//        while (true) {
+//            //thread1.interrupt();
+//            Thread.sleep(1500);
+//            System.out.println(thread1.getName() + "-" + thread1.getState() + "-interrupt- " + thread1.isInterrupted());
+//            System.out.println(thread2.getName() + "-" + thread2.getState() + "-interrupt- " + thread2.isInterrupted());
+//        }
     }
 }

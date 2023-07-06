@@ -1,8 +1,5 @@
 package com.sparrow.lesson.thread.reentrant.lock;
 
-import com.sparrow.lesson.thread.visible.ReentrantLockTest;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class WithoutReentrantLockTest {
     private static int stockCount = 1;
     public static void main(String[] args) throws InterruptedException {

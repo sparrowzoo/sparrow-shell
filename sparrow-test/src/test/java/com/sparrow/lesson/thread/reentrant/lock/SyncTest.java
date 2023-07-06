@@ -7,12 +7,6 @@ public class SyncTest {
     public static void main(String[] args) throws InterruptedException {
         NonfairSync sync = new NonfairSync();
         sync.lock();
-        new Thread(new Runnable() {
-            @Override public void run() {
-                sync.lock();
-                System.out.println(Thread.currentThread().getName() + "-" + sync.getState2());
-            }
-        }).start();
         Thread.sleep(2000);
         System.out.println(sync.getState2());//1
         sync.lock();
@@ -22,10 +16,10 @@ public class SyncTest {
         sync.release(1);
         System.out.println(sync.getState2());//2
 
-
         for (long i = 0; i < Long.MAX_VALUE; i++) {
             sync.lock();
         }
+        System.out.println(sync.getState2());
     }
 
     abstract static class Sync extends AbstractQueuedSynchronizer {

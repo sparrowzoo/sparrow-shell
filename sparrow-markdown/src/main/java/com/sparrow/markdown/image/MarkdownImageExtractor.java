@@ -16,13 +16,11 @@
  */
 package com.sparrow.markdown.image;
 
-import com.sparrow.constant.File;
 import com.sparrow.constant.Regex;
 import com.sparrow.image.AbstractImageExtractor;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.image.ImageDTO;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.CollectionsUtility;
-import com.sparrow.utility.FileUtility;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -53,11 +51,11 @@ public class MarkdownImageExtractor extends AbstractImageExtractor {
             if (image.getInner()) {
                 continue;
             }
-            String url = FileUtility.getInstance().getShufflePath(
-                image.getImageId(), image.getExtension(), true,
-                File.SIZE.BIG);
+            String url = "";// FileUtility.getInstance().getShufflePath(
+//                image.getImageId(), image.getExtension(), true,
+//                File.SIZE.BIG);
             content = content.replace(
-                image.getImageMark(), String.format(Constant.IMAGE_MARKDOWN_MARK_FORMAT, image.getRemark(), url));
+                    image.getImageMark(), String.format(Constant.IMAGE_MARKDOWN_MARK_FORMAT, image.getRemark(), url));
         }
         return content;
     }

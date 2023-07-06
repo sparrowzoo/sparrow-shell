@@ -28,6 +28,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static com.sparrow.lucence.KeyAnalyzer.LUCENCE_IDF_KEYWORDS_PATH;
+import static com.sparrow.lucence.KeyAnalyzer.LUCENCE_INDEX_PATH_FOR_SEARCH;
+
 public class IDFIndexBuilderImpl implements Runnable {
     private IndexManager indexManager;
     private IndexReader indexReader;
@@ -46,8 +49,8 @@ public class IDFIndexBuilderImpl implements Runnable {
     static {
         //可以设置为本地lucence索引
         idfIndexPath = ConfigUtility
-            .getValue(Config.LUCENCE_INDEX_PATH_FOR_SEARCH);
-        idfWordPath = ConfigUtility.getValue(Config.LUCENCE_IDF_KEYWORDS_PATH);
+            .getValue(LUCENCE_INDEX_PATH_FOR_SEARCH);
+        idfWordPath = ConfigUtility.getValue(LUCENCE_IDF_KEYWORDS_PATH);
     }
 
     @Override

@@ -17,7 +17,6 @@
 
 package com.sparrow.lucence;
 
-import com.sparrow.constant.Config;
 import com.sparrow.core.Pair;
 import com.sparrow.support.MapValueComparator;
 import com.sparrow.utility.ConfigUtility;
@@ -38,6 +37,12 @@ import java.io.StringReader;
 import java.util.*;
 
 public class KeyAnalyzer {
+
+    public static final String LUCENCE_INDEX_PATH_FOR_SEARCH = "lucence_index_path_for_search";
+    public static final String LUCENCE_DISABLE_KEYWORDS_PATH = "lucence_disable_keywords_path";
+    public static final String LUCENCE_ENABLE_KEYWORDS_PATH = "lucence_enable_keywords_path";
+    public static final String LUCENCE_IDF_KEYWORDS_PATH = "lucence_idf_keywords_path";
+
     private Logger logger = LoggerFactory.getLogger(KeyAnalyzer.class);
 
     private Analyzer analyzer;
@@ -51,9 +56,9 @@ public class KeyAnalyzer {
     private String lucenceIdfKeywordsPath = null;
 
     public KeyAnalyzer() {
-        lucenceIdfKeywordsPath = ConfigUtility.getValue(Config.LUCENCE_IDF_KEYWORDS_PATH);
-        lucenceEnableKeywordsPath = ConfigUtility.getValue(Config.LUCENCE_ENABLE_KEYWORDS_PATH);
-        lucenceDisableKeywordsPath = ConfigUtility.getValue(Config.LUCENCE_DISABLE_KEYWORDS_PATH);
+        lucenceIdfKeywordsPath = ConfigUtility.getValue(LUCENCE_IDF_KEYWORDS_PATH);
+        lucenceEnableKeywordsPath = ConfigUtility.getValue(LUCENCE_ENABLE_KEYWORDS_PATH);
+        lucenceDisableKeywordsPath = ConfigUtility.getValue(LUCENCE_DISABLE_KEYWORDS_PATH);
     }
 
     //某一特定词语的IDF，可以由总文件数目除以包含该词语之文件的数目，再将得到的商取对数得到

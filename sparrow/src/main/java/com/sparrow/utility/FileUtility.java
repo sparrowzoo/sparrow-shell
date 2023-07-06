@@ -17,7 +17,7 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.constant.File;
+import com.sparrow.constant.Config;
 import com.sparrow.cryptogram.Base64;
 import com.sparrow.io.file.FileNameProperty;
 import com.sparrow.protocol.constant.Constant;
@@ -25,27 +25,17 @@ import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.zip.CRC32;
 import java.util.zip.ZipOutputStream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FileUtility {
     private static Logger logger = LoggerFactory.getLogger(FileUtility.class);
@@ -394,6 +384,16 @@ public class FileUtility {
         return Math.ceil(kb / Digit.K / Digit.K * Digit.HUNDRED) / Digit.HUNDRED + "GB";
     }
 
+    public boolean isImageByContentType(String contentType) {
+        if (StringUtility.isNullOrEmpty(contentType)) {
+            return false;
+        }
+        if (!contentType.toLowerCase().contains(Constant.CONTENT_TYPE_IMAGE_PREFIX)) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 兼容 <a href="http://www.sparrozoo.com/bmiddle/003aGgFyzy6IXdCe80y52">...</a>
      *
@@ -438,7 +438,7 @@ public class FileUtility {
         fileNameProperty.setDirectory(directory);
         fileNameProperty.setFullFileName(fullFileName);
         fileNameProperty.setName(fileName);
-        String imageExtensionConfig = ConfigUtility.getValue(File.IMAGE_EXTENSION);
+        String imageExtensionConfig = ConfigUtility.getValue(Config.IMAGE_EXTENSION);
         if (imageExtensionConfig == null) {
             imageExtensionConfig = Constant.IMAGE_EXTENSION;
         }
@@ -453,71 +453,15 @@ public class FileUtility {
         return fileNameProperty;
     }
 
-    /**
-     * 通过一数字ID获取文件打散路径
-     *
-     * @param fileUuid
-     * @param extension
-     * @param isWebPath
-     * @param size
-     * @return
-     */
-    public String getShufflePath(String fileUuid, String extension, boolean isWebPath,
-                                 String size) {
-        CRC32 crc = new CRC32();
-        crc.update(fileUuid.getBytes());
-        long id = crc.getValue();
-        boolean isImage = this.isImage(extension);
-        long remaining = id % Digit.TWELVE;
-        long remaining1 = id % Digit.THOUSAND;
-        long div = id / Digit.THOUSAND;
-        long remaining2 = div % Digit.THOUSAND;
-        String path;
-        if (isImage) {
-            if (isWebPath) {
-                //img url 中存在参数
-                //img_url=http://img%1$s/sparrowzoo.net/%2$s/%3$s/%4$s/%5$s%6$s
-                //http://img1/sparrowzoo.net/1/big/10/1000/uuid.jpg
-                path = ConfigUtility.getValue(File.PATH.IMG_URL)
-                        + "/%2$s/%3$s/%4$s/%5$s%6$s";
-                return String.format(path, remaining, size, remaining2, remaining1,
-                        fileUuid, extension);
-            }
-            //img_unc_0=file://ip1:port/sparrow/img0 参数在key中定义
-            String imgShufflerDir = ConfigUtility.getValue(File.PATH.IMG_SHUFFLER_DIR + "_" + remaining);
-            path = imgShufflerDir
-                    + "/%1$s/%2$s/%3$s/%4$s%5$s";
-            return String.format(path, size, remaining2, remaining1,
-                    fileUuid, extension);
-        }
-        path = ConfigUtility.getValue(File.PATH.FILE_UPLOAD)
-                + "/%1$s/%2$s/%3$s%4$s";
-        return String.format(path, remaining2, remaining1, fileUuid, extension);
-    }
-
     public boolean isImage(String extension) {
         String imageExtension = ConfigUtility
-                .getValue(File.IMAGE_EXTENSION);
+                .getValue(Config.IMAGE_EXTENSION);
         if (StringUtility.isNullOrEmpty(imageExtension)) {
             imageExtension = Constant.IMAGE_EXTENSION;
         }
         return StringUtility.existInArray(imageExtension.split("\\|"), extension);
     }
 
-    /**
-     * 根据站内附件url获取物理路径
-     *
-     * @param filePath
-     * @param size
-     * @return 物理路径
-     */
-    public String getPhysicalPath(String filePath, String size) {
-        FileNameProperty fileNameProperty = this.getFileNameProperty(filePath);
-        String fileId = fileNameProperty.getName();
-        String extension = fileNameProperty.getExtension();
-        return this.getShufflePath(fileId, extension, false,
-                size);
-    }
 
     public void delete(String path, long beforeMillis) {
         java.io.File file = new java.io.File(path);
@@ -572,54 +516,6 @@ public class FileUtility {
         return StringUtility.join(separator, splits);
     }
 
-    /**
-     * 删除文件
-     */
-    public void deleteByFileId(String fileUuid, String clientFileName) {
-        FileNameProperty fileNameProperty = this.getFileNameProperty(clientFileName);
-        String extension = fileNameProperty.getExtension();
-        Boolean isImage = fileNameProperty.isImage();
-        boolean result;
-        if (isImage) {
-            String imageFullPath = FileUtility.getInstance().getShufflePath(
-                    fileUuid,
-                    extension, false, File.SIZE.ORIGIN);
-            java.io.File origin = new java.io.File(imageFullPath);
-            if (origin.exists()) {
-                result = origin.delete();
-                logger.info("deleted file {},result:{}", imageFullPath, result);
-            }
-
-            java.io.File big = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                    File.SIZE.BIG));
-            if (big.exists()) {
-                result = big.delete();
-                logger.info("deleted file {},result:{}", big.getAbsolutePath(), result);
-            }
-
-            java.io.File middle = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                    File.SIZE.MIDDLE));
-            if (middle.exists()) {
-                result = middle.delete();
-                logger.info("deleted file {},result:{}", middle.getAbsolutePath(), result);
-            }
-
-            java.io.File small = new java.io.File(imageFullPath.replace(File.SIZE.ORIGIN,
-                    File.SIZE.SMALL));
-            if (small.exists()) {
-                result = small.delete();
-                logger.info("deleted file {},result:{}", imageFullPath, result);
-            }
-            return;
-        }
-        String attachFileFullName = FileUtility.getInstance().getShufflePath(
-                fileUuid, extension, false, File.SIZE.ATTACH);
-        java.io.File origin = new java.io.File(attachFileFullName);
-        if (origin.exists()) {
-            result = origin.delete();
-            logger.info("deleted file {},result:{}", attachFileFullName, result);
-        }
-    }
 
     public boolean generateImage(String base64str,
                                  String savePath) {

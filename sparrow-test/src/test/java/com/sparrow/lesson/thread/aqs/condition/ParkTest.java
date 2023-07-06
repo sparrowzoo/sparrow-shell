@@ -1,15 +1,18 @@
 package com.sparrow.lesson.thread.aqs.condition;
 
+import java.util.concurrent.locks.LockSupport;
+
 public class ParkTest {
     public static void main(String[] args) {
         Thread thread = new Thread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 while (true) {
-                    if(Thread.currentThread().isInterrupted()) {
-                        System.out.println("do business ....");
-                        System.out.println("closing  ....");
+                    LockSupport.park();
+                    System.out.println(Thread.currentThread().isInterrupted());
+                    if (Thread.currentThread().isInterrupted()) {
+                        System.out.println(Thread.currentThread().isInterrupted());
                         break;
-                        // LockSupport.park();
                     }
                     System.out.println("end...." + Thread.currentThread().isInterrupted());
                 }

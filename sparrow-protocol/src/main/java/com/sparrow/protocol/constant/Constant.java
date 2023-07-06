@@ -41,6 +41,13 @@ public class Constant {
     public static final String VALIDATE_CODE = "validate_code";
     public static final String IMAGE_EXTENSION = ".jpg|.jpeg|.gif|.png";
 
+    /**
+     //     * 静态化错误标记
+     //     */
+    public static final String ERROR_STATIC_HTML = "<!--server error -->";
+
+    public static final String CONTENT_TYPE_IMAGE_PREFIX = "image/";
+
     public static final String CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
     public static final String CONTENT_TYPE_MS_DOWNLOAD = "application/x-msdownload";
 

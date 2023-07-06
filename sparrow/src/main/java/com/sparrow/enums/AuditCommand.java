@@ -25,7 +25,7 @@ public enum AuditCommand {
     /**
      * not pass
      */
-    NO_PASS,
+    REJECT,
     /**
      * delete
      */

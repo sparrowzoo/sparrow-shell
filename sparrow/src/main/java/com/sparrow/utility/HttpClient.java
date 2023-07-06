@@ -17,7 +17,6 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.constant.File;
 import com.sparrow.constant.Regex;
 import com.sparrow.enums.HttpMethod;
 import com.sparrow.protocol.constant.Constant;
@@ -386,8 +385,8 @@ public class HttpClient {
                 logger.error("html is null {}", url);
                 return false;
             }
-            if (html.trim().startsWith(File.ERROR_STATIC_HTML)) {
-                logger.warn(File.ERROR_STATIC_HTML + url);
+            if (html.trim().startsWith(Constant.ERROR_STATIC_HTML)) {
+                logger.warn(Constant.ERROR_STATIC_HTML + url);
                 return false;
             }
             String descDirectoryPath = htmlFileName.substring(0,

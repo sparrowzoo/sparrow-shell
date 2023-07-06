@@ -29,7 +29,7 @@ public class ReentrantLockCaseTest {
             thread1.start();
             Thread.sleep(500);
             thread2.start();
-            thread2.interrupt();
+            thread1.interrupt();
             //注意如果 换成thread2.interrupt();会是什么结果？为什么？
         }
 }

@@ -14,7 +14,7 @@ public class ConditionTest {
      * 2. 避免了在不符合条件的前提下，线程无用的获取同步状态，节省资源
      */
     static Condition empty = lock.newCondition();
-    static AtomicInteger count = new AtomicInteger(10);
+    static AtomicInteger count = new AtomicInteger();
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -23,34 +23,15 @@ public class ConditionTest {
         Thread takes[] = new Thread[threadCount];
         Thread puts[] = new Thread[threadCount];
         for (int i = 0; i < takes.length; i++) {
-            Thread thread = new Thread(conditionTest::take, "T-taking-" + i);
+            Thread thread = new Thread(conditionTest::take, "taking-thread " + i);
             thread.start();
             takes[i] = thread;
         }
         for (int i = 0; i < takes.length; i++) {
-            Thread thread = new Thread(conditionTest::put, "T-putting-" + i);
+            Thread thread = new Thread(conditionTest::put, "putting-thread" + i);
             thread.start();
             puts[i] = thread;
         }
-
-        Thread monitor = new Thread(new Runnable() {
-            @Override public void run() {
-                while (true) {
-                    for (int i = 0; i < 10; i++) {
-                        if (takes[i].getState().equals(Thread.State.TERMINATED)) {
-                            System.out.println(takes[i].getName() + "State" + takes[i].getState());
-                        }
-                    }
-
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                    }
-                    System.out.println(count.get());
-                }
-            }
-        });
-        monitor.start();
     }
 
     public Integer take() {
@@ -59,7 +40,8 @@ public class ConditionTest {
             if (count.get() < 5) {
                 empty.await();
             }
-            System.out.println("taking-" + count.addAndGet(-5) + "- " + Thread.currentThread().getName());
+            count.addAndGet(-5);
+            System.out.println(" taking-" + 5 + Thread.currentThread().getName());
             return 0;
         } catch (Exception e) {
             return 0;
@@ -72,11 +54,13 @@ public class ConditionTest {
         try {
             lock.lockInterruptibly();
             count.getAndIncrement();
+            System.out.println(Thread.currentThread().getName() + "- put");
+
             if (count.get() % 5 == 0) {
                 System.out.println(Thread.currentThread().getName() + "-" + count.get());
                 empty.signal();
             }
-            Thread.sleep(2000);
+            Thread.sleep(100);
         } catch (Exception e) {
         } finally {
             lock.unlock();

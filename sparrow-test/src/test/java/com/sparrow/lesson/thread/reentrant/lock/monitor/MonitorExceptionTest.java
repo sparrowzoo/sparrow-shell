@@ -6,21 +6,32 @@ import java.util.concurrent.locks.ReentrantLock;
 public class MonitorExceptionTest {
     private static Lock mLock = new ReentrantLock();
 
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            final int fi = i;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    test(fi);
-                }
-            }).start();
+    public static void main(String[] args) throws InterruptedException {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test(1);
+            }
+        });
+        t.start();
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test(1);
+            }
+        });
+        t2.start();
+        while (true) {
+            System.out.println(t2.getState());
+            Thread.sleep(1000);
         }
     }
 
     public static void test(int index) {
         try {
-           mLock.lock();//阻塞
+            mLock.tryLock();//阻塞
+            Thread.sleep(5000);
             //mLock.tryLock();// 报错
             System.err.println(index + " run code" + index);
         } catch (Exception e) {
