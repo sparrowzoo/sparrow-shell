@@ -14,17 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.sparrow.mq;
-
-import javax.inject.Inject;
-
-public abstract class AbstractMQHandler<T extends MQEvent> implements MQHandler<T> {
-    @Inject
-    private EventHandlerMappingContainer queueHandlerMappingContainer;
+package com.sparrow.core.algorithm.collections;
 
 
-    public void aware() {
-        queueHandlerMappingContainer.put(this);
-    }
+public interface IdentityGetter<K> {
+    /**
+     * get ID
+     *
+     * @return
+     */
+    K getIdentity();
 }

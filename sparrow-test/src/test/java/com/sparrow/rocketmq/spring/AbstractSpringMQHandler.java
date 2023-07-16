@@ -27,6 +27,6 @@ import com.sparrow.mq.MQEvent;
  */
 public abstract class AbstractSpringMQHandler<T extends MQEvent> extends AbstractMQHandler<T> implements ContainerAware {
     @Override public void aware(Container container, String beanName) {
-        this.aware(beanName);
+        this.aware();
     }
 }
