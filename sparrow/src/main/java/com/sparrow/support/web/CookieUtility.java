@@ -18,33 +18,33 @@
 package com.sparrow.support.web;
 
 import com.sparrow.constant.Config;
+import com.sparrow.constant.User;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.JSUtility;
 import com.sparrow.utility.StringUtility;
-import javax.inject.Named;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Named
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class CookieUtility {
     private static Logger logger = LoggerFactory.getLogger(CookieUtility.class);
 
-    public void set(HttpServletResponse response, String key,
-        String value, int days) {
+    public static void set(HttpServletResponse response, String key,
+                           String value, int days) {
         set(response, key, value, days, null);
     }
 
-    public void setRoot(HttpServletResponse response, String key,
-        String value, int days) {
+    public static void setRoot(HttpServletResponse response, String key,
+                               String value, int days) {
         String domain = ConfigUtility.getValue(Config.ROOT_DOMAIN);
         set(response, key, value, days, domain);
     }
 
-    public void set(HttpServletResponse response, String key,
-        String value, int days, String domain) {
+    public static void set(HttpServletResponse response, String key,
+                           String value, int days, String domain) {
         if (StringUtility.isNullOrEmpty(domain)) {
             domain = ConfigUtility.getValue(Config.DOMAIN);
         }
@@ -61,7 +61,7 @@ public class CookieUtility {
         response.addCookie(cookie);
     }
 
-    public String get(Cookie[] cookies, String key) {
+    public static String get(Cookie[] cookies, String key) {
         logger.debug("get cookie {}", key);
         if (cookies == null || cookies.length == 0) {
             return null;
@@ -76,7 +76,7 @@ public class CookieUtility {
         return null;
     }
 
-    public String getPermission(HttpServletRequest request) {
-        return this.get(request.getCookies(), "permission");
+    public static String getPermission(HttpServletRequest request) {
+        return get(request.getCookies(), User.PERMISSION);
     }
 }

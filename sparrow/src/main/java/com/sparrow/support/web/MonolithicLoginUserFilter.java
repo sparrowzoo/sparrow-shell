@@ -52,7 +52,6 @@ public class MonolithicLoginUserFilter implements Filter {
 
     private Boolean mockLoginUser;
     private Authenticator authenticator;
-
     private List<String> whiteList;
 
     @Override
@@ -71,11 +70,14 @@ public class MonolithicLoginUserFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
-            String loginTokenOfHeader = req.getHeader(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
+            String loginToken = req.getHeader(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
             LoginUser loginUser = null;
-            if (!StringUtility.isNullOrEmpty(loginTokenOfHeader)) {
+            if (StringUtility.isNullOrEmpty(loginToken)) {
+                loginToken = CookieUtility.getPermission(req);
+            }
+            if (!StringUtility.isNullOrEmpty(loginToken)) {
                 try {
-                    loginUser = this.authenticator.authenticate(loginTokenOfHeader, client.getDeviceId());
+                    loginUser = this.authenticator.authenticate(loginToken, client.getDeviceId());
                 } catch (BusinessException e) {
                     logger.error("authenticate error", e);
                     throw new RuntimeException(e);

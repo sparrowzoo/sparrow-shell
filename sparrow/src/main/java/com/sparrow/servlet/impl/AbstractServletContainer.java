@@ -23,8 +23,9 @@ import com.sparrow.support.web.CookieUtility;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.StringUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -34,18 +35,10 @@ import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.TreeMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractServletContainer implements ServletContainer {
     private static Logger logger = LoggerFactory.getLogger(AbstractServletContainer.class);
     private ServletUtility servletUtility = ServletUtility.getInstance();
-    @Inject
-    private CookieUtility cookieUtility;
-
-    public void setCookieUtility(CookieUtility cookieUtility) {
-        this.cookieUtility = cookieUtility;
-    }
 
     @Override
     public String getActionKey() {
@@ -107,12 +100,12 @@ public abstract class AbstractServletContainer implements ServletContainer {
 
     @Override
     public void cookie(String key, String value, Integer expireDays) {
-        cookieUtility.set(this.getResponse(), key, value, expireDays);
+        CookieUtility.set(this.getResponse(), key, value, expireDays);
     }
 
     @Override
     public void rootCookie(String key, String value, Integer expireDays) {
-        cookieUtility.setRoot(this.getResponse(), key, value, expireDays);
+        CookieUtility.setRoot(this.getResponse(), key, value, expireDays);
     }
 
     @Override

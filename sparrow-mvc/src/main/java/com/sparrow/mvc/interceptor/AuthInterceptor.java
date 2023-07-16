@@ -56,8 +56,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         Container container = ApplicationContext.getContainer();
-        CookieUtility cookieUtility = container.getBean(SysObjectName.COOKIE_UTILITY);
-
         if (sparrowServletUtility.getServletUtility().include(httpRequest)) {
             return true;
         }
@@ -80,7 +78,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         String actionName = handlerExecutionChain.getActionName();
         Authenticator authenticator = container.getBean(SysObjectName.AUTHENTICATOR_SERVICE);
-        String permission = cookieUtility.getPermission(httpRequest);
+        String permission = CookieUtility.getPermission(httpRequest);
         String deviceId = this.sparrowServletUtility.getServletUtility().getDeviceId(httpRequest);
         LoginUser user = authenticator.authenticate(permission, deviceId);
         httpRequest.setAttribute(User.ID, user.getUserId());

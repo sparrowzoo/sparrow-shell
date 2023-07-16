@@ -28,9 +28,6 @@
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
     <bean name="sparrowServletContainer" class="com.sparrow.web.support.SparrowServletContainer"/>
-    <bean name="cookieUtility" class="com.sparrow.support.web.CookieUtility">
-        <property name="cacheClient" ref="cacheClient"/>
-    </bean>
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
