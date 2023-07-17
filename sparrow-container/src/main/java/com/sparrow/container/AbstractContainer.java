@@ -26,6 +26,7 @@ import com.sparrow.core.TypeConverter;
 import com.sparrow.exception.DuplicateActionMethodException;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -157,7 +159,7 @@ public abstract class AbstractContainer implements Container {
             try {
                 field = currentClass.getSuperclass().getDeclaredField(propertyName);
             } catch (NoSuchFieldException exception) {
-                logger.error("field not found {} of class  {}", propertyName,currentClass);
+                logger.error("field not found {} of class  {}", propertyName, currentClass);
                 return;
             }
         }
@@ -259,6 +261,9 @@ public abstract class AbstractContainer implements Container {
         Method[] methods = beanClass.getMethods();
         for (Method method : methods) {
             String methodName = method.getName();
+            if (methodName.equals("getClass")) {
+                continue;
+            }
             if (methodName.startsWith("get")) {
                 typeConverterList.add(new TypeConverter(PropertyNamer.methodToProperty(methodName), method.getReturnType()));
             }
