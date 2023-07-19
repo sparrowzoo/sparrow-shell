@@ -25,7 +25,7 @@ public class Regex {
      * 常用匹配模式选项
      */
     public static final int OPTION = Pattern.MULTILINE
-        | Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ;
+            | Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ;
 
     /**
      * 破坏的HTML标签 br除外
@@ -102,9 +102,10 @@ public class Regex {
 
     /**
      * 密码格式
+     * 至少8个字符，至少1个字母，1个数字和1个特殊字符
      */
-    public static final String PASSWORD = "^[\\w!@#$%\\^&\\*\\(\\)_]{6,20}$";
+    public static final String PASSWORD = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
 
     public static final Pattern BAIDU_IMAGE_SEARCH = Pattern.compile(
-        "var imgdata=([\\s\\S]*?)<\\/script>", Regex.OPTION);
+            "var imgdata=([\\s\\S]*?)<\\/script>", Regex.OPTION);
 }
