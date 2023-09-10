@@ -15,11 +15,24 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.test.cron;
 
-public enum Order {
+import com.sparrow.constant.DateTime;
+import com.sparrow.enums.DateTimeUnit;
+import com.sparrow.support.cron.CronExpression;
+import com.sparrow.utility.DateTimeUtility;
 
-    ASC,
+import java.text.ParseException;
+import java.util.Date;
 
-    DESC
+public class CronTest {
+    public static void main(String[] args) throws ParseException {
+        Date nextValidTime = new Date();
+        for (int i = 0; i < 10; i++) {
+            nextValidTime = new CronExpression("0 0 2 1 * ? ").getNextValidTimeAfter(nextValidTime);
+
+//            nextValidTime = new CronExpression("0 0 10/1 * * ?").getNextValidTimeAfter(nextValidTime);
+            System.out.println(DateTimeUtility.getFormatTime(nextValidTime, DateTime.FORMAT_YYYY_MM_DD_HH_MM_SS));
+        }
+    }
 }

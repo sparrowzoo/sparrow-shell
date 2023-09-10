@@ -15,11 +15,26 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.test;
 
-public enum Order {
+import com.sparrow.enums.Order;
+import com.sparrow.support.MapValueComparator;
+import com.sparrow.utility.CollectionsUtility;
 
-    ASC,
+import java.util.*;
 
-    DESC
+public class HashMapSortTest {
+    public static void main(String[] args) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("1", 100);
+        map.put("2", 200);
+        map.put("3", 200);
+
+        List<Map.Entry<String, Integer>> result = CollectionsUtility.sortMapByValue(map, Order.ASC);
+        System.out.println(result);
+
+        TreeMap<String, Integer> treeMap = new TreeMap<>(new MapValueComparator<>(map, Order.DESC));
+        treeMap.putAll(map);
+        System.out.println(treeMap);
+    }
 }

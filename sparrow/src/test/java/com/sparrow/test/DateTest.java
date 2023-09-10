@@ -15,11 +15,19 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.test;
 
-public enum Order {
+import com.sparrow.utility.DateTimeUtility;
 
-    ASC,
+import java.util.Calendar;
 
-    DESC
+public class DateTest {
+    public static void main(String[] args) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        System.out.println(DateTimeUtility.getFormatTime(calendar.getTime(),"MM-dd"));
+    }
 }

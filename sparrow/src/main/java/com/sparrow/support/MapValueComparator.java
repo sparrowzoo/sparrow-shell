@@ -22,26 +22,28 @@ import com.sparrow.enums.Order;
 import java.util.Comparator;
 import java.util.Map;
 
-public class MapValueComparator<T> implements Comparator<T> {
-    Map<T, Double> map;
+public class MapValueComparator<T, V extends Comparable<V>> implements Comparator<T> {
+    private Map<T, V> map;
 
-    Order order;
+    private Order order;
 
-    public MapValueComparator(Map<T, Double> map, Order order) {
+    public MapValueComparator(Map<T, V> map, Order order) {
         this.map = map;
-        order = order;
+        this.order = order;
     }
 
-    public MapValueComparator(Map<T, Double> map) {
+    public MapValueComparator(Map<T, V> map) {
         this.map = map;
         order = Order.DESC;
     }
 
     @Override
     public int compare(T a, T b) {
-        if (map.get(a) >= map.get(b)) {
-            return order == Order.DESC ? -1 : 1;
+        int result = this.map.get(a).compareTo(this.map.get(b));
+        if (result == 0) {
+            //按value 排序，保证数据不丢
+            return this.order.equals(Order.ASC) ? 1 : -1;
         }
-        return order == Order.DESC ? 1 : -1;
+        return this.order.equals(Order.ASC) ? result : -result;
     }
 }

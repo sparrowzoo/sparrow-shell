@@ -17,26 +17,19 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.ClientInformation;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.ThreadContext;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.support.Authenticator;
 import com.sparrow.utility.StringUtility;
-
-import java.io.IOException;
-import java.util.List;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 单体应用解析，需要签名认证
@@ -78,7 +71,7 @@ public class MonolithicLoginUserFilter implements Filter {
             if (!StringUtility.isNullOrEmpty(loginToken)) {
                 try {
                     loginUser = this.authenticator.authenticate(loginToken, client.getDeviceId());
-                } catch (BusinessException e) {
+                } catch (Exception e) {
                     logger.error("authenticate error", e);
                     throw new RuntimeException(e);
                 }
@@ -94,7 +87,11 @@ public class MonolithicLoginUserFilter implements Filter {
             }
             ThreadContext.bindLoginToken(loginUser);
         }
-        filterChain.doFilter(servletRequest, servletResponse);
+        try {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ThreadContext.clearToken();
     }
 

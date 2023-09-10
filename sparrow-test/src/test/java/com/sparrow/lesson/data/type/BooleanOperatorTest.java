@@ -9,7 +9,6 @@ public class BooleanOperatorTest {
         boolean b = true;
         System.out.println(b & false);
         System.out.println(b && false);
-
         System.out.println(b | false);
         System.out.println(b || false);
     }

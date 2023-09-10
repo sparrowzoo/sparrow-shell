@@ -64,12 +64,12 @@ public class KeyAnalyzer {
     //某一特定词语的IDF，可以由总文件数目除以包含该词语之文件的数目，再将得到的商取对数得到
     public double getIDF(String keyWord) {
         String line = FileUtility.getInstance().search(lucenceIdfKeywordsPath, keyWord,
-            4096, new Comparator<String>() {
-                @Override
-                public int compare(String currentWord, String keyword) {
-                    return currentWord.compareTo(keyword);
-                }
-            }, 50);
+                4096, new Comparator<String>() {
+                    @Override
+                    public int compare(String currentWord, String keyword) {
+                        return currentWord.compareTo(keyword);
+                    }
+                }, 50);
         if (!StringUtility.isNullOrEmpty(line)) {
             Pair<String, String> termPair = Pair.split(line, "\\|");
             return Double.valueOf(termPair.getSecond());
@@ -83,23 +83,23 @@ public class KeyAnalyzer {
             return true;
         }
         String line = FileUtility.getInstance().search(lucenceDisableKeywordsPath, keyword, 100,
-            new Comparator<String>() {
-                @Override
-                public int compare(String currentWord, String keyword) {
-                    return currentWord.compareTo(keyword);
-                }
-            }, 20);
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String currentWord, String keyword) {
+                        return currentWord.compareTo(keyword);
+                    }
+                }, 20);
         return !StringUtility.isNullOrEmpty(line);
     }
 
     public boolean isEnable(String keyword) {
         String line = FileUtility.getInstance().search(lucenceEnableKeywordsPath, keyword, 100,
-            new Comparator<String>() {
-                @Override
-                public int compare(String currentWord, String keyword) {
-                    return currentWord.compareTo(keyword);
-                }
-            }, 20);
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String currentWord, String keyword) {
+                        return currentWord.compareTo(keyword);
+                    }
+                }, 20);
         return !StringUtility.isNullOrEmpty(line);
     }
 
@@ -107,11 +107,11 @@ public class KeyAnalyzer {
         TokenStream tokens = null;
         try {
             tokens = analyzer.tokenStream("",
-                new StringReader(text));
+                    new StringReader(text));
             OffsetAttribute offsetAttr = tokens
-                .getAttribute(OffsetAttribute.class);
+                    .getAttribute(OffsetAttribute.class);
             CharTermAttribute charTermAttr = tokens
-                .getAttribute(CharTermAttribute.class);
+                    .getAttribute(CharTermAttribute.class);
             PositionIncrementAttribute positionIncrementAttribute = tokens.getAttribute(PositionIncrementAttribute.class);
             TypeAttribute typeAttribute = tokens.getAttribute(TypeAttribute.class);
 
@@ -136,7 +136,7 @@ public class KeyAnalyzer {
             while (tokens.incrementToken()) {
                 char[] charBuf = charTermAttr.buffer();
                 String term = new String(charBuf, 0, offsetAttr.endOffset()
-                    - offsetAttr.startOffset());
+                        - offsetAttr.startOffset());
                 LexemeWithBoost lexeme = new LexemeWithBoost(positionIncrementAttribute.getPositionIncrement() - 1, offsetAttr.startOffset(), term.length(), typeAttribute.type());
                 lexeme.setLexemeText(term);
                 list.add(lexeme);
@@ -174,11 +174,11 @@ public class KeyAnalyzer {
         List<String> tagList = new ArrayList<String>();
         try {
             TokenStream tokens = analyzer.tokenStream("",
-                new StringReader(text));
+                    new StringReader(text));
             OffsetAttribute offsetAttr = tokens
-                .getAttribute(OffsetAttribute.class);
+                    .getAttribute(OffsetAttribute.class);
             CharTermAttribute charTermAttr = tokens
-                .getAttribute(CharTermAttribute.class);
+                    .getAttribute(CharTermAttribute.class);
 
             Map<String, Integer> termCount = new HashMap<String, Integer>();
             double termSum = 0;
@@ -201,7 +201,7 @@ public class KeyAnalyzer {
             while (tokens.incrementToken()) {
                 char[] charBuf = charTermAttr.buffer();
                 String term = new String(charBuf, 0, offsetAttr.endOffset()
-                    - offsetAttr.startOffset());
+                        - offsetAttr.startOffset());
 
 //                if (!this.isEnable(term)) {
 //                    continue;
@@ -220,7 +220,7 @@ public class KeyAnalyzer {
                 //指的是某一个给定的词语在该文件中出现的次数。这个数字通常会被正规化，以防止它偏向长的文件
                 Double tf = termCount.get(key) / termSum;
                 Double weight = tf
-                    * this.getIDF(key);
+                        * this.getIDF(key);
                 termWeight.put(key, weight);
             }
             // 关键词个数 100=2 1000=3 etc ...
@@ -232,7 +232,7 @@ public class KeyAnalyzer {
                 keyCount = 2;
             }
 
-            Map<String, Double> valueSortedWeight = new TreeMap<String, Double>(new MapValueComparator<String>(termWeight));
+            Map<String, Double> valueSortedWeight = new TreeMap<String, Double>(new MapValueComparator<>(termWeight));
             valueSortedWeight.putAll(termWeight);
             for (String term : valueSortedWeight.keySet()) {
                 if (tagList.size() >= keyCount) {

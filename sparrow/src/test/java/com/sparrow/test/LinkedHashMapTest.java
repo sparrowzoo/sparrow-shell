@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.test;
 
-public enum Order {
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
-    ASC,
-
-    DESC
+public class LinkedHashMapTest {
+    public static void main(String[] args) {
+        LinkedHashMap<Long, AtomicLong> linkedHashMap = new LinkedHashMap<Long, AtomicLong>();
+        //linkedHashMap.put(1L, new AtomicLong(0));
+        Iterator it = linkedHashMap.keySet().iterator();
+        if(it.hasNext()){
+        it.next();
+        it.remove();
+        }
+    }
 }

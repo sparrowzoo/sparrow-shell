@@ -124,6 +124,10 @@ public class HttpClient {
         return post(HttpMethod.PUT, pageUrl, json, "application/json");
     }
 
+    public static String postJson(String pageUrl, String json) {
+        return post(HttpMethod.POST, pageUrl, json, "application/json");
+    }
+
     public static String post(HttpMethod method, String pageUrl, String data,
                               String contentType) {
         return request(method, pageUrl, data, contentType, null, false);

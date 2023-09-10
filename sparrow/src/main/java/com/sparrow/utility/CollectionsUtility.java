@@ -17,7 +17,10 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.enums.Order;
+
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class CollectionsUtility {
 
@@ -74,5 +77,77 @@ public class CollectionsUtility {
             }
             map.put(key, value);
         }
+    }
+
+
+    /**
+     * 非线程安全，注册上层加锁控制
+     *
+     * @param linkedHashMap
+     * @param key
+     * @param limit
+     * @param <K>
+     */
+    public static <K> void incrementByKey(LinkedHashMap<K, AtomicLong> linkedHashMap, K key, Integer limit) {
+        if (linkedHashMap == null) {
+            return;
+        }
+        if (linkedHashMap.containsKey(key)) {
+            linkedHashMap.get(key).incrementAndGet();
+            return;
+        }
+        linkedHashMap.put(key, new AtomicLong(1));
+        if (linkedHashMap.size() > limit) {
+            //移掉第一个
+            Iterator<Map.Entry<K, AtomicLong>> it = linkedHashMap.entrySet().iterator();
+            if (it.hasNext()) {
+                it.next();
+                it.remove();
+            }
+        }
+    }
+
+    /**
+     * 相较于MapValueComparator 更安全
+     * <p>
+     * 而且即使取top 也需要将所有对象put进treemap
+     * 效率相当
+     *
+     * @param map
+     * @param order
+     * @param <K>
+     * @param <V>
+     * @return
+     */
+    public static <K, V extends Comparable<V>> List<Map.Entry<K, V>> sortMapByValue(Map<K, V> map, Order order) {
+        if (map == null) {
+            return null;
+        }
+        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort((o1, o2) -> {
+            if (order.equals(Order.ASC)) {
+                return o1.getValue().compareTo(o2.getValue());
+            } else {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        return list;
+    }
+
+    public static <K, V> List<Map.Entry<K, V>> sortMapByValue(Map<K, V> map, Order order, Comparator<V> comparator) {
+        if (map == null) {
+            return null;
+        }
+        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort((o1, o2) -> {
+            if (o1.equals(o2)) {
+                return 0;
+            }
+            if (order.equals(Order.ASC)) {
+                return comparator.compare(o1.getValue(), o2.getValue());
+            }
+            return comparator.compare(o2.getValue(), o1.getValue());
+        });
+        return list;
     }
 }
