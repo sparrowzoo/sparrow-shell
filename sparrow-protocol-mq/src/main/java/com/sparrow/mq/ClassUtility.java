@@ -18,6 +18,7 @@
 package com.sparrow.mq;
 
 import com.sparrow.protocol.constant.magic.Symbol;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.JarURLConnection;
@@ -30,6 +31,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +39,7 @@ public class ClassUtility {
     private static Logger logger = LoggerFactory.getLogger(ClassUtility.class);
 
     public static List<Class> getClasses(
-        String packageName) throws ClassNotFoundException, IOException, URISyntaxException {
+            String packageName) throws ClassNotFoundException, IOException, URISyntaxException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String path = packageName.replace(Symbol.DOT, Symbol.SLASH);
         Enumeration<URL> resources = classLoader.getResources(path);
@@ -49,7 +51,7 @@ public class ClassUtility {
                 classes.addAll(findClass(directory, packageName));
             } else if ("jar".equalsIgnoreCase(resource.getProtocol())) {
                 classes.addAll(findClass(((JarURLConnection) resource.openConnection())
-                    .getJarFile(), path));
+                        .getJarFile(), path));
             }
         }
         return classes;
@@ -63,7 +65,7 @@ public class ClassUtility {
                 JarEntry jarEntry = entries.nextElement();
                 if (jarEntry.getName().startsWith(packagePath) && jarEntry.getName().endsWith(".class")) {
                     Class implClass = Class.forName(jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
-                        .substring(0, jarEntry.getName().indexOf(Symbol.DOT)));
+                            .substring(0, jarEntry.getName().indexOf(Symbol.DOT)));
                     if (!implClass.isInterface()) {
                         classes.add(implClass);
                     }

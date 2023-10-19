@@ -17,10 +17,6 @@
 
 package com.sparrow.mq;
 
-import com.sparrow.cache.Key;
-
 public interface MQPublisher {
-    void publish(MQEvent event, Key productKey) throws Throwable;
-
     void publish(MQEvent event) throws Throwable;
 }

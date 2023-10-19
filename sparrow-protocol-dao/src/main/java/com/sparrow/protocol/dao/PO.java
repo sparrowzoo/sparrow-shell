@@ -20,7 +20,6 @@ package com.sparrow.protocol.dao;
 
 import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.POJO;
-import com.sparrow.protocol.enums.StatusRecord;
 
 import javax.persistence.Column;
 
@@ -31,7 +30,6 @@ public class PO implements POJO {
     private String modifiedUserName;
     private Long gmtCreate;
     private Long gmtModified;
-    private StatusRecord status;
 
     public void setCreateUserId(Long createUserId) {
         this.createUserId = createUserId;
@@ -47,16 +45,6 @@ public class PO implements POJO {
 
     public void setGmtModified(Long gmtModified) {
         this.gmtModified = gmtModified;
-    }
-
-    public void setStatus(StatusRecord status) {
-        this.status = status;
-    }
-
-    @MethodOrder(order = 100)
-    @Column(name = "status", columnDefinition = "tinyint(3) UNSIGNED DEFAULT 0 COMMENT 'STATUS'", nullable = false)
-    public StatusRecord getStatus() {
-        return status;
     }
 
     @MethodOrder(order = 101)

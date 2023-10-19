@@ -21,11 +21,11 @@
     <parent>
         <groupId>com.sparrowzoo</groupId>
         <artifactId>sparrow-bom</artifactId>
-        <version>1.0.3.1-RELEASE</version>
+        <version>1.0.4-RELEASE</version>
         <relativePath/>
     </parent>
     <artifactId>sparrow-mvc</artifactId>
-    <version>1.0.3.1-RELEASE</version>
+    <version>1.0.4-RELEASE</version>
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>

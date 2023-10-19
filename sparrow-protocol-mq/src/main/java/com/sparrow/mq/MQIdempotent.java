@@ -16,10 +16,10 @@
  */
 package com.sparrow.mq;
 
-import com.sparrow.cache.exception.CacheConnectionException;
-
 public interface MQIdempotent {
-    boolean tryLock(String keys,Long expireMills) throws CacheConnectionException;
+    boolean tryLock(String keys, Long expireMills);
+
     boolean duplicate(String keys);
-    boolean consumed(String keys,Integer seconds);
+
+    boolean consumed(String keys, Integer seconds);
 }

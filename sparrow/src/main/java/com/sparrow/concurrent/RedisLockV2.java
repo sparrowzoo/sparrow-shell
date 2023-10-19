@@ -17,20 +17,20 @@
 
 package com.sparrow.concurrent;
 
-import com.sparrow.cache.CacheClient;
-import com.sparrow.cache.Key;
-import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
-import java.util.concurrent.locks.ReentrantLock;
 
-public class RedisLockV2 extends AbstractLock {
-    private CacheClient cacheClient;
-
-    public void setCacheClient(CacheClient cacheClient) {
-        this.cacheClient = cacheClient;
+public abstract class RedisLockV2 extends AbstractLock {
+    @Override
+    protected boolean delete(String key) {
+        return false;
     }
 
-    private ReentrantLock localLock = new ReentrantLock();
+    @Override
+    protected String get(String key) {
+        return null;
+    }
+
+    protected abstract boolean setIfNotExistWithMills(String key, Long unique, long expireMillis);
 
     /**
      * 1. 不能死锁
@@ -44,46 +44,43 @@ public class RedisLockV2 extends AbstractLock {
      * @return
      */
     @Override
-    protected Boolean tryAcquire(Key key, long expireMillis) {
+    protected Boolean tryAcquire(String key, long expireMillis) {
         //系统时间+设置的过期时间
-        long unique = this.setGetUnique();
-        String expiresValue = unique + "";
+        long unique = this.setGetMillisTimeUnique();
         //https://www.cnblogs.com/somefuture/p/13690961.html
         //毫秒和纳秒使用场景不同
         try {
-            if (!localLock.tryLock()) {
-                return false;
-            }
-            if (cacheClient.string().setIfNotExistWithMills(key, expiresValue,expireMillis)) {
+            /**
+             * SetParams setParams = new SetParams();
+             * setParams.nx().px(expireMills);
+             * return "OK".equalsIgnoreCase(jedis.set(key.key(), v, setParams));
+             */
+            if (this.setIfNotExistWithMills(key, unique, expireMillis)) {
                 // 如果当前锁不存在，返回加锁成功
                 logger.error("first got lock successful");
                 return true;
             }
             //其他情况，均返回加锁失败
             return false;
-        } catch (CacheConnectionException e) {
+        } catch (Exception e) {
             //链接失败 加锁失败
-            logger.error("{} get connection fail", key.key(), e);
+            logger.error("{} get connection fail", key, e);
             return false;
-        } finally {
-            if (localLock.isHeldByCurrentThread()) {
-                localLock.unlock();
-            }
         }
     }
 
-    public Boolean release(Key key) {
+    public Boolean release(String key) {
         try {
-            String value = cacheClient.string().get(key);
+            String value = this.get(key);
             if (StringUtility.isNullOrEmpty(value)) {
                 return false;
             }
             //todo 保证原子性
-            if (Long.valueOf(value).equals(this.getUnique())) {
-                return cacheClient.key().delete(key) > 0;
+            if (Long.parseLong(value) == this.getMillisTimeUnique()) {
+                return this.delete(key);
             }
             return false;
-        } catch (CacheConnectionException e) {
+        } catch (Exception e) {
             return false;
         } finally {
             this.removeUnique();

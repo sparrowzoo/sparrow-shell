@@ -16,7 +16,6 @@
  */
 package com.sparrow.container.impl;
 
-import com.sparrow.cache.exception.CacheNotFoundException;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.AbstractContainer;
@@ -36,7 +35,9 @@ import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.Initializer;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
+
 import java.util.Iterator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,7 +122,7 @@ public class SparrowContainer extends AbstractContainer {
             logger.info("-------------init initializer ...--------------------------");
             if (builder.isInitSingletonBean()) {
                 Initializer initializer = this.getBean(
-                    SysObjectName.INITIALIZER);
+                        SysObjectName.INITIALIZER);
 
                 if (initializer != null) {
                     initializer.init(this);
@@ -169,23 +170,23 @@ public class SparrowContainer extends AbstractContainer {
         }
     }
 
-    private void initSystemConfig() throws CacheNotFoundException {
+    private void initSystemConfig() {
         if (StringUtility.isNullOrEmpty(this.builder.getConfigLocation())) {
             return;
         }
         ConfigUtility.initSystem(this.builder.getConfigLocation());
         String internationalization = ConfigUtility
-            .getValue(Config.INTERNATIONALIZATION);
+                .getValue(Config.INTERNATIONALIZATION);
 
         if (StringUtility.isNullOrEmpty(internationalization)) {
             internationalization = ConfigUtility
-                .getValue(Config.LANGUAGE);
+                    .getValue(Config.LANGUAGE);
         }
         if (StringUtility.isNullOrEmpty(internationalization)) {
             internationalization = Constant.DEFAULT_LANGUAGE;
         }
         String[] internationalizationArray = internationalization
-            .split(Symbol.COMMA);
+                .split(Symbol.COMMA);
         for (String i18n : internationalizationArray) {
             ConfigUtility.initInternationalization(i18n);
         }

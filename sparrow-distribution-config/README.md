@@ -1,1 +1,0 @@
-# sparrow-distribution-config

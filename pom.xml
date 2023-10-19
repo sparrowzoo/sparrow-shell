@@ -39,8 +39,6 @@
         <module>sparrow-json</module>
         <module>sparrow-log</module>
         <module>sparrow-rocketmq-client</module>
-        <module>sparrow-jedis</module>
-        <module>sparrow-jedis-cluster</module>
         <module>sparrow-markdown</module>
         <module>sparrow-registry</module>
         <module>sparrow-aop</module>
@@ -50,9 +48,7 @@
         <module>sparrow-test</module>
         <module>sparrow-protocol-dao</module>
         <module>sparrow-protocol-mq</module>
-        <module>sparrow-protocol-redis</module>
         <module>sparrow-mvc-thymeleaf</module>
-        <!--<module>sparrow-lettuce-cluster</module>-->
     </modules>
 
     <build>

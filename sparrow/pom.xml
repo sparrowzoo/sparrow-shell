@@ -23,12 +23,12 @@
     <parent>
         <groupId>com.sparrowzoo</groupId>
         <artifactId>sparrow-bom</artifactId>
-        <version>1.0.3.1-RELEASE</version>
+        <version>1.0.4-RELEASE</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow</artifactId>
-    <version>1.0.3.1-RELEASE</version>
+    <version>1.0.4-RELEASE</version>
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -60,7 +60,7 @@
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
-            <artifactId>sparrow-protocol-redis</artifactId>
+            <artifactId>sparrow-protocol-mq</artifactId>
         </dependency>
     </dependencies>
     <build>

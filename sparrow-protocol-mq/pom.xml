@@ -5,19 +5,19 @@
     <parent>
         <artifactId>sparrow-bom</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>1.0.3.1-RELEASE</version>
+        <version>1.0.4-RELEASE</version>
         <relativePath/>
 
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0.3.1-RELEASE</version>
+    <version>1.0.4-RELEASE</version>
 
     <artifactId>sparrow-protocol-mq</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
-            <artifactId>sparrow-protocol-redis</artifactId>
+            <artifactId>sparrow-protocol</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

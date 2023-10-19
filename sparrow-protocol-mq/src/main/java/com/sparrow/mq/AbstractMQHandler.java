@@ -23,7 +23,6 @@ public abstract class AbstractMQHandler<T extends MQEvent> implements MQHandler<
     @Inject
     private EventHandlerMappingContainer queueHandlerMappingContainer;
 
-
     public void aware() {
         queueHandlerMappingContainer.put(this);
     }

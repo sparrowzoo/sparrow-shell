@@ -17,20 +17,22 @@
 
 package com.sparrow.concurrent;
 
-import com.sparrow.cache.CacheClient;
-import com.sparrow.cache.Key;
-import com.sparrow.cache.exception.CacheConnectionException;
 import com.sparrow.utility.StringUtility;
-import java.util.concurrent.locks.ReentrantLock;
 
-public class RedisLock extends AbstractLock {
-    private CacheClient cacheClient;
-
-    public void setCacheClient(CacheClient cacheClient) {
-        this.cacheClient = cacheClient;
+public abstract class RedisLock extends AbstractLock {
+    public Long setGetMillisTimeUnique() {
+        Long unique = System.currentTimeMillis();
+        this.uniques.set(unique);
+        return unique;
     }
 
-    private ReentrantLock localLock = new ReentrantLock();
+    protected abstract boolean setIfNotExist(String key, Long currentMills);
+
+    protected abstract void expireMillis(String key, Long expireMillis);
+
+    protected abstract String getSet(String key, Long currentMills);
+
+    protected abstract long ttl(String key);
 
     /**
      * 1. 不能死锁
@@ -44,96 +46,100 @@ public class RedisLock extends AbstractLock {
      * @return
      */
     @Override
-    protected Boolean tryAcquire(Key key, long expireMillis) {
+    protected Boolean tryAcquire(String key, long expireMillis) {
         //系统时间+设置的过期时间
-        long unique = this.setGetUnique();
-        String expiresValue = unique + "";
+        Long currentMills = this.setGetMillisTimeUnique();
         //https://www.cnblogs.com/somefuture/p/13690961.html
         //毫秒和纳秒使用场景不同
         //long expireAt = System.currentTimeMillis() + expireMillis;
         try {
-            if (!localLock.tryLock()) {
-                return false;
-            }
-            if (cacheClient.string().setIfNotExist(key, expiresValue)) {
-                //过期时间
-                cacheClient.key().expireMillis(key,expireMillis);
+            //setnx and expire 非原子操作
+            if (this.setIfNotExist(key, currentMills)) {
+                /**
+                 * setnx 和 expire 不是原子性的操作，假设某个线程执行setnx 命令，
+                 * 成功获得了锁，但是还没来得及执行expire 命令，服务器就挂掉了，
+                 * 这样一来，这把锁就没有设置过期时间了，变成了死锁，
+                 * 别的线程再也没有办法获得锁了。
+                 */
+                this.expireMillis(key, expireMillis);
                 // 如果当前锁不存在，返回加锁成功
                 logger.error("first got lock successful");
                 return true;
             }
 
             // 如果锁已经存在，获取锁的过期时间
-            String currentLockValue = cacheClient.string().get(key);
+            String lockCreatedUnique = this.get(key);
             // 特别的，当已存在的锁currentLockValue为空时，应该重新SETNX
-            if (currentLockValue == null) {
-                if (cacheClient.string().setIfNotExist(key, expiresValue)) {
-                    cacheClient.key().expireMillis(key, expireMillis);
+            if (lockCreatedUnique == null) {
+                if (this.setIfNotExist(key, currentMills)) {
+                    this.expireMillis(key, expireMillis);
                     // 如果当前锁不存在，返回加锁成功
                     logger.info("first got lock successful");
                     return true;
                 }
             }
             // 如果获取到的过期时间，小于系统当前时间，表示已经过期
-            if (currentLockValue != null) {
-                long currentLockExpires = Long.parseLong(currentLockValue);
-                if (this.isExpire(currentLockExpires, expireMillis)) {
-                    Long ttl = cacheClient.key().ttl(key);
+            //currentLockValue != null
+            else {
+                long lockCreatedMillis = Long.parseLong(lockCreatedUnique);
+                //set ex 未设置的情况
+                if (this.isExpire(lockCreatedMillis, expireMillis)) {
+                    Long ttl = this.ttl(key);
                     logger.error("ttl {}", ttl);
-
                     // 锁已过期，获取上一个锁的过期时间，并设置现在锁的过期时间
                     //todo getSet 不是原子的？ 没拿到锁，但是内容已经改变，线程ID已经变了
-                    String oldLockValue = cacheClient.string().getSet(key, expiresValue);
-                    if (oldLockValue == null) {
-                        cacheClient.key().expireMillis(key, expireMillis);
+                    /**
+                     * 如果前一个锁超时的时候，刚好有多台服务器去请求获取锁，
+                     * 那么就会出现同时执行redis.getset()而导致出现过期时间覆盖问题，
+                     * 不过这种情况并不会对正确结果造成影响
+                     */
+                    String oldLockUnique = this.getSet(key, currentMills);
+                    if (oldLockUnique == null) {
+                        this.expireMillis(key, expireMillis);
                         return true;
                     }
-                    // 考虑多进程(当前进程不可能)并发的情况，只有一个线程的设置值和当前值相同，它才可以加锁
-                    if (oldLockValue.equals(currentLockValue)) {
-                        cacheClient.key().expireMillis(key, expireMillis);
+
+                    // 考虑线程并发的情况，只有一个线程的设置值和当前值相同，它才可以加锁
+                    if (oldLockUnique.equals(lockCreatedUnique)) {
+                        this.expireMillis(key, expireMillis);
                         logger.error("getset got lock not expire current:{}-redis:{}",
-                            expiresValue,
-                            currentLockValue);
+                                currentMills,
+                                lockCreatedUnique);
                         return true;
                     } else {
                         logger.error("lock fail but set expire current:{}-redis:{}",
-                            expiresValue,
-                            currentLockValue);
+                                currentMills,
+                                lockCreatedUnique);
                     }
                     return false;
-                } else {
-                    //未过期
-                    if (this.getUnique() == currentLockExpires) {
-                        //reentrant lock
-                        logger.info("current:{}-redis:{} reentrant-lock", expiresValue, currentLockValue);
-                        return true;
-                    }
+                }
+                //未过期
+                if (this.getMillisTimeUnique() == lockCreatedMillis) {
+                    //reentrant lock
+                    logger.info("current:{}-redis:{} reentrant-lock", currentMills, lockCreatedUnique);
+                    return true;
                 }
             }
             //其他情况，均返回加锁失败
             return false;
-        } catch (CacheConnectionException e) {
+        } catch (Exception e) {
             //链接失败 加锁失败
-            logger.error("{} get connection fail", key.key(), e);
+            logger.error("{} get connection fail", key, e);
             return false;
-        } finally {
-            if (localLock.isHeldByCurrentThread()) {
-                localLock.unlock();
-            }
         }
     }
 
-    public Boolean release(Key key) {
+    public Boolean release(String key) {
         try {
-            String value = cacheClient.string().get(key);
+            String value = this.get(key);
             if (StringUtility.isNullOrEmpty(value)) {
                 return false;
             }
-            if (Long.valueOf(value).equals(this.getUnique())) {
-                return cacheClient.key().delete(key) > 0;
+            //可能由于锁覆盖导致无法删除
+            //V2.0 不存在该情况
+            if (Long.parseLong(value) == this.getMillisTimeUnique()) {
+                return this.delete(key);
             }
-            return false;
-        } catch (CacheConnectionException e) {
             return false;
         } finally {
             this.removeUnique();

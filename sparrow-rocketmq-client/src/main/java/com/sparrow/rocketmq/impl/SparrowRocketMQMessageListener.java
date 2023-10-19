@@ -17,7 +17,6 @@
 
 package com.sparrow.rocketmq.impl;
 
-import com.sparrow.cache.Key;
 import com.sparrow.mq.*;
 import com.sparrow.rocketmq.MessageConverter;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
@@ -52,7 +51,7 @@ public class SparrowRocketMQMessageListener implements MessageListenerConcurrent
         this.messageConverter = messageConverter;
     }
 
-    protected boolean duplicate(MQEvent event, Key consumerKey, String keys) {
+    protected boolean duplicate(MQEvent event, String keys) {
         return mqIdempotent != null && mqIdempotent.duplicate(keys);
     }
 
@@ -80,10 +79,19 @@ public class SparrowRocketMQMessageListener implements MessageListenerConcurrent
                     return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                 }
                 MQEvent event = messageConverter.fromMessage(message);
+                //确定已经成功消费则返回
+                if (this.mqIdempotent.duplicate(message.getKeys())) {
+                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                }
+
+                //尝试拿锁失败
                 if (!this.mqIdempotent.tryLock(message.getKeys(), this.getLockMills())) {
+                    //已经确定消费成功
                     if (this.mqIdempotent.duplicate(message.getKeys())) {
                         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-                    } else {
+                    }
+                    //未消费成功
+                    else {
                         return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                     }
                 }

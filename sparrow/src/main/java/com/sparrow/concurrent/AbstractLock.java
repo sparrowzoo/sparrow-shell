@@ -17,7 +17,6 @@
 
 package com.sparrow.concurrent;
 
-import com.sparrow.cache.Key;
 import com.sparrow.utility.DateTimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,28 +24,36 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractLock {
     protected static Logger logger = LoggerFactory.getLogger(AbstractLock.class);
 
-    private ThreadLocal<Long> uniques = new ThreadLocal<>();
-
+    /**
+     * 毫秒级唯一key，因为分布式锁，同一时刻只能有一个线程拿到锁
+     * 所以毫秒级时间戮可以唯一标识一个锁
+     * 为支持1.0 版本，由于setnx exp非原子操作，导致exp 可能失效.
+     */
+    protected ThreadLocal<Long> uniques = new ThreadLocal<>();
     public static final String SUCCESS = "SUCCESS";
     public static final String RETRY_TIMEOUT = "RETRY_TIMEOUT";
     public static final String FAIL = "FAIL";
 
-    protected long getUnique() {
+    protected abstract boolean delete(String key);
+
+    protected abstract String get(String key);
+
+    protected Long getMillisTimeUnique() {
         return this.uniques.get();
     }
 
-    protected long setGetUnique() {
-        long nanoTime = System.nanoTime();
-        this.uniques.set(nanoTime);
-        return nanoTime;
+    protected Long setGetMillisTimeUnique() {
+        Long unique = System.currentTimeMillis();
+        this.uniques.set(unique);
+        return unique;
     }
 
-    protected void monitor(Key key, String status) {
-        logger.info("LOCK-MONITOR KEY={},STATUS={}", key.key(), status);
+    protected void monitor(String key, String status) {
+        logger.info("LOCK-MONITOR KEY={},STATUS={}", key, status);
     }
 
     protected boolean isExpire(long lockTime, long expireMillis) {
-        long diffMills = (System.nanoTime() - lockTime) / 1000000;
+        long diffMills = (System.currentTimeMillis() - lockTime);
         return diffMills > expireMillis;
     }
 
@@ -54,22 +61,24 @@ public abstract class AbstractLock {
         this.uniques.remove();
     }
 
-    protected abstract Boolean tryAcquire(Key key, long expireMillis);
+    protected abstract Boolean tryAcquire(String key, long expireMillis);
 
-    public abstract Boolean release(Key key);
+    public abstract Boolean release(String key);
 
-    public boolean acquire(Key key, int expireMillis, int retryMillis) {
+    public boolean acquire(String key, int expireMillis) {
+        return this.acquire(key, expireMillis, 0);
+    }
+
+    public boolean acquire(String key, int expireMillis, int retryMillis) {
         Boolean lock = this.tryAcquire(key, expireMillis);
         if (retryMillis <= 0) {
             this.monitor(key, lock ? SUCCESS : FAIL);
             return lock;
         }
-        //纳秒级，并作为唯一标识，因为用ip+线程ID作为唯一标识在锁释放时可能会导致无法正常删除
-        //同时防止毫秒级拿到多个锁
 
         int times = 1;
         int timeout = 0;
-        long t = this.getUnique();
+        long t = this.getMillisTimeUnique();
         while (lock == null || !lock) {
             lock = this.tryAcquire(key, expireMillis);
             if (lock) {
@@ -81,14 +90,13 @@ public abstract class AbstractLock {
                 if (timeout < 1024) {
                     timeout += 1 << times++;
                 }
-                if (System.nanoTime() - t > retryMillis * 1000000L) {
+                if (System.currentTimeMillis() - t > retryMillis) {
                     this.monitor(key, RETRY_TIMEOUT);
                     return false;
                 }
                 Thread.sleep(timeout);
                 logger.debug("lock {} timeout {} at [{}] {}", key, timeout, DateTimeUtility.getFormatCurrentTime(), System.currentTimeMillis());
             } catch (InterruptedException ignore) {
-                //todo 线程被中断怎么处理比较好
                 this.release(key);
             }
         }

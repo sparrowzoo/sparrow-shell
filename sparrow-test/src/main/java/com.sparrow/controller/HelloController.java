@@ -16,7 +16,6 @@
  */
 package com.sparrow.controller;
 
-import com.sparrow.cache.exception.CacheNotFoundException;
 import com.sparrow.constant.User;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
@@ -29,9 +28,10 @@ import com.sparrow.servlet.ServletContainer;
 import com.sparrow.support.Authenticator;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.vo.HelloVO;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 
 public class HelloController {
 
@@ -52,7 +52,7 @@ public class HelloController {
     }
 
     @RequestParameters("key")
-    public HelloVO env(String key) throws BusinessException {
+    public HelloVO env(String key) {
         return new HelloVO(System.getenv(key));
     }
 
@@ -100,7 +100,7 @@ public class HelloController {
         return ViewWithModel.forward(new HelloVO("jsp page content from server ..."));
     }
 
-    public ViewWithModel login(HttpServletRequest request) throws BusinessException, CacheNotFoundException, CacheNotFoundException {
+    public ViewWithModel login(HttpServletRequest request) {
         ServletUtility servletUtility = ServletUtility.getInstance();
 
         LoginUser loginToken = new LoginUser();
