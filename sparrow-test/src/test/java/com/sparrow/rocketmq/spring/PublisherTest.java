@@ -17,7 +17,6 @@
 
 package com.sparrow.rocketmq.spring;
 
-import com.sparrow.concurrent.latch.DistributedCountDownLatch;
 import com.sparrow.mq.MQPublisher;
 import com.sparrow.rocketmq.protocol.event.HelloEvent;
 import org.junit.Test;
@@ -32,10 +31,6 @@ public class PublisherTest {
 
     @Autowired
     private MQPublisher mqPublisher;
-
-    @Autowired
-    private DistributedCountDownLatch distributedCountDownLatch;
-
 
     @Test
     public void publish() {
