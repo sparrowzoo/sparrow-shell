@@ -27,7 +27,7 @@ import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.web.HttpContext;
-import com.sparrow.support.web.ResultAssembler;
+
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -45,16 +45,16 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
 
     @Override
     public void errorResolve(Throwable exception, HttpServletRequest request,
-        HttpServletResponse response) throws IOException {
+                             HttpServletResponse response) throws IOException {
         response.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
         if (exception instanceof BusinessException) {
-            Result result = ResultAssembler.assemble((BusinessException) exception, null);
+            Result result = Result.fail((BusinessException) exception);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
         }
         //业务异常
         if (exception.getCause() != null && exception.getCause() instanceof BusinessException) {
-            Result result = ResultAssembler.assemble((BusinessException) exception.getCause(), null);
+            Result result = Result.fail((BusinessException) exception);
             response.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
         }
@@ -65,8 +65,8 @@ public class JsonMethodReturnValueResolverHandlerImpl implements MethodReturnVal
 
     @Override
     public void resolve(ServletInvokableHandlerMethod handlerExecutionChain, Object returnValue, FilterChain chain,
-        HttpServletRequest request,
-        HttpServletResponse response) throws IOException {
+                        HttpServletRequest request,
+                        HttpServletResponse response) throws IOException {
         response.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
         if (returnValue == null) {
             returnValue = Symbol.EMPTY;
