@@ -90,6 +90,7 @@ public class MonolithicLoginUserFilter implements Filter {
         if (redirectUrl.endsWith(Extension.DO) || redirectUrl.endsWith(Extension.JSON)) {
             redirectUrl = ServletUtility.getInstance().referer(request);
         }
+        //https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fitem.jd.com%2F100061319193.html
         if (!StringUtility.isNullOrEmpty(redirectUrl)) {
             if (request.getQueryString() != null) {
                 redirectUrl += Symbol.QUESTION_MARK + request.getQueryString();
@@ -117,13 +118,16 @@ public class MonolithicLoginUserFilter implements Filter {
             return;
         }
         String tokenKey = ConfigUtility.getValue(Config.REQUEST_HEADER_KEY_LOGIN_TOKEN, Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
-        String loginToken = req.getHeader(tokenKey);
+        String loginToken = req.getHeader(tokenKey);//密文
         LoginUser loginUser = null;
+        //token 在header  里没拿到
         if (StringUtility.isNullOrEmpty(loginToken)) {
             loginToken = CookieUtility.getPermission(req);
         }
+        //token 没拿到
         if (!StringUtility.isNullOrEmpty(loginToken)) {
             try {
+                //认证逻辑
                 loginUser = this.authenticator.authenticate(loginToken, client.getDeviceId());
                 this.loginSuccess(loginUser, filterChain, req, rep);
             } catch (BusinessException e) {
