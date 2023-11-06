@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.sparrow.support.web;
 
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.Result;
+import com.sparrow.protocol.ResultI18nMessageAssembler;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.ConfigUtility;
-import com.sparrow.utility.StringUtility;
 
-public class ResultAssembler {
-    public static Result assemble(BusinessException exception, String language) {
-        Result result = Result.fail(exception);
-
-        String error = ConfigUtility.getLanguageValue(result.getKey(), language, result.getMessage());
+public class DefaultResultI18nMessageAssembler implements ResultI18nMessageAssembler {
+    @Override
+    public String assemble(BusinessException exception) {
+        String lang = ConfigUtility.getValue(Config.LANGUAGE);
+        String error = ConfigUtility.getLanguageValue(exception.getKey(), lang, exception.getMessage());
         if (!CollectionsUtility.isNullOrEmpty(exception.getParameters())) {
             error = String.format(error, exception.getParameters().toArray());
         }
@@ -35,20 +35,12 @@ public class ResultAssembler {
             String ctrlName = exception.getKey().split("\\.")[1];
             HttpContext.getContext().put(ctrlName, error);
         }
-        result.setMessage(error);
-        return result;
+        return error;
     }
 
-    public static Result assemble(Result result) {
-        return assemble(result, ConfigUtility.getValue(Config.LANGUAGE));
-    }
-
-    public static Result assemble(Result result, String language) {
-        String message = ConfigUtility.getLanguageValue(result.getKey(), language, result.getMessage());
-        if (StringUtility.isNullOrEmpty(message)) {
-            message = result.getMessage();
-        }
-        result.setMessage(message);
-        return result;
+    @Override
+    public String assemble(String originMessage, String i18nKey) {
+        String lang = ConfigUtility.getValue(Config.LANGUAGE);
+        return ConfigUtility.getLanguageValue(i18nKey, lang, originMessage);
     }
 }

@@ -18,50 +18,101 @@
 package com.sparrow.protocol;
 
 import com.sparrow.protocol.constant.Constant;
-import java.util.List;
+import com.sparrow.protocol.constant.SparrowError;
 
 /**
  * 可用于协议 规范服务端返回格式 <p>
- *
- * <p> BusinessException KEY
- * <p>
- * ErrorSupport SPARROW_ERROR name+suffix=key suffix 与界面name 对应 <p>
- * <p> 为什么用该类型？
  * <p>
  * 与异常相比 考虑继承的问题 枚举不可以继承
+ * ErrorSupport
  * <p>
- * 考虑该类要求稳定不经常修改 不要影响数据协议 考虑第三调用的泛型
+ * 考虑该类要求稳定不经常修改 不要影响数据协议 pure function JDK ddd (VO)
  * <p>
- * json 反序列化，set get 方法一定要存在
+ * DCL
+ * 为保证线程安全，属性只读
  */
 
 public class Result<T> implements VO {
-
-    private Result() {
-        this.code = Constant.RESULT_OK_CODE;
+    public Result() {
+        System.out.println("init objec");
     }
 
-    public Result(T data, String key) {
-        this.code = Constant.RESULT_OK_CODE;
-        this.data = data;
-        this.key = key;
+    static {
+        System.out.println("static init");
     }
-
+    /**
+     * 成功返回有效数据
+     *
+     * @param data
+     */
     public Result(T data) {
         if (data instanceof ErrorSupport) {
             ErrorSupport error = (ErrorSupport) data;
             this.code = error.getCode();
-            this.message = error.getMessage();
+            this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(error.getMessage(), error.name());
         } else {
             this.code = Constant.RESULT_OK_CODE;
             this.data = data;
+            this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(Constant.SUCCESS, Constant.SUCCESS);
         }
     }
 
-    private Result(String code, String message) {
-        this.code = code;
-        this.message = message;
+    /**
+     * 成功返回有效数据
+     * 开闭原则 SPI
+     *
+     * @param data 数据
+     * @param key  i18n key
+     */
+    public Result(T data, String key) {
+        this.code = Constant.RESULT_OK_CODE;
+        this.data = data;
+        this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(Constant.SUCCESS, key);
     }
+
+    /**
+     * 初始化默认成功
+     * 这个对象是在什么时侯用呢？
+     */
+    private static Result ok=new Result();
+
+    /**
+     * 默认成功 GC FREE
+     * DCL 解决容器加载顺序的问题：
+     * 因为static 是在jvm启动的时侯加载的
+     * 而spring 是在其后加载的
+     *
+     * @return
+     */
+    public static Result success() {
+        if (ok != null) {
+            return ok;
+        }
+        synchronized (Result.class) {
+            if (ok != null) {
+                return ok;
+            }
+            ok = success(Constant.SUCCESS);
+            return ok;
+        }
+    }
+
+
+    /**
+     * 返回有message的默认成功
+     *
+     * @param message
+     * @return
+     */
+    public static Result success(String message) {
+        Result result = new Result("");
+        result.message = message;
+        return result;
+    }
+
+
+    private static Result systemServerError;
+
 
     /**
      * 错误编码
@@ -72,44 +123,33 @@ public class Result<T> implements VO {
      */
     private String message;
     /**
-     * 错误 key= key.suffix
-     * <p>
-     * <p>
-     * suffix==input name
-     */
-    private String key;
-    /**
      * 返回值
      */
     private T data;
 
-    private List<Object> parameters;
-
-    public static Result success() {
-        return new Result();
-    }
-
-    public static Result success(String message) {
-        Result result = new Result();
-        result.setMessage(message);
-        return result;
-    }
 
     public static Result fail(ErrorSupport errorSupport) {
-        return new Result(errorSupport.getCode(), errorSupport.getMessage());
+        return new Result(errorSupport);
     }
 
     public static Result fail(BusinessException business) {
-        Result result = new Result(business.getCode(), business.getMessage());
-        result.key = business.getKey();
-        result.parameters = business.getParameters();
+        Result result = new Result();
+        result.code = business.getErrorSupport().getCode();
+        result.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(business);
         return result;
     }
 
     public static Result fail() {
-        String code = "-1";
-        String msg = "system error";
-        return new Result(code, msg);
+        if (systemServerError != null) {
+            return systemServerError;
+        }
+        synchronized (Result.class) {
+            if (systemServerError != null) {
+                return systemServerError;
+            }
+            systemServerError = new Result(SparrowError.SYSTEM_SERVER_ERROR);
+            return systemServerError;
+        }
     }
 
     public T getData() {
@@ -126,33 +166,5 @@ public class Result<T> implements VO {
 
     public String getMessage() {
         return this.message;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public List<Object> getParameters() {
-        return parameters;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public void setParameters(List<Object> parameters) {
-        this.parameters = parameters;
     }
 }

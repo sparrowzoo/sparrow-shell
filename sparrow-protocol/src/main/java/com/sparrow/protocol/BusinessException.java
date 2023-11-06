@@ -19,6 +19,7 @@ package com.sparrow.protocol;
 
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -26,18 +27,20 @@ import java.util.List;
  * 业务异常 程序中断
  */
 public class BusinessException extends Exception {
-    /**
-     * 错误码
-     */
-    private String code;
+    private ErrorSupport errorSupport;
     /**
      * 用于提示信息国际化的key
      * <p>
-     * key=ErrorSupport.name()+suffix ［
+     * key=ErrorSupport.name().suffix
      * <p>
-     * suffix 对应前端界面  input name
+     * suffix 对应前端界面name，可以通过${suffix}拿到错误信息
      * <p>
      * 由于 error support 提供的可能是公共错误信息，针对每一个输入可能提示信息不一样
+     * 详见 ResultI18nMessageAssembler输出
+     * <pre>
+     *     String ctrlName = exception.getKey().split("\\.")[1];
+     *     HttpContext.getContext().put(ctrlName, error);
+     * </pre>
      * <p>
      * 举例:
      * <p>
@@ -63,7 +66,7 @@ public class BusinessException extends Exception {
         if (suffix != null) {
             this.key = this.key + "." + suffix.toLowerCase();
         }
-        this.code = errorSupport.getCode();
+        this.errorSupport = errorSupport;
         if (parameters != null && parameters.size() > 0 && !parameters.get(0).equals(Symbol.EMPTY)) {
             this.parameters = parameters;
         }
@@ -85,8 +88,8 @@ public class BusinessException extends Exception {
         this(errorSupport, null, Symbol.EMPTY);
     }
 
-    public String getCode() {
-        return code;
+    public ErrorSupport getErrorSupport() {
+        return errorSupport;
     }
 
     public String getKey() {
@@ -114,7 +117,7 @@ public class BusinessException extends Exception {
                 sb.append(object.toString().trim());
             }
         }
-        return String.format("key:%s,code:%s,parameters:%s", key, code,
-            sb.toString());
+        return String.format("key:%s,code:%s,parameters:%s", key, this.errorSupport.getCode(),
+                sb);
     }
 }
