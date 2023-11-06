@@ -17,17 +17,23 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.protocol.ClientInformation;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.ThreadContext;
+import com.sparrow.constant.Config;
+import com.sparrow.core.spi.JsonFactory;
+import com.sparrow.enums.LoginType;
+import com.sparrow.protocol.*;
 import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.SparrowError;
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.Authenticator;
+import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -52,47 +58,90 @@ public class MonolithicLoginUserFilter implements Filter {
 
     }
 
+    private void loginSuccess(LoginUser loginUser, FilterChain filterChain, HttpServletRequest request, HttpServletResponse response) {
+        ThreadContext.bindLoginToken(loginUser);
+        try {
+            filterChain.doFilter(request, response);
+        } catch (Exception e) {
+            logger.error("do filter error", e);
+        } finally {
+            ThreadContext.clearToken();
+        }
+    }
+
+    private void loginFail(HttpServletRequest request, HttpServletResponse servletResponse, ErrorSupport e) throws IOException {
+        boolean isAjax = ServletUtility.getInstance().isAjax(request);
+        if (isAjax) {
+            servletResponse.setContentType(Constant.CONTENT_TYPE_JSON);
+            Result result = Result.fail(e);
+            servletResponse.getWriter().write(JsonFactory.getProvider().toString(result));
+            return;
+        }
+
+        String loginKey = Config.LOGIN_TYPE_KEY.get(LoginType.LOGIN);
+        String loginUrl = ConfigUtility.getValue(loginKey);
+
+        if (StringUtility.isNullOrEmpty(loginUrl)) {
+            logger.error("please config login url 【{}】", loginKey);
+            return;
+        }
+
+        String redirectUrl = request.getRequestURL().toString();
+        if (redirectUrl.endsWith(Extension.DO) || redirectUrl.endsWith(Extension.JSON)) {
+            redirectUrl = ServletUtility.getInstance().referer(request);
+        }
+        if (!StringUtility.isNullOrEmpty(redirectUrl)) {
+            if (request.getQueryString() != null) {
+                redirectUrl += Symbol.QUESTION_MARK + request.getQueryString();
+            }
+            loginUrl = loginUrl + Symbol.QUESTION_MARK + redirectUrl;
+        }
+        servletResponse.sendRedirect(loginUrl);
+    }
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        if (servletRequest instanceof HttpServletRequest) {
-            ClientInformation client = ThreadContext.getClientInfo();
-            HttpServletRequest req = (HttpServletRequest) servletRequest;
-            String currentUrl = req.getServletPath();
-            if (this.whiteList.contains(currentUrl)) {
-                filterChain.doFilter(servletRequest, servletResponse);
-                return;
-            }
-            String loginToken = req.getHeader(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
-            LoginUser loginUser = null;
-            if (StringUtility.isNullOrEmpty(loginToken)) {
-                loginToken = CookieUtility.getPermission(req);
-            }
-            if (!StringUtility.isNullOrEmpty(loginToken)) {
-                try {
-                    loginUser = this.authenticator.authenticate(loginToken, client.getDeviceId());
-                } catch (Exception e) {
-                    logger.error("authenticate error", e);
-                    throw new RuntimeException(e);
-                }
-            } else {
-                if (mockLoginUser) {
-                    loginUser = LoginUser.create(
-                            1L,
-                            "mock-user",
-                            "mock-nick-name",
-                            "header",
-                            "device id", 3);
-                }
-            }
-            ThreadContext.bindLoginToken(loginUser);
-        }
-        try {
+        boolean isHttpServlet = servletRequest instanceof HttpServletRequest;
+        if (!isHttpServlet) {
             filterChain.doFilter(servletRequest, servletResponse);
-        } catch (Exception e) {
-            e.printStackTrace();
+            return;
         }
-        ThreadContext.clearToken();
+        ClientInformation client = ThreadContext.getClientInfo();
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        HttpServletResponse rep = (HttpServletResponse) servletResponse;
+
+        String currentUrl = req.getServletPath();
+        if (this.whiteList.contains(currentUrl)) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+        String tokenKey = ConfigUtility.getValue(Config.REQUEST_HEADER_KEY_LOGIN_TOKEN, Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
+        String loginToken = req.getHeader(tokenKey);
+        LoginUser loginUser = null;
+        if (StringUtility.isNullOrEmpty(loginToken)) {
+            loginToken = CookieUtility.getPermission(req);
+        }
+        if (!StringUtility.isNullOrEmpty(loginToken)) {
+            try {
+                loginUser = this.authenticator.authenticate(loginToken, client.getDeviceId());
+                this.loginSuccess(loginUser, filterChain, req, rep);
+            } catch (BusinessException e) {
+                this.loginFail(req, (HttpServletResponse) servletResponse, e);
+            }
+            return;
+        }
+        if (mockLoginUser) {
+            loginUser = LoginUser.create(
+                    1L,
+                    "mock-user",
+                    "mock-nick-name",
+                    "header",
+                    "device id", 3);
+            this.loginSuccess(loginUser, filterChain, req, rep);
+            return;
+        }
+        this.loginFail(req, rep, SparrowError.USER_NOT_LOGIN);
     }
 
     @Override

@@ -19,11 +19,12 @@ package com.sparrow.support;
 
 import com.sparrow.constant.Config;
 import com.sparrow.constant.ConfigKeyLanguage;
-import com.sparrow.constant.User;
+import com.sparrow.exception.Asserts;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.LoginUserStatus;
 import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
@@ -40,41 +41,46 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
 
     protected abstract LoginUser verify(String token, String secretKey) throws BusinessException;
 
-    protected abstract void setUserStatus(LoginUser loginUser, LoginUserStatus loginUserStatus);
+    protected abstract void setUserStatus(Long loginUser, LoginUserStatus loginUserStatus);
 
+    /**
+     * 存储挂掉以token的过期时间为准,或者状态被删除，更新缓存方案
+     * cache aside 用户状态和过期时间分成两个key保存
+     * https://sparrowzoo.feishu.cn/docx/doxcnBm4bqwM7gNWiScATMgWHng
+     * <p>
+     * 用户状态不存在 从数据库中获取用户状态
+     * loginUserStatus = this.getUserStatusFromDB(loginUser.getUserId());
+     * <p>
+     * this.setUserStatus(loginUser, loginUserStatus);
+     *
+     * @param userId
+     * @return
+     */
     protected abstract LoginUserStatus getUserStatus(Long userId);
 
     protected abstract LoginUserStatus getUserStatusFromDB(Long userId);
 
-    protected abstract void renewal(LoginUser loginUser, LoginUserStatus loginUserStatus);
+    protected abstract void renewal(Long userId, LoginUserStatus loginUserStatus);
 
     @Override
     public LoginUser authenticate(String token, String deviceId) throws BusinessException {
         logger.debug("token {},deviceId {}", token, deviceId);
-        LoginUser visitor = this.getVisitor(deviceId);
-        if (StringUtility.isNullOrEmpty(token)) {
-            logger.error("permission is null");
-            return visitor;
-        }
+        Asserts.isTrue(StringUtility.isNullOrEmpty(token), SparrowError.USER_LOGIN_TOKEN_NOT_FOUND);
         LoginUser loginUser = this.verify(token, this.getDecryptKey());
         //设备指纹验证失败 说明token被盗
         if (!loginUser.getDeviceId().equals(deviceId) && !Constant.LOCALHOST_IP.equals(deviceId)) {
-            logger.error("device can't match sign's device [{}] request device [{}] ", loginUser.getDeviceId(), deviceId);
-            return visitor;
+            logger.error("device can't match sign's device [{}] request device [{}],user-id {} ", loginUser.getDeviceId(), deviceId, loginUser.getUserId());
+            throw new BusinessException(SparrowError.USER_DEVICE_NOT_MATCH);
         }
 
         LoginUserStatus loginUserStatus = this.getUserStatus(loginUser.getUserId());
-        //存储挂掉以token的过期时间为准
-        long expireAt;
-        //用户状态不存在 说明token 存储挂掉了,兜底方案
+        //缓存不存在会从数据库读，如果数据库依然不存在，则异常
         if (loginUserStatus == null) {
-            //存储挂掉以token的过期时间为准
-            expireAt = loginUser.getExpireAt();
-            //用户状态不存在 从数据库中获取用户状态
-            loginUserStatus = this.getUserStatusFromDB(loginUser.getUserId());
-            loginUserStatus.setExpireAt(expireAt);
-            this.setUserStatus(loginUser, loginUserStatus);
-        } else {
+            throw new BusinessException(SparrowError.USER_TOKEN_ABNORMAL);
+        }
+        long expireAt = loginUser.getExpireAt();
+        //用户状态不存在 说明token 存储挂掉了,兜底方案
+        if (loginUserStatus.getExpireAt() != null) {
             //用户状态存在 说明token 存储正常，以用户状态的过期时间为准
             expireAt = loginUserStatus.getExpireAt();
         }
@@ -82,32 +88,32 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
         //过期
         if (expireAt < System.currentTimeMillis()) {
             logger.error("token is expired");
-            return visitor;
+            throw new BusinessException(SparrowError.USER_TOKEN_EXPIRED);
         }
 
         if (!LoginUserStatus.STATUS_NORMAL.equals(loginUserStatus.getStatus())) {
             logger.error("user is disable");
-            return visitor;
+            throw new BusinessException(SparrowError.USER_TOKEN_ABNORMAL);
         }
-        this.renewal(loginUser, loginUserStatus);
+        this.renewal(loginUser.getUserId(), loginUserStatus);
         return loginUser;
     }
 
     private LoginUser getVisitor(String deviceId) {
         String visitorName = ConfigUtility.getLanguageValue(ConfigKeyLanguage.USER_VISITOR_NAME,
-            ConfigUtility.getValue(Config.LANGUAGE));
+                ConfigUtility.getValue(Config.LANGUAGE));
         String visitorNickName = ConfigUtility.getLanguageValue(ConfigKeyLanguage.USER_VISITOR_NICKNAME,
-            ConfigUtility.getValue(Config.LANGUAGE));
+                ConfigUtility.getValue(Config.LANGUAGE));
         String avatar = ConfigUtility.getValue(Config.DEFAULT_AVATAR);
-        return LoginUser.create(User.VISITOR_ID
-            , visitorName
-            , visitorNickName
-            , avatar, deviceId, 0);
+        return LoginUser.create(LoginUser.VISITOR_ID
+                , visitorName
+                , visitorNickName
+                , avatar, deviceId, 0);
     }
 
     public String sign(LoginUser loginUser, LoginUserStatus loginUserStatus) {
         String token = this.sign(loginUser, this.getEncryptKey());
-        this.setUserStatus(loginUser, loginUserStatus);
+        this.setUserStatus(loginUser.getUserId(), loginUserStatus);
         return token;
     }
 }

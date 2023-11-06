@@ -39,7 +39,7 @@ public class AuthenticatorDemo extends AbstractAuthenticatorService {
         return null;
     }
 
-    @Override protected void setUserStatus(LoginUser loginUser, LoginUserStatus loginUserStatus) {
+    @Override protected void setUserStatus(Long userId, LoginUserStatus loginUserStatus) {
 
     }
 
@@ -51,7 +51,7 @@ public class AuthenticatorDemo extends AbstractAuthenticatorService {
         return null;
     }
 
-    @Override protected void renewal(LoginUser loginUser, LoginUserStatus loginUserStatus) {
+    @Override protected void renewal(Long userId, LoginUserStatus loginUserStatus) {
 
     }
 }

@@ -20,10 +20,6 @@ package com.sparrow.constant;
 public class User {
     public static final String PERMISSION = "PERMISSION";
     /**
-     * 游客ID
-     */
-    public static final Long VISITOR_ID = 0L;
-    /**
      * 系统管理员
      */
     public static final String ADMIN = "admin";

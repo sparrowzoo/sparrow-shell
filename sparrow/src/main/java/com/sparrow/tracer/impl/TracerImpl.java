@@ -42,10 +42,13 @@ public class TracerImpl implements Tracer {
     public long getTimeoutThreshold() {
         return timeoutThreshold;
     }
-    public ThreadLocal<Object> cursorLocal = new ThreadLocal<>();
 
     /**
-     *
+     * ContextUtil.get()可以解决FGC问题，记住，要将ThreadLocal 放到全局变量中
+     */
+    public static ThreadLocal<Span> cursorLocal = new ThreadLocal<>();
+
+    /**
      * cursor 当前span指针 thread local 需要remove 防止内存泄露，这里直接用map
      */
     private Map<Long, Span> cursor = new HashMap<>();
@@ -100,12 +103,13 @@ public class TracerImpl implements Tracer {
 
     public void setCursor(Span current) {
         this.cursorLocal.set(current);
-//        this.cursor.put(Thread.currentThread().getId(), current);
+        //this.cursor.put(Thread.currentThread().getId(), current);
     }
 
     @Override
     public Span cursor() {
-        return this.cursor.get(Thread.currentThread().getId());
+        return (Span) this.cursorLocal.get();
+        //return this.cursor.get(Thread.currentThread().getId());
     }
 
     @Override
@@ -158,8 +162,8 @@ public class TracerImpl implements Tracer {
     @Override
     public void log(Logger logger, String parameters) {
         logger.info("tracer id:{} parameter:{} execute duration {}",
-            this.getId(),
-            parameters,
-            this.walking());
+                this.getId(),
+                parameters,
+                this.walking());
     }
 }

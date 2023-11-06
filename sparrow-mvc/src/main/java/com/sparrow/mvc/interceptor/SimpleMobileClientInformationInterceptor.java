@@ -30,9 +30,11 @@ import eu.bitwalker.useragentutils.BrowserType;
 import eu.bitwalker.useragentutils.DeviceType;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
+
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +43,11 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
     private static Logger logger = LoggerFactory.getLogger(SimpleMobileClientInformationInterceptor.class);
     private ServletUtility servletUtility = ServletUtility.getInstance();
 
-    @Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ClientInformation clientInformation = new ClientInformation();
         String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-        ClientInformation clientInformation = new com.sparrow.protocol.ClientInformation();
+        clientInformation.setWebsite(rootPath);
         clientInformation.setIp(servletUtility.getClientIp(request));
         String appId = request.getHeader(ClientInfoConstant.APP_ID);
         if (!StringUtility.isNullOrEmpty(appId)) {
@@ -55,16 +59,19 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
             clientInformation.setAppVersion(Float.parseFloat(appVersion));
         }
 
+        clientInformation.setSsid(request.getHeader(ClientInfoConstant.SSID));
         clientInformation.setBssid(request.getHeader(ClientInfoConstant.BSSID));
         clientInformation.setChannel(request.getHeader(ClientInfoConstant.CHANNEL));
         clientInformation.setClientVersion(request.getHeader(ClientInfoConstant.CLIENT_VERSION));
 
-        clientInformation.setDevice(request.getHeader(ClientInfoConstant.DEVICE));
-        clientInformation.setDeviceId(request.getHeader(ClientInfoConstant.DEVICE_ID));
-        clientInformation.setDeviceModel(request.getHeader(ClientInfoConstant.DEVICE_MODEL));
-
         clientInformation.setIdfa(request.getHeader(ClientInfoConstant.IDFA));
         clientInformation.setImei(request.getHeader(ClientInfoConstant.IMEI));
+
+        clientInformation.setDevice(request.getHeader(ClientInfoConstant.DEVICE));
+        clientInformation.setDeviceId(clientInformation.getImei());
+        clientInformation.setDeviceModel(request.getHeader(ClientInfoConstant.DEVICE_MODEL));
+
+
         String latitude = request.getHeader(ClientInfoConstant.LATITUDE);
         if (!StringUtility.isNullOrEmpty(latitude)) {
             clientInformation.setLatitude(Double.parseDouble(request.getHeader(ClientInfoConstant.LATITUDE)));
@@ -86,7 +93,6 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
         if (!StringUtility.isNullOrEmpty(resumeTime)) {
             clientInformation.setResumeTime(Long.parseLong(resumeTime));
         }
-        clientInformation.setWebsite(rootPath);
         clientInformation.setUserAgent(request.getHeader(ClientInfoConstant.USER_AGENT));
         UserAgent userAgent = UserAgent.parseUserAgentString(clientInformation.getUserAgent());
         OperatingSystem os = userAgent.getOperatingSystem();
@@ -107,11 +113,13 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
         return true;
     }
 
-    @Override public void postHandle(HttpServletRequest request, HttpServletResponse response) {
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response) {
 
     }
 
-    @Override public void afterCompletion(HttpServletRequest request, HttpServletResponse response)  {
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response) {
 
     }
 }

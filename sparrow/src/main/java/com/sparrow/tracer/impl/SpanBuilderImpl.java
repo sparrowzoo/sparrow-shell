@@ -106,6 +106,7 @@ public class SpanBuilderImpl implements SpanBuilder {
             this.parent.addChild(span);
             span.setFollower(false);
         }
+        //等于当前节点
         span.setParent(this.parent);
         return span;
     }

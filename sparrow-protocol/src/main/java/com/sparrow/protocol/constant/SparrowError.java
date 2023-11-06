@@ -82,10 +82,15 @@ public enum SparrowError implements ErrorSupport {
     GLOBAL_PARAMETER_IS_ILLEGAL(true, GlobalModule.GLOBAL, "28", "parameter is illegal"),
     GLOBAL_SMS_SEND_ERROR(true, GlobalModule.GLOBAL, "29", "short message service error"),
     USER_NOT_LOGIN(true, GlobalModule.GLOBAL, "34", "user not login"),
-
     USER_DISABLE(true, GlobalModule.GLOBAL, "34", "user disable"),
+    USER_LOGIN_TOKEN_NOT_FOUND(true, GlobalModule.GLOBAL, "35", "user token not found"),
+    USER_DEVICE_NOT_MATCH(true, GlobalModule.GLOBAL, "36", "user device id not match"),
 
-    IMAGE_EXTENSION_NOT_FOUND(true, GlobalModule.GLOBAL, "35", "image extension not found");
+    USER_TOKEN_EXPIRED(true, GlobalModule.GLOBAL, "37", "user token expired"),
+
+    USER_TOKEN_ABNORMAL(true, GlobalModule.GLOBAL, "38", "user token abnormal"),
+
+    IMAGE_EXTENSION_NOT_FOUND(true, GlobalModule.GLOBAL, "39", "image extension not found");
 
     private boolean system;
     private ModuleSupport module;

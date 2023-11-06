@@ -24,6 +24,7 @@ import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
+
 import java.util.Enumeration;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class ServletUtility {
 
     public boolean include(ServletRequest request) {
         return request
-            .getAttribute(Constant.REQUEST_ACTION_INCLUDE) != null;
+                .getAttribute(Constant.REQUEST_ACTION_INCLUDE) != null;
     }
 
     public String assembleActualUrl(String url) {
@@ -69,7 +70,7 @@ public class ServletUtility {
     public String getActionKey(ServletRequest request) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         Object servletPath = request
-            .getAttribute(Constant.REQUEST_ACTION_INCLUDE);
+                .getAttribute(Constant.REQUEST_ACTION_INCLUDE);
         String actionKey;
         if (servletPath != null) {
             actionKey = servletPath.toString();
@@ -86,10 +87,10 @@ public class ServletUtility {
         String serverName = request.getServerName();
         String path = httpServletRequest.getContextPath();
         rootPath = request.getScheme()
-            + "://"
-            + serverName
-            + (request.getServerPort() == 80 ? "" : ":"
-            + request.getServerPort()) + path;
+                + "://"
+                + serverName
+                + (request.getServerPort() == 80 ? "" : ":"
+                + request.getServerPort()) + path;
         // eclipse tomcat 启动时会默认请求http://localhost故此处加此判断
         //只解析一二级域名 http://www.sparrowzoo.com
         if (rootPath.indexOf(Constant.LOCALHOST) != 0 && rootPath.indexOf(Constant.LOCALHOST_127) != 0) {
@@ -105,7 +106,7 @@ public class ServletUtility {
             String domain = ConfigUtility.getValue(Config.DOMAIN);
             if (domain == null) {
                 ConfigUtility.resetKey(Config.DOMAIN,
-                    serverName);
+                        serverName);
             }
             Constant.REPLACE_MAP.put("$website", website);
         }
@@ -166,5 +167,10 @@ public class ServletUtility {
 
     public String referer(HttpServletRequest request) {
         return request.getHeader("Referer");
+    }
+
+    public boolean isAjax(HttpServletRequest request) {
+        String isAjax = request.getHeader(Constant.IS_AJAX);
+        return "true".equalsIgnoreCase(isAjax);
     }
 }

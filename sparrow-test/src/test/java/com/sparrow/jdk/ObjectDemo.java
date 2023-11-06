@@ -15,15 +15,21 @@
  * limitations under the License.
  */
 
-package com.sparrow.kafka;
+package com.sparrow.jdk;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
+public class ObjectDemo {
+    private static int get() {
+        System.out.println("get i ....");
+        return 1;
+    }
 
-import java.util.List;
+    private Integer i = get();
 
-/**
- * Created by harry on 2017/6/14.
- */
-public interface MessageListener {
-    void consumeMessage(List<ConsumerRecord<String, String>> lists);
+    public ObjectDemo() {
+        System.out.println("object init ...");
+    }
+
+    public static void main(String[] args) {
+        ObjectDemo od = new ObjectDemo();
+    }
 }

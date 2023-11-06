@@ -17,25 +17,21 @@
 
 package com.sparrow.support.web;
 
+import com.sparrow.constant.Config;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.json.Json;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.ThreadContext;
 import com.sparrow.protocol.constant.Constant;
+import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
-
-import java.io.IOException;
-import java.util.List;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 分布式场景下，从请求头中获取登录用户信息
@@ -47,12 +43,8 @@ public class LoginUserFilter implements Filter {
     }
 
     private static Logger logger = LoggerFactory.getLogger(LoginUserFilter.class);
-
     private Boolean mockLoginUser;
-
     private List<String> whiteList;
-
-
     private Json json = JsonFactory.getProvider();
 
     @Override
@@ -70,7 +62,8 @@ public class LoginUserFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
-            String loginTokenOfHeader = req.getHeader(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
+            String tokenKey = ConfigUtility.getValue(Config.REQUEST_HEADER_KEY_LOGIN_TOKEN, Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
+            String loginTokenOfHeader = req.getHeader(tokenKey);
             LoginUser loginUser = null;
             if (!StringUtility.isNullOrEmpty(loginTokenOfHeader)) {
                 loginUser = this.json.parse(loginTokenOfHeader, LoginUser.class);

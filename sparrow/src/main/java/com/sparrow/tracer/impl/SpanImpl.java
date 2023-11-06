@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SpanImpl implements Span {
     private Json json = JsonFactory.getProvider();
@@ -64,7 +65,9 @@ public class SpanImpl implements Span {
 
     public void addChild(Span child) {
         if (this.children == null) {
-            this.children = new ArrayList<>();
+            //考虑多并发场景，可能产生null的情况
+            //https://cloud.tencent.com/developer/article/1684989?ivk_sa=1024320u
+            this.children = new CopyOnWriteArrayList<>();
         }
         this.children.add(child);
     }
@@ -81,6 +84,15 @@ public class SpanImpl implements Span {
     public void finish() {
         this.endTime = System.currentTimeMillis();
         this.finished = true;
+        /**
+         *  Restore the call stack.
+         *  context.setCurEntry(parent);
+         *  如下图嵌套调用时，需要重置当前游标
+         *   A
+         *   | -- B
+         *   | -- B
+         *   A
+         */
         this.tracer.setCursor(this);
         if (this.duration() > tracer.getTimeoutThreshold()) {
             tracer.setTimeout();
@@ -184,10 +196,10 @@ public class SpanImpl implements Span {
         }
         SpanImpl span = (SpanImpl) o;
         return Objects.equals(startTime, span.startTime) &&
-            Objects.equals(name, span.name) &&
-            Objects.equals(endTime, span.endTime) &&
-            Objects.equals(children, span.children) &&
-            Objects.equals(follower, span.follower);
+                Objects.equals(name, span.name) &&
+                Objects.equals(endTime, span.endTime) &&
+                Objects.equals(children, span.children) &&
+                Objects.equals(follower, span.follower);
     }
 
     public List<Span> getChildren() {

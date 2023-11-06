@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class Config {
     public static final String INTERNATIONALIZATION = "internationalization";
+    public static final String REQUEST_HEADER_KEY_LOGIN_TOKEN = "request_header_key_login_token";
     public static final String LANGUAGE = "language";
     public static final String ROOT_PATH = "root_path";
     public static final String MVC_CONFIG = "mvc_config";

@@ -84,7 +84,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         httpRequest.setAttribute(User.ID, user.getUserId());
         httpRequest.setAttribute(User.LOGIN_TOKEN, user);
 
-        if (user.getUserId().equals(User.VISITOR_ID)) {
+        if (user.getUserId().equals(LoginUser.VISITOR_ID)) {
             if (LoginType.MESSAGE.equals(handlerExecutionChain.getLoginType())) {
                 Result result = Result.fail(SparrowError.USER_NOT_LOGIN);
                 httpResponse.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);

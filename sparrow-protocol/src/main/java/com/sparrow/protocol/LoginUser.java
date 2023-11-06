@@ -21,6 +21,10 @@ import java.util.Map;
 
 public class LoginUser implements VO {
     /**
+     * 游客ID
+     */
+    public static final Long VISITOR_ID = 0L;
+    /**
      * 用户ID
      */
     private Long userId;
@@ -48,11 +52,11 @@ public class LoginUser implements VO {
     private Map<String, Object> extensions = new LinkedHashMap<>();
 
     public static LoginUser create(Long userId,
-        String userName,
-        String nickName,
-        String avatar,
-        String deviceId,
-        Integer days) {
+                                   String userName,
+                                   String nickName,
+                                   String avatar,
+                                   String deviceId,
+                                   Integer days) {
         LoginUser login = new LoginUser();
         login.userId = userId;
         login.userName = userName;
@@ -128,4 +132,7 @@ public class LoginUser implements VO {
         this.extensions = extensions;
     }
 
+    public boolean isVisitor() {
+        return VISITOR_ID.equals(this.getUserId());
+    }
 }
