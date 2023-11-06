@@ -127,7 +127,7 @@ public class MonolithicLoginUserFilter implements Filter {
                 loginUser = this.authenticator.authenticate(loginToken, client.getDeviceId());
                 this.loginSuccess(loginUser, filterChain, req, rep);
             } catch (BusinessException e) {
-                this.loginFail(req, (HttpServletResponse) servletResponse, e);
+                this.loginFail(req, (HttpServletResponse) servletResponse, e.getErrorSupport());
             }
             return;
         }
