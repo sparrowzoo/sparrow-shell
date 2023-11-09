@@ -33,13 +33,10 @@ import com.sparrow.protocol.constant.SparrowError;
  */
 
 public class Result<T> implements VO {
-    public Result() {
-        System.out.println("init objec");
+    private Result() {
+
     }
 
-    static {
-        System.out.println("static init");
-    }
     /**
      * 成功返回有效数据
      *
@@ -74,7 +71,7 @@ public class Result<T> implements VO {
      * 初始化默认成功
      * 这个对象是在什么时侯用呢？
      */
-    private static Result ok=new Result();
+    private static Result ok = new Result();
 
     /**
      * 默认成功 GC FREE
