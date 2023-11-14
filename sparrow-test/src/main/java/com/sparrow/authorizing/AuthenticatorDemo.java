@@ -32,7 +32,8 @@ public class AuthenticatorDemo extends AbstractAuthenticatorService {
     }
 
     @Override protected String sign(LoginUser loginUser, String secretKey) {
-        return null;
+        JWT JWT=new Jwt();
+        return token;
     }
 
     @Override protected LoginUser verify(String token, String secretKey) throws BusinessException {
@@ -40,7 +41,7 @@ public class AuthenticatorDemo extends AbstractAuthenticatorService {
     }
 
     @Override protected void setUserStatus(Long userId, LoginUserStatus loginUserStatus) {
-
+//张三 t1 登录  token  t1+n 11
     }
 
     @Override protected LoginUserStatus getUserStatus(Long userId) {
