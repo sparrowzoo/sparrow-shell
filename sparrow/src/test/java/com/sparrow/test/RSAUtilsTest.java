@@ -2,6 +2,7 @@ package com.sparrow.test;
 
 
 import com.sparrow.cryptogram.RSAUtils;
+import com.sparrow.protocol.LoginUser;
 import com.sparrow.utility.FileUtility;
 
 import java.io.InputStream;
@@ -42,6 +43,22 @@ public class RSAUtilsTest {
         //公钥验签
         boolean verify = RSAUtils.verify("test", sign, publicKey1);
         System.out.printf("verify: %s\n", verify);
+
+
+        JwtRSAGenerator jwtRSAGenerator = new JwtRSAGenerator(privateKey,publicKey);
+        LoginUser loginUser = new LoginUser();
+        loginUser.setUserId(1L);
+        loginUser.setNickName("harry");
+        loginUser.setUserName("harry");
+        loginUser.setAvatar("http://avatar.com");
+        loginUser.setDeviceId("");
+        loginUser.setDays(2);
+        loginUser.setExpireAt(2L);
+//        loginUser.setExtensions();
+
+
+        String token = jwtRSAGenerator.generateToken(loginUser);
+        jwtRSAGenerator.parseToken(token);
 
     }
 }
