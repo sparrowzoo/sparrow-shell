@@ -18,10 +18,7 @@
 package com.sparrow.test;
 
 import com.alibaba.fastjson.JSON;
-import com.sparrow.json.Json;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import io.jsonwebtoken.Claims;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -39,6 +36,5 @@ public class JWTTest {
         authClaims.put("age", 100);
         authClaims.get("age", Integer.class);
         System.out.println(JSON.toJSONString(authClaims));
-
     }
 }

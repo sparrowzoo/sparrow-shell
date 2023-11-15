@@ -32,8 +32,7 @@ public class AuthenticatorDemo extends AbstractAuthenticatorService {
     }
 
     @Override protected String sign(LoginUser loginUser, String secretKey) {
-        JWT JWT=new Jwt();
-        return token;
+        return null;
     }
 
     @Override protected LoginUser verify(String token, String secretKey) throws BusinessException {
