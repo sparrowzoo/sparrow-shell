@@ -23,35 +23,43 @@ import com.sparrow.support.AbstractAuthenticatorService;
 
 public class AuthenticatorDemo extends AbstractAuthenticatorService {
 
-    @Override protected String getEncryptKey() {
+    @Override
+    protected String getEncryptKey() {
         return null;
     }
 
-    @Override protected String getDecryptKey() {
+    @Override
+    protected String getDecryptKey() {
         return null;
     }
 
-    @Override protected String sign(LoginUser loginUser, String secretKey) {
+    @Override
+    protected String sign(LoginUser loginUser, String secretKey) {
         return null;
     }
 
-    @Override protected LoginUser verify(String token, String secretKey) throws BusinessException {
+    @Override
+    protected LoginUser verify(String token, String secretKey) throws BusinessException {
         return null;
     }
 
-    @Override protected void setUserStatus(Long userId, LoginUserStatus loginUserStatus) {
+    @Override
+    protected void setUserStatus(Long userId, LoginUserStatus loginUserStatus) {
 //张三 t1 登录  token  t1+n 11
     }
 
-    @Override protected LoginUserStatus getUserStatus(Long userId) {
+    @Override
+    protected LoginUserStatus getUserStatus(Long userId) {
         return null;
     }
 
-    @Override protected LoginUserStatus getUserStatusFromDB(Long userId) {
+    @Override
+    protected LoginUserStatus getUserStatusFromDB(Long userId) {
         return null;
     }
 
-    @Override protected void renewal(Long userId, LoginUserStatus loginUserStatus) {
+    @Override
+    protected void renewal(Long userId, LoginUserStatus loginUserStatus) {
 
     }
 }
