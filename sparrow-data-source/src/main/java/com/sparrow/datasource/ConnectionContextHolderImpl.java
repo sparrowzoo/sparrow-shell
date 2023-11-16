@@ -26,10 +26,13 @@ import java.util.Map;
  * 保持线程请求中的数据 与web应用程序解耦
  */
 public class ConnectionContextHolderImpl implements ConnectionContextHolder {
+
     public ConnectionContextHolderImpl(DataSourceFactory dataSourceFactory) {
         this.dataSourceFactory = dataSourceFactory;
     }
 
+    public ConnectionContextHolderImpl() {
+    }
 
     private DataSourceFactory dataSourceFactory;
 

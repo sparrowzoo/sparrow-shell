@@ -31,14 +31,14 @@ import java.sql.SQLException;
 public class SparrowTransactionManager implements com.sparrow.transaction.TransactionManager {
     private static Logger logger = LoggerFactory.getLogger(SparrowTransactionManager.class);
 
-    private ConnectionContextHolderImpl connectionContextHolder;
-
-    private DataSourceFactoryImpl dataSourceFactory;
-
     public SparrowTransactionManager(ConnectionContextHolderImpl connectionContextHolder, DataSourceFactoryImpl dataSourceFactory) {
         this.connectionContextHolder = connectionContextHolder;
         this.dataSourceFactory = dataSourceFactory;
     }
+
+    private ConnectionContextHolderImpl connectionContextHolder;
+
+    private DataSourceFactoryImpl dataSourceFactory;
 
     @Override
     public <T> T start(Transaction<T> transaction) {
