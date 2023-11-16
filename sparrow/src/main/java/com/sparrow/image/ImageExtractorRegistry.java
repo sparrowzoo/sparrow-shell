@@ -22,9 +22,8 @@ import com.sparrow.utility.StringUtility;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.inject.Named;
 
-@Named
+
 public class ImageExtractorRegistry {
     private Map<String, ImageExtractor> container = new HashMap<>();
 

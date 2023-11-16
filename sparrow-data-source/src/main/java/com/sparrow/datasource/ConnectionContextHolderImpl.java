@@ -21,19 +21,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * 保持线程请求中的数据 与web应用程序解耦
  */
-@Named("connectionContextHolder")
 public class ConnectionContextHolderImpl implements ConnectionContextHolder {
-    public ConnectionContextHolderImpl() {
-        int i = 0;
+
+    public ConnectionContextHolderImpl(DataSourceFactory dataSourceFactory) {
+        this.dataSourceFactory = dataSourceFactory;
     }
 
-    @Inject
+    public ConnectionContextHolderImpl() {
+    }
+
     private DataSourceFactory dataSourceFactory;
 
     /**
@@ -60,7 +60,8 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
         }
     }
 
-    @Override public DataSourceFactory getDataSourceFactory() {
+    @Override
+    public DataSourceFactory getDataSourceFactory() {
         return dataSourceFactory;
     }
 
@@ -71,7 +72,8 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
         return this.transactionContainer.get();
     }
 
-    @Override public void bindConnection(Connection connection) {
+    @Override
+    public void bindConnection(Connection connection) {
         try {
             DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(connection);
             if (!connection.getAutoCommit()) {
@@ -82,7 +84,8 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
         }
     }
 
-    @Override public void unbindConnection(Connection connection) {
+    @Override
+    public void unbindConnection(Connection connection) {
         try {
             DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(connection);
             Connection proxyConnection = this.getConnection(dataSourceKey.getKey());
@@ -104,12 +107,14 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
         }
     }
 
-    @Override public Connection getConnection(String datasourceKey) {
+    @Override
+    public Connection getConnection(String datasourceKey) {
         //以事务为优先，如果当前开启事务，未commit则用事务链接执行
         return this.getTransactionHolder().get(datasourceKey);
     }
 
-    @Override public void removeAll() {
+    @Override
+    public void removeAll() {
         Map<String, Connection> transactionContainer = this.transactionContainer.get();
         if (transactionContainer != null) {
             for (String key : transactionContainer.keySet()) {

@@ -20,7 +20,6 @@ package com.sparrow.io.impl;
 import com.sparrow.io.FileService;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.StringUtility;
-import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +27,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Named("fileService")
 public class JDKFileService implements FileService {
     private static Logger logger = LoggerFactory.getLogger(JDKFileService.class);
 

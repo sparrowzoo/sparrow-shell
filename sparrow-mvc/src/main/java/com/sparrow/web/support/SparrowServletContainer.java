@@ -21,15 +21,14 @@ import com.sparrow.servlet.impl.AbstractServletContainer;
 import com.sparrow.support.pager.HtmlPagerResult;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.CollectionsUtility;
-import java.util.List;
-import javax.inject.Named;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Sparrow framework controller support class that used by sparrow only
  */
-@Named("servletContainer")
 public class SparrowServletContainer extends AbstractServletContainer {
 
     private HttpContext httpContext = HttpContext.getContext();
@@ -54,7 +53,7 @@ public class SparrowServletContainer extends AbstractServletContainer {
     public <T> void grid(String gridView, HtmlPagerResult pagerSearch) {
         httpContext.put(gridView, pagerSearch);
         httpContext.put("spanRecordTotal.innerHTML",
-            pagerSearch.getRecordTotal());
+                pagerSearch.getRecordTotal());
     }
 
     public void clear() {
