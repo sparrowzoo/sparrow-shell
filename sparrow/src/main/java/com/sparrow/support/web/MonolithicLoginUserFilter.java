@@ -43,15 +43,22 @@ import java.util.List;
 public class MonolithicLoginUserFilter implements Filter {
     private static Logger logger = LoggerFactory.getLogger(MonolithicLoginUserFilter.class);
 
-    public MonolithicLoginUserFilter(Authenticator authenticator, Boolean mockLoginUser, List<String> whiteList) {
+    public MonolithicLoginUserFilter(Authenticator authenticator, Boolean mockLoginUser, List<String> whiteList, String tokenKey) {
         this.authenticator = authenticator;
         this.mockLoginUser = mockLoginUser;
         this.whiteList = whiteList;
+        if (StringUtility.isNullOrEmpty(tokenKey)) {
+            this.tokenKey = Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN;
+        } else {
+            this.tokenKey = tokenKey;
+        }
     }
 
     private Boolean mockLoginUser;
     private Authenticator authenticator;
     private List<String> whiteList;
+    private String tokenKey;
+
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -101,8 +108,7 @@ public class MonolithicLoginUserFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-                         FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         boolean isHttpServlet = servletRequest instanceof HttpServletRequest;
         if (!isHttpServlet) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -117,7 +123,6 @@ public class MonolithicLoginUserFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-        String tokenKey = ConfigUtility.getValue(Config.REQUEST_HEADER_KEY_LOGIN_TOKEN, Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
         String loginToken = req.getHeader(tokenKey);//密文
         LoginUser loginUser = null;
         //token 在header  里没拿到
@@ -136,12 +141,7 @@ public class MonolithicLoginUserFilter implements Filter {
             return;
         }
         if (mockLoginUser) {
-            loginUser = LoginUser.create(
-                    1L,
-                    "mock-user",
-                    "mock-nick-name",
-                    "header",
-                    "device id", 3);
+            loginUser = LoginUser.create(1L, "mock-user", "mock-nick-name", "header", "device id", 3);
             this.loginSuccess(loginUser, filterChain, req, rep);
             return;
         }
