@@ -62,7 +62,7 @@ public abstract class AbstractImageExtractor implements ImageExtractor, Containe
 
     public List<ImageDTO> extractImage(String content, Long authorId, Downloader downloader) throws BusinessException {
         Matcher imageMatcher = Pattern.compile(this.getImageRegexMark(),
-            Regex.OPTION).matcher(content);
+            Regex.OPTION_MULTILINE_CASE_INSENSITIVE).matcher(content);
         List<ImageDTO> images = new ArrayList<>();
         while (imageMatcher.find()) {
             String imageUrl = this.getImageUrl(imageMatcher);
