@@ -117,7 +117,7 @@ public class Validator {
                             }
                         }
                     } else if (!StringUtility.isNullOrEmpty(this.regex)) {
-                        if (!Pattern.compile(regex, Regex.OPTION).matcher(content).find()) {
+                        if (!Pattern.compile(regex, Regex.OPTION_MULTILINE_CASE_INSENSITIVE).matcher(content).find()) {
                             throw new TemplateCellValidateException(content + "输入格式不正确," + this.regex);
                         }
                     }

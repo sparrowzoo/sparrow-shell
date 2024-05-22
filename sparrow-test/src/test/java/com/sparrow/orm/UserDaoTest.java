@@ -12,6 +12,7 @@ import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import com.sparrow.protocol.enums.StatusRecord;
 import com.sparrow.utility.DateTimeUtility;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -20,6 +21,20 @@ import java.util.List;
  * Created by harry on 2018/2/6.
  */
 public class UserDaoTest {
+    /**
+     * 有一个数据库任务 大概的数据有几万条
+     * 这个同学已经离职不在了
+     *
+     * 这个项目直接交到你手里
+     * 只有代码
+     * 问题：
+     * 本地跑起来数据insert 是正常的（没有异常报错）
+     * 现象：你在数据库里看不到数据
+     *
+     * 1. 数据源问题确认是否正确
+     * 2. 确认我其他的表，连当前数据源是否正确写入
+     * 3. 事务的问题
+     */
     @Test
     public void getUser() {
         Container container = ApplicationContext.getContainer();
@@ -27,6 +42,14 @@ public class UserDaoTest {
         container.init(new ContainerBuilder());
         UserDaoImpl userDAO = container.getBean("userDao");
         userDAO.getByUserName("harry");
+
+        java.util.Date date=new java.util.Date();
+        java.sql.Date date1=new java.sql.Date(System.currentTimeMillis());
+
+        System.out.println(date.toInstant());
+        System.out.println(date1.toInstant());
+
+
     }
 
     @Test
