@@ -18,7 +18,7 @@ public class UrlTest {
         String anyChar = "([a-z0-9]*)";
         String actionKey = "thread-{threadId}-{pageIndex}";
         Pattern p = Pattern
-                .compile(regex, Regex.OPTION);
+                .compile(regex, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
         Matcher m = p.matcher(actionKey);
 
 
