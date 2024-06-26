@@ -30,18 +30,30 @@ public class DateTest {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis()+new Random().nextInt());
             int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
-            //dayOfWeek=(dayOfWeek+5)%7;
-            //calendar.add(Calendar.DATE,-dayOfWeek);
+            dayOfWeek=(dayOfWeek+5)%7;
+            calendar.add(Calendar.DATE,-dayOfWeek);
             //1 2 3 4 5 6 7
             //2 3 4 5 6 7 1
 
-            int week=dayOfWeek-1;
+            int week=calendar.get(Calendar.DAY_OF_WEEK)-1;
 
             /**
              * 打印周几
              * 不允许用if else 和map
              */
             System.out.println(DateTimeUtility.getFormatTime(calendar.getTime(), "yyyy-MM-dd")+"周"+week);
+        }
+
+        for(int i=0;i<100;i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis()+new Random().nextInt());
+            int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
+            dayOfWeek=(dayOfWeek+5)%7;
+            calendar.add(Calendar.DATE,-dayOfWeek);
+            //1 2 3 4 5 6 7
+            //2 3 4 5 6 7 1
+
+            System.out.println(DateTimeUtility.getFormatTime(calendar.getTime(), "yyyy-MM-dd")+"是周"+(calendar.get(Calendar.DAY_OF_WEEK)-1));
         }
         /**
          * 需求 给定一个日期
