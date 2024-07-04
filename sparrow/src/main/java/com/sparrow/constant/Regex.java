@@ -24,34 +24,36 @@ public class Regex {
     /**
      * 常用匹配模式选项
      */
-    public static final int OPTION = Pattern.MULTILINE
-            | Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ;
+    public static final int OPTION_MULTILINE_CASE_INSENSITIVE = Pattern.MULTILINE
+            | Pattern.CASE_INSENSITIVE;
+
+    public static final int OPTION_MULTILINE = Pattern.MULTILINE;
 
     /**
      * 破坏的HTML标签 br除外
      */
-    public static final Pattern TAG_BREAK_HTML = Pattern.compile("<^br*?>", OPTION);
-    public static final Pattern TAG_URL = Pattern.compile("href=([\"'])(.*?)\\1", OPTION);
+    public static final Pattern TAG_BREAK_HTML = Pattern.compile("<^br*?>", OPTION_MULTILINE_CASE_INSENSITIVE);
+    public static final Pattern TAG_URL = Pattern.compile("href=([\"'])(.*?)\\1", OPTION_MULTILINE_CASE_INSENSITIVE);
     /**
      * 页面标题
      */
-    public static final Pattern PAGE_TITLE = Pattern.compile("<title>([\\s\\S]*?)<\\/title>", OPTION);
+    public static final Pattern PAGE_TITLE = Pattern.compile("<title>([\\s\\S]*?)<\\/title>", OPTION_MULTILINE_CASE_INSENSITIVE);
 
     /**
      * 内网图片的url
      */
-    public static final Pattern URL_INNER_IMAGE = Pattern.compile("http:\\/\\/img[0-9]+\\.$image_website\\.net\\/.*?", OPTION);
+    public static final Pattern URL_INNER_IMAGE = Pattern.compile("http:\\/\\/img[0-9]+\\.$image_website\\.net\\/.*?", OPTION_MULTILINE_CASE_INSENSITIVE);
     /**
      * 站内图片格式image图片标签
      * <p/>
      * img.zhuaququ.com
      */
-    public static final Pattern TAG_INNER_IMAGE = Pattern.compile("<img[\\s\\S]*?src=([\"\'])(http:\\/\\/img[0-9]+\\.$image_website\\.net\\/.*?)\\1[\\s\\S]*?\\/?>", OPTION);
+    public static final Pattern TAG_INNER_IMAGE = Pattern.compile("<img[\\s\\S]*?src=([\"\'])(http:\\/\\/img[0-9]+\\.$image_website\\.net\\/.*?)\\1[\\s\\S]*?\\/?>", OPTION_MULTILINE_CASE_INSENSITIVE);
 
     /**
      * 临时图片存储格式
      */
-    public static final Pattern TAG_TEMP_IMAGE_FORMAT = Pattern.compile("<img src=\"%1$s\" id=\"tempImage%2$s\"/>", OPTION);
+    public static final Pattern TAG_TEMP_IMAGE_FORMAT = Pattern.compile("<img src=\"%1$s\" id=\"tempImage%2$s\"/>", OPTION_MULTILINE_CASE_INSENSITIVE);
     /**
      * 临时image图片标签 temp.zhuaququ.com
      */
@@ -104,8 +106,8 @@ public class Regex {
      * 密码格式
      * 至少8个字符，至少1个字母，1个数字和1个特殊字符
      */
-    public static final String PASSWORD = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
+    public static final String PASSWORD = "^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}$";
 
     public static final Pattern BAIDU_IMAGE_SEARCH = Pattern.compile(
-            "var imgdata=([\\s\\S]*?)<\\/script>", Regex.OPTION);
+            "var imgdata=([\\s\\S]*?)<\\/script>", Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
 }

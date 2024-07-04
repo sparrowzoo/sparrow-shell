@@ -38,7 +38,7 @@ public class RegexUtility {
         if (Constant.REPLACE_MAP != null) {
             regex = StringUtility.replace(regex, Constant.REPLACE_MAP);
         }
-        return Pattern.compile(regex, Regex.OPTION).matcher(source).matches();
+        return Pattern.compile(regex, Regex.OPTION_MULTILINE).matcher(source).matches();
     }
 
     public static String group(String source, String regex) {
@@ -54,7 +54,7 @@ public class RegexUtility {
             regex = StringUtility.replace(regex, Constant.REPLACE_MAP);
         }
         Pattern p = Pattern
-            .compile(regex, Regex.OPTION);
+            .compile(regex, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
         Matcher m = p.matcher(source);
         List<String> groupList = null;
         if (!m.find()) {
@@ -72,7 +72,7 @@ public class RegexUtility {
             regex = StringUtility.replace(regex, Constant.REPLACE_MAP);
         }
         Pattern p = Pattern
-            .compile(regex, Regex.OPTION);
+            .compile(regex, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
         Matcher m = p.matcher(source);
         List<List<String>> multiGroupList = new ArrayList<List<String>>();
         while (m.find()) {
@@ -93,7 +93,7 @@ public class RegexUtility {
         String configParameter = "(\\{[a-z0-9]*\\})";
         String digitalAndLetter = "([a-z0-9\\-]*)";
         Pattern p = Pattern
-            .compile(configParameter, Regex.OPTION);
+            .compile(configParameter, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
         Matcher m = p.matcher(actionKey);
         String urlRegex = actionKey;
         List<String> parameters = new ArrayList<String>();

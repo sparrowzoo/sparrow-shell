@@ -17,17 +17,51 @@
 
 package com.sparrow.test;
 
+import com.sparrow.enums.DateTimeUnit;
 import com.sparrow.utility.DateTimeUtility;
 
 import java.util.Calendar;
+import java.util.Random;
 
 public class DateTest {
     public static void main(String[] args) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-        System.out.println(DateTimeUtility.getFormatTime(calendar.getTime(),"MM-dd"));
+        //Right BICEP
+        for(int i=0;i<100;i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis()+new Random().nextInt());
+            int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
+            dayOfWeek=(dayOfWeek+5)%7;
+            calendar.add(Calendar.DATE,-dayOfWeek);
+            //1 2 3 4 5 6 7
+            //2 3 4 5 6 7 1
+
+            int week=calendar.get(Calendar.DAY_OF_WEEK)-1;
+
+            /**
+             * 打印周几
+             * 不允许用if else 和map
+             */
+            System.out.println(DateTimeUtility.getFormatTime(calendar.getTime(), "yyyy-MM-dd")+"周"+week);
+        }
+
+        for(int i=0;i<100;i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis()+new Random().nextInt());
+            int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
+            dayOfWeek=(dayOfWeek+5)%7;
+            calendar.add(Calendar.DATE,-dayOfWeek);
+            //1 2 3 4 5 6 7
+            //2 3 4 5 6 7 1
+
+            System.out.println(DateTimeUtility.getFormatTime(calendar.getTime(), "yyyy-MM-dd")+"是周"+(calendar.get(Calendar.DAY_OF_WEEK)-1));
+        }
+        /**
+         * 需求 给定一个日期
+         * 求出来离这个日期最近的过去的周一
+         * 要求
+         * 空间复杂度O 1
+         * 时间复杂度O 1
+         * 不允许 用if else
+         */
     }
 }
