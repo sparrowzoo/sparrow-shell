@@ -15,22 +15,47 @@
  * limitations under the License.
  */
 
-package com.sparrow.pipeline;
+package com.sparrow.orm.po;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.sparrow.protocol.POJO;
 
-public interface HandlerPipeline {
+import javax.persistence.*;
+import java.util.Date;
 
-    AtomicInteger getAsyncCount();
+@Table(name = "date_test", schema = "user")
 
-    boolean isReverse();
+public class DateTest implements POJO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "birthday")
+    private Date birthday;
 
-    void add(Handler handler);
+    @Column(name = "dt")
+    private Date dt;
 
-    void fire(PipelineData arg) throws InterruptedException;
+    public Long getId() {
+        return id;
+    }
 
-    void addAsync(Handler handler);
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    ExecutorService getConsumerThreadPool();
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Date getDt() {
+        return dt;
+    }
+
+    public void setDt(Date dt) {
+        this.dt = dt;
+    }
 }

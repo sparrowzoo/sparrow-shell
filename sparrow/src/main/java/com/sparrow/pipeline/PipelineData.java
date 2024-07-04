@@ -17,20 +17,16 @@
 
 package com.sparrow.pipeline;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 
-public interface HandlerPipeline {
+public interface PipelineData {
+    void setThrowWhenException();
 
-    AtomicInteger getAsyncCount();
+    boolean isThrowWhenException();
 
-    boolean isReverse();
+    void put(Handler handler, Object result);
 
-    void add(Handler handler);
+    Map<String, Object> getResult();
 
-    void fire(PipelineData arg) throws InterruptedException;
-
-    void addAsync(Handler handler);
-
-    ExecutorService getConsumerThreadPool();
+    Object getResult(Class handler);
 }
