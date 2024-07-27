@@ -106,7 +106,7 @@ public class Regex {
      * 密码格式
      * 至少8个字符，至少1个字母，1个数字和1个特殊字符
      */
-    public static final String PASSWORD = "^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}$";
+    public static final String PASSWORD = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
 
     public static final Pattern BAIDU_IMAGE_SEARCH = Pattern.compile(
             "var imgdata=([\\s\\S]*?)<\\/script>", Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
