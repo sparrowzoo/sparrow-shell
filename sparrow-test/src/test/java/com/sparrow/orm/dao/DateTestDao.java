@@ -15,22 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.pipeline;
+package com.sparrow.orm.dao;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.sparrow.orm.po.DateTest;
+import com.sparrow.protocol.dao.DaoSupport;
 
-public interface HandlerPipeline {
-
-    AtomicInteger getAsyncCount();
-
-    boolean isReverse();
-
-    void add(Handler handler);
-
-    void fire(PipelineData arg) throws InterruptedException;
-
-    void addAsync(Handler handler);
-
-    ExecutorService getConsumerThreadPool();
+public interface DateTestDao extends DaoSupport<DateTest, Long> {
 }

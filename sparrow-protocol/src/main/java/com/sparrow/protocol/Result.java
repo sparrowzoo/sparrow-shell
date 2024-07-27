@@ -79,6 +79,8 @@ public class Result<T> implements VO {
      * 因为static 是在jvm启动的时侯加载的
      * 而spring 是在其后加载的
      *
+     * 实际是static 懒加载，用的时侯才执行
+     *
      * @return
      */
     public static Result success() {

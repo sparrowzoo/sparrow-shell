@@ -17,9 +17,9 @@
 package com.sparrow.pipeline;
 
 @SuppressWarnings("unchecked")
-class HandlerContext<T> {
+class HandlerContext<T extends PipelineData> {
     HandlerPipeline pipeline;
-    private String name;
+    String name;
     HandlerContext next;
     HandlerContext prev;
     boolean async;
@@ -37,23 +37,50 @@ class HandlerContext<T> {
 
     private Handler handler;
 
-    private void innerFire(Object arg) {
+    private HandlerNextAction innerFire(Object arg) {
         if (this.async) {
             PipelineAsyncData pipelineAsync = (PipelineAsyncData) arg;
             pipeline.getConsumerThreadPool().submit(new Runnable() {
                 @Override
                 public void run() {
-                    handler.invoke(pipelineAsync);
-                    pipelineAsync.getCountDownLatch().countDown();
+                    try {
+                        HandlerNextAction nextAction = handler.invoke(pipelineAsync);
+                        pipelineAsync.put(handler, nextAction.getResult());
+                    } catch (Exception e) {
+                        pipelineAsync.put(handler, e);
+                    }
+                    finally {
+                        pipelineAsync.getCountDownLatch().countDown();
+                    }
                 }
             });
-            return;
+            return HandlerNextAction.asyn();
         }
-        handler.invoke(arg);
+        return handler.invoke(arg);
     }
 
     public void fire(T arg) {
-        this.innerFire(arg);
+        try {
+            HandlerNextAction nextAction = this.innerFire(arg);
+            if (nextAction.getAction() != HandlerNextAction.Action.ASNY) {
+                arg.put(this.handler, nextAction.getResult());
+            }
+            if (nextAction.getAction() == HandlerNextAction.Action.BREAK) {
+                if (arg instanceof PipelineAsyncData) {
+                    PipelineAsyncData pipelineAsyncData = (PipelineAsyncData) arg;
+                    while (pipelineAsyncData.getCountDownLatch().getCount() > 0) {
+                        pipelineAsyncData.getCountDownLatch().countDown();
+                    }
+                }
+                return;
+            }
+        } catch (Exception e) {
+            arg.put(this.handler, e);
+            if(arg.isThrowWhenException()){
+                throw e;
+            }
+            return;
+        }
         if (!pipeline.isReverse()) {
             if (next != null) {
                 next.fire(arg);

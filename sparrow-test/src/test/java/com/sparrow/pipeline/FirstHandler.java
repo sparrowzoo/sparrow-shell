@@ -5,8 +5,11 @@ package com.sparrow.pipeline;
  */
 public class FirstHandler implements Handler<PipelineMain.PipelineData> {
 
-    @Override public void invoke(PipelineMain.PipelineData arg) {
+    @Override
+    public HandlerNextAction invoke(PipelineMain.PipelineData arg) {
+        System.out.println("First handler executing ... " + Thread.currentThread().getName());
         arg.add(1);
-        System.out.println("tid="+Thread.currentThread().getId()+"- 1");
+        System.out.println("First handler executed +1");
+        return HandlerNextAction.next();
     }
 }

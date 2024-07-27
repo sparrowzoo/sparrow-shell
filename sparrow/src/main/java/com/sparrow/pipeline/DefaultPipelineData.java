@@ -17,20 +17,37 @@
 
 package com.sparrow.pipeline;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.HashMap;
+import java.util.Map;
 
-public interface HandlerPipeline {
+public class DefaultPipelineData implements PipelineData {
+    private Map<String, Object> result = new HashMap<>();
 
-    AtomicInteger getAsyncCount();
+    private Boolean throwException = false;
 
-    boolean isReverse();
 
-    void add(Handler handler);
+    @Override
+    public void setThrowWhenException() {
+        this.throwException = Boolean.TRUE;
+    }
 
-    void fire(PipelineData arg) throws InterruptedException;
+    @Override
+    public boolean isThrowWhenException() {
+        return throwException;
+    }
 
-    void addAsync(Handler handler);
+    @Override
+    public void put(Handler handler, Object result) {
+        this.result.put(handler.getClass().getSimpleName(), result);
+    }
 
-    ExecutorService getConsumerThreadPool();
+    @Override
+    public Map<String, Object> getResult() {
+        return this.result;
+    }
+
+    @Override
+    public Object getResult(Class handler) {
+        return this.result.get(handler.getSimpleName());
+    }
 }

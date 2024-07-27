@@ -15,22 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.pipeline;
+package com.sparrow.orm;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
-
-public interface HandlerPipeline {
-
-    AtomicInteger getAsyncCount();
-
-    boolean isReverse();
-
-    void add(Handler handler);
-
-    void fire(PipelineData arg) throws InterruptedException;
-
-    void addAsync(Handler handler);
-
-    ExecutorService getConsumerThreadPool();
+public class DateTest {
 }

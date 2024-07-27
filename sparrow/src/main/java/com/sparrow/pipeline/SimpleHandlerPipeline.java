@@ -17,13 +17,21 @@
 package com.sparrow.pipeline;
 
 import com.sparrow.concurrent.SparrowThreadFactory;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.sparrow.utility.ClassUtility;
+
+import java.util.Map;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SuppressWarnings("unchecked")
 public class SimpleHandlerPipeline implements HandlerPipeline {
 
-    private ExecutorService consumerThreadPool = Executors.newCachedThreadPool(new SparrowThreadFactory.Builder().namingPattern("pipeline-async-%d").build());
+    private static final int CPU_CORE_SIZE = Runtime.getRuntime().availableProcessors();
+    private ExecutorService consumerThreadPool = new ThreadPoolExecutor(CPU_CORE_SIZE, CPU_CORE_SIZE * 2,
+            60,
+            TimeUnit.SECONDS, new ArrayBlockingQueue<>(CPU_CORE_SIZE * 32),
+            new SparrowThreadFactory.Builder().namingPattern("pipeline-async-%d").build(), new ThreadPoolExecutor.CallerRunsPolicy());
+
 
     public SimpleHandlerPipeline(boolean reverse) {
         this.reverse = reverse;
@@ -35,12 +43,12 @@ public class SimpleHandlerPipeline implements HandlerPipeline {
 
     private HandlerContext head;
     private HandlerContext tail;
-    private int asyncCount;
+    private AtomicInteger asyncCount = new AtomicInteger(0);
 
     private boolean reverse;
 
     @Override
-    public int getAsyncCount() {
+    public AtomicInteger getAsyncCount() {
         return this.asyncCount;
     }
 
@@ -56,6 +64,7 @@ public class SimpleHandlerPipeline implements HandlerPipeline {
 
     private void add(Handler handler, boolean asyc) {
         HandlerContext handlerContext = new HandlerContext(this, handler, asyc);
+        handlerContext.name = handler.getClass().getSimpleName();
         if (head == null) {
             head = handlerContext;
             tail = handlerContext;
@@ -70,15 +79,30 @@ public class SimpleHandlerPipeline implements HandlerPipeline {
     @Override
     public void addAsync(Handler handler) {
         this.add(handler, true);
-        this.asyncCount++;
+        this.asyncCount.incrementAndGet();
+    }
+
+    private boolean hashException(PipelineData arg) {
+        Map<String, Object> result = arg.getResult();
+        for (String handlerName : result.keySet()) {
+            Object o = result.get(handlerName);
+            if (o instanceof Exception) {
+                Exception e = (Exception) o;
+                if (arg.isThrowWhenException()) {
+                    throw (RuntimeException) e;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
-    public void fire(Object arg) throws InterruptedException {
+    public void fire(PipelineData arg) throws InterruptedException {
         PipelineAsyncData pipelineAsyncData = null;
-        if (asyncCount > 0 && arg instanceof PipelineAsyncData) {
+        if (asyncCount.get() > 0 && arg instanceof PipelineAsyncData) {
             pipelineAsyncData = (PipelineAsyncData) arg;
-            pipelineAsyncData.initLatch(this.asyncCount);
+            pipelineAsyncData.initLatch(this.asyncCount.get());
         }
         if (!reverse) {
             head.fire(arg);
@@ -88,8 +112,10 @@ public class SimpleHandlerPipeline implements HandlerPipeline {
 
         if (pipelineAsyncData != null) {
             pipelineAsyncData.getCountDownLatch().await();
+            if (arg.isThrowWhenException()) {
+                this.hashException(arg);
+            }
         }
-
     }
 
     public ExecutorService getConsumerThreadPool() {

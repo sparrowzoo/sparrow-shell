@@ -17,20 +17,23 @@
 
 package com.sparrow.pipeline;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CountDownLatch;
 
-public interface HandlerPipeline {
+public class DefaultAsynPipelineData extends DefaultPipelineData implements PipelineAsyncData{
 
-    AtomicInteger getAsyncCount();
+    private CountDownLatch countDownLatch;
+    @Override
+    public void initLatch(int count) {
+        this.countDownLatch = new CountDownLatch(count);
+    }
 
-    boolean isReverse();
+    @Override
+    public CountDownLatch getCountDownLatch() {
+        return countDownLatch;
+    }
 
-    void add(Handler handler);
-
-    void fire(PipelineData arg) throws InterruptedException;
-
-    void addAsync(Handler handler);
-
-    ExecutorService getConsumerThreadPool();
+    @Override
+    public void latch() throws InterruptedException {
+        countDownLatch.await();
+    }
 }

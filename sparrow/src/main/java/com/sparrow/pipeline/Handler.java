@@ -17,5 +17,5 @@
 package com.sparrow.pipeline;
 
 public interface Handler<T> {
-    void invoke(T arg);
+    HandlerNextAction invoke(T arg);
 }
