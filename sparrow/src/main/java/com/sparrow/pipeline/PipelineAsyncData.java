@@ -19,7 +19,7 @@ package com.sparrow.pipeline;
 
 import java.util.concurrent.CountDownLatch;
 
-public interface PipelineAsyncData extends PipelineData{
+public interface PipelineAsyncData extends PipelineData {
     void initLatch(int count);
 
     CountDownLatch getCountDownLatch();

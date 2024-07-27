@@ -19,9 +19,10 @@ package com.sparrow.pipeline;
 
 import java.util.concurrent.CountDownLatch;
 
-public class DefaultAsynPipelineData extends DefaultPipelineData implements PipelineAsyncData{
+public class DefaultAsynPipelineData extends DefaultPipelineData implements PipelineAsyncData {
 
     private CountDownLatch countDownLatch;
+
     @Override
     public void initLatch(int count) {
         this.countDownLatch = new CountDownLatch(count);

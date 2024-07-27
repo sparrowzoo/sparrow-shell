@@ -48,8 +48,7 @@ class HandlerContext<T extends PipelineData> {
                         pipelineAsync.put(handler, nextAction.getResult());
                     } catch (Exception e) {
                         pipelineAsync.put(handler, e);
-                    }
-                    finally {
+                    } finally {
                         pipelineAsync.getCountDownLatch().countDown();
                     }
                 }
@@ -76,7 +75,7 @@ class HandlerContext<T extends PipelineData> {
             }
         } catch (Exception e) {
             arg.put(this.handler, e);
-            if(arg.isThrowWhenException()){
+            if (arg.isThrowWhenException()) {
                 throw e;
             }
             return;
