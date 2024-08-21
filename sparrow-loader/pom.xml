@@ -22,12 +22,12 @@
     <parent>
         <artifactId>sparrow-bom</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>1.0.4-RELEASE</version>
+        <version>1.0.5-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow-loader</artifactId>
-    <version>1.0.4-RELEASE</version>
+    <version>1.0.5-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
