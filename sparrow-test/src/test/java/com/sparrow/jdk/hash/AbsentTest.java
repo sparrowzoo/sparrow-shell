@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-package com.sparrow;
+package com.sparrow.jdk.hash;
 
-import com.google.common.collect.Maps;
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.utility.EMailUtility;
+import com.sparrow.json.User;
 
-public class EmailTest {
-    public static void main(String[] args) throws BusinessException {
-        EMailUtility eMailUtility = new EMailUtility();
-        eMailUtility.sendMail("49200163@qq.com", "你好朋友 ", "有空吗？出来 喝点呀", "zh_cn");
+import java.util.TreeMap;
+
+public class AbsentTest {
+    public static void main(String[] args) {
+        TreeMap<String, User> map = new TreeMap<>();
+        User user = map.putIfAbsent("1", new User());
+        user.setUserName("Tom");
+        System.out.println(map.get("1").getUserName());
     }
 }

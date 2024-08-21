@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
-package com.sparrow;
+package com.sparrow.math;
 
-import com.google.common.collect.Maps;
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.utility.EMailUtility;
+import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
-public class EmailTest {
-    public static void main(String[] args) throws BusinessException {
-        EMailUtility eMailUtility = new EMailUtility();
-        eMailUtility.sendMail("49200163@qq.com", "你好朋友 ", "有空吗？出来 喝点呀", "zh_cn");
+public class NormalTest {
+    public static void main(String[] args) {
+
+        double[] values = {1, 2, 3, 4, 5};
+        Mean mean = new Mean();
+        mean.evaluate(values);
+        System.out.println(mean.getResult());
+        StandardDeviation sd = new StandardDeviation(false);
+        double stdDev = sd.evaluate(values);
+        System.out.println(stdDev);
+
+
     }
 }
