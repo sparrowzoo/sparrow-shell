@@ -18,12 +18,15 @@
 package com.sparrow.math;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 public class StatisticsNormal {
     public static void main(String[] args) {
         NormalDistribution normalDistribution = new NormalDistribution(10, 1);
-        double z = normalDistribution.inverseCumulativeProbability(0.8485);
-        System.out.println(normalDistribution.cumulativeProbability(z));
+        for (int i = 1; i <= 10; i++) {
+            double p=i/10D;
+            double z = normalDistribution.inverseCumulativeProbability(p);
+            System.out.println("p=" + p + "\tz=" + z);
+        }
+        //System.out.println(normalDistribution.cumulativeProbability(z));
     }
 }
