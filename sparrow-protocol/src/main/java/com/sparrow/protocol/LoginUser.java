@@ -24,10 +24,16 @@ public class LoginUser implements VO {
      * 游客ID
      */
     public static final Long VISITOR_ID = 0L;
+    public static final int CATEGORY_VISITOR = 0;
     /**
      * 用户ID
      */
     private Long userId;
+
+    /**
+     * 用户类型
+     */
+    private Integer category;
     /**
      * 用户昵称
      */
@@ -52,6 +58,7 @@ public class LoginUser implements VO {
     private Map<String, Object> extensions = new LinkedHashMap<>();
 
     public static LoginUser create(Long userId,
+                                   Integer category,
                                    String userName,
                                    String nickName,
                                    String avatar,
@@ -59,6 +66,7 @@ public class LoginUser implements VO {
                                    Integer days) {
         LoginUser login = new LoginUser();
         login.userId = userId;
+        login.category = category;
         login.userName = userName;
         login.nickName = nickName;
         login.avatar = avatar;
@@ -134,5 +142,13 @@ public class LoginUser implements VO {
 
     public boolean isVisitor() {
         return VISITOR_ID.equals(this.getUserId());
+    }
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
     }
 }

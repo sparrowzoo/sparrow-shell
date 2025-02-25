@@ -71,6 +71,7 @@ public class LoginUserFilter implements Filter {
                 if (mockLoginUser) {
                     loginUser = LoginUser.create(
                             1L,
+                            LoginUser.CATEGORY_VISITOR,
                             "mock-user",
                             "mock-nick-name",
                             "header",

@@ -105,7 +105,8 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
         String visitorNickName = ConfigUtility.getLanguageValue(ConfigKeyLanguage.USER_VISITOR_NICKNAME,
                 ConfigUtility.getValue(Config.LANGUAGE));
         String avatar = ConfigUtility.getValue(Config.DEFAULT_AVATAR);
-        return LoginUser.create(LoginUser.VISITOR_ID
+        return LoginUser.create(LoginUser.VISITOR_ID,
+                LoginUser.CATEGORY_VISITOR
                 , visitorName
                 , visitorNickName
                 , avatar, deviceId, 0);
