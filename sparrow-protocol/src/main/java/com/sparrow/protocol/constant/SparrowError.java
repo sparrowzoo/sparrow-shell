@@ -68,10 +68,10 @@ public enum SparrowError implements ErrorSupport {
     GLOBAL_CONTENT_IS_ILLEGAL(true, GlobalModule.GLOBAL, "16", "Content is illegal"),
     GLOBAL_CONTENT_DUPLICATE(true, GlobalModule.GLOBAL, "17", "Content duplicate"),
     GLOBAL_UNSUPPORTED_IMAGE_TYPE(true, GlobalModule.GLOBAL, "18",
-        "Unsupported image type only support JPG, GIF, PNG"),
+            "Unsupported image type only support JPG, GIF, PNG"),
     GLOBAL_IMAGE_SIZE_TOO_LARGE(true, GlobalModule.GLOBAL, "19", "Image size too large"),
     GLOBAL_ACCOUNT_ILLEGAL(true, GlobalModule.GLOBAL, "20",
-        "Account or ip or app is illegal, can not continue"),
+            "Account or ip or app is illegal, can not continue"),
     GLOBAL_OUT_OF_TIMES_LIMIT(true, GlobalModule.GLOBAL, "21", "Out of times limit"),
     GLOBAL_ADMIN_CAN_NOT_OPERATION(true, GlobalModule.GLOBAL, "22", "Admin can't operation"),
     GLOBAL_PARAMETER_NULL(true, GlobalModule.GLOBAL, "23", "Parameter is null"),
@@ -89,8 +89,10 @@ public enum SparrowError implements ErrorSupport {
     USER_TOKEN_EXPIRED(true, GlobalModule.GLOBAL, "37", "user token expired"),
 
     USER_TOKEN_ABNORMAL(true, GlobalModule.GLOBAL, "38", "user token abnormal"),
+    IMAGE_EXTENSION_NOT_FOUND(true, GlobalModule.GLOBAL, "39", "image extension not found"),
 
-    IMAGE_EXTENSION_NOT_FOUND(true, GlobalModule.GLOBAL, "39", "image extension not found");
+    USER_TOKEN_ERROR(false, GlobalModule.GLOBAL, "40", "user token error");
+
 
     private boolean system;
     private ModuleSupport module;
