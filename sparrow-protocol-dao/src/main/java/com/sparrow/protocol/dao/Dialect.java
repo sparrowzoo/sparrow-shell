@@ -15,10 +15,18 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.protocol.dao;
 
-public enum Dialect {
-    MYSQL,
-    SQL_SERVER,
-    ELASTIC_SEARCH
+import com.sparrow.protocol.dao.enums.DBDialect;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Target({TYPE})
+@Retention(RUNTIME)
+public @interface Dialect {
+    DBDialect strategy() default DBDialect.MYSQL;
 }

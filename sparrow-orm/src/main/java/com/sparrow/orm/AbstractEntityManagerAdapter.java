@@ -21,26 +21,21 @@ import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.enums.OrmEntityMetadata;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
+import com.sparrow.protocol.dao.Dialect;
 import com.sparrow.protocol.dao.Split;
 import com.sparrow.protocol.dao.SplitTable;
+import com.sparrow.protocol.dao.enums.DBDialect;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.persistence.*;
+import java.lang.reflect.Method;
+import java.util.*;
 
 public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected static Logger logger = LoggerFactory.getLogger(AbstractEntityManagerAdapter.class);
@@ -165,7 +160,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
             this.columnPropertyMap.put(column.name(), propertyName);
             String fieldName = dialectReader.getOpenQuote() + column.name()
-                + dialectReader.getCloseQuote();
+                    + dialectReader.getCloseQuote();
             // insertSQL
             if (!TableSplitStrategy.ORIGIN_NOT_PERSISTENCE.equals(field.getHashStrategy()) && !GenerationType.IDENTITY.equals(field.getGenerationType())) {
                 insertSQL.append("\n");
@@ -197,11 +192,11 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         insertSQL.append(Symbol.RIGHT_PARENTHESIS);
 
         updateSQL.deleteCharAt(updateSQL.length() - 1)
-            .append(" where ")
-            .append(this.primary.getColumnName())
-            .append("=").append(this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName()));
+                .append(" where ")
+                .append(this.primary.getColumnName())
+                .append("=").append(this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName()));
         String deleteSQL = "delete from " + this.dialectTableName + " where "
-            + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName());
+                + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName());
 
         createDDLField.append(String.format("PRIMARY KEY (`%s`)\n", this.primary.getColumnName()));
         createDDLField.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='").append(tableName).append("';\n");
@@ -237,7 +232,12 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         } else {
             this.tableName = StringUtility.setFirstByteLowerCase(clazz.getSimpleName());
         }
-        this.dialectReader = DialectReader.getInstance(schema);
+        Dialect dialect = clazz.getAnnotation(Dialect.class);
+        DBDialect dbDialect = DBDialect.MYSQL;
+        if (dialect != null) {
+            dbDialect = dialect.strategy();
+        }
+        this.dialectReader = new DialectReader(dbDialect);
         Split split = null;
         if (clazz.isAnnotationPresent(Split.class)) {
             split = clazz.getAnnotation(Split.class);

@@ -20,19 +20,23 @@ package com.sparrow.datasource;
 import com.sparrow.concurrent.SparrowThreadFactory;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
+import com.sparrow.support.EnvironmentSupport;
+import com.sparrow.utility.StringUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import javax.sql.DataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Mysql数据库链接池
@@ -57,29 +61,62 @@ public class ConnectionPool implements DataSource, ContainerAware {
 
     private DatasourceConfig connectionConfig;
 
-    public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
-        this.dataSourceFactory = dataSourceFactory;
-    }
 
     public ConnectionPool() {
     }
 
+
+    /**
+     * 读取数据库源 <p> data source key 与 connection url 映射 data source+suffix determine datasource data
+     * source+database_split_key determine jdbc template
+     *
+     * @param dataSourceKey
+     * @return
+     */
+    private DatasourceConfig getDatasourceConfig(String dataSourceKey) {
+        if (StringUtility.isNullOrEmpty(dataSourceKey)) {
+            dataSourceKey = "sparrow_default";
+        }
+        DatasourceKey dsKey = DatasourceKey.parse(dataSourceKey);
+        DatasourceConfig datasourceConfig = new DatasourceConfig();
+        try {
+            Properties props = new Properties();
+            String filePath = "/" + dataSourceKey + ".properties";
+            String schema = dsKey.getSchema();
+            props.load(EnvironmentSupport.getInstance().getFileInputStream(filePath));
+            datasourceConfig.setDriverClassName(props.getProperty(schema + ".driverClassName"));
+            datasourceConfig.setUsername(props.getProperty(schema + ".username"));
+            String envPasswordKey = "mysql_" + schema + "_password";
+            String password = System.getenv(envPasswordKey);
+            logger.info("password_key {},password {}", envPasswordKey, password);
+            datasourceConfig.setPassword(password);
+            if (StringUtility.isNullOrEmpty(datasourceConfig.getPassword())) {
+                datasourceConfig.setPassword(props.getProperty(schema + ".password"));
+            }
+            datasourceConfig.setUrl(props.getProperty(schema + ".url"));
+            datasourceConfig.setPoolSize(Integer.parseInt(props.getProperty(schema + ".poolSize")));
+        } catch (Exception ignore) {
+            throw new RuntimeException(ignore);
+        }
+        return datasourceConfig;
+    }
+
     /**
      * 初始化连接池
-     * @param container 当前集合
-     * @param datasourceName  bean 名称
+     *
+     * @param container      当前集合
+     * @param datasourceName bean 名称
      */
     @Override
     public void aware(Container container, String datasourceName) {
-        this.connectionConfig = this.dataSourceFactory.getDatasourceConfig(datasourceName);
+        this.connectionConfig = this.getDatasourceConfig(datasourceName);
         pool = new ArrayList<>(this.connectionConfig.getPoolSize());
         this.usedPool = new ConcurrentHashMap<Connection, Long>(this.connectionConfig.getPoolSize());
         for (int i = 0; i < this.connectionConfig.getPoolSize(); i++) {
             pool.add(this.newConnection());
         }
 
-        ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(1,
-            new SparrowThreadFactory.Builder().namingPattern("datasource-monitor-%d").daemon(true).build());
+        ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(1, new SparrowThreadFactory.Builder().namingPattern("datasource-monitor-%d").daemon(true).build());
 
         scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -89,8 +126,7 @@ public class ConnectionPool implements DataSource, ContainerAware {
                     if (ConnectionPool.this.loginTimeout == 0) {
                         return;
                     }
-                    if ((System.currentTimeMillis() - usedPool.get(c)) / 1000 / 60 > ConnectionPool.this
-                        .getLoginTimeout()) {
+                    if ((System.currentTimeMillis() - usedPool.get(c)) / 1000 / 60 > ConnectionPool.this.getLoginTimeout()) {
                         //expire connection
                         try {
                             ConnectionPool.this.release(c);
@@ -208,8 +244,7 @@ public class ConnectionPool implements DataSource, ContainerAware {
         if (this.isWrapperFor(arg0)) {
             return (T) arg0;
         } else {
-            throw new SQLException(
-                "no object found that implements the interface");
+            throw new SQLException("no object found that implements the interface");
         }
     }
 
@@ -234,10 +269,8 @@ public class ConnectionPool implements DataSource, ContainerAware {
     }
 
     @Override
-    public Connection getConnection(String username, String password)
-        throws SQLException {
-        throw new SQLException(
-            "not support getConnection(String username, String password) method");
+    public Connection getConnection(String username, String password) throws SQLException {
+        throw new SQLException("not support getConnection(String username, String password) method");
     }
 
     //jdk1.6 without this api

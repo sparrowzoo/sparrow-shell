@@ -14,34 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.datasource;
 
-import java.sql.Connection;
-import javax.sql.DataSource;
+package com.sparrow.protocol.dao.enums;
 
-public interface DataSourceFactory {
-    /**
-     * get datasource by key
-     *
-     * @param dataSourceKey the identify of the datasource to confirm one datasource it's same to the file name of
-     *                      datasource properties config file
-     * @return return datasource
-     * @see javax.sql.DataSource
-     */
-    DataSource getDataSource(String dataSourceKey);
-
-    /**
-     * get datasource by sparrow_default key
-     *
-     * @return DataSource
-     */
-    DataSource getDataSource();
-
-    /**
-     *作为绑定数据源的key
-     *
-     * @param connection java connection object
-     * @return DatasourceKey
-     */
-    DatasourceKey getDatasourceKey(Connection connection);
+public enum DBDialect {
+    MYSQL,
+    ORACLE,
+    SQLSERVER,
+    ELASTIC_SEARCH
 }
