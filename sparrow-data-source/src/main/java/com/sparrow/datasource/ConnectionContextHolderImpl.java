@@ -42,9 +42,15 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
      * 将datasource的具体实现分离 datasource 的connection close功能各链接池已实现
      * <p>
      * 请求过程中的事务链接 同一个线程，同一个事务中只允许一个链接
+     * key:datasourceKey
+     * value:connection
      */
     private ThreadLocal<Map<String, Connection>> transactionContainer = new ThreadLocal<Map<String, Connection>>();
 
+    /**
+     * key:connection
+     * value:proxyConnection
+     */
     private Map<Connection, ProxyConnection> originProxyMap = new HashMap<>();
 
     public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
@@ -73,11 +79,13 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
     }
 
     @Override
-    public void bindConnection(Connection connection) {
+    public void bindConnection(Connection proxyConnection) {
         try {
-            DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(connection);
-            if (!connection.getAutoCommit()) {
-                this.getTransactionHolder().put(dataSourceKey.getKey(), connection);
+            DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(proxyConnection);
+            //只有事务链接才需要绑定到事务容器中
+            //非事务链接会通过originProxyMap 映射找到对应的代理链接
+            if (!proxyConnection.getAutoCommit()) {
+                this.getTransactionHolder().put(dataSourceKey.getKey(), proxyConnection);
             }
         } catch (SQLException ignore) {
             throw new RuntimeException(ignore);
@@ -85,21 +93,22 @@ public class ConnectionContextHolderImpl implements ConnectionContextHolder {
     }
 
     @Override
-    public void unbindConnection(Connection connection) {
+    public void unbindConnection(Connection originConnection) {
         try {
-            DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(connection);
+            DatasourceKey dataSourceKey = this.dataSourceFactory.getDatasourceKey(originConnection);
             Connection proxyConnection = this.getConnection(dataSourceKey.getKey());
+            //如果不存在事务
             if (proxyConnection == null) {
-                proxyConnection = this.originProxyMap.get(connection);
+                proxyConnection = this.originProxyMap.get(originConnection);
                 if (proxyConnection != null) {
                     proxyConnection.close();
                 } else {
-                    connection.close();
+                    originConnection.close();
                 }
                 return;
             }
-            if (!connection.getAutoCommit()) {
-                this.getTransactionHolder().remove(dataSourceKey.getKey());
+            //如果是自动提交，则关闭链接
+            if (!originConnection.getAutoCommit()) {
                 proxyConnection.close();
             }
         } catch (SQLException ignore) {

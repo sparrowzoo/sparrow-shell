@@ -158,14 +158,12 @@ public class JDBCTemplate implements JDBCSupport {
         ConnectionContextHolder connectionHolder = this.getConnectionHolder();
         DatasourceKey dataSourceKey = new DatasourceKey(this.schema, this.getDataSourceSuffix());
         Connection connection = connectionHolder.getConnection(dataSourceKey.getKey());
-        //当前未绑定链接或已经绑定但不是事务
         try {
-            if (connection == null || connection.getAutoCommit()) {
+            //先从当前线程中拿到链接
+            if (connection == null) {
                 // 新连接并与当前线程绑定
                 DataSource dataSource = connectionHolder.getDataSourceFactory().getDataSource(dataSourceKey.getKey());
                 connection = dataSource.getConnection();
-                //不管是否为事务都需要绑定到线程上，以便执行完后关闭proxyConnection
-                //(ProxyConnection)connection会报错，故getConnection之后无法放回池中
                 connectionHolder
                     .bindConnection(connection);
             }

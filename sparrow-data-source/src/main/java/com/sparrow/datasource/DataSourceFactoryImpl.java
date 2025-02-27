@@ -41,8 +41,17 @@ import org.slf4j.LoggerFactory;
  */
 public class DataSourceFactoryImpl implements DataSourceFactory {
     private static Logger logger = LoggerFactory.getLogger(DataSourceFactoryImpl.class);
-    private static Map<String, DatasourceConfig> datasourceConfigMap = new ConcurrentHashMap<String, DatasourceConfig>();
-    private static Cache<String, DatasourceKey> datasourceUrlMap = new StrongDurationCache<>(CacheKey.DATA_SOURCE_URL_PAIR);
+
+    /**
+     * key:datasourceKey
+     * value:datasourceConfig
+     */
+    private static Map<String, DatasourceConfig> datasourceKeyConfigMap = new ConcurrentHashMap<String, DatasourceConfig>();
+    /**
+     * key:jdbc url
+     * value:datasourceKey
+     */
+    private static Cache<String, DatasourceKey> urlDatasourceKeyMap = new StrongDurationCache<>(CacheKey.DATA_SOURCE_URL_PAIR);
 
     public DataSourceFactoryImpl(String initDatasourceKeys) {
         String[] datasourceKeyArray = initDatasourceKeys.split(",");
@@ -93,15 +102,15 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
         if (StringUtility.isNullOrEmpty(dataSourceKey)) {
             dataSourceKey = "sparrow_default";
         }
-        DatasourceKey dsKey = DatasourceKey.parse(dataSourceKey);
-        if (datasourceConfigMap.containsKey(dataSourceKey)) {
-            return datasourceConfigMap.get(dataSourceKey);
+        if (datasourceKeyConfigMap.containsKey(dataSourceKey)) {
+            return datasourceKeyConfigMap.get(dataSourceKey);
         }
 
         synchronized (this) {
-            if (datasourceConfigMap.containsKey(dataSourceKey)) {
-                return datasourceConfigMap.get(dataSourceKey);
+            if (datasourceKeyConfigMap.containsKey(dataSourceKey)) {
+                return datasourceKeyConfigMap.get(dataSourceKey);
             }
+            DatasourceKey dsKey = DatasourceKey.parse(dataSourceKey);
             DatasourceConfig datasourceConfig = new DatasourceConfig();
             try {
                 Properties props = new Properties();
@@ -132,9 +141,9 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
                 statement = connection.createStatement();
                 boolean effectCount = statement.execute("SELECT 1");
                 if (effectCount) {
-                    datasourceUrlMap.put(connection.getMetaData().getURL(), dsKey);
+                    urlDatasourceKeyMap.put(connection.getMetaData().getURL(), dsKey);
                 }
-                datasourceConfigMap.put(dataSourceKey, datasourceConfig);
+                datasourceKeyConfigMap.put(dataSourceKey, datasourceConfig);
             } catch (Exception e) {
                 logger.error(" cat't connection", e);
             } finally {
@@ -151,7 +160,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
             return null;
         }
         try {
-            return datasourceUrlMap.get(connection.getMetaData().getURL());
+            return urlDatasourceKeyMap.get(connection.getMetaData().getURL());
         } catch (SQLException e) {
             return null;
         }

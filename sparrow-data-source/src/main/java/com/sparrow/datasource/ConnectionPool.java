@@ -65,7 +65,9 @@ public class ConnectionPool implements DataSource, ContainerAware {
     }
 
     /**
-     * 初始化数据库链接池
+     * 初始化连接池
+     * @param container 当前集合
+     * @param datasourceName  bean 名称
      */
     @Override
     public void aware(Container container, String datasourceName) {
@@ -83,7 +85,6 @@ public class ConnectionPool implements DataSource, ContainerAware {
             @Override
             public void run() {
                 Map<Connection, Long> usedPool = ConnectionPool.this.usedPool;
-                List<Connection> pool = ConnectionPool.this.pool;
                 for (Connection c : usedPool.keySet()) {
                     if (ConnectionPool.this.loginTimeout == 0) {
                         return;

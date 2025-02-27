@@ -25,6 +25,8 @@ public class LoginUser implements VO {
      */
     public static final Long VISITOR_ID = 0L;
     public static final int CATEGORY_VISITOR = 0;
+    public static final int CATEGORY_REGISTER = 1;
+
     /**
      * 用户ID
      */
