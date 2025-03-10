@@ -78,7 +78,7 @@ public class Result<T> implements VO {
      * DCL 解决容器加载顺序的问题：
      * 因为static 是在jvm启动的时侯加载的
      * 而spring 是在其后加载的
-     *
+     * <p>
      * 实际是static 懒加载，用的时侯才执行
      *
      * @return
@@ -131,11 +131,18 @@ public class Result<T> implements VO {
         return new Result(errorSupport);
     }
 
-    public static Result fail(BusinessException business) {
+    private static Result fail(BusinessException business) {
         Result result = new Result();
         result.code = business.getErrorSupport().getCode();
         result.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(business);
         return result;
+    }
+
+    public static Result fail(Exception business) {
+        if (business instanceof BusinessException) {
+            return fail((BusinessException) business);
+        }
+        return Result.fail();
     }
 
     public static Result fail() {

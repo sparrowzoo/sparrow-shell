@@ -66,6 +66,8 @@ public class DateTime {
 
     public static final String FORMAT_MM_DD = "MM-dd";
 
+    public static final String FORMAT_MMDD = "MMdd";
+
     public static final String FORMAT_YYYYMMDD = "yyyyMMdd";
 
     public static final String FORMAT_YYYYMMDDHHMMSS = "yyyyMMddHHmmss";

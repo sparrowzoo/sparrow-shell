@@ -14,25 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.sparrow.datasource;
 
-import javax.sql.DataSource;
+import java.sql.Connection;
 
-public interface DataSourceFactory {
-    /**
-     * get datasource by key
-     *
-     * @param dataSourceKey the identify of the datasource to confirm one datasource it's same to the file name of
-     *                      datasource properties config file
-     * @return return datasource
-     * @see javax.sql.DataSource
-     */
-    DataSource getDataSource(String dataSourceKey);
-
-    /**
-     * get datasource by sparrow_default key
-     *
-     * @return DataSource
-     */
-    DataSource getDataSource();
+public interface ConnectionReleaser {
+    void release(Connection connection);
 }

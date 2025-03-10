@@ -19,15 +19,12 @@ package com.sparrow.datasource;
 import java.sql.Connection;
 
 public interface ConnectionContextHolder {
-    void addOriginProxy(Connection proxy);
 
-    DataSourceFactory getDataSourceFactory();
+    Connection getConnection();
 
     void bindConnection(Connection connection);
 
     void unbindConnection(Connection connection);
-
-    Connection getConnection(String datasourceKey);
 
     void removeAll();
 }

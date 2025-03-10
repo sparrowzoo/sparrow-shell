@@ -43,7 +43,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class ConnectionPool implements DataSource, ContainerAware {
     private static Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
-    private DataSourceFactory dataSourceFactory;
     private int openedConnectionCount = 0;
     private int closedConnectionCount = 0;
 
@@ -61,8 +60,16 @@ public class ConnectionPool implements DataSource, ContainerAware {
 
     private DatasourceConfig connectionConfig;
 
+    private ConnectionProxyContainer connectionProxyContainer;
 
-    public ConnectionPool() {
+
+    public ConnectionPool(ConnectionProxyContainer connectionProxyContainer) {
+        this.connectionProxyContainer = connectionProxyContainer;
+    }
+
+    public ConnectionPool(String datasourceKey, ConnectionProxyContainer connectionProxyContainer) {
+        this.connectionProxyContainer = connectionProxyContainer;
+        this.aware(null, datasourceKey);
     }
 
 
@@ -197,6 +204,8 @@ public class ConnectionPool implements DataSource, ContainerAware {
         usedPool.remove(c);
         if (!c.isClosed()) {
             pool.add(c);
+        } else {
+            this.connectionProxyContainer.unbind(c);
         }
     }
 
@@ -204,7 +213,7 @@ public class ConnectionPool implements DataSource, ContainerAware {
         Connection conn = null;
         // 此处不要放入池中.release时即放回池中
         try {
-            conn = new ProxyConnection(this.connectionConfig, this);
+            conn = new ProxyConnection(this.connectionConfig, this, this.connectionProxyContainer);
             // 打开过的所有新链接
             this.openedConnectionCount++;
         } catch (Exception e) {

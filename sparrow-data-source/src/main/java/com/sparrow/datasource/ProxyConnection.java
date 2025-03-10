@@ -17,51 +17,35 @@
 
 package com.sparrow.datasource;
 
-import com.sparrow.constant.SysObjectName;
-import com.sparrow.container.Container;
-import com.sparrow.core.spi.ApplicationContext;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.NClob;
-import java.sql.PreparedStatement;
-import java.sql.SQLClientInfoException;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.SQLXML;
-import java.sql.Savepoint;
-import java.sql.Statement;
-import java.sql.Struct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ProxyConnection implements Connection {
     private static Logger logger = LoggerFactory.getLogger(ProxyConnection.class);
     private Connection conn = null;
     private ConnectionPool connectionPool;
 
+    private ConnectionProxyContainer connectionProxyContainer;
+
     public Connection getOriginConnection() {
         return this.conn;
     }
 
-    public ProxyConnection(DatasourceConfig datasourceConfig, ConnectionPool connectionPool) {
+    public ProxyConnection(DatasourceConfig datasourceConfig, ConnectionPool connectionPool, ConnectionProxyContainer connectionProxyContainer) {
         try {
             Class.forName(datasourceConfig.getDriverClassName());
+            this.connectionProxyContainer = connectionProxyContainer;
             this.conn = DriverManager.getConnection(datasourceConfig.getUrl(), datasourceConfig.getUsername(), datasourceConfig.getPassword());
             this.connectionPool = connectionPool;
-            Container container = ApplicationContext.getContainer();
-            ConnectionContextHolder connectionContextHolder = container.getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
-            connectionContextHolder.addOriginProxy(this);
+            connectionProxyContainer.bind(this.conn, this);
         } catch (Exception e) {
             logger.error("connection error url:{},user_name:{},password:{}", datasourceConfig.getUrl(),
-                datasourceConfig.getUsername(), datasourceConfig.getPassword(), e);
+                    datasourceConfig.getUsername(), datasourceConfig.getPassword(), e);
         }
     }
 
@@ -105,8 +89,8 @@ public class ProxyConnection implements Connection {
             logger.error("close connection error", e);
         }
         logger.debug("release-->connection pool size:"
-            + this.connectionPool.pool.size() + "used pool size:"
-            + this.connectionPool.usedPool.size());
+                + this.connectionPool.pool.size() + "used pool size:"
+                + this.connectionPool.usedPool.size());
     }
 
     @Override
@@ -116,7 +100,7 @@ public class ProxyConnection implements Connection {
 
     @Override
     public Array createArrayOf(String typeName, Object[] elements)
-        throws SQLException {
+            throws SQLException {
         return this.conn.createArrayOf(typeName, elements);
     }
 
@@ -147,21 +131,21 @@ public class ProxyConnection implements Connection {
 
     @Override
     public Statement createStatement(int resultSetType, int resultSetConcurrency)
-        throws SQLException {
+            throws SQLException {
         return this.conn.createStatement(resultSetType, resultSetConcurrency);
     }
 
     @Override
     public Statement createStatement(int resultSetType,
-        int resultSetConcurrency, int resultSetHoldability)
-        throws SQLException {
+                                     int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException {
         return this.conn.createStatement(resultSetType, resultSetConcurrency,
-            resultSetHoldability);
+                resultSetHoldability);
     }
 
     @Override
     public Struct createStruct(String typeName, Object[] attributes)
-        throws SQLException {
+            throws SQLException {
         return this.conn.createStruct(typeName, attributes);
     }
 
@@ -237,16 +221,16 @@ public class ProxyConnection implements Connection {
 
     @Override
     public CallableStatement prepareCall(String sql, int resultSetType,
-        int resultSetConcurrency) throws SQLException {
+                                         int resultSetConcurrency) throws SQLException {
         return this.conn.prepareCall(sql, resultSetType, resultSetConcurrency);
     }
 
     @Override
     public CallableStatement prepareCall(String sql, int resultSetType,
-        int resultSetConcurrency, int resultSetHoldability)
-        throws SQLException {
+                                         int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException {
         return this.conn.prepareCall(sql, resultSetType, resultSetConcurrency,
-            resultSetHoldability);
+                resultSetHoldability);
     }
 
     @Override
@@ -256,35 +240,35 @@ public class ProxyConnection implements Connection {
 
     @Override
     public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys)
-        throws SQLException {
+            throws SQLException {
         return this.conn.prepareStatement(sql, autoGeneratedKeys);
     }
 
     @Override
     public PreparedStatement prepareStatement(String sql, int[] columnIndexes)
-        throws SQLException {
+            throws SQLException {
         return this.conn.prepareStatement(sql, columnIndexes);
     }
 
     @Override
     public PreparedStatement prepareStatement(String sql, String[] columnNames)
-        throws SQLException {
+            throws SQLException {
         return this.conn.prepareStatement(sql, columnNames);
     }
 
     @Override
     public PreparedStatement prepareStatement(String sql, int resultSetType,
-        int resultSetConcurrency) throws SQLException {
+                                              int resultSetConcurrency) throws SQLException {
         return this.conn.prepareStatement(sql, resultSetType,
-            resultSetConcurrency);
+                resultSetConcurrency);
     }
 
     @Override
     public PreparedStatement prepareStatement(String sql, int resultSetType,
-        int resultSetConcurrency, int resultSetHoldability)
-        throws SQLException {
+                                              int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException {
         return this.conn.prepareStatement(sql, resultSetType,
-            resultSetConcurrency, resultSetHoldability);
+                resultSetConcurrency, resultSetHoldability);
     }
 
     @Override
@@ -314,13 +298,13 @@ public class ProxyConnection implements Connection {
 
     @Override
     public void setClientInfo(Properties properties)
-        throws SQLClientInfoException {
+            throws SQLClientInfoException {
         this.conn.setClientInfo(properties);
     }
 
     @Override
     public void setClientInfo(String name, String value)
-        throws SQLClientInfoException {
+            throws SQLClientInfoException {
         this.conn.setClientInfo(name, value);
     }
 

@@ -14,33 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.orm.template;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
+package com.sparrow.protocol.dao;
 
-public class ResultSetConnectionPair {
-    public ResultSetConnectionPair(ResultSet resultSet, Connection connection) {
-        this.resultSet = resultSet;
-        this.connection = connection;
-    }
+import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 
-    private ResultSet resultSet;
-    private Connection connection;
+import javax.sql.DataSource;
 
-    public ResultSet getResultSet() {
-        return resultSet;
-    }
-
-    public void setResultSet(ResultSet resultSet) {
-        this.resultSet = resultSet;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
+public interface DataSourceDispatcher {
+    DataSource dispatch(String schema, DatabaseSplitStrategy strategy);
 }

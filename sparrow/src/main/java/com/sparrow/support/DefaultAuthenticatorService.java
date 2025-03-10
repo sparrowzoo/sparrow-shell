@@ -40,6 +40,17 @@ public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
 
     private String encryptKey;
 
+    private Boolean validateDeviceId;
+
+    private Boolean validateStatus;
+
+    public DefaultAuthenticatorService(String encryptKey, Boolean validateDeviceId, Boolean validateStatus) {
+        this.encryptKey = encryptKey;
+        this.validateDeviceId = validateDeviceId;
+        this.validateStatus = validateStatus;
+        this.loadedEnvEncrypt = true;
+    }
+
     private volatile boolean loadedEnvEncrypt;
 
     @Override
@@ -66,11 +77,22 @@ public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
     }
 
     @Override
+    protected boolean validateDeviceId() {
+        return this.validateDeviceId;
+    }
+
+
+    @Override
+    protected boolean validateStatus() {
+        return this.validateStatus;
+    }
+
+    @Override
     protected String sign(LoginUser loginUser, String secretKey) {
         String userInfo = this.json.toString(loginUser);
         String signature = Hmac.getInstance().getSHA1Base64(userInfo,
                 this.getEncryptKey());
-        return Base64.encodeBytes(userInfo.getBytes(StandardCharsets.US_ASCII)) + "." + signature;
+        return Base64.encodeBytes(userInfo.getBytes(StandardCharsets.UTF_8)) + "." + signature;
     }
 
     @Override
@@ -81,7 +103,7 @@ public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
         String signature = tokens[1];
 
         try {
-            userInfo = new String(Base64.decode(userInfo), StandardCharsets.US_ASCII);
+            userInfo = new String(Base64.decode(userInfo), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new BusinessException(SparrowError.USER_TOKEN_ERROR);
         }
@@ -95,6 +117,9 @@ public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
 
     @Override
     protected void setUserStatus(Long loginUser, LoginUserStatus loginUserStatus) {
+        if (loginUserStatus == null) {
+            return;
+        }
         cache.put(loginUser, loginUserStatus);
     }
 

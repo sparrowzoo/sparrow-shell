@@ -21,10 +21,10 @@
 <beans>
 
     <!---当前进程的所有datasource实例,多个用,分隔-->
-    <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
+    <bean name="dataSourceFactory" class="com.sparrow.orm.datasource.DataSourceFactoryImpl">
         <constructor-arg index="1" name="initDatasourceKeys" value="sparrow_default" type="string"/>
     </bean>
-    <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
+    <bean name="connectionContextHolder" class="com.sparrow.orm.transaction.ConnectionContextHolderImpl">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
     <bean name="sparrowServletContainer" class="com.sparrow.web.support.SparrowServletContainer"/>

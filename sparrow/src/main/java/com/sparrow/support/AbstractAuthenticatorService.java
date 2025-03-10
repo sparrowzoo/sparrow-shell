@@ -37,6 +37,16 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
 
     protected abstract String getDecryptKey();
 
+    protected abstract boolean validateDeviceId();
+
+    /**
+     * 比如IM系统，客户认识，我们鉴权，sparrow系统无法用户状态
+     *
+     * @return
+     */
+    protected abstract boolean validateStatus();
+
+
     protected abstract String sign(LoginUser loginUser, String secretKey);
 
     protected abstract LoginUser verify(String token, String secretKey) throws BusinessException;
@@ -68,34 +78,28 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
         Asserts.isTrue(StringUtility.isNullOrEmpty(token), SparrowError.USER_LOGIN_TOKEN_NOT_FOUND);
         LoginUser loginUser = this.verify(token, this.getDecryptKey());
         //设备指纹验证失败 说明token被盗
-        if (!loginUser.getDeviceId().equals(deviceId) && !Constant.LOCALHOST_IP.equals(deviceId)) {
+        if (this.validateDeviceId() && !loginUser.getDeviceId().equals(deviceId) && !Constant.LOCALHOST_IP.equals(deviceId)) {
             logger.error("device can't match sign's device [{}] request device [{}],user-id {} ", loginUser.getDeviceId(), deviceId, loginUser.getUserId());
             throw new BusinessException(SparrowError.USER_DEVICE_NOT_MATCH);
         }
 
         LoginUserStatus loginUserStatus = this.getUserStatus(loginUser.getUserId());
-        //缓存不存在会从数据库读，如果数据库依然不存在，则异常
-        if (loginUserStatus == null) {
-            throw new BusinessException(SparrowError.USER_TOKEN_ABNORMAL);
-        }
+        //获取当前用户的过期时间
         long expireAt = loginUser.getExpireAt();
-        //用户状态不存在 说明token 存储挂掉了,兜底方案
-        if (loginUserStatus.getExpireAt() != null) {
-            //用户状态存在 说明token 存储正常，以用户状态的过期时间为准
-            expireAt = loginUserStatus.getExpireAt();
+        if (this.validateStatus()) {
+            Asserts.isTrue(loginUserStatus == null, SparrowError.USER_TOKEN_ABNORMAL);
+            Asserts.isTrue(!LoginUserStatus.STATUS_NORMAL.equals(loginUserStatus.getStatus()), SparrowError.USER_TOKEN_ABNORMAL);
+            //如果用户已经在服务器存在，则拿更新过的时期时间
+            if (loginUserStatus.getExpireAt() != null) {
+                //用户状态存在 说明token 存储正常，以用户状态的过期时间为准
+                expireAt = loginUserStatus.getExpireAt();
+            }
         }
-
         //过期
-        if (expireAt < System.currentTimeMillis()) {
-            logger.error("token is expired");
-            throw new BusinessException(SparrowError.USER_TOKEN_EXPIRED);
+        Asserts.isTrue(expireAt < System.currentTimeMillis(), SparrowError.USER_TOKEN_EXPIRED);
+        if (this.validateStatus() && loginUserStatus != null) {
+            this.renewal(loginUser.getUserId(), loginUserStatus);
         }
-
-        if (!LoginUserStatus.STATUS_NORMAL.equals(loginUserStatus.getStatus())) {
-            logger.error("user is disable");
-            throw new BusinessException(SparrowError.USER_TOKEN_ABNORMAL);
-        }
-        this.renewal(loginUser.getUserId(), loginUserStatus);
         return loginUser;
     }
 

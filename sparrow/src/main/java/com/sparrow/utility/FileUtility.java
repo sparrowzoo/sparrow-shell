@@ -548,6 +548,45 @@ public class FileUtility {
         }
     }
 
+    public boolean generateImage(byte[] imageBytes,
+                                 String savePath) {
+        if (imageBytes == null) {
+            return false;
+        }
+        OutputStream out = null;
+        FileNameProperty fileNameProperty = this.getFileNameProperty(savePath);
+        java.io.File directory = new java.io.File(fileNameProperty.getDirectory());
+        if (!directory.exists()) {
+            if (!directory.mkdirs()) {
+                logger.error("create directory error {}", directory);
+                return false;
+            }
+        }
+        try {
+            byte[] b = imageBytes;
+            for (int i = 0; i < b.length; ++i) {
+                if (b[i] < 0) {
+                    b[i] += 256;
+                }
+            }
+            out = Files.newOutputStream(Paths.get(savePath));
+            out.write(b);
+            return true;
+        } catch (Exception e) {
+            logger.error("image generate fail {}", savePath);
+            return false;
+        } finally {
+            if (out != null) {
+                try {
+                    out.flush();
+                    out.close();
+                } catch (IOException ignore) {
+                    logger.error("close output stream error {}", savePath);
+                }
+            }
+        }
+    }
+
     public interface FileCopier {
         void copy(String sourceFile, String targetFile);
     }

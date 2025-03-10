@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.datasource;
+package com.sparrow.orm.transaction;
 
+import com.sparrow.datasource.ConnectionContextHolder;
+import com.sparrow.datasource.DataSourceFactory;
 import com.sparrow.transaction.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +33,14 @@ import java.sql.SQLException;
 public class SparrowTransactionManager implements com.sparrow.transaction.TransactionManager {
     private static Logger logger = LoggerFactory.getLogger(SparrowTransactionManager.class);
 
-    public SparrowTransactionManager(ConnectionContextHolderImpl connectionContextHolder, DataSourceFactoryImpl dataSourceFactory) {
+    public SparrowTransactionManager(ConnectionContextHolder connectionContextHolder, DataSourceFactory dataSourceFactory) {
         this.connectionContextHolder = connectionContextHolder;
         this.dataSourceFactory = dataSourceFactory;
     }
 
-    private ConnectionContextHolderImpl connectionContextHolder;
+    private ConnectionContextHolder connectionContextHolder;
 
-    private DataSourceFactoryImpl dataSourceFactory;
+    private DataSourceFactory dataSourceFactory;
 
     @Override
     public <T> T start(Transaction<T> transaction) {

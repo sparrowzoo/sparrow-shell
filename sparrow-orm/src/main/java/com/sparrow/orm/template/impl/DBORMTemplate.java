@@ -50,8 +50,6 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
      * 实体类
      */
     private Class<?> modelClazz = null;
-
-    private String modelName;
     /**
      * 数据库辅助对象
      */
@@ -61,9 +59,6 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     public DBORMTemplate(Class<?> clazz) {
         this.modelClazz = clazz;
-        if (this.modelClazz != null) {
-            this.modelName = ClassUtility.getEntityNameByClass(this.modelClazz);
-        }
         this.ormMetadataAccessor = new OrmMetadataAccessor<>(this.modelClazz, this.criteriaProcessor);
         DatabaseSplitStrategy databaseSplitKey = this.ormMetadataAccessor.getEntityManager().getDatabaseSplitStrategy();
         this.jdbcSupport = JDBCTemplate.getInstance(this.ormMetadataAccessor.getEntityManager().getSchema(), databaseSplitKey);
@@ -142,7 +137,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
         }
 
         if (!StringUtility.isNullOrEmpty(searchCriteria.getPageSize())
-            && searchCriteria.getPageSize() != Digit.ALL) {
+                && searchCriteria.getPageSize() != Digit.ALL) {
             selectSql.append(searchCriteria.getLimit());
         }
         logger.info(selectSql.toString());
@@ -433,10 +428,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public Integer changeStatus(StatusCriteria statusCriteria) {
-
         JDBCParameter jdbcParameter = this.ormMetadataAccessor.changeStatus(statusCriteria);
         return this.jdbcSupport.executeUpdate(jdbcParameter);
     }
-
-
 }

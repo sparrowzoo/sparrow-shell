@@ -25,7 +25,6 @@ import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.query.UpdateCriteria;
 import com.sparrow.orm.query.sql.CriteriaProcessor;
 import com.sparrow.orm.query.sql.OperationEntity;
-import com.sparrow.orm.type.JdbcType;
 import com.sparrow.orm.type.TypeHandler;
 import com.sparrow.orm.type.TypeHandlerRegistry;
 import com.sparrow.protocol.constant.Constant;
@@ -33,16 +32,12 @@ import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.*;
 
 public class OrmMetadataAccessor<T> {
     private static Logger logger = LoggerFactory.getLogger(OrmMetadataAccessor.class);
@@ -92,7 +87,7 @@ public class OrmMetadataAccessor<T> {
     public OrmMetadataAccessor(Class modelClazz, CriteriaProcessor criteriaProcessor) {
         this.modelClazz = modelClazz;
         this.methodAccessor = container.getProxyBean(
-            this.modelClazz);
+                this.modelClazz);
         if (this.methodAccessor == null) {
             throw new NullPointerException(modelClazz.getName() + "'s method accessor not found please config proxy bean");
         }
@@ -137,7 +132,7 @@ public class OrmMetadataAccessor<T> {
                         id = idGenerator.generate();
                         parameters.add(new Parameter(field, id));
                         this.methodAccessor
-                            .set(model, field.getName(), id);
+                                .set(model, field.getName(), id);
                     }
                     break;
                 case IDENTITY:
@@ -186,8 +181,8 @@ public class OrmMetadataAccessor<T> {
         OperationEntity where = this.criteriaProcessor.where(criteria.getWhere());
         OperationEntity setClause = this.criteriaProcessor.setClause(criteria.getSetClausePairList());
         String update = String.format("update %1$s set %2$s where %3$s",
-            this.getTableName(criteria.getTableSuffix()), setClause.getClause(),
-            where.getClause());
+                this.getTableName(criteria.getTableSuffix()), setClause.getClause(),
+                where.getClause());
         List<Parameter> updateParameters = new ArrayList<Parameter>();
         updateParameters.addAll(setClause.getParameterList());
         updateParameters.addAll(where.getParameterList());
@@ -200,7 +195,7 @@ public class OrmMetadataAccessor<T> {
         }
         Field primaryField = this.entityManager.getPrimary();
         return new JDBCParameter(this.entityManager.getDelete(),
-            Collections.singletonList(new Parameter(primaryField, primaryField.convert(id.toString()))));
+                Collections.singletonList(new Parameter(primaryField, primaryField.convert(id.toString()))));
     }
 
     public JDBCParameter delete(SearchCriteria searchCriteria) {
@@ -227,8 +222,7 @@ public class OrmMetadataAccessor<T> {
                 String columnName = resultSetMetaData.getColumnName(i);
                 String propertyName = this.entityManager.getProperty(columnName);
                 Class javaType = this.entityManager.getField(propertyName).getType();
-                JdbcType jdbcType = JdbcType.forCode(resultSetMetaData.getColumnType(i));
-                TypeHandler typeHandler = typeHandlerRegistry.getTypeHandler(javaType, jdbcType);
+                TypeHandler typeHandler = typeHandlerRegistry.getTypeHandler(javaType);
                 Object fieldValue = typeHandler.getResult(rs, i);
                 try {
                     this.getMethodAccessor().set(model, propertyName, fieldValue);
@@ -251,17 +245,17 @@ public class OrmMetadataAccessor<T> {
         StringBuilder select = new StringBuilder("select ");
         select.append(this.entityManager.getFields());
         select.append(" from "
-            + this.entityManager.getDialectTableName());
+                + this.entityManager.getDialectTableName());
         select.append(" where " + this.entityManager.getPrimary().getColumnName() + "=?");
         return new JDBCParameter(select.toString(), Collections.singletonList(new Parameter(this.entityManager.getUniqueField(uniqueKey), key)));
     }
 
     public JDBCParameter getCount(Object key, String uniqueKey) {
         StringBuilder select = new StringBuilder("select count(*) from "
-            + this.entityManager.getDialectTableName());
+                + this.entityManager.getDialectTableName());
         Field uniqueField = this.entityManager.getUniqueField(uniqueKey);
         select.append(" where "
-            + uniqueField.getColumnName() + "=?");
+                + uniqueField.getColumnName() + "=?");
         return new JDBCParameter(select.toString(), Collections.singletonList(new Parameter(uniqueField, key)));
     }
 
@@ -284,7 +278,7 @@ public class OrmMetadataAccessor<T> {
 
         tableName = this.getTableName(criteria.getTableSuffix());
         select.append(String.format("select count(%1$s) from %2$s",
-            field, tableName));
+                field, tableName));
         if (!StringUtility.isNullOrEmpty(whereClause)) {
             select.append(" where " + whereClause);
         }
@@ -305,7 +299,7 @@ public class OrmMetadataAccessor<T> {
 
         fieldName = this.entityManager.getField(fieldName).getColumnName();
         String select = String.format("select %1$s from %2$s where %3$s=?", fieldName,
-            this.entityManager.getDialectTableName(), uniqueField.getColumnName());
+                this.entityManager.getDialectTableName(), uniqueField.getColumnName());
         return new JDBCParameter(select, Collections.singletonList(new Parameter(uniqueField, key)));
     }
 
@@ -344,14 +338,14 @@ public class OrmMetadataAccessor<T> {
         }
 
         String updateSql = String.format("update %1$s set " +
-                " %2$s=?," +
-                "`modified_user_name`=?," +
-                "`modified_user_id`=?," +
-                "`gmt_modified`=? where %3$s %4$s",
-            this.entityManager.getDialectTableName(),
-            this.entityManager.getStatus().getColumnName(),
-            this.entityManager.getPrimary().getColumnName(),
-            whereClause);
+                        " %2$s=?," +
+                        "`modified_user_name`=?," +
+                        "`modified_user_id`=?," +
+                        "`gmt_modified`=? where %3$s %4$s",
+                this.entityManager.getDialectTableName(),
+                this.entityManager.getStatus().getColumnName(),
+                this.entityManager.getPrimary().getColumnName(),
+                whereClause);
         return new JDBCParameter(updateSql, parameterList);
     }
 
@@ -363,16 +357,13 @@ public class OrmMetadataAccessor<T> {
             whereClause = " =?";
         }
         String updateSql = String.format("DELETE FROM %1$s where %2$s %3$s",
-            this.entityManager.getDialectTableName(),
-            this.entityManager.getPrimary().getColumnName(),
-            whereClause);
+                this.entityManager.getDialectTableName(),
+                this.entityManager.getPrimary().getColumnName(),
+                whereClause);
 
         Parameter[] sqlParameters = new Parameter[0];
         if (!ids.contains(Symbol.COMMA)) {
-            sqlParameters = new Parameter[] {
-                new Parameter(this.entityManager.getPrimary(),
-                    this.entityManager.getPrimary().convert(ids))
-            };
+            sqlParameters = new Parameter[]{new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(ids))};
         }
         return new JDBCParameter(updateSql, Arrays.asList(sqlParameters));
     }

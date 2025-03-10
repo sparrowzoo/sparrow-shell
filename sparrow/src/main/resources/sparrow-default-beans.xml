@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
     "beans.dtd">
 <beans>
-    <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
+    <bean name="dataSourceFactory" class="com.sparrow.orm.datasource.DataSourceFactoryImpl">
         <constructor-arg index="1" name="initDatasourceKeys" value="sparrow_default" type="string"/>
     </bean>
     <bean name="sparrow_default" class="com.sparrow.datasource.ConnectionPool">

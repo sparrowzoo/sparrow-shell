@@ -14,33 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.orm.template;
+
+package com.sparrow.datasource;
 
 import java.sql.Connection;
-import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
-public class StatementProxyConnectionPair {
-    public StatementProxyConnectionPair(Statement statement, Connection connection) {
-        this.statement = statement;
-        this.connection = connection;
+/**
+ * 自定义的数据源没有重写statement 等类，这里会获取到原始connection,故实现关联类，以方便close 时释放回链接池
+ */
+public class ConnectionProxyContainer {
+    private Map<Connection, ProxyConnection> container = new HashMap<>();
+
+    public void bind(Connection connection, ProxyConnection proxyConnection) {
+        this.container.put(connection, proxyConnection);
     }
 
-    private Statement statement;
-    private Connection connection;
-
-    public Statement getStatement() {
-        return statement;
+    public ProxyConnection getProxyConnection(Connection connection) {
+        return this.container.get(connection);
     }
 
-    public void setStatement(Statement statement) {
-        this.statement = statement;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public void unbind(Connection connection) {
+        this.container.remove(connection);
     }
 }

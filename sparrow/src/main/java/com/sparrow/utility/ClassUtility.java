@@ -161,7 +161,7 @@ public class ClassUtility {
                             classes.add(implClass);
                         }
                     } catch (Throwable e) {
-                        logger.error("class {} init error", classFullName, e);
+                        logger.error("you can ignore this error, class {} init", classFullName, e);
                     }
                 }
             }
@@ -190,7 +190,7 @@ public class ClassUtility {
                 try {
                     classes.add(Class.forName(clazzName));
                 } catch (Throwable e) {
-                    logger.error("class can't  init {}", clazzName);
+                    logger.error("you can ignore this error, class {} init", clazzName, e);
                 }
             }
         }

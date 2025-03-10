@@ -34,6 +34,16 @@ public class AuthenticatorDemo extends AbstractAuthenticatorService {
     }
 
     @Override
+    protected boolean validateDeviceId() {
+        return true;
+    }
+
+    @Override
+    protected boolean validateStatus() {
+        return true;
+    }
+
+    @Override
     protected String sign(LoginUser loginUser, String secretKey) {
         return null;
     }

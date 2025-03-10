@@ -20,10 +20,10 @@
         "beans.dtd">
 <beans>
     <component-scan>com.sparrow</component-scan>
-    <bean name="dataSourceFactory" class="com.sparrow.datasource.DataSourceFactoryImpl">
+    <bean name="dataSourceFactory" class="com.sparrow.orm.datasource.DataSourceFactoryImpl">
         <constructor-arg index="1" name="initDatasourceKeys" value="user_default"/>
     </bean>
-    <bean name="connectionContextHolder" class="com.sparrow.datasource.ConnectionContextHolderImpl">
+    <bean name="connectionContextHolder" class="com.sparrow.orm.transaction.ConnectionContextHolderImpl">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
     </bean>
     <bean name="user_default" class="com.sparrow.datasource.ConnectionPool">
