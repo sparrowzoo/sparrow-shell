@@ -19,6 +19,9 @@ package com.sparrow.orm.query;
 
 import com.sparrow.enums.ComparisonOperator;
 import com.sparrow.orm.query.impl.SimpleCriteriaField;
+import com.sun.deploy.net.proxy.UserDefinedProxyConfig;
+
+import java.util.function.Function;
 
 public class Criteria {
 
@@ -48,6 +51,8 @@ public class Criteria {
     public static Criteria field(String field) {
         return new Criteria(field, false);
     }
+
+
 
     public Criteria() {
     }
