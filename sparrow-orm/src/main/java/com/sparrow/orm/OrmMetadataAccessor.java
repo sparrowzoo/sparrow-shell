@@ -106,8 +106,8 @@ public class OrmMetadataAccessor<T> {
         boolean isIncrement = false;
         List<Parameter> parameters = new ArrayList<Parameter>();
         Map<Integer, Object> tableSuffix = new TreeMap<Integer, Object>();
-        for (Field field : this.entityManager.getFieldMap().values()) {
-            Object o = this.methodAccessor.get(model, field.getName());
+        for (Field field : this.entityManager.getPropertyFieldMap().values()) {
+            Object o = this.methodAccessor.get(model, field.getPropertyName());
             if (field.getGenerationType() == null) {
                 this.entityManager.parseField(field, parameters, o, tableSuffix, false);
                 continue;
@@ -132,7 +132,7 @@ public class OrmMetadataAccessor<T> {
                         id = idGenerator.generate();
                         parameters.add(new Parameter(field, id));
                         this.methodAccessor
-                                .set(model, field.getName(), id);
+                                .set(model, field.getPropertyName(), id);
                     }
                     break;
                 case IDENTITY:
@@ -157,8 +157,8 @@ public class OrmMetadataAccessor<T> {
         List<Parameter> parameters = new ArrayList<Parameter>();
         Parameter whereParameter = null;
         Map<Integer, Object> tableSuffix = new TreeMap<Integer, Object>();
-        for (Field field : this.entityManager.getFieldMap().values()) {
-            Object o = this.methodAccessor.get(model, field.getName());
+        for (Field field : this.entityManager.getPropertyFieldMap().values()) {
+            Object o = this.methodAccessor.get(model, field.getPropertyName());
             if (field.isPrimary()) {
                 whereParameter = new Parameter(field, o);
             } else {

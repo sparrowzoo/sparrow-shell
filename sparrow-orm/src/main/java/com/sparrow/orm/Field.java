@@ -49,7 +49,7 @@ public class Field extends TypeConverter {
         this.id = id;
         this.column = column;
         this.splitTable = splitTable;
-        this.name = property;
+        this.propertyName = property;
         this.type = type;
         this.generatedValue = generatedValue;
 

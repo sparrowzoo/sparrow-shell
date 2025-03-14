@@ -30,14 +30,14 @@ public class UniqueKeyCriteria {
      */
     private String uniquePropertyName;
 
-    private UniqueKeyCriteria(String resultFiled, Object key, String uniqueFieldName) {
+    private UniqueKeyCriteria(String resultFiled, Object key, String uniquePropertyName) {
         this.resultFiled = resultFiled;
         this.key = key;
-        this.uniquePropertyName = uniqueFieldName;
+        this.uniquePropertyName = uniquePropertyName;
     }
 
-    public static UniqueKeyCriteria createUniqueCriteria(Object key, String uniqueFieldName) {
-        return new UniqueKeyCriteria(null, key, uniqueFieldName);
+    public static UniqueKeyCriteria createUniqueCriteria(Object key, String uniquePropertyName) {
+        return new UniqueKeyCriteria(null, key, uniquePropertyName);
     }
 
     public static UniqueKeyCriteria createFieldCriteria(Object key, String resultFiled) {
@@ -45,8 +45,8 @@ public class UniqueKeyCriteria {
     }
 
     public static UniqueKeyCriteria createUniqueWithFieldCriteria(String resultFiled, Object key,
-        String uniqueFieldName) {
-        return new UniqueKeyCriteria(resultFiled, key, uniqueFieldName);
+        String uniquePropertyName) {
+        return new UniqueKeyCriteria(resultFiled, key, uniquePropertyName);
     }
 
     public String getResultFiled() {

@@ -14,51 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.orm;
 
-import java.util.Map;
+package com.sparrow.protocol;
 
-public interface EntityManager {
+import java.io.Serializable;
+import java.util.function.Function;
 
-    String getClassName();
-
-    String getSimpleClassName();
-
-    Field getPrimary();
-
-    Field getStatus();
-
-    String getTableName();
-
-    String getDialectTableName();
-
-    DialectAdapter getDialect();
-
-    String getInsert();
-
-    String getUpdate();
-
-    String getDelete();
-
-    String getFields();
-
-    String getCreateDDL();
-
-    Map<String, Field> getPropertyFieldMap();
-
-    Field getUniqueField(String unique);
-
-    String getProperty(String columnName);
-
-    Field getField(String propertity);
-
-    String getColumnName(String property);
-
-    String getSchema();
-
-    void init();
-
-    void initTable();
-
-    String parsePropertyParameter(String column, String property);
+@FunctionalInterface
+public interface SFunction<T, R> extends Function<T, R>, Serializable {
 }

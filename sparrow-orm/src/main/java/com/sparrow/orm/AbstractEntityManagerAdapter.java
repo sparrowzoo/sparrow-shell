@@ -46,7 +46,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     /**
      * 属性名和field
      */
-    protected Map<String, Field> fieldMap;
+    protected Map<String, Field> propertyFieldMap;
     /**
      * 列名与属性名映射
      */
@@ -58,7 +58,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected String className;
     protected Class<?> clazz;
     protected String simpleClassName;
-    protected DialectReader dialectReader;
+    protected DialectAdapter dialectAdapter;
     protected int tableBucketCount;
     protected DatabaseSplitStrategy databaseSplitStrategy;
     protected String insert;
@@ -73,17 +73,17 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         java.lang.reflect.Field[] fields = ClassUtility.getOrderedFields(fieldList);
         Map<String, Field> fieldMap = new LinkedHashMap<>();
 
-        for (java.lang.reflect.Field field : fields) {
-            if (!field.isAnnotationPresent(Column.class) && !field.isAnnotationPresent(SplitTable.class)) {
+        for (java.lang.reflect.Field property : fields) {
+            if (!property.isAnnotationPresent(Column.class) && !property.isAnnotationPresent(SplitTable.class)) {
                 continue;
             }
-            Column column = field.getAnnotation(Column.class);
-            SplitTable splitTable = field.getAnnotation(SplitTable.class);
-            GeneratedValue generatedValue = field.getAnnotation(GeneratedValue.class);
-            Id id = field.getAnnotation(Id.class);
+            Column column = property.getAnnotation(Column.class);
+            SplitTable splitTable = property.getAnnotation(SplitTable.class);
+            GeneratedValue generatedValue = property.getAnnotation(GeneratedValue.class);
+            Id id = property.getAnnotation(Id.class);
 
-            Field ormField = new Field(field.getName(), field.getType(), column, splitTable, generatedValue, id);
-            fieldMap.put(field.getName(), ormField);
+            Field ormField = new Field(property.getName(), property.getType(), column, splitTable, generatedValue, id);
+            fieldMap.put(property.getName(), ormField);
         }
 
         for (Method method : orderedMethods) {
@@ -104,6 +104,13 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         return new ArrayList<>(fieldMap.values());
     }
 
+    private void appendFields(StringBuilder fieldBuilder, String fieldNameOfDialect) {
+        if (fieldBuilder.length() > 0) {
+            fieldBuilder.append(",");
+        }
+        fieldBuilder.append(fieldNameOfDialect);
+    }
+
     public AbstractEntityManagerAdapter(Class<?> clazz) {
         this.clazz = clazz;
         this.className = clazz.getName();
@@ -111,24 +118,25 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         List<Field> fields = this.extractFields(clazz);
         int fieldCount = fields.size();
         uniqueFieldMap = new LinkedHashMap<>();
-        columnPropertyMap = new LinkedHashMap<String, String>(fieldCount);
+        this.columnPropertyMap = new LinkedHashMap<>(fieldCount);
+        // 初始化字段列表
+        this.propertyFieldMap = new LinkedHashMap<>(fieldCount);
         hashFieldMap = new TreeMap<>();
 
+        StringBuilder fieldBuilder = new StringBuilder();
         StringBuilder insertSQL = new StringBuilder("insert into ");
         StringBuilder insertParameter = new StringBuilder();
         StringBuilder updateSQL = new StringBuilder("update ");
         StringBuilder createDDLField = new StringBuilder();
         initTable();
-
         updateSQL.append(this.dialectTableName);
         insertSQL.append(this.dialectTableName);
-
         String createDDLHeader = String.format("DROP TABLE IF EXISTS %1$s;\nCREATE TABLE %1$s (\n", this.dialectTableName);
         String primaryCreateDDL = "";
         insertSQL.append("(");
         updateSQL.append(" set ");
         for (Field field : fields) {
-            String propertyName = field.getName();
+            String propertyName = field.getPropertyName();
             SplitTable splitTable = field.getSplitTable();
             if (splitTable != null) {
                 this.hashFieldMap.put(splitTable.index(), field);
@@ -136,13 +144,12 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
                     continue;
                 }
             }
-
             Column column = field.getColumn();
             if (column == null) {
                 continue;
             }
             if (field.isUnique()) {
-                uniqueFieldMap.put(field.getName(), field);
+                uniqueFieldMap.put(field.getPropertyName(), field);
             }
             if ("status".equalsIgnoreCase(column.name())) {
                 this.status = field;
@@ -159,17 +166,20 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             }
 
             this.columnPropertyMap.put(column.name(), propertyName);
-            String fieldName = dialectReader.getOpenQuote() + column.name()
-                    + dialectReader.getCloseQuote();
+            this.propertyFieldMap.put(field.getPropertyName(), field);
+            String fieldNameOfDialect = dialectAdapter.getOpenQuote() + column.name()
+                    + dialectAdapter.getCloseQuote();
+            this.appendFields(fieldBuilder, fieldNameOfDialect);
+
             // insertSQL
             if (!TableSplitStrategy.ORIGIN_NOT_PERSISTENCE.equals(field.getHashStrategy()) && !GenerationType.IDENTITY.equals(field.getGenerationType())) {
                 insertSQL.append("\n");
-                insertSQL.append(fieldName);
+                insertSQL.append(fieldNameOfDialect);
                 insertSQL.append(Symbol.COMMA);
 
                 insertParameter.append("\n");
                 insertParameter.append(this.parsePropertyParameter(column.name(), propertyName));
-                insertParameter.append(",");
+                insertParameter.append(Symbol.COMMA);
             }
 
             // updateSQL
@@ -180,7 +190,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
             if (column.updatable()) {
                 updateSQL.append("\n");
-                updateSQL.append(fieldName).append(Symbol.EQUAL);
+                updateSQL.append(fieldNameOfDialect).append(Symbol.EQUAL);
                 updateSQL.append(this.parsePropertyParameter(column.name(), propertyName));
                 updateSQL.append(",");
             }
@@ -194,31 +204,19 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         updateSQL.deleteCharAt(updateSQL.length() - 1)
                 .append(" where ")
                 .append(this.primary.getColumnName())
-                .append("=").append(this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName()));
+                .append("=").append(this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getPropertyName()));
         String deleteSQL = "delete from " + this.dialectTableName + " where "
-                + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getName());
+                + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getPropertyName());
 
         createDDLField.append(String.format("PRIMARY KEY (`%s`)\n", this.primary.getColumnName()));
         createDDLField.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='").append(tableName).append("';\n");
 
-        this.createDDL = createDDLHeader + primaryCreateDDL + createDDLField.toString();
+        this.createDDL = createDDLHeader + primaryCreateDDL + createDDLField;
         this.insert = insertSQL.toString();
         // 初始化delete SQL语句
         this.delete = deleteSQL;
         // 初始化update SQL语句
         this.update = updateSQL.toString();
-        // 初始化字段列表
-        this.fieldMap = new LinkedHashMap<String, Field>(fieldCount);
-        StringBuilder fieldBuilder = new StringBuilder();
-        for (Field field : fields) {
-            if (fieldBuilder.length() > 0) {
-                fieldBuilder.append(",\n");
-            }
-            if (field.isPersistence()) {
-                fieldBuilder.append(dialectReader.getOpenQuote()).append(field.getColumnName()).append(dialectReader.getCloseQuote());
-            }
-            this.fieldMap.put(field.getName(), field);
-        }
         this.fields = fieldBuilder.toString();
     }
 
@@ -237,7 +235,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         if (dialect != null) {
             dbDialect = dialect.strategy();
         }
-        this.dialectReader = new DialectReader(dbDialect);
+        this.dialectAdapter = new DialectAdapter(dbDialect);
         Split split = null;
         if (clazz.isAnnotationPresent(Split.class)) {
             split = clazz.getAnnotation(Split.class);
@@ -245,10 +243,10 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
         if (split == null) {
             //`table-name`
-            this.dialectTableName = String.format("%s%s%s", dialectReader.getOpenQuote(), tableName, dialectReader.getCloseQuote());
+            this.dialectTableName = String.format("%s%s%s", dialectAdapter.getOpenQuote(), tableName, dialectAdapter.getCloseQuote());
             return;
         }
-        this.dialectTableName = String.format("%s%s%s%s", dialectReader.getOpenQuote(), tableName, Constant.TABLE_SUFFIX, dialectReader.getCloseQuote());
+        this.dialectTableName = String.format("%s%s%s%s", dialectAdapter.getOpenQuote(), tableName, Constant.TABLE_SUFFIX, dialectAdapter.getCloseQuote());
         // 分表的桶数
         int bucketCount;
         if (split.table_bucket_count() > 1) {
@@ -284,8 +282,8 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     }
 
     @Override
-    public DialectReader getDialect() {
-        return dialectReader;
+    public DialectAdapter getDialect() {
+        return dialectAdapter;
     }
 
     @Override
@@ -309,8 +307,8 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     }
 
     @Override
-    public Map<String, Field> getFieldMap() {
-        return fieldMap;
+    public Map<String, Field> getPropertyFieldMap() {
+        return propertyFieldMap;
     }
 
     @Override
@@ -329,7 +327,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
     @Override
     public Field getField(String property) {
-        return fieldMap.get(property);
+        return propertyFieldMap.get(property);
     }
 
     @Override

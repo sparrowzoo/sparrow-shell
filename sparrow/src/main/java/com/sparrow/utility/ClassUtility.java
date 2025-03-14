@@ -17,6 +17,7 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.cg.PropertyNamer;
 import com.sparrow.protocol.FieldOrder;
 import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.constant.magic.Symbol;
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.Column;
 import java.io.File;
 import java.io.IOException;
+import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.JarURLConnection;
@@ -33,6 +35,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -50,7 +53,16 @@ public class ClassUtility {
     }
 
     public static String getEntityNameByClass(Class entity) {
-        String entityName = entity.getSimpleName();
+        return getEntityNameByClass(entity.getName());
+    }
+
+    public static String getEntityNameByClass(String entityName) {
+        if (entityName.contains(".")) {
+            entityName = entityName.substring(entityName.lastIndexOf(".")+1);
+        }
+        if (entityName.contains("/")) {
+            entityName = entityName.substring(entityName.lastIndexOf("/")+1);
+        }
         entityName = StringUtility.setFirstByteLowerCase(entityName);
         if (entityName.endsWith("DTO")) {
             return entityName.substring(0, entityName.lastIndexOf("DTO"));
@@ -128,7 +140,7 @@ public class ClassUtility {
      * </pre>
      */
     public static List<Class> getClasses(
-        String packageName) throws IOException {
+            String packageName) throws IOException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String path = packageName.replace(Symbol.DOT, Symbol.SLASH);
         Enumeration<URL> resources = classLoader.getResources(path);
@@ -140,7 +152,7 @@ public class ClassUtility {
                 classes.addAll(findClass(directory, packageName));
             } else if ("jar".equalsIgnoreCase(resource.getProtocol())) {
                 classes.addAll(findClass(((JarURLConnection) resource.openConnection())
-                    .getJarFile(), path));
+                        .getJarFile(), path));
             }
         }
         return classes;
@@ -154,7 +166,7 @@ public class ClassUtility {
                 JarEntry jarEntry = entries.nextElement();
                 if (jarEntry.getName().startsWith(packagePath) && jarEntry.getName().endsWith(".class")) {
                     String classFullName = jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
-                        .substring(0, jarEntry.getName().indexOf(Symbol.DOT));
+                            .substring(0, jarEntry.getName().indexOf(Symbol.DOT));
                     try {
                         Class implClass = Class.forName(classFullName);
                         if (!implClass.isInterface()) {
@@ -317,5 +329,44 @@ public class ClassUtility {
             orderMethodArray[i] = methodList.get(i).method;
         }
         return orderMethodArray;
+    }
+
+    public static class PropertyWithEntityName {
+        private String propertyName;
+        private String entityName;
+
+        public PropertyWithEntityName(String propertyName, String entityName) {
+            this.propertyName = propertyName;
+            this.entityName = entityName;
+        }
+
+        public String getPropertyName() {
+            return propertyName;
+        }
+
+        public String getEntityName() {
+            return entityName;
+        }
+
+        public String entityDotProperty() {
+            return entityName + Symbol.DOT + propertyName;
+        }
+    }
+
+    public static PropertyWithEntityName getPropertyNameAndClassName(Function<?, ?> function) {
+        try {
+            // 反射获取 writeReplace 方法
+            Method method = function.getClass().getDeclaredMethod("writeReplace");
+            method.setAccessible(true);
+            // 调用该方法获取 SerializedLambda 对象
+            SerializedLambda serializedLambda = (SerializedLambda) method.invoke(function);
+            // 解析方法名
+            String methodName = serializedLambda.getImplMethodName();
+            String clazz = serializedLambda.getImplClass();
+            String modelName = getEntityNameByClass(clazz);
+            return new PropertyWithEntityName(PropertyNamer.methodToProperty(methodName), modelName);
+        } catch (Exception e) {
+            throw new RuntimeException("无法解析方法名", e);
+        }
     }
 }

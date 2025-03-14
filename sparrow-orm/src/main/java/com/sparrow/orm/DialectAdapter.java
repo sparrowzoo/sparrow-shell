@@ -22,12 +22,12 @@ import com.sparrow.protocol.dao.enums.DBDialect;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DialectReader {
+public class DialectAdapter {
     private DBDialect dialect;
-    private static Map<String, DialectReader> dialectMap = new HashMap<String, DialectReader>();
+    private static Map<String, DialectAdapter> dialectMap = new HashMap<String, DialectAdapter>();
 
 
-    public DialectReader(DBDialect dialect) {
+    public DialectAdapter(DBDialect dialect) {
         this.dialect = dialect;
     }
 

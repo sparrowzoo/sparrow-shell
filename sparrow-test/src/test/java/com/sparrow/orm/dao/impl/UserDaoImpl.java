@@ -8,6 +8,7 @@ import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.template.impl.ORMStrategy;
 
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
+
 import java.util.List;
 import javax.inject.Named;
 
@@ -24,13 +25,14 @@ public class UserDaoImpl extends ORMStrategy<User, Long> implements UserDAO {
 
     @Override
     public List<User> query(String userName, String nickName, Integer sex, Integer status) {
+
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setWhere(BooleanCriteria.criteria(
-            Criteria.field("user.userName").equal(userName)).
-            and(Criteria.field("user.nickName").equal(nickName))
-            .or(
-                BooleanCriteria.criteria(Criteria.field("user.userId").equal(2L))
-                    .or(Criteria.field("user.nickName").equal(nickName)))
+                        Criteria.field(User::getUserName).equal(userName)).
+                and(Criteria.field(User::getNickName).equal(nickName))
+                .or(
+                        BooleanCriteria.criteria(Criteria.field(User::getUserId).equal(2L))
+                                .or(Criteria.field(User::getNickName).equal(nickName)))
         );
         return this.getList(searchCriteria);
     }

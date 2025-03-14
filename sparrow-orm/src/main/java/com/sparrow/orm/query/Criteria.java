@@ -19,6 +19,8 @@ package com.sparrow.orm.query;
 
 import com.sparrow.enums.ComparisonOperator;
 import com.sparrow.orm.query.impl.SimpleCriteriaField;
+import com.sparrow.protocol.SFunction;
+import com.sparrow.utility.ClassUtility;
 
 public class Criteria {
 
@@ -27,8 +29,24 @@ public class Criteria {
         this.alias = alias;
     }
 
+    public static Criteria alias(String field) {
+        return new Criteria(field, true);
+    }
+
+    public static Criteria field(String field) {
+        return new Criteria(field, false);
+    }
+
+    public static <T> Criteria field(SFunction<T,?> criteria) {
+        ClassUtility.PropertyWithEntityName property = ClassUtility.getPropertyNameAndClassName(criteria);
+        return Criteria.field(property.entityDotProperty());
+    }
+
     private CriteriaField field;
 
+    /**
+     * 条件是否使用别名
+     */
     private boolean alias = true;
 
     private CriteriaEntry criteriaEntry;
@@ -37,18 +55,9 @@ public class Criteria {
         return criteriaEntry;
     }
 
-    public static Criteria alias(String field) {
-        return new Criteria(field, true);
-    }
-
     public boolean isAlias() {
         return alias;
     }
-
-    public static Criteria field(String field) {
-        return new Criteria(field, false);
-    }
-
 
 
     public Criteria() {
@@ -144,10 +153,11 @@ public class Criteria {
         return this;
     }
 
-    public Criteria mod(Integer mod,Integer remainder) {
-        this.criteriaEntry = new CriteriaEntry(ComparisonOperator.MOD,remainder,mod);
+    public Criteria mod(Integer mod, Integer remainder) {
+        this.criteriaEntry = new CriteriaEntry(ComparisonOperator.MOD, remainder, mod);
         return this;
     }
+
     public CriteriaField getField() {
         return this.field;
     }

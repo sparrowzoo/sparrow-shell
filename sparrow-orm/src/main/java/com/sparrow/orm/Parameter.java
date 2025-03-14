@@ -62,7 +62,7 @@ public class Parameter {
 
     public Parameter(Field field,
         Object parameterValue) {
-        this.name = field.getName();
+        this.name = field.getPropertyName();
         this.type = field.getType();
         this.value = parameterValue;
         this.scale = field.getScale();

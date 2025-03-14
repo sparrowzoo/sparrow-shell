@@ -70,7 +70,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
             JDBCParameter jdbcParameter = this.ormMetadataAccessor.insert(model);
             if (jdbcParameter.isAutoIncrement()) {
                 Long id = this.jdbcSupport.executeAutoIncrementInsert(jdbcParameter);
-                this.ormMetadataAccessor.getMethodAccessor().set(model, this.ormMetadataAccessor.getEntityManager().getPrimary().getName(), id);
+                this.ormMetadataAccessor.getMethodAccessor().set(model, this.ormMetadataAccessor.getEntityManager().getPrimary().getPropertyName(), id);
                 return id;
             }
             //非自增  返回影响记录条件
@@ -259,7 +259,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
         try {
             while (rs.next()) {
-                String primaryName = this.ormMetadataAccessor.getEntityManager().getPrimary().getName();
+                String primaryName = this.ormMetadataAccessor.getEntityManager().getPrimary().getPropertyName();
                 T m = this.ormMetadataAccessor.setEntity(rs, null);
                 I key = (I) this.ormMetadataAccessor.getMethodAccessor().get(m, primaryName);
                 map.put(key, m);
@@ -312,7 +312,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     public List<T> getList(Collection<I> ids) {
         SearchCriteria searchCriteria = new SearchCriteria();
         String entityClassName = ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
-        String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getName();
+        String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getPropertyName();
         searchCriteria.setWhere(Criteria.field(entityClassName + "." + primaryProperty).in(ids));
         return this.getList(searchCriteria);
     }
@@ -321,7 +321,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     public Map<I, T> getEntityMap(Collection<I> ids) {
         SearchCriteria searchCriteria = new SearchCriteria();
         String entityClassName = ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
-        String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getName();
+        String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getPropertyName();
         searchCriteria.setWhere(Criteria.field(entityClassName + "." + primaryProperty).in(ids));
         return this.getEntityMap(searchCriteria);
     }

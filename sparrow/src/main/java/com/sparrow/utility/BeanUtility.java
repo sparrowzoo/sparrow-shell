@@ -35,13 +35,13 @@ public class BeanUtility {
         MethodAccessor targetMethodAccessor = container.getProxyBean(target.getClass());
         List<TypeConverter> targetFieldList = container.getFieldList(target.getClass());
         for (TypeConverter targetField : targetFieldList) {
-            if (StringUtility.existInArray(ignoreProperties, targetField.getName())) {
+            if (StringUtility.existInArray(ignoreProperties, targetField.getPropertyName())) {
                 continue;
             }
             try {
-                targetMethodAccessor.set(target, targetField.getName(), sourceMethodAccessor.get(source, targetField.getName()));
+                targetMethodAccessor.set(target, targetField.getPropertyName(), sourceMethodAccessor.get(source, targetField.getPropertyName()));
             } catch (Exception e) {
-                logger.error("properties copy error field-name {}", targetField.getName());
+                logger.error("properties copy error field-name {}", targetField.getPropertyName());
             }
         }
     }

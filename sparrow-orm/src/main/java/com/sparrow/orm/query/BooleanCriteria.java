@@ -17,6 +17,9 @@
 
 package com.sparrow.orm.query;
 
+import com.sparrow.protocol.SFunction;
+import com.sparrow.utility.ClassUtility;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,7 @@ public class BooleanCriteria {
     public static BooleanCriteria criteria(Criteria criteria) {
         return new BooleanCriteria(criteria);
     }
+
 
     public static BooleanCriteria criteria(BooleanCriteria booleanCriteria) {
         return new BooleanCriteria(booleanCriteria);

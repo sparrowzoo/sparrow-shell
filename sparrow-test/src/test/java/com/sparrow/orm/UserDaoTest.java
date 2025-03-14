@@ -38,16 +38,9 @@ public class UserDaoTest {
     @Test
     public void getUser() {
         Container container = ApplicationContext.getContainer();
-        //container.setContextConfigLocation("/dao.xml");
-        container.init(new ContainerBuilder());
+        container.init(new ContainerBuilder().scanBasePackage("com.sparrow"));
         UserDaoImpl userDAO = container.getBean("userDao");
-        userDAO.getByUserName("harry");
-
-        java.util.Date date=new java.util.Date();
-        java.sql.Date date1=new java.sql.Date(System.currentTimeMillis());
-
-        System.out.println(date.toInstant());
-        System.out.println(date1.toInstant());
+        userDAO.query("harry","harry",1,2);
 
 
     }

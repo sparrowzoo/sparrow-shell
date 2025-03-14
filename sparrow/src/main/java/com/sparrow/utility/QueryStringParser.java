@@ -160,7 +160,7 @@ public class QueryStringParser {
         MethodAccessor methodAccessor = container.getProxyBean(entity.getClass());
         StringBuilder sb = new StringBuilder();
         for (TypeConverter field : fieldList) {
-            Object o = methodAccessor.get(entity, field.getName());
+            Object o = methodAccessor.get(entity, field.getPropertyName());
             if (StringUtility.isNullOrEmpty(o)) {
                 continue;
             }
@@ -168,7 +168,7 @@ public class QueryStringParser {
                 sb.append(Symbol.DOLLAR);
             }
             try {
-                sb.append(StringUtility.setFirstByteLowerCase(field.getName())
+                sb.append(StringUtility.setFirstByteLowerCase(field.getPropertyName())
                         + Symbol.EQUAL
                         + URLEncoder.encode(String.valueOf(o), StandardCharsets.UTF_8.name()));
             } catch (UnsupportedEncodingException ignore) {

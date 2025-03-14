@@ -61,7 +61,7 @@ public class RequestParameterArgumentResolver implements HandlerMethodArgumentRe
 
             List<TypeConverter> methods = container.getFieldList(methodParameter.getParameterType());
             for (TypeConverter field : methods) {
-                String parameterName4Request = StringUtility.setFirstByteLowerCase(field.getName());
+                String parameterName4Request = StringUtility.setFirstByteLowerCase(field.getPropertyName());
                 parameter = request.getParameter(parameterName4Request);
 
                 if (parameter == null) {
@@ -75,7 +75,7 @@ public class RequestParameterArgumentResolver implements HandlerMethodArgumentRe
                 if (executionChain.isValidateRequest() && field.getType().equals(String.class)) {
                     parameter = HtmlUtility.encode(parameter);
                 }
-                methodAccessor.set(entity, field.getName(), field.convert(parameter));
+                methodAccessor.set(entity, field.getPropertyName(), field.convert(parameter));
             }
             return entity;
         }

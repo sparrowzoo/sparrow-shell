@@ -35,7 +35,7 @@ public class TypeConverter {
     /**
      * 字段名
      */
-    protected String name;
+    protected String propertyName;
     /**
      * 当前值
      */
@@ -50,26 +50,26 @@ public class TypeConverter {
     /**
      * 实体对象
      *
-     * @param name
+     * @param propertyName
      * @param value
      * @param type
      */
-    public TypeConverter(String name, Object value, Class type) {
-        this.name = name;
+    public TypeConverter(String propertyName, Object value, Class type) {
+        this.propertyName = propertyName;
         this.value = value;
         this.type = type;
     }
 
-    public TypeConverter(String name, Class type) {
-        this(name, null, type);
+    public TypeConverter(String propertyName, Class type) {
+        this(propertyName, null, type);
     }
 
     public TypeConverter(Class type) {
         this(null, null, type);
     }
 
-    public String getName() {
-        return name;
+    public String getPropertyName() {
+        return propertyName;
     }
 
     public Class getType() {
