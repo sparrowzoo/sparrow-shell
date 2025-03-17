@@ -17,9 +17,6 @@
 
 package com.sparrow.orm.query;
 
-import com.sparrow.protocol.SFunction;
-import com.sparrow.utility.ClassUtility;
-
 import java.util.ArrayList;
 import java.util.List;
 

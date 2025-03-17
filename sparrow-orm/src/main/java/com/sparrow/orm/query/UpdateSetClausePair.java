@@ -18,6 +18,8 @@
 package com.sparrow.orm.query;
 
 import com.sparrow.orm.query.impl.SimpleCriteriaField;
+import com.sparrow.protocol.SFunction;
+import com.sparrow.utility.ClassUtility;
 
 public class UpdateSetClausePair {
     private CriteriaField field;
@@ -27,6 +29,12 @@ public class UpdateSetClausePair {
     public static UpdateSetClausePair field(String field) {
         return new UpdateSetClausePair(field);
     }
+
+    public static <T> UpdateSetClausePair field(SFunction<T, ?> function) {
+        String field = ClassUtility.getPropertyNameAndClassName(function).entityDotProperty();
+        return new UpdateSetClausePair(field);
+    }
+
 
     private UpdateSetClausePair(String field) {
         this.field = new SimpleCriteriaField(field);

@@ -19,6 +19,8 @@ package com.sparrow.orm.query;
 
 import com.sparrow.enums.Order;
 import com.sparrow.orm.query.impl.SimpleCriteriaField;
+import com.sparrow.protocol.SFunction;
+import com.sparrow.utility.ClassUtility;
 
 public class OrderCriteria {
     private CriteriaField field;
@@ -31,6 +33,17 @@ public class OrderCriteria {
     public static OrderCriteria desc(String field) {
         return new OrderCriteria(field, Order.DESC);
     }
+
+    public static <T> OrderCriteria asc(SFunction<T, ?> function) {
+        String field = ClassUtility.getPropertyNameAndClassName(function).entityDotProperty();
+        return new OrderCriteria(field, Order.ASC);
+    }
+
+    public static <T> OrderCriteria desc(SFunction<T, ?> function) {
+        String field = ClassUtility.getPropertyNameAndClassName(function).entityDotProperty();
+        return new OrderCriteria(field, Order.DESC);
+    }
+
 
     private OrderCriteria(String field, Order order) {
         this.field = new SimpleCriteriaField(field);

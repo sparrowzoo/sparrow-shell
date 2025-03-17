@@ -58,10 +58,10 @@ public class ClassUtility {
 
     public static String getEntityNameByClass(String entityName) {
         if (entityName.contains(".")) {
-            entityName = entityName.substring(entityName.lastIndexOf(".")+1);
+            entityName = entityName.substring(entityName.lastIndexOf(".") + 1);
         }
         if (entityName.contains("/")) {
-            entityName = entityName.substring(entityName.lastIndexOf("/")+1);
+            entityName = entityName.substring(entityName.lastIndexOf("/") + 1);
         }
         entityName = StringUtility.setFirstByteLowerCase(entityName);
         if (entityName.endsWith("DTO")) {

@@ -121,7 +121,7 @@ public class TypeHandlerRegistry {
         if (typeHandlerClazz == null) {
             return null;
         }
-        return this.getTypeHandler(javaType);
+        return this.allTypeHandlerMap.get(typeHandlerClazz);
     }
 
 

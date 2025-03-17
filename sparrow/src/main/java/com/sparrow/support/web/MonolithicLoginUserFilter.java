@@ -31,22 +31,29 @@ import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * 单体应用解析，需要签名认证
  */
-public class MonolithicLoginUserFilter implements Filter {
+public class MonolithicLoginUserFilter extends AbstractLoginFilter {
     private static Logger logger = LoggerFactory.getLogger(MonolithicLoginUserFilter.class);
 
-    public MonolithicLoginUserFilter(Authenticator authenticator, Boolean mockLoginUser, List<String> whiteList, String tokenKey) {
+    public MonolithicLoginUserFilter(Authenticator authenticator,
+                                     Boolean mockLoginUser,
+                                     String tokenKey,
+                                     Boolean supportTemplate,
+                                     String apiPrefix) {
         this.authenticator = authenticator;
         this.mockLoginUser = mockLoginUser;
-        this.whiteList = whiteList;
+        this.supportTemplate = supportTemplate;
+        this.apiPrefix = apiPrefix;
         if (StringUtility.isNullOrEmpty(tokenKey)) {
             this.tokenKey = Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN;
         } else {
@@ -56,14 +63,8 @@ public class MonolithicLoginUserFilter implements Filter {
 
     private Boolean mockLoginUser;
     private Authenticator authenticator;
-    private List<String> whiteList;
     private String tokenKey;
 
-
-    @Override
-    public void init(FilterConfig config) throws ServletException {
-
-    }
 
     private void loginSuccess(LoginUser loginUser, FilterChain filterChain, HttpServletRequest request, HttpServletResponse response) {
         ThreadContext.bindLoginToken(loginUser);
@@ -77,7 +78,7 @@ public class MonolithicLoginUserFilter implements Filter {
     }
 
     private void loginFail(HttpServletRequest request, HttpServletResponse servletResponse, ErrorSupport e) throws IOException {
-        boolean isAjax = ServletUtility.getInstance().isAjax(request);
+        boolean isAjax = this.isAjax(request);
         if (isAjax) {
             servletResponse.setContentType(Constant.CONTENT_TYPE_JSON);
             Result result = Result.fail(e);
@@ -119,7 +120,7 @@ public class MonolithicLoginUserFilter implements Filter {
         HttpServletResponse rep = (HttpServletResponse) servletResponse;
 
         String currentUrl = req.getServletPath();
-        if (this.whiteList.contains(currentUrl)) {
+        if (this.matchExcludePatterns(currentUrl)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -141,7 +142,7 @@ public class MonolithicLoginUserFilter implements Filter {
             return;
         }
         if (mockLoginUser) {
-            loginUser = LoginUser.create(1L,1, "mock-user", "mock-nick-name", "header", "device id", 3);
+            loginUser = LoginUser.create(1L, 1, "mock-user", "mock-nick-name", "header", "device id", 3);
             this.loginSuccess(loginUser, filterChain, req, rep);
             return;
         }

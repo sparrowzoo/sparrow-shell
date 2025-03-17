@@ -143,7 +143,7 @@ public class LoginUser implements VO {
     }
 
     public boolean isVisitor() {
-        return VISITOR_ID.equals(this.getUserId());
+        return VISITOR_ID.equals(this.getUserId()) || CATEGORY_VISITOR == this.getCategory();
     }
 
     public Integer getCategory() {

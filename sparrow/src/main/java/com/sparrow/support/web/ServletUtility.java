@@ -169,8 +169,21 @@ public class ServletUtility {
         return request.getHeader("Referer");
     }
 
-    public boolean isAjax(HttpServletRequest request) {
-        String isAjax = request.getHeader(Constant.IS_AJAX);
-        return "true".equalsIgnoreCase(isAjax);
+    public boolean isAjax(HttpServletRequest request, boolean supportTemplate, String apiPrefix) {
+        //非模板引擎，直接返回json
+        if (!supportTemplate) {
+            return true;
+        }
+        //支持模板引擎，判断URL前缀，如果是api前缀，则返回json
+        if (!StringUtility.isNullOrEmpty(apiPrefix)) {
+            String uri = request.getRequestURI();
+            return uri.startsWith(apiPrefix);
+        }
+        //如果请求参数中明确指定了isAjax，则返回json
+        String ajax = request.getHeader(Constant.IS_AJAX);
+        if (!StringUtility.isNullOrEmpty(ajax)) {
+            return "true".equalsIgnoreCase(ajax);
+        }
+        return false;
     }
 }
