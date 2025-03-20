@@ -22,10 +22,13 @@ import com.sparrow.protocol.constant.ClientInfoConstant;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Symbol;
+import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.ConfigUtility;
+import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 
 import java.util.Enumeration;
+import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
@@ -169,15 +172,15 @@ public class ServletUtility {
         return request.getHeader("Referer");
     }
 
-    public boolean isAjax(HttpServletRequest request, boolean supportTemplate, String apiPrefix) {
+    public boolean isAjax(HttpServletRequest request, boolean supportTemplate, List<String> ajaxPattens) {
         //非模板引擎，直接返回json
         if (!supportTemplate) {
             return true;
         }
         //支持模板引擎，判断URL前缀，如果是api前缀，则返回json
-        if (!StringUtility.isNullOrEmpty(apiPrefix)) {
+        if (!CollectionsUtility.isNullOrEmpty(ajaxPattens)) {
             String uri = request.getRequestURI();
-            return uri.startsWith(apiPrefix);
+            return RegexUtility.matchPatterns(ajaxPattens, uri);
         }
         //如果请求参数中明确指定了isAjax，则返回json
         String ajax = request.getHeader(Constant.IS_AJAX);

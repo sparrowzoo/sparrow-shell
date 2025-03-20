@@ -54,7 +54,7 @@ public class RegexUtility {
             regex = StringUtility.replace(regex, Constant.REPLACE_MAP);
         }
         Pattern p = Pattern
-            .compile(regex, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
+                .compile(regex, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
         Matcher m = p.matcher(source);
         List<String> groupList = null;
         if (!m.find()) {
@@ -72,7 +72,7 @@ public class RegexUtility {
             regex = StringUtility.replace(regex, Constant.REPLACE_MAP);
         }
         Pattern p = Pattern
-            .compile(regex, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
+                .compile(regex, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
         Matcher m = p.matcher(source);
         List<List<String>> multiGroupList = new ArrayList<List<String>>();
         while (m.find()) {
@@ -93,7 +93,7 @@ public class RegexUtility {
         String configParameter = "(\\{[a-z0-9]*\\})";
         String digitalAndLetter = "([a-z0-9\\-]*)";
         Pattern p = Pattern
-            .compile(configParameter, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
+                .compile(configParameter, Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
         Matcher m = p.matcher(actionKey);
         String urlRegex = actionKey;
         List<String> parameters = new ArrayList<String>();
@@ -106,5 +106,25 @@ public class RegexUtility {
             }
         }
         return Pair.create(urlRegex, parameters);
+    }
+
+    public static boolean matchPatterns(List<String> patternList, String path) {
+        for (String pattern : patternList) {
+            if (path.matches(pattern)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static List<String> adapterWildcard(List<String> regexList) {
+        if (regexList == null || regexList.isEmpty()) {
+            return null;
+        }
+        List<String> newPatterns = new ArrayList<>();
+        for (String pattern : regexList) {
+            newPatterns.add(pattern.replace("*", ".*"));
+        }
+        return newPatterns;
     }
 }

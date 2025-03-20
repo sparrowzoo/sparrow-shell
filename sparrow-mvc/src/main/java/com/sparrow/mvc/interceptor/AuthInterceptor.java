@@ -78,7 +78,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         String actionName = handlerExecutionChain.getActionName();
         Authenticator authenticator = container.getBean(SysObjectName.AUTHENTICATOR_SERVICE);
-        String permission = CookieUtility.getPermission(httpRequest);
+        String permission = CookieUtility.getPermission(httpRequest,Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
         String deviceId = this.sparrowServletUtility.getServletUtility().getDeviceId(httpRequest);
         LoginUser user = authenticator.authenticate(permission, deviceId);
         httpRequest.setAttribute(User.ID, user.getUserId());

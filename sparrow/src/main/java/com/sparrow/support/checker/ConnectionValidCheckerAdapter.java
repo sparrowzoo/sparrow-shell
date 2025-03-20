@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.datasource.checker;
+package com.sparrow.support.checker;
 
 import com.sparrow.datasource.DataSourceValidChecker;
 import com.sparrow.utility.JDBCUtils;
@@ -48,7 +48,7 @@ public class ConnectionValidCheckerAdapter implements DataSourceValidChecker {
         } finally {
             JDBCUtils.close(rs);
             JDBCUtils.close(stmt);
-            // JDBCUtils.close(connection);
+            JDBCUtils.close(connection);
         }
     }
 

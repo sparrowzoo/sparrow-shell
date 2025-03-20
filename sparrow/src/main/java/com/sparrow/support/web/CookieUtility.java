@@ -18,7 +18,6 @@
 package com.sparrow.support.web;
 
 import com.sparrow.constant.Config;
-import com.sparrow.constant.User;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.JSUtility;
 import com.sparrow.utility.StringUtility;
@@ -76,7 +75,7 @@ public class CookieUtility {
         return null;
     }
 
-    public static String getPermission(HttpServletRequest request) {
-        return get(request.getCookies(), User.PERMISSION);
+    public static String getPermission(HttpServletRequest request,String tokenKey) {
+        return get(request.getCookies(),tokenKey);
     }
 }

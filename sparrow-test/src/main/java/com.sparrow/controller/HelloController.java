@@ -22,6 +22,7 @@ import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.LoginUserStatus;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.servlet.ServletContainer;
@@ -111,8 +112,8 @@ public class HelloController {
         loginToken.setDays(20);
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
-        String sign = authenticatorService.sign(loginToken,new LoginUserStatus(LoginUserStatus.STATUS_NORMAL,1L));
-        servletContainer.rootCookie(User.PERMISSION, sign, 6);
+        String sign = authenticatorService.sign(loginToken, new LoginUserStatus(LoginUserStatus.STATUS_NORMAL, 1L));
+        servletContainer.rootCookie(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN, sign, 6);
         return ViewWithModel.redirect("welcome", loginToken);
     }
 

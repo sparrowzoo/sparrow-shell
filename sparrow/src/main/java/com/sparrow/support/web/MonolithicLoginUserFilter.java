@@ -27,6 +27,7 @@ import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.Authenticator;
 import com.sparrow.utility.ConfigUtility;
+import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 单体应用解析，需要签名认证
@@ -49,11 +51,13 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
                                      Boolean mockLoginUser,
                                      String tokenKey,
                                      Boolean supportTemplate,
-                                     String apiPrefix) {
+                                     List<String> excludePatternList,
+                                     List<String> ajaxPatternList) {
         this.authenticator = authenticator;
         this.mockLoginUser = mockLoginUser;
         this.supportTemplate = supportTemplate;
-        this.apiPrefix = apiPrefix;
+        this.ajaxPatternList = ajaxPatternList;
+        this.excludePatternList = excludePatternList;
         if (StringUtility.isNullOrEmpty(tokenKey)) {
             this.tokenKey = Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN;
         } else {
@@ -120,7 +124,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
         HttpServletResponse rep = (HttpServletResponse) servletResponse;
 
         String currentUrl = req.getServletPath();
-        if (this.matchExcludePatterns(currentUrl)) {
+        if (RegexUtility.matchPatterns(this.excludePatternList,currentUrl)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -128,7 +132,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
         LoginUser loginUser = null;
         //token 在header  里没拿到
         if (StringUtility.isNullOrEmpty(loginToken)) {
-            loginToken = CookieUtility.getPermission(req);
+            loginToken = CookieUtility.getPermission(req,tokenKey);
         }
         //token 没拿到
         if (!StringUtility.isNullOrEmpty(loginToken)) {

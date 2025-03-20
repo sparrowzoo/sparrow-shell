@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractLoginFilter implements Filter {
-    private List<String> excludePatternList = new ArrayList<String>();
+    protected List<String> excludePatternList = new ArrayList<String>();
     protected Boolean supportTemplate;
-    protected String apiPrefix;
+    protected List<String> ajaxPatternList = new ArrayList<String>();
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -45,15 +45,6 @@ public abstract class AbstractLoginFilter implements Filter {
     }
 
     public Boolean isAjax(HttpServletRequest request) {
-        return ServletUtility.getInstance().isAjax(request, this.supportTemplate, this.apiPrefix);
-    }
-
-    public boolean matchExcludePatterns(String path) {
-        for (String pattern : this.excludePatternList) {
-            if (path.matches(pattern)) {
-                return true;
-            }
-        }
-        return false;
+        return ServletUtility.getInstance().isAjax(request, this.supportTemplate, this.ajaxPatternList);
     }
 }

@@ -25,6 +25,7 @@ import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.LoginUserStatus;
 import com.sparrow.protocol.constant.SparrowError;
+import com.sparrow.utility.JSUtility;
 import com.sparrow.utility.StringUtility;
 
 import java.io.IOException;
@@ -92,11 +93,13 @@ public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
         String userInfo = this.json.toString(loginUser);
         String signature = Hmac.getInstance().getSHA1Base64(userInfo,
                 this.getEncryptKey());
-        return Base64.encodeBytes(userInfo.getBytes(StandardCharsets.UTF_8)) + "." + signature;
+        String token = Base64.encodeBytes(userInfo.getBytes(StandardCharsets.UTF_8)) + "." + signature;
+        return JSUtility.encodeURIComponent(token);
     }
 
     @Override
     protected LoginUser verify(String token, String secretKey) throws BusinessException {
+        token = JSUtility.decodeURIComponent(token);
         String[] tokens = token.split("\\.");
         Asserts.isTrue(tokens.length != 2, SparrowError.USER_TOKEN_ERROR);
         String userInfo = tokens[0];

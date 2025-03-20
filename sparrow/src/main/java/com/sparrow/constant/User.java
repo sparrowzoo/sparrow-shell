@@ -18,7 +18,6 @@
 package com.sparrow.constant;
 
 public class User {
-    public static final String PERMISSION = "PERMISSION";
     /**
      * 系统管理员
      */

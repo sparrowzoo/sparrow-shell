@@ -646,4 +646,35 @@ public class FileUtility {
             recurseCopy(source, target, fileCopier, folderFilter);
         }
     }
+
+    public void recurseFiles(List<String> files, String path, String suffix) {
+        File sourceFile = new File(path);
+        if (!sourceFile.exists()) {
+            logger.error("{} source is not exist", path);
+            return;
+        }
+        if (sourceFile.isFile()) {
+            if (suffix == null || sourceFile.getName().endsWith(suffix)) {
+                files.add(sourceFile.getAbsolutePath());
+            }
+            return;
+        }
+        //获取目录下的所有文件
+        File[] fileList = sourceFile.listFiles();
+
+        if (fileList == null || fileList.length == 0) {
+            logger.error("{} source is empty", path);
+            return;
+        }
+
+        for (java.io.File f : fileList) {
+            String source = f.toString();
+            if (f.isFile() && (suffix == null || f.getName().endsWith(suffix))) {
+                files.add(source);
+            }
+            if (f.isDirectory()) {
+                recurseFiles(files, source, suffix);
+            }
+        }
+    }
 }

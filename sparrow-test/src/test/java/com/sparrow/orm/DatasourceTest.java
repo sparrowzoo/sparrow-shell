@@ -21,7 +21,7 @@ import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.datasource.DataSourceFactory;
 import com.sparrow.datasource.DataSourceValidChecker;
-import com.sparrow.datasource.checker.ConnectionValidCheckerAdapter;
+import com.sparrow.support.checker.ConnectionValidCheckerAdapter;
 import org.junit.Test;
 
 import javax.sql.DataSource;

@@ -36,6 +36,9 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * https://sparrowzoo.feishu.cn/docx/FyezdyOOWofMOQxIhnocm83Cndg
+ */
 public abstract class AbstractServletContainer implements ServletContainer {
     private static Logger logger = LoggerFactory.getLogger(AbstractServletContainer.class);
     private ServletUtility servletUtility = ServletUtility.getInstance();
@@ -125,19 +128,19 @@ public abstract class AbstractServletContainer implements ServletContainer {
     @Override
     public void flash(String key, Object value) {
         this.getRequest().getSession()
-            .setAttribute(key, value);
+                .setAttribute(key, value);
     }
 
     @Override
     public <T> T flash(String key) {
         return (T) this.getRequest().getSession()
-            .getAttribute(key);
+                .getAttribute(key);
     }
 
     @Override
     public <T> T removeFlash(String key) {
         T t = (T) this.getRequest().getSession()
-            .getAttribute(key);
+                .getAttribute(key);
         this.getRequest().getSession().removeAttribute(key);
         return t;
     }

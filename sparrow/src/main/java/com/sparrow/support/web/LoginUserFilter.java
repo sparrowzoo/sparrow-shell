@@ -24,6 +24,7 @@ import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.ThreadContext;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.ConfigUtility;
+import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +35,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 分布式场景下，从请求头中获取登录用户信息
  */
 public class LoginUserFilter extends AbstractLoginFilter {
-    public LoginUserFilter(Boolean mockLoginUser) {
+    public LoginUserFilter(Boolean mockLoginUser, List<String> excludePatternList) {
         this.mockLoginUser = mockLoginUser;
+        this.excludePatternList = excludePatternList;
     }
 
     private static Logger logger = LoggerFactory.getLogger(LoginUserFilter.class);
@@ -53,7 +56,7 @@ public class LoginUserFilter extends AbstractLoginFilter {
         if (servletRequest instanceof HttpServletRequest) {
             HttpServletRequest req = (HttpServletRequest) servletRequest;
             String currentUrl = req.getServletPath();
-            if (this.matchExcludePatterns(currentUrl)) {
+            if (RegexUtility.matchPatterns(this.excludePatternList,currentUrl)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
