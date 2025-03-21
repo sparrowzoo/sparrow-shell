@@ -12,6 +12,8 @@ cd ../sparrow-data-source
 mvn clean install -Dmaven.test.skip
 cd ../sparrow-loader
 mvn clean install -Dmaven.test.skip
+cd ../sparrow-container
+mvn clean install -Dmaven.test.skip
 cd ../sparrow-log
 mvn clean install -Dmaven.test.skip
 cd ../sparrow-orm
