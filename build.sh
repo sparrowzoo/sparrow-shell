@@ -2,9 +2,9 @@ cd sparrow-protocol
 mvn clean install -Dmaven.test.skip
 cd ../sparrow-protocol-dao
 mvn clean install -Dmaven.test.skip
-cd ../sparrow
-mvn clean install -Dmaven.test.skip
 cd ../sparrow-protocol-mq
+mvn clean install -Dmaven.test.skip
+cd ../sparrow
 mvn clean install -Dmaven.test.skip
 cd ../sparrow-json
 mvn clean install -Dmaven.test.skip
