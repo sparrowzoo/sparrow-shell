@@ -128,6 +128,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
 
         String currentUrl = req.getServletPath();
         if (RegexUtility.matchPatterns(this.excludePatternList, currentUrl)) {
+            logger.info("exclude url {}", currentUrl);
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
