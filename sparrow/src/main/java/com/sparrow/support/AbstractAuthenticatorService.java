@@ -74,7 +74,7 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
 
     @Override
     public LoginUser authenticate(String token, String deviceId) throws BusinessException {
-        logger.debug("token {},deviceId {}", token, deviceId);
+        logger.info("token {},deviceId {}", token, deviceId);
         Asserts.isTrue(StringUtility.isNullOrEmpty(token), SparrowError.USER_LOGIN_TOKEN_NOT_FOUND);
         LoginUser loginUser = this.verify(token, this.getDecryptKey());
         //设备指纹验证失败 说明token被盗
@@ -83,10 +83,12 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
             throw new BusinessException(SparrowError.USER_DEVICE_NOT_MATCH);
         }
 
+        logger.info("device match sign's device [{}] request device [{}],user-id {} ", loginUser.getDeviceId(), deviceId, loginUser.getUserId());
         LoginUserStatus loginUserStatus = this.getUserStatus(loginUser.getUserId());
         //获取当前用户的过期时间
         long expireAt = loginUser.getExpireAt();
         if (this.validateStatus()) {
+            logger.info("validate status,user-id {} status {}", loginUser.getUserId(), loginUserStatus);
             Asserts.isTrue(loginUserStatus == null, SparrowError.USER_TOKEN_ABNORMAL);
             Asserts.isTrue(!LoginUserStatus.STATUS_NORMAL.equals(loginUserStatus.getStatus()), SparrowError.USER_TOKEN_ABNORMAL);
             //如果用户已经在服务器存在，则拿更新过的时期时间

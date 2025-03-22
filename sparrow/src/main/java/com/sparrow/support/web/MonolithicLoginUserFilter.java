@@ -84,6 +84,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
     }
 
     private void loginFail(HttpServletRequest request, HttpServletResponse servletResponse, ErrorSupport e) throws IOException {
+        logger.error("login fail, error:{}", e.getMessage());
         boolean isAjax = this.isAjax(request);
         if (isAjax) {
             servletResponse.setContentType(Constant.CONTENT_TYPE_JSON);
