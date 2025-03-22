@@ -17,6 +17,7 @@
 
 package com.sparrow.support.web;
 
+import com.alibaba.fastjson.JSON;
 import com.sparrow.constant.Config;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.enums.LoginType;
@@ -72,6 +73,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
 
     private void loginSuccess(LoginUser loginUser, FilterChain filterChain, HttpServletRequest request, HttpServletResponse response) {
         ThreadContext.bindLoginToken(loginUser);
+        logger.info("login success bind success, user:{}", JSON.toJSONString(loginUser));
         try {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
@@ -124,7 +126,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
         HttpServletResponse rep = (HttpServletResponse) servletResponse;
 
         String currentUrl = req.getServletPath();
-        if (RegexUtility.matchPatterns(this.excludePatternList,currentUrl)) {
+        if (RegexUtility.matchPatterns(this.excludePatternList, currentUrl)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -132,7 +134,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
         LoginUser loginUser = null;
         //token 在header  里没拿到
         if (StringUtility.isNullOrEmpty(loginToken)) {
-            loginToken = CookieUtility.getPermission(req,tokenKey);
+            loginToken = CookieUtility.getPermission(req, tokenKey);
         }
         //token 没拿到
         if (!StringUtility.isNullOrEmpty(loginToken)) {
