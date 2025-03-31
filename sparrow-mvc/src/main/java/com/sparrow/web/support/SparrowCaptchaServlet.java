@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-package com.sparrow.mvc.ui;
+package com.sparrow.web.support;
 
-@SuppressWarnings("serial")
-public class Div extends AbstractJWebBodyControl {
+import com.sparrow.servlet.CaptchaServlet;
+import com.sparrow.servlet.impl.SessionCaptchaService;
 
-    @Override
-    public String setTagNameAndGetTagAttributes() {
-        super.setTagName("div");
-        return "";
+public class SparrowCaptchaServlet extends CaptchaServlet {
+    public SparrowCaptchaServlet() {
+        super(new SessionCaptchaService(SparrowServletContainer.getInstance()));
     }
-
 }

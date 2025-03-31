@@ -18,57 +18,52 @@
 package com.sparrow.support.web;
 
 import com.sparrow.constant.Config;
-import com.sparrow.utility.ConfigUtility;
-import com.sparrow.utility.StringUtility;
-import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import com.sparrow.support.AttributeContext;
+
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-public class GlobalAttributeFilter implements Filter {
-    @Override public void init(FilterConfig config) throws ServletException {
+public abstract class AbstractGlobalAttributeFilter implements Filter {
+
+    @Override
+    public void init(FilterConfig config) throws ServletException {
 
     }
 
+    public abstract AttributeContext parseAttributeContext();
+
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-        FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        AttributeContext attributeContext = this.parseAttributeContext();
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpContext.getContext().setRequest(httpServletRequest);
         HttpContext.getContext().setResponse((HttpServletResponse) servletResponse);
-        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-        if (!StringUtility.isNullOrEmpty(rootPath)) {
-            httpServletRequest.setAttribute(Config.ROOT_PATH, rootPath);
-            httpServletRequest.setAttribute(Config.WEBSITE, ConfigUtility.getValue(Config.WEBSITE));
-        }
-
-        String internationalization = ConfigUtility.getValue(Config.INTERNATIONALIZATION);
+        httpServletRequest.setAttribute(Config.ROOT_PATH, attributeContext.getRootPath());
+        String internationalization = attributeContext.getLanguage();
         String language;
+        //如果支持国际化
         if (internationalization != null) {
             language = servletRequest.getParameter(Config.LANGUAGE);
-            if (language == null || !internationalization.contains(language)) {
-                language = ConfigUtility.getValue(Config.LANGUAGE);
+            if (language == null || !internationalization.contains(Config.INTERNATIONALIZATION)) {
+                language = attributeContext.getLanguage();
             }
             HttpContext.getContext().put("sparrow_request_language", language);
             httpServletRequest.setAttribute("sparrow_request_language", language);
         }
 
-        servletRequest.setAttribute(Config.RESOURCE, ConfigUtility.getValue(Config.RESOURCE));
-        servletRequest.setAttribute(Config.RESOURCE_VERSION, ConfigUtility.getValue(Config.RESOURCE_VERSION));
-        servletRequest.setAttribute(Config.UPLOAD, ConfigUtility.getValue(Config.UPLOAD));
-        servletRequest.setAttribute(Config.IMAGE_WEBSITE, ConfigUtility.getValue(Config.IMAGE_WEBSITE));
+        servletRequest.setAttribute(Config.RESOURCE, attributeContext.getResource());
+        servletRequest.setAttribute(Config.RESOURCE_VERSION, attributeContext.getResourceVersion());
+        servletRequest.setAttribute(Config.UPLOAD, attributeContext.getUpload());
         if (httpServletRequest.getQueryString() != null) {
             servletRequest.setAttribute("queryString", httpServletRequest.getQueryString());
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    @Override public void destroy() {
+    @Override
+    public void destroy() {
 
     }
 }

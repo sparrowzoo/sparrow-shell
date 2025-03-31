@@ -97,9 +97,6 @@ public class ServletUtility {
         // eclipse tomcat 启动时会默认请求http://localhost故此处加此判断
         //只解析一二级域名 http://www.sparrowzoo.com
         if (rootPath.indexOf(Constant.LOCALHOST) != 0 && rootPath.indexOf(Constant.LOCALHOST_127) != 0) {
-            String website = serverName.substring(serverName.indexOf(".") + 1);
-            website = website.substring(0, website.indexOf("."));
-            ConfigUtility.resetKey(Config.WEBSITE, website);
 
             String rootDomain = ConfigUtility.getValue(Config.ROOT_DOMAIN);
             if (rootDomain == null) {
@@ -111,7 +108,6 @@ public class ServletUtility {
                 ConfigUtility.resetKey(Config.DOMAIN,
                         serverName);
             }
-            Constant.REPLACE_MAP.put("$website", website);
         }
         ConfigUtility.resetKey(Config.ROOT_PATH, rootPath);
         return actionKey;

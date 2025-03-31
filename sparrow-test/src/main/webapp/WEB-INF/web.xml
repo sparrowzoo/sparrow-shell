@@ -15,8 +15,27 @@
         <param-value>/system_config.properties</param-value>
     </context-param>
 
+    <!--Bean容器初始化侦听器 -->
+    <listener>
+        <listener-class>com.sparrow.mvc.ContextLoaderListener</listener-class>
+    </listener>
+
+
+    <filter>
+        <filter-name>GlobalAttribute</filter-name>
+        <filter-class>com.sparrow.web.support.SparrowGlobalAttributeFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>GlobalAttribute</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
 
     <!-- 请求编码过滤器 -->
+
+
     <filter>
         <filter-name>CharSetEncoding</filter-name>
         <filter-class>com.sparrow.support.web.CharSetEncodingFilter</filter-class>
@@ -28,19 +47,33 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-    <!--Bean容器初始化侦听器 -->
-    <listener>
-        <listener-class>com.sparrow.mvc.ContextLoaderListener</listener-class>
-    </listener>
+
+    <filter>
+        <filter-name>DispatcherFilter</filter-name>
+        <filter-class>com.sparrow.mvc.DispatcherFilter</filter-class>
+        <init-param>
+            <param-name>except_url</param-name>
+            <param-value>/qrcode,/captcha,/servlet-life-cycle</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>DispatcherFilter</filter-name>
+        <url-pattern>*</url-pattern>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+        <!--是否使用则业务端决定，框架建议注掉-->
+        <!--<dispatcher>FORWARD</dispatcher>-->
+    </filter-mapping>
+
 
     <!-- 生成验证码 -->
     <servlet>
-        <servlet-name>ValidateCode</servlet-name>
-        <servlet-class>com.sparrow.web.support.ValidateCode</servlet-class>
+        <servlet-name>Captcha</servlet-name>
+        <servlet-class>com.sparrow.web.support.SparrowCaptchaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ValidateCode</servlet-name>
-        <url-pattern>/validate-code</url-pattern>
+        <servlet-name>Captcha</servlet-name>
+        <url-pattern>/captcha</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>qrcode</servlet-name>
@@ -60,23 +93,6 @@
         <servlet-name>ServletLifeCycle</servlet-name>
         <url-pattern>/servlet-life-cycle</url-pattern>
     </servlet-mapping>
-
-    <filter>
-        <filter-name>DispatcherFilter</filter-name>
-        <filter-class>com.sparrow.mvc.DispatcherFilter</filter-class>
-        <init-param>
-            <param-name>except_url</param-name>
-            <param-value>/qrcode,/validate-code,/servlet-life-cycle</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>DispatcherFilter</filter-name>
-        <url-pattern>*</url-pattern>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>REQUEST</dispatcher>
-        <!--是否使用则业务端决定，框架建议注掉-->
-        <!--<dispatcher>FORWARD</dispatcher>-->
-    </filter-mapping>
 
     <session-config>
         <!-- session超时时间单位为分钟 -->

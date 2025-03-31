@@ -18,7 +18,6 @@
 package com.sparrow.mvc;
 
 import com.sparrow.constant.Config;
-import com.sparrow.constant.ConfigKeyLanguage;
 import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.Container;
 import com.sparrow.container.FactoryBean;
@@ -32,29 +31,23 @@ import com.sparrow.mvc.mapping.impl.UrlMethodHandlerMapping;
 import com.sparrow.protocol.NotTryException;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.web.CookieUtility;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import com.sparrow.utility.web.SparrowServletUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DispatcherFilter implements Filter {
 
@@ -86,7 +79,7 @@ public class DispatcherFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-        FilterChain chain) throws IOException, ServletException {
+        FilterChain chain) throws ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String actionKey = sparrowServletUtility.getServletUtility().getActionKey(request);
@@ -236,65 +229,12 @@ public class DispatcherFilter implements Filter {
     private void initAttribute(HttpServletRequest request,
         HttpServletResponse response, ServletInvokableHandlerMethod invokableHandlerMethod) {
         request.setAttribute(Constant.REQUEST_INVOKABLE_HANDLER_METHOD, invokableHandlerMethod);
-        //初始化 request
-        HttpContext.getContext().setRequest(request);
-        //初始化 response
-        HttpContext.getContext().setResponse(response);
-
         if (sparrowServletUtility.getServletUtility().include(request)) {
             return;
         }
         String actionKey = sparrowServletUtility.getServletUtility().getActionKey(request);
         logger.debug("PARAMETERS:" + sparrowServletUtility.getServletUtility().getAllParameter(request));
         logger.debug("ACTION KEY:" + actionKey);
-        String forumCode = request.getParameter("forumCode");
-        request.setAttribute(Constant.REQUEST_ACTION_CURRENT_FORUM, forumCode);
-        request.setAttribute("divNavigation.current", forumCode);
-
-        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-        if (!StringUtility.isNullOrEmpty(rootPath)) {
-            request.setAttribute(Config.ROOT_PATH, rootPath);
-            request.setAttribute(Config.WEBSITE,
-                ConfigUtility.getValue(Config.WEBSITE));
-        }
-
-        //国际化
-        String internationalization = ConfigUtility
-            .getValue(Config.INTERNATIONALIZATION);
-        if (internationalization != null) {
-            //设置当前请求语言
-            String language = request.getParameter(Config.LANGUAGE);
-            if (language == null
-                || !internationalization.contains(language)) {
-                language = ConfigUtility.getValue(Config.LANGUAGE);
-            }
-            HttpContext.getContext().put(Constant.REQUEST_LANGUAGE, language);
-        }
-        //设置资源根域名
-        request.setAttribute(Config.RESOURCE,
-            ConfigUtility.getValue(Config.RESOURCE));
-
-        //设置上传文件域名
-        request.setAttribute(Config.UPLOAD, ConfigUtility.getValue(Config.UPLOAD));
-
-        //设置图片域
-        request.setAttribute(Config.IMAGE_WEBSITE, ConfigUtility.getValue(Config.IMAGE_WEBSITE));
-
-        String configWebsiteName = ConfigUtility.getLanguageValue(
-            ConfigKeyLanguage.WEBSITE_NAME, ConfigUtility.getValue(Config.LANGUAGE));
-        request.setAttribute(ConfigKeyLanguage.WEBSITE_NAME, configWebsiteName);
-
-        if (configWebsiteName != null) {
-            String currentWebsiteName = cookieUtility.get(request.getCookies(),
-                ConfigKeyLanguage.WEBSITE_NAME);
-            if (!configWebsiteName.equals(currentWebsiteName)) {
-                cookieUtility.set(response, ConfigKeyLanguage.WEBSITE_NAME,
-                    configWebsiteName, Digit.ALL);
-            }
-        }
-        if (request.getQueryString() != null) {
-            request.setAttribute("previous_url", request.getQueryString());
-        }
 
         Pair<String, Map<String, Object>> sessionPair = (Pair<String, Map<String, Object>>) request.getSession().getAttribute(Constant.FLASH_KEY);
         if (sessionPair == null) {

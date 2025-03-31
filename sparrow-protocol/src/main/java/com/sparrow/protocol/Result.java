@@ -67,6 +67,12 @@ public class Result<T> implements VO {
         this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(Constant.SUCCESS, key);
     }
 
+    public static <T> Result success(T data,String instruction) {
+        Result result = new Result(data);
+        result.instruction = instruction;
+        return result;
+    }
+
     /**
      * 初始化默认成功
      * 这个对象是在什么时侯用呢？
@@ -121,6 +127,11 @@ public class Result<T> implements VO {
      * 错误文本 需要业务自定义获取错误信息获取器
      */
     private String message;
+
+    /**
+     * 指令 用于websocket 返回指令
+     */
+    private String instruction;
     /**
      * 返回值
      */
@@ -172,5 +183,13 @@ public class Result<T> implements VO {
 
     public String getMessage() {
         return this.message;
+    }
+
+    public String getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
     }
 }

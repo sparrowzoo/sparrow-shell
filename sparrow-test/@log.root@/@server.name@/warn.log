@@ -1,3 +1,0 @@
-2025-03-14 21:09:28.203 TRACE_ID WARN  main AbstractContainer dataSourceDispatcher not exist,please config [dataSourceDispatcher] in /beans.xml
-2025-03-14 21:17:01.498 TRACE_ID WARN  main AbstractContainer dataSourceDispatcher not exist,please config [dataSourceDispatcher] in /beans.xml
-2025-03-14 21:17:01.518 TRACE_ID WARN  main AbstractContainer connectionReleaser not exist,please config [connectionReleaser] in /beans.xml

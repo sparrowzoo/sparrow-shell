@@ -57,12 +57,9 @@ public class Config {
     public static final String DEFAULT_ADMIN_INDEX = "default_admin_index";
     public static final String DEFAULT_AVATAR = "default_avatar";
     public static final String DEFAULT_DATA_SOURCE_KEY = "default_data_source";
-    public static final String DEFAULT_USER_PASSWORD = "default_user_password";
     public static final String DEFAULT_PAGE_EXTENSION = "default_page_extension";
     public static final String DEFAULT_PAGE_PREFIX = "default_page_prefix";
 
-    public static final String WEBSITE = "website";
-    public static final String IMAGE_WEBSITE = "image_website";
     public static final String DOMAIN = "domain";
     public static final String ROOT_DOMAIN = "root_domain";
     public static final String RESOURCE_VERSION = "resource_version";

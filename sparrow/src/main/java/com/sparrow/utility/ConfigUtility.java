@@ -167,9 +167,6 @@ public class ConfigUtility {
         if (systemMessage.get(Config.RESOURCE) != null) {
             Constant.REPLACE_MAP.put("$resource", systemMessage.get(com.sparrow.constant.Config.RESOURCE));
         }
-        if (systemMessage.get(Config.IMAGE_WEBSITE) != null) {
-            Constant.REPLACE_MAP.put("$image_website", systemMessage.get(com.sparrow.constant.Config.IMAGE_WEBSITE));
-        }
 
         if (systemMessage.get(Config.UPLOAD_PHYSICAL_PATH) != null) {
             Constant.REPLACE_MAP.put("$physical_upload", systemMessage.get(Config.UPLOAD_PHYSICAL_PATH));

@@ -15,37 +15,26 @@
  * limitations under the License.
  */
 
-package com.sparrow.mvc.ui;
+package com.sparrow.servlet.impl;
 
-import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.utility.StringUtility;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.servlet.ServletContainer;
+import com.sparrow.support.CaptchaService;
 
-public class Lable extends AbstractJWebBodyControl {
+public class SessionCaptchaService implements CaptchaService {
+    private ServletContainer servletContainer;
 
-    private String forCtrl;
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7885097366405702047L;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public String getForCtrl() {
-        return forCtrl;
-    }
-
-    public void setForCtrl(String forCtrl) {
-        this.forCtrl = forCtrl;
+    public SessionCaptchaService(ServletContainer servletContainer) {
+        this.servletContainer = servletContainer;
     }
 
     @Override
-    public String setTagNameAndGetTagAttributes() {
-        super.setTagName("Label");
-        if (!StringUtility.isNullOrEmpty(this.getForCtrl())) {
-            return String.format(" for='%1$s' ", this.getForCtrl());
-        }
-        return Symbol.EMPTY;
+    public String getCaptcha(String s) {
+        return servletContainer.flash(Constant.VALIDATE_CODE);
+    }
+
+    @Override
+    public void setCaptcha(String sessionId, String captcha) {
+        servletContainer.flash(Constant.VALIDATE_CODE, captcha);
     }
 }
