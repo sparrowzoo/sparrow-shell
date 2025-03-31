@@ -8,11 +8,9 @@ import com.sparrow.enums.Gender;
 import com.sparrow.orm.dao.UserDAO;
 import com.sparrow.orm.dao.impl.UserDaoImpl;
 import com.sparrow.orm.po.User;
-import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import com.sparrow.protocol.enums.StatusRecord;
 import com.sparrow.utility.DateTimeUtility;
 import org.junit.Test;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
