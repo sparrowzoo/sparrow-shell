@@ -17,11 +17,10 @@
 
 package com.sparrow.datasource;
 
-import com.sparrow.constant.Config;
+import com.sparrow.core.Pair;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.core.Pair;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 
 public class DatasourceKey {
@@ -59,7 +58,8 @@ public class DatasourceKey {
         if (this.schema != null) {
             return this.schema;
         }
-        String schema = ConfigUtility.getValue(Config.DEFAULT_DATA_SOURCE_KEY);
+        DatasourceConfigReader configReader = ApplicationContext.getContainer().getBean(DatasourceConfigReader.class);
+        String schema = configReader.getDefaultSchema();
         if (StringUtility.isNullOrEmpty(schema)) {
             schema = Constant.SPARROW;
         }

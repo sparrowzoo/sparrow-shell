@@ -17,7 +17,7 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.constant.Config;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.cryptogram.Base64;
 import com.sparrow.io.file.FileNameProperty;
 import com.sparrow.protocol.constant.Constant;
@@ -25,6 +25,7 @@ import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
+import com.sparrow.support.web.WebConfigReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,8 +116,7 @@ public class FileUtility {
         }
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(
-                    inputStream, charset));
+            reader = new BufferedReader(new InputStreamReader(inputStream, charset));
             String tempString;
             while ((tempString = reader.readLine()) != null) {
                 fileLines.add(tempString);
@@ -183,8 +183,7 @@ public class FileUtility {
                 filePath = this.makeDirectory(filePath);
             }
             OutputStream outputStream = Files.newOutputStream(Paths.get(filePath));
-            osw = new OutputStreamWriter(outputStream,
-                    charset);
+            osw = new OutputStreamWriter(outputStream, charset);
             osw.write(s, Digit.ZERO, s.length());
             osw.flush();
         } catch (Exception e) {
@@ -286,8 +285,7 @@ public class FileUtility {
         }
     }
 
-    public String search(String path, String keyword, int skip,
-                         Comparator<String> compare, int minSkip) {
+    public String search(String path, String keyword, int skip, Comparator<String> compare, int minSkip) {
         java.io.File file = new java.io.File(path);
 
         BufferedReader reader = null;
@@ -295,8 +293,7 @@ public class FileUtility {
             if (!file.exists() && !file.createNewFile()) {
                 throw new FileNotFoundException(file.getPath());
             }
-            reader = new BufferedReader(new InputStreamReader(
-                    Files.newInputStream(file.toPath()), StandardCharsets.UTF_8), skip);
+            reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8), skip);
             String tempString;
             reader.mark(skip);
             skip /= 2;
@@ -430,20 +427,18 @@ public class FileUtility {
             logger.error("extension of file '{}' not exist  ", fullFilePath);
             return fileNameProperty;
         }
-        String fileName = fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE,
-                fileNameEndIndex);
-        String extension = fullFilePath.substring(fileNameEndIndex)
-                .toLowerCase();
+        String fileName = fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE, fileNameEndIndex);
+        String extension = fullFilePath.substring(fileNameEndIndex).toLowerCase();
         String fullFileName = fileName + extension;
         fileNameProperty.setDirectory(directory);
         fileNameProperty.setFullFileName(fullFileName);
         fileNameProperty.setName(fileName);
-        String imageExtensionConfig = ConfigUtility.getValue(Config.IMAGE_EXTENSION);
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+        String imageExtensionConfig = configReader.getImageExtension();
         if (imageExtensionConfig == null) {
             imageExtensionConfig = Constant.IMAGE_EXTENSION;
         }
-        String[] imageExtension = imageExtensionConfig
-                .split("\\|");
+        String[] imageExtension = imageExtensionConfig.split("\\|");
         // jpeg 或者是其他格式都转换成jpg
         if (Extension.JPEG.equalsIgnoreCase(extension)) {
             extension = Extension.JPG;
@@ -454,8 +449,8 @@ public class FileUtility {
     }
 
     public boolean isImage(String extension) {
-        String imageExtension = ConfigUtility
-                .getValue(Config.IMAGE_EXTENSION);
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+        String imageExtension = configReader.getImageExtension();
         if (StringUtility.isNullOrEmpty(imageExtension)) {
             imageExtension = Constant.IMAGE_EXTENSION;
         }
@@ -517,8 +512,7 @@ public class FileUtility {
     }
 
 
-    public boolean generateImage(String base64str,
-                                 String savePath) {
+    public boolean generateImage(String base64str, String savePath) {
         if (base64str == null) {
             return false;
         }
@@ -548,8 +542,7 @@ public class FileUtility {
         }
     }
 
-    public boolean generateImage(byte[] imageBytes,
-                                 String savePath) {
+    public boolean generateImage(byte[] imageBytes, String savePath) {
         if (imageBytes == null) {
             return false;
         }

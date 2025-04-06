@@ -41,12 +41,12 @@ public abstract class AbstractGlobalAttributeFilter implements Filter {
         HttpContext.getContext().setRequest(httpServletRequest);
         HttpContext.getContext().setResponse((HttpServletResponse) servletResponse);
         httpServletRequest.setAttribute(Config.ROOT_PATH, attributeContext.getRootPath());
-        String internationalization = attributeContext.getLanguage();
+        String internationalization = attributeContext.getInternationalization();
         String language;
         //如果支持国际化
         if (internationalization != null) {
             language = servletRequest.getParameter(Config.LANGUAGE);
-            if (language == null || !internationalization.contains(Config.INTERNATIONALIZATION)) {
+            if (language == null || !internationalization.contains(language)) {
                 language = attributeContext.getLanguage();
             }
             HttpContext.getContext().put("sparrow_request_language", language);

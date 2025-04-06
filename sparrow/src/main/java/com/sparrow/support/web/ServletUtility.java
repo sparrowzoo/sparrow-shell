@@ -17,20 +17,19 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.constant.Config;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.constant.ClientInfoConstant;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.CollectionsUtility;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 
-import java.util.Enumeration;
-import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
 
 public class ServletUtility {
 
@@ -48,70 +47,6 @@ public class ServletUtility {
                 .getAttribute(Constant.REQUEST_ACTION_INCLUDE) != null;
     }
 
-    public String assembleActualUrl(String url) {
-        if (url.contains("?")) {
-            url = url.substring(0, url.indexOf("?"));
-        }
-        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-        if (rootPath != null && url.startsWith(rootPath)) {
-            url = url.substring(rootPath.length());
-        }
-        if (!url.startsWith(Symbol.SLASH)) {
-            url = Symbol.SLASH + url;
-        }
-        String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.JSP);
-        String pagePrefix = ConfigUtility.getValue(Config.DEFAULT_PAGE_PREFIX, "/template");
-        if (!url.endsWith(extension)) {
-            url = url + extension;
-        }
-        if (!url.startsWith(pagePrefix)) {
-            url = pagePrefix + url;
-        }
-        return url;
-    }
-
-    public String getActionKey(ServletRequest request) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        Object servletPath = request
-                .getAttribute(Constant.REQUEST_ACTION_INCLUDE);
-        String actionKey;
-        if (servletPath != null) {
-            actionKey = servletPath.toString();
-        } else {
-            actionKey = httpServletRequest.getServletPath();
-        }
-
-        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
-        if (!StringUtility.isNullOrEmpty(rootPath)) {
-            return actionKey;
-        }
-
-        //第一次请求时初始化rootPath website  和domain
-        String serverName = request.getServerName();
-        String path = httpServletRequest.getContextPath();
-        rootPath = request.getScheme()
-                + "://"
-                + serverName
-                + (request.getServerPort() == 80 ? "" : ":"
-                + request.getServerPort()) + path;
-        // eclipse tomcat 启动时会默认请求http://localhost故此处加此判断
-        //只解析一二级域名 http://www.sparrowzoo.com
-        if (rootPath.indexOf(Constant.LOCALHOST) != 0 && rootPath.indexOf(Constant.LOCALHOST_127) != 0) {
-
-            String rootDomain = ConfigUtility.getValue(Config.ROOT_DOMAIN);
-            if (rootDomain == null) {
-                ConfigUtility.resetKey(Config.ROOT_DOMAIN, serverName.substring(serverName.indexOf(".")));
-            }
-
-            String domain = ConfigUtility.getValue(Config.DOMAIN);
-            if (domain == null) {
-                ConfigUtility.resetKey(Config.DOMAIN,
-                        serverName);
-            }
-        }
-        ConfigUtility.resetKey(Config.ROOT_PATH, rootPath);
-        return actionKey;
-    }
 
     public String getClientIp(ServletRequest request) {
         if (request == null) {
@@ -184,5 +119,52 @@ public class ServletUtility {
             return "true".equalsIgnoreCase(ajax);
         }
         return false;
+    }
+
+    public void moveAttribute(ServletRequest request) {
+        Map<String, Object> map = HttpContext.getContext().getHolder();
+        for (String key : map.keySet()) {
+            Object value = map.get(key);
+            request.setAttribute(key, value);
+        }
+        HttpContext.getContext().remove();
+    }
+
+    public String assembleActualUrl(String url) {
+
+        if (url.contains("?")) {
+            url = url.substring(0, url.indexOf("?"));
+        }
+
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+        String rootPath = configReader.getRootPath();
+        if (rootPath != null && url.startsWith(rootPath)) {
+            url = url.substring(rootPath.length());
+        }
+        if (!url.startsWith(Symbol.SLASH)) {
+            url = Symbol.SLASH + url;
+        }
+        String extension = configReader.getTemplateEngineSuffix();
+        String pagePrefix = configReader.getTemplateEnginePrefix();
+        if (!url.endsWith(extension)) {
+            url = url + extension;
+        }
+        if (!url.startsWith(pagePrefix)) {
+            url = pagePrefix + url;
+        }
+        return url;
+    }
+
+    public String getActionKey(ServletRequest request) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        Object servletPath = request
+                .getAttribute(Constant.REQUEST_ACTION_INCLUDE);
+        String actionKey;
+        if (servletPath != null) {
+            actionKey = servletPath.toString();
+        } else {
+            actionKey = httpServletRequest.getServletPath();
+        }
+        return actionKey;
     }
 }

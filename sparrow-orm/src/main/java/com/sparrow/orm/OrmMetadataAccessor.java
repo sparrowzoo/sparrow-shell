@@ -94,7 +94,7 @@ public class OrmMetadataAccessor<T> {
         this.entityManager = new SparrowEntityManager(this.modelClazz);
         this.entityManager.init();
         EntityManagerFactoryBean.getInstance().pubObject(this.modelClazz, this.entityManager);
-        this.modelName = ClassUtility.getEntityNameByClass(this.modelClazz);
+        this.modelName = ClassUtility.getBeanNameByClass(this.modelClazz);
         this.criteriaProcessor = criteriaProcessor;
     }
 

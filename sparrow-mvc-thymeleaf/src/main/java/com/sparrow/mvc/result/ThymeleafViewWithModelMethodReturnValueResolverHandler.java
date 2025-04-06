@@ -18,33 +18,36 @@
 package com.sparrow.mvc.result;
 
 import com.sparrow.constant.Config;
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.PageSwitchMode;
 import com.sparrow.mvc.ThymeleafEngineUtils;
 import com.sparrow.mvc.result.impl.ViewWithModelMethodReturnValueResolverHandlerImpl;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.utility.ConfigUtility;
-import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class ThymeleafViewWithModelMethodReturnValueResolverHandler extends ViewWithModelMethodReturnValueResolverHandlerImpl {
     @Override
     protected void forward(HttpServletRequest request, HttpServletResponse response,
-        String url) throws  IOException {
+                           String url) throws IOException {
         ThymeleafEngineUtils.forward(request, response, url);
     }
 
     @Override
     protected String assembleUrl(String referer, String defaultSuccessUrl, String url, PageSwitchMode pageSwitchMode,
-        String[] urlArgs) {
+                                 String[] urlArgs) {
         String assembleUrl = super.assembleUrl(referer, defaultSuccessUrl, url, pageSwitchMode, urlArgs);
-        String pagePrefix = ConfigUtility.getValue(Config.DEFAULT_PAGE_PREFIX, "/template");
-        String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.HTML);
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+        String pagePrefix = configReader.getValue(Config.TEMPLATE_ENGINE_PREFIX, "/template");
+        String extension = configReader.getValue(Config.TEMPLATE_ENGINE_SUFFIX, Extension.HTML);
 
         if (assembleUrl.startsWith(pagePrefix)) {
             assembleUrl = assembleUrl.substring(pagePrefix.length());
         }
-        if(assembleUrl.endsWith(extension)) {
+        if (assembleUrl.endsWith(extension)) {
             assembleUrl = assembleUrl.substring(0, assembleUrl.indexOf(extension));
         }
         return assembleUrl;

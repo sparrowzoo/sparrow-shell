@@ -17,6 +17,8 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.util.LinkedHashMap;
@@ -70,7 +72,8 @@ public class EnumUtility {
         if (!StringUtility.isNullOrEmpty(business)) {
             key += Symbol.UNDERLINE + business;
         }
-        String languageValue = ConfigUtility.getLanguageValue(key);
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+        String languageValue = configReader.getI18nValue(key);
         return StringUtility.isNullOrEmpty(languageValue) ? enumInstance.name() : languageValue;
     }
 
@@ -81,7 +84,8 @@ public class EnumUtility {
         if (!StringUtility.isNullOrEmpty(business)) {
             key += Symbol.UNDERLINE + business;
         }
-        String languageValue = ConfigUtility.getLanguageValue(key);
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+        String languageValue = configReader.getI18nValue(key);
         return StringUtility.isNullOrEmpty(languageValue) ? enumInstance.name() : languageValue;
     }
 }

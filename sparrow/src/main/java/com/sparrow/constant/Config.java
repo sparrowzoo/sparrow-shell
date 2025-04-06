@@ -17,11 +17,6 @@
 
 package com.sparrow.constant;
 
-import com.sparrow.enums.LoginType;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class Config {
     public static final String INTERNATIONALIZATION = "internationalization";
     public static final String REQUEST_HEADER_KEY_LOGIN_TOKEN = "request_header_key_login_token";
@@ -39,6 +34,8 @@ public class Config {
      */
     public static final String UPLOAD = "upload";
     public static final String UPLOAD_PHYSICAL_PATH = "physical_upload";
+
+    public static final String LOGIN_URL = "login_url";
     /**
      * 图片格式
      */
@@ -57,17 +54,27 @@ public class Config {
     public static final String DEFAULT_ADMIN_INDEX = "default_admin_index";
     public static final String DEFAULT_AVATAR = "default_avatar";
     public static final String DEFAULT_DATA_SOURCE_KEY = "default_data_source";
-    public static final String DEFAULT_PAGE_EXTENSION = "default_page_extension";
-    public static final String DEFAULT_PAGE_PREFIX = "default_page_prefix";
 
-    public static final String DOMAIN = "domain";
-    public static final String ROOT_DOMAIN = "root_domain";
+    public static final String DATA_SOURCE_PASSWORD_KEY = "mysql_sparrow_password";
+
+    public static final String DEBUG_DATA_SOURCE_PASSWORD_KEY = "debug_data_source_password";
+
+
+    public static final String TEMPLATE_ENGINE_PREFIX = "template_engine_prefix";
+    public static final String TEMPLATE_ENGINE_SUFFIX = "template_engine_suffix";
+
     public static final String RESOURCE_VERSION = "resource_version";
     public static final String WATER_MARK = "watermark";
     public static final String ERROR_URL = "error_url";
     public static final String TRANSIT_URL = "transit_url";
     public static final String SUCCESS_TRANSIT_URL = "success_transit_url";
     public static final String EXCEPTION_SWITCH_MODE = "exception_switch_mode";
+
+    public static final String SUPPORT_TEMPLATE_ENGINE = "support_template_engine";
+
+    public static final String AJAX_PATTERNS = "ajax_patterns";
+
+    public static final String AUTO_MAPPING_VIEW_NAMES = "auto_mapping_view_names";
 
     public static final String EMAIL_HOST = "email_host";
     public static final String EMAIL_FROM = "email_from";
@@ -91,15 +98,5 @@ public class Config {
     public static final String LOG_CLASS = "log_class";
     public static final String LOG_LEVEL = "log_level";
     public static final String LOG_PRINT_CONSOLE = "print_console";
-
-    public static final Map<LoginType, String> LOGIN_TYPE_KEY = new HashMap<LoginType, String>() {
-        private static final long serialVersionUID = 1L;
-
-        {
-            put(LoginType.LOGIN, "login_url");
-            put(LoginType.LOGIN_IFRAME, "login_url");
-            put(LoginType.DIALOG_LOGIN, "dialog_login_url");
-        }
-    };
     public static final String COMPILER_OPTION_ENCODING = "compiler_option_encoding";
 }

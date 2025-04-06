@@ -16,7 +16,6 @@
  */
 package com.sparrow.controller;
 
-import com.sparrow.constant.User;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.protocol.BusinessException;
@@ -113,7 +112,7 @@ public class HelloController {
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
         String sign = authenticatorService.sign(loginToken, new LoginUserStatus(LoginUserStatus.STATUS_NORMAL, 1L));
-        servletContainer.rootCookie(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN, sign, 6);
+        servletContainer.cookie(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN, sign, 6);
         return ViewWithModel.redirect("welcome", loginToken);
     }
 

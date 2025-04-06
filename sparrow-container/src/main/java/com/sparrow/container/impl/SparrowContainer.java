@@ -17,29 +17,20 @@
 package com.sparrow.container.impl;
 
 import com.sparrow.constant.Config;
-import com.sparrow.constant.SysObjectName;
-import com.sparrow.container.AbstractContainer;
-import com.sparrow.container.AnnotationBeanDefinitionParserDelegate;
-import com.sparrow.container.AnnotationBeanDefinitionReader;
-import com.sparrow.container.BeanDefinition;
-import com.sparrow.container.BeanDefinitionParserDelegate;
-import com.sparrow.container.BeanDefinitionReader;
-import com.sparrow.container.ContainerAware;
-import com.sparrow.container.ContainerBuilder;
-import com.sparrow.container.SimpleBeanDefinitionRegistry;
-import com.sparrow.container.XmlBeanDefinitionReader;
+import com.sparrow.container.*;
+import com.sparrow.container.ConfigReader;
+import com.sparrow.container.config.SparrowConfigReader;
 import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.Initializer;
-import com.sparrow.utility.ConfigUtility;
+import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
-
-import java.util.Iterator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Iterator;
 
 public class SparrowContainer extends AbstractContainer {
     private static Logger logger = LoggerFactory.getLogger(SparrowContainer.class);
@@ -121,8 +112,7 @@ public class SparrowContainer extends AbstractContainer {
 
             logger.info("-------------init initializer ...--------------------------");
             if (builder.isInitSingletonBean()) {
-                Initializer initializer = this.getBean(
-                        SysObjectName.INITIALIZER);
+                Initializer initializer = this.getBean(Initializer.class);
 
                 if (initializer != null) {
                     initializer.init(this);
@@ -174,12 +164,14 @@ public class SparrowContainer extends AbstractContainer {
         if (StringUtility.isNullOrEmpty(this.builder.getConfigLocation())) {
             return;
         }
-        ConfigUtility.initSystem(this.builder.getConfigLocation());
-        String internationalization = ConfigUtility
+        SparrowConfigReader configReader = new SparrowConfigReader();
+        this.singletonRegistry.pubObject(ClassUtility.getBeanNameByClass(ConfigReader.class), configReader);
+        configReader.initSystem(this.builder.getConfigLocation());
+        String internationalization = configReader
                 .getValue(Config.INTERNATIONALIZATION);
 
         if (StringUtility.isNullOrEmpty(internationalization)) {
-            internationalization = ConfigUtility
+            internationalization = configReader
                     .getValue(Config.LANGUAGE);
         }
         if (StringUtility.isNullOrEmpty(internationalization)) {
@@ -188,7 +180,7 @@ public class SparrowContainer extends AbstractContainer {
         String[] internationalizationArray = internationalization
                 .split(Symbol.COMMA);
         for (String i18n : internationalizationArray) {
-            ConfigUtility.initInternationalization(i18n);
+            configReader.initInternationalization(i18n);
         }
     }
 }

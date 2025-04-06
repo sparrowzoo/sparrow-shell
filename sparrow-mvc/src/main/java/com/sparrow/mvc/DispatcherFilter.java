@@ -17,8 +17,6 @@
 
 package com.sparrow.mvc;
 
-import com.sparrow.constant.Config;
-import com.sparrow.constant.SysObjectName;
 import com.sparrow.container.Container;
 import com.sparrow.container.FactoryBean;
 import com.sparrow.core.Pair;
@@ -34,9 +32,9 @@ import com.sparrow.protocol.constant.Extension;
 import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.web.CookieUtility;
 import com.sparrow.support.web.HttpContext;
-import com.sparrow.utility.ConfigUtility;
+import com.sparrow.support.web.ServletUtility;
+import com.sparrow.support.web.WebConfigReader;
 import com.sparrow.utility.StringUtility;
-import com.sparrow.utility.web.SparrowServletUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +51,7 @@ public class DispatcherFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(DispatcherFilter.class);
 
-    protected SparrowServletUtility sparrowServletUtility = SparrowServletUtility.getInstance();
+    protected ServletUtility servletUtility = ServletUtility.getInstance();
 
     protected FilterConfig config;
 
@@ -79,10 +77,10 @@ public class DispatcherFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-        FilterChain chain) throws ServletException {
+                         FilterChain chain) throws ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        String actionKey = sparrowServletUtility.getServletUtility().getActionKey(request);
+        String actionKey = servletUtility.getActionKey(request);
         if (StringUtility.existInArray(this.exceptUrl, actionKey)) {
             try {
                 chain.doFilter(request, response);
@@ -102,7 +100,8 @@ public class DispatcherFilter implements Filter {
             }
             if (invokableHandlerMethod == null || invokableHandlerMethod.getMethod() == null) {
                 logger.warn("invokableHandlerMethod is null or method not exist action-key {}", actionKey);
-                String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.JSP);
+                WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+                String extension = configReader.getTemplateEngineSuffix();
                 if (actionKey.endsWith(extension) || actionKey.endsWith(Extension.JSON)) {
                     chain.doFilter(request, response);
                 } else {
@@ -126,15 +125,15 @@ public class DispatcherFilter implements Filter {
     }
 
     protected void forward(ServletRequest request, ServletResponse response,
-        String actionKey) throws ServletException, IOException {
-        String dispatcherUrl = sparrowServletUtility.getServletUtility().assembleActualUrl(actionKey);
+                           String actionKey) throws ServletException, IOException {
+        String dispatcherUrl = servletUtility.assembleActualUrl(actionKey);
         logger.debug("dispatcher url is {}", dispatcherUrl);
         RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherUrl);
         dispatcher.forward(request, response);
     }
 
     private void errorHandler(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-        ServletInvokableHandlerMethod invocableHandlerMethod, Exception e) throws IOException, NotTryException {
+                              ServletInvokableHandlerMethod invocableHandlerMethod, Exception e) throws IOException, NotTryException {
         Throwable target = e;
         if (e.getCause() == null) {
             logger.error("e.getCause==null", e);
@@ -223,17 +222,17 @@ public class DispatcherFilter implements Filter {
             }
         }
         throw new ServletException("No adapter for handler [" + handler +
-            "]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
+                "]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
     }
 
     private void initAttribute(HttpServletRequest request,
-        HttpServletResponse response, ServletInvokableHandlerMethod invokableHandlerMethod) {
+                               HttpServletResponse response, ServletInvokableHandlerMethod invokableHandlerMethod) {
         request.setAttribute(Constant.REQUEST_INVOKABLE_HANDLER_METHOD, invokableHandlerMethod);
-        if (sparrowServletUtility.getServletUtility().include(request)) {
+        if (servletUtility.include(request)) {
             return;
         }
-        String actionKey = sparrowServletUtility.getServletUtility().getActionKey(request);
-        logger.debug("PARAMETERS:" + sparrowServletUtility.getServletUtility().getAllParameter(request));
+        String actionKey = servletUtility.getActionKey(request);
+        logger.debug("PARAMETERS:" + servletUtility.getAllParameter(request));
         logger.debug("ACTION KEY:" + actionKey);
 
         Pair<String, Map<String, Object>> sessionPair = (Pair<String, Map<String, Object>>) request.getSession().getAttribute(Constant.FLASH_KEY);
@@ -267,7 +266,7 @@ public class DispatcherFilter implements Filter {
         }
 
         //redirect action url
-        String actualUrl = sparrowServletUtility.getServletUtility().assembleActualUrl(actionKey);
+        String actualUrl = servletUtility.assembleActualUrl(actionKey);
         if (StringUtility.matchUrl(flashKey, actualUrl)) {
             return true;
         }
@@ -281,7 +280,7 @@ public class DispatcherFilter implements Filter {
         }
 
         //transit action url
-        String actualTransitUrl = sparrowServletUtility.getServletUtility().assembleActualUrl(actionKey);
+        String actualTransitUrl = servletUtility.assembleActualUrl(actionKey);
         if (StringUtility.matchUrl(flashKey, actualTransitUrl)) {
             return true;
         }
@@ -318,8 +317,8 @@ public class DispatcherFilter implements Filter {
     public void init(FilterConfig config) {
         this.config = config;
         this.container = ApplicationContext.getContainer();
-        this.cookieUtility = this.container.getBean(SysObjectName.COOKIE_UTILITY);
-        this.connectionContextHolder = this.container.getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
+        this.cookieUtility = this.container.getBean(CookieUtility.class);
+        this.connectionContextHolder = this.container.getBean(ConnectionContextHolder.class);
         String exceptUrl = config.getInitParameter("except_url");
         if (!StringUtility.isNullOrEmpty(exceptUrl)) {
             this.exceptUrl = exceptUrl.split(",");

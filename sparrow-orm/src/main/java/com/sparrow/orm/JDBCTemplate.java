@@ -17,7 +17,6 @@
 
 package com.sparrow.orm;
 
-import com.sparrow.constant.SysObjectName;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.datasource.ConnectionContextHolder;
 import com.sparrow.datasource.ConnectionReleaser;
@@ -57,15 +56,15 @@ public class JDBCTemplate implements JDBCSupport {
      * 连接支持器
      */
     private ConnectionContextHolder getConnectionHolder() {
-        return ApplicationContext.getContainer().getBean(SysObjectName.CONNECTION_CONTEXT_HOLDER);
+        return ApplicationContext.getContainer().getBean(ConnectionContextHolder.class);
     }
 
     private DataSourceDispatcher getDataSourceDispatcher() {
-        return ApplicationContext.getContainer().getBean(SysObjectName.DATA_SOURCE_DISPATCHER);
+        return ApplicationContext.getContainer().getBean(DataSourceDispatcher.class);
     }
 
     private ConnectionReleaser getConnectionReleaser() {
-        return ApplicationContext.getContainer().getBean(SysObjectName.CONNECTION_RELEASER);
+        return ApplicationContext.getContainer().getBean(ConnectionReleaser.class);
     }
 
     /**

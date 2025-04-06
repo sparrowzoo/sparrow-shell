@@ -44,11 +44,6 @@ public abstract class AbstractServletContainer implements ServletContainer {
     private ServletUtility servletUtility = ServletUtility.getInstance();
 
     @Override
-    public String getActionKey() {
-        return this.servletUtility.getActionKey(this.getRequest());
-    }
-
-    @Override
     public String getClientIp() {
         return this.servletUtility.getClientIp(this.getRequest());
     }
@@ -104,11 +99,6 @@ public abstract class AbstractServletContainer implements ServletContainer {
     @Override
     public void cookie(String key, String value, Integer expireDays) {
         CookieUtility.set(this.getResponse(), key, value, expireDays);
-    }
-
-    @Override
-    public void rootCookie(String key, String value, Integer expireDays) {
-        CookieUtility.setRoot(this.getResponse(), key, value, expireDays);
     }
 
     @Override

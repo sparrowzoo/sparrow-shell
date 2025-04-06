@@ -18,7 +18,6 @@
 package com.sparrow.container;
 
 import com.sparrow.cg.MethodAccessor;
-import com.sparrow.constant.SysObjectName;
 import com.sparrow.core.TypeConverter;
 
 import java.lang.reflect.Method;
@@ -55,7 +54,7 @@ public interface Container {
      */
     <T> T getBean(String beanName);
 
-    <T> T getBean(SysObjectName sysObjectName);
+    <T> T getBean(Class<T> clazzName);
 
     /**
      * 初始化container

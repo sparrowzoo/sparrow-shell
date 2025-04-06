@@ -14,34 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.container.config;
 
-package com.sparrow.enums;
-
+import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.datasource.DatasourceConfigReader;
 
-public enum Gender {
-    /**
-     * 保密
-     */
-    NULL,
-    /**
-     * 男
-     */
-    MALE,
-    /**
-     * 女
-     */
-    FEMALE;
+public class SparrowDatasourceConfigReader implements DatasourceConfigReader {
+    ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
 
     @Override
-    public String toString() {
-        String key = super.toString();
-        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
-        String gender = configReader.getI18nValue("gender_" + key.toLowerCase());
-        if (gender == null) {
-            return this.name();
-        }
-        return gender;
+    public String getDefaultSchema() {
+        return configReader.getValue(Config.DEFAULT_DATA_SOURCE_KEY);
+    }
+
+    @Override
+    public String getPasswordKey() {
+        return configReader.getValue(Config.DATA_SOURCE_PASSWORD_KEY);
+    }
+
+    @Override
+    public Boolean getDebugDatasourcePassword() {
+        return configReader.getBooleanValue(Config.DEBUG_DATA_SOURCE_PASSWORD_KEY,false);
     }
 }

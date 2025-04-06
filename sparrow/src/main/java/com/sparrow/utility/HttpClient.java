@@ -18,20 +18,16 @@
 package com.sparrow.utility;
 
 import com.sparrow.constant.Regex;
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.HttpMethod;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
+import com.sparrow.support.web.WebConfigReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -41,9 +37,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class HttpClient {
 
     static Logger logger = LoggerFactory.getLogger(HttpClient.class);
@@ -51,8 +44,7 @@ public class HttpClient {
     public static String getRedirectUrl(String pageUrl) {
         try {
             URL url = new URL(pageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url
-                    .openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             connection.disconnect();
             return connection.getURL().toString();
@@ -65,8 +57,7 @@ public class HttpClient {
     public static int getResponseCode(String pageUrl) {
         try {
             URL url = new URL(pageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url
-                    .openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             connection.disconnect();
             return connection.getResponseCode();
@@ -91,8 +82,7 @@ public class HttpClient {
             connection.setConnectTimeout(60 * 1000);
             connection.setReadTimeout(60 * 1000);
             connection.connect();
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream(), charset));
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
 
             StringBuilder content = new StringBuilder();
             String line = null;
@@ -128,13 +118,11 @@ public class HttpClient {
         return post(HttpMethod.POST, pageUrl, json, "application/json");
     }
 
-    public static String post(HttpMethod method, String pageUrl, String data,
-                              String contentType) {
+    public static String post(HttpMethod method, String pageUrl, String data, String contentType) {
         return request(method, pageUrl, data, contentType, null, false);
     }
 
-    public static String request(HttpMethod method, String pageUrl, String data,
-                                 String contentType, Map<String, String> header, Boolean gzip) {
+    public static String request(HttpMethod method, String pageUrl, String data, String contentType, Map<String, String> header, Boolean gzip) {
         StringBuilder buffer = new StringBuilder();
         HttpURLConnection httpUrlConnection = null;
         DataOutputStream dataOutputStream = null;
@@ -148,11 +136,9 @@ public class HttpClient {
             httpUrlConnection.setRequestProperty("Accept-Charset", StandardCharsets.UTF_8.name());
             //对post表单提交有影响
             if (StringUtility.isNullOrEmpty(contentType)) {
-                httpUrlConnection.setRequestProperty("Content-Type",
-                        Constant.CONTENT_TYPE_FORM);
+                httpUrlConnection.setRequestProperty("Content-Type", Constant.CONTENT_TYPE_FORM);
             } else {
-                httpUrlConnection.setRequestProperty("Content-Type",
-                        contentType);
+                httpUrlConnection.setRequestProperty("Content-Type", contentType);
             }
 
             if (header != null) {
@@ -171,8 +157,7 @@ public class HttpClient {
                 if (!HttpMethod.GET.equals(method)) {
                     httpUrlConnection.setRequestProperty("Content-Encoding", "gzip");
                     ByteArrayOutputStream originalContent = new ByteArrayOutputStream();
-                    originalContent
-                            .write(data.getBytes(StandardCharsets.UTF_8));
+                    originalContent.write(data.getBytes(StandardCharsets.UTF_8));
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     GZIPOutputStream gzipOut = new GZIPOutputStream(baos);
@@ -193,10 +178,8 @@ public class HttpClient {
                      *                 }
                      *                 不判断的话会自动变成POST
                      */
-                    dataOutputStream = new DataOutputStream(
-                            httpUrlConnection.getOutputStream());
-                    bufferedWriter = new BufferedWriter(new OutputStreamWriter(
-                            dataOutputStream, StandardCharsets.UTF_8));
+                    dataOutputStream = new DataOutputStream(httpUrlConnection.getOutputStream());
+                    bufferedWriter = new BufferedWriter(new OutputStreamWriter(dataOutputStream, StandardCharsets.UTF_8));
                     if (data != null) {
                         bufferedWriter.write(data);
                     }
@@ -209,8 +192,7 @@ public class HttpClient {
             responseCode = httpUrlConnection.getResponseCode();
             if (responseCode == 200) {
                 inputStream = httpUrlConnection.getInputStream();
-                bufferedReader = new BufferedReader(new InputStreamReader(
-                        inputStream, StandardCharsets.UTF_8));
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     buffer.append(line);
@@ -274,8 +256,7 @@ public class HttpClient {
             // 获取网络输入流
             bis = new BufferedInputStream(httpURLConnection.getInputStream());
 
-            String descDirectoryPath = fileFullPath.substring(0,
-                    fileFullPath.lastIndexOf('/') + 1);
+            String descDirectoryPath = fileFullPath.substring(0, fileFullPath.lastIndexOf('/') + 1);
             java.io.File descDirectory = new java.io.File(descDirectoryPath);
             if (!descDirectory.exists()) {
                 descDirectory.mkdirs();
@@ -350,9 +331,10 @@ public class HttpClient {
     }
 
     public static String downloadImage(String url) {
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
         String fileUUID = UUID.randomUUID().toString();
-        String temp = ConfigUtility.getValue(com.sparrow.constant.Config.TEMP);
-        String tempPhysicalPath = ConfigUtility.getValue(com.sparrow.constant.Config.RESOURCE_PHYSICAL_PATH);
+        String temp = configReader.getValue(com.sparrow.constant.Config.TEMP);
+        String tempPhysicalPath = configReader.getValue(com.sparrow.constant.Config.RESOURCE_PHYSICAL_PATH);
         int hashcode = fileUUID.hashCode();
         if (hashcode == Integer.MIN_VALUE) {
             hashcode += 1;
@@ -362,24 +344,20 @@ public class HttpClient {
         int div = hashcode / 1000;
         int remaining2 = div % 1000;
         String extension = FileUtility.getInstance().getFileNameProperty(url).getExtension();
-        if (!Extension.JPG.equalsIgnoreCase(extension) && !Extension.PNG.equalsIgnoreCase(extension)
-                && !Extension.GIF.equalsIgnoreCase(extension)) {
+        if (!Extension.JPG.equalsIgnoreCase(extension) && !Extension.PNG.equalsIgnoreCase(extension) && !Extension.GIF.equalsIgnoreCase(extension)) {
             extension = ".jpg";
         }
-        String imageUrl = String.valueOf(remaining1) + "/"
-                + String.valueOf(remaining2) + "/" + fileUUID + extension;
+        String imageUrl = String.valueOf(remaining1) + "/" + String.valueOf(remaining2) + "/" + fileUUID + extension;
         String descFilePath = tempPhysicalPath + "/" + imageUrl;
         HttpClient.downloadFile(url, descFilePath);
         String webUrl = temp + "/" + imageUrl;
-        return String.format(Regex.TAG_TEMP_IMAGE_FORMAT.pattern(), webUrl,
-                url.hashCode());
+        return String.format(Regex.TAG_TEMP_IMAGE_FORMAT.pattern(), webUrl, url.hashCode());
     }
 
     /**
      * 下载文本文件
      */
-    public static boolean downloadPage(String url, String htmlFileName,
-                                       String charset) {
+    public static boolean downloadPage(String url, String htmlFileName, String charset) {
         try {
             if (StringUtility.isNullOrEmpty(charset)) {
                 charset = StandardCharsets.UTF_8.name();
@@ -393,8 +371,7 @@ public class HttpClient {
                 logger.warn(Constant.ERROR_STATIC_HTML + url);
                 return false;
             }
-            String descDirectoryPath = htmlFileName.substring(0,
-                    htmlFileName.lastIndexOf('/') + 1);
+            String descDirectoryPath = htmlFileName.substring(0, htmlFileName.lastIndexOf('/') + 1);
             java.io.File descDirectory = new java.io.File(descDirectoryPath);
             if (!descDirectory.exists()) {
                 descDirectory.mkdirs();
@@ -422,7 +399,8 @@ public class HttpClient {
 
     public static void clearNginxCache(String url) {
         try {
-            String rootPath = ConfigUtility.getValue(com.sparrow.constant.Config.ROOT_PATH);
+            WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+            String rootPath = configReader.getRootPath();
             if (!StringUtility.isNullOrEmpty(rootPath)) {
                 if (!url.startsWith(rootPath)) {
                     url = rootPath + "/purge" + url;

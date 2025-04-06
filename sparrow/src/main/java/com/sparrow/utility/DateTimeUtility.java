@@ -18,9 +18,13 @@
 package com.sparrow.utility;
 
 import com.sparrow.constant.DateTime;
-import com.sparrow.protocol.constant.magic.Digit;
+import com.sparrow.container.ConfigReader;
 import com.sparrow.core.Pair;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.DateTimeUnit;
+import com.sparrow.protocol.constant.magic.Digit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,9 +32,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Stack;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DateTimeUtility {
 
@@ -126,7 +127,7 @@ public class DateTimeUtility {
      * @return 时间间隔
      */
     public static int getInterval(Long startTime, Long endTime,
-        DateTimeUnit dateTimeUnit) {
+                                  DateTimeUnit dateTimeUnit) {
         if (startTime == null || endTime == null) {
             return Integer.MIN_VALUE;
         }
@@ -148,9 +149,9 @@ public class DateTimeUtility {
             mm %= 60;
         }
         return String.format("%1$s:%2$s:%3$s",
-            StringUtility.leftPad(String.valueOf(hh), '0', Digit.TOW),
-            StringUtility.leftPad(String.valueOf(mm), '0', Digit.TOW),
-            StringUtility.leftPad(String.valueOf(ss), '0', Digit.TOW));
+                StringUtility.leftPad(String.valueOf(hh), '0', Digit.TOW),
+                StringUtility.leftPad(String.valueOf(mm), '0', Digit.TOW),
+                StringUtility.leftPad(String.valueOf(ss), '0', Digit.TOW));
     }
 
     /**
@@ -254,10 +255,11 @@ public class DateTimeUtility {
             interval = interval / value;
         }
         while (true);
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
         while (result.size() > start) {
             Pair<Integer, String> pair = result.pop();
             if (pair.getFirst() > 0) {
-                beforeFormat.append(pair.getFirst() + ConfigUtility.getLanguageValue("date_time_unit_" + pair.getSecond(), null, pair.getSecond()));
+                beforeFormat.append(pair.getFirst()).append(configReader.getI18nValue("date_time_unit_" + pair.getSecond(), null, pair.getSecond()));
             }
         }
         return beforeFormat.toString();

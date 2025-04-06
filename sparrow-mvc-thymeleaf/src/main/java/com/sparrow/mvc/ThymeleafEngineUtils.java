@@ -18,8 +18,9 @@
 package com.sparrow.mvc;
 
 import com.sparrow.constant.Config;
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.utility.ConfigUtility;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.dialect.SpringStandardDialect;
@@ -79,9 +80,10 @@ public class ThymeleafEngineUtils {
 ////            }
 
             innerServletContext = servletContext;
+            ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
             ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
-            String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.HTML);
-            String pagePrefix = ConfigUtility.getValue(Config.DEFAULT_PAGE_PREFIX, "/template");
+            String extension = configReader.getValue(Config.TEMPLATE_ENGINE_SUFFIX, Extension.HTML);
+            String pagePrefix = configReader.getValue(Config.TEMPLATE_ENGINE_PREFIX, "/template");
             resolver.setPrefix(pagePrefix);
             resolver.setSuffix(extension);
             resolver.setTemplateMode(TemplateMode.HTML);
@@ -95,7 +97,7 @@ public class ThymeleafEngineUtils {
     }
 
     public static void forward(ServletRequest request, ServletResponse response,
-        String actionKey) throws IOException {
+                               String actionKey) throws IOException {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;

@@ -15,33 +15,53 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.support.web;
 
-import com.sparrow.container.ConfigReader;
-import com.sparrow.core.spi.ApplicationContext;
+import java.util.List;
 
-public enum Gender {
-    /**
-     * 保密
-     */
-    NULL,
-    /**
-     * 男
-     */
-    MALE,
-    /**
-     * 女
-     */
-    FEMALE;
+public interface WebConfigReader {
 
-    @Override
-    public String toString() {
-        String key = super.toString();
-        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
-        String gender = configReader.getI18nValue("gender_" + key.toLowerCase());
-        if (gender == null) {
-            return this.name();
-        }
-        return gender;
-    }
+    List<String> getAutoMappingViewNames();
+
+    Boolean getSupportTemplateEngine();
+
+    List<String> getAjaxPattens();
+
+    String getRootPath();
+
+    String getLanguage();
+
+    String getResource();
+
+    String getPhysicalResource();
+
+    String getResourceVersion();
+
+    String getUpload();
+
+    String getPhysicalUpload();
+
+    String getWaterMark();
+    String getInternationalization();
+
+    String getDefaultAvatar();
+
+    String getLoginUrl();
+
+    String getImageExtension();
+
+    /**
+     * 为兼容spring flash 功能实现
+     *
+     * @return
+     */
+    String getTemplateEngineSuffix();
+
+    String getTemplateEnginePrefix();
+
+    String getAdminPage();
+
+    String getDefaultWelcomePage();
+
+    String getErrorPage();
 }

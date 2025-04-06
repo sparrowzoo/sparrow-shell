@@ -17,26 +17,27 @@
 
 package com.sparrow.image;
 
-import com.sparrow.constant.Config;
 import com.sparrow.constant.Regex;
-import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
+import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.io.file.FileNameProperty;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.Downloader;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.io.file.FileNameProperty;
+import com.sparrow.protocol.constant.SparrowError;
+import com.sparrow.support.web.WebConfigReader;
 import com.sparrow.utility.CollectionsUtility;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
+
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.inject.Inject;
 
 public abstract class AbstractImageExtractor implements ImageExtractor, ContainerAware {
     @Inject
@@ -64,6 +65,8 @@ public abstract class AbstractImageExtractor implements ImageExtractor, Containe
         Matcher imageMatcher = Pattern.compile(this.getImageRegexMark(),
             Regex.OPTION_MULTILINE_CASE_INSENSITIVE).matcher(content);
         List<ImageDTO> images = new ArrayList<>();
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+
         while (imageMatcher.find()) {
             String imageUrl = this.getImageUrl(imageMatcher);
             FileNameProperty fileNameProperty = FileUtility.getInstance().getFileNameProperty(imageUrl);
@@ -74,7 +77,7 @@ public abstract class AbstractImageExtractor implements ImageExtractor, Containe
                 //非站内资源引用img1.sparrowzoo.net
                 //非资源文件r.sparrowzoo.net
                 if (!RegexUtility.matches(imageUrl, Regex.URL_INNER_IMAGE.pattern()) &&
-                    !imageUrl.startsWith(ConfigUtility.getValue(Config.RESOURCE))) {
+                    !imageUrl.startsWith(configReader.getResource())) {
                     fileId = downloader.downloadImage(imageUrl, authorId);
                     if (extension == null) {
                         extension = Extension.PNG;

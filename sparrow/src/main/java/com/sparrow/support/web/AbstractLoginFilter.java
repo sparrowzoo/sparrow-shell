@@ -17,6 +17,7 @@
 
 package com.sparrow.support.web;
 
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.StringUtility;
 
 import javax.servlet.Filter;
@@ -30,6 +31,8 @@ public abstract class AbstractLoginFilter implements Filter {
     protected List<String> excludePatternList = new ArrayList<String>();
     protected Boolean supportTemplate;
     protected List<String> ajaxPatternList = new ArrayList<String>();
+
+    protected String tokenKey = Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN;
 
     @Override
     public void init(FilterConfig config) throws ServletException {

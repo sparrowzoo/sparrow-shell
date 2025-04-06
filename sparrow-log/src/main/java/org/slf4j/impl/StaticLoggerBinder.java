@@ -17,19 +17,6 @@
 
 package org.slf4j.impl;
 
-import com.sparrow.concurrent.SparrowThreadFactory;
-import com.sparrow.constant.CacheKey;
-import com.sparrow.constant.Config;
-import com.sparrow.core.cache.Cache;
-import com.sparrow.core.cache.StrongDurationCache;
-import com.sparrow.enums.LogLevel;
-
-import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import com.sparrow.utility.ConfigUtility;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.spi.LoggerFactoryBinder;
 
@@ -52,32 +39,10 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
     private static final String LOGGER_FACTORY_CLASS = SparrowLoggerFactory.class
         .getName();
 
-    private static Cache<String, Object> logCache;
-
     private final ILoggerFactory loggerFactory;
 
+
     private StaticLoggerBinder() {
-        logCache = new StrongDurationCache<>(CacheKey.LOG);
-        Integer level = LogLevel.INFO.ordinal();
-        logCache.put(Config.LOG_LEVEL, level);
-        logCache.put(Config.LOG_PRINT_CONSOLE, true);
-
-        ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(1,
-            new SparrowThreadFactory.Builder().namingPattern("log-config-%d").daemon(true).build());
-
-        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override public void run() {
-                Map<String, String> config = ConfigUtility.loadFromClassesPath("/log.properties");
-                if (config != null) {
-                    if (config.get(Config.LOG_LEVEL) != null) {
-                        logCache.put(Config.LOG_LEVEL, LogLevel.valueOf(config.get(Config.LOG_LEVEL).toUpperCase()).ordinal());
-                    }
-                    if (config.get(Config.LOG_PRINT_CONSOLE) != null) {
-                        logCache.put(Config.LOG_PRINT_CONSOLE, Boolean.valueOf(config.get(Config.LOG_PRINT_CONSOLE)));
-                    }
-                }
-            }
-        }, 0, 1, TimeUnit.SECONDS);
         loggerFactory = new SparrowLoggerFactory();
     }
 

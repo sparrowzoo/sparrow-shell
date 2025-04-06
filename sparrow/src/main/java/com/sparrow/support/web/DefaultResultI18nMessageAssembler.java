@@ -17,17 +17,17 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.constant.Config;
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.ResultI18nMessageAssembler;
 import com.sparrow.utility.CollectionsUtility;
-import com.sparrow.utility.ConfigUtility;
 
 public class DefaultResultI18nMessageAssembler implements ResultI18nMessageAssembler {
     @Override
     public String assemble(BusinessException exception) {
-        String lang = ConfigUtility.getValue(Config.LANGUAGE);
-        String error = ConfigUtility.getLanguageValue(exception.getKey(), lang, exception.getMessage());
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+        String error = configReader.getI18nValue(exception.getKey(), null, exception.getMessage());
         if (!CollectionsUtility.isNullOrEmpty(exception.getParameters())) {
             error = String.format(error, exception.getParameters().toArray());
         }
@@ -40,7 +40,7 @@ public class DefaultResultI18nMessageAssembler implements ResultI18nMessageAssem
 
     @Override
     public String assemble(String originMessage, String i18nKey) {
-        String lang = ConfigUtility.getValue(Config.LANGUAGE);
-        return ConfigUtility.getLanguageValue(i18nKey, lang, originMessage);
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+        return configReader.getI18nValue(i18nKey, null, originMessage);
     }
 }

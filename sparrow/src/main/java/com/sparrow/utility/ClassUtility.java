@@ -52,37 +52,37 @@ public class ClassUtility {
         return fieldList;
     }
 
-    public static String getEntityNameByClass(Class entity) {
-        return getEntityNameByClass(entity.getName());
+    public static String getBeanNameByClass(Class<?> clazz) {
+        return getBeanNameByClass(clazz.getName());
     }
 
-    public static String getEntityNameByClass(String entityName) {
-        if (entityName.contains(".")) {
-            entityName = entityName.substring(entityName.lastIndexOf(".") + 1);
+    public static String getBeanNameByClass(String clazzName) {
+        if (clazzName.contains(".")) {
+            clazzName = clazzName.substring(clazzName.lastIndexOf(".") + 1);
         }
-        if (entityName.contains("/")) {
-            entityName = entityName.substring(entityName.lastIndexOf("/") + 1);
+        if (clazzName.contains("/")) {
+            clazzName = clazzName.substring(clazzName.lastIndexOf("/") + 1);
         }
-        entityName = StringUtility.setFirstByteLowerCase(entityName);
-        if (entityName.endsWith("DTO")) {
-            return entityName.substring(0, entityName.lastIndexOf("DTO"));
+        clazzName = StringUtility.setFirstByteLowerCase(clazzName);
+        if (clazzName.endsWith("DTO")) {
+            return clazzName.substring(0, clazzName.lastIndexOf("DTO"));
         }
-        if (entityName.endsWith("VO")) {
-            return entityName.substring(0, entityName.lastIndexOf("VO"));
-        }
-
-        if (entityName.endsWith("BO")) {
-            return entityName.substring(0, entityName.lastIndexOf("BO"));
+        if (clazzName.endsWith("VO")) {
+            return clazzName.substring(0, clazzName.lastIndexOf("VO"));
         }
 
-        if (entityName.endsWith("Param")) {
-            return entityName.substring(0, entityName.lastIndexOf("Param"));
+        if (clazzName.endsWith("BO")) {
+            return clazzName.substring(0, clazzName.lastIndexOf("BO"));
         }
 
-        if (entityName.endsWith("Query")) {
-            return entityName.substring(0, entityName.lastIndexOf("Query"));
+        if (clazzName.endsWith("Param")) {
+            return clazzName.substring(0, clazzName.lastIndexOf("Param"));
         }
-        return entityName;
+
+        if (clazzName.endsWith("Query")) {
+            return clazzName.substring(0, clazzName.lastIndexOf("Query"));
+        }
+        return clazzName;
     }
 
     /**
@@ -196,7 +196,9 @@ public class ClassUtility {
         for (File file : fileList) {
             if (file.isDirectory()) {
                 classes.addAll(findClass(file, packageName + Symbol.DOT + file.getName()));
-            } else if (file.getName().endsWith(".class")) {
+                continue;
+            }
+            if (file.getName().endsWith(".class")) {
                 String clazzName = packageName + Symbol.DOT + file.getName().substring(0, file.getName().length() - 6);
                 logger.info("class {} init .....", clazzName);
                 try {
@@ -250,14 +252,16 @@ public class ClassUtility {
             cl = Thread.currentThread().getContextClassLoader();
         } catch (Throwable ignore) {
         }
-        if (cl == null) {
-            cl = ClassUtility.class.getClassLoader();
-            if (cl == null) {
-                try {
-                    cl = ClassLoader.getSystemClassLoader();
-                } catch (Throwable ignore) {
-                }
-            }
+        if (cl != null) {
+            return cl;
+        }
+        cl = ClassUtility.class.getClassLoader();
+        if (cl != null) {
+            return cl;
+        }
+        try {
+            cl = ClassLoader.getSystemClassLoader();
+        } catch (Throwable ignore) {
         }
         return cl;
     }
@@ -363,7 +367,7 @@ public class ClassUtility {
             // 解析方法名
             String methodName = serializedLambda.getImplMethodName();
             String clazz = serializedLambda.getImplClass();
-            String modelName = getEntityNameByClass(clazz);
+            String modelName = getBeanNameByClass(clazz);
             return new PropertyWithEntityName(PropertyNamer.methodToProperty(methodName), modelName);
         } catch (Exception e) {
             throw new RuntimeException("无法解析方法名", e);

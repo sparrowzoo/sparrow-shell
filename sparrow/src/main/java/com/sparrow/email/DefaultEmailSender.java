@@ -15,33 +15,25 @@
  * limitations under the License.
  */
 
-package com.sparrow.enums;
+package com.sparrow.email;
 
+import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.utility.StringUtility;
 
-public enum Gender {
-    /**
-     * 保密
-     */
-    NULL,
-    /**
-     * 男
-     */
-    MALE,
-    /**
-     * 女
-     */
-    FEMALE;
-
-    @Override
-    public String toString() {
-        String key = super.toString();
+public class DefaultEmailSender extends EmailSender {
+    public DefaultEmailSender() {
         ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
-        String gender = configReader.getI18nValue("gender_" + key.toLowerCase());
-        if (gender == null) {
-            return this.name();
+        this.host = configReader.getValue(Config.EMAIL_HOST);
+        this.from = configReader.getValue(Config.EMAIL_FROM);
+        this.username = configReader.getValue(Config.EMAIL_USERNAME);
+
+        String emailPassword = System.getenv(Config.EMAIL_PASSWORD);
+        if (StringUtility.isNullOrEmpty(emailPassword)) {
+            emailPassword = configReader.getValue(Config.EMAIL_PASSWORD);
         }
-        return gender;
+        this.password = emailPassword;
+        this.localAddress = configReader.getValue(Config.EMAIL_LOCAL_ADDRESS);
     }
 }

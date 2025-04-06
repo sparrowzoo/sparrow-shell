@@ -18,8 +18,9 @@
 package com.sparrow.web.support;
 
 import com.sparrow.constant.Config;
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.Size;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.web.QRCodeUtility;
 
 import javax.servlet.ServletException;
@@ -67,7 +68,7 @@ public class QRCode extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException {
+            throws IOException {
 
         int currentQRWidth = this.qrWidth;
         int currentQRHeight = this.qrHeight;
@@ -96,7 +97,8 @@ public class QRCode extends HttpServlet {
         ServletOutputStream sos = resp.getOutputStream();
         String logo = req.getParameter("logo");
         if (logo != null) {
-            logo = ConfigUtility.getValue(Config.RESOURCE_PHYSICAL_PATH) + logo;
+            ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+            logo = configReader.getValue(Config.RESOURCE_PHYSICAL_PATH) + logo;
         }
         try {
             QRCodeUtility.encode(code, sos, logo, new Size(currentQRWidth, currentQRHeight), new Size(currentLogoWidth, currentLogoHeight));

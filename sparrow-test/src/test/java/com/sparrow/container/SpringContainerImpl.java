@@ -1,10 +1,8 @@
 package com.sparrow.container;
 
 import com.sparrow.cg.MethodAccessor;
-import com.sparrow.constant.SysObjectName;
 import com.sparrow.core.TypeConverter;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -55,7 +53,7 @@ public class SpringContainerImpl implements Container {
     }
 
     @Override
-    public <T> T getBean(SysObjectName sysObjectName) {
+    public <T> T getBean(Class<T> sysObjectName) {
         return null;
     }
 

@@ -65,7 +65,7 @@ public class RequestParameterArgumentResolver implements HandlerMethodArgumentRe
                 parameter = request.getParameter(parameterName4Request);
 
                 if (parameter == null) {
-                    String entityName = ClassUtility.getEntityNameByClass(methodParameter.getParameterType());
+                    String entityName = ClassUtility.getBeanNameByClass(methodParameter.getParameterType());
                     parameter = request.getParameter(entityName + "." + parameterName4Request);
                 }
 

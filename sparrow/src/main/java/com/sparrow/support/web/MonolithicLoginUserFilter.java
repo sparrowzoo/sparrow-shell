@@ -19,15 +19,14 @@ package com.sparrow.support.web;
 
 import com.alibaba.fastjson.JSON;
 import com.sparrow.constant.Config;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.core.spi.JsonFactory;
-import com.sparrow.enums.LoginType;
 import com.sparrow.protocol.*;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.Authenticator;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
@@ -48,12 +47,7 @@ import java.util.List;
 public class MonolithicLoginUserFilter extends AbstractLoginFilter {
     private static Logger logger = LoggerFactory.getLogger(MonolithicLoginUserFilter.class);
 
-    public MonolithicLoginUserFilter(Authenticator authenticator,
-                                     Boolean mockLoginUser,
-                                     String tokenKey,
-                                     Boolean supportTemplate,
-                                     List<String> excludePatternList,
-                                     List<String> ajaxPatternList) {
+    public MonolithicLoginUserFilter(Authenticator authenticator, Boolean mockLoginUser, String tokenKey, Boolean supportTemplate, List<String> excludePatternList, List<String> ajaxPatternList) {
         this.authenticator = authenticator;
         this.mockLoginUser = mockLoginUser;
         this.supportTemplate = supportTemplate;
@@ -85,6 +79,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
 
     private void loginFail(HttpServletRequest request, HttpServletResponse servletResponse, ErrorSupport e) throws IOException {
         logger.error("login fail, error:{}", e.getMessage());
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
         boolean isAjax = this.isAjax(request);
         if (isAjax) {
             servletResponse.setContentType(Constant.CONTENT_TYPE_JSON);
@@ -92,12 +87,10 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
             servletResponse.getWriter().write(JsonFactory.getProvider().toString(result));
             return;
         }
-
-        String loginKey = Config.LOGIN_TYPE_KEY.get(LoginType.LOGIN);
-        String loginUrl = ConfigUtility.getValue(loginKey);
+        String loginUrl = configReader.getLoginUrl();
 
         if (StringUtility.isNullOrEmpty(loginUrl)) {
-            logger.error("please config login url 【{}】", loginKey);
+            logger.error("please config login url 【{}】", Config.LOGIN_URL);
             return;
         }
 

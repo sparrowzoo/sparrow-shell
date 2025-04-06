@@ -16,27 +16,22 @@
  */
 package com.sparrow.mvc.interceptor;
 
-import com.sparrow.constant.Config;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.ClientInformation;
 import com.sparrow.protocol.constant.ClientInfoConstant;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.enums.Platform;
 import com.sparrow.servlet.HandlerInterceptor;
 import com.sparrow.support.web.ServletUtility;
-import com.sparrow.utility.ConfigUtility;
+import com.sparrow.support.web.WebConfigReader;
 import com.sparrow.utility.StringUtility;
-import eu.bitwalker.useragentutils.Browser;
-import eu.bitwalker.useragentutils.BrowserType;
-import eu.bitwalker.useragentutils.DeviceType;
-import eu.bitwalker.useragentutils.OperatingSystem;
-import eu.bitwalker.useragentutils.UserAgent;
+import eu.bitwalker.useragentutils.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Named
 public class SimpleMobileClientInformationInterceptor implements HandlerInterceptor {
@@ -46,7 +41,8 @@ public class SimpleMobileClientInformationInterceptor implements HandlerIntercep
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ClientInformation clientInformation = new ClientInformation();
-        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+        String rootPath = configReader.getRootPath();
         clientInformation.setWebsite(rootPath);
         clientInformation.setIp(servletUtility.getClientIp(request));
         String appId = request.getHeader(ClientInfoConstant.APP_ID);

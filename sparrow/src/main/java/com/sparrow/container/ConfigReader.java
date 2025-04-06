@@ -14,34 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.container;
 
-package com.sparrow.enums;
+public interface ConfigReader {
 
-import com.sparrow.container.ConfigReader;
-import com.sparrow.core.spi.ApplicationContext;
+    String getI18nValue(String propertiesKey);
 
-public enum Gender {
-    /**
-     * 保密
-     */
-    NULL,
-    /**
-     * 男
-     */
-    MALE,
-    /**
-     * 女
-     */
-    FEMALE;
+    String getI18nValue(String key, String language);
 
-    @Override
-    public String toString() {
-        String key = super.toString();
-        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
-        String gender = configReader.getI18nValue("gender_" + key.toLowerCase());
-        if (gender == null) {
-            return this.name();
-        }
-        return gender;
-    }
+    String getI18nValue(String key, String language, String defaultValue);
+
+    String getValue(String key);
+
+    String getValue(String key, String defaultValue);
+
+    boolean getBooleanValue(String key);
+
+    boolean getBooleanValue(String key, boolean defaultValue);
+
+    Integer getIntegerValue(String key);
+
+    void resetKey(String key, String value);
+
 }

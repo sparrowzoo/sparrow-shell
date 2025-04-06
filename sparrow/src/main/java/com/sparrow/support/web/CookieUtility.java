@@ -17,10 +17,7 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.constant.Config;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.JSUtility;
-import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,31 +25,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * set domain 的逻辑最新协议已不建议使用
+ */
 public class CookieUtility {
     private static Logger logger = LoggerFactory.getLogger(CookieUtility.class);
 
-    public static void set(HttpServletResponse response, String key,
-                           String value, int days) {
-        set(response, key, value, days, null);
-    }
-
-    public static void setRoot(HttpServletResponse response, String key,
-                               String value, int days) {
-        String domain = ConfigUtility.getValue(Config.ROOT_DOMAIN);
-        set(response, key, value, days, domain);
-    }
-
-    public static void set(HttpServletResponse response, String key,
-                           String value, int days, String domain) {
-        if (StringUtility.isNullOrEmpty(domain)) {
-            domain = ConfigUtility.getValue(Config.DOMAIN);
-        }
+    public static void set(HttpServletResponse response, String key, String value, int days) {
         Cookie cookie = new Cookie(key, JSUtility.encodeURIComponent(value));
-        if (domain != null) {
-            cookie.setDomain(domain);
-        } else {
-            logger.warn("please config [domain] key in sparrow system config ");
-        }
         cookie.setPath("/");
         if (days > 0) {
             cookie.setMaxAge(days * 24 * 60 * 60);
@@ -75,7 +55,7 @@ public class CookieUtility {
         return null;
     }
 
-    public static String getPermission(HttpServletRequest request,String tokenKey) {
-        return get(request.getCookies(),tokenKey);
+    public static String getPermission(HttpServletRequest request, String tokenKey) {
+        return get(request.getCookies(), tokenKey);
     }
 }

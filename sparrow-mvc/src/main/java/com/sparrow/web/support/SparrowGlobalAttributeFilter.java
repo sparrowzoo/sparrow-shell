@@ -18,43 +18,47 @@
 package com.sparrow.web.support;
 
 import com.sparrow.constant.Config;
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.support.AttributeContext;
 import com.sparrow.support.web.AbstractGlobalAttributeFilter;
-import com.sparrow.utility.ConfigUtility;
 
 public class SparrowGlobalAttributeFilter extends AbstractGlobalAttributeFilter {
     @Override
     public AttributeContext parseAttributeContext() {
+
         return new AttributeContext() {
+            private ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+
             @Override
             public String getRootPath() {
-                return ConfigUtility.getValue(Config.ROOT_PATH);
+                return configReader.getValue(Config.ROOT_PATH);
             }
 
             @Override
             public String getLanguage() {
-                return ConfigUtility.getValue(Config.INTERNATIONALIZATION);
+                return configReader.getValue(Config.INTERNATIONALIZATION);
             }
 
 
             @Override
             public String getResource() {
-                return ConfigUtility.getValue(Config.RESOURCE);
+                return configReader.getValue(Config.RESOURCE);
             }
 
             @Override
             public String getResourceVersion() {
-                return ConfigUtility.getValue(Config.RESOURCE_VERSION);
+                return configReader.getValue(Config.RESOURCE_VERSION);
             }
 
             @Override
             public String getUpload() {
-                return ConfigUtility.getValue(Config.UPLOAD);
+                return configReader.getValue(Config.UPLOAD);
             }
 
             @Override
             public String getInternationalization() {
-                return ConfigUtility.getValue(Config.INTERNATIONALIZATION);
+                return configReader.getValue(Config.INTERNATIONALIZATION);
             }
         };
     }

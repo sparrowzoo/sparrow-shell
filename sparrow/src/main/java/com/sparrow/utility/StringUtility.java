@@ -17,23 +17,23 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.constant.Config;
 import com.sparrow.constant.ConfigKeyLanguage;
+import com.sparrow.container.ConfigReader;
 import com.sparrow.core.TypeConverter;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.protocol.constant.Extension;
 import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.protocol.constant.magic.Symbol;
+import com.sparrow.support.web.WebConfigReader;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class StringUtility {
     public static <T> String[] getStringArray(Iterable<T> values) {
@@ -277,9 +277,9 @@ public class StringUtility {
      * 获取在线QQ字符串
      */
     public static String getOnlineQQ(String qq) {
+        ConfigReader reader = ApplicationContext.getContainer().getBean(ConfigReader.class);
         return "<a target=blank href=\"http://wpa.qq.com/msgrd?V=1&Uin={0}&Exe=QQ&Site="
-                + ConfigUtility.getLanguageValue(ConfigKeyLanguage.WEBSITE_NAME,
-                "zh_cn")
+                + reader.getI18nValue(ConfigKeyLanguage.WEBSITE_NAME)
                 + "&Menu=No\"><img border=\"0\" src=\"http://wpa.qq.com/pa?p=1:"
                 + qq + ":1\" alt=\"给我发消息\"></a>";
     }
@@ -553,7 +553,9 @@ public class StringUtility {
         if (source.equalsIgnoreCase(target)) {
             return true;
         }
-        String rootPath = ConfigUtility.getValue(Config.ROOT_PATH);
+
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+        String rootPath = configReader.getRootPath();
         if (source.startsWith(rootPath)) {
             source = source.substring(rootPath.length());
         }
@@ -567,7 +569,7 @@ public class StringUtility {
             target = subString(target, Symbol.QUESTION_MARK);
         }
 
-        String extension = ConfigUtility.getValue(Config.DEFAULT_PAGE_EXTENSION, Extension.JSP);
+        String extension = configReader.getTemplateEngineSuffix();
         if (source.endsWith(extension)) {
             source = source.replace(extension, Symbol.EMPTY);
         }

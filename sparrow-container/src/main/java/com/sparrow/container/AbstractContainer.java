@@ -19,27 +19,20 @@ package com.sparrow.container;
 import com.sparrow.cg.Generator4MethodAccessor;
 import com.sparrow.cg.MethodAccessor;
 import com.sparrow.cg.PropertyNamer;
-import com.sparrow.constant.Config;
-import com.sparrow.constant.SysObjectName;
 import com.sparrow.core.Pair;
 import com.sparrow.core.TypeConverter;
+import com.sparrow.core.spi.MethodAccessorProvider;
 import com.sparrow.exception.DuplicateActionMethodException;
-import com.sparrow.utility.ConfigUtility;
-import com.sparrow.utility.StringUtility;
+import com.sparrow.utility.ClassUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractContainer implements Container {
     private static Logger logger = LoggerFactory.getLogger(AbstractContainer.class);
@@ -242,13 +235,13 @@ public abstract class AbstractContainer implements Container {
     }
 
     @Override
-    public <T> T getBean(SysObjectName objectName) {
-        String beanName = objectName.name().toLowerCase();
-        String defaultBeanName = StringUtility.toHump(beanName, "_");
-        beanName = ConfigUtility.getValue(beanName, defaultBeanName);
+    public <T> T getBean(Class<T> clazz) {
+        String beanName = ClassUtility.getBeanNameByClass(clazz);
+        ConfigReader configReader = this.getBean(ConfigReader.class);
+        beanName = configReader.getValue(beanName, beanName);
         T obj = this.getBean(beanName);
         if (obj == null) {
-            logger.warn(beanName + " not exist,please config [" + defaultBeanName + "] in " + builder.getContextConfigLocation());
+            logger.warn(beanName + " not exist,please config [" + beanName + "] in " + builder.getContextConfigLocation());
         }
         return obj;
     }
@@ -272,26 +265,7 @@ public abstract class AbstractContainer implements Container {
     }
 
     private Generator4MethodAccessor getGenerator4MethodAccessor() {
-        if (this.generator4MethodAccessor != null) {
-            return this.generator4MethodAccessor;
-        }
-        String methodAccessClass = ConfigUtility.getValue(Config.METHOD_ACCESS_CLASS);
-        if (!StringUtility.isNullOrEmpty(methodAccessClass)) {
-            try {
-                this.generator4MethodAccessor = (Generator4MethodAccessor) Class.forName(methodAccessClass).newInstance();
-            } catch (Exception e) {
-                logger.error("can't find class {}", methodAccessClass, e);
-            }
-        }
-        if (this.generator4MethodAccessor != null) {
-            return this.generator4MethodAccessor;
-        }
-        try {
-            generator4MethodAccessor = (Generator4MethodAccessor) Class.forName("com.sparrow.cg.impl.Generator4SetFieldMethodAccessor").newInstance();
-        } catch (Exception e) {
-            logger.error("can't find class com.sparrow.cg.impl.Generator4SetFieldMethodAccessor", e);
-        }
-        return generator4MethodAccessor;
+        return MethodAccessorProvider.getMethodAccessorProvider();
     }
 
     protected void assembleController(String beanName, Object o) {

@@ -17,15 +17,12 @@
 
 package com.sparrow.support;
 
-import com.sparrow.constant.Config;
-import com.sparrow.constant.ConfigKeyLanguage;
 import com.sparrow.exception.Asserts;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.LoginUserStatus;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,18 +102,18 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
         return loginUser;
     }
 
-    private LoginUser getVisitor(String deviceId) {
-        String visitorName = ConfigUtility.getLanguageValue(ConfigKeyLanguage.USER_VISITOR_NAME,
-                ConfigUtility.getValue(Config.LANGUAGE));
-        String visitorNickName = ConfigUtility.getLanguageValue(ConfigKeyLanguage.USER_VISITOR_NICKNAME,
-                ConfigUtility.getValue(Config.LANGUAGE));
-        String avatar = ConfigUtility.getValue(Config.DEFAULT_AVATAR);
-        return LoginUser.create(LoginUser.VISITOR_ID,
-                LoginUser.CATEGORY_VISITOR
-                , visitorName
-                , visitorNickName
-                , avatar, deviceId, 0);
-    }
+//    private LoginUser getVisitor(String deviceId) {
+//        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+//        String visitorName = configReader.getI18nValue(ConfigKeyLanguage.USER_VISITOR_NAME);
+//        String visitorNickName = configReader.getI18nValue(ConfigKeyLanguage.USER_VISITOR_NICKNAME);
+//        WebConfigReader webConfigReader=ApplicationContext.getContainer().getBean(WebConfigReader.class);
+//        String avatar = webConfigReader.getDefaultAvatar();
+//        return LoginUser.create(LoginUser.VISITOR_ID,
+//                LoginUser.CATEGORY_VISITOR
+//                , visitorName
+//                , visitorNickName
+//                , avatar, deviceId, 0);
+//    }
 
     public String sign(LoginUser loginUser, LoginUserStatus loginUserStatus) {
         String token = this.sign(loginUser, this.getEncryptKey());

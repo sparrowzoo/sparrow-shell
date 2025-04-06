@@ -18,7 +18,6 @@
 package com.sparrow.mvc.interceptor;
 
 import com.sparrow.constant.Config;
-import com.sparrow.constant.SysObjectName;
 import com.sparrow.constant.User;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
@@ -37,26 +36,27 @@ import com.sparrow.support.Authorizer;
 import com.sparrow.support.LoginDialog;
 import com.sparrow.support.web.CookieUtility;
 import com.sparrow.support.web.HttpContext;
-import com.sparrow.utility.ConfigUtility;
+import com.sparrow.support.web.ServletUtility;
+import com.sparrow.support.web.WebConfigReader;
 import com.sparrow.utility.StringUtility;
-import com.sparrow.utility.web.SparrowServletUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Named
 public class AuthInterceptor implements HandlerInterceptor {
     private static Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
     @Inject
-    private SparrowServletUtility sparrowServletUtility;
+    private ServletUtility servletUtility;
 
     @Override
     public boolean preHandle(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         Container container = ApplicationContext.getContainer();
-        if (sparrowServletUtility.getServletUtility().include(httpRequest)) {
+        if (servletUtility.include(httpRequest)) {
             return true;
         }
         ServletInvokableHandlerMethod handlerExecutionChain = null;
@@ -77,9 +77,9 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         String actionName = handlerExecutionChain.getActionName();
-        Authenticator authenticator = container.getBean(SysObjectName.AUTHENTICATOR_SERVICE);
-        String permission = CookieUtility.getPermission(httpRequest,Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
-        String deviceId = this.sparrowServletUtility.getServletUtility().getDeviceId(httpRequest);
+        Authenticator authenticator = container.getBean(Authenticator.class);
+        String permission = CookieUtility.getPermission(httpRequest, Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
+        String deviceId = servletUtility.getDeviceId(httpRequest);
         LoginUser user = authenticator.authenticate(permission, deviceId);
         httpRequest.setAttribute(User.ID, user.getUserId());
         httpRequest.setAttribute(User.LOGIN_TOKEN, user);
@@ -92,22 +92,17 @@ public class AuthInterceptor implements HandlerInterceptor {
                 return false;
             }
 
-            String loginKey = Config.LOGIN_TYPE_KEY
-                .get(handlerExecutionChain.getLoginType());
-            String loginUrl = ConfigUtility.getValue(loginKey);
+            WebConfigReader configReader = container.getBean(WebConfigReader.class);
+            String loginUrl = configReader.getLoginUrl();
             if (StringUtility.isNullOrEmpty(loginUrl)) {
-                logger.error("please config login url 【{}】", loginKey);
+                logger.error("please config login url 【{}】", Config.LOGIN_URL);
+                return false;
             }
-            boolean isInFrame = LoginType.LOGIN_IFRAME
-                .equals(handlerExecutionChain.getLoginType());
+            boolean isInFrame = LoginType.LOGIN_IFRAME.equals(handlerExecutionChain.getLoginType());
             if (!StringUtility.isNullOrEmpty(loginUrl)) {
-                String defaultSystemPage = ConfigUtility.getValue(Config.DEFAULT_ADMIN_INDEX);
-                if (!defaultSystemPage.endsWith("/")) {
-                    defaultSystemPage += "/";
-                }
                 String redirectUrl = httpRequest.getRequestURL().toString();
                 if (redirectUrl.endsWith(Extension.DO) || redirectUrl.endsWith(Extension.JSON)) {
-                    redirectUrl = sparrowServletUtility.getServletUtility().referer(httpRequest);
+                    redirectUrl = servletUtility.referer(httpRequest);
                 }
 
                 if (!StringUtility.isNullOrEmpty(redirectUrl)) {
@@ -115,6 +110,7 @@ public class AuthInterceptor implements HandlerInterceptor {
                         redirectUrl += Symbol.QUESTION_MARK + httpRequest.getQueryString();
                     }
                     if (isInFrame) {
+                        String defaultSystemPage = configReader.getAdminPage();
                         if (!defaultSystemPage.equals(redirectUrl)) {
                             redirectUrl = defaultSystemPage + Symbol.QUESTION_MARK + redirectUrl;
                         } else {
@@ -137,26 +133,27 @@ public class AuthInterceptor implements HandlerInterceptor {
             }
             logger.info("login false{}", actionName);
             //如果权限验证失败则移出属性
-            this.sparrowServletUtility.moveAttribute(httpRequest);
+            this.servletUtility.moveAttribute(httpRequest);
             return false;
         }
 
-        Authorizer authorizer = container.getBean(SysObjectName.AUTHORIZER_SERVICE);
-        if (!authorizer.isPermitted(
-            user, actionName)) {
+        Authorizer authorizer = container.getBean(Authorizer.class);
+        if (!authorizer.isPermitted(user, actionName)) {
             httpResponse.getWriter().write(Constant.ACCESS_DENIED);
-            this.sparrowServletUtility.moveAttribute(httpRequest);
+            this.servletUtility.moveAttribute(httpRequest);
             return false;
         }
         HttpContext.getContext().put(Constant.REQUEST_USER_ID, user.getUserId());
         return true;
     }
 
-    @Override public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     }
 
-    @Override public void afterCompletion(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     }
 }

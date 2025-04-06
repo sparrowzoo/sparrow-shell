@@ -19,15 +19,11 @@ package com.sparrow.support;
 
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.utility.ConfigUtility;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.URL;
 
 public class EnvironmentSupport {
     private static Logger logger = LoggerFactory.getLogger(EnvironmentSupport.class);
@@ -48,13 +44,11 @@ public class EnvironmentSupport {
      * @return
      */
     public String getClassesPhysicPath() {
-        URL url = Thread.currentThread().getContextClassLoader()
-            .getResource("");
+        URL url = Thread.currentThread().getContextClassLoader().getResource("");
         if (url != null) {
             return url.getPath().replace("%20", " ");
         }
-        String path = this.getClass().getProtectionDomain().getCodeSource()
-            .getLocation().getPath();
+        String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
         return path.substring(0, path.lastIndexOf(Symbol.SLASH));
     }
 
@@ -102,8 +96,9 @@ public class EnvironmentSupport {
     }
 
     public String getWorkspace() {
-        if (ConfigUtility.getValue(Constant.WORKSPACE) != null) {
-            return ConfigUtility.getValue(Constant.WORKSPACE);
+        String workspace = System.getenv(Constant.WORKSPACE);
+        if (workspace != null) {
+            return workspace;
         }
         String classPath = this.getClassesPhysicPath();
         if (classPath.contains("/bin")) {
@@ -138,17 +133,17 @@ public class EnvironmentSupport {
      * <p/>
      * http://user.qzone.qq.com/492006183/blog/1453881337
      *
-     * @param relativeFileName
+     * @param fileName
      * @return
      */
-    public InputStream getFileInputStream(String relativeFileName) throws FileNotFoundException {
+    public InputStream getFileInputStream(String fileName) throws FileNotFoundException {
         InputStream fileInputStream = null;
-        File file = new File(relativeFileName);
+        File file = new File(fileName);
         if (file.exists()) {
             return new FileInputStream(file);
         }
 
-        URL url = EnvironmentSupport.class.getResource(relativeFileName);
+        URL url = EnvironmentSupport.class.getResource(fileName);
         if (url != null) {
             //xxx.getClass().getResourceAsStream("xx.properties") 有缓存
             try {

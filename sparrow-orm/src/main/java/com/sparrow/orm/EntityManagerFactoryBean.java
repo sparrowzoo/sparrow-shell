@@ -67,11 +67,11 @@ public class EntityManagerFactoryBean implements ClassFactoryBean<EntityManager>
 
     @Override
     public void pubObject(Class clazz, EntityManager o) {
-        cache.put(ClassUtility.getEntityNameByClass(clazz), o);
+        cache.put(ClassUtility.getBeanNameByClass(clazz), o);
     }
 
     @Override
     public EntityManager getObject(Class clazz) {
-        return cache.get(ClassUtility.getEntityNameByClass(clazz));
+        return cache.get(ClassUtility.getBeanNameByClass(clazz));
     }
 }

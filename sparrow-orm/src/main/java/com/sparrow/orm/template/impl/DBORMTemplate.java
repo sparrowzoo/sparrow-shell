@@ -311,7 +311,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     @Override
     public List<T> getList(Collection<I> ids) {
         SearchCriteria searchCriteria = new SearchCriteria();
-        String entityClassName = ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
+        String entityClassName = ClassUtility.getBeanNameByClass(this.ormMetadataAccessor.getModelClazz());
         String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getPropertyName();
         searchCriteria.setWhere(Criteria.field(entityClassName + "." + primaryProperty).in(ids));
         return this.getList(searchCriteria);
@@ -320,7 +320,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     @Override
     public Map<I, T> getEntityMap(Collection<I> ids) {
         SearchCriteria searchCriteria = new SearchCriteria();
-        String entityClassName = ClassUtility.getEntityNameByClass(this.ormMetadataAccessor.getModelClazz());
+        String entityClassName = ClassUtility.getBeanNameByClass(this.ormMetadataAccessor.getModelClazz());
         String primaryProperty = this.ormMetadataAccessor.getEntityManager().getPrimary().getPropertyName();
         searchCriteria.setWhere(Criteria.field(entityClassName + "." + primaryProperty).in(ids));
         return this.getEntityMap(searchCriteria);

@@ -16,32 +16,44 @@
  */
 package com.sparrow.log.impl;
 
-import com.sparrow.constant.CacheKey;
 import com.sparrow.constant.Config;
-import com.sparrow.core.cache.CacheRegistry;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.DateTime;
-import com.sparrow.core.cache.Cache;
 import com.sparrow.enums.LogLevel;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.DateTimeUtility;
+import com.sparrow.utility.PropertyUtility;
 import com.sparrow.utility.StringUtility;
-import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 public class SparrowLoggerImpl implements Logger {
     private String className;
 
-    public SparrowLoggerImpl() {
-    }
+    private int minLevel;
 
-    public void setClazz(String clazz) {
-        this.className = clazz;
+    private boolean logPrintConsole;
+
+    public SparrowLoggerImpl(String className) {
+        this.className = className;
+        this.minLevel = LogLevel.INFO.ordinal();
+        this.logPrintConsole = true;
+
+        Map<String, String> configMap = PropertyUtility.loadFromClassesPath("/sparrow-log.properties");
+        if (configMap.containsKey(Config.LOG_LEVEL)) {
+            this.minLevel = Integer.parseInt(configMap.get(Config.LOG_LEVEL));
+        }
+
+        if (configMap.containsKey(Config.LOG_PRINT_CONSOLE)) {
+            this.logPrintConsole = Boolean.parseBoolean(configMap.get(Config.LOG_PRINT_CONSOLE));
+        }
     }
 
     @Override
@@ -87,7 +99,6 @@ public class SparrowLoggerImpl implements Logger {
     @Override
     public void trace(Marker marker, String msg) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
@@ -289,7 +300,6 @@ public class SparrowLoggerImpl implements Logger {
     @Override
     public void info(Marker marker, String msg, Throwable t) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
@@ -334,13 +344,11 @@ public class SparrowLoggerImpl implements Logger {
     @Override
     public void error(Marker marker, String msg) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
     public void error(Marker marker, String format, Object arg) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
@@ -367,9 +375,6 @@ public class SparrowLoggerImpl implements Logger {
     private void writeLog(String str, LogLevel logLevel) {
         FileOutputStream fileOutputStream = null;
         try {
-            Cache<String, Object> logCache = CacheRegistry.getInstance().getObject(CacheKey.LOG);
-            int minLevel = Integer.parseInt(logCache.get(Config.LOG_LEVEL).toString());
-            String logPrintConsole = logCache.get(Config.LOG_PRINT_CONSOLE).toString();
             if (logLevel.ordinal() < minLevel) {
                 return;
             }
@@ -378,16 +383,9 @@ public class SparrowLoggerImpl implements Logger {
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-            fileOutputStream = new FileOutputStream(path
-                + String.format("/log%1$s.log",
-                DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYYMMDD)),
-                true);
+            fileOutputStream = new FileOutputStream(path + String.format("/log%1$s.log", DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYYMMDD)), true);
 
-            String log = logLevel.toString() + "|"
-                + DateTimeUtility.getFormatCurrentTime() + "|"
-                + this.className + Constant.ENTER_TEXT +
-                "--------------------------------------------------------------" + Constant.ENTER_TEXT +
-                str + Constant.ENTER_TEXT;
+            String log = logLevel.toString() + "|" + DateTimeUtility.getFormatCurrentTime() + "|" + this.className + Constant.ENTER_TEXT + "--------------------------------------------------------------" + Constant.ENTER_TEXT + str + Constant.ENTER_TEXT;
 
             //https://blog.csdn.net/shijinupc/article/details/7875826
             //阻塞文件锁
@@ -407,7 +405,7 @@ public class SparrowLoggerImpl implements Logger {
                     }
                 }
                 fileOutputStream.write(log.getBytes(StandardCharsets.UTF_8));
-                if (Boolean.TRUE.toString().equalsIgnoreCase(logPrintConsole)) {
+                if (Boolean.TRUE.equals(logPrintConsole)) {
                     System.out.println(log);
                 }
             } finally {

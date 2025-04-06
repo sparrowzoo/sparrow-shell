@@ -24,8 +24,6 @@ import org.slf4j.Logger;
 public class SparrowLoggerFactory implements ILoggerFactory {
     @Override
     public Logger getLogger(String name) {
-        SparrowLoggerImpl logger = new SparrowLoggerImpl();
-        logger.setClazz(name);
-        return logger;
+        return new SparrowLoggerImpl(name);
     }
 }

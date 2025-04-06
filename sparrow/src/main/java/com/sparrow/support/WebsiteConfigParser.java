@@ -17,9 +17,10 @@
 
 package com.sparrow.support;
 
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.WebsiteConfig;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 
 public class WebsiteConfigParser {
@@ -34,17 +35,19 @@ public class WebsiteConfigParser {
         public static final String LOGO = "LOGO";
         public static final String CONTACT = "CONTACT";
     }
+
     public static WebsiteConfig parse() {
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
         WebsiteConfig websiteConfig = new WebsiteConfig();
         String configPrefix = "web_config.";
-        websiteConfig.setTitle(ConfigUtility.getLanguageValue(configPrefix + Key.TITLE.toLowerCase()));
-        websiteConfig.setDescription(ConfigUtility.getLanguageValue(configPrefix + Key.DESCRIPTION.toLowerCase()));
-        websiteConfig.setKeywords(ConfigUtility.getLanguageValue(configPrefix + Key.KEYWORDS.toLowerCase()));
-        websiteConfig.setContact(ConfigUtility.getLanguageValue(configPrefix + Key.CONTACT.toLowerCase()));
-        String banner = ConfigUtility.getLanguageValue(configPrefix + Key.BANNER.toLowerCase());
-        websiteConfig.setIcp(ConfigUtility.getLanguageValue(configPrefix + Key.ICP.toLowerCase()));
-        String bannerFlash = ConfigUtility.getLanguageValue(configPrefix + StringUtility.humpToLower(Key.BANNER_FLASH));
-        String logo = ConfigUtility.getLanguageValue(configPrefix + Key.LOGO.toLowerCase());
+        websiteConfig.setTitle(configReader.getI18nValue(configPrefix + Key.TITLE.toLowerCase()));
+        websiteConfig.setDescription(configReader.getI18nValue(configPrefix + Key.DESCRIPTION.toLowerCase()));
+        websiteConfig.setKeywords(configReader.getI18nValue(configPrefix + Key.KEYWORDS.toLowerCase()));
+        websiteConfig.setContact(configReader.getI18nValue(configPrefix + Key.CONTACT.toLowerCase()));
+        String banner = configReader.getI18nValue(configPrefix + Key.BANNER.toLowerCase());
+        websiteConfig.setIcp(configReader.getI18nValue(configPrefix + Key.ICP.toLowerCase()));
+        String bannerFlash = configReader.getI18nValue(configPrefix + StringUtility.humpToLower(Key.BANNER_FLASH));
+        String logo = configReader.getI18nValue(configPrefix + Key.LOGO.toLowerCase());
         websiteConfig.setLogo(StringUtility.replace(logo, Constant.REPLACE_MAP));
         websiteConfig.setBanner(StringUtility.replace(banner, Constant.REPLACE_MAP));
         websiteConfig.setBannerFlash(StringUtility.replace(bannerFlash, Constant.REPLACE_MAP));

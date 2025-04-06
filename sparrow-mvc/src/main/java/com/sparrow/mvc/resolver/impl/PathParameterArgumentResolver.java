@@ -17,10 +17,7 @@
 
 package com.sparrow.mvc.resolver.impl;
 
-import com.sparrow.container.Container;
-import com.sparrow.container.ContainerAware;
 import com.sparrow.core.TypeConverter;
-import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
 import com.sparrow.protocol.constant.magic.Symbol;
@@ -37,11 +34,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PathParameterArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
+public class PathParameterArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static Logger logger = LoggerFactory.getLogger(PathParameterArgumentResolver.class);
-
-    private Container container = ApplicationContext.getContainer();
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -82,10 +77,5 @@ public class PathParameterArgumentResolver implements HandlerMethodArgumentResol
             return parameter;
         }
         return new TypeConverter(methodParameter.getParameterName(), methodParameter.getParameterType()).convert(parameter);
-    }
-
-    @Override
-    public void aware(Container container, String beanName) {
-        this.container = container;
     }
 }

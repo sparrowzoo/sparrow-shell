@@ -17,13 +17,10 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.constant.Config;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.json.Json;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.ThreadContext;
-import com.sparrow.protocol.constant.Constant;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
@@ -41,9 +38,10 @@ import java.util.List;
  * 分布式场景下，从请求头中获取登录用户信息
  */
 public class LoginUserFilter extends AbstractLoginFilter {
-    public LoginUserFilter(Boolean mockLoginUser, List<String> excludePatternList) {
+    public LoginUserFilter(Boolean mockLoginUser, List<String> excludePatternList,String tokenKey) {
         this.mockLoginUser = mockLoginUser;
         this.excludePatternList = excludePatternList;
+        this.tokenKey = tokenKey;
     }
 
     private static Logger logger = LoggerFactory.getLogger(LoginUserFilter.class);
@@ -60,7 +58,6 @@ public class LoginUserFilter extends AbstractLoginFilter {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
-            String tokenKey = ConfigUtility.getValue(Config.REQUEST_HEADER_KEY_LOGIN_TOKEN, Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
             String loginTokenOfHeader = req.getHeader(tokenKey);
             LoginUser loginUser = null;
             if (!StringUtility.isNullOrEmpty(loginTokenOfHeader)) {

@@ -18,6 +18,8 @@ package com.sparrow.orm;
 
 import com.sparrow.cg.PropertyNamer;
 import com.sparrow.constant.ConfigKeyDB;
+import com.sparrow.container.ConfigReader;
+import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.OrmEntityMetadata;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
@@ -28,7 +30,6 @@ import com.sparrow.protocol.dao.enums.DBDialect;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import com.sparrow.utility.ClassUtility;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -224,7 +225,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     public void initTable() {
         // 初始化表名
         if (clazz.isAnnotationPresent(Table.class)) {
-            Table table = (Table) clazz.getAnnotation(Table.class);
+            Table table = clazz.getAnnotation(Table.class);
             this.schema = table.schema();
             this.tableName = table.name();
         } else {
@@ -247,17 +248,19 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             return;
         }
         this.dialectTableName = String.format("%s%s%s%s", dialectAdapter.getOpenQuote(), tableName, Constant.TABLE_SUFFIX, dialectAdapter.getCloseQuote());
+        this.databaseSplitStrategy = split.strategy();
         // 分表的桶数
         int bucketCount;
         if (split.table_bucket_count() > 1) {
             bucketCount = split.table_bucket_count();
-            String bucketCountConfigKey = this.simpleClassName.toLowerCase() + "." + OrmEntityMetadata.TABLE_BUCKET_COUNT.toString().toLowerCase();
-            Object configBucketCount = ConfigUtility.getValue(bucketCountConfigKey);
-            if (configBucketCount != null) {
-                bucketCount = Integer.parseInt(configBucketCount.toString());
-            }
             this.tableBucketCount = bucketCount;
-            this.databaseSplitStrategy = split.strategy();
+            return;
+        }
+        String bucketCountConfigKey = this.simpleClassName.toLowerCase() + "." + OrmEntityMetadata.TABLE_BUCKET_COUNT.toString().toLowerCase();
+        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+        Object configBucketCount = configReader.getValue(bucketCountConfigKey);
+        if (configBucketCount != null) {
+            this.tableBucketCount = Integer.parseInt(configBucketCount.toString());
         }
     }
 

@@ -15,17 +15,22 @@
  * limitations under the License.
  */
 
-package com.sparrow.constant;
+package com.sparrow.support;
 
-public enum SysObjectName {
-    AUTHENTICATOR_SERVICE,
-    AUTHORIZER_SERVICE,
-    INITIALIZER,
-    MOBILE_SUPPORT,
-    CONNECTION_CONTEXT_HOLDER,
-    COOKIE_UTILITY,
-    DATA_SOURCE_FACTORY,
-    CONNECTION_RELEASER,
+import java.util.List;
 
-    DATA_SOURCE_DISPATCHER
+public interface AuthenticatorConfigReader {
+    String getTokenKey();
+
+    String getEncryptKey();
+
+    Boolean getValidateDeviceId();
+
+    Boolean getValidateStatus();
+
+    List<String> getExcludePatterns();
+
+    Boolean getMockLoginUser();
+
+    Integer getTokenAvailableDays();
 }
