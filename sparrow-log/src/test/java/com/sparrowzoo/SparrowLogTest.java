@@ -14,22 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrowzoo;
 
-package com.sparrow.rocketmq.protocol.handler;
-
-import com.sparrow.container.Container;
-import com.sparrow.rocketmq.protocol.event.HelloEvent;
-import com.sparrow.rocketmq.spring.AbstractSpringMQHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Created by harry on 2017/6/14.
+ * @author by harry
  */
-public class HelloWorldHandler extends AbstractSpringMQHandler<HelloEvent>{
-    public HelloWorldHandler() {
-        System.out.println("init a hello world handler");
-    }
+public class SparrowLogTest {
+    private static Logger logger = LoggerFactory.getLogger(SparrowLogTest.class);
 
-    public void handle(HelloEvent event) throws Throwable {
-        System.out.println(Thread.currentThread().getName()+"---"+event.getMessage());
+    public static void main(String[] args) {
+        while (true) {
+            logger.error("{}", "{sfsfsf},{}{}", "sfsf");
+        }
     }
 }

@@ -17,13 +17,14 @@
 
 package com.sparrow;
 
-import com.google.common.collect.Maps;
+import com.sparrow.email.DefaultEmailSender;
+import com.sparrow.email.EmailSender;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.utility.EMailUtility;
 
 public class EmailTest {
     public static void main(String[] args) throws BusinessException {
-        EMailUtility eMailUtility = new EMailUtility();
-        eMailUtility.sendMail("49200163@qq.com", "你好朋友 ", "有空吗？出来 喝点呀", "zh_cn");
+
+        EmailSender emailSender = new DefaultEmailSender();
+        emailSender.send("测试","49200163@qq.com", "你好朋友 ", "有空吗？出来 喝点呀");
     }
 }

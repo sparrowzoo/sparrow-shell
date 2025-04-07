@@ -14,8 +14,10 @@
     <artifactId>sparrow-log</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.sparrowzoo</groupId>
-            <artifactId>sparrow</artifactId>
+            <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+            <groupId>org.slf4j</groupId>
+            <version>1.7.12</version>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
     </dependencies>
     <build>

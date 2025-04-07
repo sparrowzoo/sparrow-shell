@@ -237,8 +237,10 @@ public abstract class AbstractContainer implements Container {
     @Override
     public <T> T getBean(Class<T> clazz) {
         String beanName = ClassUtility.getBeanNameByClass(clazz);
-        ConfigReader configReader = this.getBean(ConfigReader.class);
-        beanName = configReader.getValue(beanName, beanName);
+        if (!clazz.equals(ConfigReader.class)) {
+            ConfigReader configReader = this.getBean(ConfigReader.class);
+            beanName = configReader.getValue(beanName, beanName);
+        }
         T obj = this.getBean(beanName);
         if (obj == null) {
             logger.warn(beanName + " not exist,please config [" + beanName + "] in " + builder.getContextConfigLocation());

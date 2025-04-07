@@ -1,8 +1,5 @@
 package com.sparrow.im;
 
-import com.sparrow.constant.SysObjectName;
-import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.datasource.ConnectionContextHolder;
 import com.sparrow.datasource.ConnectionReleaser;
 import com.sparrow.spring.starter.test.TestWithoutBootstrap;
 import org.junit.Test;
