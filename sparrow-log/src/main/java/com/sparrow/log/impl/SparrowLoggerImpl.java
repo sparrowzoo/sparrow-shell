@@ -16,43 +16,46 @@
  */
 package com.sparrow.log.impl;
 
-import com.sparrow.constant.Config;
-import com.sparrow.constant.DateTime;
+import com.sparrow.log.Config;
+import com.sparrow.log.LogLevel;
 import com.sparrow.log.LogUtils;
-import com.sparrow.protocol.constant.Constant;
-import com.sparrow.utility.DateTimeUtility;
-import com.sparrow.utility.PropertyUtility;
-import jdk.jfr.internal.LogLevel;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
+import java.util.Properties;
+
+import static com.sparrow.log.LogUtils.FORMAT_YYYYMMDD;
+import static com.sparrow.log.LogUtils.FORMAT_YYYY_MM_DD_HH_MM_SS_MS;
 
 public class SparrowLoggerImpl implements Logger {
-    private String className;
-
+    private final String className;
     private int minLevel;
-
     private boolean logPrintConsole;
 
     public SparrowLoggerImpl(String className) {
         this.className = className;
         this.minLevel = LogLevel.INFO.ordinal();
         this.logPrintConsole = true;
-
-        Map<String, String> configMap = PropertyUtility.loadFromClassesPath("/sparrow-log.properties");
-        if (configMap.containsKey(Config.LOG_LEVEL)) {
-            this.minLevel = Integer.parseInt(configMap.get(Config.LOG_LEVEL));
+        Properties properties = new Properties();
+        InputStream inputStream = SparrowLoggerImpl.class.getResourceAsStream("/sparrow-log.properties");
+        try {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        if (configMap.containsKey(Config.LOG_PRINT_CONSOLE)) {
-            this.logPrintConsole = Boolean.parseBoolean(configMap.get(Config.LOG_PRINT_CONSOLE));
+        if (properties.containsKey(Config.LOG_LEVEL)) {
+            this.minLevel = Integer.parseInt(properties.getProperty(Config.LOG_LEVEL));
+        }
+        if (properties.containsKey(Config.LOG_PRINT_CONSOLE)) {
+            this.logPrintConsole = Boolean.parseBoolean(properties.getProperty(Config.LOG_PRINT_CONSOLE));
         }
     }
 
@@ -359,7 +362,6 @@ public class SparrowLoggerImpl implements Logger {
     @Override
     public void error(Marker marker, String format, Object... arguments) {
         throw new UnsupportedOperationException("sparrow logger unsupport operation");
-
     }
 
     @Override
@@ -383,10 +385,9 @@ public class SparrowLoggerImpl implements Logger {
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-            fileOutputStream = new FileOutputStream(path + String.format("/log%1$s.log", DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYYMMDD)), true);
-
-            String log = logLevel + "|" + DateTimeUtility.getFormatCurrentTime() + "|" + this.className + LogUtils.ENTER_TEXT + "--------------------------------------------------------------" + Constant.ENTER_TEXT + str + Constant.ENTER_TEXT;
-
+            fileOutputStream = new FileOutputStream(path + String.format("/log%1$s.log", LogUtils.getFormatCurrentTime(FORMAT_YYYYMMDD)), true);
+            String log = logLevel + "|" + LogUtils.getFormatCurrentTime(FORMAT_YYYY_MM_DD_HH_MM_SS_MS) + "|" + this.className + LogUtils.ENTER_TEXT + "--------------------------------------------------------------" +
+                    LogUtils.ENTER_TEXT + str + LogUtils.ENTER_TEXT;
             //https://blog.csdn.net/shijinupc/article/details/7875826
             //阻塞文件锁
             //todo OverlappingFileLockException exception ?

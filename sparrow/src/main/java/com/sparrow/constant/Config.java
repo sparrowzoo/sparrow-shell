@@ -34,11 +34,8 @@ public class Config {
      */
     public static final String UPLOAD = "upload";
     public static final String UPLOAD_PHYSICAL_PATH = "physical_upload";
-
     public static final String DOWNLOAD = "download";
     public static final String DOWNLOAD_PHYSICAL_PATH = "physical_download";
-
-
     public static final String LOGIN_URL = "login_url";
     /**
      * 图片格式
@@ -58,11 +55,9 @@ public class Config {
     public static final String DEFAULT_ADMIN_INDEX = "default_admin_index";
     public static final String DEFAULT_AVATAR = "default_avatar";
     public static final String DEFAULT_DATA_SOURCE_KEY = "default_data_source";
-
     public static final String DATA_SOURCE_PASSWORD_KEY = "mysql_sparrow_password";
 
     public static final String DEBUG_DATA_SOURCE_PASSWORD_KEY = "debug_data_source_password";
-
 
     public static final String TEMPLATE_ENGINE_PREFIX = "template_engine_prefix";
     public static final String TEMPLATE_ENGINE_SUFFIX = "template_engine_suffix";
@@ -84,23 +79,6 @@ public class Config {
     public static final String EMAIL_FROM = "email_from";
     public static final String EMAIL_USERNAME = "email_username";
     public static final String EMAIL_PASSWORD = "email_password";
-
     public static final String EMAIL_LOCAL_ADDRESS = "email_local_address";
-    /**
-     * 提供给日志
-     */
-    public static final String WEB_SERVER_PACKAGE_PREFIX = "web_server_package_prefix";
-
-    /**
-     * 激活码的有效期
-     */
-    public static final String VALIDATE_TOKEN_AVAILABLE_DAY = "validate_token_available_day";
-
-    public static final String DEBUG = "debug";
     public static final String METHOD_ACCESS_DEBUG = "method_access_debug";
-    public static final String METHOD_ACCESS_CLASS = "method_access_class";
-    public static final String LOG_CLASS = "log_class";
-    public static final String LOG_LEVEL = "log_level";
-    public static final String LOG_PRINT_CONSOLE = "print_console";
-    public static final String COMPILER_OPTION_ENCODING = "compiler_option_encoding";
 }

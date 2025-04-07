@@ -14,21 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrowzoo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.sparrow.log;
 
-/**
- * @author by harry
- */
-public class SparrowLogTest {
-    private static Logger logger = LoggerFactory.getLogger(SparrowLogTest.class);
+public enum LogLevel {
+    /**
+     * trace
+     */
+    TRACE,
+    /**
+     * debug
+     */
+    DEBUG,
 
-    public static void main(String[] args) {
-        while (true) {
-            logger.error("{}", "{sfsfsf},{}{}", "sfsf");
-            logger.error("{}", "wrwerw");
-        }
-    }
+    /**
+     * info
+     */
+    INFO,
+
+    /**
+     * warn
+     */
+    WARN,
+
+    /**
+     * errro
+     */
+    ERROR
 }

@@ -32,14 +32,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class PropertyUtility {
-
     public static Map<String, String> load(InputStream stream, String charset) {
         if (stream == null) {
             return null;
         }
         Map<String, String> systemMessage = new ConcurrentHashMap<String, String>();
         Properties props = new Properties();
-
         try {
             props.load(stream);
         } catch (IOException e) {
@@ -99,5 +97,4 @@ public class PropertyUtility {
         }
         return load(stream, charset);
     }
-
 }

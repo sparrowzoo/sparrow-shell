@@ -49,10 +49,11 @@
         <module>sparrow-protocol-dao</module>
         <module>sparrow-protocol-mq</module>
         <module>sparrow-mvc-thymeleaf</module>
-        <module>spring-boot-test</module>
+
         <module>spring-boot-druid-demo</module>
         <module>spring-boot-sparrow-ds-demo</module>
         <module>spring-boot-life-cycle</module>
+        <module>spring-boot-test</module>
     </modules>
 
     <build>
