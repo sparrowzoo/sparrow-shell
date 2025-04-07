@@ -19,7 +19,6 @@ package com.sparrow.lucence;
 
 import com.sparrow.core.Pair;
 import com.sparrow.support.MapValueComparator;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;

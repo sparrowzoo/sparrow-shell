@@ -35,6 +35,10 @@ public class Config {
     public static final String UPLOAD = "upload";
     public static final String UPLOAD_PHYSICAL_PATH = "physical_upload";
 
+    public static final String DOWNLOAD = "download";
+    public static final String DOWNLOAD_PHYSICAL_PATH = "physical_download";
+
+
     public static final String LOGIN_URL = "login_url";
     /**
      * 图片格式

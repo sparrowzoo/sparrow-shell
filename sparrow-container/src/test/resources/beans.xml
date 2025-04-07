@@ -20,6 +20,7 @@
     "beans.dtd">
 <beans>
     <component-scan>com.sparrow.inject</component-scan>
+    <bean name="webConfigReader" class="com.sparrow.container.config.SparrowWebConfigReader"/>
     <bean name="helloTest" class="com.sparrow.inject.HelloTest"/>
 <!--    <bean name="helloTest2" class="com.sparrow.inject.HelloTest2"/>-->
     <bean name="helloProvider" class="com.sparrow.inject.HelloProvider">

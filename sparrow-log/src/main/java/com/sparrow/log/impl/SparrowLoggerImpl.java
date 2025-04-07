@@ -18,11 +18,11 @@ package com.sparrow.log.impl;
 
 import com.sparrow.constant.Config;
 import com.sparrow.constant.DateTime;
-import com.sparrow.enums.LogLevel;
+import com.sparrow.log.LogUtils;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.DateTimeUtility;
 import com.sparrow.utility.PropertyUtility;
-import com.sparrow.utility.StringUtility;
+import jdk.jfr.internal.LogLevel;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 
@@ -73,22 +73,22 @@ public class SparrowLoggerImpl implements Logger {
 
     @Override
     public void trace(String format, Object arg) {
-        this.writeLog(StringUtility.format(format, arg), LogLevel.TRACE);
+        this.writeLog(LogUtils.format(format, arg), LogLevel.TRACE);
     }
 
     @Override
     public void trace(String format, Object arg1, Object arg2) {
-        this.writeLog(StringUtility.format(format, arg1, arg2), LogLevel.TRACE);
+        this.writeLog(LogUtils.format(format, arg1, arg2), LogLevel.TRACE);
     }
 
     @Override
     public void trace(String format, Object... arguments) {
-        this.writeLog(StringUtility.format(format, arguments), LogLevel.TRACE);
+        this.writeLog(LogUtils.format(format, arguments), LogLevel.TRACE);
     }
 
     @Override
     public void trace(String msg, Throwable t) {
-        this.writeLog(StringUtility.printStackTrace(msg, t), LogLevel.TRACE);
+        this.writeLog(LogUtils.printStackTrace(msg, t), LogLevel.TRACE);
     }
 
     @Override
@@ -133,22 +133,22 @@ public class SparrowLoggerImpl implements Logger {
 
     @Override
     public void debug(String format, Object arg) {
-        this.writeLog(StringUtility.format(format, arg), LogLevel.DEBUG);
+        this.writeLog(LogUtils.format(format, arg), LogLevel.DEBUG);
     }
 
     @Override
     public void debug(String format, Object arg1, Object arg2) {
-        this.writeLog(StringUtility.format(format, arg1, arg2), LogLevel.DEBUG);
+        this.writeLog(LogUtils.format(format, arg1, arg2), LogLevel.DEBUG);
     }
 
     @Override
     public void debug(String format, Object... arguments) {
-        this.writeLog(StringUtility.format(format, arguments), LogLevel.DEBUG);
+        this.writeLog(LogUtils.format(format, arguments), LogLevel.DEBUG);
     }
 
     @Override
     public void debug(String msg, Throwable t) {
-        this.writeLog(StringUtility.printStackTrace(msg, t), LogLevel.DEBUG);
+        this.writeLog(LogUtils.printStackTrace(msg, t), LogLevel.DEBUG);
     }
 
     @Override
@@ -194,22 +194,22 @@ public class SparrowLoggerImpl implements Logger {
 
     @Override
     public void warn(String format, Object arg) {
-        this.writeLog(StringUtility.format(format, arg), LogLevel.WARN);
+        this.writeLog(LogUtils.format(format, arg), LogLevel.WARN);
     }
 
     @Override
     public void warn(String format, Object... arguments) {
-        this.writeLog(StringUtility.format(format, arguments), LogLevel.WARN);
+        this.writeLog(LogUtils.format(format, arguments), LogLevel.WARN);
     }
 
     @Override
     public void warn(String format, Object arg1, Object arg2) {
-        this.writeLog(StringUtility.format(format, arg1, arg2), LogLevel.WARN);
+        this.writeLog(LogUtils.format(format, arg1, arg2), LogLevel.WARN);
     }
 
     @Override
     public void warn(String msg, Throwable t) {
-        this.writeLog(StringUtility.printStackTrace(msg, t), LogLevel.WARN);
+        this.writeLog(LogUtils.printStackTrace(msg, t), LogLevel.WARN);
     }
 
     @Override
@@ -254,22 +254,22 @@ public class SparrowLoggerImpl implements Logger {
 
     @Override
     public void info(String format, Object arg) {
-        this.writeLog(StringUtility.format(format, arg), LogLevel.INFO);
+        this.writeLog(LogUtils.format(format, arg), LogLevel.INFO);
     }
 
     @Override
     public void info(String format, Object arg1, Object arg2) {
-        this.writeLog(StringUtility.format(format, arg1, arg2), LogLevel.INFO);
+        this.writeLog(LogUtils.format(format, arg1, arg2), LogLevel.INFO);
     }
 
     @Override
     public void info(String format, Object... arguments) {
-        this.writeLog(StringUtility.format(format, arguments), LogLevel.INFO);
+        this.writeLog(LogUtils.format(format, arguments), LogLevel.INFO);
     }
 
     @Override
     public void info(String msg, Throwable t) {
-        this.writeLog(StringUtility.printStackTrace(msg, t), LogLevel.INFO);
+        this.writeLog(LogUtils.printStackTrace(msg, t), LogLevel.INFO);
     }
 
     @Override
@@ -314,17 +314,17 @@ public class SparrowLoggerImpl implements Logger {
 
     @Override
     public void error(String format, Object arg) {
-        this.writeLog(StringUtility.format(format, arg), LogLevel.ERROR);
+        this.writeLog(LogUtils.format(format, arg), LogLevel.ERROR);
     }
 
     @Override
     public void error(String format, Object arg1, Object arg2) {
-        this.writeLog(StringUtility.format(format, arg1, arg2), LogLevel.ERROR);
+        this.writeLog(LogUtils.format(format, arg1, arg2), LogLevel.ERROR);
     }
 
     @Override
     public void error(String format, Object... arguments) {
-        this.writeLog(StringUtility.format(format, arguments), LogLevel.ERROR);
+        this.writeLog(LogUtils.format(format, arguments), LogLevel.ERROR);
     }
 
     public void error(Throwable exception) {
@@ -333,7 +333,7 @@ public class SparrowLoggerImpl implements Logger {
 
     @Override
     public void error(String prefixLog, Throwable exception) {
-        this.writeLog(StringUtility.printStackTrace(prefixLog, exception), LogLevel.ERROR);
+        this.writeLog(LogUtils.printStackTrace(prefixLog, exception), LogLevel.ERROR);
     }
 
     @Override
@@ -385,7 +385,7 @@ public class SparrowLoggerImpl implements Logger {
             }
             fileOutputStream = new FileOutputStream(path + String.format("/log%1$s.log", DateTimeUtility.getFormatCurrentTime(DateTime.FORMAT_YYYYMMDD)), true);
 
-            String log = logLevel.toString() + "|" + DateTimeUtility.getFormatCurrentTime() + "|" + this.className + Constant.ENTER_TEXT + "--------------------------------------------------------------" + Constant.ENTER_TEXT + str + Constant.ENTER_TEXT;
+            String log = logLevel + "|" + DateTimeUtility.getFormatCurrentTime() + "|" + this.className + LogUtils.ENTER_TEXT + "--------------------------------------------------------------" + Constant.ENTER_TEXT + str + Constant.ENTER_TEXT;
 
             //https://blog.csdn.net/shijinupc/article/details/7875826
             //阻塞文件锁

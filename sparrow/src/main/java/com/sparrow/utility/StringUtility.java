@@ -599,21 +599,6 @@ public class StringUtility {
         return true;
     }
 
-    public static String format(String format, Object... args) {
-        if (format == null) {
-            return Symbol.EMPTY;
-        }
-
-        if (!format.contains("{}") || args == null || args.length == 0) {
-            return format;
-        }
-
-        for (Object arg : args) {
-            format = format.replaceFirst("\\{\\}", String.valueOf(arg));
-        }
-        return format;
-    }
-
     public static String printStackTrace(String msg, Throwable t) {
         PrintWriter pw = null;
         try {

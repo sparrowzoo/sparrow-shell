@@ -2,7 +2,6 @@ package com.sparrow.orm.po;
 
 import com.sparrow.constant.Config;
 import com.sparrow.protocol.POJO;
-import com.sparrow.utility.ConfigUtility;
 import com.sparrow.utility.StringUtility;
 
 import javax.persistence.*;
@@ -72,9 +71,6 @@ public class User implements POJO, Cloneable {
 
     @Column(name = "avatar", updatable = false)
     public String getAvatar() {
-        if (StringUtility.isNullOrEmpty(this.avatar)) {
-            this.avatar = ConfigUtility.getValue(Config.DEFAULT_AVATAR);
-        }
         return avatar;
     }
 

@@ -17,14 +17,15 @@
 
 package com.sparrow.lucence;
 
-import java.io.File;
-import java.io.IOException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.LogByteSizeMergePolicy;
 import org.apache.lucene.index.LogMergePolicy;
 import org.apache.lucene.search.IndexSearcher;
+
+import java.io.File;
+import java.io.IOException;
 
 public class IndexManager {
     /**

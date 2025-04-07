@@ -18,7 +18,6 @@
 package com.sparrow.utility;
 
 import com.sparrow.constant.Regex;
-import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.HttpMethod;
 import com.sparrow.protocol.constant.Constant;
@@ -331,10 +330,10 @@ public class HttpClient {
     }
 
     public static String downloadImage(String url) {
-        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
         String fileUUID = UUID.randomUUID().toString();
-        String temp = configReader.getValue(com.sparrow.constant.Config.TEMP);
-        String tempPhysicalPath = configReader.getValue(com.sparrow.constant.Config.RESOURCE_PHYSICAL_PATH);
+        String download = configReader.getDownload();
+        String downloadPhysicalPath = configReader.getPhysicalDownload();
         int hashcode = fileUUID.hashCode();
         if (hashcode == Integer.MIN_VALUE) {
             hashcode += 1;
@@ -348,9 +347,9 @@ public class HttpClient {
             extension = ".jpg";
         }
         String imageUrl = String.valueOf(remaining1) + "/" + String.valueOf(remaining2) + "/" + fileUUID + extension;
-        String descFilePath = tempPhysicalPath + "/" + imageUrl;
+        String descFilePath = downloadPhysicalPath + "/" + imageUrl;
         HttpClient.downloadFile(url, descFilePath);
-        String webUrl = temp + "/" + imageUrl;
+        String webUrl = download + "/" + imageUrl;
         return String.format(Regex.TAG_TEMP_IMAGE_FORMAT.pattern(), webUrl, url.hashCode());
     }
 

@@ -18,7 +18,6 @@
 package com.sparrow.lucence.daemon.impl;
 
 import com.sparrow.concurrent.SparrowThreadFactory;
-import com.sparrow.constant.Config;
 import com.sparrow.lucence.IndexManager;
 import com.sparrow.utility.ConfigUtility;
 import org.apache.lucene.index.IndexReader;

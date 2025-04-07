@@ -434,17 +434,22 @@ public class FileUtility {
         fileNameProperty.setFullFileName(fullFileName);
         fileNameProperty.setName(fileName);
         WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
-        String imageExtensionConfig = configReader.getImageExtension();
-        if (imageExtensionConfig == null) {
-            imageExtensionConfig = Constant.IMAGE_EXTENSION;
+        if (configReader != null) {
+            String imageExtensionConfig = configReader.getImageExtension();
+            if (imageExtensionConfig == null) {
+                imageExtensionConfig = Constant.IMAGE_EXTENSION;
+            }
+            String[] imageExtension = imageExtensionConfig.split("\\|");
+            // jpeg 或者是其他格式都转换成jpg
+            if (Extension.JPEG.equalsIgnoreCase(extension)) {
+                extension = Extension.JPG;
+            }
+            fileNameProperty.setImage(StringUtility.existInArray(imageExtension, extension));
         }
-        String[] imageExtension = imageExtensionConfig.split("\\|");
-        // jpeg 或者是其他格式都转换成jpg
-        if (Extension.JPEG.equalsIgnoreCase(extension)) {
-            extension = Extension.JPG;
+        else {
+            fileNameProperty.setImage(false);
         }
         fileNameProperty.setExtension(extension);
-        fileNameProperty.setImage(StringUtility.existInArray(imageExtension, extension));
         return fileNameProperty;
     }
 

@@ -41,6 +41,10 @@ public interface WebConfigReader {
 
     String getPhysicalUpload();
 
+    String getDownload();
+
+    String getPhysicalDownload();
+
     String getWaterMark();
     String getInternationalization();
 

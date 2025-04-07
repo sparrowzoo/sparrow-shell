@@ -42,13 +42,17 @@
         <module>sparrow-markdown</module>
         <module>sparrow-registry</module>
         <module>sparrow-aop</module>
-<!--        <module>sparrow-distribution-job</module>-->
-<!--        <module>sparrow-distribution-config</module>-->
+        <!--        <module>sparrow-distribution-job</module>-->
+        <!--        <module>sparrow-distribution-config</module>-->
         <module>sparrow-protocol</module>
         <module>sparrow-test</module>
         <module>sparrow-protocol-dao</module>
         <module>sparrow-protocol-mq</module>
         <module>sparrow-mvc-thymeleaf</module>
+        <module>spring-boot-test</module>
+        <module>spring-boot-druid-demo</module>
+        <module>spring-boot-sparrow-ds-demo</module>
+
     </modules>
 
     <build>

@@ -93,6 +93,16 @@ public class SparrowWebConfigReader implements WebConfigReader {
         return configReader.getValue(Config.UPLOAD_PHYSICAL_PATH);
     }
 
+    @Override
+    public String getDownload() {
+        return configReader.getValue(Config.DOWNLOAD);
+    }
+
+    @Override
+    public String getPhysicalDownload() {
+        return configReader.getValue(Config.DOWNLOAD_PHYSICAL_PATH);
+    }
+
     public String getWaterMark() {
         return configReader.getValue(Config.WATER_MARK);
     }
