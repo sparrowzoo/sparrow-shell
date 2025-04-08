@@ -78,6 +78,8 @@ public class LoginUser implements VO {
         return login;
     }
 
+
+
     public Long getUserId() {
         return userId;
     }

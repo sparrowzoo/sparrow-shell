@@ -102,18 +102,7 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
         return loginUser;
     }
 
-//    private LoginUser getVisitor(String deviceId) {
-//        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
-//        String visitorName = configReader.getI18nValue(ConfigKeyLanguage.USER_VISITOR_NAME);
-//        String visitorNickName = configReader.getI18nValue(ConfigKeyLanguage.USER_VISITOR_NICKNAME);
-//        WebConfigReader webConfigReader=ApplicationContext.getContainer().getBean(WebConfigReader.class);
-//        String avatar = webConfigReader.getDefaultAvatar();
-//        return LoginUser.create(LoginUser.VISITOR_ID,
-//                LoginUser.CATEGORY_VISITOR
-//                , visitorName
-//                , visitorNickName
-//                , avatar, deviceId, 0);
-//    }
+
 
     public String sign(LoginUser loginUser, LoginUserStatus loginUserStatus) {
         String token = this.sign(loginUser, this.getEncryptKey());
