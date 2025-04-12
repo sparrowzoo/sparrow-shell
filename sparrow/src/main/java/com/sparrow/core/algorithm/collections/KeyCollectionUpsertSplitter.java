@@ -33,8 +33,16 @@ public class KeyCollectionUpsertSplitter<V> {
     public KeyCollectionUpsertSplitter(Collection<V> locals, Collection<V> remotes) {
         this.localKeys = locals;
         this.remoteKeys = remotes;
-        this.all.addAll(locals);
-        this.all.addAll(remotes);
+        if (!CollectionsUtility.isNullOrEmpty(locals)) {
+            this.all.addAll(locals);
+        } else {
+            this.localKeys = new ArrayList<>();
+        }
+        if (!CollectionsUtility.isNullOrEmpty(remotes)) {
+            this.all.addAll(remotes);
+        } else {
+            this.remoteKeys = new ArrayList<>();
+        }
     }
 
     public void split() {
