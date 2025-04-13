@@ -16,6 +16,8 @@
  */
 package com.sparrow.servlet;
 
+import com.alibaba.fastjson.JSON;
+import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.support.CaptchaService;
 import org.slf4j.Logger;
@@ -77,6 +79,12 @@ public class CaptchaServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if ("true".equalsIgnoreCase(req.getParameter("session"))) {
+            resp.addHeader("Content-Type", "application/json");
+            Result<String> result = new Result<String>(req.getRequestedSessionId());
+            resp.getWriter().print(JSON.toJSONString(result));
+            return;
+        }
         BufferedImage buffImg = new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D gd = buffImg.createGraphics();
         Random random = new Random();
