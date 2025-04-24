@@ -51,10 +51,6 @@ public class PropertyUtility {
             if (StringUtility.isNullOrEmpty(charset)) {
                 charset = StandardCharsets.UTF_8.name();
             }
-            try {
-                value = new String(value.getBytes(StandardCharsets.ISO_8859_1), charset);
-            } catch (UnsupportedEncodingException ignore) {
-            }
             if (value.startsWith("${") && value.endsWith("}")) {
                 String envKey = value.substring(2, value.length() - 1).toUpperCase();
                 String envValue = System.getenv(envKey);
