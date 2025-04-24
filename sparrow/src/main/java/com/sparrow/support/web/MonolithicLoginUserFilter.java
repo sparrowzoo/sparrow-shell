@@ -108,6 +108,13 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
         servletResponse.sendRedirect(loginUrl);
     }
 
+    private boolean isNullOrEmpty(String str) {
+        if (str == null || str.trim().equals("") || str.trim().equals("null")) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         boolean isHttpServlet = servletRequest instanceof HttpServletRequest;
@@ -128,11 +135,11 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
         String loginToken = req.getHeader(tokenKey);//密文
         LoginUser loginUser = null;
         //token 在header  里没拿到
-        if (StringUtility.isNullOrEmpty(loginToken)) {
+        if (this.isNullOrEmpty(loginToken)) {
             loginToken = CookieUtility.getPermission(req, tokenKey);
         }
         //token 没拿到
-        if (!StringUtility.isNullOrEmpty(loginToken)) {
+        if (!this.isNullOrEmpty(loginToken)) {
             try {
                 //认证逻辑
                 loginUser = this.authenticator.authenticate(loginToken, client.getDeviceId());

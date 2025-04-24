@@ -17,11 +17,14 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.cryptogram.Base64;
 import com.sparrow.io.file.FileNameProperty;
+import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
@@ -30,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -399,16 +403,18 @@ public class FileUtility {
      */
     public FileNameProperty getFileNameProperty(String fullFilePath) {
         FileNameProperty fileNameProperty = new FileNameProperty();
+        fileNameProperty.setContentType(URLConnection.guessContentTypeFromName(fullFilePath));
+
         /**
          * /target/apidocs/package-list  is not file path
          */
         java.io.File file = new java.io.File(fullFilePath);
         if (file.isDirectory()) {
-            fileNameProperty.setDirectory(true);
+            fileNameProperty.setIsDirectory(true);
             fileNameProperty.setDirectory(fullFilePath);
             return fileNameProperty;
         }
-        fileNameProperty.setDirectory(false);
+        fileNameProperty.setIsDirectory(false);
         int lastFileSeparatorIndex = fullFilePath.lastIndexOf(java.io.File.separator);
         if (lastFileSeparatorIndex == -1) {
             lastFileSeparatorIndex = fullFilePath.lastIndexOf("/");
@@ -433,7 +439,11 @@ public class FileUtility {
         fileNameProperty.setDirectory(directory);
         fileNameProperty.setFullFileName(fullFileName);
         fileNameProperty.setName(fileName);
-        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+        Container container = ApplicationContext.getContainer();
+        WebConfigReader configReader = null;
+        if (container != null) {
+            configReader = container.getBean(WebConfigReader.class);
+        }
         if (configReader != null) {
             String imageExtensionConfig = configReader.getImageExtension();
             if (imageExtensionConfig == null) {
@@ -445,8 +455,7 @@ public class FileUtility {
                 extension = Extension.JPG;
             }
             fileNameProperty.setImage(StringUtility.existInArray(imageExtension, extension));
-        }
-        else {
+        } else {
             fileNameProperty.setImage(false);
         }
         fileNameProperty.setExtension(extension);
@@ -517,16 +526,16 @@ public class FileUtility {
     }
 
 
-    public boolean generateImage(String base64str, String savePath) {
+    public Integer generateImage(String base64str, String savePath) throws BusinessException {
         if (base64str == null) {
-            return false;
+            throw new BusinessException(SparrowError.SYSTEM_ILLEGAL_REQUEST);
         }
         FileNameProperty fileNameProperty = this.getFileNameProperty(savePath);
         java.io.File directory = new java.io.File(fileNameProperty.getDirectory());
         if (!directory.exists()) {
             if (!directory.mkdirs()) {
                 logger.error("create directory error {}", directory);
-                return false;
+                throw new BusinessException(SparrowError.SYSTEM_SERVICE_UNAVAILABLE);
             }
         }
         try {
@@ -540,10 +549,10 @@ public class FileUtility {
             out.write(b);
             out.flush();
             out.close();
-            return true;
+            return b.length;
         } catch (Exception e) {
             logger.error("image generate fail {}", base64str);
-            return false;
+            throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
         }
     }
 

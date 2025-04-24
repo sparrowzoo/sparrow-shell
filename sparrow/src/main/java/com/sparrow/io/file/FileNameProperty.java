@@ -17,6 +17,9 @@
 
 package com.sparrow.io.file;
 
+import lombok.Data;
+
+@Data
 public class FileNameProperty {
     private Boolean isDirectory;
     /**
@@ -44,59 +47,13 @@ public class FileNameProperty {
      */
     private Boolean image;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    public String getDirectory() {
-        return directory;
-    }
-
-    public void setDirectory(String directory) {
-        this.directory = directory;
-    }
-
-    public String getFullFileName() {
-        return fullFileName;
-    }
-
-    public void setFullFileName(String fullFileName) {
-        this.fullFileName = fullFileName;
-    }
-
-    public Boolean isImage() {
-        return image;
-    }
-
-    public void setImage(Boolean image) {
-        this.image = image;
-    }
+    private String contentType;
 
     public String getExtensionWithoutDot() {
         if (extensionWithoutDot == null) {
             this.extensionWithoutDot = this.extension.substring(1);
         }
         return extensionWithoutDot;
-    }
-
-    public void setDirectory(Boolean directory) {
-        isDirectory = directory;
-    }
-
-    public Boolean isDirectory() {
-        return isDirectory;
     }
 
     @Override

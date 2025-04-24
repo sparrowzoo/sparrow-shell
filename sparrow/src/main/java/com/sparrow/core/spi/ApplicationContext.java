@@ -18,10 +18,12 @@
 package com.sparrow.core.spi;
 
 import com.sparrow.container.Container;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
+@Slf4j
 public class ApplicationContext {
     private static volatile Container container = null;
 
@@ -51,13 +53,13 @@ public class ApplicationContext {
                 container = (Container) containerClazz.newInstance();
                 return container;
             } catch (ClassNotFoundException x) {
-                throw new RuntimeException(
-                    "Provider " + defaultProvider + " not found", x);
+                log.error("Provider " + defaultProvider + " not found", x);
             } catch (Exception x) {
-                throw new RuntimeException(
-                    "Provider " + defaultProvider + " could not be instantiated: " + x,
-                    x);
+                log.error("Provider " + defaultProvider + " could not be instantiated: " + x,
+                        x);
+
             }
+            return null;
         }
     }
 }
