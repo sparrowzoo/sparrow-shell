@@ -29,6 +29,8 @@ public interface WebConfigReader {
 
     String getRootPath();
 
+    String getPassport();
+
     String getLanguage();
 
     String getResource();

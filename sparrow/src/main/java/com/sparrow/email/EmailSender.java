@@ -85,6 +85,7 @@ public class EmailSender {
             }
 
 
+
             message.setContent(content, "text/html;charset=gb2312");
             message.saveChanges();
             if (authentication) {

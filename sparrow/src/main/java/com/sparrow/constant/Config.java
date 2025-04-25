@@ -22,6 +22,7 @@ public class Config {
     public static final String REQUEST_HEADER_KEY_LOGIN_TOKEN = "request_header_key_login_token";
     public static final String LANGUAGE = "language";
     public static final String ROOT_PATH = "root_path";
+    public static final String PASSPORT = "passport";
     public static final String MVC_CONFIG = "mvc_config";
     public static final String REDIS_HOST = "redis_host";
     public static final String REDIS_PORT = "redis_port";

@@ -69,7 +69,7 @@ public class Result<T> implements VO {
         this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(Constant.SUCCESS, key);
     }
 
-    public static <T> Result success(T data,String instruction) {
+    public static <T> Result success(T data, String instruction) {
         Result result = new Result(data);
         result.instruction = instruction;
         return result;
@@ -151,7 +151,7 @@ public class Result<T> implements VO {
 
     private static Result fail(BusinessException business) {
         Result result = new Result();
-        result.key=business.getErrorSupport().name();
+        result.key = business.getErrorSupport().name();
         result.code = business.getErrorSupport().getCode();
         result.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(business);
         return result;

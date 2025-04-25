@@ -64,6 +64,11 @@ public class SparrowWebConfigReader implements WebConfigReader {
     }
 
     @Override
+    public String getPassport() {
+        return configReader.getValue(Config.PASSPORT);
+    }
+
+    @Override
     public String getLanguage() {
         return configReader.getValue(Config.LANGUAGE);
     }
