@@ -19,6 +19,7 @@ package com.sparrow.protocol;
 
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
+import lombok.Data;
 
 /**
  * 可用于协议 规范服务端返回格式 <p>
@@ -31,7 +32,7 @@ import com.sparrow.protocol.constant.SparrowError;
  * DCL
  * 为保证线程安全，属性只读
  */
-
+@Data
 public class Result<T> implements VO {
     private Result() {
 
@@ -46,6 +47,7 @@ public class Result<T> implements VO {
         if (data instanceof ErrorSupport) {
             ErrorSupport error = (ErrorSupport) data;
             this.code = error.getCode();
+            this.key = error.name();
             this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(error.getMessage(), error.name());
         } else {
             this.code = Constant.RESULT_OK_CODE;
@@ -123,6 +125,11 @@ public class Result<T> implements VO {
      * 错误编码
      */
     private String code;
+
+    /**
+     * 错误key
+     */
+    private String key;
     /**
      * 错误文本 需要业务自定义获取错误信息获取器
      */
@@ -144,6 +151,7 @@ public class Result<T> implements VO {
 
     private static Result fail(BusinessException business) {
         Result result = new Result();
+        result.key=business.getErrorSupport().name();
         result.code = business.getErrorSupport().getCode();
         result.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(business);
         return result;
@@ -175,21 +183,5 @@ public class Result<T> implements VO {
 
     public boolean isSuccess() {
         return this.code.equals(Constant.RESULT_OK_CODE);
-    }
-
-    public String getCode() {
-        return this.code;
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public String getInstruction() {
-        return instruction;
-    }
-
-    public void setInstruction(String instruction) {
-        this.instruction = instruction;
     }
 }
