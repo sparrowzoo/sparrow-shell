@@ -219,16 +219,18 @@ public class OrmMetadataAccessor<T> {
             TypeHandlerRegistry typeHandlerRegistry = TypeHandlerRegistry.getInstance();
 
             for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-                String columnName = resultSetMetaData.getColumnName(i);
-                String propertyName = this.entityManager.getProperty(columnName);
-                if (propertyName == null) {
-                    logger.warn("column name [{}] not found in entity [{}]", columnName, this.modelClazz.getSimpleName());
-                    continue;
-                }
-                Class javaType = this.entityManager.getField(propertyName).getType();
-                TypeHandler typeHandler = typeHandlerRegistry.getTypeHandler(javaType);
-                Object fieldValue = typeHandler.getResult(rs, i);
+                String columnName = "";
                 try {
+                    columnName = resultSetMetaData.getColumnName(i);
+                    String propertyName = this.entityManager.getProperty(columnName);
+                    if (propertyName == null) {
+                        logger.warn("column name [{}] not found in entity [{}]", columnName, this.modelClazz.getSimpleName());
+                        continue;
+                    }
+                    Class javaType = this.entityManager.getField(propertyName).getType();
+                    TypeHandler typeHandler = typeHandlerRegistry.getTypeHandler(javaType);
+                    Object fieldValue = typeHandler.getResult(rs, i);
+
                     this.getMethodAccessor().set(model, propertyName, fieldValue);
                 } catch (Exception e) {
                     logger.error(this.modelClazz.getSimpleName() + Symbol.VERTICAL_LINE + columnName, e);
