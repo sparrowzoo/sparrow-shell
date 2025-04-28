@@ -16,6 +16,7 @@
  */
 package com.sparrow.protocol;
 
+import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.enums.Platform;
 
 import java.io.Serializable;
@@ -130,6 +131,9 @@ public class ClientInformation implements Serializable {
     private long resumeTime;
 
     public String getWebsite() {
+        if (this.website == null) {
+            return Symbol.EMPTY;
+        }
         return website;
     }
 
@@ -138,6 +142,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getIp() {
+        if (this.ip == null) {
+            return Symbol.EMPTY;
+        }
         return ip;
     }
 
@@ -146,6 +153,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getDevice() {
+        if (this.device == null) {
+            return Symbol.EMPTY;
+        }
         return device;
     }
 
@@ -154,6 +164,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getDeviceId() {
+        if (this.deviceId == null) {
+            return Symbol.EMPTY;
+        }
         return deviceId;
     }
 
@@ -162,6 +175,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getDeviceModel() {
+        if (this.deviceModel == null) {
+            return Symbol.EMPTY;
+        }
         return deviceModel;
     }
 
@@ -194,6 +210,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getOs() {
+        if (this.os == null) {
+            return Symbol.EMPTY;
+        }
         return os;
     }
 
@@ -202,6 +221,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getUserAgent() {
+        if (this.userAgent == null) {
+            return Symbol.EMPTY;
+        }
         return userAgent;
     }
 
@@ -210,6 +232,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getClientVersion() {
+        if (this.clientVersion == null) {
+            return Symbol.EMPTY;
+        }
         return clientVersion;
     }
 
@@ -218,6 +243,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getChannel() {
+        if (this.channel == null) {
+            return Symbol.EMPTY;
+        }
         return channel;
     }
 
@@ -242,6 +270,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getNetwork() {
+        if (this.network == null) {
+            return Symbol.EMPTY;
+        }
         return network;
     }
 
@@ -250,6 +281,7 @@ public class ClientInformation implements Serializable {
     }
 
     public Boolean getSimulate() {
+
         return simulate;
     }
 
@@ -258,6 +290,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getImei() {
+        if (this.imei == null) {
+            return Symbol.EMPTY;
+        }
         return imei;
     }
 
@@ -266,6 +301,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getBssid() {
+        if (this.bssid == null) {
+            return Symbol.EMPTY;
+        }
         return bssid;
     }
 
@@ -274,6 +312,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getSsid() {
+        if (this.ssid == null) {
+            return Symbol.EMPTY;
+        }
         return ssid;
     }
 
@@ -282,6 +323,9 @@ public class ClientInformation implements Serializable {
     }
 
     public String getIdfa() {
+        if (this.idfa == null) {
+            return Symbol.EMPTY;
+        }
         return idfa;
     }
 
