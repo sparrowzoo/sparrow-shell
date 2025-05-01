@@ -26,6 +26,14 @@ public class OrderCriteria {
     private CriteriaField field;
     private Order order;
 
+    public static OrderCriteria parse(String sortBy) {
+        String[] fields = sortBy.split(" ");
+        if (fields.length <= 2) {
+            throw new IllegalArgumentException("Invalid order by string: " + sortBy);
+        }
+        return new OrderCriteria(fields[0], Order.valueOf(fields[1]));
+    }
+
     public static OrderCriteria asc(String field) {
         return new OrderCriteria(field, Order.ASC);
     }

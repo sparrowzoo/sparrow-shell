@@ -38,7 +38,7 @@ import java.util.List;
  * 分布式场景下，从请求头中获取登录用户信息
  */
 public class LoginUserFilter extends AbstractLoginFilter {
-    public LoginUserFilter(Boolean mockLoginUser, List<String> excludePatternList,String tokenKey) {
+    public LoginUserFilter(Boolean mockLoginUser, List<String> excludePatternList, String tokenKey) {
         this.mockLoginUser = mockLoginUser;
         this.excludePatternList = excludePatternList;
         this.tokenKey = tokenKey;
@@ -54,7 +54,7 @@ public class LoginUserFilter extends AbstractLoginFilter {
         if (servletRequest instanceof HttpServletRequest) {
             HttpServletRequest req = (HttpServletRequest) servletRequest;
             String currentUrl = req.getServletPath();
-            if (RegexUtility.matchPatterns(this.excludePatternList,currentUrl)) {
+            if (RegexUtility.matchPatterns(this.excludePatternList, currentUrl)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
@@ -65,7 +65,7 @@ public class LoginUserFilter extends AbstractLoginFilter {
             } else {
                 if (mockLoginUser) {
                     loginUser = LoginUser.create(
-                            1L,
+                            1L, "",
                             LoginUser.CATEGORY_VISITOR,
                             "mock-user",
                             "mock-nick-name",

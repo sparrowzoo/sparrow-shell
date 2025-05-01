@@ -17,10 +17,12 @@
 package com.sparrow.protocol.pager;
 
 import com.sparrow.protocol.Query;
+import lombok.Data;
 
 /**
  * simpler pager without html
  */
+@Data
 public class SimplePager implements Query {
 
     public SimplePager() {
@@ -43,21 +45,5 @@ public class SimplePager implements Query {
             currentPageIndex = 1;
         }
         this.pageNo = currentPageIndex;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public Integer getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public void setPageNo(Integer pageNo) {
-        this.pageNo = pageNo;
     }
 }

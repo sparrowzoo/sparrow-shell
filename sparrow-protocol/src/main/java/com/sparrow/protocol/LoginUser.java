@@ -16,9 +16,12 @@
  */
 package com.sparrow.protocol;
 
+import lombok.Data;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Data
 public class LoginUser implements VO {
     /**
      * 游客ID
@@ -31,6 +34,11 @@ public class LoginUser implements VO {
      * 用户ID
      */
     private Long userId;
+
+    /**
+     * 租户ID
+     */
+    private String tenantId;
 
     /**
      * 用户类型
@@ -60,6 +68,7 @@ public class LoginUser implements VO {
     private Map<String, Object> extensions = new LinkedHashMap<>();
 
     public static LoginUser create(Long userId,
+                                   String tenantId,
                                    Integer category,
                                    String userName,
                                    String nickName,
@@ -67,6 +76,7 @@ public class LoginUser implements VO {
                                    String deviceId,
                                    Integer days) {
         LoginUser login = new LoginUser();
+        login.tenantId = tenantId;
         login.userId = userId;
         login.category = category;
         login.userName = userName;
@@ -78,81 +88,7 @@ public class LoginUser implements VO {
         return login;
     }
 
-
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public Integer getDays() {
-        return days;
-    }
-
-    public Long getExpireAt() {
-        return expireAt;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public void setDays(Integer days) {
-        this.days = days;
-    }
-
-    public void setExpireAt(Long expireAt) {
-        this.expireAt = expireAt;
-    }
-
-    public Map<String, Object> getExtensions() {
-        return extensions;
-    }
-
-    public void setExtensions(Map<String, Object> extensions) {
-        this.extensions = extensions;
-    }
-
     public boolean isVisitor() {
-        return VISITOR_ID.equals(this.getUserId()) || CATEGORY_VISITOR == this.getCategory();
-    }
-
-    public Integer getCategory() {
-        return category;
-    }
-
-    public void setCategory(Integer category) {
-        this.category = category;
+        return VISITOR_ID.equals(this.userId) || CATEGORY_VISITOR == this.userId;
     }
 }

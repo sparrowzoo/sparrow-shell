@@ -17,9 +17,14 @@
 
 package com.sparrow.protocol;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ListRecordTotalBO<T extends BO> {
+    public static ListRecordTotalBO empty() {
+        return new ListRecordTotalBO(Collections.emptyList(), 0L);
+    }
+
     public ListRecordTotalBO(List<T> list, Long total) {
         this.list = list;
         this.total = total;
