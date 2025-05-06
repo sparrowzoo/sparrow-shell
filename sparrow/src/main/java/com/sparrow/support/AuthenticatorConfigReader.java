@@ -33,4 +33,6 @@ public interface AuthenticatorConfigReader {
     Boolean getMockLoginUser();
 
     Integer getTokenAvailableDays();
+
+    Integer getPlatform();
 }

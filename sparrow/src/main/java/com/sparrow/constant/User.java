@@ -36,16 +36,6 @@ public class User {
      */
     public static final String STATUS = "user_status";
     /**
-     * 内部用户
-     */
-    public static final String INNER_TYPE = "user_type_inner";
-
-    /**
-     * 在线用户列表
-     */
-    public static final String ONLINE_USER_LIST = "online_user_list";
-
-    /**
      * 用户密码sha1加密密钥
      */
     public static final String PASSWORD_SHA1_SECRET_KEY = "password_secret_sha1_key";

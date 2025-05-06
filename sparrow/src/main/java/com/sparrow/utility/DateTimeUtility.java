@@ -28,6 +28,11 @@ import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -126,8 +131,7 @@ public class DateTimeUtility {
      * @param dateTimeUnit 以毫秒为时间单位
      * @return 时间间隔
      */
-    public static int getInterval(Long startTime, Long endTime,
-                                  DateTimeUnit dateTimeUnit) {
+    public static int getInterval(Long startTime, Long endTime, DateTimeUnit dateTimeUnit) {
         if (startTime == null || endTime == null) {
             return Integer.MIN_VALUE;
         }
@@ -148,10 +152,7 @@ public class DateTimeUtility {
             hh = mm / 60;
             mm %= 60;
         }
-        return String.format("%1$s:%2$s:%3$s",
-                StringUtility.leftPad(String.valueOf(hh), '0', Digit.TOW),
-                StringUtility.leftPad(String.valueOf(mm), '0', Digit.TOW),
-                StringUtility.leftPad(String.valueOf(ss), '0', Digit.TOW));
+        return String.format("%1$s:%2$s:%3$s", StringUtility.leftPad(String.valueOf(hh), '0', Digit.TOW), StringUtility.leftPad(String.valueOf(mm), '0', Digit.TOW), StringUtility.leftPad(String.valueOf(ss), '0', Digit.TOW));
     }
 
     /**
@@ -253,8 +254,7 @@ public class DateTimeUtility {
             Integer value = DateTime.BEFORE_FORMAT.get(key);
             result.push(Pair.create((int) (interval % value), key));
             interval = interval / value;
-        }
-        while (true);
+        } while (true);
         ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
         while (result.size() > start) {
             Pair<Integer, String> pair = result.pop();
@@ -313,5 +313,37 @@ public class DateTimeUtility {
 
     public static long roundingExpire(Long timestamp, Long expire) {
         return timestamp / expire;
+    }
+
+    public static LocalDate strToDate(String dateStr) {
+        return strToDate(dateStr, DateTime.FORMAT_YYYY_MM_DD);
+    }
+
+    public static LocalDate strToDate(String dateStr, String format) {
+        if (StringUtility.isNullOrEmpty(dateStr)) {
+            return null;
+        }
+        DateTimeFormatter myFormat1 = DateTimeFormatter.ofPattern(format);
+        try {
+            return LocalDate.parse(dateStr, myFormat1);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static long toMillis(LocalDate localDate) {
+        return toMillis(localDate, ZoneOffset.ofHours(8));
+    }
+
+    public static long toMillis(LocalDate localDate, ZoneOffset zoneOffset) {
+        if (localDate == null) {
+            return 0L;
+        }
+        if (zoneOffset == null) {
+            zoneOffset = ZoneOffset.ofHours(8);
+        }
+        LocalDateTime startOfDay = localDate.atStartOfDay();
+        ZonedDateTime zonedDateTime = startOfDay.atZone(zoneOffset);
+        return zonedDateTime.toInstant().toEpochMilli();
     }
 }

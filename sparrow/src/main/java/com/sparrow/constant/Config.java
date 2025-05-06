@@ -82,4 +82,9 @@ public class Config {
     public static final String EMAIL_PASSWORD = "email_password";
     public static final String EMAIL_LOCAL_ADDRESS = "email_local_address";
     public static final String METHOD_ACCESS_DEBUG = "method_access_debug";
+
+    /**
+     * 平台内部用户类型
+     */
+    public static final String CATEGORY_PLATFORM = "platform";
 }
