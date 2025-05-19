@@ -27,15 +27,9 @@ public class Asserts {
         isTrue(expression, errorSupport, null);
     }
 
-    public static void isTrue(boolean expression, ErrorSupport errorSupport,
-        String suffix) throws BusinessException {
-        isTrue(expression, errorSupport, suffix, null);
-    }
-
-    public static void isTrue(boolean expression, ErrorSupport errorSupport,
-        String suffix, List<Object> parameters) throws BusinessException {
+    public static void isTrue(boolean expression, ErrorSupport errorSupport, List<Object> parameters) throws BusinessException {
         if (expression) {
-            throw new BusinessException(errorSupport, suffix, parameters);
+            throw new BusinessException(errorSupport, parameters);
         }
     }
 

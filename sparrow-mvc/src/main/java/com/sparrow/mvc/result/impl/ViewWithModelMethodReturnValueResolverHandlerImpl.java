@@ -204,7 +204,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         if (exception instanceof BusinessException) {
             businessException = (BusinessException) exception;
         } else {
-            businessException = new BusinessException(SparrowError.SYSTEM_SERVER_ERROR, Constant.ERROR);
+            businessException = new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
         }
         Result result = Result.fail(businessException);
         String url = configReader.getValue(Config.ERROR_URL);

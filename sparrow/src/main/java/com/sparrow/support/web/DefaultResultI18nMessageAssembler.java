@@ -21,16 +21,12 @@ import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.ResultI18nMessageAssembler;
-import com.sparrow.utility.CollectionsUtility;
 
 public class DefaultResultI18nMessageAssembler implements ResultI18nMessageAssembler {
     @Override
     public String assemble(BusinessException exception) {
         ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
         String error = configReader.getI18nValue(exception.getKey(), null, exception.getMessage());
-        if (!CollectionsUtility.isNullOrEmpty(exception.getParameters())) {
-            error = String.format(error, exception.getParameters().toArray());
-        }
         if (exception.getKey().contains(".")) {
             String ctrlName = exception.getKey().split("\\.")[1];
             HttpContext.getContext().put(ctrlName, error);

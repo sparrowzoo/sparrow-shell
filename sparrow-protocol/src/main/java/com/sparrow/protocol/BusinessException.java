@@ -17,7 +17,6 @@
 
 package com.sparrow.protocol;
 
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.util.Collections;
@@ -60,32 +59,17 @@ public class BusinessException extends Exception {
      */
     private List<Object> parameters;
 
-    public BusinessException(ErrorSupport errorSupport, String suffix, List<Object> parameters) {
+    public BusinessException(ErrorSupport errorSupport,List<Object> parameters) {
         super(errorSupport.getMessage());
         this.key = errorSupport.name();
-        if (suffix != null) {
-            this.key = this.key + "." + suffix.toLowerCase();
-        }
         this.errorSupport = errorSupport;
         if (parameters != null && parameters.size() > 0 && !parameters.get(0).equals(Symbol.EMPTY)) {
             this.parameters = parameters;
         }
     }
 
-    public BusinessException(ErrorSupport errorSupport, String suffix, Object parameter) {
-        this(errorSupport, suffix, Collections.singletonList(parameter));
-    }
-
-    public BusinessException(ErrorSupport errorSupport, List<Object> parameters) {
-        this(errorSupport, Constant.ERROR, parameters);
-    }
-
-    public BusinessException(ErrorSupport errorSupport, String suffix) {
-        this(errorSupport, suffix, "");
-    }
-
     public BusinessException(ErrorSupport errorSupport) {
-        this(errorSupport, null, Symbol.EMPTY);
+        this(errorSupport, Collections.singletonList(Symbol.EMPTY));
     }
 
     public ErrorSupport getErrorSupport() {

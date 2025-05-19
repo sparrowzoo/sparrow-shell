@@ -47,12 +47,12 @@ public class Result<T> implements VO {
         if (data instanceof ErrorSupport) {
             ErrorSupport error = (ErrorSupport) data;
             this.code = error.getCode();
-            this.key = error.name();
-            this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(error.getMessage(), error.name());
+            this.key = error.name().toLowerCase();
+            this.message = error.getMessage();
         } else {
             this.code = Constant.RESULT_OK_CODE;
             this.data = data;
-            this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(Constant.SUCCESS, Constant.SUCCESS);
+            this.message = Constant.SUCCESS;
         }
     }
 
@@ -66,7 +66,8 @@ public class Result<T> implements VO {
     public Result(T data, String key) {
         this.code = Constant.RESULT_OK_CODE;
         this.data = data;
-        this.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(Constant.SUCCESS, key);
+        this.key = key;
+        this.message = Constant.SUCCESS;
     }
 
     public static <T> Result success(T data, String instruction) {
@@ -151,9 +152,9 @@ public class Result<T> implements VO {
 
     private static Result fail(BusinessException business) {
         Result result = new Result();
-        result.key = business.getErrorSupport().name();
+        result.key = business.getErrorSupport().name().toLowerCase();
         result.code = business.getErrorSupport().getCode();
-        result.message = ResultI18nMessageAssemblerProvider.getProvider().assemble(business);
+        result.message = business.getMessage();
         return result;
     }
 
