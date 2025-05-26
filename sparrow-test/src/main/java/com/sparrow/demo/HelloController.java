@@ -5,6 +5,7 @@ import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.param.ParamDemo;
 import com.sparrow.protocol.*;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.servlet.ServletContainer;
 import com.sparrow.support.Authenticator;
@@ -104,7 +105,7 @@ public class HelloController {
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
         String sign = authenticator.sign(loginToken, new LoginUserStatus(1, System.currentTimeMillis() + 100000000000L));
-        servletContainer.rootCookie(User.PERMISSION, sign, 6);
+        servletContainer.cookie(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN, sign, 6);
         Result result = new Result<>(loginToken, "login_success");
         return ViewWithModel.transit("/login_success", "/", result);
     }
