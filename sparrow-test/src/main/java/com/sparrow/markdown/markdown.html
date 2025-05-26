@@ -1,0 +1,92 @@
+<hr/>
+<h1>frontmatter: <a href="https://jekyllrb.com/docs/front-matter/">https://jekyllrb.com/docs/front-matter/</a></h1>
+<h2>layout: post
+    title: Blogging Like a Hacker</h2>
+<h2>Markdown Basic Syntax</h2>
+<p>I just love <strong>bold text</strong>. Italicized text is the <em>cat's meow</em>. At the command prompt, type
+    <code>nano</code>.</p>
+<p>My favorite markdown editor is <a href="https://github.com/bytedance/bytemd">ByteMD</a>.</p>
+<ol>
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item</li>
+</ol>
+<blockquote>
+    <p>Dorothy followed her through many of the beautiful rooms in her castle.</p>
+</blockquote>
+<pre><code class="language-js">import gfm from '@bytemd/plugin-gfm'
+import { Editor, Viewer } from 'bytemd'
+
+const plugins = [
+  gfm(),
+  // Add more plugins here
+]
+
+const editor = new Editor({
+  target: document.body, // DOM to render
+  props: {
+    value: '',
+    plugins,
+  },
+})
+
+editor.on('change', (e) =&gt; {
+  editor.$set({ value: e.detail.value })
+})
+</code></pre>
+<h2>GFM Extended Syntax</h2>
+<p>Automatic URL Linking: <a href="https://github.com/bytedance/bytemd">https://github.com/bytedance/bytemd</a></p>
+<p>
+    <del>The world is flat.</del>
+    We now know that the world is round.
+</p>
+<ul>
+    <li><input checked="" disabled="" type="checkbox"> Write the press release</li>
+    <li><input disabled="" type="checkbox"> Update the website</li>
+    <li><input disabled="" type="checkbox"> Contact the media</li>
+</ul>
+<table>
+    <thead>
+    <tr>
+        <th>Syntax</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Header</td>
+        <td>Title</td>
+    </tr>
+    <tr>
+        <td>Paragraph</td>
+        <td>Text</td>
+    </tr>
+    </tbody>
+</table>
+<h2>Footnotes</h2>
+<p>Here's a simple footnote,[^1] and here's a longer one.[^bignote]</p>
+<p>[^1]: This is the first footnote.
+    [^bignote]: Here's one with multiple paragraphs and code.</p>
+<pre><code>Indent paragraphs to include them in the footnote.
+
+`{ my code }`
+
+Add as many paragraphs as you like.
+</code></pre>
+<h2>Gemoji</h2>
+<p>Thumbs up: :+1:, thumbs down: :-1:.</p>
+<p>Families: :family_man_man_boy_boy:</p>
+<p>Long flags: :wales:, :scotland:, :england:.</p>
+<h2>Math Equation</h2>
+<p>Inline math equation: $a+b$</p>
+<p>$$
+    \displaystyle \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2
+    \right)
+    $$</p>
+<h2>Mermaid Diagrams</h2>
+<pre><code class="language-mermaid">graph TD;
+  A--&gt;B;
+  A--&gt;C;
+  B--&gt;D;
+  C--&gt;D;
+</code></pre>
