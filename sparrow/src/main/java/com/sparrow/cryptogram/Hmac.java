@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class Hmac {
     private static Logger logger = LoggerFactory.getLogger(Hmac.class);
@@ -73,7 +74,7 @@ public class Hmac {
     public String cryptogramBase64(String algorithm, String srcString, String secretKey) {
         try {
             byte[] oauthSignature = this.cryptogram(algorithm, srcString, secretKey);
-            return Base64.encodeBytes(oauthSignature);
+            return Base64.getEncoder().encodeToString(oauthSignature);
         } catch (Exception e) {
             logger.error("encoder bytes error", e);
             return null;

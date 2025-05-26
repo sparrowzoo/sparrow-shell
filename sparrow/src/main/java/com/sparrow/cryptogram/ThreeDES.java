@@ -32,6 +32,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
 
 public class ThreeDES {
 
@@ -70,13 +71,13 @@ public class ThreeDES {
 
     public String encrypt(String key, String text, String cipherAlgorithm) {
         byte[] encryptBytes = this.encryptByAlgorithm(key, text, cipherAlgorithm);
-        return Base64.encodeBytes(encryptBytes);
+        return Base64.getEncoder().encodeToString(encryptBytes);
     }
 
     public String decrypt(String key, String encrypted, String cipherAlgorithm) {
         byte[] encryptBytes = null;
         try {
-            encryptBytes = Base64.decode(encrypted);
+            encryptBytes = Base64.getDecoder().decode(encrypted);
         } catch (Exception e) {
             logger.error("charset not support", e);
         }

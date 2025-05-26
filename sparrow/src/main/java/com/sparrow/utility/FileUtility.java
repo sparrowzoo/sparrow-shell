@@ -19,7 +19,6 @@ package com.sparrow.utility;
 
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.cryptogram.Base64;
 import com.sparrow.io.file.FileNameProperty;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.constant.Constant;
@@ -38,6 +37,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.zip.ZipOutputStream;
@@ -539,7 +539,7 @@ public class FileUtility {
             }
         }
         try {
-            byte[] b = Base64.decode(base64str);
+            byte[] b = Base64.getDecoder().decode(base64str);
             for (int i = 0; i < b.length; ++i) {
                 if (b[i] < 0) {
                     b[i] += 256;

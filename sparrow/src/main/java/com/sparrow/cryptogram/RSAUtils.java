@@ -31,6 +31,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 public class RSAUtils {
     private static Logger log = LoggerFactory.getLogger(RSAUtils.class);
@@ -69,7 +70,7 @@ public class RSAUtils {
         //移除空白字符
         privateKey = privateKey.replaceAll("\\s", "");
         // 私钥要用PKCS8进行处理
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Base64.decode(privateKey));
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey));
         KeyFactory keyFactory = KeyFactory.getInstance(RSA);
         try {
             return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
@@ -81,7 +82,7 @@ public class RSAUtils {
 
     public static RSAPublicKey getRSAPublicKey(String publicKey) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         publicKey = publicKey.replaceAll("\\s", "");
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.decode(publicKey));
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey));
         KeyFactory keyFactory = KeyFactory.getInstance(RSA);
         try {
             return (RSAPublicKey) keyFactory.generatePublic(keySpec);
@@ -98,7 +99,7 @@ public class RSAUtils {
             Cipher cipher = Cipher.getInstance(RSA);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] result = cipher.doFinal(content.getBytes());
-            return Base64.encodeBytes(result);
+            return Base64.getEncoder().encodeToString(result);
         } catch (Exception e) {
             log.error("encrypt by publicKey fail ,content:[{}]", content, e);
             throw e;
@@ -111,7 +112,7 @@ public class RSAUtils {
             Cipher cipher = Cipher.getInstance(RSA);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
 
-            byte[] result = cipher.doFinal(Base64.decode(content.getBytes()));
+            byte[] result = cipher.doFinal(Base64.getDecoder().decode(content.getBytes()));
             return new String(result, StandardCharsets.UTF_8);
         } catch (Exception e) {
             log.error("encrypt by publicKey fail ,content:[{}]", content, e);
@@ -124,13 +125,13 @@ public class RSAUtils {
         Signature sign = Signature.getInstance(SHA256_WITH_RSA);
         sign.initSign(privateKey);
         sign.update(message.getBytes(StandardCharsets.UTF_8));
-        return Base64.encodeBytes(sign.sign());
+        return Base64.getEncoder().encodeToString(sign.sign());
     }
 
     public static boolean verify(String message, String sign, PublicKey publicKey) throws Exception {
         Signature signature = Signature.getInstance(SHA256_WITH_RSA);
         signature.initVerify(publicKey);
         signature.update(message.getBytes(StandardCharsets.UTF_8));
-        return signature.verify(Base64.decode(sign));
+        return signature.verify(Base64.getDecoder().decode(sign));
     }
 }

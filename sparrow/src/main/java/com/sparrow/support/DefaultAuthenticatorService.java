@@ -17,7 +17,6 @@
 package com.sparrow.support;
 
 import com.sparrow.core.spi.JsonFactory;
-import com.sparrow.cryptogram.Base64;
 import com.sparrow.cryptogram.Hmac;
 import com.sparrow.exception.Asserts;
 import com.sparrow.json.Json;
@@ -28,9 +27,9 @@ import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.utility.JSUtility;
 import com.sparrow.utility.StringUtility;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -93,7 +92,7 @@ public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
         String userInfo = this.json.toString(loginUser);
         String signature = Hmac.getInstance().getSHA1Base64(userInfo,
                 this.getEncryptKey());
-        String token = Base64.encodeBytes(userInfo.getBytes(StandardCharsets.UTF_8)) + "." + signature;
+        String token = Base64.getEncoder().encodeToString(userInfo.getBytes(StandardCharsets.UTF_8)) + "." + signature;
         return JSUtility.encodeURIComponent(token);
     }
 
@@ -105,11 +104,8 @@ public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
         String userInfo = tokens[0];
         String signature = tokens[1];
 
-        try {
-            userInfo = new String(Base64.decode(userInfo), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new BusinessException(SparrowError.USER_TOKEN_ERROR);
-        }
+        userInfo = new String(Base64.getDecoder().decode(userInfo), StandardCharsets.UTF_8);
+
         String signatureOld = Hmac.getInstance().getSHA1Base64(userInfo,
                 this.getDecryptKey());
         if (signature.equals(signatureOld)) {
