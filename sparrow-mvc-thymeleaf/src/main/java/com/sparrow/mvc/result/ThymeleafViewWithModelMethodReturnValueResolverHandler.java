@@ -24,6 +24,7 @@ import com.sparrow.mvc.PageSwitchMode;
 import com.sparrow.mvc.ThymeleafEngineUtils;
 import com.sparrow.mvc.result.impl.ViewWithModelMethodReturnValueResolverHandlerImpl;
 import com.sparrow.protocol.constant.Extension;
+import com.sparrow.support.web.WebConfigReader;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,9 +41,9 @@ public class ThymeleafViewWithModelMethodReturnValueResolverHandler extends View
     protected String assembleUrl(String referer, String defaultSuccessUrl, String url, PageSwitchMode pageSwitchMode,
                                  String[] urlArgs) {
         String assembleUrl = super.assembleUrl(referer, defaultSuccessUrl, url, pageSwitchMode, urlArgs);
-        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
-        String pagePrefix = configReader.getValue(Config.TEMPLATE_ENGINE_PREFIX, "/template");
-        String extension = configReader.getValue(Config.TEMPLATE_ENGINE_SUFFIX, Extension.HTML);
+        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+        String pagePrefix = configReader.getTemplateEnginePrefix();
+        String extension = configReader.getTemplateEngineSuffix();
 
         if (assembleUrl.startsWith(pagePrefix)) {
             assembleUrl = assembleUrl.substring(pagePrefix.length());

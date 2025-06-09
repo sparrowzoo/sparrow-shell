@@ -1,0 +1,30 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>500 ${exception_result.code}-${e:i18n(exception_result.key)}-${website_name}</title>
+    <meta content="500 error" name="keywords"/>
+    <meta content="${e:i18n(exception_result.key)}" name="description"/>
+    <meta name="application-name" content="${website_name}"/>
+    <meta name="msapplication-tooltip" content="${website_name}"/>
+    <th:block th:include="/frames::global_resource"/>
+</head>
+<body>
+<div class="body">
+    <div class="header">
+        <h1>{flash_exception_result.key}</h1>
+        <h2>
+            ERROR_CODE:{flash_exception_result.code}<br/>
+            {flash_exception_result.key}<br/>
+        </h2>
+    </div>
+    <div class="content">
+        <br/>
+
+        <span url="${root_path}/${pageContext.request.queryString}" id="timer">50000</span>秒以后将自动跳转,或者<a href="${rootPath}/${pageContext.request.queryString}" target="_self">直接点击这里跳转</a>
+        <script type="text/javascript">
+            $.waitRedirect("timer");
+        </script>
+        <a href="${root_path}">或点击这里,直接返回首页</a>
+    </div>
+</div>
+</body>
+</html>

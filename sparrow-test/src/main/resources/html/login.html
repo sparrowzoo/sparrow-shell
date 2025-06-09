@@ -1,0 +1,70 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户登录-程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+</head>
+<body>
+
+<div class="header">
+    <h1>麻雀窝用户登录</h1>
+    <h2>
+        还没有帐号?
+        <a href="http://passport.sparrowzoo.com/register">立即注册</a>
+    </h2>
+</div>
+
+<div class="content">
+    <form action="/login.do" class="pure-form pure-form-aligned" method="post">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="txtUserName">
+                    用户名
+                </label>
+                <input class="input" id="txtUserName" name="userName" onblur='$.v.isNull(loginInfo,this);'
+                       onfocus='$.v.showMessage(loginInfo,this);' type="text"/>
+                <span class="error" id="errorUserName" name="login_user_name" th:text="${login_user_name}"></span>
+            </div>
+            <div class="pure-control-group">
+                <label>
+                    密 码
+                </label>
+                <input class="input" id="txtPassword"
+                       name="password"
+                       onblur="$.v.isNull(loginInfo,this);" onfocus="$.v.showMessage(loginInfo,this);"
+                       type="password"/>
+                <span class="error" id="errorPassword" name="login_password"></span>
+            </div>
+            <div class="pure-control-group">
+                <label>
+                    验证码
+                </label>
+                <input class="input" id="txtValidateCode"
+                       maxlength="4" name="captcha"
+                       onblur="$.v.isNull(loginInfo,this);" onfocus="$.v.showMessage(loginInfo,this);" type="text"/>
+
+                <img id="imgLoginValidateCode"
+                     onclick="$(this).fresh()" src="/validate-code"/>
+                <a href="javascript:$('#imgLoginValidateCode').fresh();"> 看不清 换一张</a>
+                <span class="error" id="errorValidateCode" name="login_validate_code"
+                      th:text="${login_validate_code}"></span>
+            </div>
+
+            <div class="pure-controls">
+                <label class="pure-checkbox" for="chbLoginDays">
+                    <input id="chbLoginDays" name="loginDays" type="checkbox" value="14"> 两周直接登录(家庭登录模式)<a
+                        href="http://passport.sparrowzoo.com/password/find">忘记密码</a><br/>
+                    <span class="highlight">温馨提示</span>为了您的密码安全,如果您在网吧等公共场所请不要勾选此项
+                </label>
+
+                <button class="pure-button pure-button-primary" onclick="$.v.getValidateResult(loginInfo);" onenter="true"
+                        type="button">登录
+                </button>
+            </div>
+        </fieldset>
+        <input name="redirectUrl" type="hidden" value=""/>
+    </form>
+</div>
+</body>
+</html>

@@ -21,9 +21,13 @@ import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.constant.Extension;
+import com.sparrow.support.web.WebConfigReader;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.dialect.SpringStandardDialect;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -54,36 +58,39 @@ public class ThymeleafEngineUtils {
                 return;
             }
 
-            ServletContext servletContext = filterConfig.getServletContext();
-            String exp = filterConfig.getInitParameter("template_expression");
-//            if ("spring".equals(exp)) {
-//                SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-//                templateResolver.setPrefix("/WEB-INF/templates/");
-//                templateResolver.setSuffix(".html");
-//                // HTML is the default value, added here for the sake of clarity.
-//                templateResolver.setTemplateMode(TemplateMode.HTML);
-//                // Template cache is true by default. Set to false if you want
-//                // templates to be automatically updated when modified.
-//                templateResolver.setCacheable(true);
-//                // SpringTemplateEngine automatically applies SpringStandardDialect and
-//                // enables Spring's own MessageSource message resolution mechanisms.
-//                SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
-//                springTemplateEngine.setTemplateResolver(templateResolver);
-//                // Enabling the SpringEL compiler with Spring 4.2.4 or newer can
-//                // speed up execution in most scenarios, but might be incompatible
-//                // with specific cases when expressions in one template are reused
-//                // across different data types, so this flag is "false" by default
-//                // for safer backwards compatibility.
-//                springTemplateEngine.setEnableSpringELCompiler(true);
-//                templateEngine = springTemplateEngine;
-//                return;
-////            }
+            WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
+            String extension = configReader.getTemplateEngineSuffix();
+            String pagePrefix = configReader.getTemplateEnginePrefix();
 
+            ServletContext servletContext = filterConfig.getServletContext();
             innerServletContext = servletContext;
-            ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
+            String exp = filterConfig.getInitParameter("template_expression");
+            if ("spring".equals(exp)) {
+                SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+                templateResolver.setPrefix(pagePrefix);
+                templateResolver.setSuffix(extension);
+                // HTML is the default value, added here for the sake of clarity.
+                templateResolver.setTemplateMode(TemplateMode.HTML);
+                // Template cache is true by default. Set to false if you want
+                // templates to be automatically updated when modified.
+                templateResolver.setCacheable(true);
+
+                templateResolver.setApplicationContext(new FileSystemXmlApplicationContext());
+                // SpringTemplateEngine automatically applies SpringStandardDialect and
+                // enables Spring's own MessageSource message resolution mechanisms.
+                SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
+                springTemplateEngine.setTemplateResolver(templateResolver);
+                // Enabling the SpringEL compiler with Spring 4.2.4 or newer can
+                // speed up execution in most scenarios, but might be incompatible
+                // with specific cases when expressions in one template are reused
+                // across different data types, so this flag is "false" by default
+                // for safer backwards compatibility.
+                springTemplateEngine.setEnableSpringELCompiler(true);
+                templateEngine = springTemplateEngine;
+                return;
+            }
+
             ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
-            String extension = configReader.getValue(Config.TEMPLATE_ENGINE_SUFFIX, Extension.HTML);
-            String pagePrefix = configReader.getValue(Config.TEMPLATE_ENGINE_PREFIX, "/template");
             resolver.setPrefix(pagePrefix);
             resolver.setSuffix(extension);
             resolver.setTemplateMode(TemplateMode.HTML);

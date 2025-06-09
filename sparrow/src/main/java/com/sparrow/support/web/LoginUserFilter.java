@@ -70,7 +70,7 @@ public class LoginUserFilter extends AbstractLoginFilter {
                             "mock-user",
                             "mock-nick-name",
                             "header",
-                            "device id", 3);
+                            "device id", 3D);
                 }
             }
             ThreadContext.bindLoginToken(loginUser);

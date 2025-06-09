@@ -1,41 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-
-    <!--ioc 容器的location地址 可以缺省，默认为beans.xml 不要加classpath:-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/sparrow_application_context.xml</param-value>
     </context-param>
-    <!--默认的全局配置文件 可以缺少，默认为 /system_config.properties 不要加classpath:-->
     <context-param>
         <param-name>configLocation</param-name>
-        <param-value>/system_config.properties</param-value>
+        <param-value>/sparrow_config.properties</param-value>
     </context-param>
 
-    <!--Bean容器初始化侦听器 -->
-    <listener>
-        <listener-class>com.sparrow.mvc.ContextLoaderListener</listener-class>
-    </listener>
-
-
-    <filter>
-        <filter-name>GlobalAttribute</filter-name>
-        <filter-class>com.sparrow.web.support.SparrowGlobalAttributeFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>GlobalAttribute</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
 
     <!-- 请求编码过滤器 -->
-
-
     <filter>
         <filter-name>CharSetEncoding</filter-name>
         <filter-class>com.sparrow.support.web.CharSetEncodingFilter</filter-class>
@@ -49,31 +27,26 @@
     </filter-mapping>
 
     <filter>
-        <filter-name>DispatcherFilter</filter-name>
-        <filter-class>com.sparrow.mvc.DispatcherFilter</filter-class>
-        <init-param>
-            <param-name>except_url</param-name>
-            <param-value>/qrcode,/captcha,/servlet-life-cycle</param-value>
-        </init-param>
+        <filter-name>GlobalAttributeFilter</filter-name>
+        <filter-class>com.sparrow.web.support.SparrowGlobalAttributeFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>DispatcherFilter</filter-name>
-        <url-pattern>*</url-pattern>
+        <filter-name>GlobalAttributeFilter</filter-name>
+        <url-pattern>/*</url-pattern>
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>REQUEST</dispatcher>
-        <!--是否使用则业务端决定，框架建议注掉-->
-        <!--<dispatcher>FORWARD</dispatcher>-->
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-
-
-    <!-- 生成验证码 -->
+    <listener>
+        <listener-class>com.sparrow.mvc.ContextLoaderListener</listener-class>
+    </listener>
     <servlet>
-        <servlet-name>Captcha</servlet-name>
+        <servlet-name>ValidateCode</servlet-name>
         <servlet-class>com.sparrow.web.support.SparrowCaptchaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Captcha</servlet-name>
-        <url-pattern>/captcha</url-pattern>
+        <servlet-name>ValidateCode</servlet-name>
+        <url-pattern>/validate-code</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>qrcode</servlet-name>
@@ -84,21 +57,31 @@
         <url-pattern>/qrcode</url-pattern>
     </servlet-mapping>
 
-
-    <servlet>
-        <servlet-name>ServletLifeCycle</servlet-name>
-        <servlet-class>com.sparrow.web.ServletLifeCycle</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ServletLifeCycle</servlet-name>
-        <url-pattern>/servlet-life-cycle</url-pattern>
-    </servlet-mapping>
-
+    <filter>
+        <filter-name>DispatcherFilter</filter-name>
+        <filter-class>com.sparrow.mvc.ThymeleafDispatcherFilter</filter-class>
+        <init-param>
+            <param-name>except_url</param-name>
+            <param-value>/qrcode,/validate-code,/favicon.ico</param-value>
+        </init-param>
+        <init-param>
+            <param-name>template_expression</param-name>
+            <param-value>spring</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>DispatcherFilter</filter-name>
+        <url-pattern>*</url-pattern>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+        <!--是否使用则业务端决定，框架建议注掉-->
+        <!--        <dispatcher>FORWARD</dispatcher>-->
+    </filter-mapping>
     <session-config>
         <!-- session超时时间单位为分钟 -->
-        <session-timeout>120</session-timeout>
+        <session-timeout>600</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>template/welcome.jsp</welcome-file>
+        <welcome-file>/index</welcome-file>
     </welcome-file-list>
 </web-app>

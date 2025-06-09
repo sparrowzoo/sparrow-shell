@@ -1,0 +1,109 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <script language="JavaScript" type="text/javascript">
+        require(['domReady!'], function (dom) {
+            $("#tabs").tabs();
+            $("#tabeditor").tabs();
+        });
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1> tab 页切换动画</h1>
+            <h2>class="tab"为自动执行脚本 否则手动执行</h2>
+        </div>
+        <div class="content">
+             <pre>
+$("#tabs").tabs();
+</pre>
+
+            <div class="tab" id="tabs">
+                <div class="pure-menu pure-menu-horizontal">
+                    <ul class="pure-menu-list" style="width: 100%;">
+                        <li class="pure-menu-item"><a class="pure-menu-link" href="#" rev="http://ww2w.baidu.com"><span>Selected</span></a>
+                        </li>
+                        <li class="pure-menu-item"><a class="pure-menu-link" href="#" rev="http://www2.sina.com"><span>Normal</span></a>
+                        </li>
+                        <li class="pure-menu-item more"><a target="_blank">MORE</a></li>
+                    </ul>
+                </div>
+
+                <div class="tab-content">
+                    <div class="block">
+                        <ul class="items">
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                        </ul>
+                    </div>
+                    <div class="none">
+
+                        <ul class="items">
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+                            <li class="item"><a class="link">www.baidu.com</a><span class="text">111</span></li>
+
+
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab" id="tabeditor">
+                <div class="pure-menu pure-menu-horizontal" id="sparrow_29053584709821">
+                    <ul class="pure-menu-list" id="sparrow_12565494756422257" style="width: 100%;">
+                        <li class="pure-menu-item pure-menu-selected" id="sparrow_7634657658249133" tab_index="0"><a
+                                class="pure-menu-link" href="javascript:void(0);" id="sparrow_017794983137893183"
+                                target="_self"><span>本地图片</span></a></li>
+                        <li class="pure-menu-item" id="sparrow_3746897690425648" tab_index="1">
+                            <a class="pure-menu-link"
+                               href="javascript:void(0);"
+                               id="sparrow_9473977880208615"
+                               target="_self"><span>网络图片</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="sparrow_8933450649348391">
+                    <div class="block" id="threadeditor_localUploadImgTab">
+                        <div id="editor_uploadImgContainer"
+                             style="width:100%;height:auto;overflow:hidden;padding:2px;"></div>
+                        <iframe class="file-frame" frameborder="0" id="editor_fileUpload_image" name="editor_fileUpload"
+                                src="http://script.sparrowzoo.com/FileUpload?pathKey=thread&amp;editor=editor"></iframe>
+                        <br></div>
+                    <div class="none">图片URL:<input id="editor_txtImage" style="width:300px;" type="text"><br><span
+                            id="editor_spanImageErrorMessage"></span><br><input onclick="editor.insertImage();"
+                                                                                type="button"
+                                                                                value="插入图片"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>

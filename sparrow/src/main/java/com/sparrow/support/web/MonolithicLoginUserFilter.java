@@ -150,7 +150,7 @@ public class MonolithicLoginUserFilter extends AbstractLoginFilter {
             return;
         }
         if (mockLoginUser) {
-            loginUser = LoginUser.create(1L,"", 1, "mock-user", "mock-nick-name", "header", "device id", 3);
+            loginUser = LoginUser.create(1L,"", 1, "mock-user", "mock-nick-name", "header", "device id", 3D);
             this.loginSuccess(loginUser, filterChain, req, rep);
             return;
         }

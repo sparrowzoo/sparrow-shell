@@ -1,0 +1,50 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1> 进度条...</h1>
+        </div>
+
+
+        <div class="content">
+            <input onclick="progress();" style="background: yellowgreen;height: 50px;width: 200px;" type="button"
+                   value="点击我可以显示哟~~"/>
+        </div>
+
+    </div>
+</div>
+<script type="application/javascript">
+    function progress() {
+        $(this).progressbar(
+            function (progress) {
+
+                if (parseInt(progress.s.style.width, 10) >= 100) {
+                    progress.s.style.width = "100%";
+                    progress.s.innerHTML = "100%";
+                    progress.end();
+                    window.setTimeout(progress.remove, 5000);
+                } else {
+                    progress.s.style.width = (parseInt(progress.s.style.width, 10) + Math
+                            .floor(Math.random() * 3))
+                        + "%";
+                    progress.s.innerHTML = progress.s.style.width;
+                }
+            }, {
+                style: 'width:1000px;height:30px;border:#ccc 1px solid;',
+                progressStyle: 'background:#ccc;height:30px;'
+            });
+    }
+</script>
+</body>
+
+</html>

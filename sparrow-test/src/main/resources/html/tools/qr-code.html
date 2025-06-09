@@ -1,0 +1,49 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户登录-程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <script type="text/javascript">
+        document.ready(function () {
+            $("#imgQRCode").source().src = $.url.root + "/qrcode?code=http://www.sparrowzoo.net";
+            $("#btnQRCode").bind("onclick", function () {
+                $("#imgQRCode").source().src = $.url.root + "/qrcode?code=" + $("#txtQRCode").value();
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1>二维码在线生成器</h1>
+        </div>
+
+
+        <div style="max-width: 100%;" class="content">
+            <form class="pure-form pure-form-aligned">
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label for="txtQRCode">二维码字符</label>
+                        <input id="txtQRCode" type="text" placeholder="输入二维码字符">
+                    </div>
+
+                    <div class="pure-controls">
+                        <input id="btnQRCode" class="pure-button pure-button-primary" type="button" value="生成二维码"/>
+                    </div>
+
+                    <div class="pure-controls">
+                        <img id="imgQRCode"/>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<th:block th:include="/frames::footer"/>
+</body>
+</html>

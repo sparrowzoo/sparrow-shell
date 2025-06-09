@@ -97,7 +97,7 @@ public abstract class AbstractServletContainer implements ServletContainer {
     }
 
     @Override
-    public void cookie(String key, String value, Integer expireDays) {
+    public void cookie(String key, String value, Double expireDays) {
         CookieUtility.set(this.getResponse(), key, value, expireDays);
     }
 

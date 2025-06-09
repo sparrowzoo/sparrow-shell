@@ -52,7 +52,7 @@ public class RSAUtilsTest {
         loginUser.setUserName("harry");
         loginUser.setAvatar("http://avatar.com");
         loginUser.setDeviceId("");
-        loginUser.setDays(2);
+        loginUser.setDays(2D);
         loginUser.setExpireAt(2L);
 //        loginUser.setExtensions();
 

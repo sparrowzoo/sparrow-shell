@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 
 public class EnvironmentSupport {
     private static Logger logger = LoggerFactory.getLogger(EnvironmentSupport.class);
@@ -170,7 +171,7 @@ public class EnvironmentSupport {
                 fileInputStream = EnvironmentSupport.class.getResourceAsStream(relativeFileName);
             }
             if (fileInputStream == null) {
-                fileInputStream = new FileInputStream(new File(relativeFileName));
+                fileInputStream = Files.newInputStream(new File(relativeFileName).toPath());
             }
         } catch (Exception e) {
             logger.error("input stream error", e);

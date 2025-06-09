@@ -69,22 +69,4 @@ public class JSUtility {
             return Symbol.EMPTY;
         }
     }
-
-//    /**
-//     * 通过js 设置Editor的编辑器内容 在后台设置以免在前端被html截断
-//     *
-//     * @param editorContent
-//     * @param editor
-//     * @return
-//     */
-//    public static String getEditorContent(String editor,
-//                                          String editorContent, String attach) {
-//        return String
-//                .format("%1$s.initContent=function(){"
-//                                + "%1$s.setEditorContent(decodeURIComponent(\"%2$s\"));};"
-//                                + "%1$s.attach.setParentObject(%1$s);"
-//                                + "%1$s.config.attach.uploadedJson=decodeURIComponent('%3$s');",
-//                        editor, encodeURIComponent(editorContent),
-//                        encodeURIComponent(attach));
-//    }
 }

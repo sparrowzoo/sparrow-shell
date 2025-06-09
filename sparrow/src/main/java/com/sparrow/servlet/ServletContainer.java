@@ -49,7 +49,7 @@ public interface ServletContainer {
 
     Cookie[] cookies();
 
-    void cookie(String key, String value, Integer expireDays);
+    void cookie(String key, String value, Double expireDays);
 
     Map<String, String> getParameters();
 

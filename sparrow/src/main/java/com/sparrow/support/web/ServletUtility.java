@@ -35,7 +35,7 @@ public class ServletUtility {
 
     private static final ServletUtility INSTANCE = new ServletUtility();
 
-    private ServletUtility() {
+    public ServletUtility() {
     }
 
     public static ServletUtility getInstance() {

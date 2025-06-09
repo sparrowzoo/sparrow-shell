@@ -32,7 +32,11 @@ public interface AuthenticatorConfigReader {
 
     Boolean getMockLoginUser();
 
-    Integer getTokenAvailableDays();
+    Double getTokenAvailableDays();
+
+    Double getLoginTokenAvailableDays();
+
+    Double getRememberMeDays();
 
     Integer getPlatform();
 }

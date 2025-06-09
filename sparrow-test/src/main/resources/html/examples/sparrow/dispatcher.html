@@ -1,0 +1,91 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+
+    <script language="JavaScript" type="text/javascript">
+        document.ready(function () {
+            PR.prettyPrint();
+            $.dispatcher.eventRegistry = [{
+                id: "btn1",//控件标签 id
+                eventName: "onclick",
+                delegate: function (e, srcElement) {
+                    alert(srcElement.value);
+                    srcElement.value = "update";
+                },//事件委托
+                //api: "api",//ajax请求的api
+                strategy: "insert",//策略 控件的 value
+            }, {
+                id: "btn1",//控件标签 id
+                delegate: function (e, srcElement) {
+                    alert(srcElement.value);
+                    srcElement.value = "insert";
+                },//事件委托
+                // api: "api",//ajax请求的api
+                strategy: "update",//策略 控件的 value
+            }];
+
+            $.dispatcher.register({
+                id: "btn2",//控件标签 id
+                delegate: function (e, srcElement) {
+                    alert(srcElement.value);
+                },//事件委托
+                //api: "api",//ajax请求的api
+            });
+            $.dispatcher.bind();
+        });
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1>Sparrow Dispatcher</h1>
+            <h2>Sparrow Dispatcher Controller</h2>
+        </div>
+
+
+        <pre class="prettyprint linenums:1">
+            require(['sparrow', 'domReady'], function ($, dom) {
+            $.dispatcher.eventRegistry = [{
+                id: "btn1",//控件标签 id
+                delegate: function (e, srcElement) {
+                    alert(srcElement.value);
+                    srcElement.value = "update";
+                },//事件委托
+                //api: "api",//ajax请求的api
+                strategy: "insert",//策略 控件的 value
+            }, {
+                id: "btn1",//控件标签 id
+                delegate: function (e, srcElement) {
+                    alert(srcElement.value);
+                    srcElement.value = "insert";
+                },//事件委托
+                // api: "api",//ajax请求的api
+                strategy: "update",//策略 控件的 value
+            }];
+
+            $.dispatcher.register({
+
+                id: "btn2",//控件标签 id
+                delegate: function (e, srcElement) {
+                    alert(srcElement.value);
+                },//事件委托
+                //api: "api",//ajax请求的api
+            });
+            $.dispatcher.bind();
+        });
+        </pre>
+        <div class="content">
+            <input type="button" id="btn1" class="pure-button" value="insert"/>
+            <input type="button" id="btn2" class="pure-button" value="delete"/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

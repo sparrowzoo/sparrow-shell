@@ -1,0 +1,52 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractDialect
+class AbstractProcessorDialect
+class ComputedOGNLExpression
+class ComputedSpelExpression
+interface IDialect << interface >>
+interface IExecutionAttributeDialect << interface >>
+interface IExpressionObjectDialect << interface >>
+interface IProcessorDialect << interface >>
+interface IStandardVariableExpressionEvaluator << interface >>
+interface ITemplateEngine << interface >>
+class OGNLVariableExpressionEvaluator
+class SPELVariableExpressionEvaluator
+class SpringStandardDialect
+class SpringTemplateEngine
+class StandardDialect
+class TemplateEngine
+
+AbstractDialect                       -[#008200,dashed]-^  IDialect                             
+AbstractProcessorDialect              -[#000082,plain]-^  AbstractDialect                      
+AbstractProcessorDialect              -[#008200,dashed]-^  IProcessorDialect                    
+ComputedOGNLExpression                +-[#820000,plain]-  OGNLVariableExpressionEvaluator      
+ComputedSpelExpression                +-[#820000,plain]-  SPELVariableExpressionEvaluator      
+IDialect                              -[#595959,dashed]->  IExecutionAttributeDialect           
+IDialect                              -[#595959,dashed]->  IExpressionObjectDialect             
+IDialect                              -[#595959,dashed]->  IProcessorDialect                    
+IExecutionAttributeDialect            -[#008200,plain]-^  IDialect                             
+IExpressionObjectDialect              -[#008200,plain]-^  IDialect                             
+IProcessorDialect                     -[#008200,plain]-^  IDialect                             
+IStandardVariableExpressionEvaluator  -[#595959,dashed]->  OGNLVariableExpressionEvaluator      
+ITemplateEngine                       -[#595959,dashed]->  TemplateEngine                       
+OGNLVariableExpressionEvaluator       -[#595959,dashed]->  ComputedOGNLExpression               : "«create»"
+OGNLVariableExpressionEvaluator       -[#008200,dashed]-^  IStandardVariableExpressionEvaluator 
+SPELVariableExpressionEvaluator       -[#008200,dashed]-^  IStandardVariableExpressionEvaluator 
+SpringStandardDialect                 -[#000082,plain]-^  StandardDialect                      
+SpringTemplateEngine                  -[#008200,dashed]-^  ITemplateEngine                      
+SpringTemplateEngine                 "1" *-[#595959,plain]-> "SPRINGSTANDARD_DIALECT\n1" SpringStandardDialect                
+SpringTemplateEngine                  -[#000082,plain]-^  TemplateEngine                       
+StandardDialect                       -[#000082,plain]-^  AbstractProcessorDialect             
+StandardDialect                       -[#008200,dashed]-^  IExecutionAttributeDialect           
+StandardDialect                       -[#008200,dashed]-^  IExpressionObjectDialect             
+StandardDialect                      "1" *-[#595959,plain]-> "variableExpressionEvaluator\n1" IStandardVariableExpressionEvaluator 
+StandardDialect                       -[#595959,dashed]->  OGNLVariableExpressionEvaluator      : "«create»"
+TemplateEngine                        -[#595959,dashed]->  IDialect                             
+TemplateEngine                        -[#008200,dashed]-^  ITemplateEngine                      
+TemplateEngine                        -[#595959,dashed]->  StandardDialect                      : "«create»"
+@enduml

@@ -28,6 +28,7 @@ import com.sparrow.servlet.ServletContainer;
 import com.sparrow.support.Authenticator;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.vo.HelloVO;
+import com.sparrow.vo.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -78,6 +79,13 @@ public class HelloController {
         return ViewWithModel.forward("thread", new HelloVO("服务器的threadId=" + threadId + ",pageIndex=" + pageIndex));
     }
 
+    public ViewWithModel thymeleaf(HttpServletRequest request) {
+        com.sparrow.vo.User user = new User();
+        user.setUserId("我是服务器的用户ID 小志");
+        request.setAttribute("user", user);
+        return ViewWithModel.forward("/thymeleaf-test");
+    }
+
     public HelloVO json() {
         return new HelloVO("够意思吧，json不用页面");
     }
@@ -108,11 +116,11 @@ public class HelloController {
         loginToken.setAvatar("http://localhost");
         loginToken.setDeviceId(servletUtility.getDeviceId(request));
         loginToken.setExpireAt(System.currentTimeMillis() + 1000 * 60 * 60);
-        loginToken.setDays(20);
+        loginToken.setDays(20D);
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
         String sign = authenticatorService.sign(loginToken, new LoginUserStatus(LoginUserStatus.STATUS_NORMAL, 1L));
-        servletContainer.cookie(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN, sign, 6);
+        servletContainer.cookie(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN, sign, 6D);
         return ViewWithModel.redirect("welcome", loginToken);
     }
 

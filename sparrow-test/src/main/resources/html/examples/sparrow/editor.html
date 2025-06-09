@@ -1,0 +1,67 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户登录-程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <script type="text/javascript">
+        var editor = null;
+        var editor2 = null;
+
+        function showOuterHTML() {
+            alert(editor.getEditorContent());
+        }
+
+        document.ready(function () {
+            $.url.upload = "http://upload.sparrowzoo.com";
+            editor = new Sparrow.editor("editor");
+            editor.initImageUploadEvent();
+            editor.config.attach.key = "forum";
+            editor2 = new Sparrow.editor("editor2");
+            editor.config.tool.adjust.adjustable = true;
+            editor2.config.style = "simple";
+
+            editor.initialize("divEditor");
+            editor.attach.validate = function () {
+                $("hdnContent").value = editor.getEditorContent();
+                return true;
+            };
+            editor.attach.setParentObject(editor);
+            editor2.initialize("divEditor2");
+            document.domain = $.browser.cookie.root_domain;
+        });
+
+        require(['sparrow', 'domReady!'], function ($, dom) {
+
+        });
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1>在线编辑器</h1>
+            <h2>sparrow editor</h2>
+        </div>
+
+        <div class="content">
+            <input id="txtTitle" type="text"/>
+
+            <input id="hdnContent" type="text">
+            <input id="btnShowOuterHTML" type="button" value="显示内容"
+                   onclick="showOuterHTML();"/>
+
+            <div id="divEditor"
+                 style="width: 700px; height: 400px; border: #ccc 1px solid;"></div>
+            <div id="divEditor2"
+                 style="width:500px; height:300px; border: #ccc 1px solid;"></div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

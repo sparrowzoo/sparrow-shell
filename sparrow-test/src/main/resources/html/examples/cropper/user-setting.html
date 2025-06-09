@@ -1,0 +1,89 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <link href="http://r.sparrowzoo.net/ext/sparrowzoo/styles/avatar.css" rel="stylesheet" type="text/css"/>
+</head>
+
+
+<body>
+<th:block th:include="/frames::menu"/>
+
+<div id="layout">
+    <div id="main">
+        <div class="header">
+            <h1>渐变动画</h1>
+            <h2></h2>
+        </div>
+
+        <div class="content">
+
+            <div class="tab" id="tabs">
+                <div class="pure-menu pure-menu-horizontal">
+                    <ul class="pure-menu-list" style="width: 100%;">
+                        <li class="pure-menu-item"><a class="pure-menu-link" href="avatar"><span>用户头象</span></a>
+                        </li>
+                        <li class="pure-menu-item"><a class="pure-menu-link" href="user-setting"><span>用户信息</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="none">
+                    </div>
+                    <div class="block">
+                        <form action="/login.do" class="pure-form pure-form-aligned" method="post">
+                            <fieldset>
+                                <div class="pure-control-group">
+                                    <label for="txtNickName">
+                                        昵称
+                                    </label>
+                                    <input class="input" id="txtNickName" name="nickName"
+                                           onblur='$.v.isNull(loginInfo,this);'
+                                           onfocus='$.v.showMessage(loginInfo,this);' type="text"/>
+                                    <span class="error" id="errorNickName" name="login_nick_name"
+                                          th:text="${login_user_name}"></span>
+                                </div>
+                                <div class="pure-control-group">
+                                    <label for="txtPersonalSign">
+                                        个性签名
+                                    </label>
+                                    <textarea id="txtPersonalSign" name="personalSign"
+                                              onblur='$.v.isNull(loginInfo,this);'
+                                              onfocus='$.v.showMessage(loginInfo,this);' type="text"></textarea>
+                                    <span class="error" id="errorPersonalSign" name="login_nick_name"
+                                          th:text="${login_user_name}"></span>
+                                </div>
+                                <div class="pure-control-group">
+
+                                </div>
+
+                                <div class="pure-controls">
+                                    <label class="pure-checkbox" for="chbLoginDays">
+                                        <input id="chbLoginDays" name="loginDays" type="checkbox" value="14">
+                                        两周直接登录(家庭登录模式)<a
+                                            href="http://passport.sparrowzoo.com/password/find">忘记密码</a><br/>
+                                        <span class="highlight">温馨提示</span>为了您的密码安全,如果您在网吧等公共场所请不要勾选此项
+                                    </label>
+
+                                    <button class="pure-button pure-button-primary"
+                                            onclick="$.v.getValidateResult(loginInfo);" onenter="true"
+                                            type="button">登录
+                                    </button>
+                                </div>
+                            </fieldset>
+                            <input name="redirectUrl" type="hidden" value=""/>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</div>
+</body>
+</html>

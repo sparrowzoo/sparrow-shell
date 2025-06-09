@@ -1,0 +1,38 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sparrow 简单移动动画 &ndash; Sparrow JS Framework</title>
+    <th:block th:include="/frames::global_resource"/>
+    <script type="application/javascript">
+        $.win.okClick = function () {
+            alert("OK");
+            win.closeClick();
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1> 对话框效果</h1>
+        </div>
+
+
+        <div class="content">
+
+            <input type="button" value="屏幕中心显示message" onclick="$.message('test')"/>
+            <br/>
+            <br/>
+            <br/><br/><br/><br/><br/><br/>
+            <input type="button" value="当前控件上方显示message" onclick="$.message('test',this)"/>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

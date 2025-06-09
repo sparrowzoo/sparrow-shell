@@ -1,0 +1,47 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf spring el 替代 ognl</title>
+</head>
+<body>
+<h1>Thymeleaf spring </h1>
+<p>
+    https://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html
+</p>
+
+<h1><span th:text="${user.userId}"></span></h1>
+
+spring boot<h1><span th:text="${user?.userId}"></span></h1>
+
+html5 兼容
+<div data-th-text="${user.userId}" data-th-remove="tag"></div>
+<br/>
+
+<h1>
+    原生ognl 写法
+<!--    <h1><span th:text="${user?user.userId:''}"></span></h1>-->
+</h1>
+
+
+方法1：使用 th:block
+<th:block th:text="${user.userId}"/>
+<br/>
+
+
+方法2：使用 inline<br/>
+用户ID:[[${user.userId}]]
+<br/>
+不会html转义 [[${html}]]<br/>
+HTML转义,[(${html})]<br/>
+<br/>
+参考：https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#inlining
+<br/><br/>
+方法3：使用 th:remove
+<span th:text="${user.userId}" th:remove="tag"></span>
+
+<a data-th-href="${root_path}+'/test'">根路径</a>
+<a data-th-href="${resource}+'/test'">资源路径</a>
+<a data-th-href="${resource+'/test'}">资源路径</a>
+
+</body>
+</html>
+

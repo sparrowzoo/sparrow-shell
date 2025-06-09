@@ -1,0 +1,41 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${flash_exception_result?.message}"></title>
+    <meta content="" name="keywords"/>
+    <meta th:content="${flash_exception_result?.message}" name="description"/>
+    <th:block th:include="/frames::global_resource"/>
+    <script  type="text/javascript">
+        function clickRedirect(){
+           var queryString='[[${#httpServletRequest.getQueryString()}]]';
+            window.location.href=queryString;
+        }
+    </script>
+</head>
+<body>
+<script  type="text/javascript" src="http://r.sparrowzoo.net/scripts/baidu.js?v=1.0.1"></script>
+<div class="body">
+    <th:block th:include="/frames::banner"/>
+    <div class="header">
+        <h1><span th:text="${flash_exception_result?.message}"></span></h1>
+        <h2>
+
+        </h2>
+    </div>
+    <div class="content">
+        错误码：<span th:text="${flash_exception_result?.code}"></span><br/>
+        <br/>
+        <!--        <a th:href="@{${#httpServletRequest.getQueryString()}}">test hyper</a>-->
+        <input id="hdnQueryString" type="hidden" th:value="${#httpServletRequest.getQueryString()}"/>
+        <span id="timer">5000</span>秒以后将自动跳转,或者
+
+        <a href="javascript:void(0);" onclick="clickRedirect()" id="hyperQueryString" target="_self">直接点击这里跳转</a>
+
+        <script type="text/javascript">
+            $.waitRedirect("timer");
+        </script>
+        <a href="http://www.sparrowzoo.com">或点击这里,直接返回首页</a>
+    </div>
+</div>
+</body>
+</html>
+

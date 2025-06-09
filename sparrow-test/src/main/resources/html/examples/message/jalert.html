@@ -1,0 +1,53 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sparrow 简单移动动画 &ndash; Sparrow JS Framework</title>
+    <th:block th:include="/frames::global_resource"/>
+    <link href="http://r.sparrowzoo.net/styles/modal.css" rel="stylesheet" type="text/css"/>
+    <script type="application/javascript">
+        $.win.okClick = function () {
+            alert("OK");
+            win.closeClick();
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1> 对话框效果</h1>
+        </div>
+
+
+        <div class="content">
+            <input onclick="$.alert('恭喜!操作成功!','smile','title');" type="button"
+                   value="alert">
+            <input onclick="$.alert('继续?','ask','title');" type="button"
+                   value="ASK">
+
+            <input onclick="$.alert('sorry!FAIL!','sad','title');" type="button"
+                   value="SAD">
+
+            <input onclick="$.alert('sorry!lock!','lock','title');" type="button"
+                   value="LOCK">
+
+            <input onclick="$.alert('sorry!wait!','wait','title');" type="button"
+                   value="WAIT">
+
+            <input onclick="$.window({url:'/examples/message/window.html'})" type="button"
+                   value="弹出windows">
+
+
+            <input onclick="$.dialog({content:'内容',width:'500px',height:'300px'});" type="button"
+                   value="弹出自定义div">
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

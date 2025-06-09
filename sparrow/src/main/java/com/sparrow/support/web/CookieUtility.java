@@ -31,25 +31,25 @@ import javax.servlet.http.HttpServletResponse;
 public class CookieUtility {
     private static Logger logger = LoggerFactory.getLogger(CookieUtility.class);
 
-    public static void set(HttpServletResponse response, String key, String value, int days) {
+    public static void set(HttpServletResponse response, String key, String value, Double days) {
         Cookie cookie = new Cookie(key, JSUtility.encodeURIComponent(value));
         cookie.setPath("/");
         if (days > 0) {
-            cookie.setMaxAge(days * 24 * 60 * 60);
+            int maxAge = (int) (days * 24 * 60 * 60);
+            cookie.setMaxAge(maxAge);
         }
         response.addCookie(cookie);
     }
 
     public static String get(Cookie[] cookies, String key) {
         logger.debug("get cookie {}", key);
-        if (cookies == null || cookies.length == 0) {
+        if (cookies == null) {
             return null;
-        } else {
-            for (Cookie cookie : cookies) {
-                logger.debug("cookie {} value {}", cookie.getName(), cookie.getValue());
-                if (cookie.getName().equalsIgnoreCase(key)) {
-                    return JSUtility.decodeURIComponent(cookie.getValue());
-                }
+        }
+        for (Cookie cookie : cookies) {
+            logger.debug("cookie {} value {}", cookie.getName(), cookie.getValue());
+            if (cookie.getName().equalsIgnoreCase(key)) {
+                return JSUtility.decodeURIComponent(cookie.getValue());
             }
         }
         return null;

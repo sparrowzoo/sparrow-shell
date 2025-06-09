@@ -595,29 +595,26 @@ public class FileUtility {
     }
 
     public interface FileCopier {
-        void copy(String sourceFile, String targetFile);
+        void copy(String sourceFile);
     }
 
     public interface FolderFilter {
-        Boolean filter(String sourceFile, String targetFile);
+        Boolean filter(String sourceFile);
     }
 
-    public void recurseCopy(String source, String target) {
-        recurseCopy(source, target, null, null);
+    public void recurseCopy(String source) {
+        recurseCopy(source, null, null);
     }
 
-    public void recurseCopy(String source, String target, FileCopier fileCopier, FolderFilter folderFilter) {
+    public void recurseCopy(String source, FileCopier fileCopier, FolderFilter folderFilter) {
         java.io.File sourceFile = new java.io.File(source);
         if (!sourceFile.exists()) {
             logger.error("{} source is not exist", source);
             return;
         }
         if (sourceFile.isFile()) {
-            //也可以转换为字符串，进行字符串的替换操作
             if (fileCopier != null) {
-                fileCopier.copy(source, target);
-            } else {
-                FileUtility.getInstance().copy(source, target);
+                fileCopier.copy(source);
             }
             return;
         }
@@ -629,28 +626,14 @@ public class FileUtility {
             return;
         }
 
-        String parent = target;
         for (java.io.File f : files) {
             source = f.toString();
-            target = parent + java.io.File.separator + f.getName();
-            if (f.isDirectory() && fileCopier != null && folderFilter.filter(source, target)) {
+            if (fileCopier != null && folderFilter.filter(f.getName())) {
                 logger.error("directory {} is not copy", f.getAbsolutePath());
                 continue;
             }
-            if (f.isFile()) {
-                recurseCopy(source, target, fileCopier, folderFilter);
-                continue;
-            }
-
-            //准备进行目录的创建
-            java.io.File mkFile = new java.io.File(target);
-            if (!mkFile.exists()) {
-                //先将目录创建出来
-                boolean result = mkFile.mkdirs();
-                logger.info("created {},result:{}", target, result);
-            }
             //递归调用
-            recurseCopy(source, target, fileCopier, folderFilter);
+            recurseCopy(source, fileCopier, folderFilter);
         }
     }
 

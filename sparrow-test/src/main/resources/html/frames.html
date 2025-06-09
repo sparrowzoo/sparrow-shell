@@ -1,0 +1,164 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="global_resource">
+    <link rel="stylesheet" type="text/css"
+          th:href="${resource}+'/styles/pure-css/pure-min.css?v='+${resource_version}"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" th:href="${resource}+'/styles/layouts-old-ie.css?v='+${resource_version}"/>
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" th:href="${resource}+'/styles/layouts.css?v='+${resource_version}"/>
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" th:href="${resource}+'/styles/sparrow.css?v='+${resource_version}"/>
+    <link rel="stylesheet" type="text/css" th:href="${resource}+'/styles/modal.css?v='+${resource_version}"/>
+    <script type="text/javascript"
+            th:src="${resource}+'/scripts/sparrow.js?v='+${resource_version}"></script>
+</div>
+<div th:fragment="banner" class="banner">
+    <div>
+        <h1><a href="http://www.sparrowzoo.com">回到首页</a></h1>
+    </div>
+</div>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="baidu">
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?11daae2d559a82e0e8bd4872ad217164";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</div>
+<div th:fragment="menu">
+    <script language="JavaScript">
+        requirejs.config({
+            baseUrl: "http://r.sparrowzoo.net/scripts",
+            paths: {
+                // Sparrow: 'sparrow'
+            }
+        });
+        require(['sparrow', 'domReady!'], function ($, dom) {
+            new $.menu("verticalMenu", $.VERTICAL, "menuLink").init();
+        });
+    </script>
+    <a class="menu-link" href="#menu" id="menuLink">
+        <span></span>
+    </a>
+    <div id="divVerticalMenu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading"
+               href="javascript:$.browser.addFavorite('http://www.sparrowzoo.com','Sparrow 为程序员服务')">收藏本站</a>
+
+            <a class="pure-menu-heading" href="http://www.sparrowzoo.com">首页</a>
+        </div>
+
+
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">动画</a>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/animation/animation'">animation</a>
+                </li>
+
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/animation/interlace'">interlace</a>
+                </li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/animation/marque'">marque</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/animation/show-hidden'">show-hidden</a>
+                </li>
+
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" th:href="${root_path}+'/examples/animation/progress'">progress</a>
+                </li>
+
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/animation/play'">play</a>
+                </li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/animation/tabs'">tabs</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">消息</a>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/message/jalert'">jalert</a>
+                </li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/message/message'">message</a></li>
+            </ul>
+        </div>
+
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">sparrow</a>
+            <ul class="pure-menu-list">
+
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" th:href="${root_path}+'/examples/sparrow/domReady'">Dom
+                        Ready 测试</a>
+                </li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/selector/selector'">选择器</a>
+                </li>
+
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/sparrow/date_picker'">date
+                    picker</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/sparrow/editor'">editor</a>
+                </li>
+
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" th:href="${root_path}+'/tools/jsonview'">json 格式化</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" th:href="${root_path}+'/examples/sparrow/jsonp-demo'">jsonp</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" th:href="${root_path}+'/examples/markdown'">markdown demo</a>
+                </li>
+
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" th:href="${root_path}+'/examples/sparrow/sparrow'">sparrow</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" th:href="${root_path}+'/examples/sparrow/dispatcher'">dispatcher</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">工具</a>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/tools/properties-yaml-converter'">yaml转换器</a>
+                </li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/tools/jsonview'">JSON格式化</a>
+                </li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/tools/qr-code'">二维码在线生成器</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/tools/commend-line-format'">Linux
+                    命令行格式化</a></li>
+
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              th:href="${root_path}+'/examples/cropper/avatar'">
+                    头象剪切</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+

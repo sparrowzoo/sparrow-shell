@@ -15,6 +15,7 @@
         <action name="/transit-test" method="transit">
             <result name="success">transit-here</result>
         </action>
+        <action name="/thymeleaf" method="thymeleaf"/>
         <action name="/thread-{threadId}-{pageIndex}" method="thread"/>
         <action name="/json-test.json" method="json"/>
         <action name="/exception" method="exception"/>
@@ -36,5 +37,48 @@
 
     <controller id="classLoaderController">
         <action name="/class-loader/get-parent" method="getParent"/>
+    </controller>
+
+    <!--在bean context中定义-->
+    <controller id="helloController">
+        <!--/template/index.jsp 兼容欢迎页-->
+        <action name="/error" method="error" login="NO_AUTHENTICATE"/>
+        <action name="/timeout" method="timeout" login="NO_AUTHENTICATE"/>
+        <action name="/sparrow-jsp" method="sparrowJspTest"/>
+        <action name="/template/welcome.jsp" method="welcome"/>
+        <action name="/env.json" method="env" login="NO_AUTHENTICATE"/>
+        <action name="/env2.json" method="env2" login="NO_AUTHENTICATE"/>
+        <!---一定以 /开头-->
+        <action name="/hello" method="hello" login="NO_AUTHENTICATE"/>
+        <action name="/fly" method="fly"/>
+        <action name="/transit-test" method="transit">
+            <result name="success">transit-here</result>
+        </action>
+        <action name="/thread-{threadId}-{pageIndex}" method="thread"/>
+        <action name="/json-test.json" method="json"/>
+        <action name="/json-post.json" method="postJson"/>
+        <action name="/exception" method="exception"/>
+        <action name="/exception.json" method="exception"/>
+        <action name="/authorizing" method="authorizing"
+                login="LOGIN" needAuthorizing="true"/>
+        <action name="/login.do" method="login"/>
+    </controller>
+
+    <!--在bean context中定义-->
+    <controller id="previewController">
+        <action name="/preview.json" method="preview"/>
+    </controller>
+
+    <controller id="yamlController">
+        <action name="/to-yaml.json" method="toYaml"/>
+        <action name="/to-properties.json" method="toProperties"/>
+    </controller>
+
+    <controller id="commendLineFormatController">
+        <action name="/commend-line-format.json" method="format"/>
+    </controller>
+
+    <controller id="wordCountController">
+        <action name="/flink/word-count.json" method="wordCount"/>
     </controller>
 </mvc>

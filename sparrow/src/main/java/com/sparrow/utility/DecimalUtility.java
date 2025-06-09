@@ -22,6 +22,7 @@ import com.sparrow.protocol.constant.magic.CapitalRmb;
 import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class DecimalUtility {
@@ -65,7 +66,7 @@ public class DecimalUtility {
         //从原num值中取出的值
         int temp;
         //将num取绝对值并四舍五入取2位小数
-        num = num.abs().setScale(2, BigDecimal.ROUND_HALF_UP);
+        num = num.abs().setScale(2, RoundingMode.HALF_UP);
         strNumbers = new DecimalFormat("#0")
             .format(num.multiply(new BigDecimal("100"))); //将num乘100并转换成字符串形式
         j = strNumbers.length(); //找出最高位
@@ -86,7 +87,7 @@ public class DecimalUtility {
                     ch2 = "";
                     nzero = nzero + 1;
                 } else {
-                    if (!String.valueOf(Digit.ZERO).equals(strBit) && nzero != 0) {
+                    if (nzero != 0) {
                         ch1 = CapitalRmb.ZERO + strNumberChinese.substring(temp, temp + 1);
                         ch2 = strWeightChinese.substring(i, i + 1);
                         nzero = 0;
@@ -107,19 +108,13 @@ public class DecimalUtility {
                         ch2 = strWeightChinese.substring(i, i + 1);
                         nzero = 0;
                     } else {
-                        if (!Symbol.ZERO.equals(strBit) && nzero >= 3) {
+                        if (j >= 11) {
                             ch1 = "";
-                            ch2 = "";
                             nzero = nzero + 1;
                         } else {
-                            if (j >= 11) {
-                                ch1 = "";
-                                nzero = nzero + 1;
-                            } else {
-                                ch1 = "";
-                                ch2 = strWeightChinese.substring(i, i + 1);
-                                nzero = nzero + 1;
-                            }
+                            ch1 = "";
+                            ch2 = strWeightChinese.substring(i, i + 1);
+                            nzero = nzero + 1;
                         }
                     }
                 }

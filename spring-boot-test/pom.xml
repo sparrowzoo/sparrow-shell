@@ -7,7 +7,6 @@
         <groupId>com.sparrowzoo</groupId>
         <version>1.0.5-SNAPSHOT</version>
         <relativePath/>
-
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-boot-test</artifactId>
@@ -53,9 +52,37 @@
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-rocketmq-client</artifactId>
         </dependency>
+        <!-- thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>2.3.2.RELEASE</version>
+        </dependency>
+
 
     </dependencies>
     <build>
-
+        <filters>
+            <filter>src/main/configs/${env}.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*.xml</include>
+                    <include>*.properties</include>
+                </includes>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/classes/</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.html</include>
+                </includes>
+                <filtering>false</filtering>
+                <targetPath>${project.build.directory}/classes/</targetPath>
+            </resource>
+        </resources>
     </build>
 </project>

@@ -1,0 +1,92 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <link href="http://r.sparrowzoo.net/ext/sparrowzoo/styles/avatar.css" rel="stylesheet" type="text/css"/>
+    <script language="JavaScript" type="text/javascript">
+        document.ready(function () {
+            var imageCropper = new $.ImageCropper(
+                "imgPreviewAvatar",
+                {
+                    lockRate: true,
+                    left: 75,
+                    top: 75,
+                },
+                function (x, y, w, h) {
+                    document.getElementById("divResult").innerHTML = "top:" + x + "left:" + y + ",width:" + w + ",height:" + h;
+                }
+            );
+            imageCropper.init()
+
+            $("#tabs").tabs({
+                tabClickCallback: function (tabIndex) {
+                    if (tabIndex == 1) {
+                        imageCropper.release()
+                    } else {
+                        imageCropper.init()
+                    }
+                }
+            });
+
+        });
+    </script>
+</head>
+
+
+<body>
+<th:block th:include="/frames::menu"/>
+<div id="layout">
+    <div id="main">
+        <div class="header">
+            <h1>头象修改</h1>
+            <h2>
+                <a href="image-tab-wrong">bad case</a>
+            </h2>
+        </div>
+
+        <div class="content">
+            <div class="tab" id="tabs">
+                <div class="pure-menu pure-menu-horizontal">
+                    <ul class="pure-menu-list" style="width: 100%;">
+                        <li class="pure-menu-item"><a class="pure-menu-link" href="avatar"><span>用户头象</span></a>
+                        </li>
+                        <li class="pure-menu-item"><a class="pure-menu-link"
+                                                      href="user-setting"><span>用户信息</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="block">
+                        <div class="avatar-content" style="height: 550px;">
+                            <div class="current-avatar">
+                                <img id="imgCurrentAvatar" th:src="${resource}+'/images/user.gif'"/>
+                            </div>
+
+                            <div class="local-upload">
+                                <img height="300px" id="imgPreviewAvatar" src="http://r.sparrowzoo.net/images/img.png"
+                                     width="300px"/> <br/>
+                            </div>
+                            <div class="local-file">
+                                <iframe class="file-frame" frameborder="0" id="fileUpload"
+                                        name="fileUpload"
+                                        src="http://upload.sparrowzoo.com/file-upload?path-key=avatar"></iframe>
+                                <span>支持.jpg|.jpeg|.png</span>
+                            </div>
+                            <div class="buttons_group">
+                                <div id="divResult"></div>
+                                <input class="button" id="btnUploadAvatar" type="button" value="保存"/>
+                                <input class="button" onclick="parent.win.closeClick();" type="button" value="关闭"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

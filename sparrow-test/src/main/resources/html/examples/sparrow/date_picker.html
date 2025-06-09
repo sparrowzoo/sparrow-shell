@@ -1,0 +1,35 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <script language="JavaScript" type="text/javascript">
+        var datePicker = null;
+        require(['sparrow', 'domReady'], function ($, dom) {
+            datePicker = new $.datePicker("datePicker");
+            datePicker.config.srcElement = $("txtDatePicker");
+            datePicker.init();
+        });
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1>日期控件</h1>
+            <h2>windows 日期选择控件</h2>
+        </div>
+
+        <div class="content">
+            <input id="txtDatePicker" type="text"/>
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>

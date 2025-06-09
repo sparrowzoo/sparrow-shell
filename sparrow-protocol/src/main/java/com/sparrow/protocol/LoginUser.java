@@ -61,7 +61,7 @@ public class LoginUser implements VO {
      */
     private String deviceId;
 
-    private Integer days;
+    private Double days;
 
     private Long expireAt;
 
@@ -74,7 +74,7 @@ public class LoginUser implements VO {
                                    String nickName,
                                    String avatar,
                                    String deviceId,
-                                   Integer days) {
+                                   Double days) {
         LoginUser login = new LoginUser();
         login.tenantId = tenantId;
         login.userId = userId;
@@ -83,7 +83,8 @@ public class LoginUser implements VO {
         login.nickName = nickName;
         login.avatar = avatar;
         login.days = days;
-        login.expireAt = System.currentTimeMillis() + days * 24 * 60 * 60 * 1000;
+        double t = days * 24 * 60 * 60 * 1000;
+        login.expireAt = System.currentTimeMillis() + (long) t;
         login.deviceId = deviceId;
         return login;
     }

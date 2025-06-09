@@ -1,0 +1,76 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户登录-程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <script type="text/javascript">
+        function properties2Yaml() {
+            $.ajax.req("POST", "${root_path}" + "/to-yaml.json", function (responseText) {
+                var json = responseText.json();
+                if (json.code === 0) {
+                    $("#divPreview").html(json.data);
+                }
+            }, "content=" + $("#txtContent").value().replace(/&/g, "%26"));
+        }
+
+        function yaml2Properties() {
+            $.ajax.req("POST", "${root_path}" + "/to-properties.json", function (responseText) {
+                var json = responseText.json();
+                if (json.code === 0) {
+                    $("#divPreview").html(json.data);
+                }
+            }, "content=" + $("#txtContent").value().replace(/&/g, "%26"));
+        }
+
+        document.ready(function () {
+            previewRequest();
+            //textarea支持tab缩进
+            $("#txtContent").bind(
+                'onkeydown',
+                function (e) {
+                    if (e.keyCode !== 9) {
+                        return;
+                    }
+                    e.preventDefault();
+                    var indent = ' ';
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+                    var selected = window.getSelection().toString();
+                    selected = indent + selected.replace(/\n/g, '\n' + indent);
+                    this.value = this.value.substring(0, start) + selected
+                        + this.value.substring(end);
+                    this.setSelectionRange(start + indent.length, start
+                        + selected.length);
+                })
+        });
+    </script>
+</head>
+<body>
+
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1>spring properties yaml 在线转换器</h1>
+        </div>
+
+        <div class="content" style="max-width: 100%;">
+            <input class="pure-button pure-button-primary" onclick="properties2Yaml();" type="button"
+                   value="spring properties 转 yaml"/>
+
+            <input class="pure-button pure-button-primary" onclick="yaml2Properties();" type="button"
+                   value="spring yaml 转 properties"/>
+
+            <div class="pure-g" style="width: 100%;">
+                <textarea class="pure-u-11-24" id="txtContent"
+                          style="max-height: 100%;height:800px;"></textarea>
+                <textarea class="pure-u-12-24" id="divPreview"
+                          style="max-height: 100%;height:800px;overflow: scroll;"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

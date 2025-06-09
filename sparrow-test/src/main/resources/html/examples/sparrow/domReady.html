@@ -1,0 +1,68 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户登录-程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <script language="JavaScript" type="text/javascript">
+        // require(['sparrow', 'domReady'], function ($, dom) {
+        //     console.log("requirejs require ready");
+        //     console.log("requirejs dom ready -" + dom);
+        //     console.log("requirejs helle {0}".format(" sparrow !"));
+        // });
+        // window.onload = function (ev) {
+        //     console.log("window onload")
+        // }
+
+        alert($);
+
+        document.ready(function () {
+            alert("document ready!!")
+            //console.log("requirejs document ready");
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1>Requirejs domReady</h1>
+            <h2>https://requirejs.org/docs/download.html#domReady</h2>
+        </div>
+
+        <div class="content">
+            <!--            <img alt="测试超时" src="23423"><br/>-->
+            <!--            <img alt="测试超时" src="/timeout?seconds=2"><br/>-->
+            <!--            <img alt="测试超时" src="/timeout?seconds=3"><br/>-->
+            <!--            <img alt="测试超时" src="/timeout?seconds=4"><br/>-->
+
+            <!--            <img alt="测试超时" src="/error?t=1"><br/>-->
+            <!--            <img alt="测试超时" src="/error?t=2"><br/>-->
+            <!--            <img alt="测试超时" src="/error?t=3"><br/>-->
+
+
+            <!--            <img alt="测试超时" src="http://passport.sparrowzoo.com/error?t=1"><br/>-->
+            <!--            <img alt="测试超时" src="http://passport.sparrowzoo.com/error?t=2"><br/>-->
+            <!--            <img alt="测试超时" src="http://passport.sparrowzoo.com/error?t=3"><br/>-->
+            <!--            <img alt="测试超时" src="http://passport.sparrowzoo.com/error?t=4"><br/>-->
+            <!--            <img alt="测试超时" src="http://passport.sparrowzoo.com/error?t=5"><br/>-->
+
+            <ul>
+                <li>jquery document ready vs requirejs domready<br/>https://stackoverflow.com/questions/15332628/requirejs-domready-plugin-vs-jquery-document-ready
+                </li>
+                <li>
+                    npmjs<br/>
+                    https://www.npmjs.com/package/requirejs-domready <br/>"requirejs-domready": "^2.0.3"
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

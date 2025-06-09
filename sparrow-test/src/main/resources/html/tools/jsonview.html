@@ -1,0 +1,39 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户登录-程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <script type="text/javascript">
+        require(['sparrow', 'domReady!'], function ($, dom) {
+            $("#jsonview").html($.format($("#txtContent").value().json()));
+            $("#btnFormat").bind("onclick", function () {
+                $("#jsonview").html($.format($("#txtContent").value().json()));
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1>JSON 在线格式化</h1>
+        </div>
+        <div class="content" style="max-width: 100%;">
+            <input class="pure-button pure-button-primary" id="btnFormat" type="button" value="格式化"/>
+            <div class="pure-g" style="width: 100%;">
+                <textarea class="pure-u-11-24" id="txtContent"
+                          style="max-height: 100%;height:800px;">{"name": "sparrow js by harry", "sex": "男", "age": "25","a":{"b":{"c":{"d":"1"}}}}</textarea>
+                <textarea class="pure-u-12-24" id="jsonview"
+                          style="max-height: 100%;height:800px;overflow: scroll;"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="/frames::footer"/>
+
+</body>
+</html>

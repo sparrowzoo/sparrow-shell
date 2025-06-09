@@ -248,7 +248,7 @@ public abstract class AbstractContainer implements Container {
         return obj;
     }
 
-    protected void initProxyBean(Class beanClass) {
+    public void initProxyBean(Class beanClass) {
         String clazzName = beanClass.getSimpleName();
         MethodAccessor methodAccessor = this.getGenerator4MethodAccessor().newMethodAccessor(beanClass);
         this.proxyBeanRegistry.pubObject(beanClass.getSimpleName(), methodAccessor);

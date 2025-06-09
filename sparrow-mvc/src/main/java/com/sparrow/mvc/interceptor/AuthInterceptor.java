@@ -42,7 +42,6 @@ import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,8 +49,7 @@ import javax.servlet.http.HttpServletResponse;
 @Named
 public class AuthInterceptor implements HandlerInterceptor {
     private static Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
-    @Inject
-    private ServletUtility servletUtility;
+    private ServletUtility servletUtility = ServletUtility.getInstance();
 
     @Override
     public boolean preHandle(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {

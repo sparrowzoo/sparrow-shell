@@ -18,7 +18,7 @@ public class Test {
         loginToken.setAvatar("http://localhost");
         loginToken.setDeviceId("192.168.1.1");
         loginToken.setExpireAt(System.currentTimeMillis() + 100000);
-        loginToken.setDays(20);
+        loginToken.setDays(2.0);
         loginToken.setUserId(1L);
         loginToken.setUserName("zhangsan");
 

@@ -18,6 +18,16 @@ public class AuthorizingDemo extends AbstractAuthenticatorService {
     }
 
     @Override
+    protected boolean validateDeviceId() {
+        return false;
+    }
+
+    @Override
+    protected boolean validateStatus() {
+        return false;
+    }
+
+    @Override
     protected String sign(LoginUser loginUser, String s) {
         return null;
     }

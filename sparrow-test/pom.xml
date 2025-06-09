@@ -125,7 +125,14 @@
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
-            <artifactId>sparrow-mvc</artifactId>
+            <artifactId>sparrow-mvc-thymeleaf</artifactId>
+            <version>1.0.5-SNAPSHOT</version>
+        </dependency>
+        <!--SPRING解析 thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>2.3.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
@@ -138,11 +145,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>com.sparrow</groupId>-->
-        <!--<artifactId>sparrow-log</artifactId>-->
-        <!--</dependency>-->
-        <!--sparrow end-->
 
         <!--json-->
         <dependency>
@@ -262,14 +264,61 @@
             <artifactId>dubbo-serialization-native-hession</artifactId>
             <version>2.7.9</version>
         </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sparrowzoo</groupId>
+            <artifactId>sparrow-data-source</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sparrowzoo</groupId>
+            <artifactId>sparrow-protocol</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-tables</artifactId>
+            <version>0.21.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.commonmark/commonmark-ext-gfm-strikethrough -->
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
+            <version>0.21.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.commonmark/commonmark-ext-autolink -->
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark-ext-autolink</artifactId>
+            <version>0.21.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.commonmark/commonmark-ext-task-list-items -->
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark-ext-task-list-items</artifactId>
+            <version>0.21.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vdurmont</groupId>
+            <artifactId>emoji-java</artifactId>
+            <version>5.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sparrowzoo</groupId>
+            <artifactId>sparrow-markdown</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>
         <filters>
-            <filter>src/main/resources/system_config.properties</filter>
-            <filter>src/main/resources/sparrow_default.properties</filter>
-            <filter>src/main/resources/user_default.properties</filter>
         </filters>
         <resources>
             <resource>
@@ -286,37 +335,18 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>*.properties</include>
+                    <include>**/*.html</include>
                 </includes>
-                <filtering>true</filtering>
-                <targetPath>${project.build.directory}/test-classes/</targetPath>
-            </resource>
-            <resource>
-                <directory>src/test/resources</directory>
-                <includes>
-                    <include>*.properties</include>
-                    <include>*.xml</include>
-                    <include>config/**/**</include>
-                    <include>META-INF/</include>
-                </includes>
-                <filtering>true</filtering>
-                <targetPath>${project.build.directory}/test-classes/</targetPath>
+                <filtering>false</filtering>
+                <targetPath>${project.build.directory}/classes/</targetPath>
             </resource>
         </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compile.version}</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                    <encoding>${maven.compile.encoding}</encoding>
-                    <debug>true</debug>
+                    <port>7777</port>
                 </configuration>
             </plugin>
         </plugins>

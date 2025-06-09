@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sparrow 简单移动动画 &ndash; Sparrow JS Framework</title>
+    <th:block th:include="/frames::global_resource"/>
+    <script language="JavaScript" type="text/javascript">
+        require(['sparrow', 'domReady!'], function ($, dom) {
+            $("#white").animation(
+                "{height:'400px',width:'400px',top:'300px',left:'500px'}", 30);
+        });
+    </script>
+</head>
+
+<body>
+<th:block th:include="/frames::menu"/>
+<div id="layout">
+    <div id="main">
+        <div class="header">
+            <h1>渐变动画</h1>
+            <h2>从坐标{a1,b1}到{a2,b2} size {width1,height1} 变到 {width2,height2}</h2>
+        </div>
+
+        <div class="content">
+
+        </div>
+        <div id="white"
+             style="background: yellowgreen; display: none; position: absolute; width: 50px; height: 50px; left: 200px; top: 80px;">
+        </div>
+    </div>
+</div>
+</body>
+</html>

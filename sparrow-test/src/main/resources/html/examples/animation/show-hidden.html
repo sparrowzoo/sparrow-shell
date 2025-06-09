@@ -1,0 +1,44 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+<body>
+<div id="layout">
+    <th:block th:include="/frames::menu"/>
+    <div id="main">
+        <div class="header">
+            <h1> 显示隐藏 动画</h1>
+            <h2>_controlled为默认控制后缀</h2>
+        </div>
+        <div class="content">
+             <pre>
+            $(this).showHidden($('hyperShowHidden_controlled'));<br/>
+            $(this).showHidden($('hyperShowHidden'));<br/>
+</pre>
+
+
+            <a id="hyperShowHidden" onclick="$(this).showHidden();"
+               style="background:yellowgreen;width: 100px;height: 30px;">点我演示一下</a>
+
+            <div id="hyperShowHidden_controlled">
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+                内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示内容展示<br/>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -27,6 +27,6 @@ public class ResultContainerTest {
 
         System.out.println(Result.fail().getMessage());
         System.out.println(Result.fail(SparrowError.GLOBAL_DB_ADD_ERROR).getMessage());
-        System.out.println(Result.fail(new BusinessException(SparrowError.GLOBAL_SMS_SEND_ERROR, "login")).getMessage());
+        System.out.println(Result.fail(new BusinessException(SparrowError.GLOBAL_SMS_SEND_ERROR)).getMessage());
     }
 }

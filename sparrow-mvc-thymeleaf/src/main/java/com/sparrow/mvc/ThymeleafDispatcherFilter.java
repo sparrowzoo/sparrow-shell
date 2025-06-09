@@ -28,8 +28,6 @@ import javax.servlet.ServletResponse;
 
 public class ThymeleafDispatcherFilter extends DispatcherFilter {
 
-    private ServletContext servletContext;
-
     @Override public void init(FilterConfig config) {
         ThymeleafEngineUtils.initEngine(config);
         super.init(config);

@@ -48,7 +48,7 @@ public class SparrowWebConfigReader implements WebConfigReader {
 
     @Override
     public String getTemplateEnginePrefix() {
-        return configReader.getValue(Config.TEMPLATE_ENGINE_PREFIX, "/template");
+        return configReader.getValue(Config.TEMPLATE_ENGINE_PREFIX, "classpath:/templates");
     }
 
     @Override

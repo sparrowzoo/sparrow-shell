@@ -1,0 +1,59 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>程序员有问题就上麻雀窝 和大牛直接聊</title>
+    <meta content="程序员有问题就上麻雀窝 和大牛直接聊" name="description"/>
+    <meta content="麻雀窝" name="application-name"/>
+    <th:block th:include="/frames::global_resource"/>
+    <link href="http://r.sparrowzoo.net/ext/sparrowzoo/styles/avatar.css" rel="stylesheet" type="text/css"/>
+    <script language="JavaScript" type="text/javascript">
+        requirejs.config({
+            baseUrl: "[[${resource}]]/scripts",
+            paths: {
+                // Sparrow: 'sparrow'
+            }
+        });
+    </script>
+    <script type="application/javascript">
+
+        require(['sparrow', 'domReady!'], function ($, dom) {
+            $("#divContainer").interlace();
+            $("#divContainer2").interlace();
+        });
+    </script>
+</head>
+
+
+<body>
+<th:block th:include="/frames::menu"/>
+
+<div id="layout">
+    <div id="main">
+        <div class="header">
+            <h1> interlace 动画</h1>
+        </div>
+
+
+        <div class="content">
+             <pre>
+     $("#divContainer").interlace();
+    $("#divContainer2").interlace();
+</pre>
+            <div id="divContainer"
+                 style="background: #000; width: 200px; height: 200px; position: relative;">
+                <div style="background: yellow;">container 1 yellow</div>
+                <div style="background: red;">container 1 red</div>
+            </div>
+
+
+            <div id="divContainer2"
+                 style="background: #000; width: 200px; height: 200px; position: relative;">
+                <div style="background: yellow;">container 2 yellow</div>
+                <div style="background: red;">container 2 red</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
