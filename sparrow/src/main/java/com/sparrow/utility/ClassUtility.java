@@ -158,9 +158,9 @@ public class ClassUtility {
         return classes;
     }
 
-    private static List<Class> findClass(JarFile jarFile, String packagePath) {
+    private static List<Class<?>> findClass(JarFile jarFile, String packagePath) {
         try {
-            List<Class> classes = new ArrayList<Class>();
+            List<Class<?>> classes = new ArrayList<>();
             Enumeration<JarEntry> entries = jarFile.entries();
             while (entries.hasMoreElements()) {
                 JarEntry jarEntry = entries.nextElement();
@@ -168,12 +168,12 @@ public class ClassUtility {
                     String classFullName = jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
                             .substring(0, jarEntry.getName().indexOf(Symbol.DOT));
                     try {
-                        Class implClass = Class.forName(classFullName);
+                        Class<?> implClass = Class.forName(classFullName);
                         if (!implClass.isInterface()) {
                             classes.add(implClass);
                         }
                     } catch (Throwable e) {
-                        logger.error("you can ignore this error, class {} init", classFullName, e);
+                        logger.error("you can ignore this error, class {} init", classFullName);
                     }
                 }
             }
@@ -184,8 +184,8 @@ public class ClassUtility {
         }
     }
 
-    private static List<Class> findClass(File directory, String packageName) {
-        List<Class> classes = new ArrayList<>();
+    private static List<Class<?>> findClass(File directory, String packageName) {
+        List<Class<?>> classes = new ArrayList<>();
         if (directory == null || !directory.exists()) {
             return null;
         }
@@ -204,7 +204,7 @@ public class ClassUtility {
                 try {
                     classes.add(Class.forName(clazzName));
                 } catch (Throwable e) {
-                    logger.error("you can ignore this error, class {} init", clazzName, e);
+                    logger.error("you can ignore this error, class {} init", clazzName);
                 }
             }
         }

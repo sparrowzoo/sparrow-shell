@@ -23,7 +23,6 @@
         <groupId>com.sparrowzoo</groupId>
         <version>1.0.5-SNAPSHOT</version>
         <relativePath/>
-
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>1.0.5-SNAPSHOT</version>
@@ -34,9 +33,7 @@
         <spring.framework.version>5.2.23.RELEASE</spring.framework.version>
         <maven.compile.source>1.8</maven.compile.source>
         <maven.compile.target>1.8</maven.compile.target>
-
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -80,14 +77,6 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
         </dependency>
         <!--sparrow-->
         <dependency>

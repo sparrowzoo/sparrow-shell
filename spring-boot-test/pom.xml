@@ -59,6 +59,10 @@
             <version>2.3.2.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+        </dependency>
 
     </dependencies>
     <build>

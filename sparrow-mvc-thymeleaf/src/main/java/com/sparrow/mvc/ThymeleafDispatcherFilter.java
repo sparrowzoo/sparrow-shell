@@ -22,7 +22,6 @@ import com.sparrow.mvc.adapter.impl.ThymeleafMethodControllerHandlerAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 

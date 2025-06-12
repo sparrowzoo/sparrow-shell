@@ -69,7 +69,7 @@ public class AnnotationBeanDefinitionReader extends AbstractBeanDefinitionReader
                     BeanDefinition bd = this.delegate.processBeanDefinition(clazz);
                     this.getRegistry().pubObject(beanName, bd);
                 } catch (Throwable e) {
-                    logger.error("class name {}", clazz.getName(), e);
+                    logger.error("class name {} load error", clazz.getName());
                 }
             }
         }

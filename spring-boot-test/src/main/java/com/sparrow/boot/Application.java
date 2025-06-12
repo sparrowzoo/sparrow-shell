@@ -17,6 +17,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 public class Application {
     private static Logger log = LoggerFactory.getLogger(Application.class);
 
+
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(Application.class);
         springApplication.addListeners(new ApplicationListener<ApplicationStartingEvent>() {
