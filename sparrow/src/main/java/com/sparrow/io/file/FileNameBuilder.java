@@ -17,6 +17,8 @@
 
 package com.sparrow.io.file;
 
+import com.sparrow.utility.StringUtility;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +30,24 @@ public class FileNameBuilder {
     }
 
     private List<String> parts;
+    private String fileName;
+    private String extension;
 
     public FileNameBuilder joint(String source) {
+        if (StringUtility.isNullOrEmpty(source)) {
+            return this;
+        }
         this.parts.add(source);
+        return this;
+    }
+
+    public FileNameBuilder fileName(String fileName) {
+        this.fileName = fileName;
+        return this;
+    }
+
+    public FileNameBuilder extension(String extension) {
+        this.extension = extension;
         return this;
     }
 
@@ -38,11 +55,24 @@ public class FileNameBuilder {
         StringBuilder sb = new StringBuilder();
         String previous = File.separator;
         for (String part : this.parts) {
+            if (StringUtility.isNullOrEmpty(part)) {
+                continue;
+            }
             if (!previous.endsWith(File.separator) && !part.startsWith(File.separator)) {
                 sb.append(File.separator);
             }
             sb.append(part);
             previous = part;
+        }
+
+        if (!StringUtility.isNullOrEmpty(this.fileName)) {
+            sb.append(File.separator).append(this.fileName);
+        }
+        if (!StringUtility.isNullOrEmpty(this.extension)) {
+            if (!this.extension.startsWith(".")) {
+                sb.append(".");
+            }
+            sb.append(this.extension);
         }
         return sb.toString();
     }

@@ -475,19 +475,19 @@ public class FileUtility {
     public void delete(String path, long beforeMillis) {
         java.io.File file = new java.io.File(path);
         if (!file.isDirectory()) {
-            logger.error("{} is not directory", path);
+            if (file.lastModified() < beforeMillis) {
+                boolean result = file.delete();
+                logger.info("deleted file {},result:{}", path, result);
+            }
             return;
         }
         java.io.File[] files = file.listFiles();
-        if (files == null) {
-            return;
-        }
-        // 如果没有文件
-        if (files.length == Digit.ZERO) {
+        if (files == null || files.length == 0) {
             boolean result = file.delete();
-            logger.info("deleted file {},result:{}", path, result);
+            logger.info("deleted directory {},result:{}", path, result);
             return;
         }
+
         for (java.io.File f : files) {
             if (f.isDirectory() && !f.isHidden()) {
                 delete(f.getPath(), beforeMillis);
@@ -496,9 +496,10 @@ public class FileUtility {
             if (f.lastModified() < beforeMillis) {
                 boolean result = f.delete();
                 logger.info("deleted file {},result:{}", path, result);
-
             }
         }
+        boolean result = file.delete();
+        logger.info("deleted directory {},result:{}", path, result);
     }
 
     public boolean existLine(String fileName, String line) {

@@ -16,19 +16,23 @@ public class SpringContainerImpl implements Container {
 
     private ApplicationContext applicationContext;
 
-    @Override public FactoryBean getSingletonRegister() {
+    @Override
+    public FactoryBean getSingletonRegister() {
         return null;
     }
 
-    @Override public FactoryBean getControllerRegister() {
+    @Override
+    public FactoryBean getControllerRegister() {
         return null;
     }
 
-    @Override public FactoryBean getProxyBeanRegister() {
+    @Override
+    public FactoryBean getProxyBeanRegister() {
         return null;
     }
 
-    @Override public FactoryBean getInterceptorRegister() {
+    @Override
+    public FactoryBean getInterceptorRegister() {
         return null;
     }
 
@@ -49,15 +53,16 @@ public class SpringContainerImpl implements Container {
 
     @Override
     public <T> T getBean(String beanName) {
-        return (T)applicationContext.getBean(beanName);
+        return (T) applicationContext.getBean(beanName);
     }
 
     @Override
-    public <T> T getBean(Class<T> sysObjectName) {
-        return null;
+    public <T> T getBean(Class<T> clazzName) {
+        return (T) applicationContext.getBean(clazzName);
     }
 
-    @Override public void init(ContainerBuilder builder) {
+    @Override
+    public void init(ContainerBuilder builder) {
 
     }
 

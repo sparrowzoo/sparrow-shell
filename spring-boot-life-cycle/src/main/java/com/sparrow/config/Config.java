@@ -1,0 +1,55 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.sparrow.config;
+
+import com.sparrow.spring.boot.scan.Scan4;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+
+@AutoConfigureAfter(Config2.class)
+public class Config {
+    @Bean
+    public C1 c1() {
+        return new C1();
+    }
+
+    @Bean
+    public C2 c2() {
+        return new C2();
+    }
+
+    @Bean
+    public C5 c5() {
+        return new C5();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(C4.class)
+    public C4 c4() {
+        System.err.println("c4 bean created by config");
+        return new C4();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(Scan4.class)
+    public Scan4 scan4() {
+        System.err.println("scan4 bean created by scanConfig");
+        return new Scan4();
+    }
+}

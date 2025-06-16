@@ -7,13 +7,14 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-@SpringBootApplication(scanBasePackages = {"com.sparrow.spring.boot"})
-public class Application
-{
+@SpringBootApplication
+//        (scanBasePackages = {"com.sparrow.spring.boot.scan"})
+public class Application {
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(Application.class);
         springApplication.addListeners(new ApplicationListener<ApplicationStartingEvent>() {
-            @Override public void onApplicationEvent(ApplicationStartingEvent event) {
+            @Override
+            public void onApplicationEvent(ApplicationStartingEvent event) {
                 System.err.println("application starting at " + event.getTimestamp());
             }
         });
