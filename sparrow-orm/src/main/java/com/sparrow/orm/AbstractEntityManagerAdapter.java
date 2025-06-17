@@ -24,6 +24,7 @@ import com.sparrow.enums.OrmEntityMetadata;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dao.Dialect;
+import com.sparrow.protocol.dao.PO;
 import com.sparrow.protocol.dao.Split;
 import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.enums.DBDialect;
@@ -54,6 +55,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected Map<String, String> columnPropertyMap;
     protected Map<String, Field> uniqueFieldMap;
     protected Map<Integer, Field> hashFieldMap;
+    protected Set<String> poPropertyNames;
     protected String tableName;
     protected String dialectTableName;
     protected String className;
@@ -67,6 +69,10 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected String delete;
     protected String fields;
     protected String createDDL;
+
+    public Set<String> getPoPropertyNames() {
+        return poPropertyNames;
+    }
 
     private List<Field> extractFields(Class<?> clazz) {
         Method[] orderedMethods = ClassUtility.getOrderedMethod(clazz.getMethods());
@@ -136,6 +142,16 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         String primaryCreateDDL = "";
         insertSQL.append("(");
         updateSQL.append(" set ");
+
+        if (PO.class.isAssignableFrom(clazz)) {
+            List<java.lang.reflect.Field> poFieldList = ClassUtility.extractFields(PO.class);
+            Set<String> poFields = new HashSet<>();
+            for (java.lang.reflect.Field poField : poFieldList) {
+                poFields.add(poField.getName());
+            }
+            this.poPropertyNames = poFields;
+        }
+
         for (Field field : fields) {
             String propertyName = field.getPropertyName();
             SplitTable splitTable = field.getSplitTable();

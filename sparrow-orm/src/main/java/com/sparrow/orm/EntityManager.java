@@ -17,8 +17,10 @@
 package com.sparrow.orm;
 
 import java.util.Map;
+import java.util.Set;
 
 public interface EntityManager {
+    Set<String> getPoPropertyNames();
 
     String getClassName();
 

@@ -18,76 +18,30 @@
 
 package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.POJO;
+import com.sparrow.protocol.enums.StatusRecord;
+import lombok.Data;
 
 import javax.persistence.Column;
 
+@Data
 public class PO implements POJO {
-    private String createUserName;
-    private Long createUserId;
-    private Long modifiedUserId;
-    private String modifiedUserName;
-    private Long gmtCreate;
-    private Long gmtModified;
-
-    public void setCreateUserId(Long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public void setModifiedUserId(Long modifiedUserId) {
-        this.modifiedUserId = modifiedUserId;
-    }
-
-    public void setGmtCreate(Long gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public void setGmtModified(Long gmtModified) {
-        this.gmtModified = gmtModified;
-    }
-
-    @MethodOrder(order = 101)
-    @Column(name = "create_user_id", columnDefinition = "int(11) UNSIGNED  DEFAULT 0 COMMENT '创建人ID'", nullable = false, updatable = false)
-    public Long getCreateUserId() {
-        return createUserId;
-    }
-
-    @MethodOrder(order = 102)
-    @Column(name = "gmt_create", columnDefinition = "bigint(11)  DEFAULT 0 COMMENT '创建时间'", nullable = false, updatable = false)
-    public Long getGmtCreate() {
-        return gmtCreate;
-    }
-
-    @MethodOrder(order = 103)
-    @Column(name = "modified_user_id", columnDefinition = "int(11) unsigned  DEFAULT 0 COMMENT '更新人ID'", nullable = false)
-    public Long getModifiedUserId() {
-        return modifiedUserId;
-    }
-
-    @MethodOrder(order = 104)
-    @Column(name = "gmt_modified", columnDefinition = "bigint(11)  DEFAULT 0 COMMENT '更新时间'", nullable = false)
-    public Long getGmtModified() {
-        return gmtModified;
-    }
-
-    @MethodOrder(order = 105)
     @Column(name = "create_user_name", columnDefinition = "varchar(64)  DEFAULT '' COMMENT '创建人'", nullable = false, updatable = false)
-    public String getCreateUserName() {
-        return createUserName;
-    }
-
-    public void setCreateUserName(String createUserName) {
-        this.createUserName = createUserName;
-    }
-
-    @MethodOrder(order = 105)
+    private String createUserName;
+    @Column(name = "create_user_id", columnDefinition = "int(11) UNSIGNED  DEFAULT 0 COMMENT '创建人ID'", nullable = false, updatable = false)
+    private Long createUserId;
+    @Column(name = "modified_user_id", columnDefinition = "int(11) unsigned  DEFAULT 0 COMMENT '更新人ID'", nullable = false)
+    private Long modifiedUserId;
     @Column(name = "modified_user_name", columnDefinition = "varchar(64)  DEFAULT '' COMMENT '更新人'", nullable = false)
-    public String getModifiedUserName() {
-        return modifiedUserName;
-    }
-
-    public void setModifiedUserName(String modifiedUserName) {
-        this.modifiedUserName = modifiedUserName;
-    }
+    private String modifiedUserName;
+    @Column(name = "gmt_create", columnDefinition = "bigint(11)  DEFAULT 0 COMMENT '创建时间'", nullable = false, updatable = false)
+    private Long gmtCreate;
+    @Column(name = "gmt_modified", columnDefinition = "bigint(11)  DEFAULT 0 COMMENT '更新时间'", nullable = false)
+    private Long gmtModified;
+    @Column(name = "deleted", columnDefinition = "tinyint(1)  DEFAULT 0 COMMENT '是否删除'", nullable = false)
+    private Boolean deleted;
+    @Column(name = "status",updatable = false,
+            columnDefinition = "tinyint(3) UNSIGNED DEFAULT 0 COMMENT 'STATUS'",
+            nullable = false)
+    private StatusRecord status;
 }
