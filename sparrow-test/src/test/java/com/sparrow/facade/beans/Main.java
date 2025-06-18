@@ -19,7 +19,7 @@ package com.sparrow.facade.beans;
 
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.utility.BeanUtility;
+import com.sparrow.utility.SparrowBeanCopier;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -41,7 +41,7 @@ public class Main {
         source.setUserId(1L);
 
         Target target = new Target();
-        BeanUtility.copyProperties(source, target);
+        new SparrowBeanCopier().copyProperties(source, target);
         System.out.println(target.getAge());
     }
 }

@@ -23,13 +23,15 @@ import com.sparrow.core.TypeConverter;
 import com.sparrow.core.spi.ApplicationContext;
 
 import java.util.List;
+
+import com.sparrow.protocol.BeanCopier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BeanUtility {
-    private static Logger logger = LoggerFactory.getLogger(BeanUtility.class);
+public class SparrowBeanCopier implements BeanCopier {
+    private static Logger logger = LoggerFactory.getLogger(SparrowBeanCopier.class);
 
-    public static void copyProperties(Object source, Object target, String... ignoreProperties) {
+    public void copyProperties(Object source, Object target, String... ignoreProperties) {
         Container container = ApplicationContext.getContainer();
         MethodAccessor sourceMethodAccessor = container.getProxyBean(source.getClass());
         MethodAccessor targetMethodAccessor = container.getProxyBean(target.getClass());
@@ -46,7 +48,7 @@ public class BeanUtility {
         }
     }
 
-    public static void copyProperties(Object source, Object target) {
+    public void copyProperties(Object source, Object target) {
         copyProperties(source, target, null);
     }
 }
