@@ -35,5 +35,11 @@ public interface Json {
 
     Map<String, Object> parse(String json);
 
+    List<Object> parseArray(String json);
+
+    <T> T toJavaObject(Object originJsonObject, Class<T> clazz);
+
+    Object getJSONObject(Object originJsonObject, String key);
+
     <T> List<T> parseList(String json, Class<T> clazz);
 }

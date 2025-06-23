@@ -18,9 +18,10 @@
 package com.sparrow.json.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.sparrow.protocol.constant.Constant;
+import com.alibaba.fastjson.JSONObject;
 import com.sparrow.json.Json;
 import com.sparrow.protocol.POJO;
+import com.sparrow.protocol.constant.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,5 +70,20 @@ public class SparrowJsonImpl implements Json {
     @Override
     public Map<String, Object> parse(String json) {
         return JSON.parseObject(json);
+    }
+
+    public <T> T toJavaObject(Object originJsonObject, Class<T> clazz) {
+        JSONObject jsonObject = (JSONObject) originJsonObject;
+        return jsonObject.toJavaObject(clazz);
+    }
+
+    public Object getJSONObject(Object originJsonObject, String key) {
+        JSONObject jsonObject = (JSONObject) originJsonObject;
+        return jsonObject.getJSONObject(key);
+    }
+
+    @Override
+    public List<Object> parseArray(String json) {
+        return JSON.parseArray(json);
     }
 }
