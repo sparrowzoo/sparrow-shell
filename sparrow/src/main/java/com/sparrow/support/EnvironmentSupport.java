@@ -138,6 +138,9 @@ public class EnvironmentSupport {
      * @return
      */
     public InputStream getFileInputStream(String fileName) throws FileNotFoundException {
+        if (fileName.contains("\\")) {
+            fileName = fileName.replace("\\", "/");
+        }
         InputStream fileInputStream = null;
         File file = new File(fileName);
         if (file.exists()) {
@@ -164,6 +167,9 @@ public class EnvironmentSupport {
      * @return
      */
     public InputStream getFileInputStreamInCache(String relativeFileName) {
+        if (relativeFileName.contains("\\")) {
+            relativeFileName = relativeFileName.replace("\\", "/");
+        }
         InputStream fileInputStream = null;
         try {
             URL url = EnvironmentSupport.class.getResource(relativeFileName);
