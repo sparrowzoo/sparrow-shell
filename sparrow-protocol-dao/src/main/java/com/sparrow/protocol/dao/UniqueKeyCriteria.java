@@ -16,7 +16,7 @@
  */
 package com.sparrow.protocol.dao;
 
-public class UniqueKeyCriteria {
+public class UniqueKeyCriteria<I> {
     /**
      * 返回结果字段
      */
@@ -24,13 +24,13 @@ public class UniqueKeyCriteria {
     /**
      * unique key
      */
-    private Object key;
+    private I key;
     /**
      * unique property name default is primary key
      */
     private String uniquePropertyName;
 
-    private UniqueKeyCriteria(String resultFiled, Object key, String uniquePropertyName) {
+    private UniqueKeyCriteria(String resultFiled, I key, String uniquePropertyName) {
         this.resultFiled = resultFiled;
         this.key = key;
         this.uniquePropertyName = uniquePropertyName;
@@ -57,11 +57,11 @@ public class UniqueKeyCriteria {
         this.resultFiled = resultFiled;
     }
 
-    public Object getKey() {
+    public I getKey() {
         return key;
     }
 
-    public void setKey(Object key) {
+    public void setKey(I key) {
         this.key = key;
     }
 

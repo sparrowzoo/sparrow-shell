@@ -132,7 +132,7 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public Integer batchDelete(String ids) {
+    public Integer batchDelete(Collection<I> ids) {
         return this.ormDaoSupport.batchDelete(ids);
     }
 
@@ -142,7 +142,7 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public T getEntityByUnique(UniqueKeyCriteria uniqueKeyCriteria) {
+    public T getEntityByUnique(UniqueKeyCriteria<I> uniqueKeyCriteria) {
         return this.ormDaoSupport.getEntityByUnique(uniqueKeyCriteria);
     }
 
@@ -182,7 +182,7 @@ public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public <X> X getFieldValueByUnique(UniqueKeyCriteria uniqueKeyCriteria) {
+    public <X> X getFieldValueByUnique(UniqueKeyCriteria<I> uniqueKeyCriteria) {
         return this.ormDaoSupport.getFieldValueByUnique(uniqueKeyCriteria);
     }
 

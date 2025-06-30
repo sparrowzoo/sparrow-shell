@@ -19,6 +19,7 @@ package com.sparrow.orm;
 
 import com.sparrow.cg.MethodAccessor;
 import com.sparrow.container.Container;
+import com.sparrow.core.Pair;
 import com.sparrow.core.StrategyFactory;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.orm.query.SearchCriteria;
@@ -39,7 +40,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.*;
 
-public class OrmMetadataAccessor<T> {
+public class OrmMetadataAccessor<T, I> {
     private static Logger logger = LoggerFactory.getLogger(OrmMetadataAccessor.class);
 
     private CriteriaProcessor criteriaProcessor;
@@ -189,7 +190,7 @@ public class OrmMetadataAccessor<T> {
         return new JDBCParameter(update, updateParameters);
     }
 
-    public JDBCParameter delete(Object id) {
+    public JDBCParameter delete(I id) {
         if (id == null) {
             throw new IllegalArgumentException("delete id can't be null");
         }
@@ -247,7 +248,7 @@ public class OrmMetadataAccessor<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public JDBCParameter getEntity(Object key, String uniqueKey) {
+    public JDBCParameter getEntity(I key, String uniqueKey) {
         StringBuilder select = new StringBuilder("select ");
         select.append(this.entityManager.getFields());
         select.append(" from "
@@ -256,7 +257,7 @@ public class OrmMetadataAccessor<T> {
         return new JDBCParameter(select.toString(), Collections.singletonList(new Parameter(this.entityManager.getUniqueField(uniqueKey), key)));
     }
 
-    public JDBCParameter getCount(Object key, String uniqueKey) {
+    public JDBCParameter getCount(I key, String uniqueKey) {
         StringBuilder select = new StringBuilder("select count(*) from "
                 + this.entityManager.getDialectTableName());
         Field uniqueField = this.entityManager.getUniqueField(uniqueKey);
@@ -309,6 +310,24 @@ public class OrmMetadataAccessor<T> {
         return new JDBCParameter(select, Collections.singletonList(new Parameter(uniqueField, key)));
     }
 
+    private Pair<String, List<Parameter>> generateIdsParameters(Collection<I> ids) {
+        if (ids.size() <= 1) {
+            throw new IllegalArgumentException("ids must be great 1");
+        }
+        String whereClause = null;
+        List<Parameter> parameterList = new ArrayList<>();
+        String idArguments = StringUtility.generateCharacter(ids.size(), '?', ',');
+        /**
+         * select * from t where id in (ids)
+         * select * from t where id in (?,?,?)
+         */
+        whereClause = String.format(" in(%s)", idArguments);
+        for (I id : ids) {
+            parameterList.add(new Parameter("id", this.entityManager.getPrimary().getType(), 0, this.entityManager.getPrimary().convert(id)));
+        }
+        return new Pair<>(whereClause, parameterList);
+    }
+
     /**
      * 1. in 条件下存在 sql注入问题
      * <p>
@@ -319,25 +338,23 @@ public class OrmMetadataAccessor<T> {
      * @param statusCriteria
      * @return
      */
-    public JDBCParameter changeStatus(StatusCriteria statusCriteria) {
+    public JDBCParameter changeStatus(StatusCriteria<I> statusCriteria) {
         List<Parameter> parameterList = new ArrayList<>();
         parameterList.add(new Parameter(this.entityManager.getStatus(), statusCriteria.getStatus()));
         parameterList.add(new Parameter("modifiedUserName", String.class, 0, statusCriteria.getModifiedUserName()));
         parameterList.add(new Parameter("modifiedUserId", Long.class, 0, statusCriteria.getModifiedUserId()));
         parameterList.add(new Parameter("gmtModified", Long.class, 0, statusCriteria.getGmtModified()));
 
+        Collection<I> idArray = statusCriteria.getIds();
         String whereClause = null;
-        if (statusCriteria.getIds().contains(Symbol.COMMA)) {
-            String[] idArray = statusCriteria.getIds().split(Symbol.COMMA);
-            String idArguments = StringUtility.generateCharacter(idArray.length, '?', ',');
+        if (idArray.size() > 1) {
+            Pair<String, List<Parameter>> idsParameters = this.generateIdsParameters(idArray);
             /**
              * select * from t where id in (ids)
              * select * from t where id in (?,?,?)
              */
-            whereClause = String.format(" in(%s)", idArguments);
-            for (String id : idArray) {
-                parameterList.add(new Parameter("id", this.entityManager.getPrimary().getType(), 0, this.entityManager.getPrimary().convert(id)));
-            }
+            whereClause = idsParameters.getFirst();
+            parameterList.addAll(idsParameters.getSecond());
         } else {
             whereClause = " =?";
             parameterList.add(new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(statusCriteria.getIds())));
@@ -355,22 +372,25 @@ public class OrmMetadataAccessor<T> {
         return new JDBCParameter(updateSql, parameterList);
     }
 
-    public JDBCParameter batchDelete(String ids) {
+    public JDBCParameter batchDelete(Collection<I> ids) {
+        List<Parameter> parameterList = new ArrayList<>();
         String whereClause;
-        if (ids.contains(Symbol.COMMA)) {
-            whereClause = " in(" + ids + Symbol.RIGHT_PARENTHESIS;
+        if (ids.size() > 1) {
+            Pair<String, List<Parameter>> idsParameters = this.generateIdsParameters(ids);
+            /**
+             * select * from t where id in (ids)
+             * select * from t where id in (?,?,?)
+             */
+            whereClause = idsParameters.getFirst();
+            parameterList.addAll(idsParameters.getSecond());
         } else {
             whereClause = " =?";
+            parameterList.add(new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(ids.iterator().next())));
         }
         String updateSql = String.format("DELETE FROM %1$s where %2$s %3$s",
                 this.entityManager.getDialectTableName(),
                 this.entityManager.getPrimary().getColumnName(),
                 whereClause);
-
-        Parameter[] sqlParameters = new Parameter[0];
-        if (!ids.contains(Symbol.COMMA)) {
-            sqlParameters = new Parameter[]{new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(ids))};
-        }
-        return new JDBCParameter(updateSql, Arrays.asList(sqlParameters));
+        return new JDBCParameter(updateSql, parameterList);
     }
 }

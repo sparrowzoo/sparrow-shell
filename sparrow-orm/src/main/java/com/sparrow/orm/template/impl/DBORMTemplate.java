@@ -55,7 +55,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
      */
     protected final JDBCSupport jdbcSupport;
 
-    private OrmMetadataAccessor<T> ormMetadataAccessor;
+    private OrmMetadataAccessor<T,I> ormMetadataAccessor;
 
     public DBORMTemplate(Class<?> clazz) {
         this.modelClazz = clazz;
@@ -102,7 +102,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public Integer batchDelete(String ids) {
+    public Integer batchDelete(Collection<I> ids) {
         JDBCParameter parameter = this.ormMetadataAccessor.batchDelete(ids);
         return this.jdbcSupport.executeUpdate(parameter);
     }
@@ -363,7 +363,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public Long getCountByUnique(UniqueKeyCriteria uniqueKeyCriteria) {
+    public Long getCountByUnique(UniqueKeyCriteria<I> uniqueKeyCriteria) {
         JDBCParameter jdbcParameter = this.ormMetadataAccessor.getCount(uniqueKeyCriteria.getKey(), uniqueKeyCriteria.getUniquePropertyName());
         Object count = this.jdbcSupport.executeScalar(jdbcParameter);
         if (count == null) {
@@ -406,7 +406,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
     }
 
     @Override
-    public <X> X getFieldValueByUnique(UniqueKeyCriteria uniqueKeyCriteria) {
+    public <X> X getFieldValueByUnique(UniqueKeyCriteria<I> uniqueKeyCriteria) {
         JDBCParameter jdbcParameter = this.ormMetadataAccessor.getFieldValue(uniqueKeyCriteria.getResultFiled(), uniqueKeyCriteria.getKey(), uniqueKeyCriteria.getUniquePropertyName());
         Object fieldValue = this.jdbcSupport.executeScalar(jdbcParameter);
         if (fieldValue == null) {

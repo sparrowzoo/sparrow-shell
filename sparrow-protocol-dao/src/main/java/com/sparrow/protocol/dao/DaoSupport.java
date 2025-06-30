@@ -69,11 +69,11 @@ public interface DaoSupport<T, I> {
      *
      * @param ids
      */
-    Integer batchDelete(String ids);
+    Integer batchDelete(Collection<I> ids);
 
     T getEntity(I id);
 
-    T getEntityByUnique(UniqueKeyCriteria uniqueKeyCriteria);
+    T getEntityByUnique(UniqueKeyCriteria<I> uniqueKeyCriteria);
 
     List<T> getList();
 
@@ -83,11 +83,11 @@ public interface DaoSupport<T, I> {
 
     List<T> getList(DatabasePagerQuery query);
 
-    Long getCountByUnique(UniqueKeyCriteria uniqueKeyCriteria);
+    Long getCountByUnique(UniqueKeyCriteria<I> uniqueKeyCriteria);
 
     Boolean exist(I key);
 
-    <X> X getFieldValueByUnique(UniqueKeyCriteria uniqueKeyCriteria);
+    <X> X getFieldValueByUnique(UniqueKeyCriteria<I> uniqueKeyCriteria);
 
     <X> X getAggregate(AggregateCriteria aggregateCriteria);
 }

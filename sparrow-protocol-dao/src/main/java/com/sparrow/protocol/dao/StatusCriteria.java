@@ -17,61 +17,20 @@
 package com.sparrow.protocol.dao;
 
 import com.sparrow.protocol.enums.StatusRecord;
+import lombok.Data;
 
-public class StatusCriteria {
-    public StatusCriteria(String ids, StatusRecord status) {
+import java.util.Collection;
+
+@Data
+public class StatusCriteria<I> {
+    public StatusCriteria(Collection<I> ids, StatusRecord status) {
         this.ids = ids;
         this.status = status;
     }
 
-    private String ids;
+    private Collection<I> ids;
     private StatusRecord status;
     private Long modifiedUserId;
     private String modifiedUserName;
     private Long gmtModified;
-
-
-    public String[] getIdArray() {
-        return this.ids.split(",");
-    }
-
-    public String getIds() {
-        return ids;
-    }
-
-    public void setIds(String ids) {
-        this.ids = ids;
-    }
-
-    public StatusRecord getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusRecord status) {
-        this.status = status;
-    }
-
-    public Long getModifiedUserId() {
-        return modifiedUserId;
-    }
-
-    public void setModifiedUserId(Long modifiedUserId) {
-        this.modifiedUserId = modifiedUserId;
-    }
-
-    public String getModifiedUserName() {
-        return modifiedUserName;
-    }
-
-    public void setModifiedUserName(String modifiedUserName) {
-        this.modifiedUserName = modifiedUserName;
-    }
-
-    public Long getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Long gmtModified) {
-        this.gmtModified = gmtModified;
-    }
 }
