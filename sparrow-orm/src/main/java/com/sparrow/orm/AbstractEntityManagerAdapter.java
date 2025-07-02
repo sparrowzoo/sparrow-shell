@@ -16,7 +16,6 @@
  */
 package com.sparrow.orm;
 
-import com.sparrow.cg.PropertyNamer;
 import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
@@ -36,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.lang.reflect.Method;
 import java.util.*;
 
 public abstract class AbstractEntityManagerAdapter implements EntityManager {
@@ -75,7 +73,6 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     }
 
     private List<Field> extractFields(Class<?> clazz) {
-        Method[] orderedMethods = ClassUtility.getOrderedMethod(clazz.getMethods());
         List<java.lang.reflect.Field> fieldList = ClassUtility.extractFields(clazz);
         java.lang.reflect.Field[] fields = ClassUtility.getOrderedFields(fieldList);
         Map<String, Field> fieldMap = new LinkedHashMap<>();
@@ -91,22 +88,6 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
             Field ormField = new Field(property.getName(), property.getType(), column, splitTable, generatedValue, id);
             fieldMap.put(property.getName(), ormField);
-        }
-
-        for (Method method : orderedMethods) {
-            if (!method.isAnnotationPresent(Column.class) && !method.isAnnotationPresent(SplitTable.class)) {
-                continue;
-            }
-            String propertyName = StringUtility.setFirstByteLowerCase(PropertyNamer.methodToProperty(method.getName()));
-            if (fieldMap.containsKey(propertyName)) {
-                continue;
-            }
-            Column column = method.getAnnotation(Column.class);
-            SplitTable splitTable = method.getAnnotation(SplitTable.class);
-            GeneratedValue generatedValue = method.getAnnotation(GeneratedValue.class);
-            Id id = method.getAnnotation(Id.class);
-            Field field = new Field(propertyName, method.getReturnType(), column, splitTable, generatedValue, id);
-            fieldMap.put(propertyName, field);
         }
         return new ArrayList<>(fieldMap.values());
     }

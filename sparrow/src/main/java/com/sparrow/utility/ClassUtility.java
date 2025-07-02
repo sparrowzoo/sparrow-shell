@@ -19,7 +19,6 @@ package com.sparrow.utility;
 
 import com.sparrow.cg.PropertyNamer;
 import com.sparrow.protocol.FieldOrder;
-import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.constant.magic.Symbol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -315,26 +314,6 @@ public class ClassUtility {
         }
         return orderFields;
     }
-
-    public static Method[] getOrderedMethod(Method[] methods) {
-        List<MethodWithRank> methodList = new ArrayList<>();
-        for (Method m : methods) {
-            if (m.getAnnotation(MethodOrder.class) != null) {
-                Float order = m.getAnnotation(MethodOrder.class).order();
-                methodList.add(new MethodWithRank(m, order));
-            } else if (m.isAnnotationPresent(Column.class)) {
-                methodList.add(new MethodWithRank(m, Float.MAX_VALUE));
-            }
-        }
-        Collections.sort(methodList);
-        Method[] orderMethodArray = new Method[methodList.size()];
-
-        for (int i = 0; i < methodList.size(); i++) {
-            orderMethodArray[i] = methodList.get(i).method;
-        }
-        return orderMethodArray;
-    }
-
     public static class PropertyWithEntityName {
         private String propertyName;
         private String entityName;
