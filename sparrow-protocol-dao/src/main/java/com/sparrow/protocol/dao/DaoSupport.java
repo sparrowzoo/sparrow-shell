@@ -55,7 +55,7 @@ public interface DaoSupport<T, I> {
      * @param statusCriteria
      * @return
      */
-    Integer changeStatus(StatusCriteria statusCriteria);
+    Integer changeStatus(StatusCriteria<I> statusCriteria);
 
     /**
      * 删除指定记录
