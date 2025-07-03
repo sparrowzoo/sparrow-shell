@@ -26,9 +26,9 @@ import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
 import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.DTO;
 import com.sparrow.protocol.NotTryException;
 import com.sparrow.protocol.Result;
-import com.sparrow.protocol.VO;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Symbol;
@@ -131,7 +131,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
 
         if (url == null) {
             //兼容默认首页 /template/index.jsp 的场景
-            VO data = viewWithModel.getVo();
+            DTO data = viewWithModel.getDTO();
             if (data != null) {
                 request.setAttribute(ClassUtility.getBeanNameByClass(data.getClass()), data);
             }
@@ -145,7 +145,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         switch (viewWithModel.getSwitchMode()) {
             case REDIRECT:
                 flashUrl = servletUtility.assembleActualUrl(url);
-                this.flash(request, flashUrl, Constant.FLASH_SUCCESS_RESULT, viewWithModel.getVo());
+                this.flash(request, flashUrl, Constant.FLASH_SUCCESS_RESULT, viewWithModel.getDTO());
                 if (!url.startsWith(Constant.HTTP_PROTOCOL)) {
                     url = rootPath + url;
                 }
@@ -153,7 +153,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
                 break;
             case TRANSIT:
                 flashUrl = servletUtility.assembleActualUrl(url);
-                this.flash(request, flashUrl, Constant.FLASH_SUCCESS_RESULT, viewWithModel.getVo());
+                this.flash(request, flashUrl, Constant.FLASH_SUCCESS_RESULT, viewWithModel.getDTO());
                 String transitUrl = viewWithModel.getTransitUrl();
                 if (StringUtility.isNullOrEmpty(transitUrl)) {
                     transitUrl = configReader.getValue(Config.TRANSIT_URL);
@@ -170,7 +170,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
                 if (rootPath != null && url.startsWith(rootPath)) {
                     url = url.substring(rootPath.length());
                 }
-                VO data = viewWithModel.getVo();
+                DTO data = viewWithModel.getDTO();
                 if (data != null) {
                     request.setAttribute(ClassUtility.getBeanNameByClass(data.getClass()), data);
                 }

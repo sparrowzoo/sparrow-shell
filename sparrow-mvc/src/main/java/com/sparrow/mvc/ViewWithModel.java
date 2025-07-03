@@ -17,11 +17,11 @@
 
 package com.sparrow.mvc;
 
-import com.sparrow.protocol.VO;
+import com.sparrow.protocol.DTO;
 import com.sparrow.protocol.constant.Constant;
 
 public class ViewWithModel {
-    private VO vo;
+    private DTO dto;
     /**
      * 目标url 不包括 template 及.jsp ....
      */
@@ -36,9 +36,9 @@ public class ViewWithModel {
     private ViewWithModel() {
     }
 
-    private ViewWithModel(String transitUrl, String targetUrl, PageSwitchMode switchMode, VO vo) {
+    private ViewWithModel(String transitUrl, String targetUrl, PageSwitchMode switchMode, DTO dto) {
         this.transitUrl = transitUrl;
-        this.vo = vo;
+        this.dto = dto;
         this.url = targetUrl;
         this.switchMode = switchMode;
     }
@@ -47,40 +47,40 @@ public class ViewWithModel {
         return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.FORWARD, null);
     }
 
-    public static ViewWithModel forward(VO vo) {
-        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.FORWARD, vo);
+    public static ViewWithModel forward(DTO dto) {
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.FORWARD, dto);
     }
 
     public static ViewWithModel forward(String targetUrl) {
         return new ViewWithModel(null, targetUrl, PageSwitchMode.FORWARD, null);
     }
 
-    public static ViewWithModel forward(String targetUrl, VO vo) {
-        return new ViewWithModel(null, targetUrl, PageSwitchMode.FORWARD, vo);
+    public static ViewWithModel forward(String targetUrl, DTO dto) {
+        return new ViewWithModel(null, targetUrl, PageSwitchMode.FORWARD, dto);
     }
 
     public static ViewWithModel transit() {
         return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.TRANSIT, null);
     }
 
-    public static ViewWithModel transit(VO vo) {
-        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.TRANSIT, vo);
+    public static ViewWithModel transit(DTO dto) {
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.TRANSIT, dto);
     }
 
     public static ViewWithModel transit(String url) {
         return new ViewWithModel(null, url, PageSwitchMode.TRANSIT, null);
     }
 
-    public static ViewWithModel transit(String targetUrl, VO vo) {
-        return new ViewWithModel(null, targetUrl, PageSwitchMode.TRANSIT, vo);
+    public static ViewWithModel transit(String targetUrl, DTO dto) {
+        return new ViewWithModel(null, targetUrl, PageSwitchMode.TRANSIT, dto);
     }
 
-    public static ViewWithModel transit(String transitUrl, String targetUrl, VO vo) {
-        return new ViewWithModel(transitUrl, targetUrl, PageSwitchMode.TRANSIT, vo);
+    public static ViewWithModel transit(String transitUrl, String targetUrl, DTO dto) {
+        return new ViewWithModel(transitUrl, targetUrl, PageSwitchMode.TRANSIT, dto);
     }
 
-    public static ViewWithModel redirect(VO vo) {
-        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.REDIRECT, vo);
+    public static ViewWithModel redirect(DTO dto) {
+        return new ViewWithModel(null, Constant.SUCCESS, PageSwitchMode.REDIRECT, dto);
     }
 
     public static ViewWithModel redirect() {
@@ -91,12 +91,12 @@ public class ViewWithModel {
         return new ViewWithModel(null, url, PageSwitchMode.REDIRECT, null);
     }
 
-    public static ViewWithModel redirect(String url, VO vo) {
-        return new ViewWithModel(null, url, PageSwitchMode.REDIRECT, vo);
+    public static ViewWithModel redirect(String url, DTO dto) {
+        return new ViewWithModel(null, url, PageSwitchMode.REDIRECT, dto);
     }
 
-    public VO getVo() {
-        return vo;
+    public DTO getDTO() {
+        return dto;
     }
 
     public String getUrl() {

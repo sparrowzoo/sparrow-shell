@@ -1,8 +1,8 @@
 package com.sparrow.vo;
 
-import com.sparrow.protocol.VO;
+import com.sparrow.protocol.DTO;
 
-public class JsonVO implements VO {
+public class JsonVO implements DTO {
     public JsonVO(String json) {
         this.json = json;
     }
