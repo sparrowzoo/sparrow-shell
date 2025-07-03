@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.assemble;
+package com.sparrow.protocol;
 
-import com.sparrow.protocol.DTO;
-import com.sparrow.protocol.VO;
-import java.util.List;
-
-public interface DTO2VOAssemble<V extends VO, D extends DTO> {
-    V dtoAssembleVO(D d);
-
-    List<V> dtoListAssembleVOList(List<D> list);
+public interface EnumIdentityAccessor {
+    Integer getIdentity();
 }

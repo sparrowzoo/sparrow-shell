@@ -17,7 +17,8 @@
 
 package com.sparrow.protocol.pager;
 
-import com.sparrow.protocol.VO;
+import com.sparrow.protocol.DTO;
+
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ import java.util.List;
  * <p>
  * T data type
  */
-public class PagerResult<T> extends SimplePager implements VO {
+public class PagerResult<T> extends SimplePager implements DTO {
 
     public PagerResult() {
     }

@@ -14,18 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.protocol;
 
-package com.sparrow.support.assemble;
+public class IdentityDTO<T> implements DTO {
+    public IdentityDTO(Long id, T data) {
+        this.id = id;
+        this.data = data;
+    }
 
-import com.sparrow.protocol.Param;
-import com.sparrow.protocol.VO;
+    public IdentityDTO(Long id) {
+        this.id = id;
+    }
 
-/**
- * 保存后返回
- *
- * @param <V>
- * @param <P>
- */
-public interface Param2VOAssemble<V extends VO, P extends Param> {
-    V paramAssembleVO(P p);
+    private Long id;
+    private T data;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

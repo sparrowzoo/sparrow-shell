@@ -33,7 +33,7 @@ import lombok.Data;
  * 为保证线程安全，属性只读
  */
 @Data
-public class Result<T> implements VO {
+public class Result<T> implements DTO {
     private Result() {
 
     }

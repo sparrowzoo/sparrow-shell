@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Data
-public class LoginUser implements VO {
+public class LoginUser implements DTO {
     /**
      * 游客ID
      */

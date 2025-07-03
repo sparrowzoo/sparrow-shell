@@ -51,8 +51,18 @@ public class ClassUtility {
         return fieldList;
     }
 
+    public static String getBeanNameByClass(Class<?> clazz, Class<?> interfaceClazz) {
+        String interfaceName = interfaceClazz.getSimpleName();
+        String className = clazz.getSimpleName();
+        int index = className.indexOf(interfaceName);
+        if (index > 0) {
+            className = className.substring(0, index);
+        }
+        return getBeanNameByClass(className);
+    }
+
     public static String getBeanNameByClass(Class<?> clazz) {
-        return getBeanNameByClass(clazz.getName());
+        return getBeanNameByClass(clazz.getSimpleName());
     }
 
     public static String getBeanNameByClass(String clazzName) {
@@ -314,6 +324,7 @@ public class ClassUtility {
         }
         return orderFields;
     }
+
     public static class PropertyWithEntityName {
         private String propertyName;
         private String entityName;

@@ -17,7 +17,7 @@
 
 package com.sparrow.protocol;
 
-public class TreeItem implements DTO,VO {
+public class TreeItem implements DTO {
     private Integer id;
     private Integer parentId;
     private String name;
