@@ -198,24 +198,24 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         insertSQL.append(")values(");
         insertSQL.append(insertParameter);
         insertSQL.append(Symbol.RIGHT_PARENTHESIS);
-
+        this.fields = fieldBuilder.toString();
+        if (this.primary == null) {
+            return;
+        }
         updateSQL.deleteCharAt(updateSQL.length() - 1)
                 .append(" where ")
                 .append(this.primary.getColumnName())
                 .append("=").append(this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getPropertyName()));
         String deleteSQL = "delete from " + this.dialectTableName + " where "
                 + this.primary.getColumnName() + "=" + this.parsePropertyParameter(this.primary.getColumnName(), this.primary.getPropertyName());
-
         createDDLField.append(String.format("PRIMARY KEY (`%s`)\n", this.primary.getColumnName()));
         createDDLField.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='").append(tableName).append("';\n");
-
         this.createDDL = createDDLHeader + primaryCreateDDL + createDDLField;
         this.insert = insertSQL.toString();
         // 初始化delete SQL语句
         this.delete = deleteSQL;
         // 初始化update SQL语句
         this.update = updateSQL.toString();
-        this.fields = fieldBuilder.toString();
     }
 
     @Override

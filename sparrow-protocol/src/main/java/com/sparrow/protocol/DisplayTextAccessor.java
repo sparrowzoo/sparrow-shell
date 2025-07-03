@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.assemble;
+package com.sparrow.protocol;
 
-import com.sparrow.protocol.BO;
-import com.sparrow.protocol.VO;
-import java.util.List;
-
-public interface BO2VOAssemble<V extends VO, B extends BO> {
-    V boAssembleVO(B b);
-
-    List<V> boListAssembleVOList(List<B> list);
+public interface DisplayTextAccessor {
+    String getDisplayText();
 }
