@@ -16,9 +16,10 @@
  */
 package com.sparrow.markdown.vo;
 
-import com.sparrow.protocol.VO;
 
-public class MarkdownVO implements VO {
+import com.sparrow.protocol.DTO;
+
+public class MarkdownVO implements DTO {
     private String markdown;
     private String html;
 
