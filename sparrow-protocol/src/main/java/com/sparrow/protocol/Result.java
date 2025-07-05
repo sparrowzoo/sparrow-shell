@@ -21,6 +21,8 @@ import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * 可用于协议 规范服务端返回格式 <p>
  * <p>
@@ -144,6 +146,11 @@ public class Result<T> implements DTO {
      * 返回值
      */
     private T data;
+
+    /**
+     * 字典
+     */
+    private Map<String, Object> dictionary;
 
 
     public static Result fail(ErrorSupport errorSupport) {
