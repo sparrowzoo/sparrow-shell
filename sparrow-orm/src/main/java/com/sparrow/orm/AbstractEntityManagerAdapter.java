@@ -20,6 +20,7 @@ import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.OrmEntityMetadata;
+import com.sparrow.protocol.DisplayTextAccessor;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dao.Dialect;
@@ -55,9 +56,11 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected Map<Integer, Field> hashFieldMap;
     protected Set<String> poPropertyNames;
     protected String tableName;
+    protected String joinTableName;
     protected String dialectTableName;
     protected String className;
     protected Class<?> clazz;
+    protected Boolean isAssignableFromDisplayText;
     protected String simpleClassName;
     protected DialectAdapter dialectAdapter;
     protected int tableBucketCount;
@@ -85,8 +88,9 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             SplitTable splitTable = property.getAnnotation(SplitTable.class);
             GeneratedValue generatedValue = property.getAnnotation(GeneratedValue.class);
             Id id = property.getAnnotation(Id.class);
-
+            JoinTable joinTable = property.getAnnotation(JoinTable.class);
             Field ormField = new Field(property.getName(), property.getType(), column, splitTable, generatedValue, id);
+            ormField.setJoinTable(joinTable);
             fieldMap.put(property.getName(), ormField);
         }
         return new ArrayList<>(fieldMap.values());
@@ -101,6 +105,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
     public AbstractEntityManagerAdapter(Class<?> clazz) {
         this.clazz = clazz;
+        this.isAssignableFromDisplayText = DisplayTextAccessor.class.isAssignableFrom(clazz);
         this.className = clazz.getName();
         this.simpleClassName = clazz.getSimpleName();
         List<Field> fields = this.extractFields(clazz);
@@ -142,6 +147,12 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
                     continue;
                 }
             }
+
+            JoinTable joinTable = field.getJoinTable();
+            if (joinTable != null) {
+                this.joinTableName = joinTable.name();
+            }
+
             Column column = field.getColumn();
             if (column == null) {
                 continue;
@@ -357,5 +368,14 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     @Override
     public String getCreateDDL() {
         return createDDL;
+    }
+
+    @Override
+    public boolean isAssignableFromDisplayText() {
+        return this.isAssignableFromDisplayText;
+    }
+
+    public String getJoinTableName() {
+        return joinTableName;
     }
 }

@@ -18,7 +18,7 @@
 package com.sparrow.cg;
 
 public interface MethodAccessor {
-    Object get(Object o, String methodName);
+    Object get(Object o, String propertyName);
 
-    void set(Object o, String methodName, Object arg);
+    void set(Object o, String propertyName, Object arg);
 }

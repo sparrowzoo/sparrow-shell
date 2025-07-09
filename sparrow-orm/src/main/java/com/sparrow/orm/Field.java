@@ -20,11 +20,11 @@ package com.sparrow.orm;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
 public class Field extends TypeConverter {
     private TableSplitStrategy hashStrategy;
     private GenerationType generationType;
@@ -32,7 +32,7 @@ public class Field extends TypeConverter {
     private Column column;
     private SplitTable splitTable;
     private GeneratedValue generatedValue;
-
+    private JoinTable joinTable;
     private String columnName;
     private Integer hashIndex = -1;
 
@@ -76,65 +76,5 @@ public class Field extends TypeConverter {
         if (id != null) {
             this.primary = true;
         }
-    }
-
-    public GenerationType getGenerationType() {
-        return generationType;
-    }
-
-    public TableSplitStrategy getHashStrategy() {
-        return hashStrategy;
-    }
-
-    public String getColumnName() {
-        return columnName;
-    }
-
-    public Integer getHashIndex() {
-        return hashIndex;
-    }
-
-    public boolean isPrimary() {
-        return primary;
-    }
-
-    public String getGenerator() {
-        return generator;
-    }
-
-    public boolean isUpdatable() {
-        return updatable;
-    }
-
-    public int getScale() {
-        return scale;
-    }
-
-    public boolean isUnique() {
-        return unique;
-    }
-
-    public boolean isPersistence() {
-        return persistence;
-    }
-
-    public String getColumnDefinition() {
-        return columnDefinition;
-    }
-
-    public Id getId() {
-        return id;
-    }
-
-    public Column getColumn() {
-        return column;
-    }
-
-    public SplitTable getSplitTable() {
-        return splitTable;
-    }
-
-    public GeneratedValue getGeneratedValue() {
-        return generatedValue;
     }
 }

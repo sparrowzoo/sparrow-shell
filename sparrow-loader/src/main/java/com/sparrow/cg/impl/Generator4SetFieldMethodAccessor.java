@@ -41,24 +41,24 @@ public class Generator4SetFieldMethodAccessor implements Generator4MethodAccesso
             }
         }
 
-        @Override public Object get(Object o, String methodName) {
-            Field field = fieldMap.get(methodName);
+        @Override public Object get(Object o, String propertyName) {
+            Field field = fieldMap.get(propertyName);
             if (field == null) {
-                logger.warn("field not found {} of object class name {}", methodName, o.getClass().getName());
+                logger.warn("field not found {} of object class name {}", propertyName, o.getClass().getName());
                 return null;
             }
             try {
                 return field.get(o);
             } catch (IllegalAccessException e) {
-                logger.warn("field get error {} of object class name {}", methodName, o.getClass().getName());
+                logger.warn("field get error {} of object class name {}", propertyName, o.getClass().getName());
                 return null;
             }
         }
 
-        @Override public void set(Object o, String methodName, Object arg) {
-            Field field = fieldMap.get(methodName);
+        @Override public void set(Object o, String propertyName, Object arg) {
+            Field field = fieldMap.get(propertyName);
             if (field == null) {
-                logger.warn("field not found {} of object class name {}", methodName, o.getClass().getName());
+                logger.warn("field not found {} of object class name {}", propertyName, o.getClass().getName());
                 return;
             }
             try {

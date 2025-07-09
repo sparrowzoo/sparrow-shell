@@ -18,14 +18,19 @@
 package com.sparrow.protocol.pager;
 
 import com.sparrow.protocol.DTO;
+import com.sparrow.protocol.KeyValue;
+import lombok.Data;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * pager result without html
  * <p>
  * T data type
  */
+@Data
 public class PagerResult<T> extends SimplePager implements DTO {
 
     public PagerResult() {
@@ -47,27 +52,19 @@ public class PagerResult<T> extends SimplePager implements DTO {
     protected Long recordTotal;
 
     protected List<T> list;
-
-    public Long getRecordTotal() {
-        return recordTotal;
-    }
-
-    public void setRecordTotal(Long recordTotal) {
-        this.recordTotal = recordTotal;
-    }
-
-    public List<T> getList() {
-        return list;
-    }
-
-    public void setList(List<T> list) {
-        this.list = list;
-    }
+    /**
+     * 字典
+     */
+    private Map<String, Object> dictionary = new HashMap<>();
 
     /**
      * 根据总记录数和每页记录数获取最后页码
      */
     public Integer getLastPageIndex() {
         return (int) Math.ceil((double) this.recordTotal / this.pageSize);
+    }
+
+    public void putDictionary(String key, List<KeyValue<Integer, String>> values) {
+        dictionary.put(key, values);
     }
 }

@@ -17,15 +17,13 @@
 
 package com.sparrow.protocol;
 
-import lombok.Data;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@Data
-public class KeyValue<K, V> {
-    public KeyValue(K key, V value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    private K key;
-    private V value;
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface EnumUniqueName {
+    String name() default "";
 }

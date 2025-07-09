@@ -17,35 +17,31 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.protocol.EnumIdentityAccessor;
+import com.sparrow.protocol.KeyValue;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class EnumUtility {
-    private static final Map<String, List<String>> CONTAINERS = new ConcurrentHashMap<>();
 
-    public static List<String> getNames(String fullEnumName) throws ClassNotFoundException {
-        if (CONTAINERS.containsKey(fullEnumName)) {
-            return CONTAINERS.get(fullEnumName);
-        }
+    public static List<KeyValue<Integer, String>> getNames(String fullEnumName) throws ClassNotFoundException {
         Class<?> c = Class.forName(fullEnumName);
         return getNames(c);
     }
 
-    public static List<String> getNames(Class<?> e) {
-        List<String> list = new ArrayList<>();
+    public static List<KeyValue<Integer, String>> getNames(Class<?> e) {
+        List<KeyValue<Integer, String>> kvs = new ArrayList<>();
         Class<Enum<?>> c = (Class<Enum<?>>) e;
-        String fullEnumName = c.getName();
-        if (CONTAINERS.containsKey(fullEnumName)) {
-            return CONTAINERS.get(fullEnumName);
-        }
         Enum<?>[] enums = c.getEnumConstants();
         for (Enum<?> en : enums) {
-            String key = en.name();
-            list.add(key);
+            String name = en.name();
+            Integer key = en.ordinal();
+            if (en instanceof EnumIdentityAccessor) {
+                key = ((EnumIdentityAccessor) en).getIdentity();
+            }
+            kvs.add(new KeyValue<>(key, name));
         }
-        CONTAINERS.put(fullEnumName, list);
-        return list;
+        return kvs;
     }
 }
