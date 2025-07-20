@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import javax.tools.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
@@ -72,115 +71,80 @@ public class DynamicCompiler {
         unloadable = null;
     }
 
-    public Object sourceToObject(String fullClassName, String javaCode)
-            throws IllegalAccessException, InstantiationException, URISyntaxException {
+    public Class<?> source2Class(String fullClassName, String javaCode) {
         long start = System.currentTimeMillis();
-        Object instance = null;
         // 获取系统的java 编译器
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-
         if (compiler == null) {
             logger.error("compiler is null put jdk/lib/tools.jar to /jre/lib/tools.jar");
             return null;
         }
+        ClassFileManager fileManager = null;
+        try {
+            // 诊断 收集器
+            DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+            fileManager = new ClassFileManager(
+                    compiler.getStandardFileManager(diagnostics, Locale.CHINA,
+                            StandardCharsets.UTF_8));
 
-        // 诊断 收集器
-        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-        ClassFileManager fileManager = new ClassFileManager(
-                compiler.getStandardFileManager(diagnostics, Locale.CHINA,
-                        StandardCharsets.UTF_8));
+            List<JavaFileObject> javaFileObjectList = new ArrayList<JavaFileObject>();
+            javaFileObjectList.add(new JavaSourceFileObject(fullClassName, javaCode));
 
-        List<JavaFileObject> javaFileObjectList = new ArrayList<JavaFileObject>();
-        javaFileObjectList.add(new JavaSourceFileObject(fullClassName, javaCode));
-
-        /**
-         *
-         * 2.用法：javac <选项> <源文件>
-         *
-         * 3.其中，可能的选项包括：
-         *
-         * 4.-g 生成所有调试信息
-         *
-         * 5.-g:none 不生成任何调试信息
-         *
-         * 6.-g:{lines,vars,source} 只生成某些调试信息
-         *
-         * 7.-nowarn 不生成任何警告
-         *
-         * 8.-verbose 输出有关编译器正在执行的操作的消息
-         *
-         * 9.-deprecation 输出使用已过时的 API 的源位置
-         *
-         * 10.-classpath <路径> 指定查找用户类文件的位置
-         *
-         * 11.-cp <路径> 指定查找用户类文件的位置
-         *
-         * 12.-sourcepath <路径> 指定查找输入源文件的位置
-         *
-         * 13.-bootclasspath <路径> 覆盖引导类文件的位置
-         *
-         * 14.-extdirs <目录> 覆盖安装的扩展目录的位置
-         *
-         * 15.-endorseddirs <目录> 覆盖签名的标准路径的位置
-         *
-         * 16.-d <目录> 指定存放生成的类文件的位置
-         *
-         * 17.-encoding <编码> 指定源文件使用的字符编码
-         *
-         * 18.-source <版本> 提供与指定版本的源兼容性
-         *
-         * 19.-target <版本> 生成特定 VM 版本的类文件
-         *
-         * 20.-version 版本信息
-         *
-         * 21.-help 输出标准选项的提要
-         *
-         * 22.-X 输出非标准选项的提要
-         *
-         * 23.-J<标志> 直接将 <标志> 传递给运行时系统
-         */
-        List<String> options = new ArrayList<String>();
-        options.add("-encoding");
-        options.add(this.encoding);
-        options.add("-classpath");
-        options.add(this.classpath);
-
-        JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager,
-                diagnostics, options, null, javaFileObjectList);
-        boolean success = task.call();
-        if (success) {
-            JavaClassFileObject javaClassFileObject = fileManager.getJavaClassObject();
-            DynamicClassLoader dynamicClassLoader = new DynamicClassLoader(
-                    this.classLoader);
-            Class<?> clazz = dynamicClassLoader.loadClass(fullClassName, javaClassFileObject);
-            instance = clazz.newInstance();
-        } else {
+            List<String> options = new ArrayList<String>();
+            options.add("-encoding");
+            options.add(this.encoding);
+            options.add("-classpath");
+            options.add(this.classpath);
+            JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager,
+                    diagnostics, options, null, javaFileObjectList);
+            boolean success = task.call();
+            if (success) {
+                JavaClassFileObject javaClassFileObject = fileManager.getJavaClassObject();
+                DynamicClassLoader dynamicClassLoader = new DynamicClassLoader(
+                        this.classLoader);
+                return dynamicClassLoader.loadClass(fullClassName, javaClassFileObject);
+            }
             String error = Symbol.EMPTY;
             for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
                 error = error + compilePrint(diagnostic);
                 logger.info(error);
             }
+            return null;
+        } catch (Exception e) {
+            logger.error("source2Class error ", e);
+            return null;
+        } finally {
+            try {
+                if (fileManager != null) {
+                    fileManager.close();
+                }
+            } catch (IOException ignore) {
+            }
+            long end = System.currentTimeMillis();
+            logger.info("init " + fullClassName + " use:" + (end - start) + "ms");
         }
-        try {
-            fileManager.close();
-        } catch (IOException ignore) {
+    }
+
+    public Object sourceToObject(String fullClassName, String javaCode)
+            throws IllegalAccessException, InstantiationException {
+        Class<?> clazz = source2Class(fullClassName, javaCode);
+        if (clazz == null) {
+            return null;
         }
-        long end = System.currentTimeMillis();
-        logger.info("init " + fullClassName + " use:" + (end - start) + "ms");
-        return instance;
+        return clazz.newInstance();
     }
 
     private String compilePrint(Diagnostic<?> diagnostic) {
         StringBuilder res = new StringBuilder();
-        res.append("Code:[" + diagnostic.getCode() + "]\n");
-        res.append("Kind:[" + diagnostic.getKind() + "]\n");
-        res.append("Position:[" + diagnostic.getPosition() + "]\n");
-        res.append("Start Position:[" + diagnostic.getStartPosition() + "]\n");
-        res.append("End Position:[" + diagnostic.getEndPosition() + "]\n");
-        res.append("Source:[" + diagnostic.getSource() + "]\n");
-        res.append("Message:[" + diagnostic.getMessage(null) + "]\n");
-        res.append("LineNumber:[" + diagnostic.getLineNumber() + "]\n");
-        res.append("ColumnNumber:[" + diagnostic.getColumnNumber() + "]\n");
+        res.append("Code:[").append(diagnostic.getCode()).append("]\n");
+        res.append("Kind:[").append(diagnostic.getKind()).append("]\n");
+        res.append("Position:[").append(diagnostic.getPosition()).append("]\n");
+        res.append("Start Position:[").append(diagnostic.getStartPosition()).append("]\n");
+        res.append("End Position:[").append(diagnostic.getEndPosition()).append("]\n");
+        res.append("Source:[").append(diagnostic.getSource()).append("]\n");
+        res.append("Message:[").append(diagnostic.getMessage(null)).append("]\n");
+        res.append("LineNumber:[").append(diagnostic.getLineNumber()).append("]\n");
+        res.append("ColumnNumber:[").append(diagnostic.getColumnNumber()).append("]\n");
         logger.info(res.toString());
         return res.toString();
     }
