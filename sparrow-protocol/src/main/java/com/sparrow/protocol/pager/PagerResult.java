@@ -64,7 +64,7 @@ public class PagerResult<T> extends SimplePager implements DTO {
         return (int) Math.ceil((double) this.recordTotal / this.pageSize);
     }
 
-    public void putDictionary(String key, List<KeyValue<Integer, String>> values) {
+    public <I> void putDictionary(String key, List<KeyValue<I, String>> values) {
         dictionary.put(key, values);
     }
 }
