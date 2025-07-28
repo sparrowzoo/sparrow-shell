@@ -1,7 +1,6 @@
 package com.sparrow.orm.po;
 
 import com.sparrow.protocol.ClientInformation;
-import com.sparrow.protocol.MethodOrder;
 import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.Split;
@@ -227,7 +226,6 @@ public class Event implements POJO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id", columnDefinition = "int(10) UNSIGNED AUTO_INCREMENT     COMMENT 'primary key'", nullable = false)
-    @MethodOrder(order = 1)
     public Long getEventId() {
         return eventId;
     }
@@ -237,7 +235,6 @@ public class Event implements POJO {
     }
 
     @SplitTable(index = 10, strategy = TableSplitStrategy.ORIGIN)
-    @MethodOrder(order = 2)
     @Column(name = "user_type", columnDefinition = "varchar(16) DEFAULT '' COMMENT 'user type'", nullable = false)
     public String getUserType() {
         return userType;
@@ -249,7 +246,6 @@ public class Event implements POJO {
 
     @SplitTable
     @Column(name = "user_id", columnDefinition = "int(10) UNSIGNED     COMMENT 'user id'", nullable = false)
-    @MethodOrder(order = 3)
     public Long getUserId() {
         return userId;
     }
@@ -259,7 +255,6 @@ public class Event implements POJO {
     }
 
 
-    @MethodOrder(order = 4)
     @Column(name = "business_type", columnDefinition = "varchar(64) DEFAULT '' COMMENT 'business typ'", nullable = false)
     public String getBusinessType() {
         return businessType;
@@ -270,7 +265,6 @@ public class Event implements POJO {
     }
 
 
-    @MethodOrder(order = 5)
     @Column(name = "business_id", columnDefinition = "int(10) UNSIGNED     COMMENT 'business id'", nullable = false)
     public Long getBusinessId() {
         return businessId;
@@ -281,7 +275,6 @@ public class Event implements POJO {
     }
 
 
-    @MethodOrder(order = 6)
     @Column(name = "times", columnDefinition = "int(10) DEFAULT 0 COMMENT 'times'", nullable = false)
     public Integer getTimes() {
         return times;
@@ -291,7 +284,6 @@ public class Event implements POJO {
         this.times = times;
     }
 
-    @MethodOrder(order = 6.1F)
     @Column(name = "channel", columnDefinition = "varchar(256) DEFAULT '' COMMENT 'channel'", nullable = false)
     public String getChannel() {
         return channel;
@@ -303,7 +295,6 @@ public class Event implements POJO {
 
 
     @Column(name = "ip", columnDefinition = "char(16) DEFAULT '' COMMENT 'ip'", nullable = false)
-    @MethodOrder(order = 7)
     public String getIp() {
         return ip;
     }
@@ -312,7 +303,6 @@ public class Event implements POJO {
         this.ip = ip;
     }
 
-    @MethodOrder(order = 8)
     @Column(name = "device", columnDefinition = "varchar(32) DEFAULT '' COMMENT 'device'", nullable = false)
     public String getDevice() {
         return device;
@@ -322,7 +312,6 @@ public class Event implements POJO {
         this.device = device;
     }
 
-    @MethodOrder(order = 9)
     @Column(name = "device_id", columnDefinition = "varchar(64) DEFAULT '' COMMENT 'device unique id'", nullable = false)
     public String getDeviceId() {
         return deviceId;
@@ -332,7 +321,6 @@ public class Event implements POJO {
         this.deviceId = deviceId;
     }
 
-    @MethodOrder(order = 9.1F)
     @Column(name = "device_model", columnDefinition = "varchar(16) DEFAULT '' COMMENT 'device model 5s e.g ...'", nullable = false)
     public String getDeviceModel() {
         return deviceModel;
@@ -342,7 +330,6 @@ public class Event implements POJO {
         this.deviceModel = deviceModel;
     }
 
-    @MethodOrder(order = 10)
     @Column(name = "event", columnDefinition = "varchar(64) DEFAULT '' COMMENT 'event type'", nullable = false)
     public String getEvent() {
         return event;
@@ -353,7 +340,6 @@ public class Event implements POJO {
     }
 
     @Column(name = "content", columnDefinition = "varchar(512) DEFAULT '' COMMENT 'content'", nullable = false)
-    @MethodOrder(order = 11)
     public String getContent() {
         return content;
     }
@@ -362,7 +348,6 @@ public class Event implements POJO {
         this.content = content;
     }
 
-    @MethodOrder(order = 12)
     @Column(name = "website", columnDefinition = "varchar(256) DEFAULT '' COMMENT 'website home url'", nullable = false)
     public String getWebsite() {
         return website;
@@ -372,7 +357,6 @@ public class Event implements POJO {
         this.website = website;
     }
 
-    @MethodOrder(order = 13)
     @Column(name = "app_id", columnDefinition = "int(11) UNSIGNED DEFAULT 0 COMMENT 'app id'", nullable = false)
     public int getAppId() {
         return appId;
@@ -382,7 +366,6 @@ public class Event implements POJO {
         this.appId = appId;
     }
 
-    @MethodOrder(order = 14)
     @Column(name = "app_version", columnDefinition = "float(11,2) DEFAULT 0.0 COMMENT 'app version'", nullable = false)
     public float getAppVersion() {
         return appVersion;
@@ -392,7 +375,6 @@ public class Event implements POJO {
         this.appVersion = appVersion;
     }
 
-    @MethodOrder(order = 15)
     @Column(name = "platform", columnDefinition = "tinyint(2) DEFAULT -1 COMMENT 'platform'", nullable = false)
     public Platform getPlatform() {
         return platform;
@@ -402,7 +384,6 @@ public class Event implements POJO {
         this.platform = platform;
     }
 
-    @MethodOrder(order = 16)
     @Column(name = "os", columnDefinition = "varchar(16) DEFAULT '' COMMENT 'operation system'", nullable = false)
     public String getOs() {
         return os;
@@ -412,7 +393,6 @@ public class Event implements POJO {
         this.os = os;
     }
 
-    @MethodOrder(order = 17)
     @Column(name = "user_agent", columnDefinition = "varchar(512) DEFAULT '' COMMENT 'use agent'", nullable = false)
     public String getUserAgent() {
         return userAgent;
@@ -422,7 +402,6 @@ public class Event implements POJO {
         this.userAgent = userAgent;
     }
 
-    @MethodOrder(order = 18)
     @Column(name = "client_version", columnDefinition = "varchar(64) DEFAULT '' COMMENT 'client os version'", nullable = false)
     public String getClientVersion() {
         return clientVersion;
@@ -433,7 +412,6 @@ public class Event implements POJO {
     }
 
 
-    @MethodOrder(order = 20)
     @Column(name = "longitude", columnDefinition = "double DEFAULT 0.0 COMMENT 'longitude'", nullable = false)
     public double getLongitude() {
         return longitude;
@@ -443,7 +421,6 @@ public class Event implements POJO {
         this.longitude = longitude;
     }
 
-    @MethodOrder(order = 21)
     @Column(name = "latitude", columnDefinition = "double DEFAULT 0.0 COMMENT 'latitude'", nullable = false)
     public double getLatitude() {
         return latitude;
@@ -453,7 +430,6 @@ public class Event implements POJO {
         this.latitude = latitude;
     }
 
-    @MethodOrder(order = 22)
     @Column(name = "network", columnDefinition = "varchar(16) DEFAULT '' COMMENT 'network'", nullable = false)
     public String getNetwork() {
         return network;
@@ -463,7 +439,6 @@ public class Event implements POJO {
         this.network = network;
     }
 
-    @MethodOrder(order = 23)
     @Column(name = "simulate", columnDefinition = "tinyint(1) DEFAULT 0 COMMENT 'is simulate'", nullable = false)
     public Boolean getSimulate() {
         return simulate;
@@ -473,7 +448,6 @@ public class Event implements POJO {
         this.simulate = simulate;
     }
 
-    @MethodOrder(order = 24)
     @Column(name = "imei", columnDefinition = "varchar(64) DEFAULT '' COMMENT 'imei'", nullable = false)
     public String getImei() {
         return imei;
@@ -483,7 +457,6 @@ public class Event implements POJO {
         this.imei = imei;
     }
 
-    @MethodOrder(order = 25)
     @Column(name = "bssid", columnDefinition = "varchar(64) DEFAULT '' COMMENT 'bssi'", nullable = false)
     public String getBssid() {
         return bssid;
@@ -493,7 +466,6 @@ public class Event implements POJO {
         this.bssid = bssid;
     }
 
-    @MethodOrder(order = 26)
     @Column(name = "ssid", columnDefinition = "char(64) DEFAULT '' COMMENT 'ssid'", nullable = false)
     public String getSsid() {
         return ssid;
@@ -503,7 +475,6 @@ public class Event implements POJO {
         this.ssid = ssid;
     }
 
-    @MethodOrder(order = 27)
     @Column(name = "idfa", columnDefinition = "char(64) DEFAULT '' COMMENT 'idfa'", nullable = false)
     public String getIdfa() {
         return idfa;
@@ -513,7 +484,6 @@ public class Event implements POJO {
         this.idfa = idfa;
     }
 
-    @MethodOrder(order = 28)
     @Column(name = "start_time", columnDefinition = "bigint(20) DEFAULT 0 COMMENT 'client start time'", nullable = false)
     public long getStartTime() {
         return startTime;
@@ -523,7 +493,6 @@ public class Event implements POJO {
         this.startTime = startTime;
     }
 
-    @MethodOrder(order = 29)
     @Column(name = "resume_time", columnDefinition = "bigint(20) DEFAULT 0 COMMENT 'client resume time'", nullable = false)
     public long getResumeTime() {
         return resumeTime;
@@ -533,7 +502,6 @@ public class Event implements POJO {
         this.resumeTime = resumeTime;
     }
 
-    @MethodOrder(order = 30)
     @Column(name = "create_time", columnDefinition = "bigint(20)  DEFAULT 0", nullable = false)
     public Long getCreateTime() {
         return createTime;
@@ -543,7 +511,6 @@ public class Event implements POJO {
         this.createTime = createTime;
     }
 
-    @MethodOrder(order = 31)
     @Column(name = "update_time", columnDefinition = "bigint(20)  DEFAULT 0", nullable = false)
     public Long getUpdateTime() {
         return updateTime;

@@ -18,6 +18,7 @@
 package com.sparrow.orm;
 
 import com.sparrow.core.TypeConverter;
+import com.sparrow.protocol.dao.ListDatasource;
 import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import lombok.Data;
@@ -32,7 +33,7 @@ public class Field extends TypeConverter {
     private Column column;
     private SplitTable splitTable;
     private GeneratedValue generatedValue;
-    private JoinTable joinTable;
+    private ListDatasource listDatasource;
     private String columnName;
     private Integer hashIndex = -1;
 

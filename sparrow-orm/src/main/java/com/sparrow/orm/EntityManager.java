@@ -65,6 +65,4 @@ public interface EntityManager {
     String parsePropertyParameter(String column, String property);
 
     boolean isAssignableFromDisplayText();
-
-    String joinTableName();
 }

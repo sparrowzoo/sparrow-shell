@@ -18,7 +18,7 @@
 package com.sparrow.utility;
 
 import com.sparrow.cg.PropertyNamer;
-import com.sparrow.protocol.FieldOrder;
+import com.sparrow.protocol.dao.FieldOrder;
 import com.sparrow.protocol.constant.magic.Symbol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

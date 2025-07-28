@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol;
+package com.sparrow.protocol.dao;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
