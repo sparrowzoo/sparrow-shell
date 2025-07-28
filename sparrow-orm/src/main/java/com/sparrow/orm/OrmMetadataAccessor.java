@@ -357,7 +357,7 @@ public class OrmMetadataAccessor<T, I> {
             parameterList.addAll(idsParameters.getSecond());
         } else {
             whereClause = " =?";
-            parameterList.add(new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(statusCriteria.getIds())));
+            parameterList.add(new Parameter(this.entityManager.getPrimary(), this.entityManager.getPrimary().convert(statusCriteria.getIds().iterator().next())));
         }
 
         String updateSql = String.format("update %1$s set " +
