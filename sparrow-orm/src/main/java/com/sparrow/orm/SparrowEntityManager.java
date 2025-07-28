@@ -45,11 +45,6 @@ public class SparrowEntityManager extends AbstractEntityManagerAdapter {
         return "?";
     }
 
-    @Override
-    public String joinTableName() {
-        return this.joinTableName;
-    }
-
     public int getTableBucketCount() {
         return tableBucketCount;
     }

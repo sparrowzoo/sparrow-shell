@@ -23,10 +23,7 @@ import com.sparrow.enums.OrmEntityMetadata;
 import com.sparrow.protocol.DisplayTextAccessor;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.protocol.dao.Dialect;
-import com.sparrow.protocol.dao.PO;
-import com.sparrow.protocol.dao.Split;
-import com.sparrow.protocol.dao.SplitTable;
+import com.sparrow.protocol.dao.*;
 import com.sparrow.protocol.dao.enums.DBDialect;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
@@ -56,7 +53,6 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected Map<Integer, Field> hashFieldMap;
     protected Set<String> poPropertyNames;
     protected String tableName;
-    protected String joinTableName;
     protected String dialectTableName;
     protected String className;
     protected Class<?> clazz;
@@ -88,9 +84,9 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             SplitTable splitTable = property.getAnnotation(SplitTable.class);
             GeneratedValue generatedValue = property.getAnnotation(GeneratedValue.class);
             Id id = property.getAnnotation(Id.class);
-            JoinTable joinTable = property.getAnnotation(JoinTable.class);
+            ListDatasource listDatasource = property.getAnnotation(ListDatasource.class);
             Field ormField = new Field(property.getName(), property.getType(), column, splitTable, generatedValue, id);
-            ormField.setJoinTable(joinTable);
+            ormField.setListDatasource(listDatasource);
             fieldMap.put(property.getName(), ormField);
         }
         return new ArrayList<>(fieldMap.values());
@@ -146,11 +142,6 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
                 if (!field.isPersistence()) {
                     continue;
                 }
-            }
-
-            JoinTable joinTable = field.getJoinTable();
-            if (joinTable != null) {
-                this.joinTableName = joinTable.name();
             }
 
             Column column = field.getColumn();
@@ -373,9 +364,5 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     @Override
     public boolean isAssignableFromDisplayText() {
         return this.isAssignableFromDisplayText;
-    }
-
-    public String getJoinTableName() {
-        return joinTableName;
     }
 }

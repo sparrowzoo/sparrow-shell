@@ -80,4 +80,19 @@ public class GsonExtensionJsonImpl implements Json {
         return null;
     }
 
+    @Override
+    public List<Object> parseArray(String json) {
+        return null;
+    }
+
+    @Override
+    public <T> T toJavaObject(Object originJsonObject, Class<T> clazz) {
+        return null;
+    }
+
+    @Override
+    public Object getJSONObject(Object originJsonObject, String key) {
+        return null;
+    }
+
 }
