@@ -356,7 +356,7 @@ public class ClassUtility {
             SerializedLambda serializedLambda = (SerializedLambda) method.invoke(function);
             // 解析方法名
             String methodName = serializedLambda.getImplMethodName();
-            String clazz = serializedLambda.getImplClass();
+            String clazz = serializedLambda.getFunctionalInterfaceClass();
             String modelName = getBeanNameByClass(clazz);
             return new PropertyWithEntityName(PropertyNamer.methodToProperty(methodName), modelName);
         } catch (Exception e) {

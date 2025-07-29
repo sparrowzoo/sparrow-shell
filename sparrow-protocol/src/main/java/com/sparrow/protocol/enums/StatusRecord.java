@@ -17,12 +17,16 @@
 
 package com.sparrow.protocol.enums;
 
+import com.sparrow.protocol.EnumIdentityAccessor;
+import com.sparrow.protocol.EnumUniqueName;
+
 /**
  * 记录状态
  *
  * @version 1.0
  */
-public enum StatusRecord {
+@EnumUniqueName(name = "statusRecord")
+public enum StatusRecord implements EnumIdentityAccessor {
     /**
      * 被屏蔽(0)
      */
@@ -30,10 +34,24 @@ public enum StatusRecord {
     /**
      * 可用(1)
      */
-    ENABLE,
+    ENABLE;
+    private final int identity;
 
-    /**
-     * 初始化
-     */
-    INIT
+    StatusRecord() {
+        this.identity = ordinal();
+    }
+
+    @Override
+    public Integer getIdentity() {
+        return identity;
+    }
+
+    public static StatusRecord valueOf(int identity) {
+        for (StatusRecord status : values()) {
+            if (status.getIdentity() == identity) {
+                return status;
+            }
+        }
+        return null;
+    }
 }

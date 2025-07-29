@@ -17,25 +17,30 @@
 package com.sparrow.orm.type;
 
 import com.sparrow.protocol.enums.StatusRecord;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StatusTypeHandler implements TypeHandler<StatusRecord> {
-    @Override public void setParameter(PreparedStatement ps, int i, StatusRecord parameter) throws SQLException {
-        ps.setInt(i, parameter.ordinal());
+    @Override
+    public void setParameter(PreparedStatement ps, int i, StatusRecord parameter) throws SQLException {
+        ps.setInt(i, parameter.getIdentity());
     }
 
-    @Override public StatusRecord getResult(ResultSet rs, String columnName) throws SQLException {
-        return StatusRecord.values()[rs.getInt(columnName)];
+    @Override
+    public StatusRecord getResult(ResultSet rs, String columnName) throws SQLException {
+        return StatusRecord.valueOf(rs.getInt(columnName));
     }
 
-    @Override public StatusRecord getResult(ResultSet rs, int columnIndex) throws SQLException {
-        return StatusRecord.values()[rs.getInt(columnIndex)];
+    @Override
+    public StatusRecord getResult(ResultSet rs, int columnIndex) throws SQLException {
+        return StatusRecord.valueOf(rs.getInt(columnIndex));
     }
 
-    @Override public StatusRecord getResult(CallableStatement cs, int columnIndex) throws SQLException {
-        return StatusRecord.values()[cs.getInt(columnIndex)];
+    @Override
+    public StatusRecord getResult(CallableStatement cs, int columnIndex) throws SQLException {
+        return StatusRecord.valueOf(cs.getInt(columnIndex));
     }
 }
