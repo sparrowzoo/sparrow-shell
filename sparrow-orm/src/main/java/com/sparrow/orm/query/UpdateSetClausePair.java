@@ -31,7 +31,7 @@ public class UpdateSetClausePair {
     }
 
     public static <T> UpdateSetClausePair field(SFunction<T, ?> function) {
-        String field = ClassUtility.getPropertyNameAndClassName(function).entityDotProperty();
+        String field = ClassUtility.getPropertyNameAndBeanName(function).entityDotProperty();
         return new UpdateSetClausePair(field);
     }
 

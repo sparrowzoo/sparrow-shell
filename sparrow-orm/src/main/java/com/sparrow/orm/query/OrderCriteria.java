@@ -43,12 +43,12 @@ public class OrderCriteria {
     }
 
     public static <T> OrderCriteria asc(SFunction<T, ?> function) {
-        String field = ClassUtility.getPropertyNameAndClassName(function).entityDotProperty();
+        String field = ClassUtility.getPropertyNameAndBeanName(function).entityDotProperty();
         return new OrderCriteria(field, Order.ASC);
     }
 
     public static <T> OrderCriteria desc(SFunction<T, ?> function) {
-        String field = ClassUtility.getPropertyNameAndClassName(function).entityDotProperty();
+        String field = ClassUtility.getPropertyNameAndBeanName(function).entityDotProperty();
         return new OrderCriteria(field, Order.DESC);
     }
 

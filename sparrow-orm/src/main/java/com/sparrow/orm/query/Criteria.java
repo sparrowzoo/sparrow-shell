@@ -38,7 +38,7 @@ public class Criteria {
     }
 
     public static <T> Criteria field(SFunction<T,?> criteria) {
-        ClassUtility.PropertyWithEntityName property = ClassUtility.getPropertyNameAndClassName(criteria);
+        ClassUtility.PropertyWithBeanName property = ClassUtility.getPropertyNameAndBeanName(criteria);
         return Criteria.field(property.entityDotProperty());
     }
 

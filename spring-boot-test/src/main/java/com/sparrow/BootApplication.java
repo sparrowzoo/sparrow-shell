@@ -20,6 +20,7 @@ package com.sparrow;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +33,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 @SpringBootApplication
 //        (scanBasePackages = "com.sparrow.*")
 //@EnableDiscoveryClient
+@MapperScan("com.sparrow")
 public class BootApplication {
     private static Logger log = LoggerFactory.getLogger(BootApplication.class);
 

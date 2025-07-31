@@ -17,9 +17,9 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.cg.PropertyNamer;
 import com.sparrow.protocol.dao.FieldOrder;
 import com.sparrow.protocol.constant.magic.Symbol;
+import com.sparrow.support.lambda.ShadowLambdaMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -148,8 +148,7 @@ public class ClassUtility {
      * }
      * </pre>
      */
-    public static List<Class> getClasses(
-            String packageName) throws IOException {
+    public static List<Class> getClasses(String packageName) throws IOException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String path = packageName.replace(Symbol.DOT, Symbol.SLASH);
         Enumeration<URL> resources = classLoader.getResources(path);
@@ -160,8 +159,7 @@ public class ClassUtility {
                 File directory = new File(URLDecoder.decode(resource.getFile(), StandardCharsets.UTF_8.name()));
                 classes.addAll(findClass(directory, packageName));
             } else if ("jar".equalsIgnoreCase(resource.getProtocol())) {
-                classes.addAll(findClass(((JarURLConnection) resource.openConnection())
-                        .getJarFile(), path));
+                classes.addAll(findClass(((JarURLConnection) resource.openConnection()).getJarFile(), path));
             }
         }
         return classes;
@@ -174,8 +172,7 @@ public class ClassUtility {
             while (entries.hasMoreElements()) {
                 JarEntry jarEntry = entries.nextElement();
                 if (jarEntry.getName().startsWith(packagePath) && jarEntry.getName().endsWith(".class")) {
-                    String classFullName = jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT)
-                            .substring(0, jarEntry.getName().indexOf(Symbol.DOT));
+                    String classFullName = jarEntry.getName().replace(Symbol.SLASH, Symbol.DOT).substring(0, jarEntry.getName().indexOf(Symbol.DOT));
                     try {
                         Class<?> implClass = Class.forName(classFullName);
                         if (!implClass.isInterface()) {
@@ -325,40 +322,39 @@ public class ClassUtility {
         return orderFields;
     }
 
-    public static class PropertyWithEntityName {
+    public static class PropertyWithBeanName {
         private String propertyName;
-        private String entityName;
+        private String beanName;
 
-        public PropertyWithEntityName(String propertyName, String entityName) {
+        public PropertyWithBeanName(String propertyName, String entityName) {
             this.propertyName = propertyName;
-            this.entityName = entityName;
+            this.beanName = entityName;
         }
 
         public String getPropertyName() {
             return propertyName;
         }
 
-        public String getEntityName() {
-            return entityName;
+        public String getBeanName() {
+            return beanName;
         }
 
         public String entityDotProperty() {
-            return entityName + Symbol.DOT + propertyName;
+            return beanName + Symbol.DOT + propertyName;
         }
     }
 
-    public static PropertyWithEntityName getPropertyNameAndClassName(Function<?, ?> function) {
+    public static PropertyWithBeanName getPropertyNameAndBeanName(Function<?, ?> function) {
         try {
             // 反射获取 writeReplace 方法
             Method method = function.getClass().getDeclaredMethod("writeReplace");
             method.setAccessible(true);
             // 调用该方法获取 SerializedLambda 对象
             SerializedLambda serializedLambda = (SerializedLambda) method.invoke(function);
-            // 解析方法名
-            String methodName = serializedLambda.getImplMethodName();
-            String clazz = serializedLambda.getFunctionalInterfaceClass();
-            String modelName = getBeanNameByClass(clazz);
-            return new PropertyWithEntityName(PropertyNamer.methodToProperty(methodName), modelName);
+            ShadowLambdaMeta shadowLambdaMeta = new ShadowLambdaMeta(serializedLambda);
+            String clazz = shadowLambdaMeta.getClassName();
+            String beanName = getBeanNameByClass(clazz);
+            return new PropertyWithBeanName(shadowLambdaMeta.getPropertyName(), beanName);
         } catch (Exception e) {
             throw new RuntimeException("无法解析方法名", e);
         }
