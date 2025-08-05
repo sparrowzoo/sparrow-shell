@@ -17,31 +17,44 @@
 
 package com.sparrow.enums;
 
-import com.sparrow.container.ConfigReader;
-import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.protocol.EnumIdentityAccessor;
+import com.sparrow.protocol.EnumUniqueName;
 
-public enum Gender {
+@EnumUniqueName(name = "gender")
+public enum Gender implements EnumIdentityAccessor {
     /**
      * 保密
      */
-    NULL,
+    NULL(999),
     /**
      * 男
      */
-    MALE,
+    MALE(0),
     /**
      * 女
      */
-    FEMALE;
+    FEMALE(1);
+
+    private Integer id;
+
+    Gender(Integer id) {
+        this.id = id;
+    }
 
     @Override
-    public String toString() {
-        String key = super.toString();
-        ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
-        String gender = configReader.getI18nValue("gender_" + key.toLowerCase());
-        if (gender == null) {
-            return this.name();
+    public Integer getIdentity() {
+        return this.id;
+    }
+
+    public static Gender getGender(Integer id) {
+        if (id == null) {
+            return Gender.NULL;
         }
-        return gender;
+        for (Gender gender : Gender.values()) {
+            if (gender.getIdentity().equals(id)) {
+                return gender;
+            }
+        }
+        return Gender.NULL;
     }
 }
