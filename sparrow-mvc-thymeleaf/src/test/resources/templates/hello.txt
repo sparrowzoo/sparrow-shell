@@ -1,0 +1,9 @@
+<body>
+public class <span th:text="${className}">Entity</span> {
+<div th:each="field : ${fields}">
+    private <span th:text="${field.type.simpleName}">String</span>
+    <span th:text="${field.name}">fieldName</span>;
+</div>
+}
+</body>
+</html>

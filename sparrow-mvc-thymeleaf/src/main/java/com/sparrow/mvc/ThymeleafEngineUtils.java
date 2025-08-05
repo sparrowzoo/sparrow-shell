@@ -17,10 +17,7 @@
 
 package com.sparrow.mvc;
 
-import com.sparrow.constant.Config;
-import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.protocol.constant.Extension;
 import com.sparrow.support.web.WebConfigReader;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.thymeleaf.TemplateEngine;
@@ -85,6 +82,7 @@ public class ThymeleafEngineUtils {
                 // with specific cases when expressions in one template are reused
                 // across different data types, so this flag is "false" by default
                 // for safer backwards compatibility.
+                springTemplateEngine.setDialect(new SpringStandardDialect());
                 springTemplateEngine.setEnableSpringELCompiler(true);
                 templateEngine = springTemplateEngine;
                 return;
@@ -96,9 +94,6 @@ public class ThymeleafEngineUtils {
             resolver.setTemplateMode(TemplateMode.HTML);
             resolver.setCacheable(false);
             templateEngine = new TemplateEngine();
-            if ("spring".equals(exp)) {
-                templateEngine.setDialect(new SpringStandardDialect());
-            }
             templateEngine.setTemplateResolver(resolver);
         }
     }

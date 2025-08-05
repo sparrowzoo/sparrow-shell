@@ -41,7 +41,7 @@ public class PO implements POJO {
     @Column(name = "deleted", columnDefinition = "tinyint(1)  DEFAULT 0 COMMENT '是否删除'", nullable = false)
     private Boolean deleted;
     @Column(name = "status",updatable = false,
-            columnDefinition = "tinyint(3) UNSIGNED DEFAULT 0 COMMENT 'STATUS'",
+            columnDefinition = "tinyint(3) UNSIGNED DEFAULT 0 COMMENT '状态'",
             nullable = false)
     private StatusRecord status;
 }

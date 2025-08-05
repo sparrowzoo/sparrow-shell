@@ -25,7 +25,7 @@ import com.sparrow.protocol.EnumUniqueName;
  *
  * @version 1.0
  */
-@EnumUniqueName(name = "statusRecord")
+@EnumUniqueName(name = "status")
 public enum StatusRecord implements EnumIdentityAccessor {
     /**
      * 被屏蔽(0)
