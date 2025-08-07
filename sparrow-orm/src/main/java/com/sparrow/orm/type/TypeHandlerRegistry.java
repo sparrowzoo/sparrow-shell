@@ -22,6 +22,8 @@ import com.sparrow.protocol.enums.StatusRecord;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Array;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +72,7 @@ public class TypeHandlerRegistry {
         this.register(new CharacterTypeHandler());
         this.register(new StatusTypeHandler());
         this.register(new PlatformTypeHandler());
+        this.register(new LocalDateTypeHandler());
 
         this.register(Long.class, LongTypeHandler.class);
         this.register(long.class, LongTypeHandler.class);
@@ -107,9 +110,13 @@ public class TypeHandlerRegistry {
         register(java.sql.Date.class, SqlDateTypeHandler.class);
         register(java.sql.Time.class, SqlTimeTypeHandler.class);
         register(java.sql.Timestamp.class, SqlTimestampTypeHandler.class);
+        register(LocalDate.class, LocalDateTypeHandler.class);
+        register(LocalTime.class, LocalTimeTypeHandler.class);
+
 
         register(Character.class, CharacterTypeHandler.class);
         register(char.class, CharacterTypeHandler.class);
+
     }
 
 
