@@ -15,29 +15,37 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.support.authenticator;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
+import com.sparrow.protocol.enums.DeviceType;
 
-/**
- * 认证接口
- */
-public interface Authenticator {
-    /**
-     * 签名
-     *
-     * @param loginUser  login user
-     * @param loginUserStatus user status
-     * @return
-     */
-    String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    LoginUser authenticate(String token, String deviceId) throws BusinessException;
+import java.util.List;
+
+public interface Session {
+    Long getId();
+    Long getStartTime();
+
+    Long getLastAccessTime();
+
+    DeviceType getDeviceType();
+
+    String getDeviceId();
+
+    List<String> getAttributes();
+
+    Object getAttribute(String name);
+
+    void setAttribute(String name, Object value);
+
+    void removeAttribute(String name);
+
+    Integer getDeviceStatus();
+
+    Long expireAt();
+
+    void touch();
+
+    void modifyStatus(Integer status);
+
+    boolean isExpired();
 }

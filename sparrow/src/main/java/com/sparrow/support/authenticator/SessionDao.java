@@ -15,29 +15,19 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.support.authenticator;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
+import java.util.List;
 
-/**
- * 认证接口
- */
-public interface Authenticator {
-    /**
-     * 签名
-     *
-     * @param loginUser  login user
-     * @param loginUserStatus user status
-     * @return
-     */
-    String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    LoginUser authenticate(String token, String deviceId) throws BusinessException;
+public interface SessionDao {
+
+    void create(Session session);
+
+    void update(Session session);
+
+    void delete(Session session);
+
+    Session get(String id);
+
+    List<Session> getActiveSessions();
 }

@@ -57,6 +57,10 @@ public class LoginUser implements DTO {
      */
     private String avatar;
     /**
+     * 设备类型
+     */
+    private Integer deviceType;
+    /**
      * 设备id
      */
     private String deviceId;

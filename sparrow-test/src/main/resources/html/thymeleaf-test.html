@@ -37,6 +37,9 @@ HTML转义,[(${html})]<br/>
 <br/><br/>
 方法3：使用 th:remove
 <span th:text="${user.userId}" th:remove="tag"></span>
+<span th:if="${register.content}" th:remove="tag">content</span>
+
+
 
 <a data-th-href="${root_path}+'/test'">根路径</a>
 <a data-th-href="${resource}+'/test'">资源路径</a>
