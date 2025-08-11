@@ -106,7 +106,7 @@ public class LoginUserSession implements Session {
 
     @Override
     public Long expireAt() {
-       return   this.loginUserStatus.getExpireAt();
+        return this.loginUserStatus.getExpireAt();
     }
 
     @Override
@@ -121,6 +121,6 @@ public class LoginUserSession implements Session {
 
     @Override
     public boolean isExpired() {
-        return this.expireAt>System.currentTimeMillis();
+        return this.expireAt > System.currentTimeMillis();
     }
 }
