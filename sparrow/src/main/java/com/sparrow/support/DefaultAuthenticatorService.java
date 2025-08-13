@@ -33,6 +33,7 @@ import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Deprecated
 public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
 
     private Json json = JsonFactory.getProvider();
@@ -97,7 +98,7 @@ public class DefaultAuthenticatorService extends AbstractAuthenticatorService {
     }
 
     @Override
-    protected LoginUser verify(String token, String secretKey) throws BusinessException {
+    public LoginUser verify(String token, String secretKey) throws BusinessException {
         token = JSUtility.decodeURIComponent(token);
         String[] tokens = token.split("\\.");
         Asserts.isTrue(tokens.length != 2, SparrowError.USER_TOKEN_ERROR);

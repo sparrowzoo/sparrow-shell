@@ -33,11 +33,16 @@ public interface Authenticator {
      * @return
      */
     String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
+
+
+    LoginUser verify(String token, String secretKey) throws BusinessException;
+
     /**
      * 认证
      *
      * @param token
      * @return
      */
+    @Deprecated
     LoginUser authenticate(String token, String deviceId) throws BusinessException;
 }

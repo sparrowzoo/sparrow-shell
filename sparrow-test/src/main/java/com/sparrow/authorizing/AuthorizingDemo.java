@@ -33,7 +33,7 @@ public class AuthorizingDemo extends AbstractAuthenticatorService {
     }
 
     @Override
-    protected LoginUser verify(String s, String s1) throws BusinessException {
+    public LoginUser verify(String s, String s1) throws BusinessException {
         return null;
     }
 

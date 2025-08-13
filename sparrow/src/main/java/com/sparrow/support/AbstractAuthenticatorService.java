@@ -46,8 +46,6 @@ public abstract class AbstractAuthenticatorService implements Authenticator {
 
     protected abstract String sign(LoginUser loginUser, String secretKey);
 
-    protected abstract LoginUser verify(String token, String secretKey) throws BusinessException;
-
     protected abstract void setUserStatus(Long loginUser, LoginUserStatus loginUserStatus);
 
     /**
