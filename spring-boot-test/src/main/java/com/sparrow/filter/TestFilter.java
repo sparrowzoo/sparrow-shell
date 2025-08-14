@@ -15,24 +15,22 @@
  * limitations under the License.
  */
 
-package com.sparrow.controller;
+package com.sparrow.filter;
 
-import com.sparrow.vo.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.*;
+import java.io.IOException;
 
-@RestController
-public class ThymeleafController {
+@Slf4j
+public class TestFilter implements Filter {
+    public TestFilter() {
+        log.info("TestFilter init");
+    }
 
-    @RequestMapping("thymeleaf")
-    public ModelAndView thymeleaf(HttpServletRequest request) {
-        User user = new User();
-        user.setUserId("userId");
-        request.setAttribute("user", user);
-        return new ModelAndView("/thymeleaf-test");
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        System.out.println("TestFilter doFilter");
+        chain.doFilter(request, response);
     }
 }

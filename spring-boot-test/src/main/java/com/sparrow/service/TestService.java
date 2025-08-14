@@ -15,24 +15,18 @@
  * limitations under the License.
  */
 
-package com.sparrow.controller;
+package com.sparrow.service;
 
-import com.sparrow.vo.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import com.sparrow.controller.ThymeleafController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
+@Service
+public class TestService {
+    @Autowired
+    private ThymeleafController thymeleafController;
 
-@RestController
-public class ThymeleafController {
-
-    @RequestMapping("thymeleaf")
-    public ModelAndView thymeleaf(HttpServletRequest request) {
-        User user = new User();
-        user.setUserId("userId");
-        request.setAttribute("user", user);
-        return new ModelAndView("/thymeleaf-test");
+    public String sayHello(String name) {
+        return "Hello " + name + ", ";
     }
 }

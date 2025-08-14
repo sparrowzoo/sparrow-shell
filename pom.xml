@@ -53,6 +53,7 @@
         <module>spring-boot-sparrow-ds-demo</module>
         <module>spring-boot-life-cycle</module>
         <module>spring-boot-test</module>
+        <module>sparrow-authenticator</module>
     </modules>
 
     <build>

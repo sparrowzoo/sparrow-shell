@@ -15,24 +15,12 @@
  * limitations under the License.
  */
 
-package com.sparrow.controller;
+package com.sparrow.authenticator.core;
 
-import com.sparrow.vo.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+public interface SecurityConfig {
+    String getSigner();
 
-import javax.servlet.http.HttpServletRequest;
+    String getRealm();
 
-@RestController
-public class ThymeleafController {
-
-    @RequestMapping("thymeleaf")
-    public ModelAndView thymeleaf(HttpServletRequest request) {
-        User user = new User();
-        user.setUserId("userId");
-        request.setAttribute("user", user);
-        return new ModelAndView("/thymeleaf-test");
-    }
+    String getSessionDao();
 }

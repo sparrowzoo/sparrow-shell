@@ -17,22 +17,19 @@
 
 package com.sparrow.controller;
 
-import com.sparrow.vo.User;
-import org.springframework.stereotype.Controller;
+import com.sparrow.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
-public class ThymeleafController {
+public class TestController {
+    @Autowired
+    private TestService testService;
 
-    @RequestMapping("thymeleaf")
-    public ModelAndView thymeleaf(HttpServletRequest request) {
-        User user = new User();
-        user.setUserId("userId");
-        request.setAttribute("user", user);
-        return new ModelAndView("/thymeleaf-test");
+    @RequestMapping("/test")
+    public String test() {
+        return testService.sayHello("thymeleaf");
     }
 }
+
