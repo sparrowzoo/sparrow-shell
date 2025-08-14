@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sparrow-bom</artifactId>
+        <groupId>com.sparrowzoo</groupId>
+        <version>1.0.5-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>authenticator-core</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.sparrowzoo</groupId>
+            <artifactId>sparrow-protocol</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sparrowzoo</groupId>
+            <artifactId>sparrow</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>../../style/sparrow_checkstyle.xml</configLocation>
+                    <suppressionsLocation>../../style/check_style_suppressions.xml</suppressionsLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

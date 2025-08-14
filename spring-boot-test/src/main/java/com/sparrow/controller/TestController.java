@@ -15,34 +15,21 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.controller;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
+import com.sparrow.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 认证接口
- */
-public interface Authenticator {
-    /**
-     * 签名
-     *
-     * @param loginUser  login user
-     * @param loginUserStatus user status
-     * @return
-     */
-    String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
+@RestController
+public class TestController {
+    @Autowired
+    private TestService testService;
 
-
-    LoginUser verify(String token, String secretKey) throws BusinessException;
-
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    @Deprecated
-    LoginUser authenticate(String token, String deviceId) throws BusinessException;
+    @RequestMapping("/test")
+    public String test() {
+        return testService.sayHello("thymeleaf");
+    }
 }
+

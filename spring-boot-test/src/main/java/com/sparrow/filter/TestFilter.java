@@ -15,34 +15,22 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.filter;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
+import lombok.extern.slf4j.Slf4j;
 
-/**
- * 认证接口
- */
-public interface Authenticator {
-    /**
-     * 签名
-     *
-     * @param loginUser  login user
-     * @param loginUserStatus user status
-     * @return
-     */
-    String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
+import javax.servlet.*;
+import java.io.IOException;
 
+@Slf4j
+public class TestFilter implements Filter {
+    public TestFilter() {
+        log.info("TestFilter init");
+    }
 
-    LoginUser verify(String token, String secretKey) throws BusinessException;
-
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    @Deprecated
-    LoginUser authenticate(String token, String deviceId) throws BusinessException;
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        System.out.println("TestFilter doFilter");
+        chain.doFilter(request, response);
+    }
 }

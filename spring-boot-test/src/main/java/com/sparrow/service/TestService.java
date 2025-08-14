@@ -15,34 +15,18 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.service;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
+import com.sparrow.controller.ThymeleafController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-/**
- * 认证接口
- */
-public interface Authenticator {
-    /**
-     * 签名
-     *
-     * @param loginUser  login user
-     * @param loginUserStatus user status
-     * @return
-     */
-    String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
+@Service
+public class TestService {
+    @Autowired
+    private ThymeleafController thymeleafController;
 
-
-    LoginUser verify(String token, String secretKey) throws BusinessException;
-
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    @Deprecated
-    LoginUser authenticate(String token, String deviceId) throws BusinessException;
+    public String sayHello(String name) {
+        return "Hello " + name + ", ";
+    }
 }

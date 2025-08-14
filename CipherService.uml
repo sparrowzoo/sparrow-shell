@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.shiro.crypto.cipher.CipherService</OriginalElement>
+  <nodes>
+    <node x="820.25" y="524.0">org.apache.shiro.mgt.DefaultSecurityManager</node>
+    <node x="643.25" y="368.0">org.apache.shiro.authc.Authenticator</node>
+    <node x="-150.0" y="140.0">org.apache.shiro.crypto.cipher.CipherService</node>
+    <node x="439.5" y="203.0">org.apache.shiro.mgt.RememberMeManager</node>
+    <node x="-0.5" y="470.0">org.apache.shiro.web.filter.authc.BearerHttpAuthenticationFilter</node>
+    <node x="68.0" y="251.0">org.apache.shiro.authc.BearerToken</node>
+    <node x="267.0" y="251.0">org.apache.shiro.authc.AuthenticationToken</node>
+    <node x="895.0" y="203.0">org.apache.shiro.session.mgt.SessionManager</node>
+    <node x="883.5" y="34.0">org.apache.shiro.session.mgt.DefaultSessionManager</node>
+    <node x="848.25" y="368.0">org.apache.shiro.mgt.SecurityManager</node>
+    <node x="782.75" y="82.0">org.apache.shiro.mgt.SubjectDAO</node>
+    <node x="253.25" y="422.0">org.apache.shiro.mgt.AbstractRememberMeManager</node>
+    <node x="857.25" y="140.0">org.apache.shiro.session.mgt.SessionFactory</node>
+    <node x="235.5" y="82.0">org.apache.shiro.authc.UsernamePasswordToken</node>
+    <node x="-55.5" y="299.0">org.apache.shiro.authc.credential.PasswordService</node>
+    <node x="653.25" y="-14.0">org.apache.shiro.subject.Subject</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.shiro.mgt.DefaultSecurityManager" target="org.apache.shiro.mgt.SubjectDAO" relationship="TO_ONE">
+      <point x="79.0" y="-14.0" />
+      <point x="1017.75" y="504.0" />
+      <point x="1088.0" y="504.0" />
+      <point x="1088.0" y="130.0" />
+      <point x="854.75" y="130.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.session.mgt.DefaultSessionManager" target="org.apache.shiro.session.mgt.SessionManager" relationship="REALIZATION">
+      <point x="58.25" y="14.0" />
+      <point x="1058.25" y="188.0" />
+      <point x="1043.3333333333333" y="188.0" />
+      <point x="59.33333333333333" y="-14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.SecurityManager" target="org.apache.shiro.authc.Authenticator" relationship="INTERFACE_GENERALIZATION">
+      <point x="-90.5" y="-0.0" />
+      <point x="77.5" y="-0.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.AbstractRememberMeManager" target="org.apache.shiro.crypto.cipher.CipherService" relationship="TO_ONE">
+      <point x="-97.0" y="-14.0" />
+      <point x="301.75" y="412.0" />
+      <point x="-70.5" y="412.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.SecurityManager" target="org.apache.shiro.subject.Subject" relationship="LINK_IN_DOCS">
+      <point x="-45.25" y="-14.0" />
+      <point x="893.5" y="358.0" />
+      <point x="747.75" y="358.0" />
+      <point x="747.75" y="38.0" />
+      <point x="707.75" y="38.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.AbstractRememberMeManager" target="org.apache.shiro.authc.AuthenticationToken" relationship="LINK_IN_DOCS">
+      <point x="0.0" y="-14.0" />
+      <point x="398.75" y="412.0" />
+      <point x="424.5" y="412.0" />
+      <point x="52.5" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.authc.AuthenticationToken" target="org.apache.shiro.authc.UsernamePasswordToken" relationship="LINK_IN_DOCS">
+      <point x="52.5" y="-14.0" />
+      <point x="63.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.RememberMeManager" target="org.apache.shiro.subject.Subject" relationship="LINK_IN_DOCS">
+      <point x="0.0" y="-14.0" />
+      <point x="552.0" y="193.0" />
+      <point x="767.75" y="193.0" />
+      <point x="767.75" y="38.0" />
+      <point x="707.75" y="38.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.DefaultSecurityManager" target="org.apache.shiro.authc.Authenticator" relationship="LINK_IN_DOCS">
+      <point x="-79.0" y="-14.0" />
+      <point x="859.75" y="474.0" />
+      <point x="899.75" y="474.0" />
+      <point x="899.75" y="416.0" />
+      <point x="720.75" y="416.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.authc.AuthenticationToken" target="org.apache.shiro.authc.Authenticator" relationship="LINK_IN_DOCS">
+      <point x="-52.5" y="14.0" />
+      <point x="319.5" y="353.0" />
+      <point x="720.75" y="353.0" />
+      <point x="0.0" y="-14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.AbstractRememberMeManager" target="org.apache.shiro.mgt.RememberMeManager" relationship="REALIZATION">
+      <point x="97.0" y="-14.0" />
+      <point x="-56.25" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.authc.UsernamePasswordToken" target="org.apache.shiro.authc.AuthenticationToken" relationship="REALIZATION">
+      <point x="-63.0" y="14.0" />
+      <point x="298.5" y="144.0" />
+      <point x="319.5" y="144.0" />
+      <point x="-52.5" y="-14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.DefaultSecurityManager" target="org.apache.shiro.mgt.SecurityManager" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.session.mgt.DefaultSessionManager" target="org.apache.shiro.session.mgt.SessionFactory" relationship="TO_ONE">
+      <point x="-58.25" y="14.0" />
+      <point x="0.0" y="-14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.AbstractRememberMeManager" target="org.apache.shiro.subject.Subject" relationship="LINK_IN_DOCS">
+      <point x="0.0" y="-14.0" />
+      <point x="398.75" y="412.0" />
+      <point x="424.5" y="412.0" />
+      <point x="424.5" y="402.0" />
+      <point x="475.75" y="402.0" />
+      <point x="475.75" y="333.0" />
+      <point x="707.75" y="333.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.web.filter.authc.BearerHttpAuthenticationFilter" target="org.apache.shiro.authc.BearerToken" relationship="CREATE">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.session.mgt.SessionFactory" target="org.apache.shiro.session.mgt.SessionManager" relationship="LINK_IN_DOCS">
+      <point x="42.25" y="14.0" />
+      <point x="0.0" y="-14.0" />
+    </edge>
+    <edge source="org.apache.shiro.session.mgt.SessionManager" target="org.apache.shiro.session.mgt.SessionFactory" relationship="LINK_IN_DOCS">
+      <point x="-59.333333333333314" y="-14.0" />
+      <point x="924.6666666666667" y="193.0" />
+      <point x="899.5" y="193.0" />
+      <point x="-42.25" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.SecurityManager" target="org.apache.shiro.session.mgt.SessionManager" relationship="INTERFACE_GENERALIZATION">
+      <point x="45.25" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.DefaultSecurityManager" target="org.apache.shiro.mgt.RememberMeManager" relationship="TO_ONE">
+      <point x="79.0" y="-14.0" />
+      <point x="1017.75" y="504.0" />
+      <point x="608.25" y="504.0" />
+      <point x="56.25" y="14.0" />
+    </edge>
+    <edge source="org.apache.shiro.authc.BearerToken" target="org.apache.shiro.authc.AuthenticationToken" relationship="REALIZATION">
+      <point x="74.5" y="-0.0" />
+      <point x="-105.0" y="-0.0" />
+    </edge>
+    <edge source="org.apache.shiro.mgt.DefaultSecurityManager" target="org.apache.shiro.subject.Subject" relationship="LINK_IN_DOCS">
+      <point x="-79.0" y="-14.0" />
+      <point x="859.75" y="494.0" />
+      <point x="879.75" y="494.0" />
+      <point x="879.75" y="426.0" />
+      <point x="628.25" y="426.0" />
+      <point x="628.25" y="343.0" />
+      <point x="727.75" y="343.0" />
+      <point x="727.75" y="38.0" />
+      <point x="707.75" y="38.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="true" x="848.5" y="461.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

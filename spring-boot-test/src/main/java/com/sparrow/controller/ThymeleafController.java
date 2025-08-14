@@ -25,8 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 public class ThymeleafController {
+
     @RequestMapping("thymeleaf")
     public ModelAndView thymeleaf(HttpServletRequest request) {
         User user = new User();

@@ -15,34 +15,11 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
-
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
-
-/**
- * 认证接口
- */
-public interface Authenticator {
-    /**
-     * 签名
-     *
-     * @param loginUser  login user
-     * @param loginUserStatus user status
-     * @return
-     */
-    String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
+package com.sparrow.authenticator.core;
 
 
-    LoginUser verify(String token, String secretKey) throws BusinessException;
+public interface DigitalSigner {
+    String sign(Principal principal, String encrpytedKey);
 
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    @Deprecated
-    LoginUser authenticate(String token, String deviceId) throws BusinessException;
+    Principal verify(String token, String decrpytedKey);
 }

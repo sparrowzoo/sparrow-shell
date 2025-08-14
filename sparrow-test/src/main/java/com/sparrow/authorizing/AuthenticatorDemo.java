@@ -49,7 +49,7 @@ public class AuthenticatorDemo extends AbstractAuthenticatorService {
     }
 
     @Override
-    protected LoginUser verify(String token, String secretKey) throws BusinessException {
+    public LoginUser verify(String token, String secretKey) throws BusinessException {
         return null;
     }
 

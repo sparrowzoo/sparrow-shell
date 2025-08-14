@@ -76,7 +76,6 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-container</artifactId>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -15,34 +15,12 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.authenticator.core;
 
-import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
+public interface SecurityConfig {
+    String getSigner();
 
-/**
- * 认证接口
- */
-public interface Authenticator {
-    /**
-     * 签名
-     *
-     * @param loginUser  login user
-     * @param loginUserStatus user status
-     * @return
-     */
-    String sign(LoginUser loginUser, LoginUserStatus loginUserStatus);
+    String getRealm();
 
-
-    LoginUser verify(String token, String secretKey) throws BusinessException;
-
-    /**
-     * 认证
-     *
-     * @param token
-     * @return
-     */
-    @Deprecated
-    LoginUser authenticate(String token, String deviceId) throws BusinessException;
+    String getSessionDao();
 }
