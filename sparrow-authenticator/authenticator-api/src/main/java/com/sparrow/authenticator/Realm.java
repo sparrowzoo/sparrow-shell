@@ -28,9 +28,6 @@ public interface Realm {
      *
      * <code>AuthenticationInfo</code>实现类表示已经验证过且存储在系统中的账户数据，
      * 而<code>AuthenticationToken</code>表示提交用于登录尝试的数据(这些数据可能与已验证存储的账户<code>AuthenticationInfo</code>匹配，也可能不匹配)
-     *
-     * @param principal
-     * @return
      */
     AuthenticationInfo getAuthenticationInfo(AuthenticationToken token);
 }

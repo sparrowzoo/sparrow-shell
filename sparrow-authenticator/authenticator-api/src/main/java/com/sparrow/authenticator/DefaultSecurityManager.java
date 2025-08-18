@@ -19,9 +19,11 @@ package com.sparrow.authenticator;
 
 import com.sparrow.authenticator.enums.AuthenticatorError;
 import com.sparrow.authenticator.enums.UserStatus;
+import com.sparrow.authenticator.notifier.*;
 import com.sparrow.authenticator.session.SessionParser;
 import com.sparrow.exception.Asserts;
 import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.pager.PagerResult;
 
 public class DefaultSecurityManager implements Authenticator {
     private Signature signature;
@@ -31,13 +33,17 @@ public class DefaultSecurityManager implements Authenticator {
     private AuthenticatorConfigReader config;
     private SessionParser sessionParser;
 
+    private Notifier notifier;
+
     public DefaultSecurityManager(
+            Notifier notifier,
             SessionParser sessionParser,
             Realm realm,
             Signature signature,
             SessionManager sessionManager,
             SessionDao sessionDao,
             AuthenticatorConfigReader config) {
+        this.notifier = notifier;
         this.config = config;
         this.realm = realm;
         this.signature = signature;
@@ -81,10 +87,12 @@ public class DefaultSecurityManager implements Authenticator {
     }
 
     @Override
-    public String login(AuthenticationInfo authentication) {
+    public String login(AuthenticationInfo authentication) throws BusinessException {
         LoginUser loginUser = authentication.getUser();
         Session session = this.sessionManager.start(loginUser);
         this.sessionDao.create(session);
+        Notifier<LoginUser> notifier= NotifyRegistry.getInstance().getObject(AuthcEventType.LOGIN.name());
+        notifier.notify(new LoginEvent(loginUser));
         return this.signature.sign(loginUser, authentication.getCredential());
     }
 }

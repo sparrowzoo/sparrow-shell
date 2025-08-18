@@ -17,10 +17,7 @@
 
 package com.sparrow.authenticator.realm;
 
-import com.sparrow.authenticator.AuthenticationInfo;
-import com.sparrow.authenticator.AuthenticationToken;
-import com.sparrow.authenticator.LoginUser;
-import com.sparrow.authenticator.Realm;
+import com.sparrow.authenticator.*;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 public class EmptyRealm implements Realm {

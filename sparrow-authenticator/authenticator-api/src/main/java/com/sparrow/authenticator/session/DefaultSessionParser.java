@@ -49,11 +49,7 @@ public class DefaultSessionParser implements SessionParser {
         return new SessionKey() {
             @Override
             public Serializable sessionKey() {
-                return String.format("%1$s:%2$s:%3$s:%4$s",
-                        loginUser.getUserId(),
-                        loginUser.getCategory(),
-                        loginUser.getDeviceType(),
-                        loginUser.getHost());
+                return String.format("%1$s:%2$s:%3$s:%4$s", loginUser.getUserId(), loginUser.getCategory(), loginUser.getDeviceType(), loginUser.getHost());
             }
         };
     }

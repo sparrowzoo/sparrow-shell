@@ -17,10 +17,7 @@
 
 package com.sparrow.authenticator.session;
 
-import com.sparrow.authenticator.LoginUser;
-import com.sparrow.authenticator.Session;
-import com.sparrow.authenticator.SessionKey;
-import com.sparrow.authenticator.SessionStatus;
+import com.sparrow.authenticator.*;
 
 public interface SessionParser {
     public Session parse(String sessionKey, SessionStatus status);

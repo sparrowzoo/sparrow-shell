@@ -26,7 +26,7 @@ public interface Authenticator {
      * @param token
      * @return
      */
-    public String login(AuthenticationInfo token);
+    String login(AuthenticationInfo token) throws BusinessException;
 
     /**
      * 认证

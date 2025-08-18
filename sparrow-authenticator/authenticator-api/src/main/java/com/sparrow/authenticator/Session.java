@@ -25,7 +25,6 @@ public interface Session extends SessionStatus, SessionKey, POJO {
     Integer getCategory();
     Integer getDeviceType();
     String getHost();
-
     //状态属性
     SessionStatus getSessionStatus();
     Boolean expire();

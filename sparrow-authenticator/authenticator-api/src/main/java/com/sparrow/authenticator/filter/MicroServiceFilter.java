@@ -17,6 +17,7 @@
 
 package com.sparrow.authenticator.filter;
 
+import com.sparrow.authenticator.DefaultLoginUser;
 import com.sparrow.authenticator.LoginUser;
 import com.sparrow.authenticator.SessionContext;
 import com.sparrow.core.spi.JsonFactory;
@@ -61,12 +62,12 @@ public class MicroServiceFilter extends AbstractAuthcFilter {
             String loginTokenOfHeader = req.getHeader(tokenKey);
             LoginUser loginUser = null;
             if (!StringUtility.isNullOrEmpty(loginTokenOfHeader)) {
-                loginUser = this.json.parse(loginTokenOfHeader, LoginUser.class);
+                loginUser = this.json.parse(loginTokenOfHeader, DefaultLoginUser.class);
             } else {
                 if (mockLoginUser) {
-                    loginUser = LoginUser.create(
+                    loginUser = DefaultLoginUser.create(
                             1L, "",
-                            LoginUser.CATEGORY_VISITOR,
+                            DefaultLoginUser.CATEGORY_VISITOR,
                             "mock-user",
                             "mock-nick-name",
                             "header",

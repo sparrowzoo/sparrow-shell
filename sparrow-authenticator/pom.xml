@@ -8,9 +8,7 @@
     <artifactId>sparrow-authenticator</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>authenticator-core</module>
+        <module>authenticator-api</module>
         <module>spring-boot-shiro</module>
-        <module>spring-boot-jwt</module>
-
     </modules>
 </project>

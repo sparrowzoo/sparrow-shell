@@ -19,6 +19,7 @@ package com.sparrow.authenticator.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.sparrow.authenticator.Authenticator;
+import com.sparrow.authenticator.DefaultLoginUser;
 import com.sparrow.authenticator.LoginUser;
 import com.sparrow.authenticator.SessionContext;
 import com.sparrow.authenticator.enums.AuthenticatorError;
@@ -160,7 +161,7 @@ public class MonolithicBearerFilter extends AbstractAuthcFilter {
             return;
         }
         if (mockLoginUser) {
-            loginUser = LoginUser.create(1L,"", 1, "mock-user", "mock-nick-name", "header", DeviceType.PC.getIdentity(), "device id", 3D);
+            loginUser = DefaultLoginUser.create(1L,"", 1, "mock-user", "mock-nick-name", "header", DeviceType.PC.getIdentity(), "device id", 3D);
             this.loginSuccess(loginUser, filterChain, req, rep);
             return;
         }

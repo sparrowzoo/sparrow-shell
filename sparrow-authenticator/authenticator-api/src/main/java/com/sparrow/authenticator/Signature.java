@@ -18,6 +18,7 @@
 package com.sparrow.authenticator;
 
 public interface Signature {
-    public String sign(LoginUser raw, String key);
-    public LoginUser verify(String signed, String key);
+    String sign(LoginUser raw, String key);
+
+    LoginUser verify(String signed, String key);
 }
