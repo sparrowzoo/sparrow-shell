@@ -14,19 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.authenticator.session.dao;
 
-public interface Authorizer {
-    /**
-     * 授权某资源
-     *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
-     * @return
-     * @throws BusinessException
-     */
-    boolean isPermitted(Long user,
-                        String resource) throws BusinessException;
+import com.sparrow.authenticator.SessionStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DefaultSessionStatus implements SessionStatus {
+    protected Long startTime;
+    protected Long lastAccessTime;
+    protected Long expireAt;
+    protected Integer status;
+    @Override
+    public Long getStartTime() {
+        return this.startTime;
+    }
+
+    @Override
+    public Long getLastAccessTime() {
+        return lastAccessTime;
+    }
+
+    @Override
+    public Long getExpireAt() {
+        return this.expireAt;
+    }
+
+    @Override
+    public Integer getStatus() {
+        return this.status;
+    }
 }

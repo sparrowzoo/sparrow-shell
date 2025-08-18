@@ -14,19 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.authenticator.utils;
 
-public interface Authorizer {
-    /**
-     * 授权某资源
-     *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
-     * @return
-     * @throws BusinessException
-     */
-    boolean isPermitted(Long user,
-                        String resource) throws BusinessException;
+import com.sparrow.authenticator.LoginUser;
+import com.sparrow.authenticator.SessionContext;
+import com.sparrow.protocol.dao.PO;
+import com.sparrow.protocol.enums.StatusRecord;
+
+public class POInitUtils {
+    public static void init(PO po) {
+        LoginUser loginUser = SessionContext.getLoginUser();
+        po.setGmtCreate(System.currentTimeMillis());
+        po.setGmtModified(po.getGmtCreate());
+        po.setCreateUserId(loginUser.getUserId());
+        po.setModifiedUserId(loginUser.getUserId());
+        po.setStatus(StatusRecord.ENABLE);
+        po.setDeleted(false);
+        po.setCreateUserName(loginUser.getUserName());
+        po.setModifiedUserName(loginUser.getUserName());
+    }
 }

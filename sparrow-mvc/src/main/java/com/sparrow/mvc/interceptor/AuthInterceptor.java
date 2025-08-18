@@ -17,6 +17,10 @@
 
 package com.sparrow.mvc.interceptor;
 
+import com.sparrow.authenticator.Authenticator;
+import com.sparrow.authenticator.LoginUser;
+import com.sparrow.authenticator.enums.AuthenticatorError;
+import com.sparrow.authenticator.token.BearerToken;
 import com.sparrow.constant.Config;
 import com.sparrow.constant.User;
 import com.sparrow.container.Container;
@@ -24,14 +28,11 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.enums.LoginType;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
-import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
-import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.servlet.HandlerInterceptor;
-import com.sparrow.support.Authenticator;
 import com.sparrow.support.Authorizer;
 import com.sparrow.support.LoginDialog;
 import com.sparrow.support.web.CookieUtility;
@@ -78,13 +79,13 @@ public class AuthInterceptor implements HandlerInterceptor {
         Authenticator authenticator = container.getBean(Authenticator.class);
         String permission = CookieUtility.getPermission(httpRequest, Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN);
         String deviceId = servletUtility.getDeviceId(httpRequest);
-        LoginUser user = authenticator.authenticate(permission, deviceId);
+        LoginUser user = authenticator.authenticate(new BearerToken(permission, deviceId));
         httpRequest.setAttribute(User.ID, user.getUserId());
         httpRequest.setAttribute(User.LOGIN_TOKEN, user);
 
         if (user.isVisitor()) {
             if (LoginType.MESSAGE.equals(handlerExecutionChain.getLoginType())) {
-                Result result = Result.fail(SparrowError.USER_NOT_LOGIN);
+                Result result = Result.fail(AuthenticatorError.USER_NOT_LOGIN);
                 httpResponse.setHeader("Content-Type", Constant.CONTENT_TYPE_JSON);
                 httpResponse.getWriter().write(JsonFactory.getProvider().toString(result));
                 return false;
@@ -136,7 +137,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         Authorizer authorizer = container.getBean(Authorizer.class);
-        if (!authorizer.isPermitted(user, actionName)) {
+        if (!authorizer.isPermitted(user.getUserId(), actionName)) {
             httpResponse.getWriter().write(Constant.ACCESS_DENIED);
             this.servletUtility.moveAttribute(httpRequest);
             return false;

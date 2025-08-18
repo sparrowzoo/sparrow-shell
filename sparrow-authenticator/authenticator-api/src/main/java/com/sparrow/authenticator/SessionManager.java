@@ -14,19 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.authenticator;
 
-public interface Authorizer {
-    /**
-     * 授权某资源
-     *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
-     * @return
-     * @throws BusinessException
-     */
-    boolean isPermitted(Long user,
-                        String resource) throws BusinessException;
+public interface SessionManager {
+    Session start(LoginUser loginUser);
+
+    Session getSession(SessionKey key);
 }

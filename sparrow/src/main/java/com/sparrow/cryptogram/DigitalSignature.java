@@ -14,19 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.cryptogram;
 
-public interface Authorizer {
-    /**
-     * 授权某资源
-     *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
-     * @return
-     * @throws BusinessException
-     */
-    boolean isPermitted(Long user,
-                        String resource) throws BusinessException;
+import com.sparrow.lang.ByteSource;
+
+public interface DigitalSignature {
+    public ByteSource sign(byte[] raw, String key);
+
+    public ByteSource sign(String raw, String key);
+
+    public ByteSource verify(byte[] signed, String key);
+
+    public ByteSource verify(String signed, String key);
 }

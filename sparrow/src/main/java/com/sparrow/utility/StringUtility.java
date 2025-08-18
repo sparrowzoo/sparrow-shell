@@ -17,12 +17,8 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.constant.ConfigKeyLanguage;
-import com.sparrow.container.ConfigReader;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.core.spi.JsonFactory;
-import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.protocol.constant.magic.Symbol;
@@ -80,46 +76,6 @@ public class StringUtility {
         return existInArray(array.split(Symbol.COMMA), key);
     }
 
-    /**
-     * 拆分数组的关键字编码 例如:key1:value1,key2:value2 先对边界字进行编码,以防原码有出来边界字符而无法显示 该函数代码顺序不能变
-     *
-     * @param str 需要折分的字符串 格式如:key1:value1,key2:value2
-     */
-    public static String encodeSplitKey(String str, boolean onlyDot) {
-        if (str.contains(Symbol.POUND_SIGN)) {
-            str = str.replace(Symbol.POUND_SIGN, "#limit");
-        }
-
-        if (!onlyDot) {
-            if (str.contains(Symbol.COLON)) {
-                str = str.replace(Symbol.COLON, "#colon#");
-            }
-        }
-
-        if (str.contains(Symbol.COMMA)) {
-            str = str.replace(Symbol.COMMA, "#dot#");
-        }
-        return str;
-    }
-
-    /**
-     * 对split拆分数组的关键字解码 解码过程与编码过程相反
-     */
-    public static String decodeSplitKey(String str, boolean onlyDot) {
-        if (!onlyDot) {
-            if (str.contains("#colon#")) {
-                str = str.replace("#colon#", Symbol.COLON);
-            }
-        }
-        if (str.contains("#dot#")) {
-            str = str.replace("#dot#", Symbol.COMMA);
-        }
-
-        if (str.contains("#limit")) {
-            str = str.replace("#limit", Symbol.POUND_SIGN);
-        }
-        return str;
-    }
 
     /**
      * 按字节剪切字符串
@@ -129,10 +85,6 @@ public class StringUtility {
             return str;
         }
         return subStringByByte(str, len, "...");
-    }
-
-    public static String json(POJO pojo) {
-        return JsonFactory.getProvider().toString(pojo);
     }
 
     /**
@@ -273,16 +225,6 @@ public class StringUtility {
         return str == null || Symbol.EMPTY.equals(str.toString().trim());
     }
 
-    /**
-     * 获取在线QQ字符串
-     */
-    public static String getOnlineQQ(String qq) {
-        ConfigReader reader = ApplicationContext.getContainer().getBean(ConfigReader.class);
-        return "<a target=blank href=\"http://wpa.qq.com/msgrd?V=1&Uin={0}&Exe=QQ&Site="
-                + reader.getI18nValue(ConfigKeyLanguage.WEBSITE_NAME)
-                + "&Menu=No\"><img border=\"0\" src=\"http://wpa.qq.com/pa?p=1:"
-                + qq + ":1\" alt=\"给我发消息\"></a>";
-    }
 
     /**
      * 将HTML中的br转换成回车文本
@@ -304,43 +246,7 @@ public class StringUtility {
         return text.replace(Constant.ENTER_TEXT, "<br/>");
     }
 
-    /**
-     * 一定是双位数
-     *
-     * @param bytes byte[]
-     * @return String
-     */
-    public static String bytes2HexString(byte[] bytes) {
-        StringBuilder ret = new StringBuilder();
-        for (byte b : bytes) {
-            String hex = Integer.toHexString(b & 0xFF);
-            if (hex.length() == 1) {
-                hex = '0' + hex;
-            }
-            ret.append(hex.toUpperCase());
-        }
-        return ret.toString();
-    }
 
-    /**
-     * 将指定字符串src，以每两个字符分割转换为16进制形式 如："2B44EFD9" byte[]{0x2B, 0x44, 0xEF,0xD9}
-     *
-     * @param src String
-     * @return byte[]
-     */
-    public static byte[] hexString2Bytes(String src) {
-        byte[] tmp = src.getBytes();
-        byte[] ret = new byte[tmp.length / 2];
-        for (int i = 0; i < tmp.length / 2; i++) {
-            byte src0 = tmp[i * 2];
-            byte src1 = tmp[i * 2 + 1];
-            byte b0 = Byte.decode("0x" + new String(new byte[]{src0}));
-            b0 = (byte) (b0 << 4);
-            byte b1 = Byte.decode("0x" + new String(new byte[]{src1}));
-            ret[i] = (byte) (b0 ^ b1);
-        }
-        return ret;
-    }
 
     /**
      * 从数组array中排除exceptArray并拼接成数组 用于标签删除时的帖子标签更新
@@ -421,9 +327,6 @@ public class StringUtility {
         return sb.toString();
     }
 
-    public static String decodeForGet(String text) {
-        return new String(text.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-    }
 
     /**
      * 驼峰格式变小写_分隔串
@@ -477,27 +380,6 @@ public class StringUtility {
         return source;
     }
 
-    /**
-     * 将字节数组转换为十六进制字符串
-     */
-    public static String byteToStr(byte[] byteArray) {
-        String strDigest = Symbol.EMPTY;
-        for (byte b : byteArray) {
-            strDigest += byteToHexStr(b);
-        }
-        return strDigest;
-    }
-
-    /**
-     * 将字节转换为十六进制字符串
-     */
-    private static String byteToHexStr(byte mByte) {
-        char[] digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-        char[] tempArr = new char[2];
-        tempArr[0] = digit[(mByte >>> 4) & 0X0F];
-        tempArr[1] = digit[mByte & 0X0F];
-        return new String(tempArr);
-    }
 
     public static String wrap(String source, String wrap, String lineSplit) {
         if (isNullOrEmpty(source)) {
@@ -621,12 +503,6 @@ public class StringUtility {
         }
     }
 
-    public static int ignoreCaseIndexOf(String str, String subStr) {
-        if (str == null || subStr == null) {
-            return -1;
-        }
-        return str.toLowerCase().indexOf(subStr.toLowerCase());
-    }
 
     public static String getDigit(String str, int start) {
         char c;

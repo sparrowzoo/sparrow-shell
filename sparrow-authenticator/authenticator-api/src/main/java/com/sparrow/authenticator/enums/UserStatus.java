@@ -14,19 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.authenticator.enums;
 
-public interface Authorizer {
+import com.sparrow.protocol.EnumIdentityAccessor;
+
+public enum UserStatus implements EnumIdentityAccessor {
+
     /**
-     * 授权某资源
-     *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
-     * @return
-     * @throws BusinessException
+     * 正常状态
      */
-    boolean isPermitted(Long user,
-                        String resource) throws BusinessException;
+    NORMAL(1),
+    /**
+     * 禁用状态
+     */
+    DISABLED(0),
+    /**
+     * 踢出状态
+     */
+    KICK_OUT(-1),
+    /**
+     * 设备踢出状态
+     */
+    DEVICE_KICK_OUT(-2),
+    /**
+     * 被顶状态
+     */
+    REPLACED(-3);
+
+    private final Integer identity;
+    UserStatus(Integer identity) {
+        this.identity = identity;
+    }
+    @Override
+    public Integer getIdentity() {
+        return null;
+    }
 }

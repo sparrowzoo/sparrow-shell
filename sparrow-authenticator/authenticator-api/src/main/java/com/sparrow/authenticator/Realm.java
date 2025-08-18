@@ -14,19 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.authenticator;
 
-public interface Authorizer {
+public interface Realm {
+
+    boolean support(AuthenticationToken token);
+
     /**
-     * 授权某资源
+     * <code>AuthenticationInfo</code> 表示与认证/登录过程相关的Subject(即用户)存储的账户信息
+     * <p>
+     * 理解该接口与{@link AuthenticationToken AuthenticationToken}接口的区别非常重要
      *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
+     * <code>AuthenticationInfo</code>实现类表示已经验证过且存储在系统中的账户数据，
+     * 而<code>AuthenticationToken</code>表示提交用于登录尝试的数据(这些数据可能与已验证存储的账户<code>AuthenticationInfo</code>匹配，也可能不匹配)
+     *
+     * @param principal
      * @return
-     * @throws BusinessException
      */
-    boolean isPermitted(Long user,
-                        String resource) throws BusinessException;
+    AuthenticationInfo getAuthenticationInfo(AuthenticationToken token);
 }

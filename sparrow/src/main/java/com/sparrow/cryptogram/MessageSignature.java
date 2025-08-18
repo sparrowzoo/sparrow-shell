@@ -17,7 +17,7 @@
 
 package com.sparrow.cryptogram;
 
-import com.sparrow.utility.StringUtility;
+import com.sparrow.lang.codec.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +48,7 @@ public class MessageSignature {
                 bytes = source.getBytes();
             }
             byte[] digest = md.digest(bytes);
-            cryptogram = StringUtility.byteToStr(digest);
+            cryptogram = Hex.encodeToString(digest);
         } catch (Exception ignored) {
             logger.error("cryptogram error", ignored);
         }

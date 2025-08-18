@@ -15,36 +15,32 @@
  * limitations under the License.
  */
 
-package com.sparrow.support.lambda;
+package com.sparrow.authenticator.realm;
 
-
-import com.sparrow.cg.PropertyNamer;
+import com.sparrow.authenticator.AuthenticationInfo;
+import com.sparrow.authenticator.AuthenticationToken;
+import com.sparrow.authenticator.LoginUser;
+import com.sparrow.authenticator.Realm;
 import com.sparrow.protocol.constant.magic.Symbol;
 
-import java.lang.invoke.SerializedLambda;
-
-public class ShadowLambdaMeta implements LambdaMeta {
-    private String className;
-    private String methodName;
-
-    public ShadowLambdaMeta(SerializedLambda lambda) {
-        String instantiatedMethodType = lambda.getInstantiatedMethodType();
-        this.className = instantiatedMethodType.substring(2, instantiatedMethodType.indexOf(Symbol.SEMICOLON)).replace(Symbol.SLASH, Symbol.DOT);
-        this.methodName = lambda.getImplMethodName();
+public class EmptyRealm implements Realm {
+    @Override
+    public boolean support(AuthenticationToken token) {
+        return true;
     }
 
     @Override
-    public String getClassName() {
-        return this.className;
-    }
+    public AuthenticationInfo getAuthenticationInfo(AuthenticationToken token) {
+        return new AuthenticationInfo() {
+            @Override
+            public LoginUser getUser() {
+                return null;
+            }
 
-    @Override
-    public String getMethodName() {
-        return this.methodName;
-    }
-
-    @Override
-    public String getPropertyName() {
-        return PropertyNamer.methodToProperty(methodName);
+            @Override
+            public String getCredential() {
+                return Symbol.EMPTY;
+            }
+        };
     }
 }

@@ -5,12 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.sparrow</groupId>
     <version>1.0</version>
-    <artifactId>sparrow-authenticator</artifactId>
+    <artifactId>spring-boot</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>authenticator-core</module>
-        <module>spring-boot-shiro</module>
-        <module>spring-boot-jwt</module>
-
+        <module>spring-boot-test</module>
+        <module>spring-boot-life-cycle</module>
+        <module>spring-boot-sparrow-ds-demo</module>
+        <module>spring-boot-druid-demo</module>
+        <module>sparrow-test</module>
     </modules>
 </project>

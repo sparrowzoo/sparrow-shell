@@ -14,19 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.authenticator.token;
 
-public interface Authorizer {
-    /**
-     * 授权某资源
-     *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
-     * @return
-     * @throws BusinessException
-     */
-    boolean isPermitted(Long user,
-                        String resource) throws BusinessException;
+import com.sparrow.authenticator.HostAuthenticationToken;
+
+public class BearerToken implements HostAuthenticationToken {
+    private final String token;
+    private final String host;
+
+
+    public BearerToken(String token, String host) {
+        this.token = token;
+        this.host = host;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return this.token;
+    }
+
+    @Override
+    public String getCredential() {
+        return this.token;
+    }
+
+    @Override
+    public String getHost() {
+        return this.host;
+    }
 }

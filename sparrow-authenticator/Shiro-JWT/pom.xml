@@ -9,7 +9,7 @@
 		<version>2.4.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ideaworks</groupId>
+	<groupId>com.sparrow</groupId>
 	<artifactId>shiro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>shiro</name>

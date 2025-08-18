@@ -14,19 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.authenticator;
 
-public interface Authorizer {
-    /**
-     * 授权某资源
-     *
-     * @param user     当前用户
-     * @param resource 请求的资源(标识)
-     * @return
-     * @throws BusinessException
-     */
-    boolean isPermitted(Long user,
-                        String resource) throws BusinessException;
+import java.util.List;
+
+public interface AuthenticatorConfigReader {
+
+    String getTokenKey();
+
+    Boolean getValidateDeviceId();
+
+    Boolean getValidateStatus();
+
+    List<String> getExcludePatterns();
+
+    Boolean getMockLoginUser();
+
+    Double getTokenAvailableDays();
+
+    Double getLoginTokenAvailableDays();
+
+    Double getRememberMeDays();
+
+    Integer getPlatform();
+
+    Long getSessionTimeout();
+
+    Long getRenewalInterval();
+
+    String getRSAPrivateKey();
+
+    String getRSAPublicKey();
+
+    String getEncryptKey();
+
+    Boolean getRenewal();
 }

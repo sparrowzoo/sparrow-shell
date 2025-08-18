@@ -17,6 +17,7 @@
 
 package com.sparrow.cryptogram;
 
+import com.sparrow.lang.codec.Hex;
 import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +85,7 @@ public class Hmac {
     public String cryptogramHex(String algorithm, String srcString, String secretKey) {
         try {
             byte[] oauthSignature = this.cryptogram(algorithm, srcString, secretKey);
-            return StringUtility.bytes2HexString(oauthSignature);
+            return Hex.encodeToString(oauthSignature);
         } catch (Exception e) {
             return null;
         }

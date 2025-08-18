@@ -81,7 +81,7 @@ public class CollectionsUtility {
 
 
     /**
-     * 非线程安全，注册上层加锁控制
+     * 非线程安全，注意上层加锁控制
      *
      * @param linkedHashMap
      * @param key

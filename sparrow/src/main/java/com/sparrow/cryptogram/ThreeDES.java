@@ -17,7 +17,7 @@
 
 package com.sparrow.cryptogram;
 
-import com.sparrow.utility.StringUtility;
+import com.sparrow.lang.codec.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,13 +56,13 @@ public class ThreeDES {
 
     public String encryptHex(String key, String text, String cipherAlgorithm) {
         byte[] encryptBytes = this.encryptByAlgorithm(key, text, cipherAlgorithm);
-        return StringUtility.bytes2HexString(encryptBytes);
+        return Hex.encodeToString(encryptBytes);
     }
 
     public String decryptHex(String key, String encrypted, String cipherAlgorithm) {
         byte[] encryptBytes = null;
         try {
-            encryptBytes = StringUtility.hexString2Bytes(encrypted);
+            encryptBytes = Hex.decode(encrypted);
         } catch (Exception e) {
             logger.error("decrypt error", e);
         }
