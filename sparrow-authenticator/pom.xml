@@ -9,6 +9,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>authenticator-api</module>
-        <module>spring-boot-shiro</module>
+        <module>authenticator-monolithic-starter</module>
     </modules>
 </project>

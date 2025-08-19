@@ -36,7 +36,7 @@ public class EmptyRealm implements Realm {
 
             @Override
             public String getCredential() {
-                return Symbol.EMPTY;
+                return token.getCredential();
             }
         };
     }

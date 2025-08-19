@@ -14,11 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.authenticator.notifier;
 
-import com.sparrow.protocol.BusinessException;
+package com.sparrow.authenticator.notifier.impl;
+import com.sparrow.authenticator.LoginUser;
+import com.sparrow.authenticator.notifier.AuthcEventType;
+import com.sparrow.authenticator.notifier.Event;
+import com.sparrow.authenticator.notifier.EventType;
 
-public interface Notifier<T> {
-    String getType();
-    void notify(Event<T> event) throws BusinessException;
+public class LoginEvent implements Event<LoginUser> {
+
+    public LoginEvent(LoginUser loginUser) {
+        this.loginUser = loginUser;
+    }
+
+    private LoginUser loginUser;
+
+
+    @Override
+    public EventType getEventType() {
+        return AuthcEventType.LOGIN;
+    }
+
+    @Override
+    public LoginUser getBody() {
+        return this.loginUser;
+    }
 }
