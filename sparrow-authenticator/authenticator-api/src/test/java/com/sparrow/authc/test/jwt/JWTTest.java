@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-package com.sparrow.test;
+package com.sparrow.authc.test.jwt;
 
 import com.alibaba.fastjson.JSON;
+import com.sparrow.authenticator.signature.jwt.AuthClaims;
 import com.sparrow.protocol.BusinessException;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class JWTTest {
                 .setSubject("zhangsan")
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 10))
                 .setIssuedAt(new Date(System.currentTimeMillis()));
+
         authClaims.put("age", 100);
         authClaims.get("age", Integer.class);
         System.out.println(JSON.toJSONString(authClaims));

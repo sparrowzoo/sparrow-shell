@@ -45,7 +45,7 @@ public class DefaultLoginUser implements LoginUser, DTO {
     /**
      * 用户类型
      */
-    private Integer category;
+    private Integer category = CATEGORY_REGISTER;
     /**
      * 用户昵称
      */

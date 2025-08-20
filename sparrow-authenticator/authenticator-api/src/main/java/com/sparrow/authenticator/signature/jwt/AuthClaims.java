@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.test;
+package com.sparrow.authenticator.signature.jwt;
 
 import io.jsonwebtoken.Claims;
 

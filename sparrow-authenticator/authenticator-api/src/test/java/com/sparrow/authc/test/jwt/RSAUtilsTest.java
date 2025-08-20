@@ -1,8 +1,28 @@
-package com.sparrow.test;
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.sparrow.authc.test.jwt;
 
 
+import com.alibaba.fastjson.JSON;
+import com.sparrow.authenticator.DefaultLoginUser;
+import com.sparrow.authenticator.LoginUser;
+import com.sparrow.authenticator.signature.jwt.JwtRSSignature;
 import com.sparrow.cryptogram.RSAUtils;
-import com.sparrow.protocol.LoginUser;
 import com.sparrow.utility.FileUtility;
 
 import java.security.PrivateKey;
@@ -43,20 +63,22 @@ public class RSAUtilsTest {
         System.out.printf("verify: %s\n", verify);
 
 
-        JwtRSAGenerator jwtRSAGenerator = new JwtRSAGenerator(privateKey,publicKey);
-        LoginUser loginUser = new LoginUser();
+        JwtRSSignature jwtRSAGenerator = new JwtRSSignature(privateKey, publicKey);
+        DefaultLoginUser loginUser = new DefaultLoginUser();
         loginUser.setUserId(1L);
         loginUser.setNickName("harry");
         loginUser.setUserName("harry");
         loginUser.setAvatar("http://avatar.com");
-        loginUser.setDeviceId("");
+        loginUser.setHost("");
         loginUser.setDays(2D);
-        loginUser.setExpireAt(2L);
+        loginUser.setExpireAt(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 2);
 //        loginUser.setExtensions();
 
 
-        String token = jwtRSAGenerator.generateToken(loginUser);
-        jwtRSAGenerator.parseToken(token);
+        String token = jwtRSAGenerator.sign(loginUser, null);
+        token = token += "22";
+        LoginUser loginUser2 = jwtRSAGenerator.verify(token, null);
+        System.out.println(JSON.toJSONString(loginUser2));
 
     }
 }

@@ -15,28 +15,31 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.test;
+package com.sparrow.authc.test;
 
+import com.sparrow.authenticator.SessionContext;
 import com.sparrow.protocol.ClientInformation;
-import com.sparrow.protocol.ThreadContext;
 
-public class ThreadContextTest {
+public class SessionContextTest {
     public static void main(String[] args) {
         ClientInformation client = new ClientInformation();
         client.setAppId(1);
-        ThreadContext.bindClientInfo(client);
+        SessionContext.bindClientInfo(client);
 
-        System.out.println("main thread " + ThreadContext.getClientInfo().getAppId());
+        System.out.println("main thread " + SessionContext.getClientInfo().getAppId());
 
         new Thread(new Runnable() {
-            @Override public void run() {
-                System.out.println("child thread " + ThreadContext.getClientInfo().getAppId());
+            @Override
+            public void run() {
+                System.out.println("child thread " + SessionContext.getClientInfo().getAppId());
                 new Thread(new Runnable() {
-                    @Override public void run() {
-                        System.out.println("child child thread " + ThreadContext.getClientInfo().getAppId());
+                    @Override
+                    public void run() {
+                        System.out.println("child child thread " + SessionContext.getClientInfo().getAppId());
                     }
                 }).start();
             }
         }).start();
     }
+
 }

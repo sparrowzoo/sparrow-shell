@@ -25,6 +25,10 @@ import com.sparrow.authenticator.session.SessionParser;
 import com.sparrow.exception.Asserts;
 import com.sparrow.protocol.BusinessException;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 public class DefaultSecurityManager implements Authenticator {
     private Signature signature;
     private Realm realm;
@@ -50,7 +54,7 @@ public class DefaultSecurityManager implements Authenticator {
     }
 
     @Override
-    public LoginUser authenticate(HostAuthenticationToken token) throws BusinessException {
+    public LoginUser authenticate(HostAuthenticationToken token) throws BusinessException{
         Boolean validateDevice = this.config.getValidateDeviceId();
         Boolean isRenewal = this.config.getRenewal();
         Boolean validateStatus = this.config.getValidateStatus();
