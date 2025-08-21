@@ -124,8 +124,6 @@ public class JwtRSSignature implements Signature {
         }
         Claims claims = jws.getBody();
         JwsHeader header = jws.getHeader();
-        System.out.println(header.getAlgorithm());
-        System.out.println(JSON.toJSONString(header));
         String body = claims.get("body", String.class);
         return JSON.parseObject(body, DefaultLoginUser.class);
     }
