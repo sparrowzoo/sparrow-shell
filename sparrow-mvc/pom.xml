@@ -49,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
-            <artifactId>authenticator-api</artifactId>
+            <artifactId>authenticator-core</artifactId>
         </dependency>
     </dependencies>
     <build>

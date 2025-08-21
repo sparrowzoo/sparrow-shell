@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.server.session.DefaultWebSessionManager;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -59,6 +60,10 @@ public class AuthcAutoConfiguration {
     @ConditionalOnMissingBean(Signature.class)
     public Signature signature() throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
         return new JwtRSSignature(this.configReader.getJwtIssuer());
+    }
+
+    public SessionManager sessionManager() {
+        return new DefaultWebSessionManager();
     }
 
 
