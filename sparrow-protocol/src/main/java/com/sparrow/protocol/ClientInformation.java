@@ -17,6 +17,7 @@
 package com.sparrow.protocol;
 
 import com.sparrow.protocol.constant.magic.Symbol;
+import com.sparrow.protocol.enums.DeviceType;
 import com.sparrow.protocol.enums.Platform;
 
 import java.io.Serializable;
@@ -64,6 +65,10 @@ public class ClientInformation implements Serializable {
      */
     private Platform platform;
 
+    /**
+     * 设备类型 限制登录使用
+     */
+    private DeviceType deviceType;
     /**
      * 操作系统
      */
@@ -347,5 +352,13 @@ public class ClientInformation implements Serializable {
 
     public void setResumeTime(long resumeTime) {
         this.resumeTime = resumeTime;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
     }
 }

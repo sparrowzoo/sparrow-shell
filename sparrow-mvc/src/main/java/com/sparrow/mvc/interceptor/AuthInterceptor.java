@@ -18,7 +18,6 @@
 package com.sparrow.mvc.interceptor;
 
 import com.sparrow.authenticator.Authenticator;
-import com.sparrow.authenticator.LoginUser;
 import com.sparrow.authenticator.enums.AuthenticatorError;
 import com.sparrow.authenticator.token.BearerToken;
 import com.sparrow.constant.Config;
@@ -28,6 +27,7 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.enums.LoginType;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
+import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.Result;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;

@@ -14,33 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.enums;
 
-import com.sparrow.protocol.EnumIdentityAccessor;
+package com.sparrow.authenticator;
 
-public enum DeviceType implements EnumIdentityAccessor {
-    PC(1),
-    MOBILE(2),
-    APP(3);
+import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.LoginUser;
 
+public interface Signature {
+    String sign(LoginUser raw, String key) throws BusinessException;
 
-    DeviceType(Integer id) {
-        this.id = id;
-    }
-
-    private final Integer id;
-
-    @Override
-    public Integer getIdentity() {
-        return this.id;
-    }
-
-    public DeviceType getDeviceById(Integer id) {
-        for (DeviceType deviceType : DeviceType.values()) {
-            if (deviceType.id.equals(id)) {
-                return deviceType;
-            }
-        }
-        return null;
-    }
+    LoginUser verify(String signed, String key) throws BusinessException;
 }

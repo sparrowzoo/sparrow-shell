@@ -47,7 +47,6 @@
         <module>sparrow-protocol-dao</module>
         <module>sparrow-protocol-mq</module>
         <module>sparrow-mvc-thymeleaf</module>
-        <module>sparrow-authenticator/authenticator-api</module>
     </modules>
 
     <build>

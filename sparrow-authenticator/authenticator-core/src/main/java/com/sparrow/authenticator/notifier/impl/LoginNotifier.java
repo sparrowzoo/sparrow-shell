@@ -14,33 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.enums;
+package com.sparrow.authenticator.notifier.impl;
 
-import com.sparrow.protocol.EnumIdentityAccessor;
+import com.sparrow.authenticator.notifier.*;
+import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.LoginUser;
 
-public enum DeviceType implements EnumIdentityAccessor {
-    PC(1),
-    MOBILE(2),
-    APP(3);
-
-
-    DeviceType(Integer id) {
-        this.id = id;
-    }
-
-    private final Integer id;
+public class LoginNotifier extends AbstractNotifier<LoginUser> {
 
     @Override
-    public Integer getIdentity() {
-        return this.id;
+    public String getType() {
+        return AuthcEventType.LOGIN.name();
     }
 
-    public DeviceType getDeviceById(Integer id) {
-        for (DeviceType deviceType : DeviceType.values()) {
-            if (deviceType.id.equals(id)) {
-                return deviceType;
-            }
-        }
-        return null;
+    @Override
+    public void notify(Event<LoginUser> event) throws BusinessException {
+
     }
 }

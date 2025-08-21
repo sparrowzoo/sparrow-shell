@@ -8,7 +8,10 @@
     <artifactId>sparrow-authenticator</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>authenticator-api</module>
+        <module>authenticator-core</module>
         <module>authenticator-monolithic-starter</module>
+        <module>authenticator-passport-starter</module>
+        <module>authenticator-microservice-starter</module>
+        <module>authenticator-gateway-api</module>
     </modules>
 </project>
