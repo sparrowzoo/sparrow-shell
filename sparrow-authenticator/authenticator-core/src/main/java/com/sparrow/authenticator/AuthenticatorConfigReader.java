@@ -14,33 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.enums;
 
-import com.sparrow.protocol.EnumIdentityAccessor;
+package com.sparrow.authenticator;
 
-public enum DeviceType implements EnumIdentityAccessor {
-    PC(1),
-    MOBILE(2),
-    APP(3);
+import java.util.List;
 
+public interface AuthenticatorConfigReader {
 
-    DeviceType(Integer id) {
-        this.id = id;
-    }
+    String getTokenKey();
 
-    private final Integer id;
+    Boolean getValidateHost();
 
-    @Override
-    public Integer getIdentity() {
-        return this.id;
-    }
+    Boolean getValidateStatus();
 
-    public DeviceType getDeviceById(Integer id) {
-        for (DeviceType deviceType : DeviceType.values()) {
-            if (deviceType.id.equals(id)) {
-                return deviceType;
-            }
-        }
-        return null;
-    }
+    List<String> getExcludePatterns();
+
+    Boolean getMockLoginUser();
+
+    Double getTokenAvailableDays();
+
+    Double getRememberMeDays();
+
+    Long getSessionTimeout();
+
+    Long getRenewalInterval();
+
+    String getEncryptKey();
+
+    String getJwtIssuer();
+
+    Boolean getRenewal();
 }

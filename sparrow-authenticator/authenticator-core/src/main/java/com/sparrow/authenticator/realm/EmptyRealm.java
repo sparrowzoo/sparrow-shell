@@ -14,33 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.enums;
 
-import com.sparrow.protocol.EnumIdentityAccessor;
+package com.sparrow.authenticator.realm;
 
-public enum DeviceType implements EnumIdentityAccessor {
-    PC(1),
-    MOBILE(2),
-    APP(3);
+import com.sparrow.authenticator.AuthenticationInfo;
+import com.sparrow.authenticator.AuthenticationToken;
+import com.sparrow.authenticator.Realm;
+import com.sparrow.protocol.LoginUser;
 
-
-    DeviceType(Integer id) {
-        this.id = id;
+public class EmptyRealm implements Realm {
+    @Override
+    public boolean support(AuthenticationToken token) {
+        return true;
     }
-
-    private final Integer id;
 
     @Override
-    public Integer getIdentity() {
-        return this.id;
-    }
-
-    public DeviceType getDeviceById(Integer id) {
-        for (DeviceType deviceType : DeviceType.values()) {
-            if (deviceType.id.equals(id)) {
-                return deviceType;
+    public AuthenticationInfo getAuthenticationInfo(AuthenticationToken token) {
+        return new AuthenticationInfo() {
+            @Override
+            public LoginUser getUser() {
+                return null;
             }
-        }
-        return null;
+
+            @Override
+            public String getCredential() {
+                return token.getCredential();
+            }
+        };
     }
 }

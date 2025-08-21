@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>authenticator-monolithic-starter</artifactId>
+    <artifactId>authenticator-core</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
@@ -24,11 +24,6 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sparrowzoo</groupId>
-            <artifactId>authenticator-core</artifactId>
-            <version>1.0.5-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <optional>true</optional>
@@ -37,6 +32,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
         </dependency>
     </dependencies>
     <build>

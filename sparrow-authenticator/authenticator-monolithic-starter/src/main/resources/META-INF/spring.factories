@@ -1,0 +1,12 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.sparrow.authenticator.config.ArgumentResolverAutoConfiguration,\
+com.sparrow.authenticator.config.AuthenticatorConfig,\
+com.sparrow.authenticator.config.AuthcAutoConfiguration,\
+com.sparrow.authenticator.autoconfiguration.WebMvcAutoConfiguration
+
+
+
+
+
+
+

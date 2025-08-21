@@ -14,33 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.enums;
 
-import com.sparrow.protocol.EnumIdentityAccessor;
+package com.sparrow.authc.test.jwt;
 
-public enum DeviceType implements EnumIdentityAccessor {
-    PC(1),
-    MOBILE(2),
-    APP(3);
+import com.sparrow.cryptogram.RSAUtils;
 
+import java.security.KeyPair;
+import java.util.Base64;
 
-    DeviceType(Integer id) {
-        this.id = id;
-    }
+public class RSAPairGenerateTest {
+    public static void main(String[] args) {
+        KeyPair keyPair = RSAUtils.generateKeyPair();
 
-    private final Integer id;
+        String publicKey = Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
 
-    @Override
-    public Integer getIdentity() {
-        return this.id;
-    }
+        System.out.println(publicKey);
+        String privateKey = Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded());
 
-    public DeviceType getDeviceById(Integer id) {
-        for (DeviceType deviceType : DeviceType.values()) {
-            if (deviceType.id.equals(id)) {
-                return deviceType;
-            }
-        }
-        return null;
+        System.out.println(privateKey);
     }
 }

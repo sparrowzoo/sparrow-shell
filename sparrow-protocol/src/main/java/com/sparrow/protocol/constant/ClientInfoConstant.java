@@ -26,6 +26,11 @@ public class ClientInfoConstant {
      */
     public static final String IP = "IP";
     /**
+     * 限制登录使用
+     */
+    public static final String DEVICE_TYPE = "DEVICE_TYPE";
+
+    /**
      * 注册设备 iphone/三星/华为
      */
     public static final String DEVICE = "DEVICE";

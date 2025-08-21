@@ -14,33 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.enums;
 
-import com.sparrow.protocol.EnumIdentityAccessor;
+package com.sparrow.support.converter;
 
-public enum DeviceType implements EnumIdentityAccessor {
-    PC(1),
-    MOBILE(2),
-    APP(3);
+import com.sparrow.context.SessionContext;
+import com.sparrow.protocol.LoginUser;
+import com.sparrow.protocol.dao.PO;
+import com.sparrow.protocol.enums.StatusRecord;
 
-
-    DeviceType(Integer id) {
-        this.id = id;
-    }
-
-    private final Integer id;
-
-    @Override
-    public Integer getIdentity() {
-        return this.id;
-    }
-
-    public DeviceType getDeviceById(Integer id) {
-        for (DeviceType deviceType : DeviceType.values()) {
-            if (deviceType.id.equals(id)) {
-                return deviceType;
-            }
-        }
-        return null;
+public class POInitUtils {
+    public static void init(PO po) {
+        LoginUser loginUser = SessionContext.getLoginUser();
+        po.setGmtCreate(System.currentTimeMillis());
+        po.setGmtModified(po.getGmtCreate());
+        po.setCreateUserId(loginUser.getUserId());
+        po.setModifiedUserId(loginUser.getUserId());
+        po.setStatus(StatusRecord.ENABLE);
+        po.setDeleted(false);
+        po.setCreateUserName(loginUser.getUserName());
+        po.setModifiedUserName(loginUser.getUserName());
     }
 }

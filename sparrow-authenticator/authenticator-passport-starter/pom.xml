@@ -9,34 +9,12 @@
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>authenticator-monolithic-starter</artifactId>
+    <artifactId>authenticator-passport-starter</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
-            <artifactId>sparrow-protocol</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sparrowzoo</groupId>
-            <artifactId>sparrow</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sparrowzoo</groupId>
-            <artifactId>authenticator-core</artifactId>
+            <artifactId>authenticator-monolithic-starter</artifactId>
             <version>1.0.5-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <optional>true</optional>
         </dependency>
     </dependencies>
     <build>

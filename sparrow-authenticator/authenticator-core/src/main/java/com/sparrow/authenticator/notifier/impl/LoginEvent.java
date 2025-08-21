@@ -14,33 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.enums;
 
-import com.sparrow.protocol.EnumIdentityAccessor;
+package com.sparrow.authenticator.notifier.impl;
+import com.sparrow.authenticator.notifier.AuthcEventType;
+import com.sparrow.authenticator.notifier.Event;
+import com.sparrow.authenticator.notifier.EventType;
+import com.sparrow.protocol.LoginUser;
 
-public enum DeviceType implements EnumIdentityAccessor {
-    PC(1),
-    MOBILE(2),
-    APP(3);
+public class LoginEvent implements Event<LoginUser> {
 
-
-    DeviceType(Integer id) {
-        this.id = id;
+    public LoginEvent(LoginUser loginUser) {
+        this.loginUser = loginUser;
     }
 
-    private final Integer id;
+    private LoginUser loginUser;
+
 
     @Override
-    public Integer getIdentity() {
-        return this.id;
+    public EventType getEventType() {
+        return AuthcEventType.LOGIN;
     }
 
-    public DeviceType getDeviceById(Integer id) {
-        for (DeviceType deviceType : DeviceType.values()) {
-            if (deviceType.id.equals(id)) {
-                return deviceType;
-            }
-        }
-        return null;
+    @Override
+    public LoginUser getBody() {
+        return this.loginUser;
     }
 }
