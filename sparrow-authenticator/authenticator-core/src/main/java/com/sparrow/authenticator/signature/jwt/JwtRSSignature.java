@@ -55,9 +55,9 @@ public class JwtRSSignature implements Signature {
 
     public JwtRSSignature(String issuer) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
         //读取私钥
-        String privateKey = FileUtility.getInstance().readFileContent("/rsa/test");
+        String privateKey = FileUtility.getInstance().readFileContent("/rsa/private");
         //读取公钥
-        String publicKey = FileUtility.getInstance().readFileContent("/rsa/test.pub");
+        String publicKey = FileUtility.getInstance().readFileContent("/rsa/public.pub");
         this.defaultPrivateKey = RSAUtils.getRSAPrivateKey(privateKey);
         this.defaultPublicKey = RSAUtils.getRSAPublicKey(publicKey);
         this.signatureAlgorithm = SignatureAlgorithm.RS256;

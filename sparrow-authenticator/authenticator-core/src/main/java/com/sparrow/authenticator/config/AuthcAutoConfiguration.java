@@ -26,6 +26,7 @@ import com.sparrow.authenticator.session.SessionParser;
 import com.sparrow.authenticator.session.dao.RedisSessionDao;
 import com.sparrow.authenticator.signature.jwt.JwtRSSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -51,11 +52,7 @@ public class AuthcAutoConfiguration {
         return new DefaultSessionParser();
     }
 
-    @Bean
-    @ConditionalOnMissingBean(SessionDao.class)
-    public RedisSessionDao redisSessionDao(RedisTemplate redisTemplate, SessionParser sessionParser) {
-        return new RedisSessionDao(redisTemplate, sessionParser);
-    }
+
 
     @Bean
     @ConditionalOnMissingBean(Signature.class)
@@ -64,14 +61,14 @@ public class AuthcAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(Realm.class)
-    public SessionManager sessionManager(SessionDao sessionDao) {
-        return new DefaultSessionManager(sessionDao);
+    @ConditionalOnMissingBean(SessionManager.class)
+    public SessionManager sessionManager(SessionDao sessionDao, SessionParser sessionParser) {
+        return new DefaultSessionManager(sessionDao, sessionParser);
     }
 
 
     @Bean
-    @ConditionalOnMissingBean(SessionManager.class)
+    @ConditionalOnMissingBean(Authenticator.class)
     public Authenticator securityManager(Realm realm,
                                          SessionParser sessionParser,
                                          SessionDao sessionDao,
@@ -87,5 +84,15 @@ public class AuthcAutoConfiguration {
     @ConditionalOnMissingBean(LoginUserArgumentResolver.class)
     public LoginUserArgumentResolver loginUserArgumentResolver() {
         return new LoginUserArgumentResolver();
+    }
+
+
+    @ConditionalOnClass(RedisTemplate.class)
+    public static class RedisSessionDaoConfig {
+        @Bean
+        @ConditionalOnMissingBean(SessionDao.class)
+        public RedisSessionDao redisSessionDao(RedisTemplate redisTemplate, SessionParser sessionParser) {
+            return new RedisSessionDao(redisTemplate, sessionParser);
+        }
     }
 }

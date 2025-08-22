@@ -14,23 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.authenticator.session.dao;
 
-package com.sparrow.authenticator.config;
+import com.sparrow.authenticator.Session;
+import com.sparrow.authenticator.SessionDao;
+import com.sparrow.authenticator.SessionKey;
+import com.sparrow.authenticator.SessionStatus;
 
-import com.sparrow.authenticator.resolvers.LoginUserArgumentResolver;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.inject.Inject;
 import java.util.List;
 
-public class ArgumentResolverAutoConfiguration implements WebMvcConfigurer {
+public class EmptySessionDao implements SessionDao {
+    @Override
+    public void create(Session session) {
 
-    @Inject
-    private LoginUserArgumentResolver loginUserArgumentResolver;
+    }
 
     @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(this.loginUserArgumentResolver);
+    public void update(Session session) {
+
+    }
+
+    @Override
+    public void delete(Session session) {
+
+    }
+
+    @Override
+    public SessionStatus get(SessionKey key) {
+        return null;
+    }
+
+    @Override
+    public List<Session> getSessions(Object userId) {
+        return null;
     }
 }

@@ -40,7 +40,6 @@ public class AuthenticatorConfig implements AuthenticatorConfigReader {
     private Integer platform;
     private Boolean mockLoginUser = false;
     private Double tokenAvailableDays = 7D;
-    private Double loginTokenAvailableDays;
     private Double rememberMeDays;
     private Long sessionTimeout;
     private Long renewalInterval;
