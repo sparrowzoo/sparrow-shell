@@ -23,18 +23,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class ArgumentResolverAutoConfiguration implements WebMvcConfigurer {
 
-    @Bean
-    @ConditionalOnMissingBean(LoginUserArgumentResolver.class)
-    public LoginUserArgumentResolver loginUserArgumentResolver() {
-        return new LoginUserArgumentResolver();
-    }
+    @Inject
+    private LoginUserArgumentResolver loginUserArgumentResolver;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(this.loginUserArgumentResolver());
+        argumentResolvers.add(this.loginUserArgumentResolver);
     }
 }

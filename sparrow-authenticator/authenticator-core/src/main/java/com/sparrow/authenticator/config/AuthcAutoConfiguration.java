@@ -19,6 +19,8 @@ package com.sparrow.authenticator.config;
 
 import com.sparrow.authenticator.*;
 import com.sparrow.authenticator.realm.EmptyRealm;
+import com.sparrow.authenticator.resolvers.LoginUserArgumentResolver;
+import com.sparrow.authenticator.session.DefaultSessionManager;
 import com.sparrow.authenticator.session.DefaultSessionParser;
 import com.sparrow.authenticator.session.SessionParser;
 import com.sparrow.authenticator.session.dao.RedisSessionDao;
@@ -27,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.server.session.DefaultWebSessionManager;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -62,8 +63,10 @@ public class AuthcAutoConfiguration {
         return new JwtRSSignature(this.configReader.getJwtIssuer());
     }
 
-    public SessionManager sessionManager() {
-        return new DefaultWebSessionManager();
+    @Bean
+    @ConditionalOnMissingBean(Realm.class)
+    public SessionManager sessionManager(SessionDao sessionDao) {
+        return new DefaultSessionManager(sessionDao);
     }
 
 
@@ -77,5 +80,12 @@ public class AuthcAutoConfiguration {
                                          AuthenticatorConfigReader configReader
     ) {
         return new DefaultSecurityManager(sessionParser, realm, signature, sessionManager, sessionDao, configReader);
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean(LoginUserArgumentResolver.class)
+    public LoginUserArgumentResolver loginUserArgumentResolver() {
+        return new LoginUserArgumentResolver();
     }
 }

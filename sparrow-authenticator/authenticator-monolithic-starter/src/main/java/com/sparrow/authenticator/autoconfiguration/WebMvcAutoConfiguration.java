@@ -22,14 +22,9 @@ import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.authenticator.filter.MonolithicBearerFilter;
 import com.sparrow.support.web.WebConfigReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.servlet.Filter;
 
 public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Autowired
@@ -43,18 +38,5 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @ConditionalOnMissingBean(MonolithicBearerFilter.class)
     public MonolithicBearerFilter monolithicBearerFilter() {
         return new MonolithicBearerFilter(this.authenticator, this.configReader, this.webConfigReader);
-    }
-
-
-    @Bean
-    public FilterRegistrationBean<Filter> monolithicBearerFilterBean() {
-        FilterRegistrationBean<Filter> monolithicBearerFilterBean = new FilterRegistrationBean();
-        monolithicBearerFilterBean.setFilter(monolithicBearerFilter());
-        monolithicBearerFilterBean.addUrlPatterns("/*");
-        monolithicBearerFilterBean.setName("monolithicBearerFilter");
-        //推荐在filterbean 中设置order
-        monolithicBearerFilterBean.setOrder(1);
-        //多个filter的时候order的数值越小 则优先级越高
-        return monolithicBearerFilterBean;
     }
 }
