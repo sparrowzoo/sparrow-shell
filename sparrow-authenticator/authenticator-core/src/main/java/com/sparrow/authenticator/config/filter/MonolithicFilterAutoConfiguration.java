@@ -14,29 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.sparrow.authenticator.autoconfiguration;
+package com.sparrow.authenticator.config.filter;
 
 import com.sparrow.authenticator.Authenticator;
 import com.sparrow.authenticator.AuthenticatorConfigReader;
+import com.sparrow.authenticator.config.AuthcAutoConfiguration;
 import com.sparrow.authenticator.filter.MonolithicBearerFilter;
 import com.sparrow.support.web.WebConfigReader;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-public class WebMvcAutoConfiguration implements WebMvcConfigurer {
-    @Autowired
-    private AuthenticatorConfigReader configReader;
-    @Autowired
-    private WebConfigReader webConfigReader;
-    @Autowired
-    private Authenticator authenticator;
+@AutoConfigureAfter(AuthcAutoConfiguration.class)
+@Slf4j
+public class MonolithicFilterAutoConfiguration {
+    public MonolithicFilterAutoConfiguration() {
+        log.info("Initializing MonolithicFilterAutoConfiguration");
+    }
 
     @Bean
     @ConditionalOnMissingBean(MonolithicBearerFilter.class)
-    public MonolithicBearerFilter monolithicBearerFilter() {
-        return new MonolithicBearerFilter(this.authenticator, this.configReader, this.webConfigReader);
+    public MonolithicBearerFilter monolithicBearerFilter(AuthenticatorConfigReader authenticatorConfigReader,
+                                                         WebConfigReader webConfigReader,
+                                                         Authenticator authenticator) {
+        return new MonolithicBearerFilter(authenticator, authenticatorConfigReader, webConfigReader);
     }
 }

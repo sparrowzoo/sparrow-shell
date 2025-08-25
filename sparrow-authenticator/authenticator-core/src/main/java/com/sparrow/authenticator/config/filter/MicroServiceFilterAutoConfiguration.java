@@ -14,39 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.sparrow.authenticator.autoconfiguration;
+package com.sparrow.authenticator.config.filter;
 
 import com.sparrow.authenticator.AuthenticatorConfigReader;
+import com.sparrow.authenticator.config.BasicAutoConfiguration;
 import com.sparrow.authenticator.filter.MicroServiceFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.Filter;
-
-public class WebMvcAutoConfiguration implements WebMvcConfigurer {
-    @Autowired
-    private AuthenticatorConfigReader configReader;
-
+@AutoConfigureAfter(BasicAutoConfiguration.class)
+public class MicroServiceFilterAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(MicroServiceFilter.class)
-    public MicroServiceFilter microServiceFilter() {
-        return new MicroServiceFilter(this.configReader);
-    }
-
-
-    @Bean
-    public FilterRegistrationBean<Filter> microServiceFilterBean() {
-        FilterRegistrationBean<Filter> microServiceFilterBean = new FilterRegistrationBean();
-        microServiceFilterBean.setFilter(microServiceFilter());
-        microServiceFilterBean.addUrlPatterns("/*");
-        microServiceFilterBean.setName("microServiceFilter");
-        //推荐在filterbean 中设置order
-        microServiceFilterBean.setOrder(1);
-        //多个filter的时候order的数值越小 则优先级越高
-        return microServiceFilterBean;
+    public MicroServiceFilter microServiceFilter(AuthenticatorConfigReader authenticatorConfigReader) {
+        return new MicroServiceFilter(authenticatorConfigReader);
     }
 }

@@ -18,7 +18,9 @@
 package com.sparrow.authenticator.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.sparrow.authenticator.*;
+import com.sparrow.authenticator.Authenticator;
+import com.sparrow.authenticator.AuthenticatorConfigReader;
+import com.sparrow.authenticator.DefaultLoginUser;
 import com.sparrow.authenticator.enums.AuthenticatorError;
 import com.sparrow.authenticator.token.BearerToken;
 import com.sparrow.constant.Config;
@@ -55,7 +57,7 @@ public class MonolithicBearerFilter extends AbstractAuthcFilter {
     public MonolithicBearerFilter(Authenticator authenticator, AuthenticatorConfigReader configReader, WebConfigReader webConfigReader) {
         this.authenticator = authenticator;
         this.mockLoginUser = configReader.getMockLoginUser();
-        this.supportTemplate = supportTemplate;
+        this.supportTemplate = webConfigReader.getSupportTemplateEngine();
         this.ajaxPatternList = webConfigReader.getAjaxPattens();
         this.excludePatternList = configReader.getExcludePatterns();
         if (StringUtility.isNullOrEmpty(tokenKey)) {

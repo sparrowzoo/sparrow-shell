@@ -17,38 +17,28 @@
 
 package com.sparrow.authenticator.config;
 
-import com.sparrow.authenticator.*;
-import com.sparrow.authenticator.session.DefaultSessionManager;
+
+import com.sparrow.authenticator.SessionDao;
 import com.sparrow.authenticator.session.SessionParser;
+import com.sparrow.authenticator.session.dao.RedisSessionDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.RedisTemplate;
 
-
-@AutoConfigureAfter({RedisSessionDaoConfig.class, BasicAutoConfiguration.class})
+@ConditionalOnClass(RedisTemplate.class)
+@AutoConfigureAfter(BasicAutoConfiguration.class)
 @Slf4j
-public class AuthcAutoConfiguration {
-    public AuthcAutoConfiguration() {
-        log.info("Initializing AuthcAutoConfiguration");
+public class RedisSessionDaoConfig {
+    public RedisSessionDaoConfig() {
+        log.info("Initializing RedisSessionDaoConfig");
     }
 
     @Bean
-    @ConditionalOnMissingBean(SessionManager.class)
-    public SessionManager sessionManager(SessionDao sessionDao, SessionParser sessionParser) {
-        return new DefaultSessionManager(sessionDao, sessionParser);
-    }
-
-
-    @Bean
-    @ConditionalOnMissingBean(Authenticator.class)
-    public Authenticator securityManager(Realm realm,
-                                         Signature signature,
-                                         SessionDao sessionDao,
-                                         SessionParser sessionParser,
-                                         SessionManager sessionManager,
-                                         AuthenticatorConfigReader configReader
-    ) {
-        return new DefaultSecurityManager(sessionParser, realm, signature, sessionManager, sessionDao, configReader);
+    @ConditionalOnMissingBean(SessionDao.class)
+    public RedisSessionDao redisSessionDao(RedisTemplate redisTemplate, SessionParser sessionParser) {
+        return new RedisSessionDao(redisTemplate, sessionParser);
     }
 }
