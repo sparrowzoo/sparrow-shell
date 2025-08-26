@@ -37,6 +37,7 @@ import com.sparrow.support.web.ServletUtility;
 import com.sparrow.support.web.WebConfigReader;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,13 +52,18 @@ import java.io.IOException;
 /**
  * 单体应用解析，需要签名认证
  */
+@Slf4j
 public class MonolithicBearerFilter extends AbstractAuthcFilter {
-    private static Logger logger = LoggerFactory.getLogger(MonolithicBearerFilter.class);
-
     public MonolithicBearerFilter(Authenticator authenticator, AuthenticatorConfigReader configReader, WebConfigReader webConfigReader) {
         this.authenticator = authenticator;
         this.mockLoginUser = configReader.getMockLoginUser();
+        if (this.mockLoginUser == null) {
+            this.mockLoginUser = false;
+        }
         this.supportTemplate = webConfigReader.getSupportTemplateEngine();
+        if (this.supportTemplate == null) {
+            this.supportTemplate = false;
+        }
         this.ajaxPatternList = webConfigReader.getAjaxPattens();
         this.excludePatternList = configReader.getExcludePatterns();
         if (StringUtility.isNullOrEmpty(tokenKey)) {
@@ -74,18 +80,18 @@ public class MonolithicBearerFilter extends AbstractAuthcFilter {
 
     private void loginSuccess(LoginUser loginUser, FilterChain filterChain, HttpServletRequest request, HttpServletResponse response) {
         SessionContext.bindLoginUser(loginUser);
-        logger.info("login success bind success, user:{}", JSON.toJSONString(loginUser));
+        log.info("login success bind success, user:{}", JSON.toJSONString(loginUser));
         try {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            logger.error("do filter error", e);
+            log.error("do filter error", e);
         } finally {
             SessionContext.clearToken();
         }
     }
 
     private void loginFail(HttpServletRequest request, HttpServletResponse servletResponse, ErrorSupport e) throws IOException {
-        logger.error("login fail, error:{}", e.getMessage());
+        log.error("login fail, error:{}", e.getMessage());
         WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
         boolean isAjax = this.isAjax(request);
         if (isAjax) {
@@ -97,7 +103,7 @@ public class MonolithicBearerFilter extends AbstractAuthcFilter {
         String loginUrl = configReader.getLoginUrl();
 
         if (StringUtility.isNullOrEmpty(loginUrl)) {
-            logger.error("please config login url 【{}】", Config.LOGIN_URL);
+            log.error("please config login url 【{}】", Config.LOGIN_URL);
             return;
         }
 
@@ -135,7 +141,7 @@ public class MonolithicBearerFilter extends AbstractAuthcFilter {
 
         String currentUrl = req.getServletPath();
         if (RegexUtility.matchPatterns(this.excludePatternList, currentUrl)) {
-            logger.info("exclude url {}", currentUrl);
+            log.info("exclude url {}", currentUrl);
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
