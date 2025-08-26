@@ -18,15 +18,13 @@ package com.sparrow.authenticator.config.filter;
 
 import com.sparrow.authenticator.Authenticator;
 import com.sparrow.authenticator.AuthenticatorConfigReader;
-import com.sparrow.authenticator.config.AuthcAutoConfiguration;
 import com.sparrow.authenticator.filter.MonolithicBearerFilter;
 import com.sparrow.support.web.WebConfigReader;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
-@AutoConfigureAfter(AuthcAutoConfiguration.class)
+
 @Slf4j
 public class MonolithicFilterAutoConfiguration {
     public MonolithicFilterAutoConfiguration() {

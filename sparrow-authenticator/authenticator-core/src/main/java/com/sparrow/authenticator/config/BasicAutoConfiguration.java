@@ -18,56 +18,19 @@
 package com.sparrow.authenticator.config;
 
 import com.sparrow.authenticator.AuthenticatorConfigReader;
-import com.sparrow.authenticator.Signature;
-import com.sparrow.authenticator.realm.EmptyRealm;
-import com.sparrow.authenticator.resolvers.LoginUserArgumentResolver;
-import com.sparrow.authenticator.session.DefaultSessionParser;
-import com.sparrow.authenticator.session.SessionParser;
-import com.sparrow.authenticator.signature.jwt.JwtRSSignature;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
 
 import javax.inject.Inject;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 @Slf4j
-@AutoConfigureAfter(AuthenticatorConfig.class)
 public class BasicAutoConfiguration {
     public BasicAutoConfiguration() {
         log.info("Initializing BasicAutoConfiguration");
     }
 
     /**
-     * WHY?
+     * WHY? 构造时为null 初始化bean 时才注入
      */
     @Inject
     AuthenticatorConfigReader configReader;
-
-    @Bean
-    @ConditionalOnMissingBean(EmptyRealm.class)
-    public EmptyRealm emptyRealm() {
-        return new EmptyRealm();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(SessionParser.class)
-    public SessionParser sessionParser() {
-        return new DefaultSessionParser();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(LoginUserArgumentResolver.class)
-    public LoginUserArgumentResolver loginUserArgumentResolver() {
-        return new LoginUserArgumentResolver();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(Signature.class)
-    public Signature signature(AuthenticatorConfigReader configReader) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
-        return new JwtRSSignature(configReader.getJwtIssuer());
-    }
 }

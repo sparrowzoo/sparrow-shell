@@ -2,7 +2,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.sparrow.authenticator.config.ArgumentResolverAutoConfiguration,\
 com.sparrow.authenticator.config.AuthenticatorConfig,\
 com.sparrow.authenticator.config.BasicAutoConfiguration,\
-com.sparrow.authenticator.config.RedisSessionDaoConfig,\
 com.sparrow.authenticator.config.AuthcAutoConfiguration,\
 com.sparrow.authenticator.config.filter.MonolithicFilterAutoConfiguration
 

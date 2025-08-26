@@ -17,13 +17,10 @@
 package com.sparrow.authenticator.config.filter;
 
 import com.sparrow.authenticator.AuthenticatorConfigReader;
-import com.sparrow.authenticator.config.BasicAutoConfiguration;
 import com.sparrow.authenticator.filter.MicroServiceFilter;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
-@AutoConfigureAfter(BasicAutoConfiguration.class)
 public class MicroServiceFilterAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(MicroServiceFilter.class)

@@ -18,19 +18,51 @@
 package com.sparrow.authenticator.config;
 
 import com.sparrow.authenticator.*;
+import com.sparrow.authenticator.realm.EmptyRealm;
+import com.sparrow.authenticator.resolvers.LoginUserArgumentResolver;
 import com.sparrow.authenticator.session.DefaultSessionManager;
+import com.sparrow.authenticator.session.DefaultSessionParser;
 import com.sparrow.authenticator.session.SessionParser;
+import com.sparrow.authenticator.session.dao.RedisSessionDao;
+import com.sparrow.authenticator.signature.jwt.JwtRSSignature;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.RedisTemplate;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
-@AutoConfigureAfter({RedisSessionDaoConfig.class, BasicAutoConfiguration.class})
 @Slf4j
 public class AuthcAutoConfiguration {
     public AuthcAutoConfiguration() {
         log.info("Initializing AuthcAutoConfiguration");
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(EmptyRealm.class)
+    public EmptyRealm emptyRealm() {
+        return new EmptyRealm();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(SessionParser.class)
+    public SessionParser sessionParser() {
+        return new DefaultSessionParser();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(LoginUserArgumentResolver.class)
+    public LoginUserArgumentResolver loginUserArgumentResolver() {
+        return new LoginUserArgumentResolver();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(Signature.class)
+    public Signature signature(AuthenticatorConfigReader configReader) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
+        return new JwtRSSignature(configReader.getJwtIssuer());
     }
 
     @Bean
@@ -50,5 +82,19 @@ public class AuthcAutoConfiguration {
                                          AuthenticatorConfigReader configReader
     ) {
         return new DefaultSecurityManager(sessionParser, realm, signature, sessionManager, sessionDao, configReader);
+    }
+
+    @ConditionalOnClass(RedisTemplate.class)
+    @Slf4j
+    public static class RedisSessionDaoConfig {
+        public RedisSessionDaoConfig() {
+            log.info("Initializing RedisSessionDaoConfig");
+        }
+
+        @Bean
+        @ConditionalOnMissingBean(SessionDao.class)
+        public RedisSessionDao redisSessionDao(RedisTemplate redisTemplate, SessionParser sessionParser) {
+            return new RedisSessionDao(redisTemplate, sessionParser);
+        }
     }
 }
