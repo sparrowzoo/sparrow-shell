@@ -38,8 +38,6 @@ import com.sparrow.support.web.WebConfigReader;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
