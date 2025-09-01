@@ -29,6 +29,11 @@
             <artifactId>chat-spring-starter</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.sparrowzoo</groupId>
+            <artifactId>file-starter</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <filters>
