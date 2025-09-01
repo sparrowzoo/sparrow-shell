@@ -14,36 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.sparrow.protocol.enums;
 
-package com.sparrow.authenticator;
+import com.sparrow.protocol.EnumIdentityAccessor;
+import com.sparrow.protocol.EnumUniqueName;
 
-import java.util.List;
+@EnumUniqueName(
+        name = "AuditStatus"
+)
+public enum AuditStatus implements EnumIdentityAccessor {
+    PENDING,
+    APPROVE,
+    REJECT;
 
-public interface AuthenticatorConfigReader {
+    private final int identity = this.ordinal();
 
-    String getTokenKey();
+    private AuditStatus() {
+    }
 
-    Boolean getValidateHost();
+    public Integer getIdentity() {
+        return this.identity;
+    }
 
-    Boolean getValidateStatus();
-
-    List<String> getExcludePatterns();
-
-    Boolean getMockLoginUser();
-
-    Double getTokenAvailableDays();
-
-    Double getRememberMeDays();
-
-    Long getSessionTimeout();
-
-    Long getRenewalInterval();
-
-    String getEncryptKey();
-
-    String getJwtIssuer();
-
-    Boolean getRenewal();
-
-    Integer getPlatformManagerCategory();
+    public static AuditStatus valueOf(int identity) {
+        for (AuditStatus auditRecord : values()) {
+            if (auditRecord.getIdentity() == identity) {
+                return auditRecord;
+            }
+        }
+        return null;
+    }
 }

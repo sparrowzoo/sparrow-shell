@@ -17,7 +17,7 @@
 
 package com.sparrow.authc.test;
 
-import com.sparrow.authenticator.SessionContext;
+import com.sparrow.context.SessionContext;
 import com.sparrow.protocol.ClientInformation;
 
 public class SessionContextTest {

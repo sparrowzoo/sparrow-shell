@@ -35,9 +35,9 @@ public class AuthenticatorConfig implements AuthenticatorConfigReader {
     private Boolean validateStatus = true;
     private List<String> excludePatterns;
     /**
-     * 平台用户类型
+     * 平台管理员类型(由上层业务自定义)
      */
-    private Integer platform;
+    private Integer platformManagerCategory;
     private Boolean mockLoginUser = false;
     private Double tokenAvailableDays = 7D;
     private Double rememberMeDays;
