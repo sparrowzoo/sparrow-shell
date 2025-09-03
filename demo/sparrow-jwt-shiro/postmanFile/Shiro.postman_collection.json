@@ -1,0 +1,144 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Shiro",
+		"_postman_id": "c5fe3b01-04f4-6365-2e5f-4a69459ae19b",
+		"description": "Shiro API 权限管理测试",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "require_auth",
+			"request": {
+				"url": "http://localhost:8080/require_auth",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "require_role",
+			"request": {
+				"url": "http://localhost:8080/require_role",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI0ODk0MTQsInVzZXJuYW1lIjoiZGFubnkifQ.V6F3GQ0Y9em915zGGQoUv4IB1MgAw_Xv3iY0ZZ-WHec",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "require_permission",
+			"request": {
+				"url": "http://localhost:8080/require_permission",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI0ODk0MTQsInVzZXJuYW1lIjoiZGFubnkifQ.V6F3GQ0Y9em915zGGQoUv4IB1MgAw_Xv3iY0ZZ-WHec",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"url": "http://localhost:8080/login",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "smith",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "smith123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "articleAdmin",
+			"request": {
+				"url": "http://localhost:8080/article",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI0ODk0MTQsInVzZXJuYW1lIjoiZGFubnkifQ.V6F3GQ0Y9em915zGGQoUv4IB1MgAw_Xv3iY0ZZ-WHec",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "loginAdmin",
+			"request": {
+				"url": "http://localhost:8080/login",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "danny",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "danny123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "article",
+			"request": {
+				"url": "http://localhost:8080/article",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI0ODkxNTMsInVzZXJuYW1lIjoic21pdGgifQ.EhbNABzMQkS2OOw4N3Ol1RYiPT8IcmTgWmGNKeBwuYw",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
