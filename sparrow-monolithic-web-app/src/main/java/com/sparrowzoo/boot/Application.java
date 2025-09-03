@@ -1,23 +1,19 @@
 package com.sparrowzoo.boot;
 
-import com.sparrow.chat.boot.config.EnableChatWebMvc;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.file.config.EnableFileWebMvc;
-import com.sparrowzoo.coder.boot.config.EnableCoderWebMvc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationStartingEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 @SpringBootApplication
-//(scanBasePackages = {"com.sparrowzoo"})
+(scanBasePackages = {"com.sparrowzoo"})
 //@MapperScan(basePackages = "com.sparrow.coder.dao")
 public class Application {
     private static Logger log = LoggerFactory.getLogger(Application.class);
