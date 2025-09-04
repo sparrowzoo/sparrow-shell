@@ -34,6 +34,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @ComponentScan(basePackages = {"com.sparrow.spring.boot.scan"})
 //@ComponentScan(basePackages = {"com.sparrow.scan.coder"})
 //@ComponentScan(basePackages = {"com.sparrow.scan.file"})
-//@ComponentScan(basePackages = {"com.sparrow.scan.passport"})
+@ComponentScan(basePackages = {"com.sparrow.scan.passport"})
 public class AutoScanConfig {
 }

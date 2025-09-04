@@ -7,10 +7,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import java.util.Arrays;
-
 @SpringBootApplication
-//        (scanBasePackages = {"com.sparrow.spring.boot.scan"})
+        (scanBasePackages = {"com.sparrow"})
 public class Application {
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(Application.class);
