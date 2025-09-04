@@ -1,8 +1,12 @@
 package com.sparrowzoo.boot;
 
+import com.sparrow.chat.boot.config.EnableChatApp;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.file.config.EnableFileApp;
+import com.sparrow.passport.config.EnablePassport;
+import com.sparrowzoo.coder.boot.config.EnableCoderApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +18,10 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 @SpringBootApplication
 (scanBasePackages = {"com.sparrowzoo"})
+@EnableFileApp
+@EnablePassport
+@EnableCoderApp
+@EnableChatApp
 //@MapperScan(basePackages = "com.sparrow.coder.dao")
 public class Application {
     private static Logger log = LoggerFactory.getLogger(Application.class);
