@@ -49,6 +49,7 @@ public class WebController {
     @GetMapping("/require_auth")
     @RequiresAuthentication
     public ResponseBean requireAuth() {
+        System.out.println("require_auth");
         return new ResponseBean(200, "You are authenticated", null);
     }
 

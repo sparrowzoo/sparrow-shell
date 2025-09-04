@@ -26,9 +26,9 @@ public class MyRealm extends AuthorizingRealm {
 
     public MyRealm(UserService userService) {
         this.userService = userService;
-        this.setAuthenticationCache(new MapCache<>("authenticationCache", new HashMap<>()));
-        this.setCachingEnabled(true);
-        this.setAuthenticationCachingEnabled(true);
+//        this.setAuthenticationCache(new MapCache<>("authenticationCache", new HashMap<>()));
+//        this.setCachingEnabled(true);
+//        this.setAuthenticationCachingEnabled(true);
 //        this.setAuthorizationCachingEnabled(true);
     }
 

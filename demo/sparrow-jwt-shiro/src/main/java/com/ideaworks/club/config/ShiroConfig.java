@@ -20,6 +20,7 @@ import org.springframework.context.annotation.DependsOn;
 
 import com.ideaworks.club.filter.JWTFilter;
 import com.ideaworks.club.service.MyRealm;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
 public class ShiroConfig {
@@ -56,6 +57,7 @@ public class ShiroConfig {
         // 401 and 404 page does not forward to our filter
         filterRuleMap.put("/401", "anon");
         filterRuleMap.put("/login", "anon");
+
 
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
