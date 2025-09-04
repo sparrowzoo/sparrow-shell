@@ -48,8 +48,13 @@ public class DefaultSessionManager implements SessionManager {
     }
 
     @Override
-    public Session getSession(SessionKey key) {
-        SessionStatus sessionStatus = this.sessionDao.get(key);
-        return this.sessionParser.parse((String) key.sessionKey(), sessionStatus);
+    public Session getSession(LoginUser loginUser) {
+        SessionKey sessionKey = this.sessionParser.generateKey(loginUser);
+        SessionStatus sessionStatus = this.sessionDao.get(sessionKey);
+        DefaultSession session = (DefaultSession) this.sessionParser.parse((String) sessionKey.sessionKey(), sessionStatus);
+        if (session.getExpireAt() == null) {
+            session.setExpireAt(loginUser.getExpireAt());
+        }
+        return session;
     }
 }

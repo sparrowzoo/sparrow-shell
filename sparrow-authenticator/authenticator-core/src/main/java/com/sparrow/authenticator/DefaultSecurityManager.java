@@ -68,8 +68,7 @@ public class DefaultSecurityManager implements Authenticator {
         }
         AuthenticationInfo authenticationInfo = this.realm.getAuthenticationInfo(token);
         LoginUser loginUser = this.signature.verify(token.getCredential(), authenticationInfo.getCredential());
-        SessionKey sessionKey = this.sessionParser.generateKey(loginUser);
-        Session session = this.sessionManager.getSession(sessionKey);
+        Session session = this.sessionManager.getSession(loginUser);
         Asserts.isTrue(session.expire(), AuthenticatorError.USER_TOKEN_EXPIRED);
         Asserts.isTrue(validateDevice && !session.matchHost(token.getHost()), AuthenticatorError.USER_DEVICE_NOT_MATCH);
         if (validateStatus) {
@@ -79,11 +78,18 @@ public class DefaultSecurityManager implements Authenticator {
             Asserts.isTrue(UserStatus.DISABLED.getIdentity().equals(session.getStatus()), AuthenticatorError.USER_DISABLE);
         }
         session.touch();
-        if (isRenewal && !session.exceedSessionTimeout(this.config.getSessionTimeout())) {
-            session.renewal(this.config.getRenewalInterval());
+        Long sessionTimeout = this.config.getSessionTimeout();
+        if (sessionTimeout == null) {
+            sessionTimeout = 30 * 60 * 1000L;
+        }
+        if (isRenewal && !session.exceedSessionTimeout(sessionTimeout)) {
+            Long renewalInterval = this.config.getRenewalInterval();
+            if (renewalInterval == null) {
+                renewalInterval = 60 * 60 * 1000L;
+            }
+            session.renewal(renewalInterval);
             this.sessionDao.update(session);
         }
-
         return loginUser;
     }
 

@@ -22,5 +22,5 @@ import com.sparrow.protocol.LoginUser;
 public interface SessionManager {
     Session start(LoginUser loginUser);
 
-    Session getSession(SessionKey key);
+    Session getSession(LoginUser loginUser);
 }

@@ -38,10 +38,12 @@ public class DefaultSessionParser implements SessionParser {
         session.setCategory(Integer.valueOf(keyArray[1]));
         session.setDeviceType(Integer.valueOf(keyArray[2]));
         session.setHost(keyArray[3]);
-        session.setStartTime(status.getStartTime());
-        session.setLastAccessTime(status.getLastAccessTime());
-        session.setExpireAt(status.getExpireAt());
-        session.setStatus(status.getStatus());
+        if (status != null) {
+            session.setStartTime(status.getStartTime());
+            session.setLastAccessTime(status.getLastAccessTime());
+            session.setExpireAt(status.getExpireAt());
+            session.setStatus(status.getStatus());
+        }
         return session;
     }
 

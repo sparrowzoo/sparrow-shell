@@ -19,7 +19,6 @@ package com.sparrow.authenticator.signature.jwt;
 
 import com.alibaba.fastjson.JSON;
 import com.sparrow.authenticator.DefaultLoginUser;
-
 import com.sparrow.authenticator.Signature;
 import com.sparrow.authenticator.enums.AuthenticatorError;
 import com.sparrow.cryptogram.RSAUtils;
@@ -74,6 +73,9 @@ public class JwtRSSignature implements Signature {
         PrivateKey privateKey = this.defaultPrivateKey;
         if (!StringUtility.isNullOrEmpty(key)) {
             try {
+                //如果传入了用户私钥，则使用用户私钥进行签名
+                //如果上层应用不使用公私钥的非对称加密，那么可以传用户密码作为加盐
+                //如果用户传了密码，那么需要重写signer 接口
                 privateKey = RSAUtils.getRSAPrivateKey(key);
             } catch (Exception e) {
                 log.error("faild to get user private key", e);
