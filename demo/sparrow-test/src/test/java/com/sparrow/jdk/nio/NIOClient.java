@@ -7,11 +7,10 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * NIO客户端
- *
- * @author 小路
  */
 public class NIOClient {
 
@@ -71,8 +70,8 @@ public class NIOClient {
                     // 设置成非阻塞
                     channel.configureBlocking(false);
                     //在这里可以给服务端发送信息 服务器读就诸事件
-                    byte[] buffer= new String("to server message:").getBytes();
-                    Integer bufferSize=buffer.length;
+                    byte[] buffer = new String("to server message:").getBytes();
+                    Integer bufferSize = buffer.length;
                     //bufferSize.byteValue();
                     channel.write(ByteBuffer.wrap(buffer));
                     System.out.println(channel);
@@ -105,19 +104,40 @@ public class NIOClient {
             stringBuffer.append(msg);
             buffer = ByteBuffer.allocate(10);
         }
+        System.out.println("client receive message：" + stringBuffer);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    execute(channel);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+    }
 
-        //在这里可以给服务端发送信息
-        for (int i = 0; i < 10; i++) {
-            channel.write(ByteBuffer.wrap(new String("to server message" + i+"\n").getBytes()));
+    private void execute(SocketChannel channel) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("输入循环示例 (输入'exit'退出)");
+
+        while (true) {
+            System.out.print("请输入内容: ");
+            String input = scanner.nextLine().trim();
+
+            System.out.println("new line " + input);
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println("程序已退出");
+                break;
+            }
+
+            if (!input.isEmpty()) {
+                channel.write(ByteBuffer.wrap(input.getBytes()));
+            } else {
+                System.out.println("输入不能为空");
+            }
         }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //事件只注册一次即可
-        channel.register(this.selector, SelectionKey.OP_READ);
-        System.out.println("client receive message：" + stringBuffer + System.nanoTime());
+        scanner.close();
     }
 
     /**
@@ -129,9 +149,5 @@ public class NIOClient {
         NIOClient client = new NIOClient();
         client.initClient("localhost", 8000);
         client.listen();
-
-        NIOClient client2 = new NIOClient();
-        client2.initClient("localhost", 8000);
-        client2.listen();
     }
 }

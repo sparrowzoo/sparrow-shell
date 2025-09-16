@@ -16,16 +16,14 @@
  */
 package com.sparrow.controller;
 
+import com.sparrow.authenticator.DefaultLoginUser;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.LoginUser;
-import com.sparrow.protocol.LoginUserStatus;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.servlet.ServletContainer;
-import com.sparrow.support.Authenticator;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.vo.HelloVO;
 import com.sparrow.vo.User;
@@ -36,13 +34,9 @@ import java.util.List;
 
 public class HelloController {
 
-    private Authenticator authenticatorService;
 
     private ServletContainer servletContainer;
 
-    public void setAuthenticatorService(Authenticator authenticatorService) {
-        this.authenticatorService = authenticatorService;
-    }
 
     public void setServletContainer(ServletContainer servletContainer) {
         this.servletContainer = servletContainer;
@@ -108,21 +102,6 @@ public class HelloController {
         return ViewWithModel.forward(new HelloVO("jsp page content from server ..."));
     }
 
-    public ViewWithModel login(HttpServletRequest request) {
-        ServletUtility servletUtility = ServletUtility.getInstance();
-
-        LoginUser loginToken = new LoginUser();
-        loginToken.setNickName("nick-zhangsan");
-        loginToken.setAvatar("http://localhost");
-        loginToken.setDeviceId(servletUtility.getDeviceId(request));
-        loginToken.setExpireAt(System.currentTimeMillis() + 1000 * 60 * 60);
-        loginToken.setDays(20D);
-        loginToken.setUserId(1L);
-        loginToken.setUserName("zhangsan");
-        String sign = authenticatorService.sign(loginToken, new LoginUserStatus(LoginUserStatus.STATUS_NORMAL, 1L));
-        servletContainer.cookie(Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN, sign, 6D);
-        return ViewWithModel.redirect("welcome", loginToken);
-    }
 
     public ViewWithModel authorizing() {
         return ViewWithModel.forward(new HelloVO("你成功了"));

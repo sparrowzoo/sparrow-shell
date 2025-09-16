@@ -18,8 +18,6 @@ import java.util.Iterator;
  * SOCKET 会阻塞
  * <p>
  * NIO服务端
- *
- * @author 小路
  */
 public class NIOServer {
 
@@ -78,8 +76,6 @@ public class NIOServer {
                     channel.write(ByteBuffer.wrap("server.accept()".getBytes()));
                     //在和客户端连接成功之后，为了可以接收到客户端的信息
                     channel.register(this.selector, SelectionKey.OP_READ, "attach");
-
-                    System.out.println(channel.toString());
                     // 获得了可读的事件
                 } else if (key.isReadable()) {
                     try {
@@ -107,7 +103,7 @@ public class NIOServer {
     public void read(SelectionKey key) throws IOException {
         // 服务器可读取消息:得到事件发生的Socket通道
         SocketChannel channel = (SocketChannel) key.channel();
-        System.out.println(key.attachment());
+        System.out.println("attach"+key.attachment());
         // 创建读取的缓冲区
         ByteBuffer buffer = ByteBuffer.allocate(10);
         StringBuilder stringBuffer = new StringBuilder();
@@ -117,12 +113,9 @@ public class NIOServer {
             stringBuffer.append(msg);
             buffer = ByteBuffer.allocate(10);
         }
-        System.out.println("服务端收到信息：" + stringBuffer.toString() + System.nanoTime());
+        System.out.println("服务端收到信息：" + stringBuffer);
         ByteBuffer outBuffer = ByteBuffer.wrap(("service received").getBytes());
-        System.out.println(channel.toString());
         channel.write(outBuffer);// 将消息回送给客户端
-        //事件只注册一次即可
-        //channel.register(this.selector, SelectionKey.OP_READ,"attach");
     }
 
     /**
