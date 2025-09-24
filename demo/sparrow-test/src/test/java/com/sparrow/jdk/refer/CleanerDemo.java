@@ -15,33 +15,27 @@
  * limitations under the License.
  */
 
-package com.sparrow.jdk.threadlocal.fullgc;
+package com.sparrow.jdk.refer;
 
-public class FullGc {
-    public static class Outer {
-        public ThreadLocal<Object> cursorLocal = new ThreadLocal<Object>();
-    }
+import com.sparrow.jdk.hash.Obj;
+import sun.misc.Cleaner;
 
-    public static class Inner {
-        private Outer tracer = new Outer();
-
-        public Inner(Outer tracer) {
-            this.tracer = tracer;
+public class CleanerDemo {
+    static class ResourceHolder implements Runnable {
+        private final String id;
+        public ResourceHolder(String id) { this.id = id; }
+        @Override public void run() {
+            System.out.println("Cleaning resource: " + id);
         }
     }
 
-    public static void main(String[] args) throws
-            InterruptedException {
-        for (; ; ) {
-            Outer outer = new Outer();
-            Inner span = new Inner(outer);
-            outer.cursorLocal.set(span);
-        }
+    public static void main(String[] args) {
+        Object o=new Object();
+        ResourceHolder resource = new ResourceHolder("demo01");
+        Cleaner cleaner = Cleaner.create(o,resource);
 
-//        for (; ; ) {
-//            TracerImpl tracer=new TracerImpl();
-//            SpanImpl span = new SpanImpl(tracer,1L,"A");
-//            tracer.setCursor(span);
-//        }
+        // 触发GC（仅演示，实际中应避免显式调用）
+        resource = null;
+        System.gc();
     }
 }

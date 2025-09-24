@@ -5,7 +5,7 @@ package com.sparrow.jdk.threadlocal;
  */
 public class ThreadLocalGc {
     //注意这里是thread local 非WeakReference
-    private static ThreadLocal<String> s=new ThreadLocal<>();
+    private static ThreadLocal<String> s = new ThreadLocal<String>();
 
     public static void main(String[] args) {
         s.set("hello");
