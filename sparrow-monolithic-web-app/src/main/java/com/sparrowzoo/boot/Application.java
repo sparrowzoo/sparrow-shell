@@ -20,7 +20,6 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 @SpringBootApplication
-(scanBasePackages = {"com.sparrowzoo"})
 @EnableFileApp
 @EnablePassport
 @EnableCoderApp

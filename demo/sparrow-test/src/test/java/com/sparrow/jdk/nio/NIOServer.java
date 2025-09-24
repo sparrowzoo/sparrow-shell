@@ -46,8 +46,6 @@ public class NIOServer {
 
     /**
      * 采用轮询的方式监听selector上是否有需要处理的事件，如果有，则进行处理
-     *
-     * @throws IOException
      */
     @SuppressWarnings("unchecked")
     public void listen() throws IOException {

@@ -27,11 +27,12 @@ import java.io.Serializable;
 
 public class DefaultSessionParser implements SessionParser {
     public Session parse(String sessionKey, SessionStatus status) {
-        String key = sessionKey.toString();
+        String key = sessionKey;
         String[] keyArray = key.split(":");
         if (keyArray.length < 4) {
             throw new IllegalArgumentException("session key length is illegal");
         }
+
         DefaultSession session = new DefaultSession();
         session.setSessionKey(sessionKey);
         session.setUserId(Long.valueOf(keyArray[0]));
