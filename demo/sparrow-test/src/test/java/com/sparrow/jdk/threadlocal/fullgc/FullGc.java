@@ -19,18 +19,19 @@ package com.sparrow.jdk.threadlocal.fullgc;
 
 public class FullGc {
     public static class Outer {
-        public ThreadLocal<Object> cursorLocal = new ThreadLocal<>();
+        public ThreadLocal<Object> cursorLocal = new ThreadLocal<Object>();
     }
 
     public static class Inner {
         private Outer tracer = new Outer();
+
         public Inner(Outer tracer) {
             this.tracer = tracer;
         }
     }
 
     public static void main(String[] args) throws
-        InterruptedException {
+            InterruptedException {
         for (; ; ) {
             Outer outer = new Outer();
             Inner span = new Inner(outer);

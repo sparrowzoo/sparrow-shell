@@ -16,11 +16,9 @@
  */
 package com.sparrow.controller;
 
-import com.sparrow.authenticator.DefaultLoginUser;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ViewWithModel;
 import com.sparrow.protocol.BusinessException;
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.protocol.pager.PagerResult;
 import com.sparrow.servlet.ServletContainer;
@@ -102,6 +100,10 @@ public class HelloController {
         return ViewWithModel.forward(new HelloVO("jsp page content from server ..."));
     }
 
+    public ViewWithModel login(HttpServletRequest request) {
+        ServletUtility servletUtility = ServletUtility.getInstance();
+        return null;
+    }
 
     public ViewWithModel authorizing() {
         return ViewWithModel.forward(new HelloVO("你成功了"));

@@ -1,5 +1,7 @@
 package com.sparrow.jdk.refer;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.PhantomReference;
@@ -15,17 +17,10 @@ import java.util.List;
  */
 public class TestPhantomReference {
     static ReferenceQueue<Byte[]> referenceQueue = new ReferenceQueue<>();
+    //模拟使用
     static List<PhantomReference<Byte[]>> list = new ArrayList<>();
-
-    static class StreamWrap {
-        private InputStream inputStream;
-        private byte[] bytes;
-
-        public StreamWrap(InputStream inputStream, byte[] bytes) {
-            this.inputStream = inputStream;
-            this.bytes = bytes;
-        }
-    }
+    //随机缓存
+    static List<Byte[]> byteList = new ArrayList<>();
 
     private static void newMonitorThread() {
         new Thread(new Runnable() {
@@ -34,7 +29,8 @@ public class TestPhantomReference {
                 while (true) {
                     Reference reference = referenceQueue.poll();
                     if (reference != null) {
-                        System.out.println(reference);
+                        //ReferenceQueue.poll() 方法获取到的对象已经被垃圾回收器回收
+                        byte[] bytes = (byte[]) reference.get();
                         list.remove(reference);
                         //todo @Override  PhantomReference method
                         /**
@@ -63,7 +59,7 @@ public class TestPhantomReference {
                          *     }
                          */
                         //((InputStream)reference.get()).close();
-                        System.out.println(reference);
+                        System.out.println("回收后" + list.size());
 //                    System.exit(0);
                     }
                 }
@@ -75,12 +71,18 @@ public class TestPhantomReference {
         newMonitorThread();
         while (true) {
             int c = System.in.read();
-            if (c > 0) {
-                InputStream file = null;//new FileInputStream(new File("D:\\redis.txt"));
-                StreamWrap streamWrap = new StreamWrap(file, new byte[1024 * 1024]);
-                PhantomReference phantomReference = new PhantomReference(streamWrap, referenceQueue);
-                list.add(phantomReference);
+            if (c == '\n') {
+                continue;
             }
+            Byte[] data = new Byte[1024 * 1024 * 10];
+            PhantomReference phantomReference = new PhantomReference(data, referenceQueue);
+            list.add(phantomReference);
+            if (c % 2 == 0) {
+                byteList.add(data);
+            }
+            System.out.println("add " + list.size() + "BYTE LIST" + byteList.size());
+
+            System.gc();
         }
     }
 }

@@ -10,7 +10,7 @@ public class MultiThreadLocalBusiness {
         m.setThreadId(1L);
         m.business();
     }
-    private ThreadLocal<Long> threadId = new ThreadLocal<>();
+    private ThreadLocal<Long> threadId = new ThreadLocal<Long>();
 
     public void setThreadId(Long threadId) {
         this.threadId.set(threadId);
