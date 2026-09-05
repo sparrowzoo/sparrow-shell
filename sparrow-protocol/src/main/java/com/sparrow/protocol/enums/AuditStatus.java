@@ -23,13 +23,14 @@ import com.sparrow.protocol.EnumUniqueName;
         name = "AuditStatus"
 )
 public enum AuditStatus implements EnumIdentityAccessor {
-    PENDING,
-    APPROVE,
-    REJECT;
+    PENDING(0),
+    APPROVE(1),
+    REJECT(2);
 
-    private final int identity = this.ordinal();
+    private final int identity;
 
-    private AuditStatus() {
+    AuditStatus(int identity) {
+        this.identity = identity;
     }
 
     public Integer getIdentity() {

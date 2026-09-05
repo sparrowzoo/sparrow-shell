@@ -80,7 +80,7 @@ public class Result<T> implements DTO {
      * 初始化默认成功
      * 这个对象是在什么时侯用呢？
      */
-    private static Result ok = new Result();
+    private static volatile Result ok;
 
     /**
      * 默认成功 GC FREE
@@ -119,7 +119,7 @@ public class Result<T> implements DTO {
     }
 
 
-    private static Result systemServerError;
+    private static volatile Result systemServerError;
 
 
     /**

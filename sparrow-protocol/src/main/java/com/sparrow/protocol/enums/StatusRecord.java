@@ -30,15 +30,15 @@ public enum StatusRecord implements EnumIdentityAccessor {
     /**
      * 被屏蔽(0)
      */
-    DISABLE,
+    DISABLE(0),
     /**
      * 可用(1)
      */
-    ENABLE;
+    ENABLE(1);
     private final int identity;
 
-    StatusRecord() {
-        this.identity = ordinal();
+    StatusRecord(int identity) {
+        this.identity = identity;
     }
 
     @Override
