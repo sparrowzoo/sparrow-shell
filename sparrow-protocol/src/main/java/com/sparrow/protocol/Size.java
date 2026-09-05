@@ -82,6 +82,6 @@ public class Size implements POJO {
         }
         double scale = Double.parseDouble(this.getContainerWidth()) / Integer.valueOf(this.width);
         double height = Math.ceil(Integer.parseInt(this.height) * scale);
-        return height+ "px";
+        return height + "px";
     }
 }
