@@ -17,17 +17,14 @@
 
 package com.sparrow.mvc.result;
 
-import com.sparrow.constant.Config;
-import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.PageSwitchMode;
 import com.sparrow.mvc.ThymeleafEngineUtils;
 import com.sparrow.mvc.result.impl.ViewWithModelMethodReturnValueResolverHandlerImpl;
-import com.sparrow.protocol.constant.Extension;
 import com.sparrow.support.web.WebConfigReader;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ThymeleafViewWithModelMethodReturnValueResolverHandler extends ViewWithModelMethodReturnValueResolverHandlerImpl {

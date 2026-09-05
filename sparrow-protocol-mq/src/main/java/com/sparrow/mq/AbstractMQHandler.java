@@ -17,7 +17,7 @@
 
 package com.sparrow.mq;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public abstract class AbstractMQHandler<T extends MQEvent> implements MQHandler<T> {
     @Inject

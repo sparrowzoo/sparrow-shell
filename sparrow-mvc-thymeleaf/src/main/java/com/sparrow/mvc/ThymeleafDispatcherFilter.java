@@ -19,11 +19,12 @@ package com.sparrow.mvc;
 
 import com.sparrow.mvc.adapter.impl.MethodControllerHandlerAdapter;
 import com.sparrow.mvc.adapter.impl.ThymeleafMethodControllerHandlerAdapter;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 public class ThymeleafDispatcherFilter extends DispatcherFilter {
 
@@ -39,7 +40,7 @@ public class ThymeleafDispatcherFilter extends DispatcherFilter {
     }
 
     @Override protected void forward(ServletRequest request, ServletResponse response,
-        String actionKey) throws IOException {
+                                     String actionKey) throws IOException {
         ThymeleafEngineUtils.forward(request, response, actionKey);
     }
 }

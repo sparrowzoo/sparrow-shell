@@ -30,7 +30,7 @@ public class JWTTest {
     public static void main(String[] args) throws BusinessException, NoSuchAlgorithmException, IOException {
         AuthClaims authClaims = new AuthClaims();
         authClaims.setId(UUID.randomUUID().toString())
-                .setIssuer("zhangsan")
+                ("zhangsan")
                 .setSubject("zhangsan")
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 10))
                 .setIssuedAt(new Date(System.currentTimeMillis()));

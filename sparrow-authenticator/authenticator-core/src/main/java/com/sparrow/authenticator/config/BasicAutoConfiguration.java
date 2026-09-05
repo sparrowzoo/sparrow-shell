@@ -18,9 +18,8 @@
 package com.sparrow.authenticator.config;
 
 import com.sparrow.authenticator.AuthenticatorConfigReader;
+import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.inject.Inject;
 
 @Slf4j
 public class BasicAutoConfiguration {

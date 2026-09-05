@@ -19,21 +19,19 @@ package com.sparrow.mvc;
 
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.support.web.WebConfigReader;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.spring5.dialect.SpringStandardDialect;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.spring6.dialect.SpringStandardDialect;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ThymeleafEngineUtils {
@@ -88,13 +86,13 @@ public class ThymeleafEngineUtils {
                 return;
             }
 
-            ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
-            resolver.setPrefix(pagePrefix);
-            resolver.setSuffix(extension);
-            resolver.setTemplateMode(TemplateMode.HTML);
-            resolver.setCacheable(false);
-            templateEngine = new TemplateEngine();
-            templateEngine.setTemplateResolver(resolver);
+//            Servreso resolver = new WebApplicationTemplateResolver(servletContext);
+//            resolver.setPrefix(pagePrefix);
+//            resolver.setSuffix(extension);
+//            resolver.setTemplateMode(TemplateMode.HTML);
+//            resolver.setCacheable(false);
+//            templateEngine = new TemplateEngine();
+//            templateEngine.setTemplateResolver(resolver);
         }
     }
 
@@ -103,10 +101,10 @@ public class ThymeleafEngineUtils {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        WebContext ctx = new WebContext(httpServletRequest, httpServletResponse, innerServletContext, request.getLocale());
+        //WebContext ctx = new WebContext(httpServletRequest, httpServletResponse, innerServletContext, request.getLocale());
         // 1.设置响应体内容类型和字符集
         httpServletResponse.setContentType("text/html;charset=UTF-8");
         //webContext.setVariable("variable-name", "variable-value");
-        templateEngine.process(actionKey, ctx, response.getWriter());
+        //templateEngine.process(actionKey, ctx, response.getWriter());
     }
 }

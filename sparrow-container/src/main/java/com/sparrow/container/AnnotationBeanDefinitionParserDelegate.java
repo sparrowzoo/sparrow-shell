@@ -18,9 +18,10 @@ package com.sparrow.container;
 
 import com.sparrow.servlet.Controller;
 import com.sparrow.servlet.HandlerInterceptor;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+
 import java.lang.reflect.Field;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 public class AnnotationBeanDefinitionParserDelegate {
 

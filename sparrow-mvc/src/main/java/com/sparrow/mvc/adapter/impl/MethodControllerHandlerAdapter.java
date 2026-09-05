@@ -26,12 +26,12 @@ import com.sparrow.mvc.result.impl.JsonMethodReturnValueResolverHandlerImpl;
 import com.sparrow.mvc.result.impl.MethodReturnValueResolverHandlerComposite;
 import com.sparrow.mvc.result.impl.ViewWithModelMethodReturnValueResolverHandlerImpl;
 import com.sparrow.mvc.result.impl.VoidReturnValueResolverHandlerImpl;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class MethodControllerHandlerAdapter implements HandlerAdapter {
 

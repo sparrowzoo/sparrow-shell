@@ -31,8 +31,8 @@
 
     <properties>
         <spring.framework.version>5.2.23.RELEASE</spring.framework.version>
-        <maven.compile.source>1.8</maven.compile.source>
-        <maven.compile.target>1.8</maven.compile.target>
+        <maven.compile.source>17</maven.compile.source>
+        <maven.compile.target>17</maven.compile.target>
     </properties>
     <dependencies>
         <dependency>

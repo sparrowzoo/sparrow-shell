@@ -19,7 +19,7 @@ package com.sparrow.mvc.resolver;
 
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.web.support.MethodParameter;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface HandlerMethodArgumentResolver {
 

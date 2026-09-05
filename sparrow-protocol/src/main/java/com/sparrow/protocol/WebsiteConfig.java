@@ -17,6 +17,13 @@
 
 package com.sparrow.protocol;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class WebsiteConfig implements POJO {
     private static final long serialVersionUID = -214177209049269222L;
     private String title;
@@ -27,49 +34,6 @@ public class WebsiteConfig implements POJO {
     private String bannerFlash;
     private String icp;
     private String contact;
-
-    public WebsiteConfig() {
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
-
-    public String getBanner() {
-        return banner;
-    }
-
-    public void setBanner(String banner) {
-        this.banner = banner;
-    }
 
     @Override public String toString() {
         return "WebsiteConfig{" +
@@ -83,29 +47,4 @@ public class WebsiteConfig implements POJO {
             ", contact='" + contact + '\'' +
             '}';
     }
-
-    public String getBannerFlash() {
-        return bannerFlash;
-    }
-
-    public void setBannerFlash(String bannerFlash) {
-        this.bannerFlash = bannerFlash;
-    }
-
-    public String getIcp() {
-        return icp;
-    }
-
-    public void setIcp(String icp) {
-        this.icp = icp;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
 }

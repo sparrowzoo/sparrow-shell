@@ -29,10 +29,10 @@ import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
+import jakarta.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
 import java.util.*;
 
 public abstract class AbstractEntityManagerAdapter implements EntityManager {

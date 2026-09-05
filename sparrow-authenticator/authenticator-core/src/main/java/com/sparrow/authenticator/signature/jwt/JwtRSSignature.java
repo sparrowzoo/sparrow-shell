@@ -110,7 +110,7 @@ public class JwtRSSignature implements Signature {
             throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
         }
         try {
-            builder = Jwts.builder().setClaims(claims).signWith(this.signatureAlgorithm, privateKey);
+            builder = Jwts.builder().claims(claims).signWith(privateKey, this.signatureAlgorithm);
         } catch (Exception e) {
             log.error("faild to generate rsa encoded jwt");
             throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
@@ -132,7 +132,7 @@ public class JwtRSSignature implements Signature {
         }
         Jws<Claims> jws = null;
         try {
-            jws = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token);
+            jws = Jwts.parser().verifyWith(publicKey).build().parseSignedClaims(token);
         } catch (Exception e) {
             log.error("faild to verify jwt token", e);
             throw new BusinessException(AuthenticatorError.USER_TOKEN_ABNORMAL);

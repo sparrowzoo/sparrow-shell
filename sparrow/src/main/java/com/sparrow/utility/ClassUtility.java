@@ -20,10 +20,9 @@ package com.sparrow.utility;
 import com.sparrow.protocol.dao.FieldOrder;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.lambda.ShadowLambdaMeta;
+import jakarta.persistence.Column;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.Column;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.SerializedLambda;

@@ -23,11 +23,11 @@ import com.sparrow.support.web.CookieUtility;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.StringUtility;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

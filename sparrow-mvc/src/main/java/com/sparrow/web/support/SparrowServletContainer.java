@@ -21,9 +21,9 @@ import com.sparrow.servlet.impl.AbstractServletContainer;
 import com.sparrow.support.pager.HtmlPagerResult;
 import com.sparrow.support.web.HttpContext;
 import com.sparrow.utility.CollectionsUtility;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**

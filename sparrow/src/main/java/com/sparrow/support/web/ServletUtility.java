@@ -24,9 +24,9 @@ import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;

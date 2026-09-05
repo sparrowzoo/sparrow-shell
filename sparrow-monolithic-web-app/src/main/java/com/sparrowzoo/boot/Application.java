@@ -1,9 +1,6 @@
 package com.sparrowzoo.boot;
 
 import com.sparrow.chat.boot.config.EnableChatApp;
-import com.sparrow.chat.domain.netty.WebSocketServer;
-import com.sparrow.chat.domain.service.MessageService;
-import com.sparrow.chat.infrastructure.mq.ContactMQPublisher;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
@@ -54,12 +51,9 @@ public class Application {
         springApplication.addListeners(new ApplicationListener<ContextRefreshedEvent>() {
             @Override
             public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-                contextRefreshedEvent.getApplicationContext().getBean(ContactMQPublisher.class).start();
-                contextRefreshedEvent.getApplicationContext().getBean(MessageService.class).startSyncSessionMeta();
                 log.info("application startup at {}", contextRefreshedEvent.getTimestamp());
                 try {
                     log.info("start web socket server");
-                    WebSocketServer.start(args);
                 } catch (Exception e) {
                     log.error("start error", e);
                 }

@@ -16,32 +16,16 @@
  */
 package com.sparrow.protocol;
 
-public class IdentityDTO<T> implements DTO {
-    public IdentityDTO(Long id, T data) {
-        this.id = id;
-        this.data = data;
-    }
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
+public class IdentityDTO<T> implements DTO {
     public IdentityDTO(Long id) {
         this.id = id;
     }
 
     private Long id;
     private T data;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }

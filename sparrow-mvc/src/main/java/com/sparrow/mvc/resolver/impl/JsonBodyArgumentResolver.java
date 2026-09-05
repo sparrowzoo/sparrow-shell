@@ -26,8 +26,9 @@ import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.web.support.MethodParameter;
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.nio.charset.StandardCharsets;
-import javax.servlet.http.HttpServletRequest;
 
 public class JsonBodyArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
 

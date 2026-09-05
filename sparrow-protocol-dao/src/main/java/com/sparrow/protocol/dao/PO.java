@@ -20,9 +20,8 @@ package com.sparrow.protocol.dao;
 
 import com.sparrow.protocol.POJO;
 import com.sparrow.protocol.enums.StatusRecord;
+import jakarta.persistence.Column;
 import lombok.Data;
-
-import javax.persistence.Column;
 
 @Data
 public class PO implements POJO {

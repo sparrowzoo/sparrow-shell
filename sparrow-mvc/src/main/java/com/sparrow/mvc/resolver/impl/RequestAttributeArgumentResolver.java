@@ -23,8 +23,8 @@ import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.resolver.HandlerMethodArgumentResolver;
 import com.sparrow.web.support.MethodParameter;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 
 public class RequestAttributeArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
 

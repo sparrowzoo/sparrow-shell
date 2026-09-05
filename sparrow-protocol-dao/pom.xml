@@ -11,19 +11,15 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow-protocol-dao</artifactId>
     <version>1.0.5-SNAPSHOT</version>
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol</artifactId>
         </dependency>
+        <!-- javax.persistence → jakarta.persistence (JDK 17+ Jakarta EE migration) -->
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
     </dependencies>
     <build>

@@ -80,8 +80,8 @@ public class Size implements POJO {
         if (Symbol.STAR.equals(this.height)) {
             return "auto";
         }
-        double scale = Double.valueOf(this.getContainerWidth()) / Integer.valueOf(this.width);
-        Double height = Math.ceil(Integer.valueOf(this.height) * scale);
-        return height.intValue() + "px";
+        double scale = Double.parseDouble(this.getContainerWidth()) / Integer.valueOf(this.width);
+        double height = Math.ceil(Integer.parseInt(this.height) * scale);
+        return height+ "px";
     }
 }
