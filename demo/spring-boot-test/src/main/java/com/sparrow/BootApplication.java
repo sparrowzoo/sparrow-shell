@@ -21,6 +21,10 @@ import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.filter.TestFilter;
+import com.sparrow.spring.starter.autoconfiguration.SparrowAutoConfiguration;
+import com.sparrow.spring.starter.config.SparrowConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,19 +33,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationContextInitializedEvent;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.boot.context.event.ApplicationStartingEvent;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 @SpringBootApplication
-//        (scanBasePackages = "com.sparrow.*")
+        (scanBasePackages = "com.sparrow.*")
 //@EnableDiscoveryClient
-@MapperScan("com.sparrow")
+@MapperScan("com.sparrow.mapper")
+// sparrow-starter 仅以遗留 spring.factories 注册自动配置, Boot3 下需显式启用其 @ConfigurationProperties bean 及其依赖的 springContext
+//@EnableConfigurationProperties(SparrowConfig.class)
+@Import(SparrowAutoConfiguration.SpringContextAutoConfiguration.class)
 public class BootApplication {
     private static Logger log = LoggerFactory.getLogger(BootApplication.class);
 

@@ -48,6 +48,6 @@ public enum UserStatus implements EnumIdentityAccessor {
     }
     @Override
     public Integer getIdentity() {
-        return null;
+        return this.identity;
     }
 }

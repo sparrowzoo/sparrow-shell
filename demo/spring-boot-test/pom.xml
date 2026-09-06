@@ -14,13 +14,20 @@
     <dependencies>
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.3</version>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <version>3.5.12</version> <!-- Spring Boot 3.x 需用 boot3 变体, 其 mybatis-spring 3.0.4+ 兼容 Spring 6.2 -->
         </dependency>
         <dependency>
             <groupId>icu.mhb</groupId>
             <artifactId>mybatis-plus-join-boot-starter</artifactId>
-            <version>2.1.0</version>
+            <version>2.1.2</version>
+            <exclusions>
+                <!-- 该 starter 内部依赖 Boot2 版 mybatis-plus-boot-starter, 与 Boot3 冲突, 需排除 -->
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -62,17 +69,12 @@
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-rocketmq-client</artifactId>
         </dependency>
-        <!-- thymeleaf -->
+        <!-- thymeleaf: 版本由 sparrow-bom(spring-boot-dependencies 3.5) 管理; 此前硬编码 2.3.2.RELEASE 为 Boot2 版, Boot3 下无法激活 thymeleaf-spring6 自动配置 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>2.3.2.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-container</artifactId>

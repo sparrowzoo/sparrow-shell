@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.Filter;
 
+import com.ideaworks.club.filter.JWTFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -18,9 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import com.ideaworks.club.filter.JWTFilter;
 import com.ideaworks.club.service.MyRealm;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
 public class ShiroConfig {
@@ -43,7 +42,8 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         // define your filter and name it as jwt
         Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put("jwt", new BearerHttpAuthenticationFilter());
+        filterMap.put("jwt",new JWTFilter());
+        //filterMap.put("jwt", new BearerHttpAuthenticationFilter());
 //        filterMap.put("jwt", new FormAuthenticationFilter());
         factoryBean.setFilters(filterMap);
         factoryBean.setSecurityManager(securityManager);
