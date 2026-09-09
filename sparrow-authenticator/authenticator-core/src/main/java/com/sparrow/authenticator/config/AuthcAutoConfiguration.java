@@ -25,9 +25,11 @@ import com.sparrow.authenticator.session.DefaultSessionParser;
 import com.sparrow.authenticator.session.SessionParser;
 import com.sparrow.authenticator.session.dao.RedisSessionDao;
 import com.sparrow.authenticator.signature.jwt.JwtRSSignature;
+import jakarta.inject.Named;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -36,6 +38,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
 @Slf4j
+@EnableConfigurationProperties(AuthenticatorConfig.class)
 public class AuthcAutoConfiguration {
     public AuthcAutoConfiguration() {
         log.info("Initializing AuthcAutoConfiguration");
@@ -62,7 +65,7 @@ public class AuthcAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(Signature.class)
     public Signature signature(AuthenticatorConfigReader configReader) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
-        return new JwtRSSignature(configReader.getJwtIssuer());
+        return new JwtRSSignature(configReader);
     }
 
     @Bean
@@ -93,7 +96,7 @@ public class AuthcAutoConfiguration {
 
         @Bean
         @ConditionalOnMissingBean(SessionDao.class)
-        public RedisSessionDao redisSessionDao(RedisTemplate redisTemplate, SessionParser sessionParser) {
+        public RedisSessionDao redisSessionDao(@Named("redisTemplate") RedisTemplate redisTemplate, SessionParser sessionParser) {
             return new RedisSessionDao(redisTemplate, sessionParser);
         }
     }

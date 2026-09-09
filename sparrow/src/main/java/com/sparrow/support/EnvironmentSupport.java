@@ -149,10 +149,9 @@ public class EnvironmentSupport {
 
         URL url = EnvironmentSupport.class.getResource(fileName);
         if (url != null) {
-            //xxx.getClass().getResourceAsStream("xx.properties") 有缓存
             try {
                 fileInputStream = url.openStream();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 logger.error("input stream error", e);
                 throw new FileNotFoundException(e.getMessage());
             }

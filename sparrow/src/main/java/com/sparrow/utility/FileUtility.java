@@ -66,7 +66,7 @@ public class FileUtility {
         InputStream inputStream = null;
         try {
             inputStream = EnvironmentSupport.getInstance().getFileInputStream(fileName);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             log.error("[{}] not found", fileName);
             return null;
         }
@@ -412,7 +412,7 @@ public class FileUtility {
             fileNameProperty.setIsDirectory(true);
             fileNameProperty.setDirectory(fullFilePath);
             return fileNameProperty;
-        }                                                                                
+        }
         fileNameProperty.setIsDirectory(false);
         int lastFileSeparatorIndex = fullFilePath.lastIndexOf(java.io.File.separator);
         if (lastFileSeparatorIndex == -1) {

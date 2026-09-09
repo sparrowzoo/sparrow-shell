@@ -17,9 +17,9 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.protocol.constant.Constant;
 import com.sparrow.constant.Regex;
 import com.sparrow.core.Pair;
+import com.sparrow.protocol.constant.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +109,9 @@ public class RegexUtility {
     }
 
     public static boolean matchPatterns(List<String> patternList, String path) {
+        if (CollectionsUtility.isNullOrEmpty(patternList)) {
+            return false;
+        }
         for (String pattern : patternList) {
             if (path.matches(pattern)) {
                 return true;
