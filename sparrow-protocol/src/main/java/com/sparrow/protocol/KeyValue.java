@@ -17,15 +17,12 @@
 
 package com.sparrow.protocol;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class KeyValue<K, V> {
-    public KeyValue(K key, V value) {
-        this.key = key;
-        this.value = value;
-    }
-
     private K key;
     private V value;
 }

@@ -66,7 +66,7 @@ public class DefaultSecurityManager implements Authenticator {
         if (validateStatus == null) {
             validateStatus = true;
         }
-        AuthenticationInfo authenticationInfo = this.realm.getAuthenticationInfo(token);
+        AuthenticationInfo authenticationInfo = this.realm.getAuthenticationInfo(token);//???
         LoginUser loginUser = this.signature.verify(token.getCredential(), authenticationInfo.getCredential());
         Session session = this.sessionManager.getSession(loginUser);
         Asserts.isTrue(session.expire(), AuthenticatorError.USER_TOKEN_EXPIRED);

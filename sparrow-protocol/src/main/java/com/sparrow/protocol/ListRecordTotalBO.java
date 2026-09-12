@@ -17,35 +17,19 @@
 
 package com.sparrow.protocol;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.Collections;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
 public class ListRecordTotalBO<T extends BO> {
     public static ListRecordTotalBO empty() {
         return new ListRecordTotalBO(Collections.emptyList(), 0L);
     }
 
-    public ListRecordTotalBO(List<T> list, Long total) {
-        this.list = list;
-        this.total = total;
-    }
-
     private List<T> list;
     private Long total;
-
-    public List<T> getList() {
-        return list;
-    }
-
-    public void setList(List<T> list) {
-        this.list = list;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
-    }
 }

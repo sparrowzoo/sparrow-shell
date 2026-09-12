@@ -21,8 +21,9 @@ import com.sparrow.protocol.POJO;
 import com.sparrow.servlet.Controller;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
+import jakarta.inject.Named;
+
 import java.util.List;
-import javax.inject.Named;
 
 public class AnnotationBeanDefinitionReader extends AbstractBeanDefinitionReader {
     public AnnotationBeanDefinitionReader(SimpleBeanDefinitionRegistry registry,

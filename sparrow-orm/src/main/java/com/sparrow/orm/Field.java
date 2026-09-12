@@ -21,9 +21,12 @@ import com.sparrow.core.TypeConverter;
 import com.sparrow.protocol.dao.ListDatasource;
 import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
-import javax.persistence.*;
 
 @Data
 public class Field extends TypeConverter {

@@ -21,7 +21,6 @@ import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
 import com.sparrow.mvc.result.ThymeleafViewWithModelMethodReturnValueResolverHandler;
 import com.sparrow.mvc.result.impl.JsonMethodReturnValueResolverHandlerImpl;
 import com.sparrow.mvc.result.impl.MethodReturnValueResolverHandlerComposite;
-import com.sparrow.mvc.result.impl.ViewWithModelMethodReturnValueResolverHandlerImpl;
 import com.sparrow.mvc.result.impl.VoidReturnValueResolverHandlerImpl;
 import java.util.ArrayList;
 import java.util.List;

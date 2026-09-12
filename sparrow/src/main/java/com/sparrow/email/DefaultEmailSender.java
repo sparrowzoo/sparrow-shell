@@ -21,7 +21,6 @@ import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.utility.StringUtility;
-
 public class DefaultEmailSender extends EmailSender {
     public DefaultEmailSender() {
         ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);

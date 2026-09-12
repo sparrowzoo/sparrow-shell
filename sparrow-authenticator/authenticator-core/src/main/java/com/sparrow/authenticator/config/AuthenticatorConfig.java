@@ -46,6 +46,8 @@ public class AuthenticatorConfig implements AuthenticatorConfigReader {
     private String jwtSecret;
     private String jwtIssuer;
     private Boolean renewal;
+    private String privateKeyPath;
+    private String publicKeyPath;
 
     public void setExcludePatterns(List<String> excludePatterns) {
         this.excludePatterns = RegexUtility.adapterWildcard(excludePatterns);

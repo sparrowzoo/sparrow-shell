@@ -46,8 +46,6 @@ public class NIOServer {
 
     /**
      * 采用轮询的方式监听selector上是否有需要处理的事件，如果有，则进行处理
-     *
-     * @throws IOException
      */
     @SuppressWarnings("unchecked")
     public void listen() throws IOException {
@@ -55,7 +53,7 @@ public class NIOServer {
         // 轮询访问selector
         while (true) {
             //当注册的事件到达时，方法返回；否则,该方法会一直阻塞
-            selector.select();
+            int events = selector.select();
             // 获得selector中选中的项的迭代器，选中的项为注册的事件
             Iterator ite = this.selector.selectedKeys().iterator();
             while (ite.hasNext()) {

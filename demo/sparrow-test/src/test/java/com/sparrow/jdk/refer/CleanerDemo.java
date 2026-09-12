@@ -19,27 +19,27 @@ package com.sparrow.jdk.refer;
 
 import sun.misc.Cleaner;
 
+
 public class CleanerDemo {
-    static class ResourceHolder implements Runnable {
-        private final String id;
-
-        public ResourceHolder(String id) {
-            this.id = id;
-        }
-
-        @Override
+    private static class Deallocator
+            implements Runnable {
         public void run() {
-            System.out.println("Cleaning resource: " + id);
+            System.out.println("cleaning up object");
+        }
+    }
+
+    static class MyObj {
+        private Cleaner cleaner;
+
+        public MyObj() {
+            Deallocator resource = new Deallocator();
+            this.cleaner = Cleaner.create(this, resource);
         }
     }
 
     public static void main(String[] args) {
-        Object o = new Object();
-        ResourceHolder resource = new ResourceHolder("demo01");
-        Cleaner cleaner = Cleaner.create(o, resource);
-
-        // 触发GC（仅演示，实际中应避免显式调用）
-        o = null;
+        MyObj obj = new MyObj();
+        obj = null;
         System.gc();
     }
 }

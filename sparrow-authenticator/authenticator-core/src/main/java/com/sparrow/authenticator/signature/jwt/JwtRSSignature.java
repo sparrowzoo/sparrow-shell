@@ -18,6 +18,7 @@
 package com.sparrow.authenticator.signature.jwt;
 
 import com.alibaba.fastjson.JSON;
+import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.authenticator.DefaultLoginUser;
 import com.sparrow.authenticator.Signature;
 import com.sparrow.authenticator.enums.AuthenticatorError;
@@ -45,26 +46,23 @@ public class JwtRSSignature implements Signature {
     private SignatureAlgorithm signatureAlgorithm;
     private String issuer;
 
-    public JwtRSSignature(String defaultPublicKey, String defaultPrivateKey, SignatureAlgorithm signatureAlgorithm, String issuer) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
-        this.defaultPrivateKey = RSAUtils.getRSAPrivateKey(defaultPrivateKey);
-        this.defaultPublicKey = RSAUtils.getRSAPublicKey(defaultPublicKey);
-        this.signatureAlgorithm = signatureAlgorithm;
-        this.issuer = issuer;
-    }
-
-    public JwtRSSignature(String issuer) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
+    public JwtRSSignature(AuthenticatorConfigReader configReader) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
         //读取私钥
-        String privateKey = FileUtility.getInstance().readFileContent("/rsa/private");
+        String privateKey = FileUtility.getInstance().readFileContent(configReader.getPrivateKeyPath());
+        if (StringUtility.isNullOrEmpty(privateKey)) {
+            log.error("[{}[ jwt private key not found ! ", configReader.getPrivateKeyPath());
+            return;
+        }
         //读取公钥
-        String publicKey = FileUtility.getInstance().readFileContent("/rsa/public.pub");
+        String publicKey = FileUtility.getInstance().readFileContent(configReader.getPublicKeyPath());
+        if (StringUtility.isNullOrEmpty(publicKey)) {
+            log.error("[{}[ jwt public key not found ! ", configReader.getPublicKeyPath());
+            return;
+        }
         this.defaultPrivateKey = RSAUtils.getRSAPrivateKey(privateKey);
         this.defaultPublicKey = RSAUtils.getRSAPublicKey(publicKey);
         this.signatureAlgorithm = SignatureAlgorithm.RS256;
-        this.issuer = issuer;
-    }
-
-    public JwtRSSignature(String defaultPrivateKey, String defaultPublicKey, String issuer) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
-        this(defaultPublicKey, defaultPrivateKey, SignatureAlgorithm.RS256, issuer);
+        this.issuer = configReader.getJwtIssuer();
     }
 
 
@@ -110,7 +108,7 @@ public class JwtRSSignature implements Signature {
             throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
         }
         try {
-            builder = Jwts.builder().setClaims(claims).signWith(this.signatureAlgorithm, privateKey);
+            builder = Jwts.builder().claims(claims).signWith(privateKey, this.signatureAlgorithm);
         } catch (Exception e) {
             log.error("faild to generate rsa encoded jwt");
             throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
@@ -132,7 +130,7 @@ public class JwtRSSignature implements Signature {
         }
         Jws<Claims> jws = null;
         try {
-            jws = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token);
+            jws = Jwts.parser().verifyWith(publicKey).build().parseSignedClaims(token);
         } catch (Exception e) {
             log.error("faild to verify jwt token", e);
             throw new BusinessException(AuthenticatorError.USER_TOKEN_ABNORMAL);

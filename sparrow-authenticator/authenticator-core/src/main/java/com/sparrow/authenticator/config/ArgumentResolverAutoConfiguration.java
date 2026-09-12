@@ -18,10 +18,10 @@
 package com.sparrow.authenticator.config;
 
 import com.sparrow.authenticator.resolvers.LoginUserArgumentResolver;
+import jakarta.inject.Inject;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.inject.Inject;
 import java.util.List;
 
 public class ArgumentResolverAutoConfiguration implements WebMvcConfigurer {

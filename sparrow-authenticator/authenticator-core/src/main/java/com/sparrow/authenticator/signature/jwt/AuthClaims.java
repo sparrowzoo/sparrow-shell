@@ -33,8 +33,7 @@ public class AuthClaims extends HashMap<String, Object> implements Claims {
         return issuer == null ? null : issuer.toString();
     }
 
-    @Override
-    public Claims setIssuer(String iss) {
+    public AuthClaims setIssuer(String iss) {
         super.put(Claims.ISSUER, iss);
         return this;
     }
@@ -49,8 +48,7 @@ public class AuthClaims extends HashMap<String, Object> implements Claims {
         return subject == null ? null : subject.toString();
     }
 
-    @Override
-    public Claims setSubject(String sub) {
+    public AuthClaims setSubject(String sub) {
         super.put(Claims.SUBJECT, sub);
         return this;
     }
@@ -60,13 +58,18 @@ public class AuthClaims extends HashMap<String, Object> implements Claims {
      * 所有人,可不添
      */
     @Override
-    public String getAudience() {
+    public Set<String> getAudience() {
         Object audience = super.get(Claims.AUDIENCE);
-        return audience == null ? null : audience.toString();
+        if (audience instanceof Set) {
+            return (Set<String>) audience;
+        }
+        if (audience == null) {
+            return null;
+        }
+        return new java.util.HashSet<>(java.util.Collections.singletonList(audience.toString()));
     }
 
-    @Override
-    public Claims setAudience(String aud) {
+    public AuthClaims setAudience(String aud) {
         super.put(Claims.AUDIENCE, aud);
         return this;
     }
@@ -81,8 +84,7 @@ public class AuthClaims extends HashMap<String, Object> implements Claims {
         return exp == null ? null : (Date) exp;
     }
 
-    @Override
-    public Claims setExpiration(Date exp) {
+    public AuthClaims setExpiration(Date exp) {
         super.put(Claims.EXPIRATION, exp);
         return this;
     }
@@ -98,8 +100,7 @@ public class AuthClaims extends HashMap<String, Object> implements Claims {
         return nf == null ? null : (Date) nf;
     }
 
-    @Override
-    public Claims setNotBefore(Date nbf) {
+    public AuthClaims setNotBefore(Date nbf) {
         super.put(Claims.NOT_BEFORE, nbf);
         return this;
     }
@@ -113,8 +114,7 @@ public class AuthClaims extends HashMap<String, Object> implements Claims {
         return issuedAt == null ? null : (Date) issuedAt;
     }
 
-    @Override
-    public Claims setIssuedAt(Date iat) {
+    public AuthClaims setIssuedAt(Date iat) {
         super.put(Claims.ISSUED_AT, iat);
         return this;
     }
@@ -129,8 +129,7 @@ public class AuthClaims extends HashMap<String, Object> implements Claims {
         return id == null ? null : id.toString();
     }
 
-    @Override
-    public Claims setId(String jti) {
+    public AuthClaims setId(String jti) {
         super.put(Claims.ID, jti);
         return this;
     }

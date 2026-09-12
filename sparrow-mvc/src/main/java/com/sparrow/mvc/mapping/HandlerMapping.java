@@ -18,8 +18,7 @@
 package com.sparrow.mvc.mapping;
 
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
-
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * mapping handler by request <p> ServletInvocableHandlerMethod for spring mvc refer

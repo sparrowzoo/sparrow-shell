@@ -1,0 +1,7 @@
+com.sparrow.authenticator.config.ArgumentResolverAutoConfiguration
+com.sparrow.authenticator.config.AuthcAutoConfiguration
+com.sparrow.authenticator.config.AuthcAutoConfiguration.RedisSessionDaoConfig
+com.sparrow.authenticator.config.filter.MicroServiceFilterAutoConfiguration
+
+
+

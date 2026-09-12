@@ -19,12 +19,13 @@ public class PhantomEdenThreadReferenceTest {
         while (true) {
             Reference reference = referenceQueue.poll();
             if (reference != null) {
-                System.out.println("YGC");
+                System.out.println("GC");
                 list.remove(reference);
             }
             byte[] bytes = new byte[1024 * 1024];
             PhantomReference phantomReference = new PhantomReference(bytes, referenceQueue);
-            list.add(phantomReference);
+            //list.add(phantomReference);
+            System.gc();
         }
     }
 }

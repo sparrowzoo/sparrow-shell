@@ -1,23 +1,19 @@
 package com.ideaworks.club.service;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.ideaworks.club.bean.JWTToken;
+import com.ideaworks.club.bean.UserBean;
+import com.ideaworks.club.util.JWTUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.cache.Cache;
-import org.apache.shiro.cache.MapCache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ideaworks.club.bean.JWTToken;
-import com.ideaworks.club.bean.UserBean;
-import com.ideaworks.club.util.JWTUtil;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class MyRealm extends AuthorizingRealm {
@@ -34,7 +30,7 @@ public class MyRealm extends AuthorizingRealm {
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof BearerToken;
+        return (token instanceof BearerToken) || (token instanceof JWTToken);
     }
 
     /**

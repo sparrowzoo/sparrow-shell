@@ -17,6 +17,8 @@
 
 package com.sparrow.controller;
 
+import com.sparrow.protocol.BusinessException;
+import com.sparrow.protocol.constant.SparrowError;
 import com.sparrow.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +31,17 @@ public class TestController {
 
     @RequestMapping("/test")
     public String test() {
-        return testService.sayHello("thymeleaf");
+        return testService.sayHello("sparrow");
+    }
+
+    @RequestMapping("/api/exception")
+    public void error() throws BusinessException {
+        throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
+    }
+
+    @RequestMapping("/error.json")
+    public void errorJson() throws BusinessException {
+        throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
     }
 }
 

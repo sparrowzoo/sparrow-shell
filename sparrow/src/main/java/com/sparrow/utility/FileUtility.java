@@ -28,8 +28,7 @@ import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.support.web.WebConfigReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.net.URLConnection;
@@ -42,8 +41,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.zip.ZipOutputStream;
 
+@Slf4j
 public class FileUtility {
-    private static Logger logger = LoggerFactory.getLogger(FileUtility.class);
     private static final FileUtility FILE_UTILITY = new FileUtility();
 
     private FileUtility() {
@@ -67,8 +66,8 @@ public class FileUtility {
         InputStream inputStream = null;
         try {
             inputStream = EnvironmentSupport.getInstance().getFileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            logger.error("[{}] not found", fileName);
+        } catch (Exception e) {
+            log.error("[{}] not found", fileName);
             return null;
         }
         return this.readFileContent(inputStream, charset);
@@ -90,7 +89,7 @@ public class FileUtility {
             }
             return bos.toString(charset);
         } catch (IOException e) {
-            logger.error("write error", e);
+            log.error("write error", e);
             return Symbol.EMPTY;
         } finally {
             try {
@@ -126,13 +125,13 @@ public class FileUtility {
                 fileLines.add(tempString);
             }
         } catch (IOException e) {
-            logger.error("flush error", e);
+            log.error("flush error", e);
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    logger.error("close error", e);
+                    log.error("close error", e);
                 }
             }
         }
@@ -147,7 +146,7 @@ public class FileUtility {
         try {
             inputStream = EnvironmentSupport.getInstance().getFileInputStream(fileName);
         } catch (FileNotFoundException e) {
-            logger.error("[{}] file not found", fileName);
+            log.error("[{}] file not found", fileName);
             return null;
         }
         return this.readLines(inputStream, charset);
@@ -191,14 +190,14 @@ public class FileUtility {
             osw.write(s, Digit.ZERO, s.length());
             osw.flush();
         } catch (Exception e) {
-            logger.error("flush error", e);
+            log.error("flush error", e);
             throw e;
         } finally {
             if (osw != null) {
                 try {
                     osw.close();
                 } catch (IOException e) {
-                    logger.error("close error", e);
+                    log.error("close error", e);
                 }
             }
         }
@@ -237,14 +236,14 @@ public class FileUtility {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    logger.error("input stream error", e);
+                    log.error("input stream error", e);
                 }
             }
             if (fos != null) {
                 try {
                     fos.close();
                 } catch (IOException e) {
-                    logger.error("output stream error", e);
+                    log.error("output stream error", e);
                 }
             }
         }
@@ -278,13 +277,13 @@ public class FileUtility {
             try {
                 inputStream.close();
             } catch (IOException e) {
-                logger.error("input stream close error", e);
+                log.error("input stream close error", e);
             }
             try {
                 outputStream.flush();
                 outputStream.close();
             } catch (IOException e) {
-                logger.error("output stream close error", e);
+                log.error("output stream close error", e);
             }
         }
     }
@@ -345,14 +344,14 @@ public class FileUtility {
             }
             return Symbol.EMPTY;
         } catch (IOException e) {
-            logger.error("reade file error", e);
+            log.error("reade file error", e);
             return Symbol.EMPTY;
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e1) {
-                    logger.error("reader close error", e1);
+                    log.error("reader close error", e1);
                 }
             }
         }
@@ -430,7 +429,7 @@ public class FileUtility {
              * /target/apidocs/package-list
              */
             fileNameProperty.setName(fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE));
-            logger.error("extension of file '{}' not exist  ", fullFilePath);
+            log.error("extension of file '{}' not exist  ", fullFilePath);
             return fileNameProperty;
         }
         String fileName = fullFilePath.substring(lastFileSeparatorIndex + Digit.ONE, fileNameEndIndex);
@@ -477,14 +476,14 @@ public class FileUtility {
         if (!file.isDirectory()) {
             if (file.lastModified() < beforeMillis) {
                 boolean result = file.delete();
-                logger.info("deleted file {},result:{}", path, result);
+                log.info("deleted file {},result:{}", path, result);
             }
             return;
         }
         java.io.File[] files = file.listFiles();
         if (files == null || files.length == 0) {
             boolean result = file.delete();
-            logger.info("deleted directory {},result:{}", path, result);
+            log.info("deleted directory {},result:{}", path, result);
             return;
         }
 
@@ -495,11 +494,11 @@ public class FileUtility {
             }
             if (f.lastModified() < beforeMillis) {
                 boolean result = f.delete();
-                logger.info("deleted file {},result:{}", path, result);
+                log.info("deleted file {},result:{}", path, result);
             }
         }
         boolean result = file.delete();
-        logger.info("deleted directory {},result:{}", path, result);
+        log.info("deleted directory {},result:{}", path, result);
     }
 
     public boolean existLine(String fileName, String line) {
@@ -535,7 +534,7 @@ public class FileUtility {
         java.io.File directory = new java.io.File(fileNameProperty.getDirectory());
         if (!directory.exists()) {
             if (!directory.mkdirs()) {
-                logger.error("create directory error {}", directory);
+                log.error("create directory error {}", directory);
                 throw new BusinessException(SparrowError.SYSTEM_SERVICE_UNAVAILABLE);
             }
         }
@@ -552,7 +551,7 @@ public class FileUtility {
             out.close();
             return b.length;
         } catch (Exception e) {
-            logger.error("image generate fail {}", base64str);
+            log.error("image generate fail {}", base64str);
             throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
         }
     }
@@ -566,7 +565,7 @@ public class FileUtility {
         java.io.File directory = new java.io.File(fileNameProperty.getDirectory());
         if (!directory.exists()) {
             if (!directory.mkdirs()) {
-                logger.error("create directory error {}", directory);
+                log.error("create directory error {}", directory);
                 return false;
             }
         }
@@ -581,7 +580,7 @@ public class FileUtility {
             out.write(b);
             return true;
         } catch (Exception e) {
-            logger.error("image generate fail {}", savePath);
+            log.error("image generate fail {}", savePath);
             return false;
         } finally {
             if (out != null) {
@@ -589,7 +588,7 @@ public class FileUtility {
                     out.flush();
                     out.close();
                 } catch (IOException ignore) {
-                    logger.error("close output stream error {}", savePath);
+                    log.error("close output stream error {}", savePath);
                 }
             }
         }
@@ -610,7 +609,7 @@ public class FileUtility {
     public void recurseCopy(String source, FileCopier fileCopier, FolderFilter folderFilter) {
         java.io.File sourceFile = new java.io.File(source);
         if (!sourceFile.exists()) {
-            logger.error("{} source is not exist", source);
+            log.error("{} source is not exist", source);
             return;
         }
         if (sourceFile.isFile()) {
@@ -623,14 +622,14 @@ public class FileUtility {
         java.io.File[] files = sourceFile.listFiles();
 
         if (files == null || files.length == 0) {
-            logger.error("{} source is empty", source);
+            log.error("{} source is empty", source);
             return;
         }
 
         for (java.io.File f : files) {
             source = f.toString();
             if (fileCopier != null && folderFilter.filter(f.getName())) {
-                logger.error("directory {} is not copy", f.getAbsolutePath());
+                log.error("directory {} is not copy", f.getAbsolutePath());
                 continue;
             }
             //递归调用
@@ -641,7 +640,7 @@ public class FileUtility {
     public void recurseFiles(List<String> files, String path, String suffix) {
         File sourceFile = new File(path);
         if (!sourceFile.exists()) {
-            logger.error("{} source is not exist", path);
+            log.error("{} source is not exist", path);
             return;
         }
         if (sourceFile.isFile()) {
@@ -654,7 +653,7 @@ public class FileUtility {
         File[] fileList = sourceFile.listFiles();
 
         if (fileList == null || fileList.length == 0) {
-            logger.error("{} source is empty", path);
+            log.error("{} source is empty", path);
             return;
         }
 

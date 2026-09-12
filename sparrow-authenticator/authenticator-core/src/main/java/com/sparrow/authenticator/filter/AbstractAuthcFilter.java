@@ -20,11 +20,11 @@ package com.sparrow.authenticator.filter;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.support.web.ServletUtility;
 import com.sparrow.utility.StringUtility;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -31,8 +31,8 @@ import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.FileUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
+import jakarta.inject.Inject;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

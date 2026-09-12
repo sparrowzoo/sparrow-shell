@@ -26,10 +26,10 @@ import com.sparrow.utility.HtmlUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 import com.sparrow.web.support.MethodParameter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

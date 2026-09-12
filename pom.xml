@@ -48,7 +48,6 @@
         <module>sparrow-protocol-mq</module>
         <module>sparrow-mvc-thymeleaf</module>
         <module>sparrow-authenticator</module>
-        <module>sparrow-monolithic-web-app</module>
     </modules>
 
     <build>

@@ -18,14 +18,13 @@
 package com.sparrow.controller;
 
 import com.sparrow.vo.User;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-
-@RestController
+// 返回视图应使用 @Controller; @RestController(@ResponseBody) 会让 ModelAndView 走消息转换器而非视图渲染
+@Controller
 public class ThymeleafController {
 
     @RequestMapping("thymeleaf")

@@ -45,5 +45,9 @@ public interface AuthenticatorConfigReader {
 
     Boolean getRenewal();
 
+    String getPrivateKeyPath();
+
+    String getPublicKeyPath();
+
     Integer getPlatformManagerCategory();
 }

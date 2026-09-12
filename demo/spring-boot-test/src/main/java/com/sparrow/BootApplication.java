@@ -21,6 +21,8 @@ import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.filter.TestFilter;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +37,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 @SpringBootApplication
-//        (scanBasePackages = "com.sparrow.*")
-//@EnableDiscoveryClient
-@MapperScan("com.sparrow")
+@MapperScan("com.sparrow.mapper")
 public class BootApplication {
     private static Logger log = LoggerFactory.getLogger(BootApplication.class);
 

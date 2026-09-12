@@ -30,9 +30,9 @@ import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.HtmlUtility;
 import com.sparrow.utility.StringUtility;
 import com.sparrow.web.support.MethodParameter;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 
 public class RequestParameterArgumentResolver implements HandlerMethodArgumentResolver, ContainerAware {
 

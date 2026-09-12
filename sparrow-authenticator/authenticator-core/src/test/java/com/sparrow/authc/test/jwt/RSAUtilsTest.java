@@ -20,6 +20,7 @@ package com.sparrow.authc.test.jwt;
 
 import com.alibaba.fastjson.JSON;
 import com.sparrow.authenticator.DefaultLoginUser;
+import com.sparrow.authenticator.config.AuthenticatorConfig;
 import com.sparrow.authenticator.signature.jwt.JwtRSSignature;
 import com.sparrow.cryptogram.RSAUtils;
 import com.sparrow.protocol.LoginUser;
@@ -62,8 +63,10 @@ public class RSAUtilsTest {
         boolean verify = RSAUtils.verify("test", sign, publicKey1);
         System.out.printf("verify: %s\n", verify);
 
+        AuthenticatorConfig authenticatorConfig=new AuthenticatorConfig();
 
-        JwtRSSignature jwtRSAGenerator = new JwtRSSignature(privateKey, publicKey, "");
+
+        JwtRSSignature jwtRSAGenerator = new JwtRSSignature(authenticatorConfig);
         DefaultLoginUser loginUser = new DefaultLoginUser();
         loginUser.setUserId(1L);
         loginUser.setNickName("harry");
