@@ -17,25 +17,29 @@
 
 package com.sparrow.jdk.refer;
 
-import com.sparrow.jdk.hash.Obj;
 import sun.misc.Cleaner;
 
 public class CleanerDemo {
     static class ResourceHolder implements Runnable {
         private final String id;
-        public ResourceHolder(String id) { this.id = id; }
-        @Override public void run() {
+
+        public ResourceHolder(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public void run() {
             System.out.println("Cleaning resource: " + id);
         }
     }
 
     public static void main(String[] args) {
-        Object o=new Object();
+        Object o = new Object();
         ResourceHolder resource = new ResourceHolder("demo01");
-        Cleaner cleaner = Cleaner.create(o,resource);
+        Cleaner cleaner = Cleaner.create(o, resource);
 
         // 触发GC（仅演示，实际中应避免显式调用）
-        resource = null;
+        o = null;
         System.gc();
     }
 }

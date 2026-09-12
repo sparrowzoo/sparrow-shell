@@ -24,6 +24,9 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.apache.gossip.LocalGossipMember;
 import org.apache.log4j.Logger;
 
+/**
+ * 根据心跳概率分布计算节点的存活状态
+ */
 public class FailureDetector {
 
     private static final Logger LOGGER = Logger.getLogger(FailureDetector.class);

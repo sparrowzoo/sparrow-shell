@@ -19,6 +19,10 @@ package org.apache.gossip.event;
 
 import org.apache.gossip.GossipMember;
 
+/**
+ * Listener interface for gossip events
+ * cossip 节点的状态变化监听器
+ */
 public interface GossipListener {
   void gossipEvent(GossipMember member, GossipState state);
 }

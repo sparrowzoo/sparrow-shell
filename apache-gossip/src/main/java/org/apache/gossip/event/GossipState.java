@@ -17,6 +17,9 @@
  */
 package org.apache.gossip.event;
 
+/**
+ * The state of a gossip member
+ */
 public enum GossipState {
   UP("up"), DOWN("down");
   @SuppressWarnings("unused")

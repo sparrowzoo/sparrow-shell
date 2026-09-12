@@ -23,32 +23,43 @@ import java.util.Map;
 
 /**
  * A abstract class representing a gossip member.
- * 
+ *
  */
 public abstract class GossipMember implements Comparable<GossipMember> {
-
-  
+  /**
+   * The URI of the member (IP/hostname and port)
+   */
   protected URI uri;
 
+  /**
+   * The heartbeat of the member
+   */
   protected volatile long heartbeat;
 
+  /**
+   * The name of the cluster the member belongs to
+   */
   protected String clusterName;
 
   /**
    * The purpose of the id field is to be able for nodes to identify themselves beyond their
    * host/port. For example an application might generate a persistent id so if they rejoin the
    * cluster at a different host and port we are aware it is the same node.
+   * 节点的ID  IP/port 可能会变化 但是ID不变
    */
   protected String id;
 
+  /**
+   * Additional properties about the member.
+   */
   /* properties provided at startup time */
   protected Map<String,String> properties;
-  
+
   /**
    * Constructor.
    *
    * @param clusterName
-   *          The name of the cluster 
+   *          The name of the cluster
    * @param uri
    *          A URI object containing IP/hostname and port
    * @param heartbeat
@@ -67,14 +78,14 @@ public abstract class GossipMember implements Comparable<GossipMember> {
   protected GossipMember(){}
   /**
    * Get the name of the cluster the member belongs to.
-   * 
+   *
    * @return The cluster name
    */
   public String getClusterName() {
     return clusterName;
   }
 
- 
+
   /**
    * @return The member address in the form IP/host:port Similar to the toString in
    * {@link InetSocketAddress}
@@ -85,7 +96,7 @@ public abstract class GossipMember implements Comparable<GossipMember> {
 
   /**
    * Get the heartbeat of this gossip member.
-   * 
+   *
    * @return The current heartbeat.
    */
   public long getHeartbeat() {
@@ -94,7 +105,7 @@ public abstract class GossipMember implements Comparable<GossipMember> {
 
   /**
    * Set the heartbeat of this gossip member.
-   * 
+   *
    * @param heartbeat
    *          The new heartbeat.
    */

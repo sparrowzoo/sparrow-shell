@@ -34,18 +34,18 @@ import org.apache.log4j.Logger;
 
 /**
  * This object represents the service which is responsible for gossiping with other gossip members.
- * 
+ *
  */
 public class GossipService {
 
   public static final Logger LOGGER = Logger.getLogger(GossipService.class);
   private final JmxReporter jmxReporter;
-  
+
   private final GossipManager gossipManager;
 
   /**
    * Constructor with the default settings.
-   * 
+   *
    * @throws InterruptedException
    * @throws UnknownHostException
    */
@@ -57,10 +57,28 @@ public class GossipService {
   }
 
   /**
-   * Setup the client's lists, gossiping parameters, and parse the startup config file.
-   * 
-   * @throws InterruptedException
-   * @throws UnknownHostException
+   *  职责：
+   *  1. 初始化JMX监控
+   *  2. 创建并配置GossipManager实例
+   *  3. 提供启动和关闭GossipManager的方法
+   *  4. 封装GossipManager的功能，简化外部调用
+   *  5. 提供数据Gossip和查询的接口
+   * @param cluster
+   *         the cluster name
+   * @param uri
+   *        the URI of this member
+   * @param id
+   *       the id of this member
+   * @param properties
+   *    the properties of this member
+   * @param gossipMembers
+   *      the initial list of members to gossip with
+   * @param settings
+   *     the settings to use for this gossip service
+   * @param listener
+   *   the listener to receive events
+   * @param registry
+   *    the metric registry to use
    */
   public GossipService(String cluster, URI uri, String id, Map<String,String> properties,
           List<GossipMember> gossipMembers, GossipSettings settings, GossipListener listener, MetricRegistry registry)
@@ -90,7 +108,7 @@ public class GossipService {
   public GossipManager getGossipManager() {
     return gossipManager;
   }
-  
+
   /**
    * Gossip data in a namespace that is per-node { node-id { key, value } }
    * @param message
@@ -99,31 +117,31 @@ public class GossipService {
   public void gossipPerNodeData(GossipDataMessage message){
     gossipManager.gossipPerNodeData(message);
   }
-  
+
   /**
    * Retrieve per-node gossip data by key
-   * 
+   *
    * @param nodeId
    *          the id of the node that owns the data
    * @param key
    *          the key in the per-node map to find the data
    * @return the value if found or null if not found or expired
    */
-  public GossipDataMessage findPerNodeData(String nodeId, String key){ 
+  public GossipDataMessage findPerNodeData(String nodeId, String key){
     return getGossipManager().findPerNodeGossipData(nodeId, key);
   }
 
   /**
-   * 
+   *
    * @param message
    *          Shared data to gossip around the cluster
    */
   public void gossipSharedData(SharedGossipDataMessage message){
     gossipManager.gossipSharedData(message);
   }
-  
+
   /**
-   * 
+   *
    * @param key
    *          the key to search for
    * @return the value associated with given key
