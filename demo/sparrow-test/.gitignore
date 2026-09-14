@@ -4,3 +4,4 @@ target
 classes
 logs
 .DS_Store
+@log.root@/
