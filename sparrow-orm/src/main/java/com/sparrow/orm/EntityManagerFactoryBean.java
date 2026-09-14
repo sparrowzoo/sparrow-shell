@@ -16,7 +16,7 @@
  */
 package com.sparrow.orm;
 
-import com.sparrow.constant.CacheKey;
+import com.sparrow.constant.CacheNames;
 import com.sparrow.container.ClassFactoryBean;
 import com.sparrow.core.cache.Cache;
 import com.sparrow.core.cache.StrongDurationCache;
@@ -34,7 +34,7 @@ public class EntityManagerFactoryBean implements ClassFactoryBean<EntityManager>
         return Nested.single;
     }
 
-    private Cache<String, EntityManager> cache = new StrongDurationCache<>(CacheKey.ORM);
+    private Cache<String, EntityManager> cache = new StrongDurationCache<>(CacheNames.ORM);
 
     @Override
     public void pubObject(String name, EntityManager o) {

@@ -30,7 +30,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     private AnnotationBeanDefinitionReader annotationBeanDefinitionReader;
 
     public XmlBeanDefinitionReader(SimpleBeanDefinitionRegistry registry,
-        AnnotationBeanDefinitionReader annotationBeanDefinitionReader, BeanDefinitionParserDelegate delegate) {
+                                   AnnotationBeanDefinitionReader annotationBeanDefinitionReader, BeanDefinitionParserDelegate delegate) {
         super(registry);
         this.annotationBeanDefinitionReader = annotationBeanDefinitionReader;
         this.delegate = delegate;
@@ -56,6 +56,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
         if (delegate.isBeanElement(element)) {
             String beanName = element.getAttribute(BeanDefinitionParserDelegate.NAME_ATTRIBUTE).trim();
+            logger.info("parse bean definition {}", beanName);
             BeanDefinition bd = delegate.processBeanElement(element);
             this.getRegistry().pubObject(beanName, bd);
         }
@@ -89,7 +90,8 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
     }
 
-    @Override public void loadBeanDefinitions(String xmlFileName) throws Exception {
+    @Override
+    public void loadBeanDefinitions(String xmlFileName) throws Exception {
         DocumentLoader documentLoader = new DefaultDocumentLoader();
         Document doc = documentLoader.loadDocument(xmlFileName, false);
         this.beforeParse(xmlFileName);

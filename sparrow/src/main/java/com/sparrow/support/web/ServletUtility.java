@@ -17,7 +17,6 @@
 
 package com.sparrow.support.web;
 
-import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.constant.ClientInfoConstant;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
@@ -130,30 +129,6 @@ public class ServletUtility {
         HttpContext.getContext().remove();
     }
 
-    public String assembleActualUrl(String url) {
-
-        if (url.contains("?")) {
-            url = url.substring(0, url.indexOf("?"));
-        }
-
-        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
-        String rootPath = configReader.getRootPath();
-        if (rootPath != null && url.startsWith(rootPath)) {
-            url = url.substring(rootPath.length());
-        }
-        if (!url.startsWith(Symbol.SLASH)) {
-            url = Symbol.SLASH + url;
-        }
-        String extension = configReader.getTemplateEngineSuffix();
-        String pagePrefix = configReader.getTemplateEnginePrefix();
-        if (!url.endsWith(extension)) {
-            url = url + extension;
-        }
-        if (!url.startsWith(pagePrefix)) {
-            url = pagePrefix + url;
-        }
-        return url;
-    }
 
     public String getActionKey(ServletRequest request) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;

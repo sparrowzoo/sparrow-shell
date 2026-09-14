@@ -20,6 +20,7 @@ package com.sparrow.utility;
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.io.file.FileNameProperty;
+import com.sparrow.lang.joiner.StringJoiner;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
@@ -29,6 +30,7 @@ import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.support.EnvironmentSupport;
 import com.sparrow.support.web.WebConfigReader;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
 import java.net.URLConnection;
@@ -453,7 +455,7 @@ public class FileUtility {
             if (Extension.JPEG.equalsIgnoreCase(extension)) {
                 extension = Extension.JPG;
             }
-            fileNameProperty.setImage(StringUtility.existInArray(imageExtension, extension));
+            fileNameProperty.setImage(ArrayUtils.contains(imageExtension, extension));
         } else {
             fileNameProperty.setImage(false);
         }
@@ -467,7 +469,7 @@ public class FileUtility {
         if (StringUtility.isNullOrEmpty(imageExtension)) {
             imageExtension = Constant.IMAGE_EXTENSION;
         }
-        return StringUtility.existInArray(imageExtension.split("\\|"), extension);
+        return ArrayUtils.contains(imageExtension.split("\\|"), extension);
     }
 
 
@@ -503,7 +505,7 @@ public class FileUtility {
 
     public boolean existLine(String fileName, String line) {
         List<String> lineList = this.readLines(fileName);
-        return StringUtility.existInArray(lineList.toArray(), line);
+        return ArrayUtils.contains(lineList.toArray(), line);
     }
 
     public String replacePath(String fullPath, String source, String destination) {
@@ -522,7 +524,7 @@ public class FileUtility {
                 break;
             }
         }
-        return StringUtility.join(separator, splits);
+        return new StringJoiner(splits,separator).join();
     }
 
 

@@ -1,6 +1,6 @@
 package com.sparrow.inject;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 @Named
 public class HelloTest2 implements HelloApi {

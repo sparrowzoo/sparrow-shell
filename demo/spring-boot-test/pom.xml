@@ -108,6 +108,7 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.html</include>
+                    <include>**/*</include>
                 </includes>
                 <filtering>false</filtering>
                 <targetPath>${project.build.directory}/classes/</targetPath>

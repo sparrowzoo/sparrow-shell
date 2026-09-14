@@ -30,9 +30,6 @@ public class Constant {
     public static final String ERROR = "error";
     public static final String SUCCESS = "success";
     // ***************************COMMON*********************************************//
-    /**
-     * 用于保存空json串;如:jsonField:jsonValue 如果jsonValue也是一个json则空串返回该常量定义
-     */
     public static final String WORKSPACE = "workspace";
     public static final String NULL_JSON = "''";
     public static final String ENTER_TEXT = "\r\n";
@@ -42,12 +39,12 @@ public class Constant {
     public static final String IMAGE_EXTENSION = ".jpg|.jpeg|.gif|.png";
 
     /**
-     //     * 静态化错误标记
-     //     */
+     * //     * 静态化错误标记
+     * //
+     */
     public static final String ERROR_STATIC_HTML = "<!--server error -->";
 
     public static final String CONTENT_TYPE_IMAGE_PREFIX = "image/";
-
     public static final String CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
     public static final String CONTENT_TYPE_MS_DOWNLOAD = "application/x-msdownload";
 
@@ -79,6 +76,7 @@ public class Constant {
 
     public static final String DEFAULT_LANGUAGE = "zh_cn";
 
+    public static final String TEMPLATE_ENGINE_PREFIX = "/templates";
     public static final String DEFAULT_NATIONALITY = "china";
     public static final String RESULT_OK_CODE = "0";
 

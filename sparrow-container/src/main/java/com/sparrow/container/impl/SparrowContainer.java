@@ -64,6 +64,7 @@ public class SparrowContainer extends AbstractContainer {
 
         while (iterator.hasNext()) {
             String beanName = iterator.next();
+            logger.info("early init singleton {}",beanName);
             try {
                 BeanDefinition bd = beanDefinitionRegistry.getObject(beanName);
                 if (bd.isSingleton() && !bd.isController()) {
@@ -74,6 +75,7 @@ public class SparrowContainer extends AbstractContainer {
                     }
                 }
             } catch (Exception e) {
+                logger.error("error early init singleton {}",beanName,e);
             }
         }
     }

@@ -33,10 +33,10 @@ public class SoftExpirableCache<K, V> extends AbstractCache<K, V> implements Exp
 
     private int expireSeconds;
 
-    public SoftExpirableCache(String name, int expire) {
+    public SoftExpirableCache(String name, int expireSeconds) {
         super(name);
 
-        this.expireSeconds = expire;
+        this.expireSeconds = expireSeconds;
 
         ScheduledThreadPoolExecutor cleaner = new ScheduledThreadPoolExecutor(1, new SparrowThreadFactory.Builder().namingPattern("cache-expire-cleaner").build());
         cleaner.scheduleAtFixedRate(new Runnable() {
@@ -64,33 +64,40 @@ public class SoftExpirableCache<K, V> extends AbstractCache<K, V> implements Exp
         }, 0, 1, TimeUnit.SECONDS);
     }
 
-    @Override public V get(K key) {
+    @Override
+    public V get(K key) {
         return this.get(key, null, this.expireSeconds);
     }
 
-    @Override public void put(K key, V value) {
+    @Override
+    public void put(K key, V value) {
         this.put(key, value, this.expireSeconds);
     }
 
-    @Override public void putAll(Map<K, V> map) {
+    @Override
+    public void putAll(Map<K, V> map) {
         for (K k : map.keySet()) {
             this.put(k, map.get(k), this.expireSeconds);
         }
     }
 
-    @Override public V getIfPresent(K key) {
+    @Override
+    public V getIfPresent(K key) {
         return this.get(key, null, this.expireSeconds);
     }
 
-    @Override public Map<K, V> getAllPresent(Iterable keys) {
+    @Override
+    public Map<K, V> getAllPresent(Iterable keys) {
         return null;
     }
 
-    @Override public long size() {
+    @Override
+    public long size() {
         return this.expirableMap.size();
     }
 
-    @Override public ConcurrentMap<K, V> asMap() {
+    @Override
+    public ConcurrentMap<K, V> asMap() {
         ConcurrentMap<K, V> map = new ConcurrentHashMap<>();
         for (K key : this.expirableMap.keySet()) {
             SoftReference<ExpirableData<V>> value = this.expirableMap.get(key);
@@ -109,15 +116,18 @@ public class SoftExpirableCache<K, V> extends AbstractCache<K, V> implements Exp
         return map;
     }
 
-    @Override public void clear() {
+    @Override
+    public void clear() {
         this.expirableMap.clear();
     }
 
-    @Override public void remove(K name) {
+    @Override
+    public void remove(K name) {
         this.expirableMap.remove(name);
     }
 
-    @Override public void invalidate(K key) {
+    @Override
+    public void invalidate(K key) {
         SoftReference<ExpirableData<V>> data = this.expirableMap.get(key);
         if (data != null) {
             ExpirableData<V> expirableData = data.get();
@@ -127,19 +137,22 @@ public class SoftExpirableCache<K, V> extends AbstractCache<K, V> implements Exp
         }
     }
 
-    @Override public void invalidateAll(Iterable<K> keys) {
+    @Override
+    public void invalidateAll(Iterable<K> keys) {
         for (K key : keys) {
             this.invalidate(key);
         }
     }
 
-    @Override public void invalidateAll() {
+    @Override
+    public void invalidateAll() {
         for (K key : this.expirableMap.keySet()) {
             this.invalidate(key);
         }
     }
 
-    @Override public void put(K key, V value, int expire) {
+    @Override
+    public void put(K key, V value, int expire) {
         this.expirableMap.put(key, new SoftReference<>(new ExpirableData<V>(expire, value)));
     }
 

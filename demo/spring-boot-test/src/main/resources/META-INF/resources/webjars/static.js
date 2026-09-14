@@ -14,28 +14,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.container;
 
-public interface ConfigReader {
-
-    String getI18nValue(String propertiesKey);
-
-    String getI18nValue(String key, String language);
-
-    String getI18nValue(String key, String language, String defaultValue);
-
-    String getValue(String key);
-
-    String getValue(String key, String defaultValue);
-
-    boolean getBooleanValue(String key);
-
-    boolean getBooleanValue(String key, boolean defaultValue);
-
-    Integer getIntegerValue(String key);
-
-    Integer getIntegerValue(String config, int defaultValue);
-
-    void resetKey(String key, String value);
-
-}
+hello.js

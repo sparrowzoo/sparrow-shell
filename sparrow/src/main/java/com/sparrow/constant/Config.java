@@ -62,6 +62,9 @@ public class Config {
 
     public static final String TEMPLATE_ENGINE_PREFIX = "template_engine_prefix";
     public static final String TEMPLATE_ENGINE_SUFFIX = "template_engine_suffix";
+    public static final String ACTION_URL_CACHE_EXPIRED_SECONDS = "action_url_cache_expired_seconds";
+
+
 
     public static final String RESOURCE_VERSION = "resource_version";
     public static final String WATER_MARK = "watermark";

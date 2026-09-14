@@ -17,7 +17,10 @@
 
 package com.sparrow.utility;
 
+import com.sparrow.core.TypeConverter;
 import com.sparrow.enums.Order;
+import com.sparrow.protocol.constant.magic.Symbol;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -56,7 +59,7 @@ public class CollectionsUtility {
         }
         for (String key : array.keySet()) {
             String value = array.get(key);
-            if (StringUtility.isNullOrEmpty(value) || StringUtility.existInArray(exceptArray, key)) {
+            if (StringUtility.isNullOrEmpty(value) || ArrayUtils.contains(exceptArray, key)) {
                 continue;
             }
             result.put(key, value);
@@ -149,5 +152,20 @@ public class CollectionsUtility {
             return comparator.compare(o2.getValue(), o1.getValue());
         });
         return list;
+    }
+
+    public static <T> String[] getStringArray(Iterable<T> values) {
+        List<String> valueList = new ArrayList<>();
+        TypeConverter typeConverter = new TypeConverter(String.class);
+        for (T value : values) {
+            if (value == null) {
+                valueList.add(Symbol.EMPTY);
+                continue;
+            }
+            valueList.add(typeConverter.convert(value).toString());
+        }
+        String[] valueArray = new String[valueList.size()];
+        valueList.toArray(valueArray);
+        return valueArray;
     }
 }

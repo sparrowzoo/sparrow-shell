@@ -2,9 +2,10 @@ package com.sparrow.inject;
 
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
-import com.sparrow.container.impl.SparrowContainer;
+import com.sparrow.core.cache.CacheRegistry;
+import com.sparrow.core.cache.StringSoftExpirableCache;
 import com.sparrow.core.spi.ApplicationContext;
-import javax.inject.Named;
+
 
 /**
  * @author by harry
@@ -16,5 +17,7 @@ public class SparrowContainerTest {
         container.init(new ContainerBuilder());
         HelloProvider helloProvider = container.getBean("helloProvider");
         helloProvider.getHelloTest().print();
+        StringSoftExpirableCache cache = (StringSoftExpirableCache) CacheRegistry.getInstance().getObject("action-url-cache");
+        System.out.printf(cache.getName());
     }
 }

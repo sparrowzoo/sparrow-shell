@@ -17,9 +17,9 @@
 
 package com.sparrow.orm;
 
+import com.sparrow.lang.joiner.MapJoiner;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
-import com.sparrow.utility.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,8 +105,9 @@ public class SparrowEntityManager extends AbstractEntityManagerAdapter {
             }
             resultSuffix.put(field.getHashIndex(), hash);
         }
-        if (resultSuffix.size() > 0) {
-            return Symbol.UNDERLINE + StringUtility.join(resultSuffix, Symbol.UNDERLINE);
+        if (!resultSuffix.isEmpty()) {
+            String result = new MapJoiner(resultSuffix, Symbol.UNDERLINE, null).join(true);
+            return Symbol.UNDERLINE + result;
         }
         return Symbol.EMPTY;
     }
@@ -118,8 +119,7 @@ public class SparrowEntityManager extends AbstractEntityManagerAdapter {
         return databaseSplitStrategy;
     }
 
-    public void parseField(Field field, List<Parameter> parameters, Object o, Map<Integer, Object> tableSuffix,
-        boolean update) {
+    public void parseField(Field field, List<Parameter> parameters, Object o, Map<Integer, Object> tableSuffix, boolean update) {
         if (field.isPersistence()) {
             if (!update || field.isUpdatable()) {
                 parameters.add(new Parameter(field, o));

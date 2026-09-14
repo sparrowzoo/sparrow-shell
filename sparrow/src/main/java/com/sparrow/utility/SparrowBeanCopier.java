@@ -25,6 +25,7 @@ import com.sparrow.core.spi.ApplicationContext;
 import java.util.List;
 
 import com.sparrow.protocol.BeanCopier;
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,7 @@ public class SparrowBeanCopier implements BeanCopier {
         MethodAccessor targetMethodAccessor = container.getProxyBean(target.getClass());
         List<TypeConverter> targetFieldList = container.getFieldList(target.getClass());
         for (TypeConverter targetField : targetFieldList) {
-            if (StringUtility.existInArray(ignoreProperties, targetField.getPropertyName())) {
+            if (ArrayUtils.contains(ignoreProperties, targetField.getPropertyName())) {
                 continue;
             }
             try {

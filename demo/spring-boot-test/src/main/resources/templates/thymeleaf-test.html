@@ -1,47 +1,124 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Thymeleaf spring el 替代 ognl</title>
+    <meta charset="UTF-8"/>
+    <title>Thymeleaf + Spring 语法对照（Spring EL 替代 OGNL）</title>
+    <style>
+        body { font-family: "Helvetica Neue", Arial, sans-serif; line-height: 1.8; margin: 2rem auto; max-width: 860px; padding: 0 1rem; color: #333; }
+        h1 { border-bottom: 2px solid #4a90d9; padding-bottom: .3rem; }
+        h2 { color: #4a90d9; margin-top: 2rem; }
+        code { background: #f4f4f4; padding: .15rem .4rem; border-radius: 3px; color: #c7254e; }
+        pre { background: #f8f8f8; border: 1px solid #eee; padding: 1rem; border-radius: 4px; overflow-x: auto; }
+        .result { color: #2e7d32; }
+        table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+        th, td { border: 1px solid #ddd; padding: .5rem .8rem; text-align: left; }
+        th { background: #f0f6ff; }
+        .note { background: #fffbe6; border-left: 4px solid #f5a623; padding: .6rem 1rem; margin: 1rem 0; }
+    </style>
 </head>
 <body>
-<h1>Thymeleaf Spring </h1>
-<p>
-    https://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html
+
+<h1>Thymeleaf + Spring 语法对照</h1>
+<p class="note">
+    本页用于验证 <strong>Thymeleaf 集成 Spring 后，表达式引擎由 OGNL 切换为 Spring EL（SpEL）</strong> 的语法差异，
+    并对常用写法（取值、空值保护、HTML5 兼容、内联、去标签、URL 拼接）做等价对照。
 </p>
 
-<h1><span th:text="${user.userId}"></span></h1>
+<h2>0. 官方文档</h2>
+<ul>
+    <li>Thymeleaf + Spring 集成教程：
+        <a href="https://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html"
+           th:href="@{https://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html}">
+            thymeleafspring.html</a>
+    </li>
+    <li>Thymeleaf 3.0 使用教程（含内联章节）：
+        <a href="https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#inlining"
+           th:href="@{https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#inlining}">
+            usingthymeleaf.html#inlining</a>
+    </li>
+</ul>
 
-spring boot<h1><span th:text="${user?.userId}"></span></h1>
+<h2>1. 变量取值（Variable Expression）</h2>
+<pre>th:text="${user.userId}"</pre>
+<p>标准 SpEL 取值：<span class="result" th:text="${user.userId}"></span></p>
 
-html5 兼容
+<h3>1.1 空值安全导航</h3>
+<pre>th:text="${user?.userId}"</pre>
+<p>Spring Boot 风格，对象为 <code>null</code> 时不抛异常：<span class="result" th:text="${user?.userId}"></span></p>
+
+<h2>2. HTML5 兼容写法</h2>
+<pre>data-th-text="${user.userId}" data-th-remove="tag"</pre>
+<p>以 <code>data-</code> 前缀书写，保证模板通过 HTML5 校验，同时只输出内容不输出标签：</p>
 <div data-th-text="${user.userId}" data-th-remove="tag"></div>
 <br/>
 
-<h1>
-    原生ognl 写法
-<!--    <h1><span th:text="${user?user.userId:''}"></span></h1>-->
-</h1>
+<h2>3. OGNL 与 SpEL 对照</h2>
+<table>
+    <tr>
+        <th>引擎</th>
+        <th>写法</th>
+        <th>说明</th>
+    </tr>
+    <tr>
+        <td>原生 OGNL（旧）</td>
+        <td><code>${user?user.userId:''}</code></td>
+        <td>三元空值判断，集成 Spring 后不再推荐</td>
+    </tr>
+    <tr>
+        <td>Spring EL（现）</td>
+        <td><code>${user?.userId}</code></td>
+        <td>安全导航符，语义等价且更简洁</td>
+    </tr>
+</table>
 
+<h2>4. 三种渲染方式</h2>
 
-方法1：使用 th:block
-<th:block th:text="${user.userId}"/>
-<br/>
+<h3>方法 1：th:block</h3>
+<pre>&lt;th:block th:text="${user.userId}"/&gt;</pre>
+<p>块级占位，不产生额外标签：<span class="result"><th:block th:text="${user.userId}"/></span></p>
 
+<h3>方法 2：inline 内联</h3>
+<pre>[[${user.userId}]]      -- 不转义
+[(${html})]             -- HTML 转义</pre>
+<ul>
+    <li>不会 HTML 转义：<span class="result">[[${user.userId}]]</span></li>
+    <li>HTML 转义（原始输出）：<span class="result">[(${html})]</span></li>
+</ul>
+<p>参考：<a th:href="@{https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#inlining}">Inlining 章节</a></p>
 
-方法2：使用 inline<br/>
-用户ID:[[${user.userId}]]
-<br/>
-不会html转义 [[${html}]]<br/>
-HTML转义,[(${html})]<br/>
-<br/>
-参考：https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#inlining
-<br/><br/>
-方法3：使用 th:remove
-<span th:text="${user.userId}" th:remove="tag"></span>
+<h3>方法 3：th:remove</h3>
+<pre>&lt;span th:text="${user.userId}" th:remove="tag"&gt;&lt;/span&gt;</pre>
+<p>渲染后移除标签本身，只保留内容：<span class="result"><span th:text="${user.userId}" th:remove="tag"></span></span></p>
 
-<a data-th-href="${root_path}+'/test'">根路径</a>
-<a data-th-href="${resource}+'/test'">资源路径</a>
-<a data-th-href="${resource+'/test'}">资源路径</a>
+<h2>5. URL 拼接</h2>
+<pre>data-th-href="${root_path}+'/test'"</pre>
+<ul>
+    <li><a data-th-href="${root_path}+'/test'">根路径</a></li>
+    <li><a data-th-href="${resource}+'/test'">资源路径</a></li>
+    <li><a data-th-href="${resource+'/test'}">资源路径（拼接写法）</a></li>
+</ul>
+<p class="note">
+    推荐使用标准链接表达式 <code>@{/test}</code> 替代手动字符串拼接，
+    以便自动处理上下文路径（context path）。示例见官方文档「Link URLs」章节。
+</p>
+
+<h2>6. 获取请求 Query String（request.getQueryString()）</h2>
+<pre>&lt;script th:inline="javascript"&gt;
+    var queryString = /*[[${queryString}]]*/ '';
+    console.log("queryString: " + queryString);
+&lt;/script&gt;</pre>
+
+<script th:inline="javascript">
+    var queryString = /*[[${queryString}]]*/ '';
+    console.log("queryString: " + queryString);
+</script>
+<p class="note">
+    Spring Boot 3.0（Thymeleaf 3.1）出于安全考虑已移除模板中直接访问 Servlet API 的表达式对象，
+    <code>#request</code> / <code>#httpServletRequest</code> 在模板里均为 <code>null</code>，
+    直接调用会抛 <code>EL1011E: Method call ... on null context object</code>。
+    正确做法：由控制器或全局过滤器 <code>request.setAttribute("queryString", request.getQueryString())</code>
+    放进 model，模板里用内联 <code>[[${queryString}]]</code> 直接读入 JS，无需 <code>th:text</code> 标签输出。
+</p>
 
 </body>
 </html>
-

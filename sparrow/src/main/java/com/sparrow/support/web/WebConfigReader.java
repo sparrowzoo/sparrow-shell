@@ -65,6 +65,8 @@ public interface WebConfigReader {
 
     String getTemplateEnginePrefix();
 
+    Integer getActionUrlCacheExpiredSeconds();
+
     String getAdminPage();
 
     String getDefaultWelcomePage();

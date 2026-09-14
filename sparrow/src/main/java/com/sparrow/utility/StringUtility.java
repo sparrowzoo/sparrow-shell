@@ -17,66 +17,40 @@
 
 package com.sparrow.utility;
 
-import com.sparrow.core.TypeConverter;
-import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.CharSymbol;
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.support.web.WebConfigReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
 
 public class StringUtility {
-    public static <T> String[] getStringArray(Iterable<T> values) {
-        List<String> valueList = new ArrayList<>();
-        TypeConverter typeConverter = new TypeConverter(String.class);
-        for (T value : values) {
-            if (value == null) {
-                valueList.add(Symbol.EMPTY);
-                continue;
-            }
-            valueList.add(typeConverter.convert(value).toString());
-        }
-        String[] valueArray = new String[valueList.size()];
-        valueList.toArray(valueArray);
-        return valueArray;
-    }
-
     public static String newUuid() {
         return UUID.randomUUID().toString().replace(Symbol.HORIZON_LINE, Symbol.EMPTY);
     }
 
     /**
-     * @param array 数组
-     * @param key   key
-     * @return exist in array
+     * null或""为true 否则为false
      */
-    public static boolean existInArray(Object[] array, Object key) {
-        if (array == null || array.length == 0 || StringUtility.isNullOrEmpty(key)) {
-            return false;
-        }
-        String trimKey = key.toString().trim();
-        for (Object s : array) {
-            if (s == null) {
-                continue;
-            }
-            if (s.toString().trim().equalsIgnoreCase(trimKey)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean existInArray(String array, String key) {
-        return existInArray(array.split(Symbol.COMMA), key);
+    public static boolean isNullOrEmpty(Object str) {
+        return str == null || Symbol.EMPTY.equals(str.toString().trim());
     }
 
 
+    public static String subString(String source, String c) {
+        if (isNullOrEmpty(source)) {
+            return Symbol.EMPTY;
+        }
+        if (source.contains(c)) {
+            source = source.substring(0, source.indexOf(c));
+        }
+        return source;
+    }
     /**
      * 按字节剪切字符串
      */
@@ -158,7 +132,7 @@ public class StringUtility {
      * 设置首字母大写
      */
     public static String setFirstByteUpperCase(String srcString) {
-        if (srcString == null || srcString.length() == 0) {
+        if (isNullOrEmpty(srcString)) {
             return Symbol.EMPTY;
         }
         char[] s = srcString.toCharArray();
@@ -174,7 +148,7 @@ public class StringUtility {
      * 设置首字母小写
      */
     public static String setFirstByteLowerCase(String srcString) {
-        if (srcString == null || srcString.length() == 0) {
+        if (isNullOrEmpty(srcString)) {
             return Symbol.EMPTY;
         }
         char[] s = srcString.toCharArray();
@@ -218,12 +192,6 @@ public class StringUtility {
         return sb.toString();
     }
 
-    /**
-     * null或""为true 否则为false
-     */
-    public static boolean isNullOrEmpty(Object str) {
-        return str == null || Symbol.EMPTY.equals(str.toString().trim());
-    }
 
 
     /**
@@ -244,87 +212,6 @@ public class StringUtility {
             return text;
         }
         return text.replace(Constant.ENTER_TEXT, "<br/>");
-    }
-
-
-
-    /**
-     * 从数组array中排除exceptArray并拼接成数组 用于标签删除时的帖子标签更新
-     */
-    public static String join(Object[] array, char separator,
-                              Object[] exceptArray) {
-        StringBuilder sb = new StringBuilder();
-        for (Object object : array) {
-            if (existInArray(exceptArray, object)) {
-                continue;
-            }
-            if (sb.length() > 0) {
-                sb.append(separator);
-            }
-            sb.append(object);
-        }
-        return sb.toString();
-    }
-
-    public static String join(String separator, Object... array) {
-        StringBuilder sb = new StringBuilder();
-        for (Object object : array) {
-            if (object == null) {
-                continue;
-            }
-            if (sb.length() > 0) {
-                sb.append(separator);
-            }
-            sb.append(object);
-        }
-        return sb.toString();
-    }
-
-    public static String join(Map<Integer, String> map) {
-        return join(map, Symbol.COMMA);
-    }
-
-    public static String join(Map<Integer, String> map, String joinChar) {
-        StringBuilder sb = new StringBuilder();
-        for (Integer key : map.keySet()) {
-            if (sb.length() > 0) {
-                sb.append(joinChar);
-            }
-            sb.append(map.get(key));
-        }
-        return sb.toString();
-    }
-
-    public static String join(Iterable<?> collection) {
-        if (collection == null) {
-            return Symbol.EMPTY;
-        }
-        return join(collection, Symbol.COMMA);
-    }
-
-    public static String join(Iterable<?> collection, String joinChar) {
-        StringBuilder sb = new StringBuilder();
-        for (Object object : collection) {
-            if (object == null) {
-                continue;
-            }
-            if (sb.length() > 0) {
-                sb.append(joinChar);
-            }
-            sb.append(object.toString().trim());
-        }
-        return sb.toString();
-    }
-
-    public static String join(List<List<String>> collections, String outerJoin, String innerJoin) {
-        StringBuilder sb = new StringBuilder();
-        for (Collection<?> collection : collections) {
-            if (sb.length() > 0) {
-                sb.append(outerJoin);
-            }
-            sb.append(join(collection, innerJoin));
-        }
-        return sb.toString();
     }
 
 
@@ -410,65 +297,6 @@ public class StringUtility {
         return wrap(source, "<p>%1$s</p>", Constant.ENTER_TEXT);
     }
 
-    public static String subString(String source, String c) {
-        if (isNullOrEmpty(source)) {
-            return Symbol.EMPTY;
-        }
-        if (source.contains(c)) {
-            source = source.substring(0, source.indexOf(c));
-        }
-        return source;
-    }
-
-    public static boolean matchUrl(String source, String desc) {
-        return matchUrl(source, desc, false);
-    }
-
-    public static boolean matchUrlWithParameter(String source, String desc) {
-        return matchUrl(source, desc, true);
-    }
-
-    private static boolean matchUrl(String source, String target, boolean withParameter) {
-        if (isNullOrEmpty(source) || isNullOrEmpty(target)) {
-            return false;
-        }
-        if (source.equalsIgnoreCase(target)) {
-            return true;
-        }
-
-        WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
-        String rootPath = configReader.getRootPath();
-        if (source.startsWith(rootPath)) {
-            source = source.substring(rootPath.length());
-        }
-        if (target.startsWith(rootPath)) {
-            target = target.substring(rootPath.length());
-        }
-        source = subString(source, Symbol.POUND_SIGN);
-        target = subString(target, Symbol.POUND_SIGN);
-        if (!withParameter) {
-            source = subString(source, Symbol.QUESTION_MARK);
-            target = subString(target, Symbol.QUESTION_MARK);
-        }
-
-        String extension = configReader.getTemplateEngineSuffix();
-        if (source.endsWith(extension)) {
-            source = source.replace(extension, Symbol.EMPTY);
-        }
-
-        if (target.endsWith(extension)) {
-            target = target.replace(extension, Symbol.EMPTY);
-        }
-
-        if (source.startsWith(Symbol.SLASH)) {
-            source = source.replaceFirst(Symbol.SLASH, Symbol.EMPTY);
-        }
-        if (target.startsWith(Symbol.SLASH)) {
-            target = target.replaceFirst(Symbol.SLASH, Symbol.EMPTY);
-        }
-        return source.equals(target);
-    }
-
     public static boolean isNumeric(String str) {
         if (isNullOrEmpty(str)) {
             return false;
@@ -493,7 +321,7 @@ public class StringUtility {
                 exceptionString.append(msg);
                 exceptionString.append(Constant.ENTER_TEXT);
             }
-            exceptionString.append(sw.toString());
+            exceptionString.append(sw);
             return exceptionString.toString();
         } finally {
             if (pw != null) {
@@ -539,6 +367,7 @@ public class StringUtility {
      * @return {@code true} if the {@code CharSequence} is not {@code null}, its length is greater than 0, and it does
      * not contain whitespace only
      * @see Character#isWhitespace
+     * @see org.springframework.util.StringUtils#hasText(String)
      */
     public static boolean hasText(CharSequence str) {
         return str != null && str.length() > 0 && containsText(str);

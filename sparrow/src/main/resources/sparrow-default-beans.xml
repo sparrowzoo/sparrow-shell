@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE beans PUBLIC "-//sparrow Framework//DTD ioc Configuration//EN"
-    "beans.dtd">
+        "beans.dtd">
 <beans>
     <bean name="webConfigReader" class="com.sparrow.container.config.SparrowWebConfigReader"/>
     <bean name="dataSourceFactory" class="com.sparrow.orm.datasource.DataSourceFactoryImpl">
@@ -8,5 +8,9 @@
     </bean>
     <bean name="connectionContextHolder" class="com.sparrow.orm.transaction.ConnectionContextHolderImpl">
         <property name="dataSourceFactory" ref="dataSourceFactory"/>
+    </bean>
+    <bean name="actionUrlCache" class="com.sparrow.core.cache.StringSoftExpirableCache">
+        <constructor-arg index="1" type="" name="name" value="action-url-cache"/>
+        <constructor-arg index="2" type="java.lang.Integer" name="expireSeconds" value="10"/>
     </bean>
 </beans>

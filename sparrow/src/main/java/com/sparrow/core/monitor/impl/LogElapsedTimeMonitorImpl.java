@@ -18,36 +18,42 @@ package com.sparrow.core.monitor.impl;
 
 import com.sparrow.core.monitor.ElapsedSection;
 import com.sparrow.core.monitor.ElapsedTimeMonitor;
-import com.sparrow.utility.StringUtility;
-import java.util.Stack;
+import com.sparrow.lang.joiner.StringJoiner;
+import com.sparrow.protocol.constant.magic.Symbol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Stack;
 
 public class LogElapsedTimeMonitorImpl implements ElapsedTimeMonitor {
     private static Logger logger = LoggerFactory.getLogger(LogElapsedTimeMonitorImpl.class);
     private ThreadLocal<Stack<Long>> start = new ThreadLocal<Stack<Long>>();
 
-    @Override public void start() {
+    @Override
+    public void start() {
         if (start.get() == null) {
             this.start.set(new Stack<Long>());
         }
         start.get().push(System.currentTimeMillis());
     }
 
-    @Override public void elapsed(Object... keys) {
+    @Override
+    public void elapsed(Object... keys) {
         long current = System.currentTimeMillis();
         long start = this.start.get().pop();
         long elapsed = current - start;
         if (this.start.get() != null && this.start.get().size() == 0) {
             this.start.remove();
         }
+        StringJoiner stringJoiner = new StringJoiner(Symbol.DASH, keys);
         logger.info("thread id {},thread-name {} ,{},elapsed:[{}-{}={}],elapsed-section {}",
-            Thread.currentThread().getId(),
-            Thread.currentThread().getName(),
-            StringUtility.join("-", keys), current, start, elapsed, ElapsedSection.section(elapsed));
+                Thread.currentThread().getId(),
+                Thread.currentThread().getName(),
+                stringJoiner.join(), current, start, elapsed, ElapsedSection.section(elapsed));
     }
 
-    @Override public void elapsedAndRestart(Object... keys) {
+    @Override
+    public void elapsedAndRestart(Object... keys) {
         this.elapsed(keys);
         this.start();
     }

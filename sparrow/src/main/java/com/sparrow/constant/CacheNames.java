@@ -17,7 +17,7 @@
 
 package com.sparrow.constant;
 
-public class CacheKey {
+public class CacheNames {
     /**
      * 保存system_config.properties配置参数
      */
@@ -34,6 +34,11 @@ public class CacheKey {
      * 国际化配置文件
      */
     public static final String INTERNATIONALIZATION = "CACHE_KEY_INTERNATIONALIZATION";
+
+    /**
+     * 在default.beans 中配置 sparrow mvc 使用
+     */
+    public static final String ACTION_URL_CACHE = "ACTION-URL-CACHE";
 
     /**
      * 日志

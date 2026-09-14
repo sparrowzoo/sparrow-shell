@@ -19,8 +19,7 @@ package com.sparrow.utility;
 
 import com.sparrow.protocol.constant.magic.Escaped;
 import com.sparrow.protocol.constant.magic.Symbol;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -36,9 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+@Slf4j
 public class Xml {
-
-    private static Logger logger = LoggerFactory.getLogger(Xml.class);
 
     public static Document getXmlDocumentByString(String xml) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -46,7 +44,7 @@ public class Xml {
         try {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            logger.error("get xml dodument parse config error", e);
+            log.error("get xml dodument parse config error", e);
             return null;
         }
         Document document = null;
@@ -56,7 +54,7 @@ public class Xml {
                     .getBytes(StandardCharsets.UTF_8)));
             }
         } catch (Exception e) {
-            logger.error("get xml document error", e);
+            log.error("get xml document error", e);
         }
         return document;
     }

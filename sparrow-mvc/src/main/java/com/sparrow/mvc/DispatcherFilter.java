@@ -22,6 +22,8 @@ import com.sparrow.container.FactoryBean;
 import com.sparrow.core.Pair;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.datasource.ConnectionContextHolder;
+import com.sparrow.lang.url.UrlAssembler;
+import com.sparrow.lang.url.UrlMatcher;
 import com.sparrow.mvc.adapter.HandlerAdapter;
 import com.sparrow.mvc.adapter.impl.MethodControllerHandlerAdapter;
 import com.sparrow.mvc.mapping.HandlerMapping;
@@ -38,8 +40,8 @@ import com.sparrow.utility.StringUtility;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,9 +49,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class DispatcherFilter implements Filter {
-
-    private static Logger logger = LoggerFactory.getLogger(DispatcherFilter.class);
 
     protected ServletUtility servletUtility = ServletUtility.getInstance();
 
@@ -76,16 +77,15 @@ public class DispatcherFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) throws ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String actionKey = servletUtility.getActionKey(request);
-        if (StringUtility.existInArray(this.exceptUrl, actionKey)) {
+        if (ArrayUtils.contains(this.exceptUrl, actionKey)) {
             try {
                 chain.doFilter(request, response);
             } catch (Exception e) {
-                logger.error("filter error", e);
+                log.error("filter error", e);
             }
             return;
         }
@@ -99,7 +99,7 @@ public class DispatcherFilter implements Filter {
                 return;
             }
             if (invokableHandlerMethod == null || invokableHandlerMethod.getMethod() == null) {
-                logger.warn("invokableHandlerMethod is null or method not exist action-key {}", actionKey);
+                log.warn("invokableHandlerMethod is null or method not exist action-key {}", actionKey);
                 WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
                 String extension = configReader.getTemplateEngineSuffix();
                 if (actionKey.endsWith(extension) || actionKey.endsWith(Extension.JSON)) {
@@ -124,22 +124,20 @@ public class DispatcherFilter implements Filter {
         }
     }
 
-    protected void forward(ServletRequest request, ServletResponse response,
-                           String actionKey) throws ServletException, IOException {
-        String dispatcherUrl = servletUtility.assembleActualUrl(actionKey);
-        logger.debug("dispatcher url is {}", dispatcherUrl);
+    protected void forward(ServletRequest request, ServletResponse response, String actionKey) throws ServletException, IOException {
+        String dispatcherUrl = new UrlAssembler(actionKey).assemble();
+        log.debug("dispatcher url is {}", dispatcherUrl);
         RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherUrl);
         dispatcher.forward(request, response);
     }
 
-    private void errorHandler(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                              ServletInvokableHandlerMethod invocableHandlerMethod, Exception e) throws IOException, NotTryException {
+    private void errorHandler(HttpServletRequest httpRequest, HttpServletResponse httpResponse, ServletInvokableHandlerMethod invocableHandlerMethod, Exception e) throws IOException, NotTryException {
         Throwable target = e;
         if (e.getCause() == null) {
-            logger.error("e.getCause==null", e);
+            log.error("e.getCause==null", e);
         } else {
             target = e.getCause();
-            logger.error("e.getCause!=null", e.getCause());
+            log.error("e.getCause!=null", e.getCause());
         }
         if (invocableHandlerMethod != null) {
             invocableHandlerMethod.getMethodReturnValueResolverHandler().errorResolve(target, httpRequest, httpResponse);
@@ -155,7 +153,7 @@ public class DispatcherFilter implements Filter {
             try {
                 handlerInterceptor.afterCompletion(httpRequest, httpResponse);
             } catch (Exception ex) {
-                logger.error(handlerInterceptor.getClass().getName() + "interception after handler error", ex);
+                log.error(handlerInterceptor.getClass().getName() + "interception after handler error", ex);
             }
         }
     }
@@ -165,7 +163,7 @@ public class DispatcherFilter implements Filter {
             try {
                 handlerInterceptor.postHandle(httpRequest, httpResponse);
             } catch (Exception ex) {
-                logger.error(handlerInterceptor.getClass().getName() + "interception post handler error", ex);
+                log.error(handlerInterceptor.getClass().getName() + "interception post handler error", ex);
             }
         }
     }
@@ -177,7 +175,7 @@ public class DispatcherFilter implements Filter {
                     return true;
                 }
             } catch (Exception e) {
-                logger.error(handlerInterceptor.getClass().getName() + "interception pre handler error", e);
+                log.error(handlerInterceptor.getClass().getName() + "interception pre handler error", e);
             }
         }
         return false;
@@ -221,26 +219,24 @@ public class DispatcherFilter implements Filter {
                 return ha;
             }
         }
-        throw new ServletException("No adapter for handler [" + handler +
-                "]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
+        throw new ServletException("No adapter for handler [" + handler + "]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
     }
 
-    private void initAttribute(HttpServletRequest request,
-                               HttpServletResponse response, ServletInvokableHandlerMethod invokableHandlerMethod) {
+    private void initAttribute(HttpServletRequest request, HttpServletResponse response, ServletInvokableHandlerMethod invokableHandlerMethod) {
         request.setAttribute(Constant.REQUEST_INVOKABLE_HANDLER_METHOD, invokableHandlerMethod);
         if (servletUtility.include(request)) {
             return;
         }
         String actionKey = servletUtility.getActionKey(request);
-        logger.debug("PARAMETERS:" + servletUtility.getAllParameter(request));
-        logger.debug("ACTION KEY:" + actionKey);
+        log.debug("PARAMETERS:" + servletUtility.getAllParameter(request));
+        log.debug("ACTION KEY:" + actionKey);
 
         Pair<String, Map<String, Object>> sessionPair = (Pair<String, Map<String, Object>>) request.getSession().getAttribute(Constant.FLASH_KEY);
         if (sessionPair == null) {
             return;
         }
 
-        if (this.matchUrl(sessionPair.getFirst(), actionKey, request)) {
+        if (new UrlMatcher(sessionPair.getFirst(), actionKey).match(request)) {
             Map<String, Object> values = sessionPair.getSecond();
             for (String key : values.keySet()) {
                 request.setAttribute(key, values.get(key));
@@ -249,43 +245,6 @@ public class DispatcherFilter implements Filter {
         }
         //url换掉时，则session 被清空 （非include）
         request.getSession().removeAttribute(Constant.FLASH_KEY);
-    }
-
-    /**
-     * flash key -->/template/action-url.jsp  final url
-     * <p>
-     * direct mode action url-->action-url
-     * <p>
-     * <p>
-     * transit mode transit url--> transit-url?action_url
-     */
-    private boolean matchUrl(String flashKey, String actionKey, HttpServletRequest request) {
-        //redirect final jsp url
-        if (StringUtility.matchUrl(flashKey, actionKey)) {
-            return true;
-        }
-
-        //redirect action url
-        String actualUrl = servletUtility.assembleActualUrl(actionKey);
-        if (StringUtility.matchUrl(flashKey, actualUrl)) {
-            return true;
-        }
-        //transit final jsp url
-        actionKey = request.getQueryString();
-        if (actionKey == null) {
-            return false;
-        }
-        if (StringUtility.matchUrl(flashKey, actionKey)) {
-            return true;
-        }
-
-        //transit action url
-        String actualTransitUrl = servletUtility.assembleActualUrl(actionKey);
-        if (StringUtility.matchUrl(flashKey, actualTransitUrl)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**

@@ -20,6 +20,7 @@ package com.sparrow.container.config;
 import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.support.web.WebConfigReader;
 
@@ -48,7 +49,12 @@ public class SparrowWebConfigReader implements WebConfigReader {
 
     @Override
     public String getTemplateEnginePrefix() {
-        return configReader.getValue(Config.TEMPLATE_ENGINE_PREFIX, "classpath:/templates");
+        return configReader.getValue(Config.TEMPLATE_ENGINE_PREFIX, Constant.TEMPLATE_ENGINE_PREFIX);
+    }
+
+    @Override
+    public Integer getActionUrlCacheExpiredSeconds() {
+        return configReader.getIntegerValue(Config.ACTION_URL_CACHE_EXPIRED_SECONDS,10);
     }
 
     @Override

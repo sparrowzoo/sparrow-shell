@@ -16,7 +16,7 @@
  */
 package com.sparrow.container.config;
 
-import com.sparrow.constant.CacheKey;
+import com.sparrow.constant.CacheNames;
 import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.cache.Cache;
@@ -36,8 +36,8 @@ public class SparrowConfigReader implements ConfigReader {
     private static Cache<String, Map<String, String>> internationalization;
 
     static {
-        configCache = new StrongDurationCache<>(CacheKey.CONFIG_FILE);
-        internationalization = new StrongDurationCache<>(CacheKey.INTERNATIONALIZATION);
+        configCache = new StrongDurationCache<>(CacheNames.CONFIG_FILE);
+        internationalization = new StrongDurationCache<>(CacheNames.INTERNATIONALIZATION);
     }
 
     public String getI18nValue(String propertiesKey) {
@@ -54,7 +54,7 @@ public class SparrowConfigReader implements ConfigReader {
 
     public String getI18nValue(String key, String language, String defaultValue) {
         if (StringUtility.isNullOrEmpty(language)) {
-            language = getValue(Config.LANGUAGE,Constant.DEFAULT_LANGUAGE);
+            language = getValue(Config.LANGUAGE, Constant.DEFAULT_LANGUAGE);
         }
         language = language.toLowerCase();
         if (internationalization == null) {
@@ -144,9 +144,13 @@ public class SparrowConfigReader implements ConfigReader {
     }
 
     public Integer getIntegerValue(String config) {
+        return getIntegerValue(config, 0);
+    }
+
+    public Integer getIntegerValue(String config, int defaultValue) {
         String value = this.getValue(config);
         if (StringUtility.isNullOrEmpty(value)) {
-            return 0;
+            return defaultValue;
         }
         return Integer.valueOf(value);
     }

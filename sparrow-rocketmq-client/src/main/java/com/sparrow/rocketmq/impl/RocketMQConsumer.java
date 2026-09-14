@@ -17,18 +17,12 @@
 
 package com.sparrow.rocketmq.impl;
 
-import com.sparrow.mq.MQClient;
-import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerAware;
 import com.sparrow.core.Pair;
-import com.sparrow.utility.StringUtility;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UnknownFormatConversionException;
-
+import com.sparrow.lang.joiner.StringJoiner;
+import com.sparrow.mq.MQClient;
+import com.sparrow.protocol.constant.magic.Symbol;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.MQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
@@ -36,6 +30,11 @@ import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UnknownFormatConversionException;
 
 public class RocketMQConsumer implements ContainerAware {
     private static Logger log = LoggerFactory.getLogger(RocketMQConsumer.class);
@@ -204,7 +203,7 @@ public class RocketMQConsumer implements ContainerAware {
             //setConsumeThread(defaultMQPushConsumer);
             //订阅多个topic
             for (TopicTagPair topicTagPair : this.getTopicConfigList()) {
-                defaultMQPushConsumer.subscribe(topicTagPair.getTopic(), StringUtility.join(topicTagPair.getTags(), Symbol.VERTICAL_LINE));
+                defaultMQPushConsumer.subscribe(topicTagPair.getTopic(), new StringJoiner(Symbol.VERTICAL_LINE,topicTagPair.getTags()).join());
             }
             defaultMQPushConsumer.setInstanceName(getInstanceName() + Symbol.UNDERLINE + groupName);
             defaultMQPushConsumer.registerMessageListener(messageListener);

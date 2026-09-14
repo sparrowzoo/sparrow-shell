@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot 静态资源访问说明</title>
+    <style>
+        body { font-family: "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; margin: 2rem auto; max-width: 1024px; padding: 0 1rem; color: #333; }
+        h1 { border-bottom: 2px solid #4a90d9; padding-bottom: .3rem; }
+        h2 { color: #4a90d9; margin-top: 2rem; }
+        code { background: #f4f4f4; padding: .15rem .4rem; border-radius: 3px; color: #c7254e; }
+        a { color: #1a73e8; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+        th, td { border: 1px solid #ddd; padding: .6rem .8rem; text-align: left; vertical-align: top; word-break: break-all; }
+        th { background: #f0f6ff; white-space: nowrap; }
+        tr:nth-child(even) td { background: #fafbfd; }
+        td.path { font-family: Consolas, Monaco, monospace; white-space: nowrap; }
+        .note { background: #fffbe6; border-left: 4px solid #f5a623; padding: .6rem 1rem; margin: 1rem 0; }
+        .tag { display: inline-block; font-size: .78rem; padding: 0 .45rem; border-radius: 3px; margin-right: .3rem; background: #e6f4ff; color: #1a73e8; border: 1px solid #b6d7ff; }
+    </style>
+</head>
+<body>
+
+<h1>Spring Boot 资源访问与 URL 映射说明</h1>
+<p class="note">
+    本页基于当前项目 <code>demo/spring-boot-test</code> 的 <code>src/main/resources</code> 目录，
+    以第三方中立视角说明 Spring Boot 的资源访问机制，覆盖三类处理逻辑：
+    <strong>静态资源</strong>、<strong>动态资源</strong>（<code>@Controller</code>）与
+    <strong>自动 Controller</strong>（<code>addViewControllers</code> 视图控制器）。
+    服务端口来自 <code>application.properties</code> 的 <code>server.port=8888</code>。
+</p>
+
+<h2>1. Spring Boot 默认静态资源位置（优先级从高到低）</h2>
+<p>
+    <code>spring-boot-starter-web</code> 的自动配置 <code>WebMvcAutoConfiguration</code>
+    将 <code>classpath:</code> 下的以下目录映射为静态资源根，统一挂载到 <code>/**</code>
+    （前缀由 <code>spring.mvc.static-path-pattern</code> 控制，默认 <code>/**</code>）：
+</p>
+<ol>
+    <li><code>classpath:/META-INF/resources/</code> —— 优先级最高</li>
+    <li><code>classpath:/resources/</code></li>
+    <li><code>classpath:/static/</code></li>
+    <li><code>classpath:/public/</code> —— 优先级最低</li>
+</ol>
+<p>
+    同名文件出现在多个目录时，<strong>按上述顺序先匹配者生效</strong>。
+    静态资源位置列表可通过 <code>spring.web.resources.static-locations</code> 覆盖。
+</p>
+
+<h2>2. webjars 资源位置</h2>
+<p>
+    webjars 是「以 jar 包形式发布的 Web 前端资源」。Spring Boot 将 <code>/webjars/**</code> 路径
+    <strong>单独映射</strong>到 <code>classpath:/META-INF/resources/webjars/</code>，
+    因此依赖 jar 包内 <code>META-INF/resources/webjars/</code> 下的资源可直接通过 <code>/webjars/xxx</code> 访问。
+</p>
+
+<h2>3. 静态资源文件详细映射表</h2>
+<table>
+    <tr>
+        <th>项目目录</th>
+        <th>使用说明</th>
+        <th>web url（点击访问）</th>
+    </tr>
+    <tr>
+        <td class="path">src/main/resources/<br/>static/index.html</td>
+        <td>
+            <span class="tag">static</span><span class="tag">优先级 3</span>
+            对应 <code>classpath:/static/</code> 静态位置。<br/>
+            当前内容：本说明文档（原为 <code>static html</code> 占位文本）。<br/>
+            <code>index.html</code> 是约定俗成的<strong>欢迎页</strong>，访问根路径 <code>/</code> 时自动返回本文件，
+            因此该文件同时充当项目默认首页。
+        </td>
+        <td>
+            <a href="/">/</a><br/>
+            <a href="/index.html">/index.html</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="path">src/main/resources/<br/>public/public.html</td>
+        <td>
+            <span class="tag">public</span><span class="tag">优先级 4（最低）</span>
+            对应 <code>classpath:/public/</code> 静态位置。<br/>
+            当前内容：<code>public.html</code> 占位文本。<br/>
+            用于演示 <code>public</code> 目录是四个默认静态位置之一，其中的 HTML 可直接以文件名访问。
+        </td>
+        <td>
+            <a href="/public.html">/public.html</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="path">src/main/resources/<br/>resources/resource.html</td>
+        <td>
+            <span class="tag">resources</span><span class="tag">优先级 2</span>
+            对应 <code>classpath:/resources/</code> 静态位置。<br/>
+            当前内容：空文件（0 字节）。<br/>
+            注意：此处指 <code>src/main/resources/</code> 根下的 <code>resources/</code> <strong>子目录</strong>，
+            与 Maven 资源根目录同名但含义不同。空文件访问返回 200 空内容，用于验证该静态位置生效。
+        </td>
+        <td>
+            <a href="/resource.html">/resource.html</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="path">src/main/resources/<br/>META-INF/resources/<br/>webjars/static.js</td>
+        <td>
+            <span class="tag">META-INF/resources</span><span class="tag">优先级 1（最高）</span><span class="tag">webjars</span>
+            对应 <code>classpath:/META-INF/resources/</code> 静态位置，
+            且 <code>/webjars/**</code> 由 Spring MVC 专门映射到 <code>classpath:/META-INF/resources/webjars/</code>。<br/>
+            当前内容：<code>hello.js</code> 占位文本。<br/>
+            用于模拟「webjars jar 包」内的前端资源，验证 <code>/webjars/</code> 前缀的访问路径。
+        </td>
+        <td>
+            <a href="/webjars/static.js">/webjars/static.js</a>
+        </td>
+    </tr>
+</table>
+
+<p class="note">
+    说明：<code>templates/thymeleaf-test.html</code> 属于 Thymeleaf 视图模板（由
+    <code>spring.thymeleaf.prefix=classpath:/templates</code> 指定），<strong>不是静态资源</strong>，
+    需由控制器返回视图名渲染后才能访问，不能像上表那样直接通过 URL 访问。
+</p>
+
+<h2>4. URL 映射与三类资源处理机制</h2>
+<p>
+    一次 HTTP 请求进入 <code>DispatcherServlet</code> 后，会按 <code>order</code> 从小到大遍历所有
+    <code>HandlerMapping</code>，由第一个返回非空处理器的映射接管请求。Spring MVC 默认注册的映射链如下：
+</p>
+
+<h3>4.1 Spring MVC 默认 HandlerMapping 链</h3>
+<table>
+    <tr>
+        <th>order</th>
+        <th>HandlerMapping</th>
+        <th>负责内容</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td><code>RequestMappingHandlerMapping</code></td>
+        <td><strong>动态资源</strong>：<code>@Controller</code> / <code>@RequestMapping</code> / <code>@GetMapping</code> 等注解方法</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td><code>ViewControllerHandlerMapping</code></td>
+        <td><strong>自动 Controller</strong>：<code>addViewControllers</code> 注册的 URL → 视图</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td><code>BeanNameUrlHandlerMapping</code></td>
+        <td>名字以 <code>/</code> 开头的 bean</td>
+    </tr>
+    <tr>
+        <td>MAX-1</td>
+        <td><code>ResourceHandlerMapping</code></td>
+        <td><strong>静态资源</strong>：<code>/webjars/**</code> 与 <code>/**</code> → 静态目录</td>
+    </tr>
+    <tr>
+        <td>更低</td>
+        <td><code>WelcomePageHandlerMapping</code></td>
+        <td>欢迎页 <code>index.html</code></td>
+    </tr>
+</table>
+<p>
+    优先级结论：<strong>动态资源 &gt; 自动 Controller &gt; 静态资源</strong>。
+    因此同一 URL 若同时存在 <code>@Controller</code> 与视图控制器，<code>@Controller</code> 优先；
+    若同时存在视图控制器与同名静态文件，视图控制器优先。
+</p>
+
+<h3>4.2 三类资源实现逻辑对比</h3>
+<table>
+    <tr>
+        <th>资源类型</th>
+        <th>实现入口</th>
+        <th>处理逻辑</th>
+        <th>典型示例</th>
+    </tr>
+    <tr>
+        <td><strong>动态资源</strong></td>
+        <td><code>@Controller</code> + <code>@RequestMapping</code></td>
+        <td>由 <code>RequestMappingHandlerMapping</code> 命中，执行控制器方法；方法可访问 service/model，返回视图名或 <code>@ResponseBody</code> JSON</td>
+        <td><code>@GetMapping("/user")</code> 返回 JSON 或页面</td>
+    </tr>
+    <tr>
+        <td><strong>自动 Controller</strong></td>
+        <td><code>addViewControllers</code></td>
+        <td>由 <code>ViewControllerHandlerMapping</code> 命中，<strong>跳过控制器方法</strong>，直接把 URL 当视图名交给 <code>ViewResolver</code> 渲染模板</td>
+        <td><code>/login</code> → <code>templates/login.html</code></td>
+    </tr>
+    <tr>
+        <td><strong>静态资源</strong></td>
+        <td><code>ResourceHandlerMapping</code></td>
+        <td>命中后由 <code>ResourceHttpRequestHandler</code> 在静态目录列表中按优先级查找文件，找到即返回原始字节</td>
+        <td><code>/index.html</code>、<code>/webjars/static.js</code></td>
+    </tr>
+</table>
+
+<h3>4.3 自动 Controller 实现逻辑</h3>
+<p>
+    <code>addViewControllers</code> 将配置中的视图名逐个注册为 URL 映射，本质是「无控制器方法、纯跳模板」的快捷通道。
+    视图名交给 <code>ViewResolver</code>（如 Thymeleaf）后，由视图解析器用
+    <code>prefix + viewName + suffix</code> 拼出实际模板路径：
+</p>
+<pre>registry.addViewController("/login").setViewName("/login");
+// → ViewResolver → classpath:/templates/login.html</pre>
+<p>
+    需要注意：视图名若带前导 <code>/</code>，Thymeleaf 会在拼接 <code>prefix</code> 前剥掉它，
+    因此最终路径仍是 <code>classpath:/templates/login.html</code>，而非 <code>classpath:/templates//login.html</code>。
+</p>
+
+<h3>4.4 URL → 资源请求流程</h3>
+<pre>
+HTTP 请求
+  │  DispatcherServlet.getHandler(request)
+  ▼
+RequestMappingHandlerMapping (0)   —— 命中 @Controller → 执行方法 → 返回视图 / JSON
+  │ 未命中
+  ▼
+ViewControllerHandlerMapping (1)   —— 命中自动视图 → ViewResolver 渲染模板
+  │ 未命中
+  ▼
+BeanNameUrlHandlerMapping (2)
+  │ 未命中
+  ▼
+ResourceHandlerMapping (MAX-1)     —— 命中静态资源 → 按目录优先级查找文件
+  │ 未命中
+  ▼
+404（或进入 /error 错误处理）
+</pre>
+
+<h2>5. 小结</h2>
+<ul>
+    <li><strong>静态资源</strong>：由 <code>ResourceHandlerMapping</code> 按 <code>META-INF/resources → resources → static → public</code> 顺序查找，直接返回文件字节。</li>
+    <li><strong>动态资源</strong>：由 <code>RequestMappingHandlerMapping</code> 命中 <code>@Controller</code>，优先级最高，可执行任意业务逻辑。</li>
+    <li><strong>自动 Controller</strong>：由 <code>ViewControllerHandlerMapping</code> 命中，跳过控制器方法，URL 直接映射到模板视图，优先级介于动态与静态之间。</li>
+</ul>
+
+</body>
+</html>

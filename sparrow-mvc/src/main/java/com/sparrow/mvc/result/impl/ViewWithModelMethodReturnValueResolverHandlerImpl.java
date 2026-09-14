@@ -21,6 +21,7 @@ import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.Pair;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.lang.url.UrlAssembler;
 import com.sparrow.mvc.PageSwitchMode;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;
 import com.sparrow.mvc.ViewWithModel;
@@ -48,7 +49,6 @@ import java.util.Enumeration;
 import java.util.Map;
 
 public class ViewWithModelMethodReturnValueResolverHandlerImpl implements MethodReturnValueResolverHandler {
-
     private ServletUtility servletUtility = ServletUtility.getInstance();
 
     public ViewWithModelMethodReturnValueResolverHandlerImpl() {
@@ -95,7 +95,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
 
         // /index-->template/index.jsp
         if (PageSwitchMode.FORWARD.equals(pageSwitchMode) && !url.contains(Symbol.DOT)) {
-            url = servletUtility.assembleActualUrl(url);
+            url = new UrlAssembler(url).assemble();
         }
 
         if (CollectionsUtility.isNullOrEmpty(urlArgs)) {
@@ -144,7 +144,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         String rootPath = configReader.getValue(Config.ROOT_PATH);
         switch (viewWithModel.getSwitchMode()) {
             case REDIRECT:
-                flashUrl = servletUtility.assembleActualUrl(url);
+                flashUrl = new UrlAssembler(url).assemble();
                 this.flash(request, flashUrl, Constant.FLASH_SUCCESS_RESULT, viewWithModel.getDTO());
                 if (!url.startsWith(Constant.HTTP_PROTOCOL)) {
                     url = rootPath + url;
@@ -152,7 +152,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
                 response.sendRedirect(url);
                 break;
             case TRANSIT:
-                flashUrl = servletUtility.assembleActualUrl(url);
+                flashUrl = new UrlAssembler(url).assemble();
                 this.flash(request, flashUrl, Constant.FLASH_SUCCESS_RESULT, viewWithModel.getDTO());
                 String transitUrl = viewWithModel.getTransitUrl();
                 if (StringUtility.isNullOrEmpty(transitUrl)) {
@@ -213,7 +213,7 @@ public class ViewWithModelMethodReturnValueResolverHandlerImpl implements Method
         }
 
         String referer = servletUtility.referer(request);
-        String flashUrl = this.servletUtility.assembleActualUrl(referer);
+        String flashUrl = new UrlAssembler(referer).assemble();
         this.flash(request, flashUrl, Constant.FLASH_EXCEPTION_RESULT, result);
         if (errorPageSwitch.equals(PageSwitchMode.TRANSIT)) {
             url = url + "?" + referer;

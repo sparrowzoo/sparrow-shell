@@ -20,7 +20,7 @@ package com.sparrow.support.workflow;
 import com.sparrow.exception.Asserts;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.constant.SparrowError;
-import com.sparrow.utility.StringUtility;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class Operation {
     private String[] allowStatus;
@@ -38,8 +38,8 @@ public class Operation {
     }
 
     public Operation(String allowStatus, String allowRole, String name, String description, Integer resultStatus) {
-        this.allowStatus = new String[] {allowStatus};
-        this.allowRole = new String[] {allowRole};
+        this.allowStatus = new String[]{allowStatus};
+        this.allowRole = new String[]{allowRole};
         this.name = name;
         this.description = description;
         this.resultStatus = resultStatus;
@@ -50,8 +50,8 @@ public class Operation {
     }
 
     public Boolean validate(Integer currentStatus, Integer currentRole) throws BusinessException {
-        Asserts.isTrue(StringUtility.existInArray(this.allowStatus, currentStatus), SparrowError.GLOBAL_OPERATION_VALIDATE_STATUS_INVALID);
-        Asserts.isTrue(StringUtility.existInArray(this.allowRole, currentRole), SparrowError.GLOBAL_OPERATION_VALIDATE_ROLE_INVALID);
+        Asserts.isTrue(ArrayUtils.contains(this.allowStatus, currentStatus), SparrowError.GLOBAL_OPERATION_VALIDATE_STATUS_INVALID);
+        Asserts.isTrue(ArrayUtils.contains(this.allowRole, currentRole), SparrowError.GLOBAL_OPERATION_VALIDATE_ROLE_INVALID);
         return true;
     }
 
