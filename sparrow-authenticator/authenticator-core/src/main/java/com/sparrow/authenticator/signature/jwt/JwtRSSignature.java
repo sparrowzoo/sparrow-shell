@@ -39,6 +39,16 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * RSA 签名验签功能，支持全局统一的默认公私钥对
+ * 也支持用户自定义公私钥对。如果用户自定义上传公私钥对一定要符合公私钥格式 格式参考
+ *  KeyPair keyPair = RSAUtils.generateKeyPair();
+ *  String publicKey = Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
+ * @see RSAUtils#generateKeyPair()
+ *
+ * 注意：如果用户自定义的公私钥为自己的密码，则格式不正确 ，需要重写并重新注册签字对象，覆盖默认的签名对象
+ * @see com.sparrow.authenticator.config.AuthcAutoConfiguration#signature
+ */
 @Slf4j
 public class JwtRSSignature implements Signature {
     private PrivateKey defaultPrivateKey;

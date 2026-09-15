@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(git commit -m 'fix: 修复 Result 默认成功单例与枚举身份稳定性' -m '- Result：去掉 ok 字段的 eager 初始化\\(= new Result\\(\\)\\)，使 DCL 懒加载真正生效，避免 success\\(\\) 返回 code/message 为 null 的空实例及 isSuccess\\(\\) 的 NPE *)",
-      "Bash(git -c user.name=zh_harry -c user.email=zh_harry@163.com commit -m 'fix: 修复 Result 默认成功单例与枚举身份稳定性' -m '- Result：去掉 ok 字段的 eager 初始化\\(= new Result\\(\\)\\)，使 DCL 懒加载真正生效，避免 success\\(\\) 返回 code/message 为 null 的空实例及 isSuccess\\(\\) 的 NPE *)"
+      "Bash(git -c user.name=zh_harry -c user.email=zh_harry@163.com commit -m 'fix: 修复 Result 默认成功单例与枚举身份稳定性' -m '- Result：去掉 ok 字段的 eager 初始化\\(= new Result\\(\\)\\)，使 DCL 懒加载真正生效，避免 success\\(\\) 返回 code/message 为 null 的空实例及 isSuccess\\(\\) 的 NPE *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

@@ -64,6 +64,8 @@ public class RSAUtilsTest {
         System.out.printf("verify: %s\n", verify);
 
         AuthenticatorConfig authenticatorConfig=new AuthenticatorConfig();
+        authenticatorConfig.setPrivateKeyPath("/rsa/test");
+        authenticatorConfig.setPublicKeyPath("/rsa/test.pub");
 
 
         JwtRSSignature jwtRSAGenerator = new JwtRSSignature(authenticatorConfig);
@@ -79,9 +81,8 @@ public class RSAUtilsTest {
 
 
         String token = jwtRSAGenerator.sign(loginUser, null);
-        token = token += "22";
+        //token = token += "22";
         LoginUser loginUser2 = jwtRSAGenerator.verify(token, null);
         System.out.println(JSON.toJSONString(loginUser2));
-
     }
 }

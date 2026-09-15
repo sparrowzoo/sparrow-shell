@@ -22,6 +22,9 @@ import com.sparrow.cryptogram.RSAUtils;
 import java.security.KeyPair;
 import java.util.Base64;
 
+/**
+ * 生成后内容直接对应到 resource/rsa 目录下 对应公私钥对
+ */
 public class RSAPairGenerateTest {
     public static void main(String[] args) {
         KeyPair keyPair = RSAUtils.generateKeyPair();

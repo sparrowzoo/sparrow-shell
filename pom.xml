@@ -41,15 +41,12 @@
         <module>sparrow-rocketmq-client</module>
         <module>sparrow-markdown</module>
         <module>sparrow-aop</module>
-        <!--        <module>sparrow-distribution-job</module>-->
-        <!--        <module>sparrow-distribution-config</module>-->
         <module>sparrow-protocol</module>
         <module>sparrow-protocol-dao</module>
         <module>sparrow-protocol-mq</module>
         <module>sparrow-mvc-thymeleaf</module>
         <module>sparrow-authenticator</module>
     </modules>
-
     <build>
         <finalName>${project.artifactId}</finalName>
     </build>
