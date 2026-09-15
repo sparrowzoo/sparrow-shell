@@ -172,23 +172,18 @@ public class JDBCTemplate implements JDBCSupport {
             connection = this.getConnection();
             connection.setReadOnly(jdbcParameter.isReadOnly());
             if (jdbcParameter.isAutoIncrement()) {
-                preparedStatement = connection.prepareStatement(jdbcParameter.getCommand(),
-                        Statement.RETURN_GENERATED_KEYS);
+                preparedStatement = connection.prepareStatement(jdbcParameter.getCommand(), Statement.RETURN_GENERATED_KEYS);
             } else {
                 // 存储过程
                 if (jdbcParameter.getCommand().trim().toLowerCase().startsWith("call")) {
                     if (jdbcParameter.isReadOnly()) {
-                        preparedStatement = connection.prepareCall(jdbcParameter.getCommand(),
-                                ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                ResultSet.CONCUR_READ_ONLY);
+                        preparedStatement = connection.prepareCall(jdbcParameter.getCommand(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                     } else {
                         preparedStatement = connection.prepareCall(jdbcParameter.getCommand());
                     }
                 } else {
                     if (jdbcParameter.isReadOnly()) {
-                        preparedStatement = connection.prepareStatement(jdbcParameter.getCommand(),
-                                ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                ResultSet.CONCUR_READ_ONLY);
+                        preparedStatement = connection.prepareStatement(jdbcParameter.getCommand(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                     } else {
                         preparedStatement = connection.prepareStatement(jdbcParameter.getCommand());
                     }
@@ -208,8 +203,7 @@ public class JDBCTemplate implements JDBCSupport {
                 if (parameterValue == null) {
                     parameterValue = Symbol.EMPTY;
                 }
-                commandString = commandString.replaceFirst("\\?",
-                        Matcher.quoteReplacement(parameterValue.toString()));
+                commandString = commandString.replaceFirst("\\?", Matcher.quoteReplacement(parameterValue.toString()));
             }
             logger.debug("SQL:" + commandString);
         }
@@ -335,9 +329,7 @@ public class JDBCTemplate implements JDBCSupport {
         try {
             if (jdbcParameter.getParameters() == null || jdbcParameter.getParameters().size() == 0) {
                 connection = this.getConnection();
-                statement = connection.createStatement(
-                        ResultSet.TYPE_SCROLL_SENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
+                statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 logger.debug("SQL:" + jdbcParameter.getCommand());
                 resultSet = statement.executeQuery(jdbcParameter.getCommand());
             } else {

@@ -23,6 +23,10 @@ public class DateTimeTypeHandler implements TypeHandler<Date> {
 
     @Override
     public void setParameter(PreparedStatement ps, int i, Date parameter) throws SQLException {
+        if (parameter == null) {
+            ps.setTimestamp(i, null);
+            return;
+        }
         ps.setTimestamp(i, new Timestamp(parameter.getTime()));
     }
 
