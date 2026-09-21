@@ -27,8 +27,8 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ServletUtility {
 
@@ -102,7 +102,7 @@ public class ServletUtility {
         return request.getHeader("Referer");
     }
 
-    public boolean isAjax(HttpServletRequest request, boolean supportTemplate, List<String> ajaxPattens) {
+    public boolean isAjax(HttpServletRequest request, boolean supportTemplate, Set<String> ajaxPattens) {
         //非模板引擎，直接返回json
         if (!supportTemplate) {
             return true;

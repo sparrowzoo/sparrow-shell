@@ -15,39 +15,8 @@
  * limitations under the License.
  */
 
-package com.sparrow.authenticator;
+package com.sparrow.io;
 
-import java.util.Set;
-
-public interface AuthenticatorConfigReader {
-
-    String getTokenKey();
-
-    Boolean getValidateHost();
-
-    Boolean getValidateStatus();
-
-    Set<String> getExcludePatterns();
-
-    Boolean getMockLoginUser();
-
-    Double getTokenAvailableDays();
-
-    Double getRememberMeDays();
-
-    Long getSessionTimeout();
-
-    Long getRenewalInterval();
-
-    String getEncryptKey();
-
-    String getJwtIssuer();
-
-    Boolean getRenewal();
-
-    String getPrivateKeyPath();
-
-    String getPublicKeyPath();
-
-    Integer getPlatformManagerCategory();
+public interface FileCopier {
+    void copy(String sourceFile);
 }

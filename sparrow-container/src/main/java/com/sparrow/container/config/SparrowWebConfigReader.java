@@ -25,16 +25,17 @@ import com.sparrow.protocol.constant.Extension;
 import com.sparrow.support.web.WebConfigReader;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class SparrowWebConfigReader implements WebConfigReader {
     ConfigReader configReader = ApplicationContext.getContainer().getBean(ConfigReader.class);
 
     @Override
-    public List<String> getAutoMappingViewNames() {
+    public Set<String> getAutoMappingViewNames() {
         String autoMappingViewNames = configReader.getValue(Config.AUTO_MAPPING_VIEW_NAMES);
         String[] viewNames = autoMappingViewNames.split(",");
-        return Arrays.asList(viewNames);
+        return new LinkedHashSet<>(Arrays.asList(viewNames));
     }
 
     @Override
@@ -54,14 +55,14 @@ public class SparrowWebConfigReader implements WebConfigReader {
 
     @Override
     public Integer getActionUrlCacheExpiredSeconds() {
-        return configReader.getIntegerValue(Config.ACTION_URL_CACHE_EXPIRED_SECONDS,10);
+        return configReader.getIntegerValue(Config.ACTION_URL_CACHE_EXPIRED_SECONDS, 10);
     }
 
     @Override
-    public List<String> getAjaxPattens() {
+    public Set<String> getAjaxPattens() {
         String ajaxPatterns = configReader.getValue(Config.AJAX_PATTERNS);
         String[] patterns = ajaxPatterns.split(",");
-        return Arrays.asList(patterns);
+        return new LinkedHashSet<>(Arrays.asList(patterns));
     }
 
     @Override

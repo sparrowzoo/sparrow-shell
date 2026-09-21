@@ -55,10 +55,10 @@ public class StringJoiner {
         StringBuilder sb = new StringBuilder();
         if (!CollectionsUtility.isNullOrEmpty(this.array)) {
             for (Object object : this.array) {
-                if (ArrayUtils.contains(exceptArray, object)) {
+                if (!CollectionsUtility.isNullOrEmpty(exceptArray) && ArrayUtils.contains(exceptArray, object)) {
                     continue;
                 }
-                if (sb.length() > 0) {
+                if (!sb.isEmpty()) {
                     sb.append(separator);
                 }
                 sb.append(object);
@@ -68,14 +68,15 @@ public class StringJoiner {
 
         if (!CollectionsUtility.isNullOrEmpty(this.iterator)) {
             for (Object object : this.iterator) {
-                if (ArrayUtils.contains(exceptArray, object)) {
+                if (!CollectionsUtility.isNullOrEmpty(exceptArray) && ArrayUtils.contains(exceptArray, object)) {
                     continue;
                 }
-                if (sb.length() > 0) {
+                if (!sb.isEmpty()) {
                     sb.append(separator);
                 }
                 sb.append(object);
             }
+            return sb.toString();
         }
         return Symbol.EMPTY;
     }

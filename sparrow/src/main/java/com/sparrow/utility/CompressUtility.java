@@ -17,40 +17,42 @@
 
 package com.sparrow.utility;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.sparrow.io.FolderFilter;
+import com.sparrow.protocol.constant.magic.Symbol;
+
+import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class CompressUtility {
 
+    public static void zipDir(String directory, OutputStream outputStream, FolderFilter filter) {
+        writeZip(outputStream, zipOutputStream -> {
+            File dir = new File(directory);
+            if (!dir.exists()) {
+                throw new FileNotFoundException(directory);
+            }
+            if (!dir.isDirectory()) {
+                throw new IllegalArgumentException(directory + " is not a directory");
+            }
+            String rootName = dir.getName();
+            if (StringUtility.isNullOrEmpty(rootName)) {
+                rootName = dir.getAbsolutePath();
+            }
+            compress(dir, rootName, zipOutputStream, filter);
+        });
+    }
+
     public static void zip(String fileName, OutputStream outputStream) {
-        ZipOutputStream zipOutputStream = null;
-        try {
+        writeZip(outputStream, zipOutputStream -> {
             File file = new File(fileName);
             if (!file.exists()) {
                 throw new FileNotFoundException(fileName);
             }
-            zipOutputStream = new ZipOutputStream(outputStream);
-            ZipEntry entry = new ZipEntry(FileUtility.getInstance().getFileNameProperty(fileName).getFullFileName());
-            zipOutputStream.putNextEntry(entry);
-            FileUtility.getInstance().copy(new FileInputStream(file), zipOutputStream);
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        } finally {
-            if (zipOutputStream != null) {
-                try {
-                    zipOutputStream.close();
-                } catch (IOException ignore) {
-                }
-            }
-        }
+            String entryName = FileUtility.getInstance().getFileNameProperty(fileName).getFullFileName();
+            writeEntry(zipOutputStream, entryName, new FileInputStream(file));
+        });
     }
 
     /**
@@ -69,7 +71,7 @@ public class CompressUtility {
         if (!StringUtility.isNullOrEmpty(unzipFileName)) {
             fileOutputStream = new FileOutputStream(unzipFileName);
         }
-        CompressUtility.unzip(inputStream, fileOutputStream);
+        unzip(inputStream, fileOutputStream);
     }
 
     /**
@@ -92,28 +94,81 @@ public class CompressUtility {
         try {
             zipInputStream = new ZipInputStream(inputStream);
             ZipEntry zipEntry = zipInputStream.getNextEntry();
+            if (zipEntry == null) {
+                return;
+            }
             if (outputStream == null) {
                 outputStream = new FileOutputStream(zipEntry.getName());
             }
-            FileUtility.getInstance().copy(zipInputStream, outputStream);
+            copy(zipInputStream, outputStream);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         } finally {
-            if (zipInputStream != null) {
-                try {
-                    zipInputStream.close();
-                } catch (IOException ignore) {
-                    ignore.printStackTrace();
-                }
-            }
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException ignore) {
-                    ignore.printStackTrace();
-                }
-            }
+            close(zipInputStream);
+            close(outputStream);
+            close(inputStream);
         }
+    }
 
+    private static void writeZip(OutputStream outputStream, ZipOperation operation) {
+        ZipOutputStream zipOutputStream = null;
+        try {
+            zipOutputStream = new ZipOutputStream(outputStream);
+            operation.write(zipOutputStream);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(zipOutputStream);
+        }
+    }
+
+    private static void compress(File file, String entryName, ZipOutputStream zipOutputStream, FolderFilter filter) throws IOException {
+        if (file.isDirectory()) {
+            File[] children = file.listFiles();
+            if (children == null) {
+                return;
+            }
+            for (File child : children) {
+                if (filter != null && filter.filter(child.getPath())) {
+                    continue;
+                }
+                compress(child, entryName + Symbol.SLASH + child.getName(), zipOutputStream, filter);
+            }
+            return;
+        }
+        writeEntry(zipOutputStream, entryName, new FileInputStream(file));
+    }
+
+    private static void writeEntry(ZipOutputStream zipOutputStream, String entryName, InputStream inputStream) throws IOException {
+        try {
+            zipOutputStream.putNextEntry(new ZipEntry(entryName));
+            copy(inputStream, zipOutputStream);
+            zipOutputStream.closeEntry();
+        } finally {
+            close(inputStream);
+        }
+    }
+
+    private static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, length);
+        }
+    }
+
+    private static void close(Closeable closeable) {
+        if (closeable == null) {
+            return;
+        }
+        try {
+            closeable.close();
+        } catch (IOException ignore) {
+        }
+    }
+
+    @FunctionalInterface
+    private interface ZipOperation {
+        void write(ZipOutputStream zipOutputStream) throws IOException;
     }
 }

@@ -17,15 +17,15 @@
 
 package com.sparrow.support.web;
 
-import java.util.List;
+import java.util.Set;
 
 public interface WebConfigReader {
 
-    List<String> getAutoMappingViewNames();
+    Set<String> getAutoMappingViewNames();
 
     Boolean getSupportTemplateEngine();
 
-    List<String> getAjaxPattens();
+    Set<String> getAjaxPattens();
 
     String getRootPath();
 

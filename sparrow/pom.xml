@@ -46,6 +46,11 @@
             <groupId>jakarta.mail</groupId>
             <artifactId>jakarta.mail-api</artifactId>
         </dependency>
+        <!-- Angus Mail：运行时实现，包含 StreamProvider -->
+        <dependency>
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>angus-mail</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>jakarta.persistence</groupId>

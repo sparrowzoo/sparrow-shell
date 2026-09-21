@@ -19,6 +19,8 @@ package com.sparrow.utility;
 
 import com.sparrow.container.Container;
 import com.sparrow.core.spi.ApplicationContext;
+import com.sparrow.io.FileCopier;
+import com.sparrow.io.FolderFilter;
 import com.sparrow.io.file.FileNameProperty;
 import com.sparrow.lang.joiner.StringJoiner;
 import com.sparrow.protocol.BusinessException;
@@ -490,7 +492,7 @@ public class FileUtility {
         }
 
         for (java.io.File f : files) {
-            if (f.isDirectory() && !f.isHidden()) {
+            if (f.isDirectory()) {
                 delete(f.getPath(), beforeMillis);
                 continue;
             }
@@ -524,7 +526,7 @@ public class FileUtility {
                 break;
             }
         }
-        return new StringJoiner(splits,separator).join();
+        return new StringJoiner(splits, separator).join();
     }
 
 
@@ -596,14 +598,6 @@ public class FileUtility {
         }
     }
 
-    public interface FileCopier {
-        void copy(String sourceFile);
-    }
-
-    public interface FolderFilter {
-        Boolean filter(String sourceFile);
-    }
-
     public void recurseCopy(String source) {
         recurseCopy(source, null, null);
     }
@@ -630,7 +624,7 @@ public class FileUtility {
 
         for (java.io.File f : files) {
             source = f.toString();
-            if (fileCopier != null && folderFilter.filter(f.getName())) {
+            if (fileCopier != null && folderFilter.filter(source)) {
                 log.error("directory {} is not copy", f.getAbsolutePath());
                 continue;
             }

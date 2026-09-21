@@ -15,39 +15,19 @@
  * limitations under the License.
  */
 
-package com.sparrow.authenticator;
+package com.sparrow.servlet.impl;
 
-import java.util.Set;
+import com.sparrow.support.CaptchaService;
 
-public interface AuthenticatorConfigReader {
+public class MockCaptchaService implements CaptchaService {
 
-    String getTokenKey();
+    @Override
+    public String getCaptcha(String s) {
+        return "mock";
+    }
 
-    Boolean getValidateHost();
-
-    Boolean getValidateStatus();
-
-    Set<String> getExcludePatterns();
-
-    Boolean getMockLoginUser();
-
-    Double getTokenAvailableDays();
-
-    Double getRememberMeDays();
-
-    Long getSessionTimeout();
-
-    Long getRenewalInterval();
-
-    String getEncryptKey();
-
-    String getJwtIssuer();
-
-    Boolean getRenewal();
-
-    String getPrivateKeyPath();
-
-    String getPublicKeyPath();
-
-    Integer getPlatformManagerCategory();
+    @Override
+    public void setCaptcha(String sessionId, String captcha) {
+        return;
+    }
 }

@@ -23,7 +23,8 @@ import lombok.Data;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Data
 @ToString
@@ -33,7 +34,9 @@ public class AuthenticatorConfig implements AuthenticatorConfigReader {
     private String encryptKey;
     private Boolean validateHost = true;
     private Boolean validateStatus = true;
-    private List<String> excludePatterns;
+    private Set<String> excludePatterns;
+    //登录时跳过密码较验
+    private Boolean skipPasswordValid = false;
     /**
      * 平台管理员类型(由上层业务自定义)
      */
@@ -49,7 +52,7 @@ public class AuthenticatorConfig implements AuthenticatorConfigReader {
     private String privateKeyPath;
     private String publicKeyPath;
 
-    public void setExcludePatterns(List<String> excludePatterns) {
-        this.excludePatterns = RegexUtility.adapterWildcard(excludePatterns);
+    public void setExcludePatterns(Set<String> excludePatterns) {
+        this.excludePatterns = new LinkedHashSet<>(RegexUtility.adapterWildcard(excludePatterns));
     }
 }

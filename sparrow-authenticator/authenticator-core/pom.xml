@@ -13,6 +13,11 @@
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
+            <artifactId>sparrow-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol</artifactId>
         </dependency>
         <dependency>

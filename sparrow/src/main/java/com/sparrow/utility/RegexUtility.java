@@ -22,6 +22,7 @@ import com.sparrow.core.Pair;
 import com.sparrow.protocol.constant.Constant;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -108,7 +109,7 @@ public class RegexUtility {
         return Pair.create(urlRegex, parameters);
     }
 
-    public static boolean matchPatterns(List<String> patternList, String path) {
+    public static boolean matchPatterns(Collection<String> patternList, String path) {
         if (CollectionsUtility.isNullOrEmpty(patternList)) {
             return false;
         }
@@ -120,7 +121,7 @@ public class RegexUtility {
         return false;
     }
 
-    public static List<String> adapterWildcard(List<String> regexList) {
+    public static List<String> adapterWildcard(Collection<String> regexList) {
         if (regexList == null || regexList.isEmpty()) {
             return null;
         }

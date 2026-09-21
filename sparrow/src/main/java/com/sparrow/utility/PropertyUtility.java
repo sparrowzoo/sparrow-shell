@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +36,13 @@ public class PropertyUtility {
         if (stream == null) {
             return null;
         }
+        if (StringUtility.isNullOrEmpty(charset)) {
+            charset = StandardCharsets.UTF_8.name();
+        }
         Map<String, String> systemMessage = new ConcurrentHashMap<String, String>();
         Properties props = new Properties();
         try {
-            props.load(stream);
+            props.load(new InputStreamReader(stream, charset));
         } catch (IOException e) {
             log.error("load config file error", e);
             return null;
@@ -47,9 +51,7 @@ public class PropertyUtility {
         for (Object key : props.keySet()) {
             String strKey = key.toString();
             String value = props.getProperty(strKey);
-            if (StringUtility.isNullOrEmpty(charset)) {
-                charset = StandardCharsets.UTF_8.name();
-            }
+
             if (value.startsWith("${") && value.endsWith("}")) {
                 String envKey = value.substring(2, value.length() - 1).toUpperCase();
                 String envValue = System.getenv(envKey);

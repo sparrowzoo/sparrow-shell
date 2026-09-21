@@ -25,13 +25,13 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public abstract class AbstractAuthcFilter implements Filter {
-    protected List<String> excludePatternList = new ArrayList<String>();
+    protected Set<String> excludePatternList = new LinkedHashSet<>();
     protected Boolean supportTemplate;
-    protected List<String> ajaxPatternList = new ArrayList<String>();
+    protected Set<String> ajaxPatternList = new LinkedHashSet<>();
     protected String tokenKey = Constant.REQUEST_HEADER_KEY_LOGIN_TOKEN;
 
     @Override
