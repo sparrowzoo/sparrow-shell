@@ -96,7 +96,7 @@ flowchart TB
 
 | 模块 | 说明 |
 | --- | --- |
-| `sparrow-bom` | 物料清单（BOM），统一管理各模块版本 |
+| [`sparrow-bom`](sparrow-bom/README.md) | 物料清单（BOM），统一管理各模块版本（含 `sparrow-parent` 与 `infra-bom`） |
 | `sparrow` | 核心 API 层，定义框架全部接口与抽象，仅依赖 JDK |
 | `sparrow-protocol` | 领域协议（DDD）与通用常量、分页等基础协议 |
 | `sparrow-protocol-dao` | DAO 数据访问协议接口 |
@@ -122,6 +122,22 @@ flowchart TB
 | `sparrow-jni` | JNI / C++ 扩展 |
 | `gossip` / `apache-gossip` | Gossip 协议 |
 | `demo` | 示例工程 |
+
+工程基线（sparrow-bom）
+---
+
+`sparrow-bom` 集中维护 Maven 公共配置与组件版本，让业务项目保持一致的构建与接入方式。按需选择 Parent：仅需通用基线时继承 `sparrow-parent`，使用平台组件时继承 `infra-bom`。
+
+- [`sparrow-bom`](sparrow-bom/README.md) — 聚合构建入口，统一工程基线
+- [`sparrow-parent`](sparrow-bom/sparrow-parent/README.md) — 通用依赖、编译、测试、质量检查与发布配置
+- [`infra-bom`](sparrow-bom/infra-bom/README.md) — 继承公共基线，统一管理平台组件版本
+
+```mermaid
+flowchart LR
+    business[平台业务工程] -->|parent| infra[infra-bom]
+    infra -->|parent| base[sparrow-parent]
+    common[通用工程] -->|parent| base
+```
 
 Quick start
 ---
