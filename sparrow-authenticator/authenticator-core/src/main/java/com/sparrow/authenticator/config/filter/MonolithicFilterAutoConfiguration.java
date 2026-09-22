@@ -19,7 +19,7 @@ package com.sparrow.authenticator.config.filter;
 import com.sparrow.authenticator.Authenticator;
 import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.authenticator.filter.MonolithicBearerFilter;
-import com.sparrow.spring.filter.FilterOrders;
+import com.sparrow.servlet.FilterOrders;
 import com.sparrow.support.web.WebConfigReader;
 import jakarta.servlet.Filter;
 import lombok.extern.slf4j.Slf4j;

@@ -22,11 +22,13 @@ import com.sparrow.mvc.result.ThymeleafViewWithModelMethodReturnValueResolverHan
 import com.sparrow.mvc.result.impl.JsonMethodReturnValueResolverHandlerImpl;
 import com.sparrow.mvc.result.impl.MethodReturnValueResolverHandlerComposite;
 import com.sparrow.mvc.result.impl.VoidReturnValueResolverHandlerImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThymeleafMethodControllerHandlerAdapter extends MethodControllerHandlerAdapter{
-    @Override protected void initReturnValueResolvers() {
+public class ThymeleafMethodControllerHandlerAdapter extends MethodControllerHandlerAdapter {
+    @Override
+    protected void initReturnValueResolvers() {
         this.returnValueResolverHandlerComposite = new MethodReturnValueResolverHandlerComposite();
         List<MethodReturnValueResolverHandler> methodReturnValueResolverHandlers = new ArrayList();
         MethodReturnValueResolverHandler viewWithModelMethodReturnValueResolverHandler = new ThymeleafViewWithModelMethodReturnValueResolverHandler();

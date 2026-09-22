@@ -28,19 +28,23 @@ import java.util.ArrayList;
 
 public class ThymeleafDispatcherFilter extends DispatcherFilter {
 
-    @Override public void init(FilterConfig config) {
+    @Override
+    public void init(FilterConfig config) {
         ThymeleafEngineUtils.initEngine(config);
         super.init(config);
     }
 
-    @Override protected void initAdapter() {
+    @Override
+    protected void initAdapter() {
         this.handlerAdapters = new ArrayList(1);
         MethodControllerHandlerAdapter adapter = new ThymeleafMethodControllerHandlerAdapter();
         this.handlerAdapters.add(adapter);
     }
 
-    @Override protected void forward(ServletRequest request, ServletResponse response,
-                                     String actionKey) throws IOException {
+    @Override
+    protected void forward(ServletRequest request,
+                           ServletResponse response,
+                           String actionKey) throws IOException {
         ThymeleafEngineUtils.forward(request, response, actionKey);
     }
 }

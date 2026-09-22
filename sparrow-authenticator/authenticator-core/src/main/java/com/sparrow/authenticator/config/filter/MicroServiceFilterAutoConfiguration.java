@@ -18,7 +18,7 @@ package com.sparrow.authenticator.config.filter;
 
 import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.authenticator.filter.MicroServiceFilter;
-import com.sparrow.spring.filter.FilterOrders;
+import com.sparrow.servlet.FilterOrders;
 import jakarta.servlet.Filter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

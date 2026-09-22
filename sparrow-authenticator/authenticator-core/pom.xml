@@ -11,17 +11,10 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>authenticator-core</artifactId>
     <properties>
-        <sparrow-starter.version>1.0.0-SNAPSHOT</sparrow-starter.version>
         <sparrow-protocol.version>1.0.0-SNAPSHOT</sparrow-protocol.version>
         <sparrow.version>1.0.0-SNAPSHOT</sparrow.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>com.sparrowzoo</groupId>
-            <artifactId>sparrow-starter</artifactId>
-            <version>${sparrow-starter.version}</version>
-            <optional>true</optional>
-        </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol</artifactId>

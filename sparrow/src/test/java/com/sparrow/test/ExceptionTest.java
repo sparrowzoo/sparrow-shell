@@ -15,11 +15,25 @@
  * limitations under the License.
  */
 
-package com.sparrow.authenticator.gateway;
+package com.sparrow.test;
 
-import com.sparrow.authenticator.HostAuthenticationToken;
-import com.sparrow.protocol.LoginUser;
+public class ExceptionTest {
 
-public interface Gateway {
-    LoginUser verify(HostAuthenticationToken token);
+    public static void main(String[] args) {
+        try {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    new ExceptionTest().test();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test() throws Exception {
+        throw new Exception("test");
+    }
 }
