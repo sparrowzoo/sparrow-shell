@@ -30,6 +30,7 @@
         http://mvnrepository.com/
     </description>
     <modules>
+        <module>sparrow-bom</module>
         <module>sparrow</module>
         <module>sparrow-loader</module>
         <module>sparrow-mvc</module>
