@@ -55,6 +55,8 @@ email:zh_harry#163.com
 
 # Quick start
 
+构建前请将 `SPARROW_STYLE_DIR` 环境变量设为本仓库 `style` 目录的绝对路径，配置方法见 [Checkstyle 构建说明](style/readme.md)。
+
 ```aidl
 cd sparrow-bom
 mvn clean install -Dmaven.test.skip

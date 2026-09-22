@@ -23,7 +23,7 @@
     <groupId>com.sparrowzoo</groupId>
     <artifactId>sparrow-shell</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <url>http://maven.apache.org</url>
     <description>
         mvn repository

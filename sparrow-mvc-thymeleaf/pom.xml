@@ -21,18 +21,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.sparrowzoo</groupId>
-        <artifactId>sparrow-bom</artifactId>
-        <version>1.0.5-SNAPSHOT</version>
+        <artifactId>sparrow-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow-mvc-thymeleaf</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
+    <properties>
+        <sparrow-mvc.version>1.0.0-SNAPSHOT</sparrow-mvc.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-mvc</artifactId>
+            <version>${sparrow-mvc.version}</version>
         </dependency>
 
         <dependency>
@@ -46,5 +50,7 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-
+    <build>
+        <finalName>${project.artifactId}</finalName>
+    </build>
 </project>

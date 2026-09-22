@@ -3,15 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sparrow-bom</artifactId>
+        <artifactId>sparrow-parent</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>1.0.5-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
 
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-boot-druid-demo</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <properties>
+        <sparrow-json.version>1.0.0-SNAPSHOT</sparrow-json.version>
+        <sparrow-container.version>1.0.0-SNAPSHOT</sparrow-container.version>
+        <sparrow-loader.version>1.0.0-SNAPSHOT</sparrow-loader.version>
+        <sparrow-starter.version>1.0.0-SNAPSHOT</sparrow-starter.version>
+        <sparrow-orm.version>1.0.0-SNAPSHOT</sparrow-orm.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -33,11 +40,13 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-json</artifactId>
+            <version>${sparrow-json.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-container</artifactId>
+            <version>${sparrow-container.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -47,10 +56,12 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-loader</artifactId>
+            <version>${sparrow-loader.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-starter</artifactId>
+            <version>${sparrow-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -60,6 +71,7 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-orm</artifactId>
+            <version>${sparrow-orm.version}</version>
         </dependency>
     </dependencies>
     <build>

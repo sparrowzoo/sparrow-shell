@@ -20,16 +20,21 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.sparrowzoo</groupId>
-        <artifactId>sparrow-bom</artifactId>
-        <version>1.0.5-SNAPSHOT</version>
+        <artifactId>sparrow-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <artifactId>sparrow-mvc</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
+    <properties>
+        <sparrow.version>1.0.0-SNAPSHOT</sparrow.version>
+        <authenticator-core.version>1.0.0-SNAPSHOT</authenticator-core.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow</artifactId>
+            <version>${sparrow.version}</version>
         </dependency>
         <!-- 二维码-->
         <dependency>
@@ -55,23 +60,10 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>authenticator-core</artifactId>
+            <version>${authenticator-core.version}</version>
         </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <configLocation>../style/sparrow_checkstyle.xml</configLocation>
-                    <suppressionsLocation>../style/check_style_suppressions.xml</suppressionsLocation>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 </project>

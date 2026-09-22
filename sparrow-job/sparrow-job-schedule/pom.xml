@@ -5,24 +5,28 @@
     <parent>
         <artifactId>sparrow-bom</artifactId>
         <groupId>com.sparrow</groupId>
-        <version>1.0</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
 
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sparrow-job-schedule</artifactId>
-    <version>${sparrow_distribution_job_version}</version>
+    <version>1.0.0-SNAPSHOT</version>
+    <properties>
+        <sparrow-job-core.version>1.0.0-SNAPSHOT</sparrow-job-core.version>
+        <sparrow-distribution-job-api.version>1.0.0-SNAPSHOT</sparrow-distribution-job-api.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.sparrow</groupId>
             <artifactId>sparrow-job-core</artifactId>
-            <version>${sparrow_distribution_job_version}</version>
+            <version>${sparrow-job-core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrow</groupId>
             <artifactId>sparrow-distribution-job-api</artifactId>
-            <version>${sparrow_distribution_job_version}</version>
+            <version>${sparrow-distribution-job-api.version}</version>
         </dependency>
     </dependencies>
     <build>

@@ -3,27 +3,27 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sparrow-bom</artifactId>
+        <artifactId>sparrow-parent</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>1.0.5-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0.5-SNAPSHOT</version>
     <artifactId>sparrow-aop</artifactId>
     <properties>
         <curator.version>2.10.0</curator.version>
+        <sparrow.version>1.0.0-SNAPSHOT</sparrow.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow</artifactId>
+            <version>${sparrow.version}</version>
         </dependency>
         <!--必须 spring aop 使用-->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.9.4</version>
         </dependency>
         <!--非必要aspectjweaver 中已包含-->
         <!--        <dependency>-->
@@ -41,7 +41,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>4.3.20.RELEASE</version>
         </dependency>
     </dependencies>
 
@@ -51,20 +50,4 @@ aspectjweaver：支持切入点表达式等
 
 aspectjrt：支持aop相关注解等-->
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <configLocation>../style/sparrow_checkstyle.xml</configLocation>
-                    <suppressionsLocation>../style/check_style_suppressions.xml</suppressionsLocation>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

@@ -28,7 +28,7 @@
 	<groupId>org.apache.gossip</groupId>
 	<artifactId>gossip</artifactId>
 	<name>gossip</name>
-	<version>0.1.2-incubating-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<description>A peer to peer cluster discovery service</description>
 	<url>http://gossip.incubator.apache.org/</url>

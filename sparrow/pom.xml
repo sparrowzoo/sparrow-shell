@@ -22,12 +22,18 @@
 
     <parent>
         <groupId>com.sparrowzoo</groupId>
-        <artifactId>sparrow-bom</artifactId>
-        <version>1.0.5-SNAPSHOT</version>
+        <artifactId>sparrow-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sparrow</artifactId>
+    <properties>
+        <sparrow-protocol.version>1.0.0-SNAPSHOT</sparrow-protocol.version>
+        <sparrow-protocol-dao.version>1.0.0-SNAPSHOT</sparrow-protocol-dao.version>
+        <sparrow-protocol-mq.version>1.0.0-SNAPSHOT</sparrow-protocol-mq.version>
+
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -63,14 +69,19 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol</artifactId>
+            <version>${sparrow-protocol.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol-dao</artifactId>
+            <version>${sparrow-protocol-dao.version}</version>
+
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol-mq</artifactId>
+            <version>${sparrow-protocol-mq.version}</version>
+
         </dependency>
 
         <dependency>
@@ -79,26 +90,11 @@
         </dependency>
 
         <dependency>
-            <version>1.2.83</version>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <configLocation>../style/sparrow_checkstyle.xml</configLocation>
-                    <suppressionsLocation>../style/check_style_suppressions.xml</suppressionsLocation>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 </project>

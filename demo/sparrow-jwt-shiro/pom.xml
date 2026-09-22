@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.sparrow</groupId>
     <artifactId>sparrow-jwt-shiro</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>shiro</name>
     <description>Test Shiro + JWT</description>
     <properties>

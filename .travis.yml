@@ -19,6 +19,9 @@ cache:
 
 install: true
 
+before_script:
+  - export SPARROW_STYLE_DIR="$TRAVIS_BUILD_DIR/style"
+
 script:
   - travis_wait 30 ./mvnw clean install -DskipTests=false -Dcheckstyle.skip=false -Drat.skip=false -Dmaven.javadoc.skip=true
 

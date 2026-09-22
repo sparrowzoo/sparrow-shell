@@ -19,13 +19,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sparrow-bom</artifactId>
+        <artifactId>sparrow-parent</artifactId>
         <groupId>com.sparrowzoo</groupId>
-        <version>1.0.5-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <artifactId>sparrow-test</artifactId>
     <packaging>war</packaging>
 
@@ -33,6 +33,17 @@
         <spring.framework.version>5.2.23.RELEASE</spring.framework.version>
         <maven.compile.source>17</maven.compile.source>
         <maven.compile.target>17</maven.compile.target>
+        <sparrow-loader.version>1.0.0-SNAPSHOT</sparrow-loader.version>
+        <sparrow-protocol.version>1.0.0-SNAPSHOT</sparrow-protocol.version>
+        <sparrow-protocol-dao.version>1.0.0-SNAPSHOT</sparrow-protocol-dao.version>
+        <sparrow-protocol-mq.version>1.0.0-SNAPSHOT</sparrow-protocol-mq.version>
+        <sparrow-container.version>1.0.0-SNAPSHOT</sparrow-container.version>
+        <sparrow-data-source.version>1.0.0-SNAPSHOT</sparrow-data-source.version>
+        <sparrow-json.version>1.0.0-SNAPSHOT</sparrow-json.version>
+        <sparrow-orm.version>1.0.0-SNAPSHOT</sparrow-orm.version>
+        <sparrow-mvc-thymeleaf.version>1.0.0-SNAPSHOT</sparrow-mvc-thymeleaf.version>
+        <sparrow-rocketmq-client.version>1.0.0-SNAPSHOT</sparrow-rocketmq-client.version>
+        <sparrow-markdown.version>1.0.0-SNAPSHOT</sparrow-markdown.version>
     </properties>
     <dependencies>
         <dependency>
@@ -82,40 +93,48 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-loader</artifactId>
+            <version>${sparrow-loader.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol</artifactId>
+            <version>${sparrow-protocol.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol-dao</artifactId>
+            <version>${sparrow-protocol-dao.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol-mq</artifactId>
+            <version>${sparrow-protocol-mq.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-container</artifactId>
+            <version>${sparrow-container.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-data-source</artifactId>
+            <version>${sparrow-data-source.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-json</artifactId>
+            <version>${sparrow-json.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-orm</artifactId>
+            <version>${sparrow-orm.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-mvc-thymeleaf</artifactId>
-            <version>1.0.5-SNAPSHOT</version>
+            <version>${sparrow-mvc-thymeleaf.version}</version>
         </dependency>
         <!--SPRING解析 thymeleaf -->
         <dependency>
@@ -126,6 +145,7 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-rocketmq-client</artifactId>
+            <version>${sparrow-rocketmq-client.version}</version>
             <exclusions>
                 <!--与lettuce netty 版本冲突，导致链接超时-->
                 <exclusion>
@@ -260,6 +280,7 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-data-source</artifactId>
+            <version>${sparrow-data-source.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -268,6 +289,7 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-protocol</artifactId>
+            <version>${sparrow-protocol.version}</version>
         </dependency>
 
         <dependency>
@@ -302,6 +324,7 @@
         <dependency>
             <groupId>com.sparrowzoo</groupId>
             <artifactId>sparrow-markdown</artifactId>
+            <version>${sparrow-markdown.version}</version>
         </dependency>
     </dependencies>
 

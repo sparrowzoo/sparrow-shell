@@ -16,16 +16,17 @@
 ## 在框架中的位置
 
 ```text
-sparrow-bom (依赖管理 / BOM)
- └─ sparrow-shell (多模块工程)
-     ├─ sparrow-protocol      ← 本模块：协议、契约、类型体系（仅依赖 Lombok）
-     ├─ sparrow-protocol-dao  (DAO 层协议)
-     ├─ sparrow-protocol-mq   (消息协议)
-     ├─ sparrow-mvc / sparrow-orm / sparrow-json / ...
-     └─ ...
+sparrow-shell (聚合工程)
+ ├─ sparrow-protocol      ← 本模块：协议、契约、类型体系（仅依赖 Lombok）
+ ├─ sparrow-protocol-dao  (DAO 层协议)
+ ├─ sparrow-protocol-mq   (消息协议)
+ ├─ sparrow-mvc / sparrow-orm / sparrow-json / ...
+ └─ ...
 ```
 
-坐标：`com.sparrowzoo:sparrow-protocol:1.0.5-SNAPSHOT`
+图中表示模块聚合关系；这些核心模块各自继承 `sparrow-parent` 的构建配置。
+
+坐标：`com.sparrowzoo:sparrow-protocol:1.0.0-SNAPSHOT`
 
 ---
 
@@ -196,12 +197,12 @@ page.setList(list);
 # 在仓库根目录统一构建（推荐）
 sh build.sh
 
-# 或单独构建本模块（需先安装父 BOM）
+# 或单独构建本模块（需先安装父 POM）
 mvn clean install -Dmaven.test.skip
 ```
 
-> 该模块依赖 `sparrow-bom`（父 BOM，`relativePath` 空），单独构建前请先安装 `sparrow-bom`。
-> 代码规范走 checkstyle：`../style/sparrow_checkstyle.xml`。
+> 该模块继承 `sparrow-parent`（`relativePath` 空），单独构建前请先安装该父 POM。
+> Checkstyle 配置继承自 `sparrow-parent`，规则路径为 `${env.SPARROW_STYLE_DIR}/sparrow_checkstyle.xml`。构建前请按 [Checkstyle 构建说明](../style/readme.md) 设置环境变量。
 
 ---
 
