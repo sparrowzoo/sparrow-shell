@@ -1,81 +1,157 @@
-麻雀虽小，但五脏俱全
+麻雀虽小，五脏俱全
+===
+
+> sparrow 源自中国俗语「麻雀虽小，五脏俱全」，全力打造一个全新的 **低耦合、0 依赖、高性能** 的 Java 基础框架。
+
+你是否遇到过这些问题？
+
+- 工程代码越来越臃肿，却说不清哪些依赖是真正需要的？
+- 为了一个很小的功能，被迫引入一整个庞大的框架？
+- 项目里因为 jar 包冲突折腾很久？
+- 相似的框架提供一致的业务能力，对外的接口却各不相同，无法统一？
+- 有没有想过只依赖 JDK 就实现一个 WEB 工程？
+
+如果这些戳中了你的痛点，那么 sparrow 非常适合你。
+
+基于 OOP 的基本思想，sparrow 只定义一层 **API**，把「做什么」和「怎么做」彻底解耦。
+
+设计理念
 ---
-sparrow 源自中国俗语 麻雀虽小，但五脏俱全，全力打造一个全新的低耦合，0依赖的高性能java基础框架。
 
-- 有没有发现我们的工程代码其实很臃肿？
-- 有没有发现我们依赖了很多没有用的jar包？
-- 有没有发现在项目中因为jar 冲突而折腾很久？
-- 有没有想过我只依赖jdk 就实现一个WEB工程？
-- 有没有发现其实我们只需要一小块功能，而需要引入一个大框架？
-- 有没有发现其实有些功能非常简单，而被框架限制了？
-- 有没有发现其实有些功能原理不复杂，而框架实现很庞杂？因为不相信程序员！
-- 有没有发现相似的框架提供的业务功能是一致的？但对外的接口是不同的？想不想统一？
-- 有没有想过自己也实现一套JAVA-WEB 框架？
+- **相信程序员**
 
-如果你也一样？
-那么sparrow 非常适合你！
+  很多框架之所以重，一个重要原因是「不相信程序员」，把简单的事情层层封装。sparrow 从 JDK 出发，尽量不依赖第三方 jar 包，让程序跑得更快，也让原理更透明。
 
-为此基于oop的基本思想，构建一层api,最大化的解耦。
+- **从 0 开始**
 
-![架构图](https://user-images.githubusercontent.com/5276088/172513968-9a6b1e84-3b92-4834-b374-a58a1fac7438.png)
+  技术更像一层窗户纸——捅破了就很简单，捅不破就如隔山。sparrow 从 0 构建，让知识连贯起来，不只让程序高效，更让程序员高效。
 
-框架特点
+- **0 依赖**
+
+  框架只实现最简单、最核心的能力，尽量不依赖任何框架（包括 Spring）。
+
+- **解耦 / 隔离**
+
+  `sparrow` 模块只定义接口，具体实现放在其它模块中，是否引入由业务端决定，实现最大化解耦。
+
+- **扩展**
+
+  遵循开闭原则，对业务提供扩展点。
+
+架构
 ---
-- 相信程序员
 
-通过对原理有了更深入的了解，对写程序来讲会更简单，高效，很多框架之所以很重，很重要的一个原因是不相信程序员，这个框架从jdk出发，尽量不依赖第三方jar 包，让程序能跑起来，让程序更快。
+```mermaid
+flowchart TB
+    subgraph APP["应用层 Application"]
+        demo["demo 示例工程"]
+        authenticator["sparrow-authenticator 认证框架"]
+        job["sparrow-job 任务调度"]
+    end
 
-- 从0开始
+    subgraph IMPL["实现层 Implementation（可替换）"]
+        mvc["sparrow-mvc"]
+        orm["sparrow-orm"]
+        aop["sparrow-aop"]
+        json["sparrow-json"]
+        datasource["sparrow-data-source"]
+        container["sparrow-container"]
+        log["sparrow-log"]
+        loader["sparrow-loader"]
+        markdown["sparrow-markdown"]
+        rocketmq["sparrow-rocketmq-client"]
+        thymeleaf["sparrow-mvc-thymeleaf"]
+    end
 
-人脑思维是发散的，如果中间某个知识点断掉，可能就会产生知识盲点，这个盲点可能产生的影响很大的，尤其是技术更象是一层窗户纸，捅破了，简单，捅不破，如隔山。
-所以我们从0开始，让知识连贯起来，消除盲点，不只让程序变得高效，更让程序员变得高效。
+    subgraph API["核心 API 层 Core API（0 依赖）"]
+        core["sparrow 核心接口"]
+        protocol["sparrow-protocol"]
+        protocolDao["sparrow-protocol-dao"]
+        protocolMq["sparrow-protocol-mq"]
+    end
 
-- 0依赖
+    bom["sparrow-bom 版本统一管理"]
+    JDK["JDK"]
 
-框架实现最简单的，最核心的功能，尽量不依赖任何框架，包括spring。
+    APP --> IMPL
+    IMPL --> API
+    API --> JDK
+    bom -. 依赖约束 .-> IMPL
+    bom -. 依赖约束 .-> API
+```
 
+分层说明：
 
-- 解耦/隔离
+| 层次 | 模块 | 职责 |
+| --- | --- | --- |
+| 应用层 | `demo`、`sparrow-authenticator`、`sparrow-job` | 面向业务，按需组合实现层模块 |
+| 实现层 | `sparrow-mvc` / `sparrow-orm` / `sparrow-json` … | 各能力的可替换实现 |
+| 核心 API 层 | `sparrow`、`sparrow-protocol(-dao/-mq)` | 仅定义接口与协议，只依赖 JDK |
+| 版本管理 | `sparrow-bom` | 统一各模块版本 |
 
-sparrow模块 只定义了一些接口，具体实现在其他的模块中，是否依赖由业务端决定，最大化解耦。
+依赖方向自上而下：应用层 → 实现层 → 核心 API 层 → JDK，上层依赖抽象，实现可替换。
 
-- 扩展
- 
-遵循开闭原则，对业务提供扩展点。
-
-项目架构及远期规划
+模块说明
 ---
-架构中大部分功能已具基本的使用框架，但还需要进一步完善和优化，具体内容可查看架构详细介绍
 
-jedis和rocket mq 客户端已具备基本的生产环境使用条件
+| 模块 | 说明 |
+| --- | --- |
+| `sparrow-bom` | 物料清单（BOM），统一管理各模块版本 |
+| `sparrow` | 核心 API 层，定义框架全部接口与抽象，仅依赖 JDK |
+| `sparrow-protocol` | 领域协议（DDD）与通用常量、分页等基础协议 |
+| `sparrow-protocol-dao` | DAO 数据访问协议接口 |
+| `sparrow-protocol-mq` | 消息队列（MQ）协议接口 |
+| `sparrow-json` | JSON 序列化实现 |
+| `sparrow-data-source` | 数据源实现 |
+| `sparrow-loader` | 类加载器与代码生成（CG） |
+| `sparrow-container` | IoC 容器实现 |
+| `sparrow-log` | 日志实现（SLF4J 适配） |
+| `sparrow-orm` | ORM 实现 |
+| `sparrow-mvc` | MVC 框架实现 |
+| `sparrow-aop` | AOP 实现 |
+| `sparrow-markdown` | Markdown 解析与渲染 |
+| `sparrow-rocketmq-client` | RocketMQ 客户端实现 |
+| `sparrow-mvc-thymeleaf` | Thymeleaf 模板视图适配 |
+| `sparrow-authenticator` | 认证框架（core / gateway / microservice / monolithic / passport starter） |
 
-其它模块还需进一步完善，欢迎有兴趣的小伙伴，一起加入
-email:zh_harry#163.com
+> 以下为独立子工程，不参与根 POM 聚合构建：
 
+| 模块 | 说明 |
+| --- | --- |
+| `sparrow-job` | 分布式任务调度 |
+| `sparrow-jni` | JNI / C++ 扩展 |
+| `gossip` / `apache-gossip` | Gossip 协议 |
+| `demo` | 示例工程 |
 
-# Quick start
+Quick start
+---
 
 构建前请将 `SPARROW_STYLE_DIR` 环境变量设为本仓库 `style` 目录的绝对路径，配置方法见 [Checkstyle 构建说明](style/readme.md)。
 
-```aidl
+```bash
+# 方式一：直接聚合构建
 cd sparrow-bom
 mvn clean install -Dmaven.test.skip
 cd ..
 mvn clean install -Dmaven.test.skip
-```
-OR
-```aidl
- sh build.sh
-```
-## 项目demo演示
-http://www.sparrowzoo.com
- 
-我们的愿景和未来
---------
-让程序员脱离spring, 也能写代码,而且更快，更优雅
 
-志哥微信
+# 方式二：按依赖顺序逐个构建
+sh build.sh
+```
+
+项目 Demo
 ---
 
-![wechar](img.png)
+http://www.sparrowzoo.com
 
+愿景
+---
+
+让程序员脱离 Spring 也能写代码，而且更快、更优雅。
+
+联系
+---
+
+email: zh_harry#163.com（`#` 替换为 `@`）
+
+![wechar](zhige.png)
