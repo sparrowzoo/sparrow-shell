@@ -19,20 +19,21 @@ package com.sparrow.support;
 
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.magic.Symbol;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 
+@Slf4j
 public class EnvironmentSupport {
-    private static Logger logger = LoggerFactory.getLogger(EnvironmentSupport.class);
-
-    private static EnvironmentSupport environmentSupport = new EnvironmentSupport();
+    private final static EnvironmentSupport ENVIRONMENT_SUPPORT = new EnvironmentSupport();
 
     public static EnvironmentSupport getInstance() {
-        return environmentSupport;
+        return ENVIRONMENT_SUPPORT;
     }
 
     private EnvironmentSupport() {
@@ -40,7 +41,7 @@ public class EnvironmentSupport {
     }
 
     /**
-     * 获取当前classes文件夹../WebRoot/WEB-INF/classes/
+     * 获取当前classes文件夹..
      *
      * @return
      */
@@ -53,70 +54,20 @@ public class EnvironmentSupport {
         return path.substring(0, path.lastIndexOf(Symbol.SLASH));
     }
 
-    /**
-     * 获取当WebRoot文件夹
-     *
-     * @return
-     */
-    public String getWebRootPhysicPath() {
-        String path = getClassesPhysicPath();
-        return path.substring(0, path.indexOf("WEB-INF"));
-    }
-
-    public String getApplicationSourcePath() {
-        String path = getClassesPhysicPath();
-        if (path.contains("/bin")) {
-            path = path.replace("/bin", "/src");
-        } else if (path.contains("/target")) {
-            path = path.substring(0, path.indexOf("/target"));
-        }
-        return path;
-    }
-
-    public String getRootPath() {
-        String path = getClassesPhysicPath();
-        if (path.contains("/bin")) {
-            return path.replace("/bin", "/src");
-        }
-        return path.substring(0, path.indexOf("WEB-INF"));
-    }
 
     /**
-     * 获取当WEB-INF文件夹
+     * 这里获取当前项目所在的绝对路径
      *
+     * @param projectName 当前项目的名称
      * @return
      */
-    public String getWebInfPhysicPath() {
-        String path = getClassesPhysicPath();
-        return path.substring(0, path.indexOf("classes"));
-    }
-
-    public String getLibPhysicPath() {
-        String path = getClassesPhysicPath();
-        return path.substring(0, path.indexOf("classes")) + "/lib";
-    }
-
-    public String getWorkspace() {
+    public String getWorkspace(String projectName) {
         String workspace = System.getenv(Constant.WORKSPACE);
         if (workspace != null) {
             return workspace;
         }
         String classPath = this.getClassesPhysicPath();
-        if (classPath.contains("/bin")) {
-            classPath = classPath.substring(0, classPath.indexOf("/bin"));
-        } else if (classPath.contains("/target")) {
-            classPath = classPath.substring(0, classPath.indexOf("/target"));
-        } else if (classPath.contains("/WebRoot")) {
-            classPath = classPath.substring(0, classPath.indexOf("/WebRoot"));
-        }
-        classPath = classPath.substring(0, classPath.lastIndexOf(Symbol.SLASH));
-        if (classPath.startsWith(Symbol.SLASH)) {
-            classPath = classPath.substring(1);
-        }
-        if (classPath.contains(Symbol.SLASH)) {
-            classPath = classPath.replace(Symbol.SLASH, Symbol.BACKSLASH);
-        }
-        return classPath;
+        return classPath.substring(0, classPath.lastIndexOf(projectName)) + projectName;
     }
 
     /**
@@ -152,7 +103,7 @@ public class EnvironmentSupport {
             try {
                 fileInputStream = url.openStream();
             } catch (Exception e) {
-                logger.error("input stream error", e);
+                log.error("input stream error", e);
                 throw new FileNotFoundException(e.getMessage());
             }
         }
@@ -179,7 +130,7 @@ public class EnvironmentSupport {
                 fileInputStream = Files.newInputStream(new File(relativeFileName).toPath());
             }
         } catch (Exception e) {
-            logger.error("input stream error", e);
+            log.error("input stream error", e);
         }
         return fileInputStream;
     }

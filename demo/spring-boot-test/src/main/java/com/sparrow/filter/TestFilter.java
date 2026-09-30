@@ -30,8 +30,8 @@ public class TestFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException, ServletException {
-        System.out.println("TestFilter doFilter");
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        log.info("TestFilter doFilter");
         chain.doFilter(request, response);
     }
 }

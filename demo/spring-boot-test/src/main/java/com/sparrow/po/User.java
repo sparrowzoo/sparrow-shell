@@ -23,7 +23,7 @@ import lombok.Data;
 
 @TableName("user")
 @Data
-public class User{
+public class User {
     @TableField("id")
     private Long id;
     @TableField("name")

@@ -13,5 +13,9 @@
         <module>spring-boot-sparrow-ds-demo</module>
         <module>spring-boot-druid-demo</module>
         <module>sparrow-test</module>
+        <module>shiro-spring-boot-web</module>
+        <module>sparrow-jwt-shiro</module>
+        <module>spring-boot-shiro</module>
+        <module>spring-boot3-autoconfiguration-test</module>
     </modules>
 </project>

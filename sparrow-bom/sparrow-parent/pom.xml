@@ -28,7 +28,8 @@
     <packaging>pom</packaging>
 
     <name>sparrow-parent</name>
-    <description>Shared dependency versions, build conventions and release configuration for Sparrow projects</description>
+    <description>Shared dependency versions, build conventions and release configuration for Sparrow projects
+    </description>
 
     <properties>
         <mysql.version>8.0.29</mysql.version>
@@ -200,24 +201,12 @@
                                             <failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
                                         </requireReleaseVersion>
                                         <requireReleaseDeps>
-                                            <message>Release builds require non-SNAPSHOT dependencies and parent.</message>
+                                            <message>Release builds require non-SNAPSHOT dependencies and parent.
+                                            </message>
                                             <failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
                                         </requireReleaseDeps>
                                     </rules>
                                 </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
                             </execution>
                         </executions>
                     </plugin>
@@ -391,6 +380,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
