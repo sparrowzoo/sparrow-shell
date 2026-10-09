@@ -24,7 +24,6 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collections;
 import java.util.Properties;
 
 @Slf4j
@@ -85,7 +84,6 @@ public class EmailSender {
             }
 
 
-
             message.setContent(content, "text/html;charset=gb2312");
             message.saveChanges();
             if (authentication) {
@@ -108,7 +106,7 @@ public class EmailSender {
             }
         } catch (Exception e) {
             log.error("send email error", e);
-            throw new BusinessException(SparrowError.GLOBAL_EMAIL_SEND_FAIL, Collections.singletonList(to));
+            throw new BusinessException(SparrowError.GLOBAL_EMAIL_SEND_FAIL, "to", to);
         }
     }
 }

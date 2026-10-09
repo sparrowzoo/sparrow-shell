@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-package com.sparrow.protocol.constant;
+package com.sparrow.protocol;
 
-public class OpenType {
-    public static final String BLANK = "_blank";
-    public static final String SELF = "_self";
-    public static final String PARENT = "_parent";
+public interface TreeItemAccessor {
+    Long getParentId();
+
+    Long getId();
+
+    Boolean getHasChildren();
 }

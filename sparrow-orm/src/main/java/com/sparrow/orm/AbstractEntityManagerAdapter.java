@@ -30,13 +30,12 @@ import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
 import jakarta.persistence.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+@Slf4j
 public abstract class AbstractEntityManagerAdapter implements EntityManager {
-    protected static Logger logger = LoggerFactory.getLogger(AbstractEntityManagerAdapter.class);
 
     protected String schema;
     protected Field primary;
@@ -67,6 +66,11 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
     protected String fields;
     protected String createDDL;
 
+    @Override
+    public Class<?> getEntityClass() {
+        return this.clazz;
+    }
+
     public Set<String> getPoPropertyNames() {
         return poPropertyNames;
     }
@@ -84,9 +88,9 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
             SplitTable splitTable = property.getAnnotation(SplitTable.class);
             GeneratedValue generatedValue = property.getAnnotation(GeneratedValue.class);
             Id id = property.getAnnotation(Id.class);
-            ListDatasource listDatasource = property.getAnnotation(ListDatasource.class);
+            InputDatasource inputDatasource = property.getAnnotation(InputDatasource.class);
             Field ormField = new Field(property.getName(), property.getType(), column, splitTable, generatedValue, id);
-            ormField.setListDatasource(listDatasource);
+            ormField.setInputDatasource(inputDatasource);
             fieldMap.put(property.getName(), ormField);
         }
         return new ArrayList<>(fieldMap.values());
@@ -125,14 +129,13 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
         insertSQL.append("(");
         updateSQL.append(" set ");
 
-        if (PO.class.isAssignableFrom(clazz)) {
-            List<java.lang.reflect.Field> poFieldList = ClassUtility.extractFields(PO.class);
-            Set<String> poFields = new HashSet<>();
-            for (java.lang.reflect.Field poField : poFieldList) {
-                poFields.add(poField.getName());
-            }
-            this.poPropertyNames = poFields;
+        List<java.lang.reflect.Field> poFieldList = ClassUtility.extractFields(PO.class);
+        Set<String> poFields = new HashSet<>();
+        for (java.lang.reflect.Field poField : poFieldList) {
+            poFields.add(poField.getName());
         }
+        this.poPropertyNames = poFields;
+
 
         for (Field field : fields) {
             String propertyName = field.getPropertyName();

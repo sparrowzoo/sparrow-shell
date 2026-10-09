@@ -19,7 +19,7 @@ package com.sparrow.utility;
 
 import com.sparrow.constant.Regex;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.enums.HttpMethod;
+import com.sparrow.protocol.enums.HttpMethod;
 import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.Extension;
 import com.sparrow.support.web.WebConfigReader;

@@ -14,24 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.protocol.dao;
 
-import com.sparrow.protocol.dao.enums.ListDatasourceType;
+package com.sparrow.protocol.enums;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.sparrow.protocol.EnumIdentityAccessor;
 
-@Target({ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ListDatasource {
-    /**
-     * 指定顺序
-     *
-     * @return 该属性的顺序
-     */
-    ListDatasourceType type();
+public enum HttpMethod implements EnumIdentityAccessor {
+    GET(1),
+    POST(2),
+    DELETE(3),
+    PUT(4),
+    HEAD(5),
+    OPTION(6);
 
-    String params();
+    private final int id;
+
+    HttpMethod(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getIdentity() {
+        return this.id;
+    }
 }

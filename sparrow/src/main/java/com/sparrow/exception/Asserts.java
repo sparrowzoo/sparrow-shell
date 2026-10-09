@@ -20,14 +20,14 @@ package com.sparrow.exception;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.ErrorSupport;
 
-import java.util.List;
+import java.util.Map;
 
 public class Asserts {
     public static void isTrue(boolean expression, ErrorSupport errorSupport) throws BusinessException {
         isTrue(expression, errorSupport, null);
     }
 
-    public static void isTrue(boolean expression, ErrorSupport errorSupport, List<Object> parameters) throws BusinessException {
+    public static void isTrue(boolean expression, ErrorSupport errorSupport, Map<String,String> parameters) throws BusinessException {
         if (expression) {
             throw new BusinessException(errorSupport, parameters);
         }

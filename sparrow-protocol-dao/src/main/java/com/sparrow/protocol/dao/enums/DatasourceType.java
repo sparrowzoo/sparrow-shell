@@ -20,20 +20,21 @@ import com.sparrow.protocol.EnumIdentityAccessor;
 import com.sparrow.protocol.EnumUniqueName;
 
 @EnumUniqueName(name = "datasourceType")
-public enum ListDatasourceType implements EnumIdentityAccessor {
-    NULL(1),
+public enum DatasourceType implements EnumIdentityAccessor {
+    NULL(0),
     DICTIONARY(2),
     TABLE(3),
-    ENUM(4);
+    ENUM(4),
+    UPLOAD(5);
 
     private final int identity;
 
-    ListDatasourceType(Integer identity) {
+    DatasourceType(Integer identity) {
         this.identity = identity;
     }
 
-    public static ListDatasourceType getById(int identity) {
-        for (ListDatasourceType type : ListDatasourceType.values()) {
+    public static DatasourceType getById(int identity) {
+        for (DatasourceType type : DatasourceType.values()) {
             if (type.identity == identity) {
                 return type;
             }
@@ -44,5 +45,17 @@ public enum ListDatasourceType implements EnumIdentityAccessor {
     @Override
     public Integer getIdentity() {
         return this.identity;
+    }
+
+    public static Boolean isList(DatasourceType datasourceType) {
+        return TABLE.equals(datasourceType) ||
+                ENUM.equals(datasourceType) ||
+                DICTIONARY.equals(datasourceType);
+    }
+
+    public static Boolean isList(Integer datasourceType) {
+        return TABLE.getIdentity().equals(datasourceType) ||
+                ENUM.getIdentity().equals(datasourceType) ||
+                DICTIONARY.getIdentity().equals(datasourceType);
     }
 }

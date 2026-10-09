@@ -20,7 +20,7 @@ package com.sparrow.protocol;
 import com.sparrow.protocol.constant.magic.Symbol;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 业务异常 程序中断
@@ -55,21 +55,27 @@ public class BusinessException extends Exception {
      */
     private String key;
     /**
-     * 其他参数
+     * 命名参数:next-intl 基于 ICU Message Format
+     * 与前端参数标准保持一致
      */
-    private List<Object> parameters;
+    private Map<String, String> parameters;
 
-    public BusinessException(ErrorSupport errorSupport,List<Object> parameters) {
+    public BusinessException(ErrorSupport errorSupport, String key, String value) {
+        this(errorSupport, Collections.singletonMap(key, value));
+    }
+
+
+    public BusinessException(ErrorSupport errorSupport, Map<String, String> parameters) {
         super(errorSupport.getMessage());
         this.key = errorSupport.name();
         this.errorSupport = errorSupport;
-        if (parameters != null && parameters.size() > 0 && !parameters.get(0).equals(Symbol.EMPTY)) {
+        if (parameters != null && !parameters.isEmpty()) {
             this.parameters = parameters;
         }
     }
 
     public BusinessException(ErrorSupport errorSupport) {
-        this(errorSupport, Collections.singletonList(Symbol.EMPTY));
+        this(errorSupport, Collections.emptyMap());
     }
 
     public ErrorSupport getErrorSupport() {
@@ -80,7 +86,7 @@ public class BusinessException extends Exception {
         return key;
     }
 
-    public List<Object> getParameters() {
+    public Map<String, String> getParameters() {
         return parameters;
     }
 
@@ -91,14 +97,13 @@ public class BusinessException extends Exception {
 
     @Override
     public String toString() {
-
         StringBuilder sb = new StringBuilder();
         if (parameters != null) {
-            for (Object object : parameters) {
-                if (sb.length() > 0) {
+            for (String key:parameters.keySet()) {
+                if (!sb.isEmpty()) {
                     sb.append(Symbol.COMMA);
                 }
-                sb.append(object.toString().trim());
+                sb.append(key).append(Symbol.COLON).append(parameters.get(key));
             }
         }
         return String.format("key:%s,code:%s,parameters:%s", key, this.errorSupport.getCode(),

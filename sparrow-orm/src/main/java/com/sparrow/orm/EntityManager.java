@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Set;
 
 public interface EntityManager {
+    Class<?> getEntityClass();
+
     Set<String> getPoPropertyNames();
 
     String getClassName();

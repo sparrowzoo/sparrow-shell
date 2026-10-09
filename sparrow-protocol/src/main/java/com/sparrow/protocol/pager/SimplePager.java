@@ -17,6 +17,8 @@
 package com.sparrow.protocol.pager;
 
 import com.sparrow.protocol.Query;
+import com.sparrow.protocol.constant.Constant;
+import com.sparrow.protocol.constant.magic.Digit;
 import lombok.Data;
 
 /**
@@ -37,12 +39,16 @@ public class SimplePager implements Query {
      */
     protected Integer pageNo;
 
+    public void allPageSize() {
+        this.pageSize = Constant.ALL;
+    }
+
     public SimplePager(Integer pageSize, Integer currentPageIndex) {
         if (pageSize != null) {
             this.pageSize = pageSize;
         }
         if (currentPageIndex == null) {
-            currentPageIndex = 1;
+            currentPageIndex = Digit.ONE;
         }
         this.pageNo = currentPageIndex;
     }

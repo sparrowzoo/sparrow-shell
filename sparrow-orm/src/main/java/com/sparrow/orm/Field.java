@@ -18,7 +18,7 @@
 package com.sparrow.orm;
 
 import com.sparrow.core.TypeConverter;
-import com.sparrow.protocol.dao.ListDatasource;
+import com.sparrow.protocol.dao.InputDatasource;
 import com.sparrow.protocol.dao.SplitTable;
 import com.sparrow.protocol.dao.enums.TableSplitStrategy;
 import jakarta.persistence.Column;
@@ -36,7 +36,7 @@ public class Field extends TypeConverter {
     private Column column;
     private SplitTable splitTable;
     private GeneratedValue generatedValue;
-    private ListDatasource listDatasource;
+    private InputDatasource inputDatasource;
     private String columnName;
     private Integer hashIndex = -1;
 
@@ -49,7 +49,7 @@ public class Field extends TypeConverter {
     private String columnDefinition;
 
     public Field(String property, Class<?> type, Column column, SplitTable splitTable, GeneratedValue generatedValue,
-        Id id) {
+                 Id id) {
         this.id = id;
         this.column = column;
         this.splitTable = splitTable;

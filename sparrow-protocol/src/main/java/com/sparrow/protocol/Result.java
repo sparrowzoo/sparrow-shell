@@ -21,6 +21,8 @@ import com.sparrow.protocol.constant.Constant;
 import com.sparrow.protocol.constant.SparrowError;
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * 可用于协议 规范服务端返回格式 <p>
  * <p>
@@ -145,6 +147,8 @@ public class Result<T> implements DTO {
      */
     private T data;
 
+    private Map<String, String> parameters;
+
 
     public static Result fail(ErrorSupport errorSupport) {
         return new Result(errorSupport);
@@ -155,6 +159,7 @@ public class Result<T> implements DTO {
         result.key = business.getErrorSupport().name().toLowerCase();
         result.code = business.getErrorSupport().getCode();
         result.message = business.getMessage();
+        result.parameters = business.getParameters();
         return result;
     }
 

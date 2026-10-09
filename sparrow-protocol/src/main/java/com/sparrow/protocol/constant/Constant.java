@@ -17,6 +17,8 @@
 
 package com.sparrow.protocol.constant;
 
+import com.sparrow.protocol.constant.magic.Digit;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,7 +26,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * 常用常量
  */
 public class Constant {
-    public static final int MAX_REMARK_LENGTH = 500;
+    public static final Long LONG_ALL = -1L;
+    public static final Integer ALL = Digit.ALL;
+    public static final Long LONG_DEFAULT_OPTION_KEY = 0L;
+    public static final Integer DEFAULT_OPTION_KEY = 0;
     public static final String SPARROW = "sparrow";
     public static final String DEFAULT = "default";
     public static final String ERROR = "error";

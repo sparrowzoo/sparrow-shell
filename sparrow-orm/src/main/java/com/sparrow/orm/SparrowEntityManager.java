@@ -20,17 +20,15 @@ package com.sparrow.orm;
 import com.sparrow.lang.joiner.MapJoiner;
 import com.sparrow.protocol.constant.magic.Symbol;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+@Slf4j
 public class SparrowEntityManager extends AbstractEntityManagerAdapter {
-    private static Logger logger = LoggerFactory.getLogger(SparrowEntityManager.class);
-
     public SparrowEntityManager(Class<?> clazz) {
         super(clazz);
     }
@@ -91,7 +89,7 @@ public class SparrowEntityManager extends AbstractEntityManagerAdapter {
                 case HASH:
                     Long hashKey = Long.valueOf(parameter.toString());
                     if (hashKey == -1) {
-                        logger.warn("hashKey is -1");
+                        log.warn("hashKey is -1");
                         break;
                     }
                     hash = String.valueOf(hashKey % this.getTableBucketCount());

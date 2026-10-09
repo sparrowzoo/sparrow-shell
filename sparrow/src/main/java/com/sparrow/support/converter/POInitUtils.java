@@ -30,7 +30,6 @@ public class POInitUtils {
         po.setCreateUserId(loginUser.getUserId());
         po.setModifiedUserId(loginUser.getUserId());
         po.setStatus(StatusRecord.ENABLE);
-        po.setDeleted(false);
         po.setCreateUserName(loginUser.getUserName());
         po.setModifiedUserName(loginUser.getUserName());
     }

@@ -37,8 +37,11 @@ public class EnumUtility {
         for (Enum<?> en : enums) {
             String name = en.name();
             Integer key = en.ordinal();
-            if (en instanceof EnumIdentityAccessor) {
-                key = ((EnumIdentityAccessor) en).getIdentity();
+            if (en instanceof EnumIdentityAccessor enumIdentityAccessor) {
+                key = enumIdentityAccessor.getIdentity();
+                if (enumIdentityAccessor.getDisplayName() != null) {
+                    name = enumIdentityAccessor.getDisplayName();
+                }
             }
             kvs.add(new KeyValue<>(key, name));
         }

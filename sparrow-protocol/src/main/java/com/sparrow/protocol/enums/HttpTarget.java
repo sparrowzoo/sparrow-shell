@@ -1,13 +1,13 @@
-/*
+/**
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,40 +18,46 @@
 package com.sparrow.protocol.enums;
 
 import com.sparrow.protocol.EnumIdentityAccessor;
-import com.sparrow.protocol.EnumUniqueName;
 
-/**
- * 记录状态
- *
- * @version 1.0
- */
-@EnumUniqueName(name = "status")
-public enum StatusRecord implements EnumIdentityAccessor {
+public enum HttpTarget implements EnumIdentityAccessor {
+    CONTENT(1, "content"),
     /**
-     * 被屏蔽(0)
+     * 新页面
      */
-    DISABLE(0),
+    BLANK(2, "_blank"),
     /**
-     * 可用(1)
+     * 当前自己
      */
-    ENABLE(1);
-    private final Integer identity;
+    SELF(3, "_self"),
 
-    StatusRecord(Integer identity) {
-        this.identity = identity;
+    /**
+     * 父框架
+     */
+    PARENT(4, "_parent"),
+    /**
+     * 顶部
+     */
+    TOP(5, "_top");
+
+
+    HttpTarget(int id, String target) {
+        this.id = id;
+        this.target = target;
     }
+
+    private int id;
+    private String target;
 
     @Override
     public Integer getIdentity() {
-        return identity;
+        return this.id;
     }
 
-    public static StatusRecord valueOf(Integer identity) {
-        for (StatusRecord status : values()) {
-            if (status.getIdentity().equals(identity)) {
-                return status;
-            }
-        }
-        return null;
+    public int getId() {
+        return id;
+    }
+
+    public String getTarget() {
+        return target;
     }
 }

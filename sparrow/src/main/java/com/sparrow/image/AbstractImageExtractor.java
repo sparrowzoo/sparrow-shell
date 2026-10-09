@@ -34,7 +34,6 @@ import com.sparrow.utility.StringUtility;
 import jakarta.inject.Inject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,7 +62,7 @@ public abstract class AbstractImageExtractor implements ImageExtractor, Containe
 
     public List<ImageDTO> extractImage(String content, Long authorId, Downloader downloader) throws BusinessException {
         Matcher imageMatcher = Pattern.compile(this.getImageRegexMark(),
-            Regex.OPTION_MULTILINE_CASE_INSENSITIVE).matcher(content);
+                Regex.OPTION_MULTILINE_CASE_INSENSITIVE).matcher(content);
         List<ImageDTO> images = new ArrayList<>();
         WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
 
@@ -77,13 +76,13 @@ public abstract class AbstractImageExtractor implements ImageExtractor, Containe
                 //非站内资源引用img1.sparrowzoo.net
                 //非资源文件r.sparrowzoo.net
                 if (!RegexUtility.matches(imageUrl, Regex.URL_INNER_IMAGE.pattern()) &&
-                    !imageUrl.startsWith(configReader.getResource())) {
+                        !imageUrl.startsWith(configReader.getResource())) {
                     fileId = downloader.downloadImage(imageUrl, authorId);
                     if (extension == null) {
                         extension = Extension.PNG;
                     }
                     if (fileId == null) {
-                        throw new BusinessException(SparrowError.IMAGE_EXTENSION_NOT_FOUND, Collections.singletonList(imageUrl));
+                        throw new BusinessException(SparrowError.IMAGE_EXTENSION_NOT_FOUND, "url", imageUrl);
                     }
                 } else {
                     fileId = fileNameProperty.getName();

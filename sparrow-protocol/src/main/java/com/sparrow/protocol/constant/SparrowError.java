@@ -46,7 +46,7 @@ public enum SparrowError implements ErrorSupport {
     GLOBAL_ADMIN_CAN_NOT_OPERATION("22", "Admin can't operation"),
     GLOBAL_PARAMETER_NULL("23", "Parameter is null"),
     GLOBAL_REQUEST_REPEAT("24", "Request repeat"),
-    GLOBAL_EMAIL_SEND_FAIL("25", "email send fail"),
+    GLOBAL_EMAIL_SEND_FAIL("25", "email send fail "),
     GLOBAL_OPERATION_VALIDATE_STATUS_INVALID("26", "operation validate status is invalid"),
     GLOBAL_OPERATION_VALIDATE_ROLE_INVALID("27", "operation validate role is invalid"),
     GLOBAL_PARAMETER_IS_ILLEGAL("28", "parameter is illegal"),

@@ -43,6 +43,11 @@ public class StringJoiner {
         this.setSeparator(separator);
     }
 
+    public StringJoiner(Iterable<?> array) {
+        this.iterator = array;
+        this.setSeparator(Symbol.COMMA);
+    }
+
     public StringJoiner(String separator, Object... array) {
         this.array = array;
         this.setSeparator(separator);
