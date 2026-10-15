@@ -33,7 +33,7 @@ flowchart LR
 
 ## 快速接入
 
-**环境要求：JDK 18+、Maven 3.8.6+。** 编译使用 `maven.compiler.release=18`，同时限定 Java API 与字节码版本。
+**环境要求：JDK 25+、Maven 3.8.6+。** 编译使用 `maven.compiler.release=25`，同时限定 Java API 与字节码版本。
 
 ### 1. 配置 Checkstyle
 

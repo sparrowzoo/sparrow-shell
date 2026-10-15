@@ -18,10 +18,13 @@
 package com.sparrow.mq;
 
 
-import java.lang.reflect.ParameterizedType;
-import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DefaultQueueHandlerMappingContainer implements EventHandlerMappingContainer {
     private static Logger logger = LoggerFactory.getLogger(DefaultQueueHandlerMappingContainer.class);
@@ -30,7 +33,7 @@ public class DefaultQueueHandlerMappingContainer implements EventHandlerMappingC
     }
 
     /**
-     * map<EventName,MQHandler>
+     * {@code map<EventName,MQHandler>}
      */
     private Map<String, MQHandler> queueHandlerMappings = new HashMap<String, MQHandler>();
 

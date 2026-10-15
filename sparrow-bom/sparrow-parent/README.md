@@ -61,9 +61,31 @@
 
 继承后，`dependencyManagement` 提供依赖版本管理；项目仍需在自己的 `dependencies` 中声明实际使用的依赖。已管理的依赖通常可以省略版本。
 
+## JDK 25 与 Spring 4 基线
+
+| 组件 | 版本 |
+| --- | --- |
+| Spring Boot / Boot Maven Plugin | 4.0.8 |
+| Spring Cloud | 2025.1.3 |
+| Spring Cloud Alibaba | 2025.1.0.0 |
+| Spring AI | 2.0.1 |
+| springdoc | 3.0.3 |
+| Lombok | 1.18.46 |
+
+Spring Framework、Security、Jackson、Netty、SLF4J 和 Servlet API 由 Boot BOM 管理。
+Lombok 在 `dependencyManagement` 中固定版本，并通过编译插件的 `annotationProcessorPaths` 显式启用；
+业务模块仍需声明 Lombok 依赖。需要其他注解处理器的模块应扩展处理器列表。
+
+Spring AI Alibaba 2.0 当前仅有基于 Spring AI 2.0.0-M1 的预发布版，本基线不引入该扩展，
+并移除未使用的 `spring-ai-alibaba-version` 属性。
+
+从 Boot 3 升级的应用需核查 Jackson 3 包名与 API、Boot Starter/自动配置变更及第三方 Starter 的 Boot 4 支持。
+Cloud Alibaba 2025.1 的 Nacos 配置需使用 `spring.config.import`。
+父 POM 的依赖解析通过不代表下游应用已经完成迁移。
+
 ## 默认构建行为
 
-要求 JDK 18+、Maven 3.8.6+，编译的 `release`、`source`、`target` 统一使用 `maven.compiler.release=18`。Enforcer 在 `validate` 检查工具版本，Checkstyle 同阶段按外部规则执行。
+要求 JDK 25+、Maven 3.8.6+，编译通过 `release` 统一使用 `maven.compiler.release=25`。Enforcer 在 `validate` 检查工具版本，Checkstyle 同阶段按外部规则执行。
 
 构建前，将 `SPARROW_STYLE_DIR` 环境变量指向包含 `sparrow_checkstyle.xml` 和 `check_style_suppressions.xml` 的目录；Parent 分别通过 `${env.SPARROW_STYLE_DIR}/sparrow_checkstyle.xml` 和 `${env.SPARROW_STYLE_DIR}/check_style_suppressions.xml` 定位规则与抑制文件。配置方式见 [Checkstyle 环境变量](../README.md#checkstyle-环境变量)。
 
