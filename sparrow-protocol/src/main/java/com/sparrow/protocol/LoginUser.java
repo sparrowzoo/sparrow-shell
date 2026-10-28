@@ -16,12 +16,12 @@
  */
 package com.sparrow.protocol;
 
+import com.sparrow.protocol.enums.DeviceType;
+
 import java.util.Map;
 
 public interface LoginUser extends POJO {
     public static final Long VISITOR_ID = 0L;
-    public static final int CATEGORY_VISITOR = 0;
-    public static final int CATEGORY_REGISTER = 1;
     /**
      * 用户ID
      */
@@ -55,12 +55,14 @@ public interface LoginUser extends POJO {
     /**
      * 设备类型
      */
-    Integer getDeviceType();
+    DeviceType getDeviceType();
 
     /**
      * 设备id
      */
     String getHost();
+
+    Long getIp();
 
     Double getDays();
 

@@ -24,13 +24,11 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @Configuration
 //@Import({CoderConfiguration.class, FileConfiguration.class, PassportConfiguration.class})
 @CoderConfiguration
 @FileConfiguration
-@EnableSwagger2WebMvc
 @ComponentScan(basePackages = {"com.sparrow.spring.boot.scan"})
 //@ComponentScan(basePackages = {"com.sparrow.scan.coder"})
 //@ComponentScan(basePackages = {"com.sparrow.scan.file"})

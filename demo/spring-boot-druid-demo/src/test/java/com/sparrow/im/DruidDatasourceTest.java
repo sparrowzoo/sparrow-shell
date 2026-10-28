@@ -1,11 +1,9 @@
 package com.sparrow.im;
 
 import com.sparrow.datasource.ConnectionReleaser;
-import com.sparrow.spring.starter.test.TestWithoutBootstrap;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.sparrow.spring.test.TestWithoutBootstrap;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-@RunWith(SpringRunner.class)
 @TestWithoutBootstrap
 public class DruidDatasourceTest {
 

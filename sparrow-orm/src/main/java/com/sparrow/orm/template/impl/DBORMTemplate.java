@@ -20,7 +20,7 @@ package com.sparrow.orm.template.impl;
 import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.orm.query.Criteria;
 import com.sparrow.protocol.constant.magic.Digit;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.orm.*;
 import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.query.UpdateCriteria;

@@ -30,9 +30,7 @@
     </parent>
 
     <artifactId>infra-bom</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <name>infra-bom</name>
     <description>Company platform component dependency management for business projects</description>
 
@@ -50,7 +48,7 @@
         <sparrow-rocketmq-client.version>1.0.0-SNAPSHOT</sparrow-rocketmq-client.version>
         <sparrow-protocol.version>1.0.0-SNAPSHOT</sparrow-protocol.version>
         <sparrow-protocol-dao.version>1.0.0-SNAPSHOT</sparrow-protocol-dao.version>
-        <sparrow-protocol-mq.version>1.0.0-SNAPSHOT</sparrow-protocol-mq.version>
+        <sparrow-messaging-protocol.version>1.0.0-SNAPSHOT</sparrow-messaging-protocol.version>
         <sparrow-starter.version>1.0.0-SNAPSHOT</sparrow-starter.version>
         <authenticator-core.version>1.0.0-SNAPSHOT</authenticator-core.version>
         <authenticator-passport-starter.version>1.0.0-SNAPSHOT</authenticator-passport-starter.version>
@@ -130,10 +128,10 @@
                 <version>${sparrow-protocol-dao.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.sparrowzoo</groupId>
-                <artifactId>sparrow-protocol-mq</artifactId>
-                <version>${sparrow-protocol-mq.version}</version>
+                <dependency>
+                    <groupId>com.sparrowzoo.messaging</groupId>
+                    <artifactId>messaging-protocol</artifactId>
+                    <version>${sparrow-messaging-protocol.version}</version>
             </dependency>
 
             <dependency>

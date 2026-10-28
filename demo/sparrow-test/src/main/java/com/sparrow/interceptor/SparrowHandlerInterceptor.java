@@ -3,9 +3,9 @@ package com.sparrow.interceptor;
 
 import com.sparrow.servlet.HandlerInterceptor;
 
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Created by harry on 2018/2/1.

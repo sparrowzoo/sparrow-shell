@@ -16,7 +16,7 @@
  */
 package com.sparrow.core.monitor;
 
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.FileUtility;
 import java.util.ArrayList;

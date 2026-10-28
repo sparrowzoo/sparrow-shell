@@ -22,6 +22,7 @@ import com.sparrow.authenticator.SessionKey;
 import com.sparrow.authenticator.SessionStatus;
 import com.sparrow.authenticator.session.dao.DefaultSession;
 import com.sparrow.protocol.LoginUser;
+import com.sparrow.protocol.enums.DeviceType;
 
 import java.io.Serializable;
 
@@ -37,7 +38,7 @@ public class DefaultSessionParser implements SessionParser {
         session.setSessionKey(sessionKey);
         session.setUserId(Long.valueOf(keyArray[0]));
         session.setCategory(Integer.valueOf(keyArray[1]));
-        session.setDeviceType(Integer.valueOf(keyArray[2]));
+        session.setDeviceType(DeviceType.valueOf(keyArray[2]));
         session.setHost(keyArray[3]);
         if (status != null) {
             session.setStartTime(status.getStartTime());

@@ -19,7 +19,7 @@ package com.sparrow.mvc;
 
 import com.sparrow.container.Container;
 import com.sparrow.container.FactoryBean;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.datasource.ConnectionContextHolder;
 import com.sparrow.lang.url.UrlAssembler;

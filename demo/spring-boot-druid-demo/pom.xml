@@ -7,7 +7,6 @@
         <groupId>com.sparrowzoo</groupId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
-
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-boot-druid-demo</artifactId>
@@ -34,8 +33,8 @@
             <artifactId>spring-jdbc</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>

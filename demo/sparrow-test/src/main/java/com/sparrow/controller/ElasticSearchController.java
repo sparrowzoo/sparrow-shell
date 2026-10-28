@@ -20,7 +20,7 @@ import com.sparrow.mvc.RequestParameters;
 import com.sparrow.utility.HttpClient;
 import com.sparrow.utility.QueryStringParser;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

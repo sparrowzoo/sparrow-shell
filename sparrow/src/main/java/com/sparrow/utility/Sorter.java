@@ -18,7 +18,7 @@
 package com.sparrow.utility;
 
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.enums.Order;
 
 public class Sorter {

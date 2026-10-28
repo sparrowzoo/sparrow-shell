@@ -19,6 +19,7 @@ package com.sparrow.protocol.enums;
 import com.sparrow.protocol.EnumIdentityAccessor;
 
 public enum DeviceType implements EnumIdentityAccessor {
+    UNKNOW(0),
     PC(1),
     MOBILE(2),
     APP(3);
@@ -35,12 +36,12 @@ public enum DeviceType implements EnumIdentityAccessor {
         return this.id;
     }
 
-    public DeviceType getDeviceById(Integer id) {
+    public static DeviceType getDeviceById(Integer id) {
         for (DeviceType deviceType : DeviceType.values()) {
             if (deviceType.id.equals(id)) {
                 return deviceType;
             }
         }
-        return null;
+        return DeviceType.UNKNOW;
     }
 }

@@ -17,7 +17,7 @@
 
 package com.sparrow;
 
-import com.sparrow.spring.starter.config.SparrowConfig;
+import com.sparrow.spring.config.SparrowConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

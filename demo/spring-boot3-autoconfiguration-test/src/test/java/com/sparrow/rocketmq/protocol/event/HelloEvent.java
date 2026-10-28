@@ -17,7 +17,7 @@
 
 package com.sparrow.rocketmq.protocol.event;
 
-import com.sparrow.mq.MQEvent;
+import com.sparrow.pubsub.MQEvent;
 
 /**
  * Created by harry on 2017/6/14.

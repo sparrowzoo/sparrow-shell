@@ -18,8 +18,8 @@
 package com.sparrow.test;
 
 import com.sparrow.BootApplication;
-import com.sparrow.spring.starter.config.SparrowConfig;
-import com.sparrow.spring.starter.test.SparrowTestExecutionListener;
+import com.sparrow.spring.config.SparrowConfig;
+import com.sparrow.spring.test.SparrowTestExecutionListener;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

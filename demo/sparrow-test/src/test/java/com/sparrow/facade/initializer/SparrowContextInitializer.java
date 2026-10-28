@@ -19,7 +19,7 @@ package com.sparrow.facade.initializer;
 
 import com.sparrow.container.Container;
 import com.sparrow.support.Initializer;
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 @Named("initializer")
 public class SparrowContextInitializer implements Initializer {

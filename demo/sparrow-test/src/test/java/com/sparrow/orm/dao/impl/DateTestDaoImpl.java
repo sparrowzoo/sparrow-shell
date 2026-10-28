@@ -21,7 +21,7 @@ import com.sparrow.orm.dao.DateTestDao;
 import com.sparrow.orm.po.DateTest;
 import com.sparrow.orm.template.impl.ORMStrategy;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 @Named
 public class DateTestDaoImpl extends ORMStrategy<DateTest, Long> implements DateTestDao {

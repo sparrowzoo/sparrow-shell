@@ -28,7 +28,7 @@
     <bean name="cacheClient" class="com.sparrow.cache.impl.redis.RedisCacheClient">
         <property name="redisPool" ref="redisPool"/>
     </bean>
-    <bean name="mqIdempotent" class="com.sparrow.mq.DefaultIdempotent">
+    <bean name="mqIdempotent" class="com.sparrow.pubsub.DefaultIdempotent">
         <property name="cacheClient" ref="cacheClient"/>
     </bean>
     <bean name="messageConverter" class="com.sparrow.rocketmq.impl.SparrowJsonMessageConverter">
@@ -39,7 +39,7 @@
         <property name="cacheClient" ref="cacheClient"/>
     </bean>
 
-    <bean name="queueHandlerMappingContainer" class="com.sparrow.mq.DefaultQueueHandlerMappingContainer"/>
+    <bean name="queueHandlerMappingContainer" class="com.sparrow.pub.sub.DefaultQueueHandlerMappingContainer"/>
 
     <bean name="rocketMQMessageListener" class="com.sparrow.rocketmq.impl.SparrowRocketMQMessageListener">
         <property name="messageConverter" ref="messageConverter"/>

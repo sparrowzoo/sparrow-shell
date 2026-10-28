@@ -19,7 +19,7 @@ package com.sparrow.container;
 import com.sparrow.cg.Generator4MethodAccessor;
 import com.sparrow.cg.MethodAccessor;
 import com.sparrow.cg.PropertyNamer;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.core.TypeConverter;
 import com.sparrow.core.spi.MethodAccessorProvider;
 import com.sparrow.exception.DuplicateActionMethodException;

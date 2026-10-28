@@ -17,7 +17,7 @@
 
 package com.sparrow.rocketmq.spring;
 
-import com.sparrow.mq.MQPublisher;
+import com.sparrow.pub.sub.MQPublisher;
 import com.sparrow.rocketmq.protocol.event.HelloEvent;
 import org.junit.Test;
 import org.junit.runner.RunWith;

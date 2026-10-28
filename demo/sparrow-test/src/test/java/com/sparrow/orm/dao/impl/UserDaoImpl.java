@@ -10,7 +10,7 @@ import com.sparrow.orm.template.impl.ORMStrategy;
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
 
 import java.util.List;
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 @Named
 public class UserDaoImpl extends ORMStrategy<User, Long> implements UserDAO {

@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.mq;
+package com.sparrow.protocol;
 
-import jakarta.inject.Inject;
-
-public abstract class AbstractMQHandler<T extends MQEvent> implements MQHandler<T> {
-    @Inject
-    private EventHandlerMappingContainer queueHandlerMappingContainer;
-
-    public void aware() {
-        queueHandlerMappingContainer.put(this);
-    }
+public interface LLMTools {
 }

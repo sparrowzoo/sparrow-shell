@@ -19,6 +19,7 @@ package com.sparrow.authenticator.session.dao;
 
 import com.sparrow.authenticator.Session;
 import com.sparrow.authenticator.SessionStatus;
+import com.sparrow.protocol.enums.DeviceType;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -31,7 +32,7 @@ public class DefaultSession extends DefaultSessionStatus implements Session {
     private Serializable sessionKey;
     private Long userId;
     private Integer category;
-    private Integer deviceType;
+    private DeviceType deviceType;
     private String host;
 
     @Override
@@ -60,7 +61,7 @@ public class DefaultSession extends DefaultSessionStatus implements Session {
     }
 
     @Override
-    public Integer getDeviceType() {
+    public DeviceType getDeviceType() {
         return this.deviceType;
     }
 

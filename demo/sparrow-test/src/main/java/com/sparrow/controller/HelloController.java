@@ -26,7 +26,7 @@ import com.sparrow.support.web.ServletUtility;
 import com.sparrow.vo.HelloVO;
 import com.sparrow.vo.User;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 

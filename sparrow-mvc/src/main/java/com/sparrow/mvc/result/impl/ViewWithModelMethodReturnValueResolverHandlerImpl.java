@@ -19,7 +19,7 @@ package com.sparrow.mvc.result.impl;
 
 import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.lang.url.UrlAssembler;
 import com.sparrow.mvc.PageSwitchMode;

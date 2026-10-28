@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.core;
+package com.sparrow.protocol;
 
 import java.util.HashMap;
 import java.util.Iterator;

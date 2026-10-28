@@ -32,11 +32,9 @@
     <artifactId>samples-spring-boot-web</artifactId>
     <name></name>
     <properties>
-        <module.name>samples.spring.boot.web</module.name>
         <commons.logging.version>1.3.5</commons.logging.version>
         <maven.compiler.release>17</maven.compiler.release>
     </properties>
-
 
     <dependencies>
 
@@ -53,11 +51,10 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
+
 
         <!-- Spring -->
         <dependency>

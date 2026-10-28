@@ -93,6 +93,7 @@ public class MonolithicBearerFilter extends AbstractAuthcFilter {
         WebConfigReader configReader = ApplicationContext.getContainer().getBean(WebConfigReader.class);
         boolean isAjax = this.isAjax(request);
         if (isAjax) {
+            servletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             servletResponse.setContentType(Constant.CONTENT_TYPE_JSON);
             Result result = Result.fail(e);
             servletResponse.getWriter().write(JsonFactory.getProvider().toString(result));
@@ -161,7 +162,7 @@ public class MonolithicBearerFilter extends AbstractAuthcFilter {
             return;
         }
         if (mockLoginUser) {
-            loginUser = DefaultLoginUser.create(1L, "", 1, "mock-user", "mock-nick-name", "header", DeviceType.PC.getIdentity(), "device id", 3D);
+            loginUser = DefaultLoginUser.create(1L, "", 1, "mock-user", "mock-nick-name", "header", DeviceType.PC, "device id", 0L,3D);
             this.loginSuccess(loginUser, filterChain, req, rep);
             return;
         }

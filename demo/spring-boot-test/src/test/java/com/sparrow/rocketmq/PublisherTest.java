@@ -20,7 +20,7 @@ package com.sparrow.rocketmq;
 import com.sparrow.container.Container;
 import com.sparrow.container.ContainerBuilder;
 import com.sparrow.container.impl.SparrowContainer;
-import com.sparrow.mq.MQPublisher;
+import com.sparrow.pub.sub.MQPublisher;
 import com.sparrow.rocketmq.protocol.event.HelloEvent;
 
 public class PublisherTest {

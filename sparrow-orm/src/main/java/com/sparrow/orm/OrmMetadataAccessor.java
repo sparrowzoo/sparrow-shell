@@ -19,7 +19,7 @@ package com.sparrow.orm;
 
 import com.sparrow.cg.MethodAccessor;
 import com.sparrow.container.Container;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.core.StrategyFactory;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.orm.query.SearchCriteria;

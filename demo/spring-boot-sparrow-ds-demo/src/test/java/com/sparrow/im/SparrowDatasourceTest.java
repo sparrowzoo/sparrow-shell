@@ -1,7 +1,7 @@
 package com.sparrow.im;
 
 import com.sparrow.datasource.ConnectionReleaser;
-import com.sparrow.spring.starter.test.TestWithoutBootstrap;
+import com.sparrow.spring.test.TestWithoutBootstrap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

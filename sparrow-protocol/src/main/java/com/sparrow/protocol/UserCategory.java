@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.mq;
+package com.sparrow.protocol;
 
-public interface EventHandlerMappingContainer {
-
-    void put(MQHandler handler);
-
-    void init(String packageName) throws IllegalAccessException, InstantiationException;
-
-    MQHandler get(String eventClazzName);
+public interface UserCategory extends EnumIdentityAccessor {
 }

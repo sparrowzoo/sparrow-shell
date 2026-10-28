@@ -79,7 +79,7 @@
         </dependency>
         <dependency>
             <groupId>com.sparrowzoo</groupId>
-            <artifactId>sparrow-protocol-mq</artifactId>
+            <artifactId>sparrow-protocol-ps</artifactId>
             <version>${sparrow-protocol-mq.version}</version>
 
         </dependency>

@@ -18,7 +18,7 @@
 package com.sparrow.orm;
 
 import com.sparrow.protocol.constant.magic.Symbol;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.enums.ComparisonOperator;
 import com.sparrow.utility.StringUtility;
 import java.util.List;

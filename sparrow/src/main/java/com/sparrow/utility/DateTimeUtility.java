@@ -19,7 +19,7 @@ package com.sparrow.utility;
 
 import com.sparrow.constant.DateTime;
 import com.sparrow.container.ConfigReader;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.DateTimeUnit;
 import com.sparrow.protocol.constant.magic.Digit;

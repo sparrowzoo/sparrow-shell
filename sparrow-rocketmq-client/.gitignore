@@ -1,7 +1,0 @@
-*.iml
-target
-.idea
-lib
-classes
-logs
-*.jar

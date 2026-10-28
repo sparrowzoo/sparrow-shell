@@ -18,12 +18,13 @@
 package com.sparrow.authenticator;
 
 import com.sparrow.protocol.POJO;
+import com.sparrow.protocol.enums.DeviceType;
 
 public interface Session extends SessionStatus, SessionKey, POJO {
     // key 静态属性
     Long getUserId();
     Integer getCategory();
-    Integer getDeviceType();
+    DeviceType getDeviceType();
     String getHost();
     //状态属性
     SessionStatus getSessionStatus();

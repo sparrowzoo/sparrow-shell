@@ -472,7 +472,7 @@ catch (AuthenticationException ae) {…
 <!-- /wp:paragraph -->
 
 <!-- wp:list -->
-<ul><li>Apache Shiro</li><li>java-jwt</li></ul>
+<ul><li>Apache Shiro</li><li>JJWT</li></ul>
 <!-- /wp:list -->
 
 <!-- wp:paragraph -->
@@ -492,9 +492,9 @@ catch (AuthenticationException ae) {…
 			&lt;version>1.7.1&lt;/version>
 		&lt;/dependency>
 		&lt;dependency>
-			&lt;groupId>com.auth0&lt;/groupId>
-			&lt;artifactId>java-jwt&lt;/artifactId>
-			&lt;version>3.4.1&lt;/version>
+			&lt;groupId>io.jsonwebtoken&lt;/groupId>
+			&lt;artifactId>jjwt&lt;/artifactId>
+			&lt;version>0.13.0&lt;/version>
 		&lt;/dependency>
 		&lt;dependency>
 			&lt;groupId>org.projectlombok&lt;/groupId>
@@ -568,58 +568,12 @@ public class UserBean {
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>我们构建了一个简单的 JWT 加密工具，并将用户密码作为加密密码，从而确保令牌即使被窃取也无法破解。另外，我们把用户名放在令牌里，设置5分钟后令牌过期。</p>
+<p>示例使用 JJWT 为令牌签名，从用户密码派生签名密钥，并设置 5 分钟过期。读取用户名只用于查找账号，随后仍会验证签名和过期时间。生产环境应使用独立的高强度密钥。</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:code -->
-<pre class="wp-block-code"><code>public class JWTUtil {
-    // 5 分钟后过期
-    private static final long EXPIRE_TIME = 5*60*1000;
-    /**
-     * Verify TOKEN
-     * @param token 
-     * @param secret User password
-     * @return 
-     */
-    public static boolean verify(String token, String username, String secret) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withClaim("username", username)
-                    .build();
-            DecodedJWT jwt = verifier.verify(token);
-            return true;
-        } catch (Exception exception) {
-            return false;
-        }
-    }
-    /**
-     * Get username from TOKEN
-     * @return token contains username information
-     */
-    public static String getUsername(String token) {
-        try {
-            DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("username").asString();
-        } catch (JWTDecodeException e) {
-            return null;
-        }
-    }
-    /**
-     * 生成 signature, signature 5 分钟后过期
-     * @param username 
-     * @param secret 
-     * @return Encryted token
-     */
-    public static String sign(String username, String secret) {
-         
-  		Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
-		Algorithm algorithm = Algorithm.HMAC256(secret);
-
-		return JWT.create().withClaim("username", username).withExpiresAt(date).sign(algorithm);
-    }
-}</code></pre>
-<!-- /wp:code -->
+<!-- wp:paragraph -->
+<p>完整实现见 <a href="src/main/java/com/ideaworks/club/util/JWTUtil.java">JWTUtil.java</a>。令牌签发、验签和用户名读取集中在这个文件中。</p>
+<!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 <p>ResponseBean.java</p>

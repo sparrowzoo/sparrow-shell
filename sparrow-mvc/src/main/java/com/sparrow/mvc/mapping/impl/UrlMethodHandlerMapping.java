@@ -20,7 +20,7 @@ package com.sparrow.mvc.mapping.impl;
 import com.sparrow.constant.Config;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.container.Container;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.LoginType;
 import com.sparrow.lang.url.UrlAssembler;

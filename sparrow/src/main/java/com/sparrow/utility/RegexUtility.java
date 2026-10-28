@@ -18,7 +18,7 @@
 package com.sparrow.utility;
 
 import com.sparrow.constant.Regex;
-import com.sparrow.core.Pair;
+import com.sparrow.protocol.Pair;
 import com.sparrow.protocol.constant.Constant;
 
 import java.util.ArrayList;

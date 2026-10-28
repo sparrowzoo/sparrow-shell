@@ -1,7 +1,6 @@
 package com.sparrow.controller;
 
 import com.sparrow.mvc.RequestParameters;
-import com.sparrow.utility.StringUtility;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -60,8 +59,8 @@ public class YamlController {
     }
 
 
-    private String getKey(Stack stack) {
-        return StringUtility.join(stack, ".");
+    private String getKey(Stack<String> stack) {
+        return String.join(".", stack);
     }
 
     private void traverse(Map<String, Object> map, StringBuilder properties, Stack keys) {

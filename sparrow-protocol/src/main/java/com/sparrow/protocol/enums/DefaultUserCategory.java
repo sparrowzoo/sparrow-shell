@@ -15,8 +15,26 @@
  * limitations under the License.
  */
 
-package com.sparrow.mq;
+package com.sparrow.protocol.enums;
 
-public interface MQHandler<T extends MQEvent> {
-    void handle(T t) throws Throwable;
+import com.sparrow.protocol.UserCategory;
+
+public enum DefaultUserCategory implements UserCategory {
+    VISITOR(0), REGISTER(1), AI(2), SERVER(3);
+
+    private final int id;
+
+    DefaultUserCategory(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getIdentity() {
+        return this.id;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return this.name();
+    }
 }

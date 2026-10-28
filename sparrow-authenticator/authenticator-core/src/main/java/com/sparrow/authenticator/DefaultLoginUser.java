@@ -18,10 +18,13 @@ package com.sparrow.authenticator;
 
 import com.sparrow.protocol.DTO;
 import com.sparrow.protocol.LoginUser;
+import com.sparrow.protocol.enums.DefaultUserCategory;
+import com.sparrow.protocol.enums.DeviceType;
 import lombok.Data;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 
 
 @Data
@@ -40,7 +43,7 @@ public class DefaultLoginUser implements LoginUser, DTO {
     /**
      * 用户类型
      */
-    private Integer category = CATEGORY_REGISTER;
+    private Integer category = DefaultUserCategory.REGISTER.getIdentity();
     /**
      * 用户昵称
      */
@@ -56,11 +59,13 @@ public class DefaultLoginUser implements LoginUser, DTO {
     /**
      * 设备类型
      */
-    private Integer deviceType;
+    private DeviceType deviceType;
     /**
      * 设备id
      */
     private String host;
+
+    private Long ip;
 
     private Double days;
 
@@ -74,8 +79,9 @@ public class DefaultLoginUser implements LoginUser, DTO {
                                           String userName,
                                           String nickName,
                                           String avatar,
-                                          Integer deviceType,
+                                          DeviceType deviceType,
                                           String host,
+                                          Long ip,
                                           Double days) {
         DefaultLoginUser login = new DefaultLoginUser();
         login.tenantId = tenantId;
@@ -88,11 +94,12 @@ public class DefaultLoginUser implements LoginUser, DTO {
         double t = days * 24 * 60 * 60 * 1000;
         login.expireAt = System.currentTimeMillis() + (long) t;
         login.deviceType = deviceType;
+        login.ip = ip;
         login.host = host;
         return login;
     }
 
     public boolean isVisitor() {
-        return VISITOR_ID.equals(this.userId) || CATEGORY_VISITOR == this.category;
+        return VISITOR_ID.equals(this.userId) || DefaultUserCategory.VISITOR.getIdentity().equals(this.category);
     }
 }

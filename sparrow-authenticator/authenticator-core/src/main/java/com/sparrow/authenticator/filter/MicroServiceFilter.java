@@ -23,6 +23,7 @@ import com.sparrow.context.SessionContext;
 import com.sparrow.core.spi.JsonFactory;
 import com.sparrow.json.Json;
 import com.sparrow.protocol.LoginUser;
+import com.sparrow.protocol.enums.DefaultUserCategory;
 import com.sparrow.protocol.enums.DeviceType;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
@@ -67,12 +68,12 @@ public class MicroServiceFilter extends AbstractAuthcFilter {
                 if (mockLoginUser) {
                     loginUser = DefaultLoginUser.create(
                             1L, "",
-                            DefaultLoginUser.CATEGORY_VISITOR,
+                            DefaultUserCategory.REGISTER.getIdentity(),
                             "mock-user",
                             "mock-nick-name",
                             "header",
-                            DeviceType.PC.getIdentity(),
-                            "device id", 3D);
+                            DeviceType.PC,
+                            "device id", 1L, 30D);
                 }
             }
             SessionContext.bindLoginUser(loginUser);
