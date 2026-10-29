@@ -22,6 +22,7 @@ import java.util.Map;
 
 public interface LoginUser extends POJO {
     public static final Long VISITOR_ID = 0L;
+
     /**
      * 用户ID
      */
@@ -58,7 +59,7 @@ public interface LoginUser extends POJO {
     DeviceType getDeviceType();
 
     /**
-     * 设备id
+     * 移动端是 浏览器则为IP 设备比对按此字段对比
      */
     String getHost();
 

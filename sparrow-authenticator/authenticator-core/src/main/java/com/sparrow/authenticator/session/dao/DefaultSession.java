@@ -21,10 +21,12 @@ import com.sparrow.authenticator.Session;
 import com.sparrow.authenticator.SessionStatus;
 import com.sparrow.protocol.enums.DeviceType;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 
 @Data
+@Slf4j
 public class DefaultSession extends DefaultSessionStatus implements Session {
     public DefaultSession() {
     }
@@ -95,6 +97,7 @@ public class DefaultSession extends DefaultSessionStatus implements Session {
         if (this.host == null) {
             return false;
         }
+        log.info("device match -->user session's device type {},host:{} current device {}", this.deviceType, this.host, host);
         return this.host.equals(host);
     }
 
