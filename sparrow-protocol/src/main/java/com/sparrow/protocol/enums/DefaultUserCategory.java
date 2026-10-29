@@ -19,6 +19,10 @@ package com.sparrow.protocol.enums;
 
 import com.sparrow.protocol.UserCategory;
 
+/**
+ * 用户类别，一个用户只能有一个类别，在注册时确定，可以切换。但同一时刻只能有一个
+ * ADMIN是角色不是用户类别
+ */
 public enum DefaultUserCategory implements UserCategory {
     VISITOR(0), REGISTER(1), AI(2), SERVER(3);
 
