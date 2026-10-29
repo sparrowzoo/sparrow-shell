@@ -19,13 +19,14 @@ package com.sparrow.support.web;
 
 import com.sparrow.protocol.constant.ClientInfoConstant;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.protocol.constant.magic.Symbol;
+import com.sparrow.utility.ClientIpResolver;
 import com.sparrow.utility.CollectionsUtility;
 import com.sparrow.utility.RegexUtility;
 import com.sparrow.utility.StringUtility;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +35,10 @@ public class ServletUtility {
 
     private static final ServletUtility INSTANCE = new ServletUtility();
 
+    private final ClientIpResolver clientIpResolver;
+
     public ServletUtility() {
+        this.clientIpResolver = ClientIpResolver.fromSystemProperties();
     }
 
     public static ServletUtility getInstance() {
@@ -52,26 +56,9 @@ public class ServletUtility {
             return Constant.LOCALHOST;
         }
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String ip = httpRequest.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpRequest.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpRequest.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        if (ip == null) {
-            return "";
-        }
-        if (ip.contains(",")) {
-            ip = ip.substring(0, ip.indexOf(","));
-        }
-        if (ip.indexOf(Symbol.COLON) > 0) {
-            ip = ip.split(Symbol.COLON)[0];
-        }
-        return ip;
+        return this.clientIpResolver.resolve(request.getRemoteAddr(),
+                Collections.list(httpRequest.getHeaders("X-Forwarded-For")),
+                Collections.list(httpRequest.getHeaders("X-Real-IP")));
     }
 
     public String getDeviceId(HttpServletRequest request) {
