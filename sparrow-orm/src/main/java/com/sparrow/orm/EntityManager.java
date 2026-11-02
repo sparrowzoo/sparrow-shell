@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Set;
 
 public interface EntityManager {
+    String PRIMARY_KEY_UNIQUE = "PRIMARY";
+
     Class<?> getEntityClass();
 
     Set<String> getPoPropertyNames();

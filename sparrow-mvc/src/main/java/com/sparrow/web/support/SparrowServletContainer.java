@@ -18,13 +18,9 @@
 package com.sparrow.web.support;
 
 import com.sparrow.servlet.impl.AbstractServletContainer;
-import com.sparrow.support.pager.HtmlPagerResult;
 import com.sparrow.support.web.HttpContext;
-import com.sparrow.utility.CollectionsUtility;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.util.List;
 
 /**
  * Sparrow framework controller support class that used by sparrow only
@@ -46,19 +42,6 @@ public class SparrowServletContainer extends AbstractServletContainer {
     @Override
     public HttpServletResponse getResponse() {
         return HttpContext.getContext().getResponse();
-    }
-
-    public <T> void grid(String gridView, List<T> list) {
-        if (CollectionsUtility.isNullOrEmpty(list)) {
-            return;
-        }
-        this.grid(gridView, HtmlPagerResult.page(1, list.size(), (long) list.size()));
-    }
-
-    public <T> void grid(String gridView, HtmlPagerResult pagerSearch) {
-        httpContext.put(gridView, pagerSearch);
-        httpContext.put("spanRecordTotal.innerHTML",
-                pagerSearch.getRecordTotal());
     }
 
     public void clear() {

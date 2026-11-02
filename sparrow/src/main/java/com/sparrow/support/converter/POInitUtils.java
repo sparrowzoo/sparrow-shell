@@ -17,14 +17,17 @@
 
 package com.sparrow.support.converter;
 
-import com.sparrow.context.SessionContext;
 import com.sparrow.protocol.LoginUser;
+import com.sparrow.protocol.context.SessionContext;
 import com.sparrow.protocol.dao.PO;
 import com.sparrow.protocol.enums.StatusRecord;
 
 public class POInitUtils {
     public static void init(PO po) {
         LoginUser loginUser = SessionContext.getLoginUser();
+        if (loginUser == null) {
+            return;
+        }
         po.setGmtCreate(System.currentTimeMillis());
         po.setGmtModified(po.getGmtCreate());
         po.setCreateUserId(loginUser.getUserId());

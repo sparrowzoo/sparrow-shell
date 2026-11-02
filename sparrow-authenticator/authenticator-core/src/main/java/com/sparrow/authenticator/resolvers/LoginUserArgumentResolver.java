@@ -17,7 +17,7 @@
 
 package com.sparrow.authenticator.resolvers;
 
-import com.sparrow.context.SessionContext;
+import com.sparrow.protocol.context.SessionContext;
 import com.sparrow.protocol.LoginUser;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

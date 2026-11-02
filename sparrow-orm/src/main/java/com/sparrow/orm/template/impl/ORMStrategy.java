@@ -22,8 +22,6 @@ import com.sparrow.orm.query.UpdateCriteria;
 import com.sparrow.orm.template.SparrowDaoSupport;
 import com.sparrow.protocol.dao.*;
 import com.sparrow.protocol.dao.enums.DBDialect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -33,7 +31,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class ORMStrategy<T, I> implements SparrowDaoSupport<T, I> {
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public ORMStrategy() {
         Class<?> clazz = null;

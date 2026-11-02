@@ -15,36 +15,42 @@
  * limitations under the License.
  */
 
-package com.sparrow.context;
+package com.sparrow.protocol.context;
 
 import com.sparrow.protocol.ClientInformation;
 import com.sparrow.protocol.LoginUser;
 
-public class SessionContext {
-    private static InheritableThreadLocal<LoginUser> loginTokenThreadLocal = new InheritableThreadLocal<LoginUser>();
-    private static InheritableThreadLocal<ClientInformation> clientThreadLocal = new InheritableThreadLocal<ClientInformation>();
+/**
+ * Authentication data bound to the current thread and inherited by newly created child threads.
+ */
+public final class SessionContext {
+    private static final InheritableThreadLocal<LoginUser> LOGIN_USER = new InheritableThreadLocal<>();
+    private static final InheritableThreadLocal<ClientInformation> CLIENT_INFO = new InheritableThreadLocal<>();
 
-    public static void bindLoginUser(LoginUser loginToken) {
-        loginTokenThreadLocal.set(loginToken);
+    private SessionContext() {
+    }
+
+    public static void bindLoginUser(LoginUser loginUser) {
+        LOGIN_USER.set(loginUser);
     }
 
     public static LoginUser getLoginUser() {
-        return loginTokenThreadLocal.get();
-    }
-
-    public static ClientInformation getClientInfo() {
-        return clientThreadLocal.get();
-    }
-
-    public static void bindClientInfo(ClientInformation client) {
-        clientThreadLocal.set(client);
+        return LOGIN_USER.get();
     }
 
     public static void clearToken() {
-        loginTokenThreadLocal.remove();
+        LOGIN_USER.remove();
+    }
+
+    public static void bindClientInfo(ClientInformation client) {
+        CLIENT_INFO.set(client);
+    }
+
+    public static ClientInformation getClientInfo() {
+        return CLIENT_INFO.get();
     }
 
     public static void clearClient() {
-        clientThreadLocal.remove();
+        CLIENT_INFO.remove();
     }
 }

@@ -18,12 +18,10 @@
 package com.sparrow.concurrent;
 
 import com.sparrow.utility.DateTimeUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class AbstractLock {
-    protected static Logger logger = LoggerFactory.getLogger(AbstractLock.class);
-
     /**
      * 毫秒级唯一key，因为分布式锁，同一时刻只能有一个线程拿到锁
      * 所以毫秒级时间戮可以唯一标识一个锁
@@ -49,7 +47,7 @@ public abstract class AbstractLock {
     }
 
     protected void monitor(String key, String status) {
-        logger.info("LOCK-MONITOR KEY={},STATUS={}", key, status);
+        log.info("LOCK-MONITOR KEY={},STATUS={}", key, status);
     }
 
     protected boolean isExpire(long lockTime, long expireMillis) {
@@ -82,7 +80,7 @@ public abstract class AbstractLock {
         while (lock == null || !lock) {
             lock = this.tryAcquire(key, expireMillis);
             if (lock) {
-                logger.info("retry times {} got lock duration {}", times, (System.nanoTime() - t) / 1000000);
+                log.info("retry times {} got lock duration {}", times, (System.nanoTime() - t) / 1000000);
                 this.monitor(key, SUCCESS);
                 return true;
             }
@@ -95,7 +93,7 @@ public abstract class AbstractLock {
                     return false;
                 }
                 Thread.sleep(timeout);
-                logger.debug("lock {} timeout {} at [{}] {}", key, timeout, DateTimeUtility.getFormatCurrentTime(), System.currentTimeMillis());
+                log.debug("lock {} timeout {} at [{}] {}", key, timeout, DateTimeUtility.getFormatCurrentTime(), System.currentTimeMillis());
             } catch (InterruptedException ignore) {
                 this.release(key);
             }

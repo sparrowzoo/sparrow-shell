@@ -14,27 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sparrow.support;
 
-import com.sparrow.servlet.HandlerInterceptor;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+package com.sparrow.mvc;
 
-
-public class WebsiteConfigInterceptor implements HandlerInterceptor {
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("websiteConfig", WebsiteConfigParser.parse());
-        return true;
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-    }
+public enum LoginType {
+    /**
+     * 0不需求登录
+     */
+    NO_AUTHENTICATE,
+    /**
+     * 1正常网站登录
+     */
+    LOGIN,
+    /**
+     * 2框架内登录 default.jsp 内登录
+     */
+    LOGIN_IFRAME,
+    /**
+     * 4对话框登录(对话框不允许在框架内，如果在框架内则重定向至父页面)
+     */
+    DIALOG_LOGIN,
+    /**
+     * 直接打印错误信息
+     */
+    MESSAGE
 }

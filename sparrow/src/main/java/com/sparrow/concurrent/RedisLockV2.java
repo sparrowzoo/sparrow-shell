@@ -18,7 +18,9 @@
 package com.sparrow.concurrent;
 
 import com.sparrow.utility.StringUtility;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class RedisLockV2 extends AbstractLock {
     @Override
     protected boolean delete(String key) {
@@ -57,14 +59,14 @@ public abstract class RedisLockV2 extends AbstractLock {
              */
             if (this.setIfNotExistWithMills(key, unique, expireMillis)) {
                 // 如果当前锁不存在，返回加锁成功
-                logger.error("first got lock successful");
+                log.error("first got lock successful");
                 return true;
             }
             //其他情况，均返回加锁失败
             return false;
         } catch (Exception e) {
             //链接失败 加锁失败
-            logger.error("{} get connection fail", key, e);
+            log.error("{} get connection fail", key, e);
             return false;
         }
     }

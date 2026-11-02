@@ -17,15 +17,13 @@
 
 package com.sparrow.authenticator.session.dao;
 
+import com.alibaba.fastjson.JSON;
 import com.sparrow.authenticator.Session;
 import com.sparrow.authenticator.SessionDao;
 import com.sparrow.authenticator.SessionKey;
 import com.sparrow.authenticator.SessionStatus;
 import com.sparrow.authenticator.session.SessionParser;
-import com.sparrow.core.spi.JsonFactory;
-import com.sparrow.json.Json;
-import com.sparrow.utility.CollectionsUtility;
-import com.sparrow.utility.StringUtility;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.Serializable;
@@ -46,7 +44,6 @@ public class RedisSessionDao implements SessionDao {
     }
 
     private RedisTemplate redisTemplate;
-    private Json json = JsonFactory.getProvider();
 
     private String getTerminalKey(Serializable key) {
         return String.format(TERMINAL_KEY, key);
@@ -56,7 +53,7 @@ public class RedisSessionDao implements SessionDao {
     public void create(Session session) {
         String key = this.getTerminalKey(session.sessionKey());
         SessionStatus sessionStatus = session.getSessionStatus();
-        redisTemplate.opsForValue().set(key, json.toString(sessionStatus));
+        redisTemplate.opsForValue().set(key, JSON.toJSONString(sessionStatus));
         redisTemplate.expireAt(key, new Date(session.getExpireAt()));
         String userKey = String.format(USER_KEY, session.getUserId());
         redisTemplate.opsForSet().add(userKey, session.sessionKey());
@@ -85,7 +82,7 @@ public class RedisSessionDao implements SessionDao {
     @Override
     public SessionStatus get(SessionKey key) {
         String value = (String) this.redisTemplate.opsForValue().get(this.getTerminalKey(key.sessionKey()));
-        return this.json.parse(value, SessionStatus.class);
+        return JSON.parseObject(value, DefaultSessionStatus.class);
     }
 
     @Override
@@ -100,15 +97,15 @@ public class RedisSessionDao implements SessionDao {
         List<Session> sessions = new ArrayList<>();
         for (int i = 0; i < sessions.size(); i++) {
             String value = values.get(i);
-            if (StringUtility.isNullOrEmpty(value)) {
+            if (StringUtils.isEmpty(StringUtils.trim(value))) {
                 continue;
             }
-            SessionStatus sessionStatus = this.json.parse(value, SessionStatus.class);
+            SessionStatus sessionStatus = JSON.parseObject(value, DefaultSessionStatus.class);
             String key = keys.get(i);
             Session session = this.sessionParser.parse(key, sessionStatus);
             sessions.add(session);
         }
-        if (CollectionsUtility.isNullOrEmpty(sessions)) {
+        if (sessions.isEmpty()) {
             this.redisTemplate.delete(userKey);
         }
         return sessions;

@@ -22,45 +22,58 @@ import com.alibaba.fastjson.JSON;
 import com.sparrow.authenticator.DefaultLoginUser;
 import com.sparrow.authenticator.config.AuthenticatorConfig;
 import com.sparrow.authenticator.signature.jwt.JwtRSSignature;
-import com.sparrow.cryptogram.RSAUtils;
 import com.sparrow.protocol.LoginUser;
-import com.sparrow.utility.FileUtility;
 
+import javax.crypto.Cipher;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Signature;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 public class RSAUtilsTest {
     public static void main(String[] args) throws Exception {
-        //读取私钥
-        String privateKey = FileUtility.getInstance().readFileContent("/rsa/test");
-        System.out.printf("private key: %s", privateKey);
-
-        //读取公钥
-        String publicKey = FileUtility.getInstance().readFileContent("/rsa/test.pub");
-        System.out.printf("public key: %s", publicKey);
-        privateKey = privateKey.replaceAll("\\s", "");
-        PrivateKey privateKey1 = RSAUtils.getRSAPrivateKey(privateKey);
-
-        PublicKey publicKey1 = RSAUtils.getRSAPublicKey(publicKey);
-
-        //RSAUtils.encryptByPublicKey("CONTENT",)
-
-        System.out.println(privateKey1.toString());
-        System.out.println(publicKey1.toString());
+        String privateKey;
+        String publicKey;
+        try (InputStream privateStream = RSAUtilsTest.class.getResourceAsStream("/rsa/test");
+             InputStream publicStream = RSAUtilsTest.class.getResourceAsStream("/rsa/test.pub")) {
+            if (privateStream == null || publicStream == null) {
+                throw new IllegalStateException("RSA example key resources not found");
+            }
+            privateKey = new String(privateStream.readAllBytes(), StandardCharsets.UTF_8);
+            publicKey = new String(publicStream.readAllBytes(), StandardCharsets.UTF_8);
+        }
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PrivateKey privateKey1 = keyFactory.generatePrivate(
+                new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey.replaceAll("\\s", ""))));
+        PublicKey publicKey1 = keyFactory.generatePublic(
+                new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey.replaceAll("\\s", ""))));
 
         //公钥加密
-        String encrypt = RSAUtils.encryptByPublicKey("test", publicKey1);
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey1);
+        String encrypt = Base64.getEncoder().encodeToString(cipher.doFinal("test".getBytes(StandardCharsets.UTF_8)));
         System.out.printf("encrypt: %s\n", encrypt);
         //私钥解密
-        String content = RSAUtils.decryptByPrivateKey(encrypt, privateKey1);
+        cipher.init(Cipher.DECRYPT_MODE, privateKey1);
+        String content = new String(cipher.doFinal(Base64.getDecoder().decode(encrypt)), StandardCharsets.UTF_8);
         System.out.printf("content: %s\n", content);
 
         //私钥签名
-        String sign = RSAUtils.sign("test", privateKey1);
+        Signature rsaSignature = Signature.getInstance("SHA256withRSA");
+        rsaSignature.initSign(privateKey1);
+        rsaSignature.update("test".getBytes(StandardCharsets.UTF_8));
+        String sign = Base64.getEncoder().encodeToString(rsaSignature.sign());
         System.out.printf("sign: %s\n", sign);
 
         //公钥验签
-        boolean verify = RSAUtils.verify("test", sign, publicKey1);
+        rsaSignature.initVerify(publicKey1);
+        rsaSignature.update("test".getBytes(StandardCharsets.UTF_8));
+        boolean verify = rsaSignature.verify(Base64.getDecoder().decode(sign));
         System.out.printf("verify: %s\n", verify);
 
         AuthenticatorConfig authenticatorConfig=new AuthenticatorConfig();

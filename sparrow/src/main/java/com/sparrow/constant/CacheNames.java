@@ -23,10 +23,6 @@ public class CacheNames {
      */
     public static final String CONFIG_FILE = "CACHE_KEY_CONFIG_FILE";
     /**
-     * 保存字典表配置参数
-     */
-    public static final String CONFIG_CODE_DB = "CACHE_KEY_CONFIG_CODE_DB";
-    /**
      * 保存ORM参数
      */
     public static final String ORM = "CACHE_KEY_ORM";
@@ -40,12 +36,4 @@ public class CacheNames {
      */
     public static final String ACTION_URL_CACHE = "ACTION-URL-CACHE";
 
-    /**
-     * 日志
-     */
-    public static final String LOG = "LOG";
-
-    public static final String DATA_SOURCE_URL_PAIR = "DATA_SOURCE_URL_PAIR";
-
-    public static final String DIALECT_READER_CACHE = "DIALECT_READER_CACHE";
 }

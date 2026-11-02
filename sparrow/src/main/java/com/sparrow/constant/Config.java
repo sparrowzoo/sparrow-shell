@@ -19,7 +19,6 @@ package com.sparrow.constant;
 
 public class Config {
     public static final String INTERNATIONALIZATION = "internationalization";
-    public static final String REQUEST_HEADER_KEY_LOGIN_TOKEN = "request_header_key_login_token";
     public static final String LANGUAGE = "language";
     public static final String ROOT_PATH = "root_path";
     public static final String PASSPORT = "passport";
@@ -42,9 +41,7 @@ public class Config {
      * 图片格式
      */
     public static final String IMAGE_EXTENSION = "image_extension";
-    public static final String THEMES = "themes";
     public static final String RESOURCE_PHYSICAL_PATH = "physical_resource";
-    public static final String TEMP = "temp";
 
     /**
      * 默认前台欢迎url http://www.sparrowzoo.com 在passport.sparrowzoo.com 中配置
@@ -63,7 +60,6 @@ public class Config {
     public static final String TEMPLATE_ENGINE_PREFIX = "template_engine_prefix";
     public static final String TEMPLATE_ENGINE_SUFFIX = "template_engine_suffix";
     public static final String ACTION_URL_CACHE_EXPIRED_SECONDS = "action_url_cache_expired_seconds";
-
 
 
     public static final String RESOURCE_VERSION = "resource_version";
@@ -85,9 +81,4 @@ public class Config {
     public static final String EMAIL_PASSWORD = "email_password";
     public static final String EMAIL_LOCAL_ADDRESS = "email_local_address";
     public static final String METHOD_ACCESS_DEBUG = "method_access_debug";
-
-    /**
-     * 平台内部用户类型
-     */
-    public static final String CATEGORY_PLATFORM = "platform";
 }

@@ -22,29 +22,38 @@ import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.authenticator.DefaultLoginUser;
 import com.sparrow.authenticator.Signature;
 import com.sparrow.authenticator.enums.AuthenticatorError;
-import com.sparrow.cryptogram.RSAUtils;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.constant.SparrowError;
-import com.sparrow.utility.FileUtility;
-import com.sparrow.utility.StringUtility;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
 /**
  * RSA 签名验签功能，支持全局统一的默认公私钥对
  * 也支持用户自定义公私钥对。如果用户自定义上传公私钥对一定要符合公私钥格式 格式参考
- *  KeyPair keyPair = RSAUtils.generateKeyPair();
+ *  KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+ *  generator.initialize(2048);
+ *  KeyPair keyPair = generator.generateKeyPair();
  *  String publicKey = Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
- * @see RSAUtils#generateKeyPair()
+ * @see java.security.KeyPairGenerator
  *
  * 注意：如果用户自定义的公私钥为自己的密码，则格式不正确 ，需要重写并重新注册签字对象，覆盖默认的签名对象
  * @see com.sparrow.authenticator.config.AuthcAutoConfiguration#signature
@@ -58,33 +67,70 @@ public class JwtRSSignature implements Signature {
 
     public JwtRSSignature(AuthenticatorConfigReader configReader) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
         //读取私钥
-        String privateKey = FileUtility.getInstance().readFileContent(configReader.getPrivateKeyPath());
-        if (StringUtility.isNullOrEmpty(privateKey)) {
+        String privateKey = readKeyContent(configReader.getPrivateKeyPath());
+        if (StringUtils.isEmpty(StringUtils.trim(privateKey))) {
             log.error("[{}[ jwt private key not found ! ", configReader.getPrivateKeyPath());
             return;
         }
         //读取公钥
-        String publicKey = FileUtility.getInstance().readFileContent(configReader.getPublicKeyPath());
-        if (StringUtility.isNullOrEmpty(publicKey)) {
+        String publicKey = readKeyContent(configReader.getPublicKeyPath());
+        if (StringUtils.isEmpty(StringUtils.trim(publicKey))) {
             log.error("[{}[ jwt public key not found ! ", configReader.getPublicKeyPath());
             return;
         }
-        this.defaultPrivateKey = RSAUtils.getRSAPrivateKey(privateKey);
-        this.defaultPublicKey = RSAUtils.getRSAPublicKey(publicKey);
+        this.defaultPrivateKey = parsePrivateKey(privateKey);
+        this.defaultPublicKey = parsePublicKey(publicKey);
         this.signatureAlgorithm = SignatureAlgorithm.RS256;
         this.issuer = configReader.getJwtIssuer();
+    }
+
+    private static String readKeyContent(String location) {
+        if (StringUtils.isEmpty(StringUtils.trim(location))) {
+            return null;
+        }
+        String normalized = location.replace('\\', '/');
+        try {
+            Path file = Path.of(normalized);
+            if (Files.exists(file)) {
+                return Files.readString(file, StandardCharsets.UTF_8);
+            }
+            // 原工具使用 EnvironmentSupport.class.getResource，保留其包相对路径。
+            String resourcePath = normalized.startsWith("/")
+                    ? normalized.substring(1) : "com/sparrow/support/" + normalized;
+            try (InputStream stream = new ClassPathResource(resourcePath).getInputStream()) {
+                return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+            }
+        } catch (IOException e) {
+            log.error("[{}] jwt key not found or unreadable", location);
+            return null;
+        }
+    }
+
+    private static PrivateKey parsePrivateKey(String encodedKey) throws NoSuchAlgorithmException {
+        byte[] decoded = Base64.getDecoder().decode(encodedKey.replaceAll("\\s", ""));
+        try {
+            return KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
+        } catch (InvalidKeySpecException e) {
+            log.error("failed to parse RSA private key", e);
+            return null;
+        }
+    }
+
+    private static PublicKey parsePublicKey(String encodedKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] decoded = Base64.getDecoder().decode(encodedKey.replaceAll("\\s", ""));
+        return KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
     }
 
 
     @Override
     public String sign(LoginUser loginUser, String key) throws BusinessException {
         PrivateKey privateKey = this.defaultPrivateKey;
-        if (!StringUtility.isNullOrEmpty(key)) {
+        if (!StringUtils.isEmpty(StringUtils.trim(key))) {
             try {
                 //如果传入了用户私钥，则使用用户私钥进行签名
                 //如果上层应用不使用公私钥的非对称加密，那么可以传用户密码作为加盐
                 //如果用户传了密码，那么需要重写signer 接口
-                privateKey = RSAUtils.getRSAPrivateKey(key);
+                privateKey = parsePrivateKey(key);
             } catch (Exception e) {
                 log.error("faild to get user private key", e);
                 throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);
@@ -130,9 +176,9 @@ public class JwtRSSignature implements Signature {
     @Override
     public LoginUser verify(String token, String userPublicKey) throws BusinessException {
         PublicKey publicKey = this.defaultPublicKey;
-        if (!StringUtility.isNullOrEmpty(userPublicKey)) {
+        if (!StringUtils.isEmpty(StringUtils.trim(userPublicKey))) {
             try {
-                publicKey = RSAUtils.getRSAPublicKey(userPublicKey);
+                publicKey = parsePublicKey(userPublicKey);
             } catch (Exception e) {
                 log.error("faild to get user public key", e);
                 throw new BusinessException(SparrowError.SYSTEM_SERVER_ERROR);

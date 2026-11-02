@@ -17,16 +17,13 @@
 
 package com.sparrow.authenticator.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.authenticator.DefaultLoginUser;
-import com.sparrow.context.SessionContext;
-import com.sparrow.core.spi.JsonFactory;
-import com.sparrow.json.Json;
+import com.sparrow.protocol.context.SessionContext;
 import com.sparrow.protocol.LoginUser;
 import com.sparrow.protocol.enums.DefaultUserCategory;
 import com.sparrow.protocol.enums.DeviceType;
-import com.sparrow.utility.RegexUtility;
-import com.sparrow.utility.StringUtility;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -48,38 +45,48 @@ public class MicroServiceFilter extends AbstractAuthcFilter {
 
     private static Logger logger = LoggerFactory.getLogger(MicroServiceFilter.class);
     private Boolean mockLoginUser;
-    private Json json = JsonFactory.getProvider();
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        if (servletRequest instanceof HttpServletRequest) {
-            HttpServletRequest req = (HttpServletRequest) servletRequest;
-            String currentUrl = req.getServletPath();
-            if (RegexUtility.matchPatterns(this.excludePatternList, currentUrl)) {
-                filterChain.doFilter(servletRequest, servletResponse);
-                return;
+        LoginUser previous = SessionContext.getLoginUser();
+        boolean bound = false;
+        try {
+            if (servletRequest instanceof HttpServletRequest) {
+                HttpServletRequest req = (HttpServletRequest) servletRequest;
+                String currentUrl = req.getServletPath();
+                if (matchesPatterns(this.excludePatternList, currentUrl)) {
+                    filterChain.doFilter(servletRequest, servletResponse);
+                    return;
+                }
+                String loginTokenOfHeader = req.getHeader(tokenKey);
+                LoginUser loginUser = null;
+                if (!isEmpty(loginTokenOfHeader)) {
+                    loginUser = JSON.parseObject(loginTokenOfHeader, DefaultLoginUser.class);
+                } else {
+                    if (mockLoginUser) {
+                        loginUser = DefaultLoginUser.create(
+                                1L, "",
+                                DefaultUserCategory.REGISTER.getIdentity(),
+                                "mock-user",
+                                "mock-nick-name",
+                                "header",
+                                DeviceType.PC,
+                                "device id", 1L, 30D);
+                    }
+                }
+                SessionContext.bindLoginUser(loginUser);
+                bound = true;
             }
-            String loginTokenOfHeader = req.getHeader(tokenKey);
-            LoginUser loginUser = null;
-            if (!StringUtility.isNullOrEmpty(loginTokenOfHeader)) {
-                loginUser = this.json.parse(loginTokenOfHeader, DefaultLoginUser.class);
-            } else {
-                if (mockLoginUser) {
-                    loginUser = DefaultLoginUser.create(
-                            1L, "",
-                            DefaultUserCategory.REGISTER.getIdentity(),
-                            "mock-user",
-                            "mock-nick-name",
-                            "header",
-                            DeviceType.PC,
-                            "device id", 1L, 30D);
+            filterChain.doFilter(servletRequest, servletResponse);
+        } finally {
+            if (bound) {
+                SessionContext.clearToken();
+                if (previous != null) {
+                    SessionContext.bindLoginUser(previous);
                 }
             }
-            SessionContext.bindLoginUser(loginUser);
         }
-        filterChain.doFilter(servletRequest, servletResponse);
-        SessionContext.clearToken();
     }
 
     @Override

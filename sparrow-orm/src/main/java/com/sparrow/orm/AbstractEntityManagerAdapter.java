@@ -16,7 +16,6 @@
  */
 package com.sparrow.orm;
 
-import com.sparrow.constant.ConfigKeyDB;
 import com.sparrow.container.ConfigReader;
 import com.sparrow.core.spi.ApplicationContext;
 import com.sparrow.enums.OrmEntityMetadata;
@@ -318,7 +317,7 @@ public abstract class AbstractEntityManagerAdapter implements EntityManager {
 
     @Override
     public Field getUniqueField(String unique) {
-        if (unique.equalsIgnoreCase(ConfigKeyDB.ORM_PRIMARY_KEY_UNIQUE)) {
+        if (unique.equalsIgnoreCase(EntityManager.PRIMARY_KEY_UNIQUE)) {
             return this.primary;
         } else {
             return this.uniqueFieldMap.get(unique);

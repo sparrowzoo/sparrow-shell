@@ -17,34 +17,31 @@
 
 package com.sparrow.orm.template.impl;
 
-import com.sparrow.constant.ConfigKeyDB;
-import com.sparrow.orm.query.Criteria;
-import com.sparrow.protocol.constant.magic.Digit;
-import com.sparrow.protocol.Pair;
 import com.sparrow.orm.*;
+import com.sparrow.orm.query.Criteria;
 import com.sparrow.orm.query.SearchCriteria;
 import com.sparrow.orm.query.UpdateCriteria;
 import com.sparrow.orm.query.sql.CriteriaProcessor;
 import com.sparrow.orm.query.sql.OperationEntity;
 import com.sparrow.orm.query.sql.impl.criteria.processor.SqlCriteriaProcessorImpl;
 import com.sparrow.orm.template.SparrowDaoSupport;
+import com.sparrow.protocol.Pair;
+import com.sparrow.protocol.constant.magic.Digit;
 import com.sparrow.protocol.dao.AggregateCriteria;
 import com.sparrow.protocol.dao.DatabasePagerQuery;
 import com.sparrow.protocol.dao.StatusCriteria;
 import com.sparrow.protocol.dao.UniqueKeyCriteria;
 import com.sparrow.protocol.dao.enums.DatabaseSplitStrategy;
-import com.sparrow.orm.JDBCSupport;
 import com.sparrow.utility.ClassUtility;
 import com.sparrow.utility.StringUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+@Slf4j
 public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
-    private static Logger logger = LoggerFactory.getLogger(OrmMetadataAccessor.class);
     protected CriteriaProcessor criteriaProcessor = SqlCriteriaProcessorImpl.getInstance();
     /**
      * 实体类
@@ -55,7 +52,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
      */
     protected final JDBCSupport jdbcSupport;
 
-    private OrmMetadataAccessor<T,I> ormMetadataAccessor;
+    private OrmMetadataAccessor<T, I> ormMetadataAccessor;
 
     public DBORMTemplate(Class<?> clazz) {
         this.modelClazz = clazz;
@@ -76,7 +73,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
             //非自增  返回影响记录条件
             return (long) this.jdbcSupport.executeUpdate(jdbcParameter);
         } catch (Throwable e) {
-            logger.error("insert error", e);
+            log.error("insert error", e);
             throw new RuntimeException(e);
         }
     }
@@ -140,7 +137,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
                 && searchCriteria.getPageSize() != Digit.ALL) {
             selectSql.append(searchCriteria.getLimit());
         }
-        logger.info(selectSql.toString());
+        log.info(selectSql.toString());
         return new JDBCParameter(selectSql.toString(), boolOperationEntity.getParameterList());
     }
 
@@ -154,7 +151,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public T getEntity(I id) {
-        return this.getEntityByUnique(UniqueKeyCriteria.createUniqueCriteria(id, ConfigKeyDB.ORM_PRIMARY_KEY_UNIQUE));
+        return this.getEntityByUnique(UniqueKeyCriteria.createUniqueCriteria(id, EntityManager.PRIMARY_KEY_UNIQUE));
     }
 
     @Override
@@ -290,7 +287,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
                 }
             }
         } catch (Exception ex) {
-            logger.error("first result", ex);
+            log.error("first result", ex);
             return list;
         } finally {
             this.jdbcSupport.release(rs);
@@ -355,7 +352,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
             }
             return map;
         } catch (Exception ex) {
-            logger.error("get map", ex);
+            log.error("get map", ex);
             return map;
         } finally {
             this.jdbcSupport.release(rs);
@@ -374,7 +371,7 @@ public class DBORMTemplate<T, I> implements SparrowDaoSupport<T, I> {
 
     @Override
     public Boolean exist(I key) {
-        return this.getCountByUnique(UniqueKeyCriteria.createUniqueCriteria(key, ConfigKeyDB.ORM_PRIMARY_KEY_UNIQUE)) > 0;
+        return this.getCountByUnique(UniqueKeyCriteria.createUniqueCriteria(key, EntityManager.PRIMARY_KEY_UNIQUE)) > 0;
     }
 
     @Override

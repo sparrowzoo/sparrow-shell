@@ -74,16 +74,7 @@ public class EmailSender {
             fromAddress.setPersonal(fromName);
             message.setFrom(fromAddress);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            if (subject.contains("$website_name")) {
-                subject = subject.replace("$website_name", fromName);
-            }
             message.setSubject(subject);
-
-            if (content.contains("$website_name")) {
-                content = content.replace("$website_name", fromName);
-            }
-
-
             message.setContent(content, "text/html;charset=gb2312");
             message.saveChanges();
             if (authentication) {

@@ -24,7 +24,6 @@ import com.sparrow.authenticator.notifier.Notifier;
 import com.sparrow.authenticator.notifier.NotifyRegistry;
 import com.sparrow.authenticator.notifier.impl.LoginEvent;
 import com.sparrow.authenticator.session.SessionParser;
-import com.sparrow.exception.Asserts;
 import com.sparrow.protocol.BusinessException;
 import com.sparrow.protocol.LoginUser;
 
@@ -69,13 +68,25 @@ public class DefaultSecurityManager implements Authenticator {
         AuthenticationInfo authenticationInfo = this.realm.getAuthenticationInfo(token);//???
         LoginUser loginUser = this.signature.verify(token.getCredential(), authenticationInfo.getCredential());
         Session session = this.sessionManager.getSession(loginUser);
-        Asserts.isTrue(session.expire(), AuthenticatorError.USER_TOKEN_EXPIRED);
-        Asserts.isTrue(validateDevice && !session.matchHost(token.getHost()), AuthenticatorError.USER_DEVICE_NOT_MATCH);
+        if (session.expire()) {
+            throw new BusinessException(AuthenticatorError.USER_TOKEN_EXPIRED);
+        }
+        if (validateDevice && !session.matchHost(token.getHost())) {
+            throw new BusinessException(AuthenticatorError.USER_DEVICE_NOT_MATCH);
+        }
         if (validateStatus) {
-            Asserts.isTrue(UserStatus.KICK_OUT.getIdentity().equals(session.getStatus()), AuthenticatorError.USER_KICKOUT);
-            Asserts.isTrue(UserStatus.DEVICE_KICK_OUT.getIdentity().equals(session.getStatus()), AuthenticatorError.USER_DEVICE_KICKOUT);
-            Asserts.isTrue(UserStatus.REPLACED.getIdentity().equals(session.getStatus()), AuthenticatorError.USER_REPLACED);
-            Asserts.isTrue(UserStatus.DISABLED.getIdentity().equals(session.getStatus()), AuthenticatorError.USER_DISABLE);
+            if (UserStatus.KICK_OUT.getIdentity().equals(session.getStatus())) {
+                throw new BusinessException(AuthenticatorError.USER_KICKOUT);
+            }
+            if (UserStatus.DEVICE_KICK_OUT.getIdentity().equals(session.getStatus())) {
+                throw new BusinessException(AuthenticatorError.USER_DEVICE_KICKOUT);
+            }
+            if (UserStatus.REPLACED.getIdentity().equals(session.getStatus())) {
+                throw new BusinessException(AuthenticatorError.USER_REPLACED);
+            }
+            if (UserStatus.DISABLED.getIdentity().equals(session.getStatus())) {
+                throw new BusinessException(AuthenticatorError.USER_DISABLE);
+            }
         }
         session.touch();
         Long sessionTimeout = this.config.getSessionTimeout();

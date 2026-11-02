@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sparrow.support;
+package com.sparrow.mvc;
 
 import com.sparrow.protocol.POJO;
 

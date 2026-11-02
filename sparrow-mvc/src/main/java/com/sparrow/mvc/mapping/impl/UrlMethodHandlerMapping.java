@@ -22,7 +22,7 @@ import com.sparrow.container.ConfigReader;
 import com.sparrow.container.Container;
 import com.sparrow.protocol.Pair;
 import com.sparrow.core.spi.ApplicationContext;
-import com.sparrow.enums.LoginType;
+import com.sparrow.mvc.LoginType;
 import com.sparrow.lang.url.UrlAssembler;
 import com.sparrow.mvc.RequestParameters;
 import com.sparrow.mvc.ServletInvokableHandlerMethod;

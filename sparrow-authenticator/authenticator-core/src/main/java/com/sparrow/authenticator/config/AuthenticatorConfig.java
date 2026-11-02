@@ -18,7 +18,6 @@ package com.sparrow.authenticator.config;
 
 import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.utility.RegexUtility;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -53,6 +52,11 @@ public class AuthenticatorConfig implements AuthenticatorConfigReader {
     private String publicKeyPath;
 
     public void setExcludePatterns(Set<String> excludePatterns) {
-        this.excludePatterns = new LinkedHashSet<>(RegexUtility.adapterWildcard(excludePatterns));
+        this.excludePatterns = new LinkedHashSet<>();
+        if (excludePatterns != null) {
+            for (String pattern : excludePatterns) {
+                this.excludePatterns.add(pattern.replace("*", ".*"));
+            }
+        }
     }
 }

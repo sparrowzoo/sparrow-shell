@@ -17,29 +17,50 @@
 
 package com.sparrow.authc.test;
 
-import com.sparrow.context.SessionContext;
+import com.sparrow.authenticator.DefaultLoginUser;
+import com.sparrow.protocol.context.SessionContext;
 import com.sparrow.protocol.ClientInformation;
+import com.sparrow.protocol.LoginUser;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.atomic.AtomicReference;
+
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class SessionContextTest {
-    public static void main(String[] args) {
-        ClientInformation client = new ClientInformation();
-        client.setAppId(1);
-        SessionContext.bindClientInfo(client);
-
-        System.out.println("main thread " + SessionContext.getClientInfo().getAppId());
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("child thread " + SessionContext.getClientInfo().getAppId());
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("child child thread " + SessionContext.getClientInfo().getAppId());
-                    }
-                }).start();
-            }
-        }).start();
+    @AfterEach
+    void clear() {
+        SessionContext.clearToken();
+        SessionContext.clearClient();
     }
 
+    @Test
+    void childInheritsBothValuesAndCanClearItsOwnBindings() throws InterruptedException {
+        LoginUser user = new DefaultLoginUser();
+        ClientInformation client = new ClientInformation();
+        SessionContext.bindLoginUser(user);
+        SessionContext.bindClientInfo(client);
+        AtomicReference<LoginUser> inheritedUser = new AtomicReference<>();
+        AtomicReference<ClientInformation> inheritedClient = new AtomicReference<>();
+        AtomicReference<LoginUser> clearedUser = new AtomicReference<>(user);
+        AtomicReference<ClientInformation> clearedClient = new AtomicReference<>(client);
+        Thread child = new Thread(() -> {
+            inheritedUser.set(SessionContext.getLoginUser());
+            inheritedClient.set(SessionContext.getClientInfo());
+            SessionContext.clearToken();
+            SessionContext.clearClient();
+            clearedUser.set(SessionContext.getLoginUser());
+            clearedClient.set(SessionContext.getClientInfo());
+        });
+        child.start();
+        child.join();
+        assertSame(user, inheritedUser.get());
+        assertSame(client, inheritedClient.get());
+        assertNull(clearedUser.get());
+        assertNull(clearedClient.get());
+        assertSame(user, SessionContext.getLoginUser());
+        assertSame(client, SessionContext.getClientInfo());
+    }
 }

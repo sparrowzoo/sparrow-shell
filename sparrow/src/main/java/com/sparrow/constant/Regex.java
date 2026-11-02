@@ -54,23 +54,11 @@ public class Regex {
      * 临时图片存储格式
      */
     public static final Pattern TAG_TEMP_IMAGE_FORMAT = Pattern.compile("<img src=\"%1$s\" id=\"tempImage%2$s\"/>", OPTION_MULTILINE_CASE_INSENSITIVE);
-    /**
-     * 临时image图片标签 temp.zhuaququ.com
-     */
-    public static final String TAG_TEMP_IMAGE = "<img[\\s\\S]*?src=([\"\'])(http:\\/\\/temp\\.$image_website\\.net\\/.*?)\\1[\\s\\S]*?\\/?>";
-    /**
-     * 第三方网站（抓取时使用）图片标签 所有图片格式
-     */
-    public static final String TAG_IMAGE = "<img[\\s\\S]*?src=([\"\'])(.*?)\\1[\\s\\S]*?\\/?>";
 
     /**
      * MARK DOWN 图片标签
      */
     public static final String TAG_MARKDOWN_IMAGE = "!\\[(.*)]\\((.*)\\)";
-    /**
-     * flashTag标签
-     */
-    public static final String TAG_FLASH = "<embed.*?src=([\"']?)(.*?)\\1\\s.*?>(<\\/embed>)?";
     /**
      * 回车换行
      */
@@ -91,11 +79,6 @@ public class Regex {
      */
     public static final String TAG_BLOCK = "</?div>|</?p>|<br/?>|</?dl>|</?table>|<hr/?>|</?h[1-6]>";
 
-    /**
-     * 带内容的块标签
-     */
-    public static final String TAG_BLOCK_WITH_CONTENT = "<(div|p|ul|table|dl|h[1-6])>(.*?)<\\/\\1>";
-
     public static final String IMG_URL_RULE = "^\\/([a-z0-9_]*)\\/";
     /**
      * 注释标记
@@ -108,6 +91,4 @@ public class Regex {
      */
     public static final String PASSWORD = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
 
-    public static final Pattern BAIDU_IMAGE_SEARCH = Pattern.compile(
-            "var imgdata=([\\s\\S]*?)<\\/script>", Regex.OPTION_MULTILINE_CASE_INSENSITIVE);
 }

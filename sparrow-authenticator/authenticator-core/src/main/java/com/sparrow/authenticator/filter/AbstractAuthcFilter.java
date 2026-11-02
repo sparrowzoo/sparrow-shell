@@ -18,17 +18,17 @@
 package com.sparrow.authenticator.filter;
 
 import com.sparrow.protocol.constant.Constant;
-import com.sparrow.support.web.ServletUtility;
-import com.sparrow.utility.StringUtility;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 public abstract class AbstractAuthcFilter implements Filter {
+    public static final int ORDER = 2;
     protected Set<String> excludePatternList = new LinkedHashSet<>();
     protected Boolean supportTemplate;
     protected Set<String> ajaxPatternList = new LinkedHashSet<>();
@@ -37,8 +37,11 @@ public abstract class AbstractAuthcFilter implements Filter {
     @Override
     public void init(FilterConfig config) throws ServletException {
         String excludePatterns = config.getInitParameter("excludePatterns");
-        if (StringUtility.isNullOrEmpty(excludePatterns)) {
+        if (isEmpty(excludePatterns)) {
             return;
+        }
+        if (this.excludePatternList == null) {
+            this.excludePatternList = new LinkedHashSet<>();
         }
         String[] patterns = excludePatterns.split(",");
         for (String pattern : patterns) {
@@ -48,6 +51,29 @@ public abstract class AbstractAuthcFilter implements Filter {
     }
 
     public Boolean isAjax(HttpServletRequest request) {
-        return ServletUtility.getInstance().isAjax(request, this.supportTemplate, this.ajaxPatternList);
+        if (!Boolean.TRUE.equals(this.supportTemplate)) {
+            return true;
+        }
+        if (this.ajaxPatternList != null && !this.ajaxPatternList.isEmpty()) {
+            return matchesPatterns(this.ajaxPatternList, request.getRequestURI());
+        }
+        String ajax = request.getHeader(Constant.IS_AJAX);
+        return !isEmpty(ajax) && "true".equalsIgnoreCase(ajax);
+    }
+
+    protected boolean matchesPatterns(Set<String> patterns, String path) {
+        if (patterns == null || patterns.isEmpty()) {
+            return false;
+        }
+        for (String pattern : patterns) {
+            if (path.matches(pattern)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean isEmpty(String value) {
+        return StringUtils.isEmpty(StringUtils.trim(value));
     }
 }

@@ -17,23 +17,29 @@
 
 package com.sparrow.authc.test.jwt;
 
-import com.sparrow.cryptogram.RSAUtils;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.util.Base64;
 
 /**
- * 生成后内容直接对应到 resource/rsa 目录下 对应公私钥对
+ * 通过两个参数指定公钥和私钥输出文件，不向控制台输出私钥。
  */
 public class RSAPairGenerateTest {
-    public static void main(String[] args) {
-        KeyPair keyPair = RSAUtils.generateKeyPair();
+    public static void main(String[] args) throws Exception {
+        if (args.length != 2) {
+            System.out.println("Usage: RSAPairGenerateTest <public-key-file> <private-key-file>");
+            return;
+        }
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        generator.initialize(2048);
+        KeyPair keyPair = generator.generateKeyPair();
 
         String publicKey = Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
 
-        System.out.println(publicKey);
         String privateKey = Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded());
-
-        System.out.println(privateKey);
+        Files.writeString(Path.of(args[0]), publicKey);
+        Files.writeString(Path.of(args[1]), privateKey);
     }
 }

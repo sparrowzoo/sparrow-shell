@@ -47,7 +47,7 @@ public class CollectionsUtility {
     }
 
     /**
-     * 除去数组中的空值 <p> "sign".equalsIgnoreCase(key) || "sign_type".equalsIgnoreCase(key)
+     * 除去数组中的空值
      *
      * @param array 签名参数组
      * @return 去掉空值与签名参数后的新签名参数组

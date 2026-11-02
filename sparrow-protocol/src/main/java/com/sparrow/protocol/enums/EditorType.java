@@ -17,6 +17,7 @@
 package com.sparrow.protocol.enums;
 
 public enum EditorType {
+    TEXT,
     MARKDOWN,
     HTML
 }

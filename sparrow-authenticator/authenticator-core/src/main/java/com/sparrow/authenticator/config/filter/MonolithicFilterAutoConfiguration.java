@@ -19,13 +19,13 @@ package com.sparrow.authenticator.config.filter;
 import com.sparrow.authenticator.Authenticator;
 import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.authenticator.filter.MonolithicBearerFilter;
-import com.sparrow.servlet.FilterOrders;
-import com.sparrow.support.web.WebConfigReader;
+import com.sparrow.authenticator.filter.AbstractAuthcFilter;
 import jakarta.servlet.Filter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 
 
 @Slf4j
@@ -37,9 +37,9 @@ public class MonolithicFilterAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(MonolithicBearerFilter.class)
     public MonolithicBearerFilter monolithicBearerFilter(AuthenticatorConfigReader authenticatorConfigReader,
-                                                         WebConfigReader webConfigReader,
+                                                         Environment environment,
                                                          Authenticator authenticator) {
-        return new MonolithicBearerFilter(authenticator, authenticatorConfigReader, webConfigReader);
+        return new MonolithicBearerFilter(authenticator, authenticatorConfigReader, environment);
     }
 
     @Bean
@@ -48,7 +48,7 @@ public class MonolithicFilterAutoConfiguration {
         filterRegistrationBean.setFilter(monolithicBearerFilter);
         filterRegistrationBean.addUrlPatterns("/*");
         filterRegistrationBean.setName("monolithicBearerFilter");
-        filterRegistrationBean.setOrder(FilterOrders.AUTHC_FILTER_ORDER);
+        filterRegistrationBean.setOrder(AbstractAuthcFilter.ORDER);
         //多个filter的时候order的数值越小 则优先级越高
         return filterRegistrationBean;
     }

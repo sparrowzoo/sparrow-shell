@@ -18,7 +18,7 @@ package com.sparrow.authenticator.config.filter;
 
 import com.sparrow.authenticator.AuthenticatorConfigReader;
 import com.sparrow.authenticator.filter.MicroServiceFilter;
-import com.sparrow.servlet.FilterOrders;
+import com.sparrow.authenticator.filter.AbstractAuthcFilter;
 import jakarta.servlet.Filter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -38,7 +38,7 @@ public class MicroServiceFilterAutoConfiguration {
         filterRegistrationBean.setFilter(microServiceFilter);
         filterRegistrationBean.addUrlPatterns("/*");
         filterRegistrationBean.setName("microServiceFilter");
-        filterRegistrationBean.setOrder(FilterOrders.AUTHC_FILTER_ORDER);
+        filterRegistrationBean.setOrder(AbstractAuthcFilter.ORDER);
         //多个filter的时候order的数值越小 则优先级越高
         return filterRegistrationBean;
     }

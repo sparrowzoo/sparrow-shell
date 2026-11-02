@@ -18,7 +18,9 @@
 package com.sparrow.concurrent;
 
 import com.sparrow.utility.StringUtility;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class RedisLock extends AbstractLock {
     public Long setGetMillisTimeUnique() {
         Long unique = System.currentTimeMillis();
@@ -63,7 +65,7 @@ public abstract class RedisLock extends AbstractLock {
                  */
                 this.expireMillis(key, expireMillis);
                 // 如果当前锁不存在，返回加锁成功
-                logger.error("first got lock successful");
+                log.error("first got lock successful");
                 return true;
             }
 
@@ -74,7 +76,7 @@ public abstract class RedisLock extends AbstractLock {
                 if (this.setIfNotExist(key, currentMills)) {
                     this.expireMillis(key, expireMillis);
                     // 如果当前锁不存在，返回加锁成功
-                    logger.info("first got lock successful");
+                    log.info("first got lock successful");
                     return true;
                 }
             }
@@ -85,7 +87,7 @@ public abstract class RedisLock extends AbstractLock {
                 //set ex 未设置的情况
                 if (this.isExpire(lockCreatedMillis, expireMillis)) {
                     Long ttl = this.ttl(key);
-                    logger.error("ttl {}", ttl);
+                    log.error("ttl {}", ttl);
                     // 锁已过期，获取上一个锁的过期时间，并设置现在锁的过期时间
                     //todo getSet 不是原子的？ 没拿到锁，但是内容已经改变，线程ID已经变了
                     /**
@@ -102,12 +104,12 @@ public abstract class RedisLock extends AbstractLock {
                     // 考虑线程并发的情况，只有一个线程的设置值和当前值相同，它才可以加锁
                     if (oldLockUnique.equals(lockCreatedUnique)) {
                         this.expireMillis(key, expireMillis);
-                        logger.error("getset got lock not expire current:{}-redis:{}",
+                        log.error("getset got lock not expire current:{}-redis:{}",
                                 currentMills,
                                 lockCreatedUnique);
                         return true;
                     } else {
-                        logger.error("lock fail but set expire current:{}-redis:{}",
+                        log.error("lock fail but set expire current:{}-redis:{}",
                                 currentMills,
                                 lockCreatedUnique);
                     }
@@ -116,7 +118,7 @@ public abstract class RedisLock extends AbstractLock {
                 //未过期
                 if (this.getMillisTimeUnique() == lockCreatedMillis) {
                     //reentrant lock
-                    logger.info("current:{}-redis:{} reentrant-lock", currentMills, lockCreatedUnique);
+                    log.info("current:{}-redis:{} reentrant-lock", currentMills, lockCreatedUnique);
                     return true;
                 }
             }
@@ -124,7 +126,7 @@ public abstract class RedisLock extends AbstractLock {
             return false;
         } catch (Exception e) {
             //链接失败 加锁失败
-            logger.error("{} get connection fail", key, e);
+            log.error("{} get connection fail", key, e);
             return false;
         }
     }

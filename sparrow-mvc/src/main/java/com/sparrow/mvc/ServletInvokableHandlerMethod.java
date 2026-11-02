@@ -17,7 +17,6 @@
 
 package com.sparrow.mvc;
 
-import com.sparrow.enums.LoginType;
 import com.sparrow.mvc.resolver.impl.HandlerMethodArgumentResolverComposite;
 import com.sparrow.mvc.result.MethodReturnValueResolverHandler;
 import com.sparrow.utility.CollectionsUtility;
